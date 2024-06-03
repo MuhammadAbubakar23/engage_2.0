@@ -198,6 +198,16 @@ export class CommonDataService {
   getautoResponedFB = environment.links.console.getautoResponedFB
   addFbResponed =environment.links.console.addFbResponed
   getCompanyPages = environment.links.console.getCompanyPages
+  getActions = environment.links.console.getActions
+  getPlatorm = environment.links.console.getPlatform
+  getConsoleEntities = environment.links.console.getConsoleEntities
+  getConsoleEntityProperties = environment.links.console.getConsoleEntityProperties
+  getRuleType= environment.links.console.getRuleType
+  getRuleTag = environment.links.console.getRuleTag
+  getServicetree = environment.links.console.getServicetree
+  getTemplateStatus= environment.links.console.getTemplateStatus
+  deleteTemplate= environment.links.console.deleteTemplate
+  getRuleStatus= environment.links.console.getRuleStatus
 
   // teams
   // getAllTeams= environment.links.console.getAllTeams
@@ -341,8 +351,7 @@ export class CommonDataService {
   }
 // auto responder apis  
 getAutoRespondFB(body: any) {
-  const url = this.autoresponderbaseurl + this.getautoResponedFB + '?nativeIdentifier=' + body;
-  return this.http.post(url, null); 
+  return this.http.post(this.autoresponderbaseurl + this.getautoResponedFB , body);
 }
 AddFbResponed( body: any) {
     return this.http.post(this.autoresponderbaseurl + this.addFbResponed , body);
@@ -350,6 +359,9 @@ AddFbResponed( body: any) {
   GetCompanyPages(){
     return this.http.get(this.autoresponderbaseurl + this.getCompanyPages);
 
+  }
+  GetActions(){
+    return this.http.get(this.autoresponderbaseurl + this.getActions);
   }
   GetFbCommentStats(pageId: any, commentId: any) {
     return this.http.post(
@@ -628,7 +640,7 @@ AddFbResponed( body: any) {
     return this.http.post(this.consoleBaseUrl + this.getAllRules, body);
   }
   GetAllFbRules(body: any) {
-    return this.http.post<RuleWithCount>(this.faceRoxBaseUrl + this.getFbRule, body);
+    return this.http.post<RuleWithCount>(this.autoresponderbaseurl + this.getFbRule, body);
   }
   
   GetRuleById(ruleId: string) {
@@ -639,7 +651,7 @@ AddFbResponed( body: any) {
     return this.http.post(this.consoleBaseUrl + this.addRules, addrule);
   }
   AddFBRule(addrule: any) {
-    return this.http.post(this.faceRoxBaseUrl + this.addRule, addrule);
+    return this.http.post(this.autoresponderbaseurl + this.addRule, addrule);
   }
   UpdateRules(rule: any) {
     const url = `${this.consoleBaseUrl}${this.updateRules}`;
@@ -659,12 +671,12 @@ AddFbResponed( body: any) {
   GetEntitiesRules() {
     return this.http.get(this.autoresponderbaseurl + this.getEntitiesRules);
   }
-  GetRuleEntitiesProperties(entity: string) {
+  GetRuleEntitiesProperties(entity: any) {
     return this.http.get(
       `${this.autoresponderbaseurl}${this.getEntitiesProperties}?tableName=${entity}`
     );
   }
-  GetRuleEntityProperties(entity: string) {
+  GetRuleEntityProperties(entity: any) {
     return this.http.get(
       `${this.consoleBaseUrl}${this.getRuleEntityProperties}?tableName=${entity}`
     );
@@ -945,6 +957,39 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
   }
   GetInteractionReport(body: any) {
     return this.http.post(this.CommonBaseUrl + this.getInteractionReport, body)
+  }
+  GetPlatorm(){
+    return this.http.get(this.consoleBaseUrl + this.getPlatorm)
+  }
+  GetConsoleEntities(serviceId: any): Observable<any> {
+    const url = `${this.consoleBaseUrl}${this.getConsoleEntities}?serviceId=${serviceId}`;
+    return this.http.post<any>(url, {});
+  }
+  GetConsoleEntityProperties(entityId: any) {
+    const url = `${this.consoleBaseUrl}${this.getConsoleEntityProperties}?entityId=${entityId}`;
+    return this.http.get<any>(url, {});
+  }
+  GetRuleType(){
+    return this.http.get(this.consoleBaseUrl + this.getRuleType)
+  }
+  GetRuleTag(id: any){
+    const url = `${this.consoleBaseUrl}${this.getRuleTag}?id=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  GetServicetree(){
+    return this.http.get(this.consoleBaseUrl + this.getServicetree)
+  }
+  GetTemplateStatus(id: any) {
+    const url = `${this.autoresponderbaseurl}${this.getTemplateStatus}?templateId=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  DeleteTemplate(id: any) {
+    const url = `${this.autoresponderbaseurl}${this.deleteTemplate}?templateId=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  GetRuleStatus(id: any) {
+    const url = `${this.autoresponderbaseurl}${this.getRuleStatus}?Id=${id}`;
+    return this.http.get<any>(url, {});
   }
 }
 

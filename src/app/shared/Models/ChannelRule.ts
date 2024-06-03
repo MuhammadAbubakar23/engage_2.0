@@ -19,4 +19,5 @@ export class Rule{
         parentId: number=0;
         groupId: number=0;
         createdDate: Date=new Date()
+        status: boolean = false;  // Add this line
 }

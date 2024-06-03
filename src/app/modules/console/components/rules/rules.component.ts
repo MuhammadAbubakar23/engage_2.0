@@ -18,8 +18,22 @@ export class RulesComponent implements OnInit {
   searchText: string = '';
   perPage: number = 15;
   currentPage: number = 1;
+  selectedSortOption: any;
   totalCount: any;
   channelRules: ChannelRule[] = [];
+  channels: any[] = [];
+  ruleTypes: any[] = [];
+  selectedChannel = 'Engage';
+  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router, private spinnerServerice: NgxSpinnerService) { }
+
+  ngOnInit(): void {
+    this.refreshtableData();
+    this.ruleType();
+    this.loadServices()
+  }
+  updatevalue(string: any) {
+    this.headerService.updateMessage(string);
+  }
   applySearchFilter() {
     if (this.searchText.trim() !== '') {
       this.refreshtableData()
@@ -29,58 +43,102 @@ export class RulesComponent implements OnInit {
       this.refreshtableData()
     }
   }
+  onChannelChange(event: any) {
+    const selectedChannelId = event.target.value;
+    this.selectedChannel = this.channels.find(channel => channel.id == selectedChannelId)?.name || 'Engage';
+    this.refreshtableData();
+  }
+
+  ruleType() {
+    this.commonService.GetRuleType().subscribe(
+      (response: any) => {
+        this.ruleTypes = response
+
+        // this.ruleTypes = response.map((item: any) => item.name);
+      },
+      (error: any) => {
+        console.error('Error fetching services:', error);
+      }
+    );
+  }
+  selectedRuleType:any
+  onRuleTypeChange() {
+    this.refreshtableData();
+}
+
 
   refreshtableData() {
     const data = {
       search: this.searchText,
       sorting: this.selectedSortOption,
       pageNumber: this.currentPage,
-      pageSize: this.perPage
-    }
-    this.spinnerServerice.show()
+      pageSize: this.perPage,
+      ruleType:this.selectedRuleType
+    };
+    this.spinnerServerice.show();
     this.channelRules = [];
-    this.commonService.GetAllFbRules(data).subscribe((response: RuleWithCount) => {
 
-      this.spinnerServerice.hide();
-      this.channelRules.push({
-        platform: "Facebook",
-        rulesWihtCount: response
-      })
-      //  this.tableData = response.Rules.map((item: any) => ({ ...item, platform: 'Facebook' }));
-      this.totalCount = response.TotalCount
-    })
-    this.commonService.GetAllRules(data).subscribe(
+    if (this.selectedChannel === 'Exchange-email') {
+      this.commonService.GetAllFbRules(data).subscribe(
+        (response: RuleWithCount) => {
+          this.spinnerServerice.hide();
+          this.channelRules.push({
+            platform: "Exchange-email",
+            rulesWihtCount: response
+          });
+          this.totalCount = response.TotalCount;
+        },
+        (error: any) => {
+          this.spinnerServerice.hide();
+          console.error(error);
+        }
+      );
+    } else {
+      this.commonService.GetAllRules(data).subscribe(
+        (response: any) => {
+          this.spinnerServerice.hide();
+          this.channelRules.push({
+            platform: "Engage",
+            rulesWihtCount: response
+          });
+          this.totalCount = response.TotalCount;
+        },
+        (error: any) => {
+          this.spinnerServerice.hide();
+          console.error(error);
+        }
+      );
+    }
+  }
+  toggleStatus(rule: any) {
+    this.commonService.GetRuleStatus(rule.id).subscribe(
       (response: any) => {
-        this.spinnerServerice.hide();
-        this.channelRules.push({
-          platform: "Common",
-          rulesWihtCount: response
-        })
-        // this.tableData = response.Rules.map((item: any) => ({ ...item, platform: 'Common' }));
-        this.totalCount = response.TotalCount
-
+        rule.status = !rule.status;
       },
       (error: any) => {
-        this.spinnerServerice.hide()
-
-        console.error(error);
+        console.error('Error toggling status:', error);
       }
     );
   }
-  selectedSortOption: any;
-
+  loadServices(): void {
+    this.commonService.GetPlatorm().subscribe(
+      (response: any) => {
+        this.channels = Object.keys(response).map(key => ({
+          id: parseInt(key),
+          name: response[key]
+        }));
+      },
+      (error: any) => {
+        console.error('Error fetching services:', error);
+      }
+    );
+  }
   setSortOption(option: string) {
 
     this.selectedSortOption = option;
     this.refreshtableData();
   }
-  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router, private spinnerServerice: NgxSpinnerService) { }
-  ngOnInit(): void {
-    this.refreshtableData()
-  }
-  updatevalue(string: any) {
-    this.headerService.updateMessage(string);
-  }
+
   editTemplate(message: any) {
 
     this.router.navigate(['/console/add-rules', message.id])
@@ -119,25 +177,6 @@ export class RulesComponent implements OnInit {
       }
     }
   }
-  // deleteTemplate(rule: ChannelRule, platform: string) {
-  //   const confirmation = confirm('Are you sure you want to delete this template?');
-  //   if (confirmation) {
-  //     const ruleId = platform === 'Facebook' ? rule.rulesWihtCount.Rules[0].id : rule.rulesWihtCount.Rules[0].groupId;
-  //     const filteredRules = platform === 'Facebook' ? rule.rulesWihtCount.Rules.filter((r: any) => r.id !== ruleId) : rule.rulesWihtCount.Rules.filter((r: any) => r.groupId !== ruleId);
-
-  //     const deleteService = platform === 'Facebook' ? this.commonService.DeleteFbRules(ruleId) : this.commonService.DeleteRules(ruleId);
-
-  //     deleteService.subscribe(
-  //       () => {
-  //         console.log(`${platform} rule deleted:`, rule);
-  //         rule.rulesWihtCount.Rules = filteredRules;
-  //       },
-  //       (error: any) => {
-  //         console.error(`Error deleting ${platform} rule:`, error);
-  //       }
-  //     );
-  //   }
-  // }
   disableTemplate(message: any) {
     console.log('Disabling template:', message);
   }

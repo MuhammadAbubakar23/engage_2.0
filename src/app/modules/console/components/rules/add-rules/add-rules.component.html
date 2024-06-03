@@ -1,4 +1,4 @@
-<div class="content-box-wrapper d-flex w-100">
+<!-- <div class="content-box-wrapper d-flex w-100">
   <div class="middle-content d-flex">
     <div class="agent-page-main-content">
       <div class="preferences console-body-wrapper footerheight" data-scrollbar="true" tabindex="-1"
@@ -19,7 +19,6 @@
                   </button>
                 </div>
               </nav>
-
               <div class="tab-body">
                 <div class="tab-content" id="nav-tabContent">
                   <div id="holiday-detail" class="tab-pane fade active show" role="tabpanel"
@@ -49,8 +48,6 @@
                       </div>
                     </form>
                   </div>
-
-
                   <div id="business-hour" class="tab-pane fade" role="tabpanel" aria-labelledby="business-hour-tab">
                     <div class="bussiness-hour-wrap ps-5 pe-5">
                       <div class="col-sm-6">
@@ -77,7 +74,6 @@
                             <div>
                             </div>
                             <div>
-
                             </div>
                           </div>
                         </div>
@@ -91,7 +87,6 @@
           </div>
         </div>
       </div>
-
       <footer class="footer">
         <div class="ps-3 pe-3">
           <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
@@ -119,176 +114,202 @@
       </footer>
     </div>
   </div>
-</div>
-<!-- <div class="content-box-wrapper d-flex w-100">
+</div> -->
+<!-- Ensure that query is correctly bound -->
+<div class="content-box-wrapper d-flex w-100">
   <div class="middle-content d-flex">
-
     <div class="agent-page-main-content">
       <div class="preferences console-body-wrapper footerheight" data-scrollbar="true" tabindex="-1"
         style="overflow: auto; outline: none;">
-        <div class="scroll-content">
-          <div class="wider-container pt-3">
-
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <h5 class="m-0">Move based on sender</h5>
-              <div class="form-check form-switch">
-                <label class="form-check-label" for="flexSwitchCheckChecked">Rule is active</label>
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked="">
-              </div>
-            </div>
-            <div class="mb-2">
-              <input placeholder="Enter a name for this rule" class="form-control" name="">
-            </div>
-            <div class="mb-2">
-              <input placeholder="Description" class="form-control" name="">
-            </div>
-            <hr>
-            <div class="border rounded p-3 mb-3">
-              <div class="d-flex align-items-center g-3">
-                <span class="iconButton medium iconHover me-3">
-                  <i class="fa-light fa-user"></i>
-                </span>
-
-                <span class="mx-3 coal">Select Service</span>
-                <select name="" class="form-select w-50">
-                  <option value="">Facebook</option>
-                  <option value="">Instagram</option>
-                  <option value="">Twitter</option>
-
-                </select>
-              </div>
-            </div>
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <h5 class="m-0"> When</h5>
-              <a class="sky">More Options</a>
-            </div>
-            <div class="mb-2">
-              <select name="" class="form-select">
-                <option value="">Inbound message is received</option>
-              </select>
-            </div>
-
-            <hr>
-            <div class="border rounded p-3 mb-3">
-              <div class="d-flex align-items-center g-3">
-                <span class="iconButton medium iconHover me-3">
-                  <i class="fa-light fa-inbox"></i>
-                </span>
-
-                <span class="mx-3 coal">Conversation is in</span>
-                <select name="" class="form-select w-50">
-                  <option value="">Select an inbox</option>
-                </select>
-              </div>
-            </div>
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <h5 class="m-0"> if.</h5>
-              <a data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"
-                class="sky" (click)="addMore()"><i class="fa-light fa-plus"></i> Add More</a>
-            </div>
-
-            <div *ngFor="let card of cards; let i = index" class="card mb-3">
-              <div class="card-body">
-                <div class="row align-items-center mb-3 mx-2">
-                  <span class="iconButton medium iconHover bg-light me-3 col-1">
-                    <i class="fa-light fa-user"></i>
-                  </span>
-                  <select name="" class="form-select col">
-                    <option value="">From</option>
-                  </select>
-                  <span class="mx-4 coal col-1">field</span>
-                  <select name="" class="form-select col">
-                    <option value="">Contains</option>
-                  </select>
-                </div>
-                <div class="mb-2">
-                  <input type="email" placeholder="Email Address" class="form-control" name="">
+        <form [formGroup]="rulesForm">
+          <div class="scroll-content">
+            <div class="wider-container pt-3">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <h5 class="m-0">Move based on sender</h5>
+                <div class="form-check form-switch">
+                  <label class="form-check-label" [for]="switchId">
+                    {{ rulesForm.get('status')?.value ? 'Rule is Active' : 'Rule is InActive' }}
+                  </label>
+                  <input class="form-check-input" type="checkbox" role="switch" [id]="switchId"
+                    formControlName="status">
                 </div>
               </div>
-            <h6 class="text-center mb-2 coal">AND</h6>
-
-              <button *ngIf="i > 0" (click)="removeCard(i)" class="btn btn-danger btn-sm">Cancel</button>
-            </div>
-
-
-            <hr>
-
-            <div class="addpanel collapse" id="collapseExample">
-              <h6 class="text-center mb-2 coal">AND</h6>
-              <div class="card mb-3">
-                <div class="card-body">
-                  <div class="row align-items-center mb-3 mx-2">
-                    <span class="iconButton medium iconHover bg-light me-3 col-1">
-                      <i class="fa-light fa-user"></i>
-                    </span>
-                    <select name="" class="form-select col">
-                      <option value="">From</option>
-                    </select>
-                    <span class="mx-4 coal col-1">field</span>
-                    <select name="" class="form-select col">
-                      <option value="">Contains</option>
-                    </select>
+              <div id="holiday-detail" class="tab-pane fade active show" role="tabpanel"
+                aria-labelledby="holiday-detail-tab">
+                <div class="business-detail-wrap">
+                  <div class="mb-2">
+                    <input type="text" class="form-control" id="ruleName" placeholder="Rule Name"
+                      formControlName="ruleName"
+                      [class.is-invalid]="ruleName?.invalid && (ruleName?.dirty || ruleName?.touched)"
+                      [class.is-valid]="ruleName?.valid && (ruleName?.dirty || ruleName?.touched)">
+                    <div class="invalid-feedback" *ngIf="ruleName?.errors?.['required']">Rule name is required.
+                    </div>
+                    <div class="invalid-feedback" *ngIf="ruleName?.errors?.['pattern']">Only alphabets are
+                      allowed.</div>
                   </div>
                   <div class="mb-2">
-                    <input type="email" placeholder="Email Address" class="form-control" name="">
+                    <input class="form-control" placeholder="Description" id="description" formControlName="description"
+                      [class.is-invalid]="description?.invalid && (description?.dirty || description?.touched)"
+                      [class.is-valid]="description?.valid && (description?.dirty || description?.touched)">
+                    <div class="invalid-feedback" *ngIf="description?.errors?.['required']">Description is
+                      required.</div>
+                  </div>
+                  <hr>
+                </div>
+              </div>
+              <!-- <hr> -->
+              <!-- <div class="border rounded p-3 mb-3">
+                <div class="d-flex align-items-center g-3">
+                  <span class="iconButton medium iconHover me-3">
+                    <i class="fa-light fa-user"></i>
+                  </span>
+                  <span class="mx-3 coal">Select Platform</span>
+                  <ng-select class=" w-50" placeholder="Select Platform" formControlName="selectedService"
+                    (change)="onServiceSelect()">
+                    <ng-option *ngFor="let service of services" [value]="service">{{ service }}</ng-option>
+                  </ng-select>
+                </div>
+              </div> -->
+              <!-- <div class="mb-2">
+                <select name="" class="form-select" formControlName="selectedService"  (change)="onServiceSelect()"> 
+                  <option  selected disabled value="">Select Platform</option>
+                  <option  *ngFor="let service of services" [value]="service">{{ service }}</option>
+                </select>
+              </div> -->
+              <div class="mb-2">
+                <select name="" class="form-select" formControlName="selectedService" (change)="onServiceSelect()">
+                  <option selected disabled value="">Select Platform</option>
+                  <!-- Use *ngFor to loop over the services array and display each option -->
+                  <option *ngFor="let ser of services" [value]="ser.id">{{ ser.platformName }}</option>
+                </select>
+              </div>
+              <hr>
+              <div>
+                <!-- <div class="border rounded p-3 mb-3" *ngIf="showQueryRulesTab">
+                  <div class="d-flex align-items-center g-3">
+                    <span class="iconButton medium iconHover me-3">
+                      <i class="fa-light fa-inbox"></i>
+                    </span>
+                    <span class="mx-3 coal">Conversation is in</span>
+                    <ng-select class="w-50" formControlName="entityName" (change)="selectEntity()">
+                      <ng-option *ngFor="let entity of entities" [value]="entity">{{entity}}</ng-option>
+                    </ng-select>
+                  </div>
+                </div> -->
+                <div class="mb-2" *ngIf="showQueryRulesTab">
+                  <select name="" class="form-select" formControlName="entityName" (change)="selectEntity()">
+                    <option selected disabled value="">Select Entity</option>
+                    <option *ngFor="let entity of entities" [value]="entity.id">{{ entity.entityName }}</option>
+                  </select>
+                </div>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                  <h5 class="m-0"> if.</h5>
+                  <a data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"
+                    class="sky" (click)="addRule()"><i class="fa-light fa-plus"></i> Add More</a>
+                </div>
+                <div formArrayName="rulesJson">
+                  <div *ngFor="let card of rulesJsonFormArray.controls; let i = index" class="card mb-3">
+                    <div class="card-body" [formGroupName]="i">
+                      <div class="row align-items-center mb-3 mx-2">
+                        <span class="iconButton medium iconHover bg-light me-3 col-1">
+                          <i class="fa-light fa-user"></i>
+                        </span>
+                        <select name="" class="form-select col" formControlName="field">
+                          <option *ngFor="let field of entitySet" [value]="field.entityName">{{ field.entityName }}
+                          </option>
+                        </select>
+                        <span class="mx-4 coal col-1">field</span>
+                        <select name="" class="form-select col" formControlName="operator">
+                          <option *ngFor="let operator of config.fields[card.value.field]?.operators"
+                            [value]="operator">{{ operator }}</option>
+                        </select>
+                      </div>
+                      <div class="mb-2">
+                        <input [type]="getFieldType(card)" class="form-control" formControlName="value">
+                      </div>
+                    </div>
+                    <h6 class="text-center mb-2 coal">AND</h6>
+                    <button *ngIf="i > 0" (click)="removeCard(i)" class="btn btn-danger btn-sm">Remove</button>
+                  </div>
+                  <hr>
+                  <div class="addpanel collapse" id="collapseExample">
+                    <h6 class="text-center mb-2 coal">AND</h6>
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <div class="row align-items-center mb-3 mx-2">
+                          <span class="iconButton medium iconHover bg-light me-3 col-1">
+                            <i class="fa-light fa-user"></i>
+                          </span>
+                          <select name="" class="form-select col">
+                            <option value="">From</option>
+                          </select>
+                          <span class="mx-4 coal col-1">field</span>
+                          <select name="" class="form-select col">
+                            <option value="">Contains</option>
+                          </select>
+                        </div>
+                        <div class="mb-2">
+                          <input type="email" placeholder="Email Address" class="form-control" name="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5>Then.</h5>
+                  </div>
+                  <!-- <div class="border rounded p-3 mb-3">
+                    <div class="row align-items-center mx-2">
+                      <span class="iconButton medium iconHover me-1 col-1">
+                        <i class="fa-light fa-arrow-right"></i>
+                      </span>
+                      <span class="me-3 coal col-2"> Move to Tags</span>
+                      <select class="form-select col" (click)="ruleTagValue($event)">
+                        <option selected disabled value="">Rules</option>
+                        <option *ngFor="let page of Rules" [ngValue]="page.name">{{ page.name }}</option>
+                      </select>
+                    </div>
+                  </div> -->
+                </div>
+                <div class="border rounded p-3 mb-3">
+                  <div class="row align-items-center mx-2">
+                    <span class="iconButton medium iconHover me-1 col-1">
+                      <i class="fa-light fa-arrow-right"></i>
+                    </span>
+                    <span class="me-3 coal col-2"> Rule Type</span>
+                    <select name="ruleType" class="form-select col" (change)="onRuleTypeChange($event)">
+                      <option value="">Select Rule Type</option>
+                      <option *ngFor="let type of ruleTypes" [value]="type.mainId">{{ type.name }}</option>
+                    </select>
+                    <span class="mx-3 coal col-1"> Tags</span>
+                    <select class="form-select col" (change)="ruleTagValue($event)">
+                      <option selected disabled value="">Tag</option>
+                      <option *ngFor="let tag of currentTags" [value]="tag.slug">{{ tag.name }}</option>
+                    </select>
                   </div>
                 </div>
               </div>
             </div>
-
-
-
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <h5>Then.</h5>
-              <a class="sky"><i class="fa-light fa-plus"></i> Add More</a>
-            </div>
-
-            <div class="border rounded p-3 mb-3">
-              <div class="row align-items-center mx-2">
-                <span class="iconButton medium iconHover me-1 col-1">
-                  <i class="fa-light fa-arrow-right"></i>
-                </span>
-
-                <span class="me-3 coal col-2"> Move to</span>
-                <select name="" class="form-select col">
-                  <option value="">Select inbox</option>
-                </select>
-                <span class="mx-3 coal col-1"> and</span>
-                <select name="" class="form-select col">
-                  <option value="">Restrict Participants </option>
-                </select>
-              </div>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                Stop processing other rules
-              </label>
-            </div>
           </div>
-        </div>
-   
+        </form>
       </div>
       <footer class="footer">
         <div class="ps-3 pe-3">
           <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
             <div class="row w-100">
               <div class="col-md-4">
-
                 <div class="f-icon-txt-wrapper d-flex align-items-center">
                   <button class="iconButton medium iconHover" id="deleteModalBtn">
-                    <i class="fal fa-redo-alt silver"></i>
                   </button>
-                  <p class="f-icon-txt coal ms-1 m-0">Reset to default</p>
                 </div>
               </div>
               <div class="col-md-8 justify-content-end d-flex">
                 <div class="buttons-wrap d-flex">
-                  <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4" data-bs-toggle="modal"
-                    data-bs-target=""> Cancel </button>
-                  <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"></button>
-                  <button type="button" class="btn skyBg ms-2 px-4 btn-medium saveBtn" data-bs-toggle="modal"
-                    data-bs-target="">Save</button>
+                  <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4" (click)="cancelbtn()">
+                    Cancel
+                  </button>
+                  <button type="button" (click)="onClick()" class="btn skyBg ms-2 px-4 btn-medium saveBtn">
+                    Save
+                  </button>
                 </div>
               </div>
             </div>
@@ -297,4 +318,4 @@
       </footer>
     </div>
   </div>
-</div> -->
+</div>

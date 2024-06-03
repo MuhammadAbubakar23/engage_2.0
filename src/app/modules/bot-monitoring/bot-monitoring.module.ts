@@ -10,6 +10,8 @@ import { BotMoniteringHeaderComponent } from './monitoring-header/bot-monitering
 import { ConversationHeaderComponent } from './monitoring-header/conversation-header/conversation-header.component';
 import { ComponentsHeaderComponent } from './monitoring-header/components-header/components-header.component';
 import { UploadDownloadHeaderComponent } from './monitoring-header/upload-download-header/upload-download-header.component';
+import { ChatBotStepperComponent } from './components/chat-bot-stepper/chat-bot-stepper.component';
+import { ChatBotStepperHeaderComponent } from './monitoring-header/chat-bot-stepper-header/chat-bot-stepper-header.component';
 //  import { BotMoniteringChatComponent } from './components/bot-monitering-chat/bot-monitering-chat.component';
 
 
@@ -22,6 +24,8 @@ import { UploadDownloadHeaderComponent } from './monitoring-header/upload-downlo
     ConversationHeaderComponent,
     ComponentsHeaderComponent,
     UploadDownloadHeaderComponent,
+    ChatBotStepperHeaderComponent,
+    // ChatBotStepperComponent,
     //  BotMoniteringChatComponent,
 
   ],

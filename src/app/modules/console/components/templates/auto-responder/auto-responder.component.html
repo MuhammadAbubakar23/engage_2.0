@@ -1,4 +1,7 @@
 <div class="content-box-wrapper d-flex w-100">
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <p style="color: white"> Loading... </p>
+    </ngx-spinner>
     <div class="middle-content d-flex">
         <div class="team-user-wrap console-body-wrapper inbox-container" data-scrollbar="true" tabindex="-1"
             style="overflow: auto; outline: none;">
@@ -10,29 +13,32 @@
                                 <div class="row">
                                     <div class="col-md-5">
                                         <ul class="list-group list-group-horizontal border-0">
-                                            <li class="list-group-item border-0 p-0">
-                                                <div class="icon-input">
-                                                    <i class="fa-light fa-magnifying-glass"></i>
-                                                    <input class="form-control" placeholder="Search candidates.. ">
-                                                </div>
-                                            </li>
+                                            <a class="search-btn">
+                                                <button class="iconButton medium">
+                                                    <i class="fal fa-search silver"></i>
+                                                </button>
+                                                <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
+                                                    (ngModelChange)="searchText ? applySearchFilter() : refreshtableData()">
+                                            </a>
                                             <li class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle"
                                                 aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                data-bs-original-title="Refresh">
+                                                data-bs-original-title="Refresh" (click)="loadAPI()">
                                                 <i class="fal fa-redo"></i>
-                                            </li>
-                                            <li class="list-group-item after-select-fun iconHover iconButton medium rounded-circle"
-                                                aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                data-bs-original-title="Delete" style="display: none;">
-                                                <i class="fal fa-trash"></i>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-md-7">
-                                        <div class="d-flex align-items-center justify-content-end">
+                                    <div class="col-md-7 d-flex align-items-center justify-content-end">
+                                        <div class="me-2">
+                                            <select class="form-select" id="channelSelect"
+                                                (change)="onChannelChange($event)">
+                                                <option selected disabled>Select Platform</option>
+                                                <option *ngFor="let channel of channels" [value]="channel.id">{{
+                                                    channel.name }}</option>
+                                            </select>
+                                        </div>
+                                        <div>
                                             <a (click)="updatevalue('create-auto-responder')"
-                                                [routerLink]="['/console/templates/add-auto-responder/:0']"
-                                                class="ms-2">
+                                                [routerLink]="['/console/templates/add-auto-responder/:0']">
                                                 <button type="button" class="btn btn-success">
                                                     <i class="fal fa-plus me-2"></i>
                                                     Create
@@ -45,51 +51,33 @@
                             <div class="query-container perfect-scrollbar" data-scrollbar="true" tabindex="-1"
                                 style="overflow: hidden; outline: none;">
                                 <div class="scroll-content">
-
-                                    <div class="alert alert-secondary text-center email-info-alert p-2" role="alert">
-                                        All <strong>09</strong> candidates on this page are selected.
-                                        <a class="all-conversation fw-bold sky btn">Select
-                                            all
-                                            09 Candidates</a>
-                                        <a class="clear-selection" style="display: none;">Clear selection</a>
-                                    </div>
                                     <div class="table-section">
                                         <table class="table table-sm table-nowrap table-reset" id="table">
                                             <thead>
                                                 <tr>
-                                                    <th>
-                                                        <span class="all-check-boxes">
-                                                            <input class="form-check-input me-1" type="checkbox"
-                                                                aria-label="..." data-bs-toggle="tooltip"
-                                                                data-bs-placement="bottom"
-                                                                data-bs-original-title="Check All">
-                                                        </span>
-                                                    </th>
                                                     <th>Template Name</th>
-                                                    <!-- <th>Subject </th> -->
+                                                    <th>Description</th>
                                                     <th>Status </th>
-                                                    <th>Action </th>
+                                                    <!-- <th>Action </th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let row of templates">
-                                                    <td><input class="form-check-input me-1" type="checkbox"
-                                                            aria-label="..."></td>
                                                     <td>
                                                         <span class="emailer-name" aria-label="..."
                                                             data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                             data-bs-original-title="Fatima Ahmed">
-                                                            <a>{{ row.name }}</a>
+                                                            <a>{{ row?.name }}</a>
                                                         </span>
                                                     </td>
-                                                    <!-- <td>{{ row.subject }}</td> -->
+                                                    <td>{{ row?.description }}</td>
                                                     <td>
                                                         <div class="form-check form-switch">
                                                             <input class="form-check-input" type="checkbox"
-                                                                role="switch" id="flexSwitchCheckChecked"
-                                                                [checked]="row.status">
-                                                            <label class="form-check-label"
-                                                                for="flexSwitchCheckChecked"></label>
+                                                                role="switch" id="flexSwitchCheckChecked{{row?.id}}"
+                                                                [checked]="row?.status"
+                                                                (change)="toggleStatus(row)">
+                                                            <label class="form-check-label" for="flexSwitchCheckChecked{{row?.uniqueId}}"></label>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -101,12 +89,9 @@
                                                             </button>
                                                             <ul class="dropdown-menu fade">
                                                                 <li>
-                                                                    <a class="dropdown-item"><i
-                                                                            class="fal fa-edit me-2"></i> Edit</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a class="dropdown-item delete-dd"><i
-                                                                            class="fal fa-trash me-2"></i> Delete</a>
+                                                                    <a class="dropdown-item delete-dd" (click)="deleteTemplate(row)">
+                                                                        <i class="fal fa-trash me-2"></i> Delete
+                                                                    </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -115,15 +100,18 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination justify-content-end">
-                                            <li class="page-item disabled">
+                                    <nav aria-label="Page navigation example"
+                                        class="d-flex align-items-center mt-3 mb-3">
+                                        <ul class="pagination m-0">
+                                            <li class="page-item" (click)="previousPage()">
                                                 <a class="page-link">Previous</a>
                                             </li>
-                                            <li class="page-item"><a class="page-link">1</a></li>
-                                            <li class="page-item"><a class="page-link">2</a></li>
-                                            <li class="page-item"><a class="page-link">3</a></li>
-                                            <li class="page-item">
+                                            <li class="page-item" *ngFor="let pageNumber of getVisiblePageNumbers()"
+                                                [class.active]="pageNumber === currentPage">
+                                                <a class="page-link" (click)="goToPage(pageNumber)">{{
+                                                    pageNumber }}</a>
+                                            </li>
+                                            <li class="page-item" (click)="nextPage()">
                                                 <a class="page-link">Next</a>
                                             </li>
                                         </ul>

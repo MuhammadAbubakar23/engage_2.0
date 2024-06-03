@@ -47,6 +47,7 @@ import { ChatBotHeaderComponent } from 'src/app/modules/bot-monitoring/monitorin
 import { ConversationHeaderComponent } from 'src/app/modules/bot-monitoring/monitoring-header/conversation-header/conversation-header.component';
 import { ComponentsHeaderComponent } from 'src/app/modules/bot-monitoring/monitoring-header/components-header/components-header.component';
 import { UploadDownloadHeaderComponent } from 'src/app/modules/bot-monitoring/monitoring-header/upload-download-header/upload-download-header.component';
+import { ChatBotStepperHeaderComponent } from 'src/app/modules/bot-monitoring/monitoring-header/chat-bot-stepper-header/chat-bot-stepper-header.component';
 
 @Component({
   selector: 'app-monitoring-header',
@@ -108,6 +109,10 @@ export class MonitoringHeaderComponent implements OnInit {
         break;
       case ('upload'):
         componentFactory = this.resolver.resolveComponentFactory(UploadDownloadHeaderComponent);
+        this.target.createComponent(componentFactory);
+        break;
+        case ('stepper'):
+        componentFactory = this.resolver.resolveComponentFactory(ChatBotStepperHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
       default:
