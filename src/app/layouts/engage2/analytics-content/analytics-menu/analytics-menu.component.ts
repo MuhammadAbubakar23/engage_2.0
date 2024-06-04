@@ -184,11 +184,10 @@ export class AnalyticsMenuComponent implements OnInit {
             name: 'Agent Performance Report',
             link: '/analytics/performance-report',
           },
-          { name: 'Shift Report', link: '/analytics/shift-report' },
+          { name: 'Shift Report', link: '/analyticsKs/shift-report' },
         ];
       }
     } else if (this.channelname == 'KE') {
-      debugger
       if(this.keAgentShowallReportsExpectAgentPrefomanceReport.includes(this.restrictedAgent)){
         this.analyticeReport = [
           {

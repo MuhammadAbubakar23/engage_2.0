@@ -20,7 +20,6 @@ export class ActorsComponent implements OnInit {
     this.fullName = data.username;
     console.table(data);
     this.email = data.originalUserName;
-    debugger;
   }
 
 }
