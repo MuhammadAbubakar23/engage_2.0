@@ -294,7 +294,7 @@ export const environment = {
       twitterProfileWiseReport: 'Report/GetTwitterProfileWiseReport',
       getUserList: 'Users/GetUserList',
       getSentimentData: 'Keyword/GetAllSentiments',
-      addAgentPerformance: 'Report/GetAgentPerformanceReport',
+      addAgentPerformance: 'AgentReport/GetAgentPerformanceReport',
       shiftReport: 'Report/GetShiftReport',
       getWhatsAppRawDataReport: 'Report/GetWhatsAppRawDataReport',
       downloadWhatsAppRawDataReport: 'Report/GetWhatsAppCSVData',
