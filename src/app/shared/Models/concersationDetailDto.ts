@@ -91,7 +91,7 @@ export class tagsDto {}
 // }
 
 export class commentsDto {
-  id?: number=0;
+  id: number=0;
   wings?: string="";
   postId?: string="";
   commentId?: string="";
@@ -136,7 +136,7 @@ export class Sentiment {
 }
 
 export class messagesDto {
-  id?: number = 0;
+  id: number = 0;
   msgId?: string = '';
   fromId?: string = '';
   fromName?: string = '';
@@ -158,7 +158,7 @@ export class messagesDto {
 }
 // for new post
 export class newpostcommentDto{
-  id?: number = 0;
+  id: number = 0;
   postId?: string = '';
   commentId?: string = '';
   message?: string = '';

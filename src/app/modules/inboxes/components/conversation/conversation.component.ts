@@ -108,7 +108,7 @@ export class ConversationComponent implements OnInit {
       toDate: new FormControl(null),
       isAttachment: new FormControl(this.isAttachment),
       text: new FormControl(''),
-      dateWithin: new FormControl(''),
+      dateWithin: new FormControl('1 week'),
       hasBlueTick: new FormControl(''),
     });
 
@@ -270,7 +270,7 @@ export class ConversationComponent implements OnInit {
   wings: any;
   isverifiedAccount: boolean = false;
   skillSlugUrl: any;
-  skillSlug = this.getSkillSlug.skillSlug;
+  skillSlug = this.getSkillSlug.skillSlug || "";
   getConversationList() {
     this.flag = this.currentUrl.split('/')[2];
     this.skillSlugUrl = this.currentUrl.split('/')[3];
@@ -323,12 +323,9 @@ export class ConversationComponent implements OnInit {
     } else if (this.searchForm.value.dateWithin == '1 week') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 6);
-      const fromDate =
-        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
-
-      this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '2 weeks') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 13);
@@ -775,19 +772,23 @@ export class ConversationComponent implements OnInit {
     this.isChecked = false;
     this.isCheckedAll = false;
     this.masterSelected = false;
-    this.searchForm.reset();
-    this.text = '';
-    this.user = '';
-    this.userName = '';
-    this.notInclude = '';
-    this.include = '';
+    this.searchForm.reset({
+      user: '',
+      userName: '',
+      notInclude: '',
+      include: '',
+      fromDate: null,
+      toDate: null,
+      isAttachment: this.isAttachment,
+      text: '',
+      dateWithin: '1 week',
+      hasBlueTick: '',
+    });
     this.advanceSearch = false;
     this.pageNumber = 1;
     this.pageSize = 20;
     this.to = 0;
     this.from = 0;
-    this.fromDate = null;
-    this.toDate = null;
     this.searchUser = '';
     localStorage.removeItem('username');
     localStorage.removeItem('datefillter');

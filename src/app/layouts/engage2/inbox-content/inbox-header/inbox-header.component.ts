@@ -46,7 +46,7 @@ export class InboxHeaderComponent implements OnInit {
           });
         }
       });
-      // this.getFollowUpCount();
+      this.getFollowUpCount();
     }
   
     getFollowUpCount(){
@@ -69,7 +69,7 @@ export class InboxHeaderComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         wings: this.getWing.wings,
-        groupId: this.getRulesGroupIdsService.rulesGroupIds,
+        // skillSlug: this.getRulesGroupIdsService.rulesGroupIds,
       }
       this.commonService.GetFollowUpCount(obj).subscribe((res:any)=>{
         this.followUpCount = res

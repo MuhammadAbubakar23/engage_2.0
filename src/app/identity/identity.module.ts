@@ -9,6 +9,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FormsModule } from '@angular/forms';
+import { ActorsComponent } from './actors/actors.component';
+import { LayoutsModule } from '../layouts/layouts.module';
 
 
 @NgModule({
@@ -17,15 +19,15 @@ import { FormsModule } from '@angular/forms';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     SignUpComponent,
-    
+    ActorsComponent
   ],
   imports: [
     CommonModule,
     IdentityRoutingModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-    FormsModule
-
+    FormsModule,
+    LayoutsModule
   ],
   providers:[
     DatePipe

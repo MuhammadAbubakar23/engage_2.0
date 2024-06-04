@@ -745,10 +745,7 @@ export class ChannelComponent implements OnInit {
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.TotalCmntQueryCount = res.TotalQueryCount;
             this.pageName = this.Comments[0]?.post.profile.clientAppName;
-            localStorage.setItem(
-              'lastQueryId',
-              this.Comments[0].comments[0].id
-            );
+            localStorage.setItem('lastQueryId', this.Comments[0].comments[0].id);
             this.commentsArray = [];
 
             this.Comments?.forEach((item: any) => {
@@ -803,11 +800,11 @@ export class ChannelComponent implements OnInit {
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
-    const openedContentType = localStorage.getItem('contentType');
+    // const openedContentType = localStorage.getItem('contentType');
     if (this.updatedComments.length > 0) {
       this.updatedComments?.forEach((xyz: any) => {
         xyz.comments.forEach((abc: any) => {
-          if (openedContentType == abc.contentType) {
+          // if (openedContentType == abc.contentType) {
             if (this.id == xyz.user.userId) {
               this.commentDto = {
                 id: abc.id,
@@ -843,6 +840,7 @@ export class ChannelComponent implements OnInit {
                 dispositions: abc.dispositions,
                 signalRGroupName: abc.signalRGroupName,
               };
+              localStorage.setItem('lastQueryId', this.commentDto.id.toString());
               this.Comments?.forEach((item: any) => {
                 this.postIdArray.push(item.post.postId);
                 this.commentsArray = [];
@@ -900,6 +898,7 @@ export class ChannelComponent implements OnInit {
                           tags: z.tags,
                         };
                       });
+                      localStorage.setItem('lastQueryId', this.newpostcommentDto.id.toString());
                       if (
                         !this.newPostComment.find(
                           (comment) => comment.post.postId === x.post.postId
@@ -953,7 +952,7 @@ export class ChannelComponent implements OnInit {
               this.totalUnrespondedCmntCountByCustomer =
                 this.totalUnrespondedCmntCountByCustomer + 1;
             }
-          }
+          // }
         });
       });
     }
@@ -965,9 +964,9 @@ export class ChannelComponent implements OnInit {
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
-    const openedContentType = localStorage.getItem('contentType');
+    // const openedContentType = localStorage.getItem('contentType');
     this.updatedMessages.forEach((xyz: any) => {
-      if (openedContentType == xyz.contentType) {
+      // if (openedContentType == xyz.contentType) {
         if (this.id == xyz.fromId) {
           this.messageDto = {
             id: xyz.id,
@@ -990,6 +989,7 @@ export class ChannelComponent implements OnInit {
             profileId: xyz.profileId,
             profilePageId: xyz.profilePageId,
           };
+          localStorage.setItem('lastQueryId', this.messageDto.id.toString());
           this.messageOrDM.unshift(this.messageDto);
           this.messagesArray.unshift(this.messageDto);
 
@@ -1016,7 +1016,7 @@ export class ChannelComponent implements OnInit {
           this.totalUnrespondedMsgCountByCustomer =
             this.totalUnrespondedMsgCountByCustomer + 1;
         }
-      }
+      // }
     });
     this.changeDetect.detectChanges();
   }
