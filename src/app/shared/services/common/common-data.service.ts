@@ -23,7 +23,8 @@ export class CommonDataService {
   LinkedInBaseUrl = environment.LinkedInBaseUrl;
   KemediaBaseUrl = environment.KemediaBaseUrl;
   KescrmBaseUrl = environment.KescrmBaseUrl;
-  WhatsappBaseUrl = environment.WhatsappBaseUrl
+  WhatsappBaseUrl = environment.WhatsappBaseUrl;
+  KeReportsBaseUrl=environment.keReportsBaseUrl
   // KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
@@ -683,11 +684,11 @@ export class CommonDataService {
   }
 
   Addinboundoutbound(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.addinboundoutbound, body);
+    return this.http.post(this.KeReportsBaseUrl + this.addinboundoutbound, body);
   }
 
   GetTwitterReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.twitterReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.twitterReport, body);
   }
 
   GetTwitterSLAReport(body: any) {
@@ -696,7 +697,7 @@ export class CommonDataService {
 
   GetTwitterProfileWiseReport(body: any) {
     return this.http.post(
-      this.CommonBaseUrl + this.twitterProfileWiseReport,
+      this.KeReportsBaseUrl + this.twitterProfileWiseReport,
       body
     );
   }
@@ -709,11 +710,11 @@ export class CommonDataService {
   }
 
   AddAgentPerformance(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.addAgentPerformance, body);
+    return this.http.post(this.KeReportsBaseUrl + this.addAgentPerformance, body);
   }
 
   GetShiftReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.shiftReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.shiftReport, body);
   }
 
   GetWhatsAppReport(body: any) {
@@ -743,10 +744,10 @@ export class CommonDataService {
   }
   // facebookreport
   Getfacebookreport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.facebookReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.facebookReport, body);
   }
   GetfacebookProfile(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.facebookProfile, body);
+    return this.http.post(this.KeReportsBaseUrl + this.facebookProfile, body);
   }
   // Executive Dashboard
   GetAllSocialMatrics(body: any) {
@@ -754,11 +755,11 @@ export class CommonDataService {
   }
 
   PostInstagramReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.instagramReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.instagramReport, body);
   }
 
   GetInstagramProfile(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.instagramProfile, body);
+    return this.http.post(this.KeReportsBaseUrl + this.instagramProfile, body);
   }
 
   GetAllTags(): Observable<any> {
@@ -771,10 +772,10 @@ export class CommonDataService {
   }
 
   GetAllTagsReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.getTagReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.getTagReport, body);
   }
   DownloadTagsReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.downloadTagReport, body, {
+    return this.http.post(this.KeReportsBaseUrl + this.downloadTagReport, body, {
       responseType: 'text',
     });
   }
@@ -801,7 +802,7 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
   }
 
   EmailShiftReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.emailShiftReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.emailShiftReport, body);
   }
 
   CSATFormForKE(body: any) {
@@ -892,7 +893,7 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
     return this.http.post(this.WhatsappBaseUrl + this.whatsappBotInteraction, body)
   }
   GetInteractionReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.getInteractionReport, body)
+    return this.http.post(this.KeReportsBaseUrl + this.getInteractionReport, body)
   }
   GetAllWing(){
     return this.http.get(this.IdentityBaseUrl + this.getAllWing);
