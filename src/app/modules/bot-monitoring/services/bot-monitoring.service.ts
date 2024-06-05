@@ -21,6 +21,7 @@ export class BotMonitoringService {
   intentDelete = environment.links.bot.intentDelete
   deleteChatBot = environment.links.bot.deleteChatBot
   createRule= environment.links.bot.createRule
+  createStory= environment.links.bot.createStory
 
   constructor(private http: HttpClient) { }
 
@@ -60,6 +61,9 @@ export class BotMonitoringService {
   }
   CreateRule(body: any) {
     return this.http.post(this.botMoniteringBaseUrl + this.createRule, body);
+  }
+  CreateStory(body: any) {
+    return this.http.post(this.botMoniteringBaseUrl + this.createStory, body);
   }
   GetIntents(botId: number): Observable<any> {
     return this.http.get(`${this.botMoniteringBaseUrl}${this.getIntents}?bot_id=${botId}`);

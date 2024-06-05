@@ -113,6 +113,11 @@ export class ChatBotComponent implements OnInit {
   shareValueStepper(value: any) {
     localStorage.setItem('bot_id', value.bot_id)
     this.chatBotIdS.setOption(value.bot_id)
-    this.route.navigateByUrl('/bot-monitoring/chatBot-stepper')
+    this.route.navigateByUrl('/bot-monitoring/chatBot-Rule')
+  }
+  shareValueStory(value: any) {
+    localStorage.setItem('bot_id', value.bot_id)
+    this.chatBotIdS.setOption(value.bot_id)
+    this.route.navigateByUrl('/bot-monitoring/chatBot-Story')
   }
 }

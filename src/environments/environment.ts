@@ -268,7 +268,8 @@ export const environment = {
       intentDelete: 'intents/delete',
       responseDelete: 'responses/delete',
       deleteChatBot: 'bots/deactivate',
-      createRule: 'rules/create'
+      createRule: 'rules/create',
+      createStory:'stories/create'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',
