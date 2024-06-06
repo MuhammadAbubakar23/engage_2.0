@@ -4,6 +4,8 @@ import { Router, RouterModule } from '@angular/router';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { entries } from 'lodash';
+import { number } from 'echarts';
 @Component({
   selector: 'app-create-auto-responder',
   templateUrl: './create-auto-responder.component.html',
@@ -12,103 +14,112 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   imports: [CommonModule, RouterModule, CKEditorModule, FormsModule, ReactiveFormsModule]
 })
 export class CreateAutoResponderComponent implements OnInit {
-
+  assingClients: any;
+  selectedFruits: any;
+  switchId = 'flexSwitchCheckChecked';
+  newtempletvaiablesArray: any[] = []
   messageForm!: FormGroup;
   name!: string;
   subject!: string;
   editorContent!: string;
-  channels = [
-    { id: 1, name: 'Facebook' },
-    { id: 2, name: 'Twitter' },
-    { id: 3, name: 'Linkedin' }
-  ];
-  companyPages: any[] = [
-    {
-      name: 'Ibex socialcrm',
-      uniqueId: "100507598977567",
-      url: null,
-      isActive: false
-    }
-  ];
-  selectedEntity: string = "";
-  formDisabled = false;
-  errorMessage = '';
+  channels :any[]=[];
+  content :any[]= [];
   editorConfig = {};
-  entities: string[] = [];
-  showEntitiesDropdown = false;
+  entities: any[] = [];
+  currentTags: any[] = [];
   templateVariables: string = "";
-  
-  constructor(private formBuilder: FormBuilder, private commonService: CommonDataService, private router: Router) {
-    
+  constructor(
+    private formBuilder: FormBuilder
+    , private commonService: CommonDataService
+    , private router: Router) {
   }
-
-  ngOnInit(): void { 
+  ngOnInit() {
     this.messageForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
-      // subject: ['', Validators.required],
-      template_Message: ['', Validators.required],
-      // templateType: ['']
+      description: ['', Validators.required],
+      template_Message: ['',],
+      entityName: ['',],
+      ruleTag: ['', Validators.required],
+      variables: ['',],
+      status: [true,],
+      contentType: ['',],
+    });
+    this.loadPlatform();
+    this.getAutoResponderTag()
+  }
+  loadPlatform() {
+    this.commonService.GetServicetree().subscribe((res: any) => {
+      this.channels = res
     });
   }
-
-  getEntityProperties(): void {
-    if (this.selectedEntity) {
-      this.commonService.GetRuleEntityProperties(this.selectedEntity).subscribe(
-        (res: any) => {
-          this.templateVariables = res.map((entity: any) => `{${entity.entityName}}`).join('');
-        },
-        (error: any) => {
-          console.error('Error fetching entity properties:', error);
-        }
-      );
+  getAutoResponderTag() {
+    this.commonService.GetRuleTag(13).subscribe(
+      (response: any) => {
+        this.currentTags = response
+      },
+      (error: any) => {
+        console.error('Error fetching rule tags:', error);
+      }
+    );
+  }
+  loadTemplateVariables(templateVariable: any) {
+    this.editorContent += templateVariable.entityName;
+  }
+  updateFormVariables() {
+    const variables = this.newtempletvaiablesArray.map(variable => variable.entityName).join(', ');
+    this.messageForm.get('variables')?.setValue(variables);
+  }
+  onChangeChannel(event: any) {
+    this.entities=[]
+    this.newtempletvaiablesArray=[]
+    const channelName = event.target.value;
+    const selectedChannel = this.channels.find(channel => channel.name === channelName);
+    if (selectedChannel) {
+      this.content = selectedChannel.subService;
+      this.entities = []; 
     }
   }
-  onEntitySelect(event: any): void {
-    this.selectedEntity = event.target.value;
-    this.getEntityProperties();
-  }
-
-  onChangeChannel(event: any): void {
-    const channelId = event.target.value;
-    if (channelId === '1') {
-      this.commonService.GetCompanyPages().subscribe(
-        (res: any) => {
-          this.companyPages = res;
-          if (this.companyPages.length === 0) {
-            this.formDisabled = true;
-            this.errorMessage = 'No company pages available. Template cannot be created.';
-          } else {
-            this.formDisabled = false;
-            this.errorMessage = '';
-          }
-        },
-        (error: any) => {
-          console.error('Error fetching company pages:', error);
-          this.formDisabled = true;
-          this.errorMessage = 'Error fetching company pages. Template cannot be created.';
-        }
-      );
-    } else {
-      this.showEntitiesDropdown = false;
+  getEntites(event:any){
+    this.entities=[]
+    this.newtempletvaiablesArray=[]
+    const contentType= event.target.value
+    this.content.forEach((table:any)=>{
+    if(contentType==table.prefix){
+      this.entities.push(table.name)
     }
+    })
   }
-
-  onPageSelect() {
-    this.showEntitiesDropdown = true;
-    this.commonService.GetEntitiesRule().subscribe((response: any) => {
-      this.entities = response;
-    });
+  getTableProperites(event:any){
+    const tableproperties=event.target.value
+    this.content.forEach((loadproperties:any)=>{
+      if(tableproperties==loadproperties.name){
+        const template=loadproperties.subService
+        template.forEach((x:any)=>{
+          this.newtempletvaiablesArray.push({
+            id: x.id,
+            entityName: `{${x.name}}`
+          });
+        })
+      }
+    })
+    this.updateFormVariables();
   }
-
-
-
-  saveForm(): void {
-    if (this.messageForm.valid && !this.formDisabled) {
-      const updatedTemplate = {
+  saveForm() {
+    if (this.messageForm.valid) {
+      const obj = {
+        id:0,
+        companyId: 0,
+        uniqueId: "",
         name: this.messageForm.value.name,
-        template_Message: this.messageForm.value.template_Message
+        description: this.messageForm.value.description,
+        template_Message: this.messageForm.value.template_Message,
+        entityName: this.messageForm.value.entityName,
+        ruleTag: this.messageForm.value.ruleTag,
+        variables: this.messageForm.value.variables,
+        status: this.messageForm.value.status,
+        contentType: this.messageForm.value.contentType
       };
-      this.commonService.AddFbResponed(updatedTemplate).subscribe(
+      this.commonService.AddFbResponed(obj).subscribe(
         (response: any) => {
           this.router.navigate(['/console/templates/auto-responder']);
         },
@@ -120,7 +131,7 @@ export class CreateAutoResponderComponent implements OnInit {
       console.log('Form is invalid or disabled');
     }
   }
-  cancelForm(): void {
+  cancelForm() {
     this.router.navigate(['/console/templates/auto-responder']);
   }
 }

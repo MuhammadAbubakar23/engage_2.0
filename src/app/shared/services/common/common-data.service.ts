@@ -211,6 +211,17 @@ export class CommonDataService {
   getProfileDetails = environment.links.console.getProfileDetails
   getServices = environment.links.console.getServices
   botsList = environment.links.console.getBotList
+  getActions = environment.links.console.getActions
+  getPlatorm = environment.links.console.getPlatform
+  getConsoleEntities = environment.links.console.getConsoleEntities
+  getConsoleEntityProperties = environment.links.console.getConsoleEntityProperties
+  getRuleType= environment.links.console.getRuleType
+  getRuleTag = environment.links.console.getRuleTag
+  getServicetree = environment.links.console.getServicetree
+  getTemplateStatus= environment.links.console.getTemplateStatus
+  deleteTemplate= environment.links.console.deleteTemplate
+  getRuleStatus= environment.links.console.getRuleStatus
+
   // teams
   // getAllTeams= environment.links.console.getAllTeams
   // addTeam = environment.links.console.addTeam
@@ -353,8 +364,7 @@ export class CommonDataService {
   }
 // auto responder apis  
 getAutoRespondFB(body: any) {
-  const url = this.autoresponderbaseurl + this.getautoResponedFB + '?nativeIdentifier=' + body;
-  return this.http.post(url, null); 
+  return this.http.post(this.autoresponderbaseurl + this.getautoResponedFB , body);
 }
 getChannelsList(){
   return this.http.get(this.channelBaseUrl + this.getServices);
@@ -371,6 +381,10 @@ AddFbResponed( body: any) {
   }
   GetProfileInfo(){
     return this.http.get( this.profileBaseUrl + this.getProfileDetails)
+  }
+
+  GetActions(){
+    return this.http.get(this.autoresponderbaseurl + this.getActions);
   }
   GetFbCommentStats(pageId: any, commentId: any) {
     return this.http.post(
@@ -660,7 +674,7 @@ AddFbResponed( body: any) {
     return this.http.post(this.consoleBaseUrl + this.getAllRules, body);
   }
   GetAllFbRules(body: any) {
-    return this.http.post<RuleWithCount>(this.faceRoxBaseUrl + this.getFbRule, body);
+    return this.http.post<RuleWithCount>(this.autoresponderbaseurl + this.getFbRule, body);
   }
   
   GetRuleById(ruleId: string) {
@@ -671,7 +685,7 @@ AddFbResponed( body: any) {
     return this.http.post(this.consoleBaseUrl + this.addRules, addrule);
   }
   AddFBRule(addrule: any) {
-    return this.http.post(this.faceRoxBaseUrl + this.addRule, addrule);
+    return this.http.post(this.autoresponderbaseurl + this.addRule, addrule);
   }
   UpdateRules(rule: any) {
     const url = `${this.consoleBaseUrl}${this.updateRules}`;
@@ -682,7 +696,7 @@ AddFbResponed( body: any) {
     return this.http.get(url);
   }
   DeleteFbRules(delRules: any) {
-    const url = `${this.faceRoxBaseUrl}${this.softDeleteFb}?Id=${delRules}`;
+    const url = `${this.autoresponderbaseurl}${this.softDeleteFb}?Id=${delRules}`;
     return this.http.get(url);
   }
   GetEntitiesRule() {
@@ -691,12 +705,12 @@ AddFbResponed( body: any) {
   GetEntitiesRules() {
     return this.http.get(this.autoresponderbaseurl + this.getEntitiesRules);
   }
-  GetRuleEntitiesProperties(entity: string) {
+  GetRuleEntitiesProperties(entity: any) {
     return this.http.get(
       `${this.autoresponderbaseurl}${this.getEntitiesProperties}?tableName=${entity}`
     );
   }
-  GetRuleEntityProperties(entity: string) {
+  GetRuleEntityProperties(entity: any) {
     return this.http.get(
       `${this.consoleBaseUrl}${this.getRuleEntityProperties}?tableName=${entity}`
     );
@@ -981,6 +995,39 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
   }
   GetAllWing(){
     return this.http.get(this.IdentityBaseUrl + this.getAllWing);
+  }
+  GetPlatorm(){
+    return this.http.get(this.consoleBaseUrl + this.getPlatorm)
+  }
+  GetConsoleEntities(serviceId: any): Observable<any> {
+    const url = `${this.consoleBaseUrl}${this.getConsoleEntities}?serviceId=${serviceId}`;
+    return this.http.post<any>(url, {});
+  }
+  GetConsoleEntityProperties(entityId: any) {
+    const url = `${this.consoleBaseUrl}${this.getConsoleEntityProperties}?entityId=${entityId}`;
+    return this.http.get<any>(url, {});
+  }
+  GetRuleType(){
+    return this.http.get(this.consoleBaseUrl + this.getRuleType)
+  }
+  GetRuleTag(id: any){
+    const url = `${this.consoleBaseUrl}${this.getRuleTag}?id=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  GetServicetree(){
+    return this.http.get(this.consoleBaseUrl + this.getServicetree)
+  }
+  GetTemplateStatus(id: any) {
+    const url = `${this.autoresponderbaseurl}${this.getTemplateStatus}?templateId=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  DeleteTemplate(id: any) {
+    const url = `${this.autoresponderbaseurl}${this.deleteTemplate}?templateId=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  GetRuleStatus(id: any) {
+    const url = `${this.autoresponderbaseurl}${this.getRuleStatus}?Id=${id}`;
+    return this.http.get<any>(url, {});
   }
 }
 

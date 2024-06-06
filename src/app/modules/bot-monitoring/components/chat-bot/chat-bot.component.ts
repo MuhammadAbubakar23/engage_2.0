@@ -44,6 +44,7 @@ export class ChatBotComponent implements OnInit {
     })
   }
   updatevalue(string: any) {
+    
     this.headerService.updateMessage(string)
   }
   viewChatbotDetails(botId: number): void {
@@ -54,7 +55,7 @@ export class ChatBotComponent implements OnInit {
     });
   }
   DeleteChat(botId: any) {
-    debugger
+    
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
       const obj = new FormData();
@@ -108,5 +109,15 @@ export class ChatBotComponent implements OnInit {
     localStorage.setItem('bot_id', value.bot_id)
     this.chatBotIdS.setOption(value.bot_id)
     this.route.navigateByUrl('/bot-monitoring/components')
+  }
+  shareValueStepper(value: any) {
+    localStorage.setItem('bot_id', value.bot_id)
+    this.chatBotIdS.setOption(value.bot_id)
+    this.route.navigateByUrl('/bot-monitoring/chatBot-Rule')
+  }
+  shareValueStory(value: any) {
+    localStorage.setItem('bot_id', value.bot_id)
+    this.chatBotIdS.setOption(value.bot_id)
+    this.route.navigateByUrl('/bot-monitoring/chatBot-Story')
   }
 }

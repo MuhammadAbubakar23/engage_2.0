@@ -101,8 +101,15 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+
+  // testing uiengage company id 657
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  // LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
 
   //for statging / Internal :companyId 650
   // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
@@ -111,8 +118,16 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://conrox.enteract.app/api/',
+  // // for rule
+  faceRoxBaseUrl: 'https://smallreddart56.conveyor.cloud/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  // LinkedInBaseUrl: '',
+  botMoniteringBaseUrl: 'http://3.1.47.150:5000/',
+  flowBot: 'https://flowbot.enteract.app/',
+  intentBot: 'https://intentBot.enteract.app/',
+  autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
+
+
+
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
@@ -186,7 +201,14 @@ export const environment = {
       getAllSkills: 'Skill/GetAll',
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
+      getAllWing: 'Teams/GetAllWing',
 
+      // service Base rules 
+      getEntitiesRules: 'EntityConfigs/GetEntities',
+      getEntitiesProperties: 'EntityConfigs/GetEntitiesProperties',
+      addRule: 'RuleConfigs/Add',
+      getFbRule: 'RuleConfigs/GetAll',
+      softDeleteFb: 'RuleConfigs/Delete',
       // getTagsAll: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
@@ -218,7 +240,19 @@ export const environment = {
       teamGetById: 'Teams/FetchTeamById',
       getTeamType: 'Teams/GetTypes',
       deleteMultipleTeams: 'Teams/DeleteMultiple',
-      getAllWing: 'Teams/GetAllWing',
+      getautoResponedFB: 'Configurations/GetCompanyTemplates',
+      addFbResponed: 'Configurations/CreateTemplate',
+      getCompanyPages: 'ProfileManagement/GetCompanyPages',
+      getActions: 'Configurations/GetAllAction',
+      getPlatform: 'ServicesStructure/GetServices',
+      getConsoleEntities: 'ServicesStructure/GetEntities',
+      getConsoleEntityProperties: 'ServicesStructure/GetEntitiesProperties',
+      getRuleType: 'Tags/GetSupreamTags',
+      getRuleTag: 'Tags/GetTagsBySupreamId',
+      getServicetree: 'ServicesStructure/GetServiceTree',
+      getTemplateStatus: "Configurations/TemplateStatusToggler",
+      deleteTemplate: 'Configurations/DeleteTemplate',
+      getRuleStatus: 'RuleConfigs/UpdateRuleStatus'
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -229,6 +263,20 @@ export const environment = {
       reasons: 'Order/GetMainReasons/',
       GetTicketStatuses: 'Order/GetTicketStatuses',
       subReasons: 'Order/GetSubReasons/',
+    },
+    bot: {
+      getAllChatBot: 'bots/get_all',
+      addBot: 'bots/create',
+      getbyid: 'bots/get',
+      generateAugment: 'generative/augment',
+      addIntend: 'intents/create',
+      getIntents: 'intents/get',
+      getReponse: 'responses/get',
+      addResponse: 'responses/create',
+      intentDelete: 'intents/delete',
+      responseDelete: 'responses/delete',
+      deleteChatBot: 'bots/deactivate',
+      createRule: 'rules/create'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',
@@ -375,7 +423,6 @@ export const environment = {
     },
   },
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

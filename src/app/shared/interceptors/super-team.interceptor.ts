@@ -5,7 +5,7 @@ import { StorageService } from '../services/storage/storage.service';
 
 @Injectable()
 export class SuperTeamInterceptor implements HttpInterceptor {
-  companyId: number = 651;
+  companyId: number = 657;
   baseUrl: string = "";
   constructor(private storage: StorageService) { }
 

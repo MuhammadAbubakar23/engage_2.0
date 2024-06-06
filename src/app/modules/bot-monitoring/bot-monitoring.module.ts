@@ -10,7 +10,8 @@ import { BotMoniteringHeaderComponent } from './monitoring-header/bot-monitering
 import { ConversationHeaderComponent } from './monitoring-header/conversation-header/conversation-header.component';
 import { ComponentsHeaderComponent } from './monitoring-header/components-header/components-header.component';
 import { UploadDownloadHeaderComponent } from './monitoring-header/upload-download-header/upload-download-header.component';
-//  import { BotMoniteringChatComponent } from './components/bot-monitering-chat/bot-monitering-chat.component';
+import { ChatBotStepperHeaderComponent } from './monitoring-header/chat-bot-stepper-header/chat-bot-stepper-header.component';
+import { ChatbotStoryHeaderComponent } from './monitoring-header/chatbot-story-header/chatbot-story-header.component';
 
 
 
@@ -22,8 +23,8 @@ import { UploadDownloadHeaderComponent } from './monitoring-header/upload-downlo
     ConversationHeaderComponent,
     ComponentsHeaderComponent,
     UploadDownloadHeaderComponent,
-    //  BotMoniteringChatComponent,
-
+    ChatBotStepperHeaderComponent,
+    ChatbotStoryHeaderComponent,
   ],
   imports: [
     RouterModule,

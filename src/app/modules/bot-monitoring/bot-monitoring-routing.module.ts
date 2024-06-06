@@ -34,6 +34,14 @@ const routes: Routes = [
         path: 'bot-monitering-chat',
         loadComponent: () => import('./components/bot-monitering-chat/bot-monitering-chat.component').then(c => c.BotMoniteringChatComponent)
       },
+      {
+        path: 'chatBot-Rule',
+        loadComponent: () => import('./components/chat-bot-stepper/chat-bot-stepper.component').then(c => c.ChatBotStepperComponent)
+      },
+      {
+        path: 'chatBot-Story',
+        loadComponent: () => import('./components/chat-bot-story/chat-bot-story.component').then(c => c.ChatBotStoryComponent)
+      },
     ]
   }
 ];

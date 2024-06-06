@@ -226,10 +226,10 @@ autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
 
       // service Base rules 
       getEntitiesRules: 'EntityConfigs/GetEntities',
-      getEntitiesProperties: 'EntityConfig/GetEntitiesProperties',
-      addRule: 'RuleBuilder/Add',
-      getFbRule: 'RuleBuilder/GetAll',
-      softDeleteFb: 'RuleBuilder/Delete',
+      getEntitiesProperties: 'EntityConfigs/GetEntitiesProperties',
+      addRule: 'RuleConfigs/Add',
+      getFbRule: 'RuleConfigs/GetAll',
+      softDeleteFb: 'RuleConfigs/Delete',
       // getTagsAll: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
@@ -266,7 +266,18 @@ autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
       getCompanyPages:'ProfileManagement/GetCompanyPages',
       getProfileDetails:'ProfileManagement/GetProfileInfo?companyId=657', 
       getServices:'ServicesStructure/GetServices',
-      getBotList: 'get_all'
+      getBotList: 'get_all',
+      getActions: 'Configurations/GetAllAction',
+      getPlatform: 'ServicesStructure/GetServices',
+      getConsoleEntities: 'ServicesStructure/GetEntities',
+      getConsoleEntityProperties: 'ServicesStructure/GetEntitiesProperties',
+      getRuleType: 'Tags/GetSupreamTags',
+      getRuleTag: 'Tags/GetTagsBySupreamId',
+      getServicetree: 'ServicesStructure/GetServiceTree',
+      getTemplateStatus: "Configurations/TemplateStatusToggler",
+      deleteTemplate: 'Configurations/DeleteTemplate',
+      getRuleStatus: 'RuleConfigs/UpdateRuleStatus'
+
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -289,7 +300,9 @@ autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
       addResponse: 'responses/create',
       intentDelete: 'intents/delete',
       responseDelete: 'responses/delete',
-      deleteChatBot: 'bots/deactivate'
+      deleteChatBot: 'bots/deactivate',
+      createRule: 'rules/create',
+      createStory:'stories/create'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

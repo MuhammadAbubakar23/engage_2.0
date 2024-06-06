@@ -9,7 +9,7 @@ import { ChatbotIdService } from 'src/app/services/chatBot_idService/chatbot-id.
   templateUrl: './components.component.html',
   styleUrls: ['./components.component.scss'],
   standalone: true,
-  imports: [CommonModule, SharedModule, FormsModule, ReactiveFormsModule, SharedModule],
+  imports: [CommonModule, SharedModule, FormsModule, ReactiveFormsModule],
 })
 export class ComponentsComponent implements OnInit {
   newPhrase: string = '';
@@ -97,7 +97,7 @@ export class ComponentsComponent implements OnInit {
   }
   generateAugments() {
     console.log("this.newPhrase", this.IntendForm.value)
-    debugger
+    
     this.BotId = localStorage.getItem('bot_id')
     const obj = new FormData();
     obj.append('intent', this.IntendForm.value.newPhrase);
