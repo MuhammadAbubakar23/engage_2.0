@@ -27,6 +27,10 @@ export class CommonDataService {
   WhatsappBaseUrl = environment.WhatsappBaseUrl
   faceRoxBaseUrl=environment.faceRoxBaseUrl
   autoresponderbaseurl = environment.autoresponderbaseurl
+  profileBaseUrl = environment.botConfigBaseUrl
+  channelBaseUrl = environment.consoleBaseUrl
+  botsBaseUrl = environment.botsBaseUrl
+  botConfigBaseUrl = environment.botConfigBaseUrl
   // KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
@@ -80,6 +84,7 @@ export class CommonDataService {
   signOut = environment.links.common.signOut;
   getCustomers = environment.links.common.getCustomers;
   updateStatus = environment.links.common.updateStatus;
+  updateBotStatus = environment.links.common.updateBotStatus;
   insertTagOnProfile = environment.links.common.insertTagOnProfile;
   removeTagOnProfile = environment.links.common.removeTagOnProfile;
   hideUnhideMessage = environment.links.common.hideUnhideMessage;
@@ -136,9 +141,13 @@ export class CommonDataService {
   getfortesting = environment.links.scrmReports.getfortesting
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
+  botConfigDetails = environment.links.console.botConfigDetails;
+  updateBotConfigDetail = environment.links.console.UpdateStatus
+  ViewBotConfig = environment.links.console.ViewBotConfig
   addTemplate = environment.links.console.addTemplate;
   updateTemplate = environment.links.console.updateTemplate;
   deleteMessages = environment.links.console.deleteMessages;
+  deleteBotConfig = environment.links.console.deleteBotConfig;
   getQuickReply = environment.links.console.getQuickReply;
   addQuickReply = environment.links.console.addQuickReply;
   updateQuickReply = environment.links.console.updateQuickReply;
@@ -163,6 +172,7 @@ export class CommonDataService {
   getSkills = environment.links.console.getSkills;
   getAllSkills = environment.links.console.getAllSkills;
   addSkill = environment.links.console.addSkill;
+  addBotConfig = environment.links.console.addBotConfig;
   deleteSkill = environment.links.console.deleteSkill;
   getskillbyid = environment.links.console.getSkillsbyId;
   updateSkill = environment.links.console.updateSkill;
@@ -198,7 +208,9 @@ export class CommonDataService {
   getautoResponedFB = environment.links.console.getautoResponedFB
   addFbResponed =environment.links.console.addFbResponed
   getCompanyPages = environment.links.console.getCompanyPages
-
+  getProfileDetails = environment.links.console.getProfileDetails
+  getServices = environment.links.console.getServices
+  botsList = environment.links.console.getBotList
   // teams
   // getAllTeams= environment.links.console.getAllTeams
   // addTeam = environment.links.console.addTeam
@@ -344,12 +356,21 @@ getAutoRespondFB(body: any) {
   const url = this.autoresponderbaseurl + this.getautoResponedFB + '?nativeIdentifier=' + body;
   return this.http.post(url, null); 
 }
+getChannelsList(){
+  return this.http.get(this.channelBaseUrl + this.getServices);
+}
+getBots(){
+  return this.http.get(this.botsBaseUrl + this.botsList)
+}
 AddFbResponed( body: any) {
     return this.http.post(this.autoresponderbaseurl + this.addFbResponed , body);
   }
   GetCompanyPages(){
     return this.http.get(this.autoresponderbaseurl + this.getCompanyPages);
 
+  }
+  GetProfileInfo(){
+    return this.http.get( this.profileBaseUrl + this.getProfileDetails)
   }
   GetFbCommentStats(pageId: any, commentId: any) {
     return this.http.post(
@@ -469,6 +490,9 @@ AddFbResponed( body: any) {
   GetAllMessages(templates: any) {
     return this.http.post(this.consoleBaseUrl + this.getAllMessages, templates);
   }
+  GetBotConfig(url: any, body: any){
+    return this.http.post(url+ this.botConfigDetails, body);
+  }
   Addtemplate(addData: any) {
     return this.http.post(this.consoleBaseUrl + this.addTemplate, addData);
   }
@@ -479,6 +503,14 @@ AddFbResponed( body: any) {
   DeleteMessage(deleteId: string): Observable<any> {
     const url = `${this.consoleBaseUrl}${this.deleteMessages}?Id=${deleteId}`;
     return this.http.get(url);
+  }
+  DeleteBotConfig(pageId: any, Type: any): Observable<any> {
+    const url = `${this.botConfigBaseUrl}${this.deleteBotConfig}?PageId=${pageId}&Type=${Type}`;
+    return this.http.get(url);
+  }
+  UpdateBotStatus(pageId: any, contentType: any, Status: any){
+    const url = `${this.botConfigBaseUrl}${this.updateBotConfigDetail}?PageID=${pageId}&ContentType=${contentType}&status=${Status}`
+    return this.http.post( url,"null")
   }
   GetQuickReply(body: any) {
     return this.http.post(this.consoleBaseUrl + this.getQuickReply, body);
@@ -562,6 +594,13 @@ AddFbResponed( body: any) {
   }
   AddSkill(addSkill: any) {
     return this.http.post(this.consoleBaseUrl + this.addSkill, addSkill);
+  }
+  AddBotConfig(body: any){
+    return this.http.post(this.botConfigBaseUrl + this.addBotConfig, body)
+  }
+  GetBotConfigById(pageId: any, Type: any){
+    const url = `${this.botConfigBaseUrl}${this.ViewBotConfig}?PageID=${pageId}&Type=${Type}`
+    return this.http.get( url )
   }
   // DeleteSkill(delSkill: string): Observable<any> {
   //   const url = `${this.consoleBaseUrl}${this.deleteSkill}?Id=${delSkill}`;

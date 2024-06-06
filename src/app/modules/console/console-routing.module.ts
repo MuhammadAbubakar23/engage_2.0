@@ -27,6 +27,8 @@ import { BulkUploadComponent } from './components/sentiment-analysis/bulk-upload
 import { CreateSentimentComponent } from './components/sentiment-analysis/create-sentiment/create-sentiment.component';
 import { SkillsResolver } from './resolvers/users/skills.resolver';
 import { ContactsComponent } from '../inboxes/right-sidebar-components/contacts/contacts.component';
+import { BotConfigurationComponent } from './components/bot-configuration/bot-configuration.component';
+import { CreateBotConfigurationComponent } from './components/bot-configuration/create-bot-configuration/create-bot-configuration.component';
 
 const routes: Routes = [
   {
@@ -166,6 +168,21 @@ const routes: Routes = [
       {
         path: 'business-hours',
         loadComponent: () => import('./components/business-hours/business-hours.component').then(c => c.BusinessHoursComponent)
+
+      },
+      {
+        path: 'bot-configuration',
+        loadComponent: () => import('./components/bot-configuration/bot-configuration.component').then(c => c.BotConfigurationComponent)
+
+      },
+      {
+        path: 'add-bot-configuration',
+        loadComponent: () => import('./components/bot-configuration/create-bot-configuration/create-bot-configuration.component').then(c => c.CreateBotConfigurationComponent)
+
+      },
+      {
+        path: 'bot-configuration/:type/:id',
+        loadComponent: () => import('./components/bot-configuration/create-bot-configuration/create-bot-configuration.component').then(c => c.CreateBotConfigurationComponent)
 
       },
       {
