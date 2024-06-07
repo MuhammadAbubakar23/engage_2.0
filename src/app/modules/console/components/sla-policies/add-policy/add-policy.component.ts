@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-
 @Component({
   selector: 'app-add-policy',
   templateUrl: './add-policy.component.html',
@@ -12,7 +11,6 @@ export class AddPolicyComponent implements OnInit {
   oprationalHours: any[] = ['hours', 'actions'];
   messageForm: FormGroup;
   policyId: any;
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -45,7 +43,6 @@ export class AddPolicyComponent implements OnInit {
     return this.messageForm.get('slaTargets') as FormArray;
   }
   ngOnInit(): void {
-
     // this.getOperationalHours();
     this.policyId = this.route.snapshot.paramMap.get('id')
     this.getPolicyById(this.policyId)
@@ -84,11 +81,9 @@ export class AddPolicyComponent implements OnInit {
   }
   selectOperationalhours(value: any, index: any) {
     const slaTargets = this.messageForm.get('slaTargets') as FormArray;
-
     if (index >= 0 && index < slaTargets.controls.length) {
       const formGroup = slaTargets.controls[index] as FormGroup;
       // formGroup.patchValue({ oprationHoursId: value });
-
     } else {
       console.error('Invalid index:', index);
     }
@@ -102,7 +97,6 @@ export class AddPolicyComponent implements OnInit {
     // }
     if (this.messageForm.valid) {
       // const template = history.state.template;
-
       if (this.policyId) {
         const updatedTemplate = {
           // ...template,

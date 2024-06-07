@@ -1,11 +1,9 @@
-
 import { SipPhone } from "./SipPhone";
 import { Logger } from "./Logger";
 import { Util } from "./Util";
 import { PhoneDialerService } from '../services/DialerService/phone-dialer.service'
 import { HttpClient } from '@angular/common/http';
 import { environment } from "../environments/environment";
-
 export abstract class Agent
 {
     protected isLoginErrCnt: number = 0;
@@ -42,13 +40,10 @@ export abstract class Agent
     protected allowManualDial: boolean = false;
     protected SIPPHONE!: SipPhone;
     protected inquiryInProgress: boolean = false;
-
     public static AUX: Array<any>;
     public static LAST_CALL_AUX: Array<any>;
     public http!: HttpClient
     public dialerService!: PhoneDialerService;
-
-
     public abstract changeStatus(statusName: string, statusNumber: string, extraHeader?: Array<any>): void;
     public abstract callCompleted(event: any, response: any, cause: any, sessionNum: any, callFailed: any): void;
     public abstract unWrapUp(): void;
@@ -68,7 +63,6 @@ export abstract class Agent
     public abstract chatReply(chatId: number, msg: string, senderName: string): void;
     public abstract chatClose(chatId: number): void;
 	public abstract sendMessage(msg: string): void;
-
     /**
      * Dependign upon current state return availabnle states
      * @returns {*}
@@ -88,7 +82,6 @@ export abstract class Agent
         else if (this.inManual)
         {
             let tempAux: any = {};
-
             for (let dialNum in Agent.AUX)
             {
                 if (dialNum != "*12")
@@ -96,14 +89,12 @@ export abstract class Agent
                     tempAux[dialNum] = Agent.AUX[dialNum];
                 }
             }
-
             tempAux['*3'] = "READY";
             return tempAux;
         }
         else
         {
             let currentState = this.currentStatus.toLowerCase();
-
             if (currentState == 'wrapup')
             {
                 return Agent.LAST_CALL_AUX;
@@ -115,24 +106,19 @@ export abstract class Agent
             else
             {
                 var defaultStatus: any = { '*3': 'READY' };
-
                 if (this.allowManualDial)
                 {
                     defaultStatus["*12"] = 'Manual Dial';
                 }
-
                 return defaultStatus;
             }
         }
     }
-
-
     public rejectIncoming()
     {
         this.SIPPHONE.endCall(this.SIPPHONE.incomingSession);
         this.isIncoming = false;
     }
-
     public answerIncoming()
     {
         //if (this.isIncoming)
@@ -141,7 +127,6 @@ export abstract class Agent
             this.SIPPHONE.answerIncoming();
         }
     }
-
     /**
      Call is coming need to answer
      */
@@ -152,10 +137,8 @@ export abstract class Agent
         let callerId = data[0];
         let dnis = data[5].split("@")[0];
         let queue = data[2];
-
         this.isIncoming = true;
     }
-
     /**
      * Incoming Call
      * @param event
@@ -165,7 +148,6 @@ export abstract class Agent
     {
         let caller = session.remoteIdentity.uri.user;
         let data = caller.split("_");
-
         this.callDetail = {};
         this.callDetail['queue'] = data[2];
         this.callDetail['dnis'] = data[5].split("@")[0];
@@ -174,18 +156,15 @@ export abstract class Agent
         this.callDetail['call_id'] = data[1];
         this.callDetail['selected_option'] = data[3];
     }
-
     public muteAll()
     {
         this.mute(1);
         this.mute(2);
     }
-
     public isMuteAll() : boolean
     {
         let m1: boolean = this.SIPPHONE.isMute(1);
         let m2: boolean = this.SIPPHONE.isMute(2);
-
         //if both calls are active
         if (this.SIPPHONE.session1 != null && this.SIPPHONE.session2 != null)
         {
@@ -193,26 +172,20 @@ export abstract class Agent
             {
                 return true;
             }
-
             return false;
         }
-
         //if line one is acitve
         else if (this.SIPPHONE.session1 != null && this.SIPPHONE.session2 == null)
         {
             return m1;
         }
-
         //if line two is acitve
         else if (this.SIPPHONE.session1 == null && this.SIPPHONE.session2 != null)
         {
             return m2;
         }
-
         return false;
-
     }
-
     /**
      *
      * @param callNum
@@ -221,7 +194,6 @@ export abstract class Agent
     {
         if (this.inCall)
         {
-
             if ((
                 (callNum && callNum == 1) || typeof callNum === "undefined"
             ) && this.SIPPHONE.session1)
@@ -229,7 +201,6 @@ export abstract class Agent
                 this.SIPPHONE.mute(1);
                 Logger.AddToStatusLogList('|Mute call| Agent ID:' + this.extension + '|On Line: 1');
             }
-
             if ((
                 (callNum && callNum == 2) || typeof callNum === "undefined"
             ) && this.SIPPHONE.session2)
@@ -239,14 +210,11 @@ export abstract class Agent
             }
         }
     }
-
-
     public unmuteAll()
     {
         this.unmute(1);
         this.unmute(2);
     }
-
     /**
      *
      * @param callNum
@@ -255,7 +223,6 @@ export abstract class Agent
     {
         if (this.inCall)
         {
-
             if ((
                 (callNum && callNum == 1) || typeof callNum === "undefined"
             ) && this.SIPPHONE.session1)
@@ -263,7 +230,6 @@ export abstract class Agent
                 this.SIPPHONE.unmute(1);
                 Logger.AddToStatusLogList('|UnMute call| Agent ID:' + this.extension + '|On Line: 1');
             }
-
             if ((
                 (callNum && callNum == 2) || typeof callNum === "undefined"
             ) && this.SIPPHONE.session2)
@@ -273,7 +239,6 @@ export abstract class Agent
             }
         }
     }
-
     /**
      *
      * @param callNum
@@ -291,11 +256,8 @@ export abstract class Agent
             {
                 this.SIPPHONE.session1.hold();
                 Logger.AddToStatusLogList('|Hold call| Agent ID:' + this.extension + '|On Line: 1');
-
-
                 this.dialerService.updateEvent('holdSuccess',[this.SIPPHONE.session1]);
                 // $(document).trigger('holdSuccess', [this.SIPPHONE.session1]);
-
                 this.dialerService.eventDispatcher(environment.server_url, params).subscribe({
                   next:(data:any) =>{
                     Logger.AddToStatusLogList('|HOLD URL| Agent ID:' + this.extension + "|Response:" + data);
@@ -306,7 +268,6 @@ export abstract class Agent
                 //     Logger.AddToStatusLogList('|HOLD URL| Agent ID:' + self.extension + "|Response:" + data);
                 // });
             }
-
             if ((
                 (callNum && callNum == 2) || typeof callNum === "undefined"
             ) && this.SIPPHONE.session2 && this.SIPPHONE.session2.localHold == false)
@@ -314,24 +275,19 @@ export abstract class Agent
                 Logger.AddToStatusLogList('|Hold call| Agent ID:' + this.extension + '|On Line: 2');
                 this.SIPPHONE.session2.hold();
                 this.dialerService.updateEvent('holdSuccess',[this.SIPPHONE.session2]);
-
                 // $(document).trigger('holdSuccess', [this.SIPPHONE.session2]);
-
                 this.dialerService.eventDispatcher(environment.server_url, params).subscribe({
                   next:(data:any) =>{
                     Logger.AddToStatusLogList('|HOLD URL| Agent ID:' + this.extension + "|Response:" + data);
                   }
                 });
-
                 // $.get(environment.server_url + '/event/dispatch?type=hold', function (data: any)
                 // {
                 //     Logger.AddToStatusLogList('|HOLD URL| Agent ID:' + this.extension + "|Response:" + data);
                 // });
             }
-
         }
     }
-
     public unHold(callNum: number, holdType?: string)
     {
       let params = {
@@ -340,7 +296,6 @@ export abstract class Agent
         if (this.inCall)
         {
             let isUnhold: boolean = false;
-
             if ((
                 (callNum && callNum == 1) || typeof callNum === "undefined"
             ) && this.SIPPHONE.session1 && this.SIPPHONE.session1.localHold == true)
@@ -349,35 +304,27 @@ export abstract class Agent
                 this.SIPPHONE.holdedSession = this.SIPPHONE.session1;
                 this.SIPPHONE.session1.unhold();
                 this.dialerService.updateEvent('unHoldSuccess',[this.SIPPHONE.session1]);
-
                 // $(document).trigger('unHoldSuccess', [this.SIPPHONE.session1]);
                 isUnhold = true;
-
             }
-
             if ((
                 (callNum && callNum == 2) || typeof callNum === "undefined"
             ) && this.SIPPHONE.session2 && this.SIPPHONE.session2.localHold == true)
             {
                 Logger.AddToStatusLogList('|UnHold call| Agent ID:' + this.extension + '|On Line: 2');
-
                 this.SIPPHONE.holdedSession = this.SIPPHONE.session2;
                 this.SIPPHONE.session2.unhold();
                 this.dialerService.updateEvent('unHoldSuccess',[this.SIPPHONE.session2]);
-
                 // $(document).trigger('unHoldSuccess', [this.SIPPHONE.session2]);
                 isUnhold = true;
             }
-
             if(isUnhold)
             {
                 let callState: string = 'CONNECT';
-
                 if (this.inManual)
                 {
                     callState = 'MCONNECT';
                 }
-
                 this.dialerService.eventDispatcher(environment.server_url, params).subscribe({
                   next:(data:any) =>{
                     Logger.AddToStatusLogList('|UnHOLD URL| Agent ID:' + this.extension + "|Response:" + data);
@@ -390,43 +337,34 @@ export abstract class Agent
             }
         }
     }
-
     /**
      *
      * @param callNum
      */
     public hangup(callNum?: number)
     {
-
         if ((
             (callNum && callNum == 1) || typeof callNum === "undefined"
         ) && this.SIPPHONE.session1
-
         )
         {
             this.SIPPHONE.endCall(this.SIPPHONE.session1);
-
             if (this.SIPPHONE.session2)
             {
                 this.SIPPHONE.setupRemoteMedia(this.SIPPHONE.session2);
             }
         }
-
         if ((
             (callNum && callNum == 2) || typeof callNum === "undefined"
         ) && this.SIPPHONE.session2)
         {
-
             this.SIPPHONE.endCall(this.SIPPHONE.session2);
-
             if (this.SIPPHONE.session1)
             {
                 this.SIPPHONE.setupRemoteMedia(this.SIPPHONE.session1);
             }
         }
-
     }
-
     /**
      *
      * @param lastCallNum
@@ -437,7 +375,6 @@ export abstract class Agent
         this.lastCallName = lastCallName;
         this.lastCallNumber = lastCallNum;
     }
-
     /**
      *
      * @param skills
@@ -446,7 +383,6 @@ export abstract class Agent
     {
         this.skills = skills;
     }
-
     /**
      *
      * @param number
@@ -462,12 +398,9 @@ export abstract class Agent
                 alert("Please unhold before blind transfer");
                 return;
             }
-
-
             if (toNumber)
             {
                 //number = $("#blind_transfer_number").val();
-
                 if (number.length == 4 || number.length == 5)
                 {
                     number = "00" + number;
@@ -478,20 +411,15 @@ export abstract class Agent
                     number = this.callDetail.lead_id + "_" + number + "_" + skillId;
                 }
             }
-
-
             if (number != '')
             {
                 let referto = "sip:" + number + "@" + this.SIPPHONE.sipServer + ":5060";
                 // let referto = "sip:" + number + "@iptdevagent.ibexglobal.com:5060";
-
                 this.SIPPHONE.session1.refer(referto);
-
                 Logger.AddToStatusLogList('|Transfer call| Agent ID:' + this.extension);
             }
         }
     }
-
     /**
      * Dial number for att transfer
      */
@@ -500,38 +428,30 @@ export abstract class Agent
         //if agent is in call and not previous att dialed
         if (this.inCall && this.attDialed == false)
         {
-
             if (toNumber &&
                 (numDial.length == 4 || numDial.length == 5)
             )
             {
                 numDial = "00" + numDial;
             }
-
             if (numDial)
             {
                 this.attNum = numDial;
                 this.hold(1);
-
                 //Logger.AddToStatusLogList('|Hold call| Agent ID:' + this.extension + '|On Line: 1');
-
                 if (numDial.length >= 10 || toNumber)
                 {
                     if (numDial.length >= 10)
                     {
                         numDial = this.callDetail.lead_id + "_" + numDial + "_" + skillId;
                     }
-
                 }
-
                 this.attDialed = true;
                 let extraHeaders = ['transfertype: att'];
                 this.SIPPHONE.dialNum(numDial, extraHeaders);
             }
         }
-
     }
-
     /**
      * ATT transfer call hangup
      */
@@ -539,17 +459,14 @@ export abstract class Agent
     {
         if (this.inCall)
         {
-
             if (this.SIPPHONE.session2 && this.SIPPHONE.session2.endTime == null)
             {
                 this.unHold(1);
                 this.hangup(2);
                 Logger.AddToStatusLogList('|Call Completed| Agent ID:' + this.extension + '|On Line: 2');
             }
-
         }
     }
-
     /**
      * @todo: toNumber not required any more
      * @param toNumber
@@ -562,7 +479,6 @@ export abstract class Agent
         {
             this.hold(1);
             this.hold(2);
-
             let callType = 'Inbound';
             let callId = this.callDetail.call_id;
             let params = {
@@ -571,7 +487,6 @@ export abstract class Agent
               caller_id:  this.callDetail.caller_id,
               call_type:  callType,
             }
-
             if (this.inManual || this.inBusy || this.inWrapup)
             {
                 callType = 'Outbound';
@@ -586,13 +501,10 @@ export abstract class Agent
             // {
             //     Logger.AddToStatusLogList('|Transfer URL| Agent ID:' + this.extension + "|Response:" + data);
             // });
-
             this.SIPPHONE.session2.refer(this.SIPPHONE.session1);
-
             Logger.AddToStatusLogList('|Transfer call| Agent ID:' + this.extension);
         }
     }
-
     /**
      *
      * @param toNumber
@@ -607,7 +519,6 @@ export abstract class Agent
                 this.hold(1);
                 Logger.AddToStatusLogList('| Hold call | Agent ID:' + this.extension + '| On Line: 1');
             }
-
             if (toNumber)
             {
                 if (numDial.length == 4 || numDial.length == 5)
@@ -619,28 +530,21 @@ export abstract class Agent
                     numDial = this.callDetail.lead_id + "_" + numDial + "_" + skillId;
                 }
             }
-
             this.SIPPHONE.dialNum(numDial, extraHeaders, true);
             this.inConf = true;
             this.confBridgeImediate = false;
             //this.confBridgeImediate = confBridgeImediate;
-
             Logger.AddToStatusLogList('| Calling | Agent ID:' + this.extension + '| On Line: 2');
-
-
         }
     }
-
     public bridgeCalls()
     {
         return this.SIPPHONE.bridgeCalls(false);
     }
-
     public splitCalls()
     {
         this.SIPPHONE.splitCalls();
     }
-
     /**
      * Conference is started
      */
@@ -650,10 +554,8 @@ export abstract class Agent
         {
             this.confStarted = true;
         }
-
         this.unHold(1, 'conf');
     }*/
-
     /**
      *
      */
@@ -661,17 +563,12 @@ export abstract class Agent
     {
         if (this.inConf)
         {
-
             this.hangup(2);
             Logger.AddToStatusLogList('| Hang Up | Agent ID:' + this.extension + '| On Line: 2');
-
             this.unHold(1);
             Logger.AddToStatusLogList('| Call established(unHold) | Agent ID:' + this.extension + '| On Line: 1');
-
         }
     }
-
-
     /***
      * Return true if agent is in break
      */
@@ -682,20 +579,13 @@ export abstract class Agent
         {
             return true;
         }
-
         let currentState = this.currentStatus.toLowerCase();
-
         if (this.inWrapup || currentState == 'ready' || this.inCall)
         {
             return false;
         }
-
         return true;
     }
-
-
-
-
     /**
      * Dial a manual number
      */
@@ -707,31 +597,23 @@ export abstract class Agent
             "SKILL: " + skillName,
             "LeadID: " + leadId,
             "timeid: " + manualNum + "-" + Util.currentTime("")];
-
             this.callDetail = {};
             this.callDetail['queue'] = skillName;
             this.callDetail['dnis'] = "";
             this.callDetail['lead_id'] = leadId;
             this.callDetail['caller_id'] = manualNum;
             this.callDetail['selected_option'] = "";
-
             //unixTime = Math.round((new Date()).getTime() / 1000);
-
             let dialNum = manualTime + "-" + leadId + "_" + manualNum + "_" + skillId;
-
             if (manualNum.length == 4 || manualNum.length == 5) {
                 dialNum = "00" + manualNum;
-
             }
-
             if (this.inBusy) {
                 dialNum = dialNum + "_chat";
             }
-
             this.SIPPHONE.dialNum(dialNum, headers, false, true);
         }
     }*/
-
     /**
      * WIll be called in case of manual dial
      * @param event
@@ -745,22 +627,16 @@ export abstract class Agent
             this.inCall = true;
             this.currentStatus = "IN CALL";
             this.dialerService.updateEvent('IB_callConnected',[this.callDetail,'']);
-
             // $(document).trigger('IB_callConnected', [this.callDetail, '']);
             //xdmPhoneSocket.inboundCall(this.callDetail, '');
             this.dialerService.updateEvent('statusChanged',[this.currentStatus,'']);
-
             // $(document).trigger('statusChanged', [this.currentStatus, true]);
         }
-
-
         if ((this.inManual || this.inBusy || this.inWrapup) && this.changeStatusInProgress == false)
         {
-
             this.inCall = true;
             this.currentStatus = "IN CALL";
             let caller = "";
-
             if (session.remoteURI)
             {
                 caller = session.remoteURI.user;
@@ -771,29 +647,20 @@ export abstract class Agent
             }
             this.dialerService.updateEvent('statusChanged', [this.currentStatus, true]);
             this.dialerService.updateEvent('OB_callConnected', [this.callDetail, '']);
-
             // $(document).trigger('statusChanged', [this.currentStatus, true]);
             // $(document).trigger('OB_callConnected', [this.callDetail, '']);
         }
-
-
         if (this.attDialed)
         {
           this.dialerService.updateEvent('att_callConnected', []);
-
             // $(document).trigger('att_callConnected', []);
         }
-
         if (this.inConf)
         {
           this.dialerService.updateEvent('att_callConnected', []);
-
             // $(document).trigger('conf_callConnected', []);
         }
-
     }
-
-
     /**
      *
      * @param callNum
@@ -803,34 +670,28 @@ export abstract class Agent
         if (this.inCall)
         {
             dtmfVal = dtmfVal.toString();
-
             if (this.attDialed || this.inConf)
             {
                 callNum = 2;
             }
-
             if (dtmfVal.length <= 0)
             {
                 return;
             }
-
             if ((
                 (callNum && callNum == 1) || typeof callNum === "undefined"
             ) && this.SIPPHONE.session1)
             {
-
                 for (let i = 0; i < dtmfVal.length; i++)
                 {
                     Logger.AddToStatusLogList('|DTMF| Agent ID:' + this.extension + '|On Line: 1');
                     this.SIPPHONE.session1.dtmf(dtmfVal[i]);
                 }
             }
-
             if ((
                 (callNum && callNum == 2) || typeof callNum === "undefined"
             ) && this.SIPPHONE.session2)
             {
-
                 for (let i = 0; i < dtmfVal.length; i++)
                 {
                     Logger.AddToStatusLogList('|DTMF| Agent ID:' + this.extension + '|On Line: 2');
@@ -839,7 +700,6 @@ export abstract class Agent
             }
         }
     }
-
     /**
      *
      * @returns {null}
@@ -848,7 +708,6 @@ export abstract class Agent
     {
         return this.currentStatus;
     }
-
     /**
      *
      *
@@ -861,68 +720,54 @@ export abstract class Agent
         this.chatInit = true;
         let extraHeaders = ['NC_ID: ' + chatId, 'NC_SKILL: ' + chatSkill, 'NC_START_TIME: ' + chatStart,
         ];
-
         this.changeStatus("BUSY", "*50", extraHeaders);
         //SIPPHONE.dialNum('*50', extraHeaders);
     }
-
     public toggle(toggleMode: any)
     {
         if (this.inCall)
         {
             var holdCallNum = 0;
             var unHoldCallNum = 0;
-
             if (this.SIPPHONE.session1 && this.SIPPHONE.session1.localHold == false &&
                 this.SIPPHONE.session2 && this.SIPPHONE.session2.localHold == true)
             {
                 holdCallNum = 1;
                 unHoldCallNum = 2;
             }
-
-
             if (this.SIPPHONE.session1 && this.SIPPHONE.session1.localHold == true &&
                 this.SIPPHONE.session2 && this.SIPPHONE.session2.localHold == false)
             {
                 holdCallNum = 2;
                 unHoldCallNum = 1;
             }
-
             if (holdCallNum > 0 && unHoldCallNum > 0)
             {
                 this.hold(holdCallNum, toggleMode);
                 this.unHold(unHoldCallNum, toggleMode);
             }
-
         }
     }
-
-
     public isHold(lineNum: number): boolean
     {
         let ret: boolean = false;
-
         if (this.inCall)
         {
             let session: any = null;
-
             switch (lineNum)
             {
                 case 1:
                     session = this.SIPPHONE.session1;
                     break;
-
                 case 2:
                     session = this.SIPPHONE.session2;
                     break;
             }
-
             if (session && session.localHold == true)
             {
                 ret = true;
             }
         }
-
         return ret;
     }
 }

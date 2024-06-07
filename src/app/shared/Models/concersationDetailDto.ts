@@ -2,7 +2,6 @@ export class conversationDetailDto {
   TotalCount: number = 0;
   List: listDto = new listDto();
 }
-
 export class listDto {
   platform: string = '';
   company: companyDto = new companyDto();
@@ -10,30 +9,25 @@ export class listDto {
   post: postDto = new postDto();
   comments: commentsDto = new commentsDto();
 }
-
 export class companyDto {
   id: number = 0;
   name: string = '';
 }
-
 export class userDto {
   userId: string = '';
   userName: string = '';
   profilePic: string = '';
 }
-
 export class attachmentsDto {
   mediaType: string = '';
   description: string = '';
   attachmentUrl: string = '';
 }
-
 export class profileDto {
   profile_Id: string = '';
   page_Id: string = '';
   page_Name: string = '';
 }
-
 export class postDto {
   id: number = 0;
   postId: string = '';
@@ -44,7 +38,6 @@ export class postDto {
   profile: profileDto = new profileDto();
   postStats : postStatsDto = new postStatsDto();
 }
-
 export class postStatsDto {
   likes: number = 0;
   comments: number = 0;
@@ -64,11 +57,8 @@ export class reactioinsListDto {
   cARE: number = 0;
   totalReactionsDateValue: string = '';
 }
-
 export class repliesDto {}
-
 export class tagsDto {}
-
 // export class commentsDto {
 //   id?: number = 0;
 //   postId?: string = '';
@@ -89,7 +79,6 @@ export class tagsDto {}
 //   sentiment?: string = '';
 //   tags?: tagsDto = [];
 // }
-
 export class commentsDto {
   id: number=0;
   wings?: string="";
@@ -124,7 +113,6 @@ export class commentsDto {
   dispositions?: any
   signalRGroupName?: any
 }
-
 export class Sentiment {
   platform: string="";
   name: string="";
@@ -134,7 +122,6 @@ export class Sentiment {
   createdByName: any
   wings: string="";
 }
-
 export class messagesDto {
   id: number = 0;
   msgId?: string = '';

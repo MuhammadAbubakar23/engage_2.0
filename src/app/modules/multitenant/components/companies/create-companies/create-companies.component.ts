@@ -10,8 +10,6 @@ import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 //import { AutoUnsubscribe } from 'src/app/shared/services/decorator/auto-unsubscribe';
 import { CompaniesService } from '../../../services/companies.service';
-
-
 // import { AddCompaniesMembersComponent } from '../add-companies-members/add-companies-members.component'; AddCompaniesMembersComponent,
 // import { CompaniesService } from '../companies.service';
 /// @AutoUnsubscribe
@@ -24,12 +22,10 @@ import { CompaniesService } from '../../../services/companies.service';
 })
 export class CreateCompaniesComponent implements OnInit, OnDestroy {
   onDestroy$: Subject<void> = new Subject();
-
   permissionlistselectall:string = "Privileges";
   accesslistselectall:string = "Privileges";
   propertieslistselectall:string = "Privileges";
   isActive=false;
-  
   companiesForm : UntypedFormGroup = new UntypedFormGroup({
     id: new UntypedFormControl(),
     normalizedName: new UntypedFormControl(),
@@ -38,11 +34,9 @@ export class CreateCompaniesComponent implements OnInit, OnDestroy {
     acesses: this.formbuilder.array([]),
     permissions: this.formbuilder.array([]),
     properties: this.formbuilder.array([]),
-      
     // businesshours : new UntypedFormControl(),
     // supportchannelhour : new UntypedFormControl(),
     // supportchannelcompanies : new UntypedFormControl(),
-    
   });
   identity:number=0;
   submitted = false;
@@ -54,26 +48,21 @@ export class CreateCompaniesComponent implements OnInit, OnDestroy {
   CompaniesNPropertiesChecked:MenuModel[]=[];
   CompaniesNAccessesChecked:Array<any>=[];
   CompaniesNPermissionsChecked:Array<any>=[];
-
   constructor(private headerService: HeaderService, 
     private _Activatedroute:ActivatedRoute, 
     private formbuilder : UntypedFormBuilder, 
     private companiesservice:CompaniesService) { }
-    
   ngOnDestroy(): void {
     // throw new Error('Method not implemented.');
     this.onDestroy$.next();
     this.onDestroy$.complete();
   }
-
   ngOnInit(): void {
     this.CompaniesNPermissions = this._Activatedroute.snapshot.data["companiesroles"];
     this.CompaniesNAccesses = this._Activatedroute.snapshot.data["companiesteams"];
     this.CompaniesNProperties = this._Activatedroute.snapshot.data["companiesprops"];
     this.Companies = this._Activatedroute.snapshot.data["companies"];
-    
     // this.CompaniesNAccessesPermissions = [...this.CompaniesNAccesses, ...this.CompaniesNPermissions];
-   
     this._Activatedroute.paramMap.subscribe(paramMap => { 
       this.identity = Number(paramMap.get('id'));      
     });
@@ -102,14 +91,11 @@ export class CreateCompaniesComponent implements OnInit, OnDestroy {
     //     teamId:[],
     //   //  teams:"",
     //   //  userId:[],//null0000void//null0000void
-       
     //   }
     //   this.setform(form);
     // }
-
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
-    
     this.companiesForm = this.formbuilder.group({
       id: [this.identity],
       normalizedName: [this.Companies?.normalizedName],
@@ -121,10 +107,8 @@ export class CreateCompaniesComponent implements OnInit, OnDestroy {
       // businesshours:['', [Validators.required]],
       // supportchannelhour:['', [Validators.required]],
       // supportchannelcompanies:['', [Validators.required]]
-      
     })
   }
-
   onSubmit() : void {
     let _self = this;
     const acesses: FormArray = this.companiesForm.get('acesses') as FormArray;
@@ -132,23 +116,19 @@ export class CreateCompaniesComponent implements OnInit, OnDestroy {
     this.CompaniesNAccessesChecked.forEach(function (jsonval:any) {
       acesses.push(new FormControl(jsonval));
     });
-
     const permissions: FormArray = this.companiesForm.get('permissions') as FormArray;
     while (permissions.length !== 0)  permissions.removeAt(0);
     this.CompaniesNPermissionsChecked.forEach(function (jsonval:any) {
       permissions.push(new FormControl(jsonval));
     });
-
     const properties: FormArray = this.companiesForm.get('properties') as FormArray;
     while (properties.length !== 0)  permissions.removeAt(0);
     this.CompaniesNPropertiesChecked.forEach(function (jsonval:any) {
       acesses.push(new FormControl(jsonval)); //properties.push(new FormControl(jsonval));
     });
-    
     // if (this.companiesForm.invalid) {
     //  // return;
     // }
-    
     let controllerRoute = "TeamProperties";
     this.companiesservice.save(controllerRoute, this.companiesForm.value)
         .pipe(takeUntil(this.onDestroy$))
@@ -226,5 +206,4 @@ export class CreateCompaniesComponent implements OnInit, OnDestroy {
       });
     }
   }
-  
 }

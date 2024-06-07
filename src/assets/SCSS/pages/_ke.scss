@@ -6,9 +6,7 @@
   border: 1px solid #FFC6C6;
   border-radius: 16px;
   .thankslogo{
-
   }
- 
   .submitbtn{
     @include gradient((6deg, #fa8e6f, #f6428b));
     border-color: #f6428b;
@@ -18,7 +16,6 @@
     &:hover{
       @include gradient((45deg, #fa8e6f, #f6428b));
     }
-    
   }
   .surveybtns{
     .btn{
@@ -35,7 +32,6 @@
     }
   }
 }
-
 .leftactive .inbox-container .tab-content .query-container .table tr .textdiv {
   max-width: 320px;
 }
@@ -47,17 +43,14 @@
 .msgTypingField .input-group .form-control::-webkit-scrollbar {
   width: 6px;
 }
-
 /* Track */
 .msgTypingField .input-group .form-control::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
-
 /* Handle */
 .msgTypingField .input-group .form-control::-webkit-scrollbar-thumb {
   background: #c4c4c4;
 }
-
 /* Handle on hover */
 .msgTypingField .input-group .form-control::-webkit-scrollbar-thumb:hover {
   background: #9c9c9c;
@@ -67,11 +60,8 @@
     position: absolute;
     right: 0;
     top: 30px;
-
   }
-
 }
-
 .Guides__container {
   display: grid;
   grid-template-columns: repeat(6,1fr);

@@ -16,7 +16,6 @@
                             <div href="javascript:;" class="breadcrumbs">Ticket Information</div>
                         </button>
                     </div>
-
                     <!-- <div class="icons-list">
                         <div class="searchbar-click">
                             <form class="searchbox">
@@ -30,22 +29,18 @@
                 </nav>
             </header>
             <form [formGroup]="createTicketForm" (submit)="createTicket()">
-
                 <div class="rightbar-scroll-wrap" data-scrollbar="true" tabindex="-1"
                     style="overflow-y: auto; outline: none;">
                     <div class="scroll-content">
                         <div class="tab-content" id="nav-tabContent">
-
                             <div id="app-social1-tab" class="tab-pane fade active show" role="tabpanel"
                                 aria-labelledby="app-files">
-
                                 <div class="list-group-section pe-3 pb-4">
                                     <div class="bg-light p-3 mb-3">
                                         <div class="form-floating">
                                             <select class="form-select" id="floatingSelect"
                                                 (change)="getMainReasons($event)" formControlName="ticketType"
                                                 aria-label="No conference">
-
                                                 <option *ngFor="let reason of Information" [value]="reason.name"
                                                     selected="">
                                                     {{reason.name}}</option>
@@ -73,7 +68,6 @@
                                                         aria-label="No conference" formControlName="subReasonName">
                                                         <option *ngFor="let SubresonName of SubReasons"
                                                             [value]="SubresonName.name" selected="">
-
                                                             {{SubresonName.name}}
                                                         </option>
                                                     </select>
@@ -152,16 +146,9 @@
                                             formControlName="resolutionComments" rows="10"></textarea>
                                         <label for="first-name">Issue Detail </label>
                                     </div>
-
-
-
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
                 </div>
                 <footer class="footer">
@@ -180,7 +167,6 @@
                     </div>
                 </footer>
             </form>
-
         </div>
     </div>
 </nav>
@@ -190,10 +176,8 @@
         <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
             <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
             <div class="toast-btn d-flex align-items-center">
-
                 <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
                     (click)="closeToaster()"><i class="fal fa-times"></i></button>
-
             </div>
         </div>
     </div>

@@ -7,7 +7,6 @@ import { MenuModel } from 'src/app/layouts/engage2/menu-state/menu.model';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { RolesAndPermissionsService } from '../roles-and-permissions.service';
-
 @Component({
   selector: 'app-create-roles',
   standalone:true,
@@ -26,17 +25,13 @@ export class CreateRolesComponent implements OnInit {
     acesses: this.formbuilder.array([]),
     permissions: this.formbuilder.array([]),
     properties: this.formbuilder.array([]),
-    
   });
   idnetity:number=0;
   submitted = false;
   RolesNPermissionsChecked:Array<any>=[];
   constructor(private location: Location, private headerService: HeaderService, private _Activatedroute:ActivatedRoute, private formbuilder : UntypedFormBuilder, private roleService : RolesAndPermissionsService, private router: Router) { }
-
   ngOnInit(): void {
     this.RolesNPermission = this._Activatedroute.snapshot.data["rolesnpermission"];
-
-
     this.roleForm = this.formbuilder.group({
       name: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
       description: ['',[Validators.required]],     
@@ -44,7 +39,6 @@ export class CreateRolesComponent implements OnInit {
       // businesshours:['', [Validators.required]],
       // supportchannelhour:['', [Validators.required]],
       // supportchannelteam:['', [Validators.required]]
-      
     })
   }
   onSubmit() : void {
@@ -63,15 +57,12 @@ export class CreateRolesComponent implements OnInit {
     this.roleService.save(controllerRoute, this.roleForm.value).subscribe({ 
       next: (res:any) => {
         this.router.navigate(['/console/roles-permissions']);
-
       },
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;
         // this.showError = true;
       }
     });
-    
-    
   }
   setMenuList(menuData:any){
     let _self = this;

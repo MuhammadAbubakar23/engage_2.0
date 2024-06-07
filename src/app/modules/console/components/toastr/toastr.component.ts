@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-
 @Component({
   selector: 'app-toastr',
   templateUrl: './toastr.component.html',
@@ -10,10 +9,8 @@ export class ToastrComponent implements OnInit {
   @Input() isToaster: boolean = false;
   toastermessage = false;
   constructor() { }
-
   ngOnInit(): void {
   }
-
   closeToaster() {
     this.toastermessage = false;
   }

@@ -12,19 +12,15 @@
                       type="button" role="tab" aria-controls="connect" aria-selected="false">
                       <h6>Connect Channel</h6>
                     </button>
-                   
                   </div>
                 </nav>
               </header>
               <div class="tab-body">
                 <div class="tab-content" id="nav-tabContent">
-  
                   <div id="connect" class="tab-pane fade active show" role="tabpanel" aria-labelledby="user-tab">
                     <div class="row">
                       <div class="col-lg-12">
                         <div class="team-detail-form-box mb-5">
-  
-  
                           <div class="floating-item mb-4">
                             <div [ngClass]="{'was-validated' : connectForm.get('name')!.valid && connectForm.get('name')!.touched}"
                               class="form-floating mb-2">
@@ -42,7 +38,6 @@
                                 </div>
                               </div>
                               <div class="valid-feedback" *ngIf="connectForm.get('name')!.valid && connectForm.get('name')!.touched">
-                          
                                 Looks Good!
                               </div>
                             </div>
@@ -66,13 +61,10 @@
                                 <!-- <div *ngIf="connectForm.get('status')!.errors?.['required']">
                                                       status is required!
                                                     </div> -->
-                          
                               </div>
                               <div class="valid-feedback" *ngIf="connectForm.get('status')!.valid && connectForm.get('status')!.touched">
-                          
                                 Looks Good!
                               </div>
-                          
                             </div>
                           </div>
                           <div class="floating-item mb-4">
@@ -83,7 +75,6 @@
                           connectForm.get('websiteurl')!.dirty))}" class="form-control" id="websiteurl"
                                 formControlName="websiteurl" placeholder="Enter Website URL">
                               <label for="websiteurl">Website URL</label>
-  
                               <div class="invalid-feedback" *ngIf="(connectForm.get('websiteurl')!.errors && (connectForm.get('websiteurl')!.touched ||
                                                                                       connectForm.get('websiteurl')!.dirty))">
                                 <div *ngIf="connectForm.get('websiteurl')!.errors?.['required']">
@@ -92,7 +83,6 @@
                               </div>
                               <div class="valid-feedback"
                                 *ngIf="connectForm.get('websiteurl')!.valid && connectForm.get('websiteurl')!.touched">
-  
                                 Looks Good!
                               </div>
                             </div>
@@ -110,11 +100,9 @@
                                 <div *ngIf="connectForm.get('numberofseats')!.errors?.['required']">
                                   Number of Seats are required!
                                 </div>
-  
                               </div>
                               <div class="valid-feedback"
                                 *ngIf="connectForm.get('numberofseats')!.valid && connectForm.get('numberofseats')!.touched">
-  
                                 Looks Good!
                               </div>
                             </div>
@@ -136,7 +124,6 @@
                               </div>
                               <div class="valid-feedback"
                                 *ngIf="connectForm.get('business')!.valid && connectForm.get('business')!.touched">
-  
                                 Looks Good!
                               </div>
                             </div>
@@ -158,21 +145,17 @@
                               </div>
                               <div class="valid-feedback"
                                 *ngIf="connectForm.get('information')!.valid && connectForm.get('information')!.touched">
-  
                                 Looks Good!
                               </div>
                             </div>
                           </div>
-                          
                         </div>
-                       
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-  
           </div>
         </div>
         <footer class="footer">
@@ -180,15 +163,12 @@
             <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
               <div class="row w-100">
                 <div class="col-md-4">
-  
-  
                 </div>
                 <div class="col-md-8 justify-content-end d-flex">
                   <div class="buttons-wrap d-flex">
                     <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4" data-bs-toggle="modal"
                       data-bs-target="">Cancel </button>
                     <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"></button>
-  
                     <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn">Next</button>
                   </div>
                 </div>
@@ -198,9 +178,7 @@
         </footer>
       </div>
     </form>
-  
   </div>
-  
   <!-- <div [class.show]="isShow==true" class="offcanvas offcanvas-end" tabindex="-1" id="manageSkill"
     aria-labelledby="offcanvasRightLabel" aria-modal="true" role="dialog" style="visibility: visible;">
     <div class="offcanvas-header align-items-center saltBg">
@@ -242,7 +220,6 @@
                       <label class="form-check-label checkbox-txt" for="flexCheckDefault">
                         Technical Support
                       </label>
-  
                     </li>
                     <li class="list-group-item checkbox-tick">
                       <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
@@ -280,7 +257,6 @@
                       <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
                       <label class="checkbox-txt" for="select-skill-10"> Product Support</label>
                     </li>
-  
                     <li class="list-group-item checkbox-tick">
                       <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
                       <label class="checkbox-txt" for="select-skill-11"> Online Order</label>
@@ -300,7 +276,6 @@
                     style="height: 491px; transform: translate3d(0px, 0px, 0px);"></div>
                 </div>
               </div>
-  
             </div>
           </div>
           <div class="col-lg-6">
@@ -374,5 +349,4 @@
         </div>
       </div>
     </div>
-  
   </div> -->

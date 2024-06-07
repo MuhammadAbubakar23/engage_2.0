@@ -7,80 +7,85 @@ import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-pan
 import { ChangeDetectorRef } from '@angular/core';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
+import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 @Component({
   selector: 'inbox-header',
   templateUrl: './inbox-header.component.html',
-  styleUrls: ['./inbox-header.component.scss']
+  styleUrls: ['./inbox-header.component.scss'],
 })
 export class InboxHeaderComponent implements OnInit {
-
-  flag:string='';
+  flag: string = '';
   followUpCount: number = 0;
-  inboxHeader:any[]=[];
-  constructor(private stor: StorageService,
+  inboxHeader: any[] = [];
+  filterDto = new FiltersDto();
+  pageNumber: number = 1;
+  pageSize: number = 500;
+  UnResponded: number = 0;
+  AlterMsg: any;
+  toastermessage: any;
+  skillSlugUrl:string='';
+  skillSlug:any[]=[]
+  constructor(
+    private stor: StorageService,
     private commonService: CommonDataService,
-    private reviceTotalCountServices:ClosePanelService,
-    private cd:ChangeDetectorRef,
+    private reviceTotalCountServices: ClosePanelService,
+    private cd: ChangeDetectorRef,
     private _route: Router,
     private getWing: GetWingsService,
-    private getRulesGroupIdsService : RulesGroupIdsService) { }
-
+    private route: Router,
+    private skillSlugService: SkillslugService
+  ) {}
   ngOnInit(): void {
-
     this.flag = this._route.url.split('/')[2];
+    this.skillSlugUrl = this.route.url.split('/')[3];
+    if (this.skillSlugUrl === 'all') {
+      this.skillSlug = [];
+    } else {
+      this.skillSlug = this.skillSlugService.skillSlug;
+    }
     // this.getAllConversationCount();
-  this.reviceTotalCountServices.reciveTaotalCounts().subscribe((res:any)=>{
-
-    this.followUpCount=res
-  })
+    this.reviceTotalCountServices.reciveTaotalCounts().subscribe((res: any) => {
+      this.followUpCount = res;
+    });
     const headerMenu = this.stor.retrive('Tags', 'O').local;
-      headerMenu.forEach((item:any) => {
-        if(item.name == "Engage Header"){
-          
-          item.subTags.forEach((singleInboxHeaderMenu:any) => {
-
-            if(!this.inboxHeader.includes(singleInboxHeaderMenu)){
-            this.inboxHeader.push(singleInboxHeaderMenu)
-            }
-          });
-        }
-      });
-      this.getFollowUpCount();
-    }
-  
-    getFollowUpCount(){
-      
-      let obj = {
-        agentId: 0,
-        user: "",
-        postId: "",
-        profile_Page_Email: "string",
-        plateForm: "string",
-        fromDate: "2023-01-01T09:29:55.197Z",
-        toDate: "2024-01-01T09:29:55.197Z",
-        isAttachment: true,
-        queryType: "string",
-        flag: "string",
-        text: "string",
-        notInclude: "string",
-        userName: "string",
-        include: "string",
-        pageNumber: 0,
-        pageSize: 0,
-        wings: this.getWing.wings,
-        // skillSlug: this.getRulesGroupIdsService.rulesGroupIds,
+    headerMenu.forEach((item: any) => {
+      if (item.name == 'Engage Header') {
+        item.subTags.forEach((singleInboxHeaderMenu: any) => {
+          if (!this.inboxHeader.includes(singleInboxHeaderMenu)) {
+            this.inboxHeader.push(singleInboxHeaderMenu);
+          }
+        });
       }
-      this.commonService.GetFollowUpCount(obj).subscribe((res:any)=>{
-        this.followUpCount = res
-      })
-    }
-
-  filterDto = new FiltersDto();
-  pageNumber:number=1;
-  pageSize:number=500;
-  UnResponded:number=0;
-
-  getAllConversationCount(){
+    });
+    this.getFollowUpCount();
+  }
+  getFollowUpCount() {
+    this.filterDto = {
+      fromDate: null,
+      toDate: null,
+      user: '',
+      pageId: '',
+      plateForm: '',
+      pageNumber: 1,
+      pageSize: 30,
+      isAttachment: false,
+      hasBlueTick: false,
+      queryType: '',
+      text: '',
+      include: '',
+      userName: '',
+      notInclude: '',
+      flag: '',
+      wings: '',
+      skills: [],
+    };
+    this.commonService
+      .GetFollowUpCount(this.filterDto)
+      .subscribe((res: any) => {
+        this.followUpCount = res;
+      });
+  }
+  getAllConversationCount() {
     this.filterDto = {
       // fromDate : new Date(),
       // toDate : new Date(),
@@ -89,7 +94,7 @@ export class InboxHeaderComponent implements OnInit {
       plateForm: '',
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
-      hasBlueTick:false,
+      hasBlueTick: false,
       isAttachment: false,
       queryType: '',
       text: '',
@@ -97,20 +102,17 @@ export class InboxHeaderComponent implements OnInit {
       notInclude: '',
       include: '',
       flag: '',
-      wings:'',
-      skills:[]
+      wings: '',
+      skills: [],
     };
-    this.commonService.GetConversationList(this.filterDto).subscribe((res:any)=>{
-      
-      this.UnResponded = res.TotalCount
-    });
-    
+    this.commonService
+      .GetConversationList(this.filterDto)
+      .subscribe((res: any) => {
+        this.UnResponded = res.TotalCount;
+      });
   }
-
   update(menuLink: any) {
- 
     this.flag = this._route.url.split('/')[2];
-
     if (
       localStorage.getItem('assignedProfile') == null ||
       localStorage.getItem('assignedProfile') == '' ||
@@ -118,14 +120,10 @@ export class InboxHeaderComponent implements OnInit {
     ) {
       this._route.navigateByUrl('/' + menuLink);
     } else {
-      this.reloadComponent('querryAssigned')
-    } 
-    this.cd.detectChanges()
+      this.reloadComponent('querryAssigned');
+    }
+    this.cd.detectChanges();
   }
-
-  AlterMsg:any;
-  toastermessage:any;
-  
   reloadComponent(type: any) {
     if (type == 'querryAssigned') {
       this.AlterMsg = 'Please Complete Querry First!';

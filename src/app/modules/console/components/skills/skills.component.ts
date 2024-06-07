@@ -38,23 +38,16 @@ export class SkillsComponent implements OnInit {
     private commonData: CommonDataService,
     private route: Router,
     private spinnerServerice: NgxSpinnerService) { }
-
   ngOnInit(): void {
-
     this.getSkillList()
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
     this.skills.forEach((x) => {
       this.isSelectedDepartment = x.department
-
       this.isDepartmentArray.push(this.isSelectedDepartment)
     });
-
-
-
   }
   updatevalue(string: any) {
-
     this.headerService.updateMessage(string);
   }
   getReadableWingName(wingSlug: string): string {
@@ -73,17 +66,14 @@ export class SkillsComponent implements OnInit {
   }
   getSkillList() {
     let obj = {
-
       search: this.search,
       sorting: "",
       pageNumber: this.pageNumber,
       pageSize: this.itemsPerPage,
-
     }
     this.spinnerServerice.show()
     this.commonData.GetAllSkills(obj).subscribe((res: any) => {
       this.spinnerServerice.hide()
-
       this.skills = res.Skills
       this.TotalCount = res.TotalCount;
       if (this.pageNumber == 1) {
@@ -98,12 +88,9 @@ export class SkillsComponent implements OnInit {
         this.endingPoint = this.startingPoint + this.itemsPerPage - 1;
       }
     })
-
   }
   skills: any[] = [];
-
   // skills: any[] = [
-
   //   { id: 1, teams: "vw", userid: 333, department: "Information technology" },
   //   { id: 2, teams: "special Projects", userid: 3434, department: "Sales" },
   //   { id: 3, teams: "Corporte Team", userid: 3422, department: "Account,Support" },
@@ -111,7 +98,6 @@ export class SkillsComponent implements OnInit {
   //   { id: 5, teams: "PK Sport", userid: 9988, department: "All" },
   //   { id: 6, teams: "HR Management", userid: 9988, department: "All" },
   //   { id: 7, teams: "IT Managment", userid: 9908, department: "IT Managemnet" },
-
   // ]
   isSelected(id: number) {
     return this.selectedIds.indexOf(id) >= 0;
@@ -130,8 +116,6 @@ export class SkillsComponent implements OnInit {
     // Check if all checkboxes are selected
     this.allSelected = this.selectedIds.length === this.skills.length;
   }
-
-
   isSectedAll() {
     this.allSelected = !this.allSelected;
     this.isChecked = !this.isChecked;
@@ -155,28 +139,21 @@ export class SkillsComponent implements OnInit {
     this.selectedIds = [];
   }
   isDecsendingorder: boolean = false
-
   isDeccsendingsort: string = ''
-
   sortedBy(data: string) {
-
     this.isDecsendingorder = !this.isDecsendingorder
     this.skills.sort((a: any, b: any) => {
       if (a[data] < b[data]) {
-
         return this.isDecsendingorder ? 1 : -1;
       }
       if (a[data] > b[data]) {
-
         return this.isDecsendingorder ? -1 : 1;
       }
       return 0
     })
   }
   deleted(id: number) {
-
     this.selectedIds.push(id)
-
     this.commonData.DeleteSkill(this.selectedIds).subscribe(
       (res: any) => {
         this.skills = this.skills.filter((x) => x.id !== id);
@@ -185,15 +162,11 @@ export class SkillsComponent implements OnInit {
         console.error('Delete error:', error);
       }
     );
-
     this.toastermessage = true;
-
     setTimeout(() => {
       this.toastermessage = false;
     }, 2000);
   }
-
-
   checkout: any = ''
   totalPages: any;
   pageNumber = 1;
@@ -208,7 +181,6 @@ export class SkillsComponent implements OnInit {
       this.getSkillList();
     }
   }
-
   closeToaster() {
     this.toastermessage = false
   }
@@ -234,7 +206,6 @@ export class SkillsComponent implements OnInit {
   totaluser: string = '';
   tottalDepartment: string = ''
   username: string = '';
-
   handOnclick(name: any, totaluser: any, dep: any) {
     let data = {
       "TeamNAme": this.username = name,
@@ -246,5 +217,4 @@ export class SkillsComponent implements OnInit {
   editUser(id: any) {
     this.route.navigateByUrl(`/console/skills/create/${id}`);
   }
-
 }

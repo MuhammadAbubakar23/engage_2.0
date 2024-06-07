@@ -125,16 +125,13 @@
           top:-5px;
         }
       }
-
       li {
         &.active {
           background-color: rgb(240, 237, 237);
            border-color:#1DA1F3;
-
           &::after {
             content: normal;
           }
-          
         }
         &:hover{
           background-color: #e9ecef;
@@ -142,18 +139,15 @@
         &:hover{
           background-color: #f8f9fa;
         }
-
         a {
           color: $darkblue;
         }
       }
     }
-
     &.list-group-followup{
       .list-group-item {
         border-bottom: none;
       }
     }
   }
-  
 }

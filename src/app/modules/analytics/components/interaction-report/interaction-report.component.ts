@@ -14,7 +14,6 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 // @ts-ignore
 import * as html2pdf from 'html2pdf.js';
 import { SharedModule } from '../../../../shared/shared.module';
-
 @Component({
   standalone: true,
   selector: 'app-interaction-report',
@@ -80,7 +79,6 @@ export class InteractionReportComponent implements OnInit {
   totalAgents = [{ id: '', name: '', isSelected: false }];
   totalAgentsEmail = [{ email: '', name: '', isSelected: false }];
   activeChannel:any
-
   AgentIds: any[] = [];
   selectedTagBy: string = '';
   constructor(
@@ -90,16 +88,13 @@ export class InteractionReportComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private datePipe: DatePipe
   ) {}
-
   ngOnInit(): void {
     this.activeChannel=window.location.origin
     this.baseUrl = window.location.pathname.split('/');
-   
     const newObj = {
       title: 'Interaction Report',
       url: '/analytics/interaction-report',
     };
-
     this._hS.setHeader(newObj);
     this.currentDate = new Date();
     // this.maxEndDate = this.currentDate.toISOString().split('T')[0];
@@ -109,10 +104,8 @@ export class InteractionReportComponent implements OnInit {
     this.getListUser();
     this.GetAllChannels()
     // charts
-   
     // this.pieChart()
   }
-
    platformIconMapping :any= {
       Facebook: 'fa-brands fa-facebook fs-4 navy',
       Twitter: 'fa-brands fa-twitter fs-4 sky',
@@ -126,9 +119,6 @@ export class InteractionReportComponent implements OnInit {
       PlayStore: 'fa-brands fa-google-play fs-4 googleplaycolor',
       OfficeEmail: 'fa-light fa-envelope  fs-4 navy ',
     };
-  
-
-  
   formatFirstResponseTime(timeString: string): string {
     if (!timeString) {
       return '';
@@ -143,7 +133,6 @@ export class InteractionReportComponent implements OnInit {
     const seconds = this.padZero(date.getSeconds());
     return `${hours}:${minutes}:${seconds}`;
   }
-
   padZero(num: number): string {
     return num < 10 ? '0' + num : num.toString();
   }
@@ -171,7 +160,6 @@ export class InteractionReportComponent implements OnInit {
       ) {
         totalSeconds += this.timeToSeconds(agent[field]);
       }
-
       agentPerformance = agentPerformance.filter((item: any) => {
         return (
           item.averageTime !== '00:00:00' && item.maximumTime !== '00:00:00'
@@ -181,12 +169,10 @@ export class InteractionReportComponent implements OnInit {
     const averageSeconds = totalSeconds / agentPerformance.length;
     return this.secondsToTime(averageSeconds);
   }
-
   timeToSeconds(timeStr: string): number {
     const [hours, minutes, seconds] = timeStr.split(':').map(Number);
     return hours * 3600 + minutes * 60 + seconds;
   }
-
   secondsToTime(seconds: number): string {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -195,7 +181,6 @@ export class InteractionReportComponent implements OnInit {
       remainingSeconds
     )}`;
   }
-
   pad(num: number): string {
     return num < 10 ? '0' + num : num.toString();
   }
@@ -211,17 +196,13 @@ export class InteractionReportComponent implements OnInit {
   }
   selectedChannel: any[]=[];
   toggleChannelSelection(channel:any) {
-    
     const index = this.selectedChannel.findIndex((x:any)=>x == channel.name)
     if(index != -1){
       this.selectedChannel.splice(index,1)
     }
     else{
-
       this.selectedChannel.push(channel.name)
-
     }   
- 
   }
   mouseClickReset() {
     this.searchText = '';
@@ -240,7 +221,6 @@ export class InteractionReportComponent implements OnInit {
       }
     );
   }
-
   selectedAgents() {
     let selectedTagByArray = this.totalAgents.filter((item) => item.isSelected).map((item) => item.id);
     this.selectedTagBy = selectedTagByArray.toString();
@@ -252,14 +232,12 @@ export class InteractionReportComponent implements OnInit {
       endDateTime.setHours(23, 59, 59);
       this.endDate =
         this.datePipe.transform(endDateTime, 'yyyy-MM-ddTHH:mm:ss') || '';
-
       const prevDate = new Date(today);
       prevDate.setDate(today.getDate() - 6);
       prevDate.setHours(0, 0, 0);
       this.startDate =
         this.datePipe.transform(prevDate, 'yyyy-MM-ddTHH:mm:ss') || '';
     }
-
     // const startDateObj = new Date(this.startDate);
     // const endDateObj = new Date(this.endDate);
     // const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
@@ -306,16 +284,12 @@ export class InteractionReportComponent implements OnInit {
     this.channelCountsArray = [];
     this.allDates = [];
     this.newArray = [];
-
     this.commonData.GetInteractionReport(formData).subscribe((res: any) => {
       this.SpinnerService.hide();
       this.getAllCSATData();
-
       this.interactionStats = res;
       this.data = res.agentPerformance;
-
       this.socialMediaData = res.plateFormWiseInteraction;
-
       this.socialMediaData.forEach((x: any) => {
         this.inProgressCount += x.unRespondedCount;
         this.assignToMeCount += x.assignTomeCount;
@@ -333,7 +307,6 @@ export class InteractionReportComponent implements OnInit {
       this.averageResponseData = Math.abs(
         (this.completedCount / this.totalInteractionCount) * 100
       );
-
       this.previousSocialMediaData = res.previousPlateFormWiseInteraction;
       this.previousSocialMediaData.forEach((y: any) => {
         this.previousInprogressCount += y.unRespondedCount;
@@ -345,13 +318,11 @@ export class InteractionReportComponent implements OnInit {
         this.previousInprogressCount +
         this.previousAssigntoMeCount +
         this.previousFollowUpCount;
-
       this.preAveragePercentage =
         ((this.averageResponseRateSum - this.PreviousTotalInteractionCount) /
           this.PreviousTotalInteractionCount) *
         100;
       // current time sum
-
       this.finalAverage = this.calculateAverageTime(
         this.interactionStats.agentPerformance,
         'averageTime'
@@ -377,9 +348,7 @@ export class InteractionReportComponent implements OnInit {
         this.interactionStats.previousAgentPerformance,
         'maximumTime'
       );
-
       // averageTime average for increase and decrease
-
       let finalAverageInSeconds = this.convertTimeToSeconds(this.finalAverage);
       let LastfinalAverageInSeconds = this.convertTimeToSeconds(
         this.LastfinalAverage
@@ -398,7 +367,6 @@ export class InteractionReportComponent implements OnInit {
             100
         );
       }
-
       // min cater time average percentage
       let finalMinCater = this.convertTimeToSeconds(this.finalAverageMinimum);
       let LastfinalMinCater = this.convertTimeToSeconds(this.LastfinalAverage);
@@ -412,7 +380,6 @@ export class InteractionReportComponent implements OnInit {
           ((finalMinCater - LastfinalMinCater) / LastfinalMinCater) * 100
         );
       }
-
       let finalMaxCater = this.convertTimeToSeconds(this.finalAverageMaximum);
       let LastfinalMaxCater = this.convertTimeToSeconds(
         this.LastfinalAverageMaximum
@@ -427,8 +394,6 @@ export class InteractionReportComponent implements OnInit {
           ((finalMaxCater - LastfinalMaxCater) / LastfinalMaxCater) * 100
         );
       }
-
-
       // this.finalAverageFirstResponse = this.calculateAverageTime(this.interactionStats.agentPerformance, 'firstResponseTime');
       this.newArray = []; 
       this.interactionData = res.dateWiseInteraction;
@@ -454,7 +419,6 @@ export class InteractionReportComponent implements OnInit {
           type: 'line',
           data: this.newArray, // Use newArray for each platform
         });
-       
       });
       this.interactionByDate();
       // this.interactionData = res.dateWiseInteraction;
@@ -467,7 +431,6 @@ export class InteractionReportComponent implements OnInit {
       //     if (!this.allDates.includes(date)) {
       //       this.allDates.push(date);
       //     }
-
       //     let sentimentCounts: { [key: string]: number } = {};
       //     sentimentCounts = interaction.count;
       //     this.newArray.push(sentimentCounts);
@@ -480,10 +443,8 @@ export class InteractionReportComponent implements OnInit {
       //         data: this.newArray,
       //       });
       //     }
-
       //     //           this.newArray.push(interaction.count)
       //     //
-
       //     //           this.channelCountsArray.push({
       //     //             name: this._legend.toString(),
       //     //             type: 'line',
@@ -503,14 +464,12 @@ export class InteractionReportComponent implements OnInit {
         this.interactionStats.sentimentData.find(
           (data: any) => data.name === 'neutral'
         )?.count || 0;
-  
     });
     this.getAgentsTeamList();
   }
   resetStartDate() {
     this.endDate = '';
   }
-
   agentCount: number = 0;
   // formatNumber(value: number): string {
   //   if (value === null || value === undefined) {
@@ -582,10 +541,8 @@ export class InteractionReportComponent implements OnInit {
           );
           this. fillterdata= this.csatArray.filter((item:any)=>item.value!==0)
         }
-
         this.getCSATGraph();
       },
-
       (error) => {
         this.SpinnerService.hide();
       }
@@ -595,7 +552,6 @@ export class InteractionReportComponent implements OnInit {
     var chartDom = document.getElementById('interactions');
     this.interactionchart = echarts.init(chartDom);
     var option;
-
     option = {
       // title: {
       //   text: 'Stacked Line'
@@ -629,16 +585,12 @@ export class InteractionReportComponent implements OnInit {
       },
       series: this.sentimentDataPoints,
     };
-
     option && this.interactionchart.setOption(option,true);
-
   }
-
   getCSATGraph() {
     var chartDom = document.getElementById('piechart');
     this.CSATGraph = echarts.init(chartDom);
     var option;
-
     option = {
       tooltip: {
         trigger: 'item',
@@ -671,7 +623,6 @@ export class InteractionReportComponent implements OnInit {
         },
       ],
     };
-
     option && this.CSATGraph.setOption(option);
   }
   channelOptions:any
@@ -776,7 +727,6 @@ export class InteractionReportComponent implements OnInit {
         },
       ];
     }
-
     if(this.activeChannel=='https://bzengage.enteract.live'){
             this.channelOptions=[
               {
@@ -804,9 +754,7 @@ export class InteractionReportComponent implements OnInit {
       ]
     }
   }
- 
   isDownloading: boolean = false;
-
   downloadPdf() {
     this.isDownloading = true;
     const element = document.getElementById('dashboardContent');
@@ -817,7 +765,6 @@ export class InteractionReportComponent implements OnInit {
       html2canvas: { scale: 3 },
       jsPDF: { unit: 'in', format: 'Tabloid', orientation: 'landscape' },
     };
-
     html2pdf().set(options).from(element).save();
     this.isDownloading = false;
   }
@@ -827,7 +774,6 @@ export class InteractionReportComponent implements OnInit {
       if (this.interactionchart) {
         this.interactionchart.resize();
       }
-
       if (this.CSATGraph) {
         this.CSATGraph.resize();
       }

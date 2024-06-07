@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as echarts from 'echarts';
-
 @Component({
   selector: 'app-echarts-testing',
   templateUrl: './echarts-testing.component.html',
@@ -11,14 +10,11 @@ import * as echarts from 'echarts';
 })
 export class EchartsTestingComponent implements OnInit {
   constructor() {}
-
   ngOnInit(): void {
     type EChartsOption = echarts.EChartsOption;
-
     var chartDom = document.getElementById('main')!;
     var myChart = echarts.init(chartDom);
     var option: EChartsOption;
-
     option = {
       color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
       title: {
@@ -201,7 +197,6 @@ export class EchartsTestingComponent implements OnInit {
         },
       ],
     };
-
     option && myChart.setOption(option);
   }
 }

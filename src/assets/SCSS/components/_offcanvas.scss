@@ -22,11 +22,9 @@
                     margin: 0;
                 }
                 .accordion-button {
-                   
                     &:not(.collapsed){
                         &:after{
                             background-image: url(/2.0/images/minus.svg);
-
                         }
                     }
                     &:after{
@@ -42,7 +40,6 @@
                     .list-group{
                         .list-group-item{
                             padding: 0.9rem 1rem 0.9rem 2.5rem;
-
                             &.qrItem{
                                 transition: 0.5s;
                                 i{
@@ -62,9 +59,7 @@
                     }
                 }
             }
-            
         }
-
         .card-header{
             display: flex;
             align-items: center !important;
@@ -117,9 +112,6 @@
                     }
                 }
             }
-            
         }
     }
 }
-
-

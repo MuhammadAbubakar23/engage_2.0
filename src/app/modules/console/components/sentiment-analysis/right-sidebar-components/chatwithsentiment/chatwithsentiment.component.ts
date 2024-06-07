@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Message } from 'src/app/modules/console/services/bot.service';
 import { SentimentService } from 'src/app/modules/console/services/sentiment.service';
-
 @Component({
   selector: 'app-chatwithsentiment',
   templateUrl: './chatwithsentiment.component.html',
@@ -14,15 +13,12 @@ export class ChatwithsentimentComponent implements OnInit {
   expired: boolean = false;
   text: string='';
   senchatForm = new FormGroup({
-
     text: new FormControl(''),
   });
   langchatForm = new FormGroup({
-
     text: new FormControl(''),
   });
   constructor(private senService: SentimentService) {
-
    }
    ngOnInit() {
     this.senService.senconversation.subscribe((val:any) => {
@@ -31,9 +27,7 @@ export class ChatwithsentimentComponent implements OnInit {
   this.senService.langconversation.subscribe((val:any) => {
     this.languages = this.languages.concat(val);
   });
-
 }
-
    getSentiment() {
     this.senService.getSentimentApi(this.senchatForm.value.text!).subscribe((result:any) => {
       const botMessage = new Message('bot',result);
@@ -48,7 +42,6 @@ export class ChatwithsentimentComponent implements OnInit {
       this.langchatForm.reset();
      });
    }
-
 //32a4676fbd167365fd7a117cc8616c1c8c64b370
   //  trainModel():void{
   //   this.senService.trainApi().subscribe((result:any) => {
@@ -56,6 +49,5 @@ export class ChatwithsentimentComponent implements OnInit {
   //     },(error:any) => {
   //      alert("Error!");
   //    });
-
   //  }
 }

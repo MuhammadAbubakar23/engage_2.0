@@ -11,7 +11,6 @@
                             Bot Interaction
                         </button>
                     </div>
-
                 </nav>
             </header>
             <div class="tab-pane fade show active mt-3" id="post" role="tabpanel" aria-labelledby="post-tab" style="overflow: auto; height: 600px; overflow-x: hidden
@@ -27,7 +26,6 @@
                                     <div class="d-flex msg-user-info">
                                         <div class="d-flex align-items-center">
                                             <h6 class="card-title mint m-0">{{ message?.customer?.name }}</h6>
-
                                             <p class="card-text ms-3"><small class="silver">{{message?.createdDate |
                                                     date:'hh:mm:ss a'}}</small></p>
                                         </div>
@@ -36,14 +34,12 @@
                                                 data-bs-toggle="dropdown" aria-expanded="false">
                                                 <small>Completed</small>
                                             </button>
-
                                         </div>
                                     </div>
                                     <div class="tags">
                                         <span>{{ message?.customer?.phone }}</span>
                                     </div>
                                     <p class="card-textnignt p-0">{{ message?.message }}</p>
-
                                 </div>
                             </div>
                         </div>

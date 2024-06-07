@@ -38,14 +38,12 @@ import { SharedService } from 'src/app/services/SharedService/shared.service';
 // import { UsersComponent } from './components/users/users.component';
 // import { ConnectFormComponent } from './components/connect-form/connect-form.component';
 // import { HomeComponent } from './components/home/home.component';
-
 @Component({
   selector: 'app-console',
   templateUrl: './console.component.html',
   styleUrls: ['./console.component.scss']
 })
 export class ConsoleComponent implements OnInit {
-
   // @ViewChild('container', {
   //   read: ViewContainerRef,
   // })
@@ -60,7 +58,6 @@ export class ConsoleComponent implements OnInit {
     private sharedService: SharedService
   ) {
     // console.clear();    
-
   // router.events.subscribe((event: Event) => {
   //     if (event instanceof NavigationStart) {
   //       // console.clear();
@@ -115,9 +112,7 @@ export class ConsoleComponent implements OnInit {
   //       // * Scroll: When the user scrolls.
   //     }
   //   });
-  
   }
-
   ngOnInit(): void {
     if(this.router.url === '/console'){
       this.menu$ = this.store.select(getEmargingNotEqual("role_left_menu")).subscribe((item:any) => {
@@ -138,16 +133,12 @@ export class ConsoleComponent implements OnInit {
     // });
   }
   onChange() {}
-
   ngAfterViewInit() {
     //this.target.clear();
     //this.loadComponent(this.componentName);   
   }
-
   loadComponent(leftSideName: string) {
-    
     let componentFactory = null;
-
     // switch (leftSideName) {
     //   case 'home':
     //     componentFactory = this.resolver.resolveComponentFactory(HomeComponent);
@@ -180,7 +171,6 @@ export class ConsoleComponent implements OnInit {
     //       this.resolver.resolveComponentFactory(TeamsComponent);
     //     this.target.createComponent(componentFactory);
     //     break;
-
     //   case 'teams:create-team':
     //     componentFactory =
     //       this.resolver.resolveComponentFactory(CreateTeamComponent);
@@ -202,7 +192,6 @@ export class ConsoleComponent implements OnInit {
     //       this.resolver.resolveComponentFactory(TemplatesComponent);
     //     this.target.createComponent(componentFactory);
     //     break;
-
     //   case 'messages-template':
     //     componentFactory =
     //       this.resolver.resolveComponentFactory(MessagesComponent);
@@ -214,7 +203,6 @@ export class ConsoleComponent implements OnInit {
     //     );
     //     this.target.createComponent(componentFactory);
     //     break;
-
     //   case 'signatures-template':
     //     componentFactory =
     //       this.resolver.resolveComponentFactory(SignaturesComponent);
@@ -247,7 +235,6 @@ export class ConsoleComponent implements OnInit {
     //     );
     //     this.target.createComponent(componentFactory);
     //     break;
-
     //   case 'rolesAndPermissions:add-roles':
     //     componentFactory =
     //       this.resolver.resolveComponentFactory(AddRolesComponent);
@@ -258,7 +245,6 @@ export class ConsoleComponent implements OnInit {
     //       this.resolver.resolveComponentFactory(SkillsComponent);
     //     this.target.createComponent(componentFactory);
     //     break;
-
     //   case 'slaPolicies':
     //     componentFactory =
     //       this.resolver.resolveComponentFactory(SlaPoliciesComponent);
@@ -298,7 +284,6 @@ export class ConsoleComponent implements OnInit {
     //     );
     //     this.target.createComponent(componentFactory);
     //     break;
-
     //   case 'console-documents:document-details':
     //     componentFactory = this.resolver.resolveComponentFactory(
     //       DocumentDetailsComponent
@@ -326,17 +311,14 @@ export class ConsoleComponent implements OnInit {
     //       this.resolver.resolveComponentFactory(ConsoleHelpComponent);
     //     this.target.createComponent(componentFactory);
     //     break;
-   
     //   case 'connect-form':
     //     componentFactory =
     //       this.resolver.resolveComponentFactory(ConnectFormComponent);
     //     this.target.createComponent(componentFactory);
     //     break;
-      
     //   default:
     //     componentFactory = null;
     //     break;
     // }
   }
-
 }

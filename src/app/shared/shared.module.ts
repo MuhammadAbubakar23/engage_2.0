@@ -19,8 +19,6 @@ import { PairsPipe } from './CustomPipes/pairs.pipe';
 import { InitialLettersPipe } from './CustomPipes/initial-letters.pipe';
 import { BreaklinePipe } from './CustomPipes/replacelineBreaks/breakline.pipe';
 import { GifFilterPipe } from './CustomPipes/gifFilter.pipe';
-
-
 @NgModule({
   declarations: [
     SortPipe,
@@ -38,10 +36,8 @@ import { GifFilterPipe } from './CustomPipes/gifFilter.pipe';
     InitialLettersPipe,
     BreaklinePipe
     // TableResponsiveComponent
-
   ],
   imports: [
-
     CommonModule,
     RouterModule,
     ReactiveFormsModule,

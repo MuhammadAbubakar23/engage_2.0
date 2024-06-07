@@ -9,7 +9,6 @@ export class DispositionFormDto {
     skillSlug:string="";
     tab:string="";
   }
-
   export class CompletedDataDto {
     user: string = '';
     plateFrom: string = '';

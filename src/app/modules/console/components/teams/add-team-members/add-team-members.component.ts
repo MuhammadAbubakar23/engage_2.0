@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 @Component({
   selector: 'app-add-team-members',
   standalone:true,
@@ -7,10 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-team-members.component.scss']
 })
 export class AddTeamMembersComponent implements OnInit {
-
   constructor() { }
-
   ngOnInit(): void {
   }
-
 }

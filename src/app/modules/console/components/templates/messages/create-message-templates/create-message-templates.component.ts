@@ -12,14 +12,10 @@ export class CreateMessageTemplatesComponent implements OnInit {
   templateName!: string;
   subject!: string;
   editorContent!: string;
-
   editorConfig = {
     // Add any desired configuration options here
   };
-
-
   constructor(private formBuilder: FormBuilder, private commonService: CommonDataService, private router: Router) { }
-
   ngOnInit(): void {
     this.messageForm = this.formBuilder.group({
       templateName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
@@ -27,14 +23,12 @@ export class CreateMessageTemplatesComponent implements OnInit {
       message: ['', Validators.required],
       templateType:['']
     });
-  
     const template = history.state.template; // Get the template value from the state
     if (template) {
       // Update the form values with the selected template
       this.templateName = template.templateName;
       this.subject = template.subject;
       this.editorContent = template.message;
-  
       // You can also set other form fields if needed
       this.messageForm.patchValue({
         templateName: this.templateName,
@@ -48,13 +42,11 @@ export class CreateMessageTemplatesComponent implements OnInit {
       this.editorContent = '';
     }
   }
-  
   saveForm() {
     if (this.messageForm.valid) {
       this.messageForm.patchValue({
         templateType: "Message"
       });
-
       const template = history.state.template; // Get the template value from the state
       if (template) {
         const updatedTemplate = {
@@ -63,7 +55,6 @@ export class CreateMessageTemplatesComponent implements OnInit {
           subject: this.messageForm.value.subject,
           message: this.messageForm.value.message
         };
-
         this.commonService.UpdateTemplate(updatedTemplate.id, updatedTemplate).subscribe(
           (response: any) => {
             // Handle the successful response after updating the template
@@ -90,8 +81,6 @@ export class CreateMessageTemplatesComponent implements OnInit {
       // Handle form validation errors
     }
   }
-
-
   cancelForm(): void {
     // Redirect to the main page without resetting the form
     this.router.navigate(['/console/templates/message']);

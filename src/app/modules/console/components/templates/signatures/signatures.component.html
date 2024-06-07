@@ -5,7 +5,6 @@
   </ngx-spinner>
   <div class="scroll-content">
     <div class="wider-container pt-3">
-
       <div class="searchBar-wrapper mb-2 p-0">
         <div class="row">
           <div class="col-lg-4">
@@ -38,7 +37,6 @@
                 <i class="fal fa-search silver"></i>
               </button>
               <input [(ngModel)]="searchText" placeholder="Search" class="me-1"  (input)="applySearchFilter()">
-
             </a>
             <a (click)="updatevalue('consoleCreateSignatureTemplatesHeader')"
               [routerLink]="['/console/templates/createSignatures']" class="ms-2">
@@ -50,7 +48,6 @@
           </div>
         </div>
       </div>
-
       <div class="table-section">
         <table class="table mb-5 align-middle" *ngIf="signatures && signatures.length > 0">
           <thead>
@@ -116,7 +113,6 @@
                   </ul>
                 </nav>
               </td>
-        
               <td>
                 <div class="tags-per-page d-flex align-items-center justify-content-end mt-3 mb-3 coal">
                   Per page
@@ -144,7 +140,6 @@
         </table>
         <div *ngIf="!signatures || signatures.length === 0">No messages found.</div>
       </div>
-
     </div>
   </div>
   <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">

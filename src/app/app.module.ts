@@ -16,9 +16,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { LayoutsModule } from './layouts/layouts.module';
 // import { WordCloudComponent } from './word-cloud/word-cloud.component';
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,10 +31,8 @@ import { LayoutsModule } from './layouts/layouts.module';
     CommonModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
-
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production, autoPause: true }),
     LayoutsModule
-  
   ],
   providers: [SharedService, customInterceptorProvider],
   bootstrap: [AppComponent],

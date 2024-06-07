@@ -8,7 +8,6 @@ interface Rule {
     type: string;
     value: string[];
   }
-  
   interface QueryBuilderFilterRuleDto {
     id: string;
     condition: string;
@@ -19,7 +18,6 @@ interface Rule {
     value: string[];
     rules: Rule[];
   }
-  
   interface CompleteDataToSend {
     formData: {
       ruleName: string;

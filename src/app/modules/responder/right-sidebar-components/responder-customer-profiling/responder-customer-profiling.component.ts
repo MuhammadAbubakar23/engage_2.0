@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators ,FormControlName, AbstractControl} from '@angular/forms';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-
 @Component({
   selector: 'app-responder-customer-profiling',
   templateUrl: './responder-customer-profiling.component.html',
@@ -29,9 +28,7 @@ customerInformationForm= new FormGroup({
   contractAccount: new FormControl('',[Validators.required]),
   phoneNumber: new FormControl('', [ Validators.minLength(11), Validators.maxLength(14)]),
   customerEmail: new FormControl('',[Validators.email])
-
 })
-
   customerProfileInformation: any[] = [];
   get f(): { [key: string]: AbstractControl } {
     return this.customerInformationForm.controls;
@@ -46,7 +43,6 @@ customerInformationForm= new FormGroup({
     if (this.searchProfileDetails != '') {
       this.profileId = '';
       this.platform = '';
-
       var obj = {
         profileId: this.profileId,
         search: this.searchProfileDetails,
@@ -61,7 +57,6 @@ customerInformationForm= new FormGroup({
     } else if (this.searchProfileDetails == '') {
       this.profileId = localStorage.getItem('storeOpenedId') || '';
       this.platform = localStorage.getItem('parent') || '';
-
       var obj = {
         profileId: this.profileId,
         search: this.searchProfileDetails,
@@ -73,11 +68,9 @@ customerInformationForm= new FormGroup({
         .subscribe((res: any) => {
           this.customerProfileInformation = res;
           this.customerProfileInformation.forEach((x:any)=>{
-            
             if(this.index==x){
               this.deattachInformation=x
             }
-            
           })
         });
     }
@@ -103,14 +96,11 @@ customerInformationForm= new FormGroup({
   // }
   type: string = '';
   deattachProfileInformation(name:string,contractAccount:number,mobileNumber:number,){
-
-    
     // var obj = {
     //   externalId: this.id,
     //   platform: this.openedChannel,
     //   companyId: 0,
     //   contractAccount: this.deattachInformation.,
-
     //   customerSocialProfileName: this.customerSocialProfileName,
     //   customerEmail: this.customerEmail,
     //   phoneNumber: this.phoneNumber,
@@ -130,10 +120,8 @@ customerInformationForm= new FormGroup({
         this.closeProfileComponent('customer-profile');
       }, 1000);
       this.getCustomerProfileDetails()
-     
     })
   }
-
   addProfileInformation() {
     var obj = {
       externalId: this.id,
@@ -144,7 +132,6 @@ customerInformationForm= new FormGroup({
       customerEmail: this.customerEmail,
       phoneNumber: this.phoneNumber,
     };
-   
     this.commonService.AddProfileInformation(obj).subscribe(
       (res: any) => {
         this.reloadComponent('profileUpdated');
@@ -194,7 +181,6 @@ customerInformationForm= new FormGroup({
       this.toastermessage=true
       setTimeout(()=>{
         this.toastermessage=false
-
       },4000)
     }
   }

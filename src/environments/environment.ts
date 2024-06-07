@@ -1,7 +1,6 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
 export const environment = {
   production: true,
   fetchIntegrate: 'true',
@@ -31,13 +30,10 @@ export const environment = {
   // WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WhatsappBaseUrl: 'https://waservice.enteract.live/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
-
   KelisteningBaseUrl: 'https://listen.enteract.live/backend/api/',
   KemediaBaseUrl: 'https://kemedia.360scrm.com/api/',
   KescrmBaseUrl: 'https://kescrm.360scrm.com/',
-
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
-
   // For KE
   IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
   CommonBaseUrl: 'https://comservices.enteract.live/api/',
@@ -48,7 +44,6 @@ export const environment = {
   keReportsBaseUrl:'https://kereports.enteract.live/api/',
   LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
   botBaseUrl:'',
-
   // For Jazz
   // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
   // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
@@ -58,7 +53,6 @@ export const environment = {
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // LinkedInBaseUrl:'',
-
   // For Total Parco
   // IdentityBaseUrl: 'https://tt_identity.enteract.live/api/',
   // CommonBaseUrl: 'https://ttcommon.enteract.live/api/',
@@ -67,13 +61,11 @@ export const environment = {
   // ServiceBaseUrl: '',
   //  ProfileBaseUrl: '',
   //  botBaseUrl:'',
-
   // old Tppl
   // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api/',
   // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',
   // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
   // consoleBaseUrl: 'https://tpplcons.360scrm.com/api/',
-
   // For Morinaga
   // IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
@@ -83,7 +75,6 @@ export const environment = {
   // ProfileBaseUrl: '',
   // botBaseUrl: '',
   // LinkedInBaseUrl:'',
-
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
@@ -94,7 +85,6 @@ export const environment = {
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
     // LinkedInBaseUrl:'',
-
   // For Jazz Rox
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
   // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
@@ -104,7 +94,6 @@ export const environment = {
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
-
   //for statging / Internal :companyId 650
   // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
   // CommonBaseUrl: 'https://85b6-203-135-1-210.ngrok-free.app/api/',
@@ -114,14 +103,11 @@ export const environment = {
   // consoleBaseUrl: 'https://conrox.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // LinkedInBaseUrl: '',
-
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
-
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
   // consoleBaseUrl: 'http://10.111.11.93:45455/api/',
   // consoleBaseUrl: '',
-
   links: {
     identity: {
       login: 'Authentication/Login',
@@ -187,7 +173,6 @@ export const environment = {
       getAllSkills: 'Skill/GetAll',
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
-
       // getTagsAll: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
@@ -375,7 +360,6 @@ export const environment = {
     },
   },
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

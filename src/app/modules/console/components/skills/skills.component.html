@@ -24,7 +24,6 @@
                                     data-select2-id="select2-data-1-st3r" tabindex="-1" aria-hidden="true">
                                     <option value="Select Departments" selected disabled> Selected Departments </option>
                                     <option *ngFor="let dep of isDepartmentArray ">{{dep}}</option>
-
                                 </select>
                             </li> -->
                         </ul>
@@ -37,7 +36,6 @@
                                 Create Skill
                             </button>
                         </a>
-
                     </div>
                 </div>
             </div>
@@ -91,7 +89,6 @@
                             <th>Wing</th>
                             <th>Created Date</th>
                             <th>...</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -99,8 +96,6 @@
                             <td>
                                 <input class="form-check-input" type="checkbox" [checked]="isSelected(team.id)"
                                     (change)="toggleSelection(team.id)">
-
-
                             </td>
                             <td>{{ team?.name }}</td>
                             <td>
@@ -127,7 +122,6 @@
                                     </div>
                                 </div>
                             </td>
-
                             <td>
                                 {{ team?.skillRules[0]?.name }}
                                 <div class="d-inline-block dropdown w-auto ps-1">
@@ -145,14 +139,10 @@
                                     </ul>
                                 </div>
                             </td>
-
-
                             <td>{{getReadableWingName(team?.wingSlug)}}</td>
-
                             <td>{{team?.createdDate|
                                 date:'h:mm a, d MMM
                                 YYYY':'UTC' | date:' d MMM YYYY':'GMT+5'}}</td>
-
                             <td>
                                 <div class="icons-list d-flex justify-content-end dropstart"
                                     *ngIf="team.companyId !== 0">
@@ -168,7 +158,6 @@
                                         <li>
                                             <a class="dropdown-item delete-dd" data-bs-toggle="modal"
                                                 data-bs-target="#delete-device">
-
                                                 <i class="fal fa-trash me-2"></i> Delete</a>
                                         </li>
                                     </ul>

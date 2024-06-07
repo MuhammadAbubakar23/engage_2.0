@@ -30,19 +30,14 @@ import { InsertTagInProfileFeedDto } from 'src/app/shared/Models/InsertTagaInPro
 export class ConversationComponent implements OnInit {
   @Input() imagename: string = '';
   fullName: string = '';
-
   unread = false;
   alertWarning = false;
   alertDanger = false;
-
   currentDate: any = new Date();
-
   isChecked = false;
   isCheckedAll = false;
   masterSelected = false;
-
   Ids: any[] = [];
-
   ConversationList: any[] = [];
   TotalUnresponded: number = 0;
   TodayDate: any;
@@ -50,32 +45,24 @@ export class ConversationComponent implements OnInit {
   pageSize: number = 20;
   platform: string = '';
   updatedList: any;
-
   isAttachment: boolean = false;
   blueTick: boolean = false;
   listingDto = new ListingDto();
   filterDto = new FiltersDto();
   filterDtolocal = new FiltersDtolocal();
   assignQuerryDto = new AssignQuerryDto();
-
   public criteria!: SortCriteria;
   public subscription!: Subscription;
-
   searchForm!: FormGroup;
-
   text: string = '';
   userName: string = '';
   user: string = '';
   notInclude: string = '';
   include: string = '';
-
   fromDate: any;
   toDate: any;
-
   searchCustomerForm!: FormGroup;
-
   groupByDateList: any[] = [];
-
   constructor(
     private fetchId: FetchIdService,
     private SpinnerService: NgxSpinnerService,
@@ -98,7 +85,6 @@ export class ConversationComponent implements OnInit {
       property: 'createdDate',
       descending: true,
     };
-
     this.searchForm = new FormGroup({
       user: new FormControl(''),
       userName: new FormControl(''),
@@ -111,26 +97,21 @@ export class ConversationComponent implements OnInit {
       dateWithin: new FormControl('1 week'),
       hasBlueTick: new FormControl(''),
     });
-
     this.searchCustomerForm = new FormGroup({
       userName: new FormControl(''),
     });
   }
-
   currentUrl: string = '';
   FlagForAssignToMe: string = '';
-
   ngOnInit(): void {
     this.wings = this.getWing.wings;
     const date_fillter = localStorage.getItem('datefillter');
     if (date_fillter) {
       this.filterDtolocal = JSON.parse(date_fillter);
     }
-
     this.currentUrl = this.router.url;
     this.FlagForAssignToMe = this.currentUrl.split('/')[2];
     this.TodayDate = new Date();
-
     if (this.currentUrl.split('/')[2] == 'assigned_to_me') {
       this.SpinnerService.show();
       this.commondata
@@ -153,7 +134,6 @@ export class ConversationComponent implements OnInit {
               },
               {}
             );
-
             this.groupByDateList = Object.keys(groupedItems).map(
               (createdDate) => {
                 return {
@@ -177,23 +157,19 @@ export class ConversationComponent implements OnInit {
         this.getConversationList();
       }, 2000);
     }
-
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
       (tooltipNode) => new Tooltip(tooltipNode)
     );
-
     this.subscription = this.updateListService
       .receiveList()
       .subscribe((res) => {
         this.updateListDataListener(res);
       });
-
     this.subscription = this.removeAssignedQueryService
       .receiveAssignedQuerry()
       .subscribe((res) => {
         this.removeAssignedQueryListener(res);
       });
-
     setInterval(() => {
       if (this.currentUrl.split('/')[2] == 'focused') {
         if (this.groupByDateList?.length > 0) {
@@ -258,14 +234,11 @@ export class ConversationComponent implements OnInit {
     }, 1000);
   }
   wingsList: any[] = [];
-
   totalPageNumbers: any;
   filter: any;
-
   to: number = 0;
   from: number = 0;
   flag: string = '';
-
   customersList: any[] = [];
   wings: any;
   isverifiedAccount: boolean = false;
@@ -277,7 +250,6 @@ export class ConversationComponent implements OnInit {
     if (this.skillSlugUrl === 'all') {
       this.skillSlug = [];
     }
-
     if (this.currentUrl.toLowerCase().includes('facebook')) {
       this.platform = 'Facebook';
     } else if (this.currentUrl.toLowerCase().includes('instagram')) {
@@ -303,9 +275,7 @@ export class ConversationComponent implements OnInit {
     } else if (this.currentUrl.toLowerCase().includes('all')) {
       this.platform = 'all';
     }
-
     // }
-
     if (this.searchForm.value.dateWithin == '1 day') {
       this.fromDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
@@ -317,7 +287,6 @@ export class ConversationComponent implements OnInit {
       const fromDate =
         this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
-
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '1 week') {
@@ -332,7 +301,6 @@ export class ConversationComponent implements OnInit {
       const fromDate =
         this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
-
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '1 month') {
@@ -341,7 +309,6 @@ export class ConversationComponent implements OnInit {
       const fromDate =
         this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
-
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '2 months') {
@@ -350,7 +317,6 @@ export class ConversationComponent implements OnInit {
       const fromDate =
         this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
-
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '6 months') {
@@ -359,7 +325,6 @@ export class ConversationComponent implements OnInit {
       const fromDate =
         this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
-
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '1 year') {
@@ -368,7 +333,6 @@ export class ConversationComponent implements OnInit {
       const fromDate =
         this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
-
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (
@@ -396,14 +360,12 @@ export class ConversationComponent implements OnInit {
       //   this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
       // this.toDate =
       //   this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
-
       // 30 days
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 30);
       const fromDate =
         this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
-
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     }
@@ -411,7 +373,6 @@ export class ConversationComponent implements OnInit {
     //   this.fromDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
     //   this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     // }
-
     this.searchForm.patchValue({
       text: this.text,
       user: this.user,
@@ -444,7 +405,6 @@ export class ConversationComponent implements OnInit {
         skills: this.skillSlug,
       };
     }
-
     this.SpinnerService.show();
     this.changeDetect.detectChanges();
     // localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
@@ -457,9 +417,7 @@ export class ConversationComponent implements OnInit {
           this.from = 0;
           this.SpinnerService.hide();
         }
-
         // for followTotalCounts
-
         res?.List?.forEach((x: any) => {
           // if (x.follow_Up_Status !== null) {
           //   this.sendCount.sendtotalCount(res.TotalCount);
@@ -470,7 +428,6 @@ export class ConversationComponent implements OnInit {
             this.isverifiedAccount = false;
           }
         });
-
         if (Object.keys(res).length > 0) {
           this.searchForm.reset();
           this.SpinnerService.hide();
@@ -478,7 +435,6 @@ export class ConversationComponent implements OnInit {
           this.showDateRange = false;
           this.ConversationList = res.List;
           this.TotalUnresponded = res.TotalCount;
-
           let groupedItems = this.ConversationList.reduce(
             (acc: any, item: any) => {
               const date = item.createdDate?.split('T')[0];
@@ -490,7 +446,6 @@ export class ConversationComponent implements OnInit {
             },
             {}
           );
-
           this.groupByDateList = Object.keys(groupedItems).map(
             (createdDate) => {
               return {
@@ -499,7 +454,6 @@ export class ConversationComponent implements OnInit {
               };
             }
           );
-
           if (this.TotalUnresponded < this.pageSize) {
             this.from = this.TotalUnresponded;
           } else if (
@@ -535,9 +489,7 @@ export class ConversationComponent implements OnInit {
       }
     );
   }
-
   searchUser: string = '';
-
   getCustomers() {
     this.filterDto = {
       fromDate: null,
@@ -562,14 +514,12 @@ export class ConversationComponent implements OnInit {
       this.customersList = res;
     });
   }
-
   getConversationListByCustomer(fromId: string) {
     this.searchForm.patchValue({
       user: fromId,
     });
     this.getConversationList();
   }
-
   anyTime(value: string) {
     if (value == 'Any Time') {
       this.toDate =
@@ -581,7 +531,6 @@ export class ConversationComponent implements OnInit {
       this.toDate =
         this.datePipe.transform(olderThenAWeek, 'YYYY-MM-dd') +
         'T23:59:59.999Z';
-
       const oneYearFromToDate = currentDate.setDate(
         currentDate.getDate() - 365
       );
@@ -594,7 +543,6 @@ export class ConversationComponent implements OnInit {
       this.toDate =
         this.datePipe.transform(olderThenAMonth, 'YYYY-MM-dd') +
         'T23:59:59.999Z';
-
       const oneYearFromToDate = currentDate.setDate(
         currentDate.getDate() - 365
       );
@@ -607,7 +555,6 @@ export class ConversationComponent implements OnInit {
       this.toDate =
         this.datePipe.transform(olderThenASixMonth, 'YYYY-MM-dd') +
         'T23:59:59.999Z';
-
       const oneYearFromToDate = currentDate.setDate(
         currentDate.getDate() - 365
       );
@@ -620,7 +567,6 @@ export class ConversationComponent implements OnInit {
       this.toDate =
         this.datePipe.transform(olderThenAYear, 'YYYY-MM-dd') +
         'T23:59:59.999Z';
-
       const oneYearFromToDate = currentDate.setDate(
         currentDate.getDate() - 365
       );
@@ -641,7 +587,6 @@ export class ConversationComponent implements OnInit {
   isAttachmentChecked() {
     this.isAttachment = !this.isAttachment;
   }
-
   updateListDataListener(res: any) {
     const username = localStorage.getItem('username');
     if (this.searchUser == '') {
@@ -663,13 +608,11 @@ export class ConversationComponent implements OnInit {
             }
           }
         });
-
         const groupedItems = this.groupItemsByDate();
         this.groupByDateList = Object.keys(groupedItems).map((createdDate) => ({
           createdDate,
           items: groupedItems[createdDate],
         }));
-
         this.setFromAndToValues();
         this.changeDetect.detectChanges();
       }
@@ -678,19 +621,15 @@ export class ConversationComponent implements OnInit {
   updateConversationList(newMsg: any) {
     // Retrieve data from storage
     let data = this.storage.retrive('skills', 'O').local;
-
     // Find the rule that includes the new message skill slug
     let rule = data.find((x: any) => x.rules.includes(newMsg.rule));
-
     if (rule) {
       newMsg.skillSlug = rule.skilSlug;
-
       // Find existing conversation in the list
       const existingConversation = this.ConversationList.find(
         (obj: any) =>
           obj.user === newMsg.user && obj.skillSlug === newMsg.skillSlug
       );
-
       if (existingConversation) {
         // Update existing conversation
         existingConversation.message = newMsg.message;
@@ -700,11 +639,9 @@ export class ConversationComponent implements OnInit {
         // Check skillSlug conditions and add new conversation to the list
         if (this.skillSlug.length == 0 || this.skillSlug[0] === newMsg.skillSlug) {
           this.ConversationList.unshift(newMsg);
-
           if (this.ConversationList.length > this.pageSize) {
             this.ConversationList.pop();
           }
-
           this.TotalUnresponded++;
           this.from++;
         }
@@ -713,7 +650,6 @@ export class ConversationComponent implements OnInit {
       console.error('No rule found for the given skill slug.');
     }
   }
-
   groupItemsByDate() {
     return this.ConversationList.reduce((acc: any, item: any) => {
       const date = item.createdDate?.split('T')[0];
@@ -722,7 +658,6 @@ export class ConversationComponent implements OnInit {
       return acc;
     }, {});
   }
-
   setFromAndToValues() {
     if (this.TotalUnresponded < this.pageSize) {
       this.from = this.TotalUnresponded;
@@ -732,7 +667,6 @@ export class ConversationComponent implements OnInit {
     ) {
       this.from = this.pageSize;
     }
-
     this.to =
       this.ConversationList.length === 0
         ? 0
@@ -740,7 +674,6 @@ export class ConversationComponent implements OnInit {
         ? 1
         : 0;
   }
-
   removeAssignedQueryListener(res: any) {
     if (this.currentUrl.split('/')[2] == 'focused') {
       this.groupByDateList.forEach((group) => {
@@ -762,7 +695,6 @@ export class ConversationComponent implements OnInit {
       });
     }
   }
-
   Reload() {
     if (this.FlagForAssignToMe == 'assigned_to_me') {
     }
@@ -793,7 +725,6 @@ export class ConversationComponent implements OnInit {
     localStorage.removeItem('datefillter');
     this.getConversationList();
   }
-
   updatevalue(
     count: any,
     id: any,
@@ -826,17 +757,14 @@ export class ConversationComponent implements OnInit {
           this.SpinnerService.hide();
           this.headerCountService.shareUnresponedCount(count);
           this.reloadComponent('queryallocated');
-
           this.fetchId.setPlatform(platform);
           this.sendSkillId.sendSkillIds(skillId);
           this.getWing.sendWings(wing);
           this.fetchId.setOption(id);
-
           this.fetchposttype.sendPostType(postType);
           localStorage.setItem('profileId', profileId);
           localStorage.setItem('assignedProfile', profileId);
           this.router.navigateByUrl(this.currentUrl + '/responder/' + platform);
-
           this.lodeModuleService.updateModule('responder');
           if (this.from < this.TotalUnresponded) {
             this.pageNumber = 1;
@@ -875,13 +803,11 @@ export class ConversationComponent implements OnInit {
       localStorage.setItem('profileId', profileId);
       this.router.navigateByUrl(this.currentUrl + '/responder/' + platform);
       this.SpinnerService.hide();
-
       this.lodeModuleService.updateModule('responder');
     }
   }
   AlterMsg: any;
   toastermessage = false;
-
   reloadComponent(type: any) {
     if (type == 'undoblack_list') {
       this.AlterMsg = 'Profile(s) has been removed from Blacklisted items';
@@ -967,7 +893,6 @@ export class ConversationComponent implements OnInit {
         this.toastermessage = false;
       }, 4000);
     }
-
     if (type == 'queryallocated') {
       this.AlterMsg = 'Querry Assigned Successfully!';
       this.toastermessage = true;
@@ -1032,7 +957,6 @@ export class ConversationComponent implements OnInit {
       }, 4000);
     }
   }
-
   checkUncheckAll(evt: any) {
     this.groupByDateList.forEach((group) => {
       group.items.forEach((c: any) => (c.isChecked = evt.target.checked));
@@ -1066,7 +990,6 @@ export class ConversationComponent implements OnInit {
       }
     });
   }
-
   isAllSelected(
     evt: any,
     index: any,
@@ -1092,11 +1015,9 @@ export class ConversationComponent implements OnInit {
     this.groupByDateList.forEach((group) => {
       if (group.createdDate == date) {
         group.items[index].isChecked = evt.target.checked;
-
         this.masterSelected = this.ConversationList.every(
           (l: any) => l.isChecked == true
         );
-
         let checkselectedlogs = group.items.find(
           (x: any) => x.isChecked == true
         );
@@ -1113,7 +1034,6 @@ export class ConversationComponent implements OnInit {
       }
     });
   }
-
   remaining: number = 0;
   NextPage(pageNumber: any) {
     if (this.TotalUnresponded < this.from) {
@@ -1169,13 +1089,10 @@ export class ConversationComponent implements OnInit {
       }
     }
   }
-
   closeToaster() {
     this.toastermessage = false;
   }
-
   getAgentReportDto = new GetAgentReportDto();
-
   download() {
     this.getAgentReportDto.agentId = 1;
     this.commondata
@@ -1189,18 +1106,14 @@ export class ConversationComponent implements OnInit {
         document.body.removeChild(a);
       });
   }
-
   advanceSearch: boolean = false;
-
   AdvanceSearch() {
     this.advanceSearch = !this.advanceSearch;
   }
-
   CloseAdvanceSearch() {
     localStorage.removeItem('datefillter');
     this.advanceSearch = false;
   }
-
   ResetSearchForm() {
     this.searchForm.reset();
     this.text = '';
@@ -1211,10 +1124,8 @@ export class ConversationComponent implements OnInit {
     this.getConversationList();
     localStorage.removeItem('datefillter');
   }
-
   anyTimeDropdown = false;
   showDateRange = false;
-
   ShowDateRange() {
     this.anyTimeDropdown = false;
     this.showDateRange = true;
@@ -1223,10 +1134,8 @@ export class ConversationComponent implements OnInit {
     this.anyTimeDropdown = true;
     this.showDateRange = false;
   }
-
   itemsToBeUpdated: any[] = [];
   insertTagInProfileFeedDto = new InsertTagInProfileFeedDto();
-
   InsertTagInProfile(tagName: string, type: string) {
     this.Ids.forEach((query: any) => {
       this.insertTagInProfileFeedDto = {
@@ -1249,7 +1158,6 @@ export class ConversationComponent implements OnInit {
         }
       });
   }
-
   RemoveTagInProfile(tagName: string, type: string) {
     this.Ids.forEach((query: any) => {
       this.insertTagInProfileFeedDto = {

@@ -3,7 +3,6 @@
         height: calc(100vh - 50px);
     }
 }
-
 .starbtn{
     .fas{
       display: none;
@@ -20,10 +19,7 @@
         color: $sky;
       }
     }
-
-
 }
-
 .email-accordion{
     // height: 170vh;
     // overflow-x: scroll;
@@ -32,7 +28,6 @@
         border: 1px solid $powder;
         .accordion-header{
             position: relative;
-           
             .top-right{
                 display: flex;
                 align-items: baseline;
@@ -45,7 +40,6 @@
                     // &.unactive{
                     //     display: none;
                     // }
-                   
                 // }
                 // .expanded-card-header-actions{
                     // display: none;
@@ -59,14 +53,12 @@
                 box-shadow: none;
                 border-radius: 5px !important;
                 padding: 1rem;
-                
                 .list-group{
                     width: 96%
                 }
                 .msg-snippet{
                     // opacity: 1;
                     // display: block;
-                   
                     transition: all 0.2s ease;
                     // &.show-text{
                     //     opacity: 1;
@@ -91,7 +83,6 @@
                         // }
                     // }
                 }
-
                 &.unread{
                     border: 1px solid $sky50;
                     background-color: $sky20;
@@ -99,7 +90,6 @@
                         border-color: $sky;
                     }
                 }
-                
                 &:after{
                     display: none;
                 }
@@ -116,13 +106,11 @@
                 .expanded-card-header-actions{
                     display: none;
                 }
-
                 .accordion-button{
                     .msg-snippet{
                         opacity: 1;
                         display: block;
                     }
-
                     .card-header-content{
                         .card-header-top{
                             position: inherit;
@@ -133,7 +121,6 @@
                     }
                 }
             }
-
             &.open{
                 .defult-card-header-actions{
                     display: none;
@@ -142,13 +129,11 @@
                     display: flex;
                     align-items: center;
                 }
-
                 .accordion-button{
                     .msg-snippet{
                         opacity: 0;
                         display: none;
                     }
-
                     .card-header-content{
                         border-bottom: 1px solid $powder;
                         .card-header-top{
@@ -160,9 +145,6 @@
                         }
                     }
                 }
-                
-
-                
             }
         }
         .accordion-collapse{
@@ -233,7 +215,6 @@
                 }
             }
         }
-
         &.msgReplyOpened{
             border: none;
             background-color: transparent;
@@ -246,7 +227,6 @@
             }
         }
     }
-
     .email-reply-section{
         display: none;
         background: $ice;
@@ -299,7 +279,6 @@
             }
         }
     }
-
     .thread-collapsed{
         margin: 12px 0;
         .thread-count-wrapper{
@@ -334,7 +313,6 @@
                 -ms-flex-align: center;
                 align-items: center;
                 cursor: pointer;
-
                 button{
                     position: absolute;
                 }
@@ -343,7 +321,6 @@
                     background-color: $powder;
                     color: $coal;
                 }
-
                 &:hover{
                     .show-email{
                         display: block;
@@ -352,7 +329,6 @@
             }
         }
     }
-   
     .marked-wrap{
         .accordion-button{
             align-items: flex-start;
@@ -374,7 +350,6 @@
         }
     }
 }
-
 .email-content-header{
     // padding: 20px 0;
     padding: 0px 0;
@@ -392,4 +367,3 @@
         margin-top: 8px;
     }
 }
-

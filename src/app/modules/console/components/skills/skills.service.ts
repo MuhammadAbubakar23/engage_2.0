@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { IdNameDto } from 'src/app/shared/Models/IdNameDto';
 import { RequestService } from 'src/app/shared/services/request/request.service';
-
 @Injectable({
   providedIn: 'root'
 })
 export class SkillsService {
-
   constructor(private request:RequestService) { }
   getMyTeams(): Observable<IdNameDto[]> {
     // return this.http.get("http://localhost:5036/api/Roles",{}).pipe(

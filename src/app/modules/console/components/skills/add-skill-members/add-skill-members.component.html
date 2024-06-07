@@ -1,5 +1,4 @@
 <div class="offcanvas-header align-items-center saltBg">
-
     <h5 id="select-accesspointlabel" class="darkblue fw-bold m-0"> <i class="fal fa-users-class me-2 fs-6"></i> Add
         Team Members</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -56,7 +55,6 @@
                             </li>
                         </ul>
                     </div>
-
                     <div class="section-heading"  >
                         <h6 class="silver pt-3 mb-0">
                             <mark>
@@ -64,14 +62,12 @@
                             </mark>
                             </h6>
                     </div>
-                  
                         <div class="list-group-section pt-0">
                             <div class="messenger">
                                 <div class="list-group list-group-flush suggested-users" >
                                     <a
                                         class="list-group-item messenger-wraper suggested-user-item form-check w-100 p-0 theme-check"
                                         value="Zain Haider" *ngFor="let user of  teamMemberDetails" >
-    
                                         <label class="form-check-label coal d-flex align-items-center w-100" for="check1">
                                             <div class="avatar large" >
                                                 <img [src]="user.imageUrl" alt="-" class="rounded-circle w-100">
@@ -82,26 +78,19 @@
                                                     <mark>
                                                         {{user.name}}
                                                     </mark>
-                                                   
                                                 </h6>
                                             </div>
                                         </label>
                                         <form [formGroup]="teamMemberForm" >
                                             <input class="form-check-input float-end"
-                                      
                                             (click)="toggleSelectionIds(user.id)"
                                             formControlName="memberids"
                                                 type="checkbox">
                                         </form>
-                                       
                                     </a>
-                                 
                                 </div>
                             </div>
                         </div>
-                
-                    
-
                 </div>
                 <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
                     <div class="scrollbar-thumb scrollbar-thumb-x"
@@ -113,9 +102,7 @@
                 </div> -->
             </div>
         </div>
-
     </div>
-
 </div>
 <div class="off-canvaas-footer border-top p-3 pe-5">
     <div class="icon-buttons-wrapper d-flex justify-content-end">

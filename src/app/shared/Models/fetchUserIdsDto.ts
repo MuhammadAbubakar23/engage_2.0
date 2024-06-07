@@ -8,5 +8,4 @@ export class userIdsDto{
     tags:any=[0];
     pageNo:any=0;
     pageSize:any=0;
-
 }

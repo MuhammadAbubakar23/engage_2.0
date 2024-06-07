@@ -1,17 +1,14 @@
-
 <div
   class="w-auto chat-message-component w-100 inbox-container"
   [ngClass]="showPanel ? 'panelToggled' : ''"
 >
   <div class="d-flex main-body-wrapper">
-
     <div class="agent-page-main-content">
       <div class="searchBar-wrapper mt-3">
         <div class="row">
           <div class="col-lg-4">
           </div>
           <div class="col-lg-8 d-flex align-items-center justify-content-end">
-
             <a [routerLink]="['/console/automation/sentiment-analysis/bulk-upload']" class="ms-2">
               <button type="button" class="btn btn-success">
                 <i class="fal fa-plus me-2"></i>
@@ -27,7 +24,6 @@
           [isToaster]="isToaster"
         ></app-toastr>
         <div class="row">
-
           <div class="col-md-3"></div>
           <div class="col-md-7 mt-4" style="max-height: 600px;overflow-y: auto;">
             <h5>Create Sentiment</h5>
@@ -84,7 +80,6 @@
                       +
                     </button>
                   </div>
-
                   <ng-template #removebutton>
                     <div class="col-sm-2 mb-2">
                       <button
@@ -105,7 +100,6 @@
                   save
                 </button>
               </div>
-
             </form>
           </div>
           <div class="col-md-2"></div>
@@ -137,15 +131,10 @@
           </div>
         </div> -->
       </div>
-
-
-
     </div>
-
     <div class="rightbar-expanded-wrapper">
       <template #rightcontainer> </template>
     </div>
-
   </div>
   <bot-right-sidebar></bot-right-sidebar>
   <footer class="footer" style="margin-top: 50px;">
@@ -201,10 +190,8 @@
           </div>
           <div class="col-md-1"></div>
         </div>
-
         </div>
       </div>
     </div>
   </footer>
 </div>
-

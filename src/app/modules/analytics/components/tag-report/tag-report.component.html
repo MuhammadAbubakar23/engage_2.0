@@ -47,17 +47,14 @@
                             <li class="list-inline-item ms-auto">
                                 <div class="btn-group buttonfilter" role="group"
                                     aria-label="Basic radio toggle button group">
-
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
                                     #radioInput10
                                         (click)="getPagenationDay(10)" autocomplete="off" >
                                     <label class="btn btn-outline-secondary" for="btnradio1">10</label>
-
                                     <input type="radio" class="btn-check" name="btnradio" (click)="getPagenationDay(20)"
                                     #radioInput20
                                         id="btnradio2" autocomplete="off">
                                     <label class="btn btn-outline-secondary" for="btnradio2">20</label>
-
                                     <input type="radio" class="btn-check" name="btnradio" (click)="getPagenationDay(30)"
                                     #radioInput30
                                         id="btnradio3" autocomplete="off">
@@ -94,7 +91,6 @@
                                         <div>
                                             <span class="iconButton medium mintBg mb-4">
                                                 <i class="fa-light fa-message"></i>
-                                        
                                             </span>
                                             <p class="coal mb-0"> Total Posts <small>(Tags Applied)</small> </p>
                                         </div>
@@ -126,14 +122,12 @@
                                             <span class="fw-semibold">{{item.tagPercentage}}%</span>
                                         </li>
                                     </ng-container>
-                                  
                                 </ul>
                             </div> -->
                         </div>
                     </div>
 <!--                  
                     <span class="iconButton medium fw-bold iceBg border">
-                    
                                             </span> -->
                     <div >
                         <div class="accordion tagaccordion" id="accordionExample">
@@ -144,7 +138,6 @@
                                             <avatar-content [name]="user.agentName" [subname]="''"
                                                 [imagename]="''"></avatar-content>
                                             <!-- <span class="iconButton medium fw-bold iceBg border">
-                                                                    
                                                                                             </span> -->
                                             <!-- <h6 class="ms-2 mb-0">{{user.agentName}}</h6> -->
                                         </div>
@@ -179,7 +172,6 @@
                                             aria-controls="collapseOne">
                                         </a>
                                     </div>
-
                                     <div [id]="'detail'+ user?.agentId" class="accordion-collapse collapse "
                                         data-bs-parent="#accordionExample ">
                                         <div class="accordion-body" style="overflow: auto; height: 200px;">
@@ -222,8 +214,6 @@
                                         </div>
                                     </div>
                             </ng-container>
-                            
-   
                         </div>
                     </div>
                 </div>

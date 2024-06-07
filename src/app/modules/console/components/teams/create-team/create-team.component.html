@@ -20,7 +20,6 @@
                         </div>
                     </nav>
                 </header>
-
                 <!-- <div class="tab-body">
                 <div class="tab-content" id="nav-tabContent">
                     <div id="team-detail" class="tab-pane fade active show" role="tabpanel" aria-labelledby="user-tab">
@@ -50,12 +49,10 @@
                                 </div>
                                 <div class="valid-feedback"
                                     *ngIf="teamForm.get('name')!.valid && teamForm.get('name')!.touched">
-
                                     Looks Good!
                                 </div>
                             </div>
                             <!-- <small class="example-text ms-3">e.g. Customer support Team</small> -->
-
                         </div>
                         <div class="floating-item mb-4">
                             <div [ngClass]="{'was-validated' : teamForm.get('desc')!.valid && teamForm.get('desc')!.touched}"
@@ -67,21 +64,18 @@
                                 <label for="floatingTextarea2">Description</label>
                                 <div class="invalid-feedback" *ngIf="(teamForm.get('desc')!.errors && (teamForm.get('desc')!.touched ||
                                                                               teamForm.get('desc')!.dirty))">
-
                                     <div *ngIf="teamForm.get('desc')!.errors?.['required']">
                                         description is required!
                                     </div>
                                 </div>
                                 <div class="valid-feedback"
                                     *ngIf="teamForm.get('desc')!.valid && teamForm.get('desc')!.touched">
-
                                     Looks Good!
                                 </div>
                             </div>
                             <!-- <small class="example-text ms-3">e.g. This Team belongs to Customer Support in
                                 Tokyo
                                 timezone</small> -->
-
                         </div>
                         <div class="floating-item mb-4">
                             <div class="form-floating mb-2">
@@ -115,7 +109,6 @@
                                     <div *ngIf="teamForm.get('timeZone')!.errors?.['required']">
                                         Please select  Hours
                                     </div>
-
                                 </div>
                                 <div class="valid-feedback"
                                     *ngIf="teamForm.get('timeZone')!.valid && teamForm.get('timeZone')!.touched">
@@ -142,8 +135,6 @@
                                     <div *ngIf="teamForm.get('supportchannelhour')!.errors?.['required']">
                                         Please select Hours
                                     </div>
-
-
                                 </div>
                                 <div class="valid-feedback"
                                     *ngIf="teamForm.get('supportchannelhour')!.valid && teamForm.get('supportchannelhour')!.touched">
@@ -171,7 +162,6 @@
                                                 </div>
                                                 <div class="valid-feedback"
                                                     *ngIf="teamForm.get('supportchannelteam')!.valid && teamForm.get('supportchannelteam')!.touched">
-    
                                                     Looks Good!
                                                 </div>
                                             </div>
@@ -218,7 +208,6 @@
                                                             <a href="javascript:">EnteractRoute settings.</a>
                                                         </div>
                                                     </div>
-                
                                                     <div class="form-check mb-3">
                                                         <input class="form-check-input" type="radio" name="flexRadioDefault"
                                                             id="flexRadioDefault1">
@@ -231,7 +220,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                
                                                 <div>
                                                     <h5 class="mb-3 mt-5 fw-bold darkblue">Agent availability</h5>
                                                     <div class="form-check mb-3">
@@ -269,7 +257,6 @@
                             (menulistchecked)="setMenuList($event)"></engage2-card-box-list> -->
                     </div>
                     <!-- </div> -->
-
                 </div>
             </div>
             <!-- </div> -->
@@ -309,13 +296,10 @@
                                                             class="select2-selection__arrow" role="presentation"><b
                                                                 role="presentation"></b></span></span></span><span
                                                     class="dropdown-wrapper" aria-hidden="true"></span></span>
-
                                         </li>
                                     </ul>
-
                                 </div>
                                 <div class="col-lg-6 d-flex align-items-center justify-content-end">
-
                                     <button (click)="AddTeamMembers()" type="button" class="btn btn-success"
                                         data-bs-toggle="offcanvas" data-bs-target="#addteammembers"
                                         aria-controls="offcanvasRight">
@@ -326,15 +310,12 @@
                             </div>
                         </div>
                         <div class="filter-container">
-
                             <ul class="list-group list-group-horizontal border-0">
-
                                 <li class="list-group-item border-0 refreshicon" aria-label="..."
                                     data-bs-toggle="tooltip" data-bs-placement="bottom"
                                     data-bs-original-title="Refresh">
                                     <i class="fal fa-redo"></i>
                                 </li>
-
                             </ul>
                             <div class="selected-row" style="display:none;">
                                 Selected <span class="badge skyBg rounded-pill">05<span>
@@ -594,8 +575,6 @@
             <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
                 <div class="row w-100">
                     <div class="col-md-4">
-
-
                     </div>
                     <div class="col-md-8 justify-content-end d-flex">
                         <div class="buttons-wrap d-flex">
@@ -615,10 +594,8 @@
        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
           <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
           <div class="toast-btn d-flex align-items-center">
- 
              <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
                 (click)="closeToaster()"><i class="fal fa-times"></i></button>
- 
           </div>
        </div>
     </div>

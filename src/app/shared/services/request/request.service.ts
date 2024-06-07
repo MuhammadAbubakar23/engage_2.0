@@ -10,13 +10,10 @@ import { UserPaginationService } from 'src/app/services/userpaginationServices/u
 export class RequestService {
   params: HttpParams = new HttpParams();
   headers: HttpHeaders = new HttpHeaders();
-
   constructor(private http: HttpClient, private env: EnvService,
     private paginationS:UserPaginationService,
      private messagingService: MessagingService) { }
-
   private requestHeaderOptions(options?: any) {
-
     let opt = (!options) ? {} : options;
     let headers = (opt.headers) ? opt.headers : new HttpHeaders();
     // headers.append('Content-type', 'application/json');
@@ -27,29 +24,20 @@ export class RequestService {
     let opt = (!options) ? {} : options;
     let params = (opt.params) ? opt.params : new HttpParams();
     //opt.params =
-
   }
   private createCompleteRoute = (route: string, envAddress: string, routeparams?: any) => {
-
     if (routeparams === undefined) {
       routeparams = "";
-
     }
     if(route ===undefined){
       route ='Skill/GetSkills'
     }
     if(route===undefined){
-
       route='Skill/GetSkills'
     }
-
       return (routeparams != "" || routeparams.length > 0) ? `${envAddress}${route}${routeparams}` : `${envAddress}${route}`
-   
- 
   };
-
   get<T>(route: string, params?: any, routeparams: string = ""): Observable<T> {
-
     return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, routeparams), { params ,observe: 'response'}).pipe( 
       map ((res:any)=>{
         const headers: HttpHeaders = res.headers;
@@ -114,7 +102,6 @@ export class RequestService {
       );
   }
   delete<T>(route: string, routeparams: any, params?: any): Observable<T> {
-
     return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, "?Id=" + routeparams), params)
       .pipe(
         map((res: any) => { return res }),
@@ -167,13 +154,10 @@ export class RequestService {
   // }
   public handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
       // TODO: send the error to remote logging infrastructure
       // console.error(error); // log to console instead
-
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message} `);
-
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };

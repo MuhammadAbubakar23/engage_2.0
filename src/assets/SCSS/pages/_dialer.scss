@@ -636,7 +636,6 @@
               opacity: 1;
             }
           }
-
           &.compress {
             .header {
               min-height: 110px;
@@ -1600,13 +1599,11 @@
   &.incomingCall {
     background-image: linear-gradient(180deg, $pearl 20%, #6c7cf5 80%);
   }
-  
   //Contacts List Style
   .Contacts-list {
     flex: 1;
     display: flex;
     flex-direction: column;
-    
     .listItem {
       min-height: 70px;
       display: flex;
@@ -1652,4 +1649,3 @@
     }
   }
 }
-

@@ -21,7 +21,6 @@
       }
       &.open {
         display: block;
-       
       }
       .profile {
         table {
@@ -76,7 +75,6 @@
     &.style2 {
       width: 7%;
     }
-
     .rightbar-tab-header {
       nav {
         display: flex;
@@ -143,12 +141,8 @@
           &:hover{
             .closeTab {
               display: block;
-            
           } 
           }
-          
-           
-
             &.active {
               font-weight: 500 !important;
             }
@@ -156,7 +150,6 @@
         }
       }
     }
-
     &.style2 {
       width: 7%;
     }
@@ -184,7 +177,6 @@
   li {
     color: $charcoal;
   }
-
   .right-bar-img {
     width: 146px;
     height: 123px;
@@ -194,11 +186,9 @@
     }
   }
 }
-
 #task2 {
   border-bottom: 1px solid $powder;
 }
-
 .new-event {
   .color-picker {
     display: flex;
@@ -217,7 +207,6 @@
     }
   }
 }
-
 .input-disabled {
   &.form-control,
   &.form-select {
@@ -227,17 +216,14 @@
     }
   }
 }
-
 .key-shortcuts {
   .rounded-key-tab {
     padding: 0.25rem 1rem;
   }
 }
-
 .moretext {
   display: none;
 }
-
 .app-section {
   .separator {
     position: relative;
@@ -275,7 +261,6 @@
     color: $silver;
   }
 }
-
 #short-key-tab {
   .list-group {
     .list-group-item {
@@ -286,20 +271,17 @@
     }
   }
 }
-
 .menu_bar_collapse {
   .rotate-down.active {
     transform: rotateZ(90deg);
     transition: all 0.2s ease;
   }
 }
-
 .icons-list {
   display: flex;
   align-items: center;
   padding: 5px 0;
 }
-
 .add-more-field {
   justify-content: flex-start;
   color: $sky;
@@ -327,7 +309,6 @@
   height: calc(100vh - 140px);
   padding-bottom: 50px;
 }
-
 .complaint-timeline {
   padding: 1.5rem 2rem 0 2rem;
   .timeline-item {
@@ -398,9 +379,6 @@
     }
   }
 }
-
-
-
 .complaint-timeline .timeline-item .timeline-item-content .case-date {
   margin-top: 0.5em;
   color: #9398a5;
@@ -449,13 +427,11 @@
 .complaint-timeline .timeline-item.hidden .vl {
   height: 75px;
 }
-
 .editable {
   .text-edit{
     outline: none;
   }
 }
-
 .main_timeline{
   .timeline_item{
     position: relative;
@@ -477,7 +453,6 @@
            color: $darkblue !important;
         }
       }
-      
       position: relative;
       &:before{
         position: absolute;
@@ -490,7 +465,6 @@
       }
     }
     .timeline_content{
-
     }
   }
 }

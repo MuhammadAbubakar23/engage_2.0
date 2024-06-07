@@ -1,5 +1,4 @@
 export class SmsReplyDto {
-    
     id: number= 0;
     smsId:number= 0;
     from: string="";

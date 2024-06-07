@@ -6,14 +6,12 @@
   align-items: center;
   overflow: hidden;
   position: relative;
- 
   .circlebg{
     width: 130px;
     height: 130px;
     background: linear-gradient(221.46deg, #F6448A 11.63%, #FA8971 92.27%);
     border-radius: 100px;
     position: absolute;
-   
     &.topleft{
       left: -10px;
       top: -30px;
@@ -34,22 +32,16 @@
         top: 25px;
         margin: 0;
       }
-     
     }
-  
-   
   }
   aside{
     position: relative;
     height: 100%;
-    
-   
     .logo{
       text-align: center;
       img{
         max-width: 280px;
         display: inline-block;
-
       }
     }
     .illustration{
@@ -58,7 +50,6 @@
       img{
         width: 100%;
         display: inline-block;
-
       }
     }
     .iconButton{
@@ -197,7 +188,6 @@
     justify-content: center;
     position: relative;
     z-index: 99;
- 
     .social-list{
       >li{
         >a{
@@ -206,11 +196,7 @@
         }
       }
     }
-
   }
-
-
-
   .login-form,.signup-form {
     display: inline-flex;
     align-self: center;
@@ -231,7 +217,6 @@
     }
   }
 }
-
 #loginWrapper{
   .left-wrap{
     width: 100%;
@@ -360,7 +345,6 @@
                   font-size: 30px;
                 }
               }
-            
               &:hover{
                 &.lightinkbg{
                   border-color: $lightink;
@@ -383,8 +367,6 @@
               }
             }
           }
-          
-
           .buttons-wrap{
               display: flex;
               justify-content: center;
@@ -402,7 +384,6 @@
     }
   }
 }
-
 .center-section{
   display: flex;
   margin: 16px auto;
@@ -463,9 +444,7 @@
       border: 1px solid #EF6179;
     }
   }
- 
 }
-
 .verify-code{
   display: flex;
   justify-content: center;
@@ -480,7 +459,6 @@
     font-weight: 700;
   }
 }
-
 .loginbtn{
   background: #EF6179;
   border: 1px solid #EF6179;
@@ -494,7 +472,6 @@
     color: #EF6179;
   }
 }
-
 .vertical-box-wrap{
   display: flex;
   flex-wrap: wrap;
@@ -553,7 +530,6 @@
             color: $white;
           }
         }
-       
       }
       &.twitterbg{
         background: linear-gradient(180deg, #59BAF7 0%, #24A4F2 100%);
@@ -644,13 +620,11 @@
         }
       }
     }
-
     &.dashed-border{
       border: 1px dashed $coal;
     }
   }
 }
-
 .connect-page-modal{
   .modal-content{
     width: 707px;
@@ -704,7 +678,6 @@
     }
   }
 }
-
 .connectPages{
   .vertical-box{
     position: relative;
@@ -752,11 +725,9 @@
     }
   }
 }
-
 .modal-xl {
   --bs-modal-width: 1280px;
 }
-
 @keyframes move-the-circle
 {
 	0%
@@ -775,18 +746,13 @@
 		opacity: 1;
 	}
 }
-
 // $steps: 8;
 // @mixin progress_bar($steps) {
-
 //   $width: (100/$steps)*1%;
-
 //   @for $i from 1 through $steps {
-
 //     [data-progress='#{$i}']:after {
 //       width: $width*$i !important;
 //     }
-
 //     $steps: $steps - 1;
 //   }
 // }

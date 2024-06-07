@@ -3,7 +3,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-
 @Component({
   selector: 'app-customer-satisfaction',
   templateUrl: './customer-satisfaction.component.html',
@@ -16,17 +15,14 @@ export class CustomerSatisfactionComponent implements OnInit {
   feedbackSubmitted = false;
   activeButtonIndex: number | null = null;
   url: any;
-
   constructor(
     private commanDateServices: CommonDataService,
     private spinnerService: NgxSpinnerService,
     private router: Router
   ) {}
-
   ngOnInit(): void {
     this.url = window.location.origin;
   }
-
   markScore(value: any) {
     this.value = value;
     this.activeButtonIndex = value;
@@ -63,7 +59,6 @@ export class CustomerSatisfactionComponent implements OnInit {
       (error: any) => {}
     );
   }
-
   closeToaster() {
     this.toastermessage = false;
   }

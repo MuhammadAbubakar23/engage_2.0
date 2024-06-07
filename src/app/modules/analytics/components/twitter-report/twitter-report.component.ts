@@ -64,7 +64,6 @@ export class TwitterReportComponent implements OnInit {
   MentionsReceivedGraph: any[] = [];
   TotalRepliesGraph: any[] = [];
   allDates: any[] = [];
-
   totalPlainTextPercentage: number = 0;
   totalVideoQueryPercentage: number = 0;
   totalImageQueryPercentage: number = 0;
@@ -93,7 +92,6 @@ export class TwitterReportComponent implements OnInit {
   slatotalTweetsRecived: number = 0
   slatotalDMReceived: number = 0
   slalastTotalDMRecived: number = 0
-
   slalastTotalMentionReceived: number = 0
   slalastTotalReplySent: number = 0
   slalastTotalDMSent: number = 0
@@ -114,34 +112,28 @@ export class TwitterReportComponent implements OnInit {
   OutboundGraph: any;
   QueryTypeChart: any;
   OutboundQueriesChart: any;
-
   constructor(private _hS: HeaderService,
     private commonDataService: CommonDataService,
     private excelServices: ExcelService,
     private datePipe: DatePipe,
     private SpinnerService: NgxSpinnerService
   ) { }
-
   ngOnInit(): void {
-
     const newObj = { title: 'Twitter Report', url: '/analytics/twitter-report' };
     this._hS.setHeader(newObj);
     const currentDate = new Date();
     this.maxEndDate = currentDate.toISOString().split('T')[0];
-
     this.GetTwitterReport();
     // this.GetTwitterSLAReport();
     this.GetTwitterProfileWiseReport();
   }
   date_pagination(days: number) {
-
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - days);
     this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
     this.GetTwitterReport()
   }
-
   GetTwitterReport() {
     this.totalTweetsSent = 0;
     this.totalTweetReceived = 0;
@@ -150,7 +142,6 @@ export class TwitterReportComponent implements OnInit {
     this.totalMentionSent = 0;
     this.totalMentionReceived = 0;
     this.totalReplies = 0;
-
     this.TweetsSentGraph = [];
     this.TweetsReceivedGraph = [];
     this.DMSentGraph = [];
@@ -162,13 +153,11 @@ export class TwitterReportComponent implements OnInit {
     this.totalPlainTextPercentage = 0;
     this.totalVideoQueryPercentage = 0;
     this.totalImageQueryPercentage = 0;
-
     this.totalTweetsSentPercentage = 0;
     this.totalDmSentPercentage = 0;
     this.totalMentionSentPercentage = 0;
     this.SumofTwettsandDMSent = 0
     this.persentageofTweetSent = 0
-
     this.SumoftotalTweetsandDMrecevied = 0
     this.SumoflastTotalTweetsandDMRecevied = 0
    this.sumofTotalEngagementMetrics=0
@@ -177,7 +166,6 @@ export class TwitterReportComponent implements OnInit {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 6);
       this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
-
       this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
     } else if (this.fromDate != '' && this.toDate != '') {
       // this.toDate = this.toDate.split('T')[0];
@@ -201,15 +189,12 @@ export class TwitterReportComponent implements OnInit {
       fromDate: this.fromDate,
       toDate: this.toDate,
       profileId: '539038993',
-
     };
     if (this.toDate >= this.fromDate) {
       this.SpinnerService.show();
       this.commonDataService.GetTwitterReport(body).subscribe((res) => {
         this.SpinnerService.hide();
-
         this.TwitterReport = res;
-        
         // calculate SLA for twitter Report
         this.slatotalMentionRecived = this.TwitterReport.totalMentionReceived
         this.slatotalReplysent = this.TwitterReport.totalReplySent
@@ -222,7 +207,6 @@ export class TwitterReportComponent implements OnInit {
         this.SumoftotalTweetsandDMrecevied = this.slatotalTweetsRecived + this.slatotalDMReceived
         this.sumofTotalEngagementMetrics = this.slatotalMentionRecived + this.slatotalDMsent + this.slatotalDMReceived + this.slatotalMentionSent + this.slatotalTweetsSent + this.slatotalTweetsRecived
         // last total
-        
         this.slalastTotalMentionReceived = this.TwitterReport.lastTotalMentionReceived
         this.slalastTotalReplySent = this.TwitterReport.lastTotalReplySent
         this.slalastTotalDMSent = this.TwitterReport.lastTotalDMSent
@@ -233,22 +217,14 @@ export class TwitterReportComponent implements OnInit {
         this.SumoflastTotalTweetsandDMRecevied = this.slalastTotalTweetsRecived + this.slalastTotalDMRecived
         this.SumofLastTwettsandDMSent = this.slalastTotalDMSent + this.slalastTotalTweetsSent
         this.sumoflastTotalEngagementMetrics = this.slalastTotalMentionReceived + this.slalastTotalDMRecived + this.slalastTotalMentionSent + this.slalastTotalTweetsSent + this.slalastTotalTweetsRecived + this.slalastTotalDMSent
-
         if (this.SumoflastTotalTweetsandDMRecevied == 0) {
           this.persentageofTweetsRecevied = 100
         }
-        
         else {
           this.persentageofTweetsRecevied = Number(((this.SumoftotalTweetsandDMrecevied / this.SumoflastTotalTweetsandDMRecevied) * 100).toFixed(2))
         }
-
-
-     
-
         if (this.SumofLastTwettsandDMSent == 0) {
-     
           this.persentageofTweetSent = 100
-
         }
         else if (this.SumofTwettsandDMSent == 0) {
           this.persentageofTweetSent = 100
@@ -273,15 +249,10 @@ export class TwitterReportComponent implements OnInit {
           this.EnagementMetricepersentage = Number(((this.sumofTotalEngagementMetrics / this.sumoflastTotalEngagementMetrics) * 100).toFixed(2))
         }
         // sum of Recevied Tweets and DMS
-
- 
-
         this.TwitterReport.dateWise.forEach((data: any) => {
           if (!this.allDates.includes(data.date)) {
-
             this.allDates.push(this.datePipe.transform(data.date, 'dd MMM'));
           }
-
           this.totalTweetsSent += data.tweetSent;
           this.totalTweetReceived += data.tweetReceived;
           this.totalDmSent += data.dmSent;
@@ -289,7 +260,6 @@ export class TwitterReportComponent implements OnInit {
           this.totalMentionSent += data.mentionSent;
           this.totalMentionReceived += data.mentionReceived;
           this.totalReplies += data.replies;
-
           this.TweetsSentGraph.push(data.tweetSent);
           this.TweetsReceivedGraph.push(data.tweetReceived);
           this.DMSentGraph.push(data.dmSent);
@@ -304,15 +274,12 @@ export class TwitterReportComponent implements OnInit {
           this.totalVideoQueryPercentage = (this.TwitterReport?.totalVideoQuery / totalTypesOfQueries) * 100;
           this.totalImageQueryPercentage = (this.TwitterReport?.totalImageQuery / totalTypesOfQueries) * 100;
         }
-
         var totalOutboundQueries = this.totalTweetsSent + this.totalDmSent + this.totalMentionSent;
         if (totalOutboundQueries > 0) {
           this.totalTweetsSentPercentage = (this.totalTweetsSent / totalOutboundQueries) * 100;
           this.totalDmSentPercentage = (this.totalDmSent / totalOutboundQueries) * 100;
           this.totalMentionSentPercentage = (this.totalMentionSent / totalOutboundQueries) * 100;
         }
-
-
         if (this.allDates.length == 0) {
           this.isShowConversation = true
         }
@@ -321,14 +288,11 @@ export class TwitterReportComponent implements OnInit {
         this.populateTweetingBehaviourGraph();
         this.populateOutboundGraph();
       });
-
     } else {
       alert('End Date is less than Start Date');
     }
-
     this.GetTwitterProfileWiseReport()
   }
-
   populateInboundOutboundGraph() {
     type EChartsOption = echarts.EChartsOption;
     if (this.isShowConversation == false) {
@@ -338,7 +302,6 @@ export class TwitterReportComponent implements OnInit {
         useDirtyRect: false,
       });
       var option: EChartsOption;
-
       option = {
         title: {
           text: '',
@@ -420,22 +383,17 @@ export class TwitterReportComponent implements OnInit {
           },
         ],
       };
-
       option && myChart.setOption(option);
     }
-
   }
   populateTypesOfQueriesGraph() {
-
     type EChartsOption = echarts.EChartsOption;
-
     const dom = document.getElementById('TypesOfQueriesReport');
     const myChart = echarts.init(dom, null, {
       renderer: 'canvas',
       useDirtyRect: false,
     });
     var option: EChartsOption;
-
     option = {
       title: {
       },
@@ -447,7 +405,6 @@ export class TwitterReportComponent implements OnInit {
         bottom: -5,
         left: 'center',
         icon: 'circle',
-
       },
       series: [
         {
@@ -479,17 +436,14 @@ export class TwitterReportComponent implements OnInit {
     };
     option && myChart.setOption(option);
   }
-
   populateTweetingBehaviourGraph() {
     type EChartsOption = echarts.EChartsOption;
-
     const dom = document.getElementById('TweetingBehaviourReport');
     const myChart = echarts.init(dom, null, {
       renderer: 'canvas',
       useDirtyRect: false,
     });
     var option: EChartsOption;
-
     option = {
       title: {
       },
@@ -519,7 +473,6 @@ export class TwitterReportComponent implements OnInit {
             { value: Number(this.totalTweetsSentPercentage.toFixed(2)), name: 'Tweets' },
             { value: Number(this.totalDmSentPercentage.toFixed(2)), name: 'DMs' },
             { value: Number(this.totalMentionSentPercentage.toFixed(2)), name: 'Mentions' },
-
           ],
           emphasis: {
             itemStyle: {
@@ -536,14 +489,12 @@ export class TwitterReportComponent implements OnInit {
   populateOutboundGraph() {
     if (this.isShowConversation == false) {
       type EChartsOption = echarts.EChartsOption;
-
       const dom = document.getElementById('OutboundReport');
       const myChart = echarts.init(dom, null, {
         renderer: 'canvas',
         useDirtyRect: false,
       });
       var option: EChartsOption;
-
       option = {
         title: {
           text: '',
@@ -558,7 +509,6 @@ export class TwitterReportComponent implements OnInit {
           ],
           icon: 'circle',
           bottom: 'bottom',
-
         },
         grid: {
           left: '10%',
@@ -602,13 +552,9 @@ export class TwitterReportComponent implements OnInit {
           }
         ],
       };
-
       option && myChart.setOption(option);
     }
-
-
   }
-
   GetTwitterSLAReport() {
     var body = {
       fromDate: this.fromDate,
@@ -621,7 +567,6 @@ export class TwitterReportComponent implements OnInit {
       this.TwitterSLAReport = res;
     });
   }
-
   GetTwitterProfileWiseReport() {
     var body = {
       pageNumber: 0,
@@ -645,7 +590,6 @@ export class TwitterReportComponent implements OnInit {
   }
   resetEndDate() {
     if (this.toDate >= this.fromDate) {
-
       if (this.radioInput5 !== undefined) {
         this.radioInput5.nativeElement.checked = false
       }

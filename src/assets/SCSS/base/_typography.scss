@@ -8,19 +8,16 @@ a {
   -ms-transition-duration: 0.3s;
   transition-duration: 0.3s;
   color: $sky;
-
   &:hover {
     opacity: 0.8;
     text-decoration: none;
     color: $sky;
   }
 }
-
 .font-italic{
   font-family: 'robotoitalic';
   font-style: italic;
 }
-
 .section-heading{
   h6{
     font-weight: 500;
@@ -28,7 +25,6 @@ a {
       text-transform: uppercase;
       font-size: 0.9rem;
       letter-spacing: 1px;
-     
   }
 }
 body{

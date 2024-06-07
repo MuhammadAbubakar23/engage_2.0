@@ -25,7 +25,6 @@
                                 <span class="searchbox-icon medium iconButton iconHover" (click)="click(show)"><i
                                         [ngClass]="show == false ? 'fa fa-search': 'fa fa-times'"></i></span>
                             </form>
-
                         </div>
                     </div>
                 </nav>
@@ -34,7 +33,6 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div id="user-profile-tab" class="tab-pane fade active show" role="tabpanel"
                         aria-labelledby="user-profile">
-
                         <div class="about-profile-main">
                             <!-- <form [formGroup]="userDetailForm" (submit)="updateUserInformation()"> -->
                             <div class="rightbar-scroll-wrap" data-scrollbar="true" tabindex="-1"
@@ -85,7 +83,6 @@
                                                             <label for="type"
                                                                 class="col-sm-3 col-form-label">Type</label>
                                                             <div class="col-sm-9 type-dropdown">
-
                                                                 <select class="form-select" id="floatingSelect"
                                                                     aria-label="Floating label select" [(ngModel)]="type">
                                                                     <option disabled>Select the Type</option>
@@ -95,7 +92,6 @@
                                                                 </select>
                                                             </div>
                                                         </div> -->
-
                                                     <div class="row w-100">
                                                         <div class="col-md-4"></div>
                                                         <div class="col-md-8 justify-content-end d-flex">
@@ -173,7 +169,6 @@
                                                                     customerInformationForm.get('phoneNumber')!.errors?.['minlength']">
                                                                     Mobile Number minmum length 11 and maximum 14 !
                                                                   </div>
-    
                                                                         <div
                                                                             *ngIf="customerInformationForm.get('phoneNumber')!.errors?.['required']">
                                                                        Please eneter vaid phoneNumber!  
@@ -186,7 +181,6 @@
                                                                     </div>
                                                                 </div>
                                                                 </div>
-                                                                
                                                         </div>
                                                         <div class="row mb-3">
                                                             <label for="inputName" class="col-sm-3 col-form-label">Email
@@ -215,7 +209,6 @@
                                                                     customerInformationForm.get('customerEmail')!.errors?.['email']">
                                                                   Please Enter Vaild Email 
                                                                   </div>
-
                                                                         <!-- <div
                                                                             *ngIf="customerInformationForm.get('customerEmail')!.errors?.['email']">
                                                                             Please Enter Vaild Email !
@@ -228,16 +221,13 @@
                                                                         Looks Good!
                                                                     </div>
                                                                 </div>
-
                                                             </div>
                                                             <span></span>
-
                                                         </div>
                                                         <!-- <div class="row mb-3">
                                                                 <label for="type"
                                                                     class="col-sm-3 col-form-label">Type</label>
                                                                 <div class="col-sm-9 type-dropdown">
-    
                                                                     <select class="form-select" id="floatingSelect"
                                                                         aria-label="Floating label select" [(ngModel)]="type">
                                                                         <option disabled>Select the Type</option>
@@ -261,11 +251,9 @@
                                                         </div>
                                                     </ng-container>
                                                 </form>
-
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <!-- <footer class="footer">
@@ -300,10 +288,8 @@
         <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
             <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
             <div class="toast-btn d-flex align-items-center">
-
                 <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
                     (click)="closeToaster()"><i class="fal fa-times"></i></button>
-
             </div>
         </div>
     </div>

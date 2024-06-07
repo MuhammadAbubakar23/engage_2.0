@@ -44,11 +44,9 @@
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
                             #radioInput5 (click)="date_pagination(5)">
                         <label class="btn btn-outline-secondary" for="btnradio1">5</label>
-
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
                             #radioInput10 (click)="date_pagination(10)">
                         <label class="btn btn-outline-secondary" for="btnradio2">10</label>
-
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"
                             #radioInput20 (click)="date_pagination(20)">
                         <label class="btn btn-outline-secondary" for="btnradio3">20</label>
@@ -106,7 +104,6 @@
                 </div>
             </div>
         </div>
-
         <div class="card iceBg p-4 rounded mb-5">
             <h5 class="section-heading mb-4 p-0">Posts &amp; Conversations (Inbound/Outbound) </h5>
             <ng-container *ngIf="isShowConversation==false">
@@ -124,7 +121,6 @@
                     </div>
                 </div>
             </ng-container>
-
             <div class="row align-items-start px-5">
                 <div class="col-md-4">
                     <ul class="nav nav-tabs flex-column linetabs mb-3" id="myTab" role="tablist">
@@ -139,7 +135,6 @@
                                 tabindex="-1">Received Metrics
                             </button>
                         </li>
-
                     </ul>
                 </div>
                 <div class="col-md-8 ps-5">
@@ -164,43 +159,32 @@
                                     <span class="fw-semibold">{{totalTweetsSent + totalDmSent +
                                         totalMentionSent}}</span>
                                 </li>
-
-
                             </ul>
                             <div class="card dashboard-card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between">
-
                                         <ng-container *ngIf="SumofTwettsandDMSent > SumofLastTwettsandDMSent">
-
                                             <span class="iconButton medium mintBg mb-4">
                                                 <i class="fa-light fa-arrow-up"></i>
                                             </span>
                                             <p class="coal mb-0"> Tweets &amp; DMS you sent Increased </p>
-
                                         </ng-container>
                                         <ng-container *ngIf="SumofTwettsandDMSent < SumofLastTwettsandDMSent">
-
                                             <span class="iconButton medium radicalBg mb-4">
                                                 <i class="fa-light fa-arrow-down"></i>
                                             </span>
                                             <p class="coal mb-0"> Tweets &amp; DMS you sent decreased </p>
-
                                         </ng-container>
                                         <ng-container *ngIf="SumofLastTwettsandDMSent === 0">
-
                                             <span class="iconButton medium mintBg mb-4">
                                                 <i class="fa-light fa-arrow-up"></i>
                                             </span>
                                             <p class="coal mb-0"> Tweets &amp; DMS you sent Increased </p>
-
                                         </ng-container>
-
                                         <h3>{{persentageofTweetSent}}%</h3>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <div class="tab-pane fade" id="MENTIONS-pane" role="tabpanel" aria-labelledby="MENTIONS"
                             tabindex="0">
@@ -222,7 +206,6 @@
                                     <span class="fw-semibold">{{totalTweetReceived + totalDmReceived +
                                         totalMentionReceived}}</span>
                                 </li>
-
                             </ul>
                             <div class="card dashboard-card">
                                 <div class="card-body">
@@ -257,26 +240,18 @@
                                             </span>
                                             <p class="coal mb-0"> Tweets &amp; DMS you received Increased</p>
                                         </span>
-
                                         <h3> {{persentageofTweetsRecevied}}%</h3>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
         <div class="card iceBg p-4 rounded mb-5">
             <h5 class="section-heading mb-4 p-0">Your Content &amp; Engagement Habits (Outbound)
             </h5>
-
             <div class="row align-items-start">
                 <div class="col-md-6">
                     <h6 class="section-heading mb-4 p-0 coal">Your Tweets</h6>
@@ -296,7 +271,6 @@
                 </div>
             </div>
         </div>
-
         <div class="card iceBg p-4 rounded mb-5">
             <h5 class="section-heading mb-4 p-0">Audience Engagement (Outbound)</h5>
             <ng-container *ngIf="isShowConversation==false">
@@ -314,8 +288,6 @@
                     </div>
                 </div>
             </ng-container>
-
-
             <div class="row align-items-start px-5">
                 <div class="col-md-4">
                     <ul class="nav nav-tabs linetabs mb-3" id="myTab" role="tablist">
@@ -330,7 +302,6 @@
                                 aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">PreSet Time Stats
                             </button>
                         </li> -->
-
                     </ul>
                 </div>
                 <div class="col-md-8 ps-4">
@@ -354,43 +325,34 @@
                                     <span class="coal">Completed </span>
                                     <span class="fw-semibold">{{TwitterReport?.markAsCompleted}}</span>
                                 </li>
-
                             </ul>
                             <div class="card dashboard-card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <ng-container
                                             *ngIf="sumofTotalEngagementMetrics > sumoflastTotalEngagementMetrics">
-
                                             <span class="iconButton medium mintBg mb-4">
                                                 <i class="fa-light fa-arrow-up"></i>
                                             </span>
                                             <p class="coal mb-0"> Engagements Increased </p>
-
                                         </ng-container>
                                         <ng-container
                                             *ngIf="sumofTotalEngagementMetrics < sumoflastTotalEngagementMetrics">
-
                                             <span class="iconButton medium radicalBg mb-4">
                                                 <i class="fa-light fa-arrow-down"></i>
                                             </span>
                                             <p class="coal mb-0"> Engagements Decreased </p>
-
                                         </ng-container>
                                         <ng-container *ngIf="sumofTotalEngagementMetrics==0">
-
                                             <span class="iconButton medium mintBg mb-4">
                                                 <i class="fa-light fa-arrow-up"></i>
                                             </span>
                                             <p class="coal mb-0"> Engagements Increased </p>
-
                                         </ng-container>
-                                  
                                         <h3>{{EnagementMetricepersentage}}%</h3>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <!-- <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
                             tabindex="0">
@@ -408,7 +370,6 @@
                                     <span class="fw-semibold">{{TwitterSLAReport?.totalReplyInLimit +
                                         TwitterSLAReport?.totalReplyOutOfLimit}}</span>
                                 </li>
-
                             </ul>
                             <div class="card dashboard-card">
                                 <div class="card-body">
@@ -423,18 +384,11 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div> -->
-
                     </div>
                 </div>
             </div>
-
         </div>
-
-
-
-
         <div class="card iceBg p-4 rounded mb-5">
             <div class="row mb-4">
                 <div class="col-md-6">
@@ -446,13 +400,11 @@
                             <input type="radio" class="btn-check" name="btnradio" id="btnradio10" autocomplete="off"
                                 checked>
                             <!-- <label class="btn btn-outline-secondary" for="btnradio10">Top 5  Customers</label> -->
-
                             <input type="radio" class="btn-check" name="btnradio" id="btnradio20" autocomplete="off">
                             <button class="btn btn-info" (click)="export()">
                                 <i class="fa-solid fa-file-export"></i>
                                 Export</button>
                             <!-- <label class="btn btn-outline-secondary" for="btnradio20">All Customers</label> -->
-
                         </div>
                         <!-- <div class="dropdown w-auto ms-3">
                             <button class="btn iconButton medium" type="button" id="dropdownMenuButton1"
@@ -479,9 +431,6 @@
                     </div>
                 </div>
             </div>
-
-
-
             <div class="table-section">
                 <table class="table table-sm">
                     <thead>
@@ -504,7 +453,6 @@
                             <td>
                                 <app-avatar-photo [photoUrl]="" [name]=" cust?.fullName"></app-avatar-photo>
                             </td>
-
                             <td>
                                 <a class="sky fw-semibold">{{cust.fullName}}</a>
                             </td>
@@ -513,24 +461,20 @@
                             <td>{{cust.totalDm}}</td>
                             <td>{{cust.totalReplies}}</td>
                         </tr>
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
             <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
             <div class="toast-btn d-flex align-items-center">
-
                 <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
                     (click)="closeToaster()"><i class="fal fa-times"></i></button>
-
             </div>
         </div>
     </div>

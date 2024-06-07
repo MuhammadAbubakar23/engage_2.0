@@ -6,7 +6,6 @@ import { QueryBuilderClassNames, QueryBuilderConfig, QueryBuilderModule, RuleSet
 import { CommonDataService } from '../../../../../shared/services/common/common-data.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EntityTypeBuilder } from 'src/app/shared/Models/EntityTypeDto';
-
 @Component({
   selector: 'app-add-rules',
   standalone: true,
@@ -15,14 +14,11 @@ import { EntityTypeBuilder } from 'src/app/shared/Models/EntityTypeDto';
   styleUrls: ['./add-rules.component.scss']
 })
 export class AddRulesComponent implements OnInit {
-
   entities = [];
-
   rulesForm = new FormGroup({
     ruleName: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
     description: new FormControl('', Validators.required),
     // rulesJson: new FormControl('')
-    
   })
   get ruleName() { return this.rulesForm.get('ruleName'); }
   get description() { return this.rulesForm.get('description'); }
@@ -33,7 +29,6 @@ export class AddRulesComponent implements OnInit {
   public queryCtrl!: FormControl;
   selectedRuleSet!: RuleSet;
   public oDataFilter: string = "hello";
-
   public config: QueryBuilderConfig = {
     fields: {}
   };
@@ -63,7 +58,6 @@ export class AddRulesComponent implements OnInit {
     // inputControl: 'form-control mt-2',
     // inputControlSize: 'col-auto'
   }
-
   entitySet: any = [];
   ruleId: any;
 count=0;
@@ -78,10 +72,7 @@ count=0;
       this.processRules(ruleSet.rules);
       this.selectedRuleSet = ruleSet;
     });
-
   }
-
-
   processRules(rules: any[]) {
     rules?.forEach((rule: any) => {
         if (rule.rules) {
@@ -113,24 +104,19 @@ ngOnInit(): void {
   // getRuleById(ruleId: string) {
   //   this._cs.GetRuleById(ruleId).subscribe((res: any) => {
   //     this.rulesForm.patchValue({
-
   //       description: res.description,
   //       ruleName: res.name,
   //       // rulesJson: JSON.parse(res.rulesJson),
   //       // tableName :res.tableName
-
   //     });
   //     this.selectedRuleSet = JSON.parse(res.rulesJson);
   //     this.loadExistingRuleSet();
   //   },
   //     (error: any) => {
   //     })
-
   // }
   selectEntity() {
-
     this._cs.GetRuleEntityProperties(this.selectedEntity).subscribe((response) => {
-
       if (Array.isArray(response)) {
         this.entitySet = [];
         response?.forEach((item) => {
@@ -147,7 +133,6 @@ ngOnInit(): void {
           switch (obj.entitytype) {
             case 'integer':
               typeValue = 'number';
-
               operators = ["equal", "not_equal", "not_in", "less_or_equal", "greater_or_equal", "not_between", "begins_with", "not_begins_with", "is_null"]
               break;
             case 'boolean':
@@ -166,15 +151,11 @@ ngOnInit(): void {
             default:
               typeValue = 'number';
           }
-
           const fieldsObj = {
             name: obj.entityName,
             type: typeValue,
             operators: operators,
-
           };
-
-
           this.config.fields[obj.entityName] = fieldsObj;
         });
         //this.loadExistingRuleSet();
@@ -190,7 +171,6 @@ ngOnInit(): void {
   //     this.queryCtrl.setValue(this.query);
   //   }
   // }
-
   onClick() {
     const ruleData = {
       "name": this.rulesForm.value['ruleName'],
@@ -212,12 +192,3 @@ ngOnInit(): void {
     this.router.navigate(['console/rules']);
   }
 }
-
-
-
-
-
-
-
-
-

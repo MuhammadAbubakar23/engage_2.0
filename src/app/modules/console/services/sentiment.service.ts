@@ -16,13 +16,11 @@ export class SentimentService {
     const body = { username: 'usman', password: 'usman' };
     return this.http.post(baseUrl + "jwt_token", body);
   }
-
   gethttpOptions() {
     let headers_object = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': "Bearer " + localStorage.getItem('token')
     });
-
     let httpOptions = {
       headers: headers_object
     };
@@ -32,14 +30,11 @@ export class SentimentService {
     let headers_object = new HttpHeaders({
       'Authorization': "Bearer " + localStorage.getItem('token')
     });
-
     let httpOptions = {
       headers: headers_object
     };
-
     return httpOptions;
   }
-
   getSentimentApi(value: string): Observable<string> {
     let httpOptions = this.gethttpOptions();
     const userMessage = new Message('user', value);
@@ -58,7 +53,6 @@ export class SentimentService {
     let httpOptions = this.gethttpOptions();
     return this.http.post(baseUrl + "singlesentence", data, httpOptions)
   }
-
   fileUploadApi(data: any) {
     let httpOptions = this.gethttpOptionsforFile();
     return this.http.post(baseUrl + "uploadfile", data, httpOptions)

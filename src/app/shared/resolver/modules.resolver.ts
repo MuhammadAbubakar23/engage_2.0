@@ -12,7 +12,6 @@ import { loadPermissionsLetters } from 'src/app/layouts/engage2/permission-state
 import { PermissionState } from 'src/app/layouts/engage2/permission-state/permission.state';
 import { loadTagsList, updateTagsList } from 'src/app/layouts/engage2/tags-state/tags.actions';
 import { TagsState } from 'src/app/layouts/engage2/tags-state/tags.state';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +19,6 @@ export class ModulesResolver implements Resolve<boolean> {
   constructor(private MenuStore: Store<MenuState>,
     private TagsStore: Store<TagsState>,
     private PermissionStore: Store<PermissionState>){
-
     }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     this.MenuStore.dispatch(loadMenusList());

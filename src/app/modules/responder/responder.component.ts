@@ -23,8 +23,6 @@ import { ResponderProfileComponent } from './right-sidebar-components/responder-
 import { DispositionFormComponent } from './components/disposition-form/disposition-form.component';
 import { WebPhoneComponent } from '../web-phone/web-phone.component';
 import { ChannelComponent } from './components/responderChannelData/channel.component';
-
-
 @Component({
   selector: 'responder',
   templateUrl: './responder.component.html',
@@ -35,23 +33,18 @@ export class ResponderComponent implements OnInit {
     read: ViewContainerRef,
   })
   target!: ViewContainerRef;
-
   @ViewChild('rightcontainer', {
     read: ViewContainerRef,
   })
   rightcontainer!: ViewContainerRef;
-
   @Output() someEvent = new EventEmitter<string>();
-
   componentName!: any;
   oldComponent:any;
   childComponentName!: any;
   public subscription!: Subscription;
   panelToggled: any;
   showPanel=false;
-
   assignedProfile = localStorage.getItem('assignedProfile')
-
   constructor(
     private resolver: ComponentFactoryResolver,
     private route: ActivatedRoute,
@@ -59,19 +52,14 @@ export class ResponderComponent implements OnInit {
     private rightNavService: RightNavService,
     private toggleService : ToggleService
   ) {}
-
   ngOnInit(): void {
-    
     this.route.params.subscribe((routeParams) => {
-      
       if(routeParams['channel'] != undefined && routeParams['channel'] != "undefined"){
         this.componentName = (routeParams['channel']);
       } 
       this.childComponentName = routeParams['ticket'];
       let ffff = this.componentName + this.childComponentName;
-
       this.rightNavService.updateChildComponent(this.childComponentName);
-
       localStorage.setItem('child', this.childComponentName);
       if (this.childComponentName != null) {
         this.childComponentName = localStorage.getItem('child');
@@ -79,15 +67,11 @@ export class ResponderComponent implements OnInit {
       if(this.componentName != undefined){
         localStorage.setItem('parent', this.componentName);
       }
-      
       this.sharedService.updateMessage(this.componentName);
-
       this.target?.clear();
       this.rightcontainer?.clear();
       if(this.oldComponent!=undefined){
-
         if(localStorage.getItem('parent')!=undefined && localStorage.getItem('parent')!=this.oldComponent){
-          
           this.loadComponent(this.componentName, '');
           this.oldComponent=this.componentName;
         }
@@ -100,9 +84,7 @@ export class ResponderComponent implements OnInit {
         this.loadComponent('', this.childComponentName);
       }
     });
-
     this.subscription = this.toggleService.getTogglePanel().subscribe(msg3 => {
-      
       if(msg3){
         this.rightcontainer?.clear();
         localStorage.setItem('child', msg3)
@@ -114,9 +96,7 @@ export class ResponderComponent implements OnInit {
         this.rightcontainer?.clear();
         localStorage.setItem('child', '')
       }
-
       // this.subscription = this.toggleService.getDispositionForm().subscribe(value=>{
-        
       //   if(value){
       //     this.target?.clear();
       //     this.loadComponent(value,'')
@@ -124,9 +104,7 @@ export class ResponderComponent implements OnInit {
       // })
     });
   }
-
   ngAfterViewInit() {
-    
     this.target?.clear();
     this.rightcontainer?.clear();
     this.oldComponent=this.componentName;
@@ -136,7 +114,6 @@ export class ResponderComponent implements OnInit {
       this.loadComponent('', this.childComponentName);
     }
     this.subscription = this.toggleService.getDispositionForm().subscribe(value=>{
-      
       if(value == 'disposition-form'){
         this.target?.clear();
         this.loadComponent(value,'')
@@ -148,11 +125,8 @@ export class ResponderComponent implements OnInit {
       }
     })
   }
-
   loadComponent(leftSideName: string, rightSideName: string) {
-    
     let componentFactory = null;
-
     switch (leftSideName || rightSideName) {
       case 'Facebook':
         this.showPanel = false;
@@ -160,18 +134,15 @@ export class ResponderComponent implements OnInit {
         componentFactory =
           this.resolver.resolveComponentFactory(ChannelComponent);
            this.target?.createComponent(componentFactory);
-
           // componentRef.instance.someEvent.subscribe((data:any)=>{
           // })
         break;
-
       case 'Instagram':
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
-        
         break;
         case 'PlayStore':
         this.showPanel = false;
@@ -179,7 +150,6 @@ export class ResponderComponent implements OnInit {
         componentFactory =
           this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
-        
         break;
       case 'Twitter':
         this.showPanel = false;
@@ -239,13 +209,11 @@ export class ResponderComponent implements OnInit {
         );
         this.target?.createComponent(componentFactory);
         break;
-      
       case 'ticket':
         componentFactory =
           this.resolver.resolveComponentFactory(ResponderTicketsComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
-
       case 'contacts':
         componentFactory =
           this.resolver.resolveComponentFactory(ResponderContactsComponent);
@@ -261,7 +229,6 @@ export class ResponderComponent implements OnInit {
           this.resolver.resolveComponentFactory(ResponderCreateNewComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
-
       case 'task':
         componentFactory = this.resolver.resolveComponentFactory(ResponderTaskComponent);
         this.rightcontainer?.createComponent(componentFactory);
@@ -302,7 +269,6 @@ export class ResponderComponent implements OnInit {
           this.resolver.resolveComponentFactory(ResponderScheduleComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
-
       case 'complaint-ticket-panel':
         componentFactory = this.resolver.resolveComponentFactory(
           ResponderComplaintTicketPanelComponent
@@ -335,5 +301,4 @@ export class ResponderComponent implements OnInit {
         break;
     }
   }
-  
 }

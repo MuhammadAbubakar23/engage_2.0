@@ -16,7 +16,6 @@ import { RolesAndPermissionsService } from '../../roles-and-permissions/roles-an
 import { UsersService } from '../users.service';
 import { NavigationBackDirective } from 'src/app/shared/services/navigation/navigation-back.directive';
 import { SharedModule } from 'src/app/shared/shared.module';
-
 @Component({
   selector: 'create-user',
   standalone: true,
@@ -47,7 +46,6 @@ export class CreateUserComponent implements OnInit {
     // timezone : new UntypedFormControl(),
     // supportchannel : new UntypedFormControl(),
     // language : new UntypedFormControl(),
-
   });
   submitted = false;
   RolesControl = new UntypedFormControl(null);
@@ -71,7 +69,6 @@ export class CreateUserComponent implements OnInit {
     , private roles: RolesAndPermissionsService
     , private router: Router
     , private teams: TeamsService) { }
-
   get f(): { [key: string]: AbstractControl } {
     return this.userForm.controls;
   }
@@ -86,7 +83,6 @@ export class CreateUserComponent implements OnInit {
     if (this.identity > 0) {//.pipe(takeUntil(this.unsubscribe))
       this._request.getBy<userDto>("GetUserById", this.identity.toString()).subscribe(
         (next: userDto) => {//...next:T[]
-        
           this.setform(next);
         },
         (error: any) => console.log(error)
@@ -107,17 +103,13 @@ export class CreateUserComponent implements OnInit {
         skillId: [],
         //  teams:"",
         //  userId:[],//null0000void//null0000void
-
       }
       this.setform(form);
     }
-
-
     // let vr = this.storsrv.retrive("main","o").local;
     // this.Roles = vr.roles;
   }
   async setform(formVal: any): Promise<void> {
-
     this.userForm = this.formbuilder.group({
       id: [formVal.id],
       firstname: [formVal.firstName, Validators.required],
@@ -155,7 +147,6 @@ export class CreateUserComponent implements OnInit {
       });
       this.TeamsControl.setValue(teamForm);
     }
-
     if (formVal.skillId.length >= 1 && this.Skills.length != 0) {
       formVal.skillId.forEach((element: any) => {
         let mitem = this.Skills.filter((item: any) => item?.skillID == element);
@@ -163,7 +154,6 @@ export class CreateUserComponent implements OnInit {
       });
       this.SkillsControl.setValue(skillForm);
     }
-
   }
   // async getRoles():Promise<void>{
   //   await this.roles.getMyRoles().subscribe({
@@ -197,7 +187,6 @@ export class CreateUserComponent implements OnInit {
     this.userForm.controls['skillId'].reset();
   }
   onSubmit(): void {
-    
     let _self = this;
     this.userForm.controls['roleId'].reset();
     this.userForm.controls['teamId'].reset();
@@ -206,7 +195,6 @@ export class CreateUserComponent implements OnInit {
     //this.userForm.controls['teamId'].setValue('');
     this.submitted = true;
     // this.userForm.controls['roleId'].setValue(this.RolesControl.value);
-
     // let _self = this;
     // // this.RolesControl.value.forEach(function (item:any) {
     // //     return _self.RoleIds.push(item.id);
@@ -222,27 +210,22 @@ export class CreateUserComponent implements OnInit {
       if(!this.RoleIds.includes(this.RolesControl.value[i]?.id.toString())){
         this.RoleIds.push(this.RolesControl?.value[i]?.id.toString());
       }
-   
     }
   this.TeamIds=[]
     for (let i in this.TeamsControl.value) {
       if(!this.TeamIds.includes(this.TeamsControl?.value[i]?.id.toString())){
         this.TeamIds.push(this.TeamsControl?.value[i]?.id?.toString());
       }
-     
     }
     this.SkillIds=[]
     for (let i in this.SkillsControl.value) {
       if(!this.SkillIds.includes(this.SkillsControl.value[i]?.skillID)){
         this.SkillIds.push(this.SkillsControl.value[i]?.skillID);
       }
-    
     }
-    
     this.userForm.controls['roleId'].setValue(this.RoleIds);
     this.userForm.controls['teamId'].setValue(this.TeamIds);
     this.userForm.controls['skillId'].setValue(this.SkillIds);
-
     // return ;
     //breturn;
     let controllerRoute = "AddUser";
@@ -255,14 +238,10 @@ export class CreateUserComponent implements OnInit {
     if (controllerRoute == "AddUser" && this.userForm?.controls["password"].value !== this.userForm?.controls["confirmpassword"].value) {
       return;
     }
-
     this.uservc.save(controllerRoute, this.userForm.value).subscribe({
       next: (res: any) => {
-        
         _self.onReset();
         this.router.navigate(['/console/users']);
-
-
       },
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;
@@ -270,22 +249,16 @@ export class CreateUserComponent implements OnInit {
       }
     });
   }
-
   isShow = false;
   isActive = false;
-
   ManageSkills() {
     this.isShow = !this.isShow;
   }
-
   ManageSkillsSwitch() {
     this.isActive = !this.isActive;
   }
-
   cancelForm() {
     this.router.navigate(['/console/users']);
-
-
   }
   onCatRemovedTeam(cat: string) {
     const Teams = this.TeamsControl.value as string[];
@@ -309,37 +282,28 @@ export class CreateUserComponent implements OnInit {
     }
   }
   reloadComponent(){
-
   }
   closeToaster(){
     this.toastermessage=false
   }
   // SupportChannelsControl = new UntypedFormControl(null, Validators.required);
   // SupportChannels: string[] = ['Corporate Teams','Sales Teams', 'Add channels'];
-
   // LanguagesControl = new UntypedFormControl(null, Validators.required);
   // Languages: string[] = ['English', 'Urdu'];
   //this.stor.store("main", res);
-
-
-
   /**
    * Write code on Method
    *
    * method logical code
    */
   // onCatRemovedSupportChannel(cat: string) {
-
   //   const SupportChannels = this.SupportChannelsControl.value as string[];
   //   this.removeFirst(SupportChannels, cat);
   //   this.SupportChannelsControl.setValue(SupportChannels); // To trigger change detection
   // }
-
   // onCatRemovedLanguage(cat: string) {
   //   const Languages = this.LanguagesControl.value as string[];
   //   this.removeFirst(Languages, cat);
   //   this.LanguagesControl.setValue(Languages); // To trigger change detection
   // }
-
-
 }

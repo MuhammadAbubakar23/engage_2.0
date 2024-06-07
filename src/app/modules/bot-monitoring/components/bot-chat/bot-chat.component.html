@@ -10,14 +10,12 @@
       <span class="iconButton medium bg-white fw-bold">
         {{ chat[0].customer.name | initialLetters }}
       </span>
-
       <div class="ms-3">
         <h6 class="user-status m-0">
           {{ chat[0].customer.name || chat[0].customer.phone }}
           <!-- <i class="fa fa-circle user-status-icon sun" title="away"></i> -->
         </h6>
       </div>
-
       <span
         class="iconButton medium ms-auto"
         id="minbutton"
@@ -91,7 +89,6 @@
                         </div>
                         <!-- <p class="card-text nignt">
                           {{reply.message}} -->
-
                         <div *ngFor="let line of reply.message.split('\n')">
                           <p class="card-text nignt" *ngIf="line.trim() !== ''">
                             {{ line }}

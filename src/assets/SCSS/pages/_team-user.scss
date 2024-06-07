@@ -2,37 +2,30 @@
   .tabs {
     border-bottom: 1px solid $powder;
   }
-
   .nav-link {
     color: $coal;
     text-transform: capitalize;
     border-bottom: 2px solid transparent;
     padding: 8px 44px;
-
     border-top: 0;
     border-left: 0;
     border-right: 0;
-
     &.active {
       border-bottom: 2px solid $sky;
       border-top: 0;
       border-left: 0;
       border-right: 0;
-
       h6 {
         color: $night;
         font-weight: bold;
         margin: 0;
-
         .count {
           background-color: $sky;
         }
       }
     }
-
     h4 {
       display: flex;
-
       .count {
         background-color: $coal;
       }

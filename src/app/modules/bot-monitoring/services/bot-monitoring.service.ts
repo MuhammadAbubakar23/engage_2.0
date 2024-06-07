@@ -7,14 +7,11 @@ const baseUrl = environment.botBaseUrl;
   providedIn: 'root'
 })
 export class BotMonitoringService {
-
   constructor(private http: HttpClient) { }
-
   getChats(data: any): Observable<any> {
     return this.http.post(baseUrl + "WhatsAppBot/GetWhatsAppBotlisting", data)
   }
   getChatDetails(data: any): Observable<any> {
     return this.http.post(baseUrl + `WhatsAppBot/GetBotConversationDetails`, data)
   }
-
 }

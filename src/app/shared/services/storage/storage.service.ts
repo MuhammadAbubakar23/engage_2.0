@@ -6,7 +6,6 @@ import  *  as CryptoJS from  'crypto-js';
 import { EnvService } from '../env/env.service';
 //import { GenericService } from '../generic/generic.service';
 //import { MessagingService } from '../messaging/messaging.service';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +14,6 @@ export class StorageService { //extends GenericService { //  extends LocalStorag
   starter = "";
   types: any = {};
   envstore: any = {
-
   };
   storage = 'LS, SS, CS';
   data: any = {
@@ -23,8 +21,6 @@ export class StorageService { //extends GenericService { //  extends LocalStorag
     'session' : "",
     'cookie': "",
   };
-  
-
   constructor(private env: EnvService,
               // private messagingServices: MessagingService,
               private local: LocalStorageService, 
@@ -35,9 +31,6 @@ export class StorageService { //extends GenericService { //  extends LocalStorag
     this.types = env.store.types;
     this.resetData();
   }
-
-  
-  
   private setStore(store:string){
     this.storage = store;
   }
@@ -63,7 +56,6 @@ export class StorageService { //extends GenericService { //  extends LocalStorag
     }
     return (a==true)?value.data:null;
   }
-  
   store(key: string, value: string | any) {//, store : string = 'LS'
    // let types = this.env.store.types;
     if(typeof value === 'object' || value instanceof Object){
@@ -79,7 +71,6 @@ export class StorageService { //extends GenericService { //  extends LocalStorag
       } 
     }    
   }
-
   retrive(key: string, datatype:string = "String", subkey:string | null = null) : any | string
   {
     // let types = this.env.store.types;'
@@ -107,7 +98,6 @@ export class StorageService { //extends GenericService { //  extends LocalStorag
       }      
     }
     return this.data;
-
     // for (let [okey, ovalue] of Object.entries(types)) {
     //   let storeData = _self.type(ovalue).get(_self.renewKey(key));
     //   this.data[key] = this.unmapTokenKey(JSON.parse(this.decrypt(storeData)))
@@ -166,7 +156,6 @@ export class StorageService { //extends GenericService { //  extends LocalStorag
     }
   }
   StoreJson(key: string, value: string | any, store: string = "LS") {
-
     let nValue = this.encrypt(JSON.stringify(this.mapTokenKey(value,store)))
    // this.store(key, nValue, store);
   }
@@ -174,29 +163,21 @@ export class StorageService { //extends GenericService { //  extends LocalStorag
     let storeData =  this.retrive(key,"LS")
     this.data.local = (storeData != null)?this.unmapTokenKey(JSON.parse(this.decrypt(storeData))):storeData;
     storeData =  this.retrive(key,"SS")
-    
     // return (subkey != "" && subkey != null && type != 'S' && storeDataOnV != null)?storeDataOnV[subkey]:storeDataOnV;
-  
-
     return this.data = {
       local : this.retrive(key,"LS"),
       session : this.retrive(key,"SS"),
       cookie : this.retrive(key,"CS"),
     }
-    
-
     // let loc = this.local.get(this.renewKey(key));
     // let ses = this.session.get(this.renewKey(key));
     // let cok = this.cookie.get(this.renewKey(key)); //(type == 'S')?this.local.get(key):JSON.parse(this.local.get(key));
-    
     // let local = (loc != null && type != 'S')?JSON.parse(loc):loc;
     // let session = (ses != null && type != 'S')?JSON.parse(ses):ses;
     // let cookie = (cok != null && type != 'S')?JSON.parse(cok):cok;
-
     // this.data.local = (subkey != "" && subkey != null && type != 'S' && local != null)?local[subkey]:local;
     // this.data.session = (subkey != "" && subkey != null && type != 'S' && session != null)?session[subkey]:session;
     // this.data.cookie = (subkey != "" && subkey != null && type != 'S' && cookie != null)?cookie[subkey]:cookie;
-   
     // return this.data;
   }
   // delete(key: string, subkey: string | null = null, type: string = 'S') {
@@ -209,6 +190,4 @@ export class StorageService { //extends GenericService { //  extends LocalStorag
   //   this.clear("SS");
   //   this.clear("CS");
   // }
-  
-  
 }

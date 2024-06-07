@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { HeaderService } from 'src/app/shared/services/header.service';
-
 @Component({
   standalone: true,
   imports: [CommonModule, FormsModule, NgxSpinnerModule],
@@ -26,7 +25,6 @@ export class SocialRawDataComponent implements OnInit {
   toDate: string = '';
   itemperPage: number = 25;
   totalPages: any;
-
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
@@ -36,7 +34,6 @@ export class SocialRawDataComponent implements OnInit {
     private _hS: HeaderService,
     private SpinnerService: NgxSpinnerService
   ) {}
-
   ngOnInit(): void {
     const newObj = {
       title: 'Social Raw Data',
@@ -51,7 +48,6 @@ export class SocialRawDataComponent implements OnInit {
       oneDayBeforeCurrentDate,
       'YYYY-MM-dd'
     );
-
     this.GetSocialRawData();
   }
   GetSocialRawData() {
@@ -59,7 +55,6 @@ export class SocialRawDataComponent implements OnInit {
       // let currentDate = new Date();
       // let prevDate = currentDate.setDate(currentDate.getDate() - 5);
       // this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
-
       // this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
       this.fromDate = this.maxEndDate;
       this.toDate = this.maxEndDate;
@@ -97,7 +92,6 @@ export class SocialRawDataComponent implements OnInit {
       alert('select end date greater then start date');
     }
   }
-
   DownloadSocialRawData() {
     var obj = {
       fromDate: this.fromDate,
@@ -134,15 +128,12 @@ export class SocialRawDataComponent implements OnInit {
     }
     this.GetSocialRawData();
   }
-
   resetEndDate() {
     this.toDate = '';
   }
-
   closeToaster() {
     this.toastermessage = false;
   }
-
   reloadComponent(type: any) {
     if (type == 'downloading') {
       this.AlterMsg = 'Downloading Started';

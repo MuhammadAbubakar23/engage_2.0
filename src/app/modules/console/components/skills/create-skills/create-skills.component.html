@@ -59,13 +59,11 @@
                     <!-- <small class="example-text ms-3"
                       >e.g. Customer support Skill</small
                     > -->
-
                   </div>
                   <div class="list-group-section">
                     <div class="section-heading">
                       <h6 class="coal text-uppercase mb-0">Style</h6>
                     </div><br>
-
                     <ul class="list-group list-group-flush">
                       <li class="list-group-item d-flex justify-content-between align-items-sm-center">
                         <div class="me-auto coal">
@@ -77,10 +75,7 @@
                             <div class="color-picker">
                               <input type="color" [(ngModel)]="selectedTextColor"
                                 (change)="onTextColorChange($event)" />
-
                             </div>
-
-
                           </div>
                         </span>
                         <span>
@@ -92,13 +87,11 @@
                           </a>
                         </span>
                         <span>
-
                         </span>
                       </li>
                       <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="icon" placeholder="Icon" formControlName="icon">
                         <label for="icon">Icon</label>
-
                       </div>
                     </ul>
                   </div>
@@ -187,7 +180,6 @@
                           aria-label="Floating label select">
                           <!-- <option selected disabled></option> -->
                           <option *ngFor="let wing of isSelectedWing" [value]="wing.slug">
-
                             {{ wing.name }}
                           </option>
                         </select>
@@ -214,7 +206,6 @@
                     </div>
                     <div class="escalation-setting-box mb-5">
                       <!-- <h6 class="mb-4 darkblue">SLA Policies</h6> -->
-
                       <div class="floating-item mb-4">
                         <div class="floating-wrap form-floating mb-2" [ngClass]="{
                           'was-validated':
@@ -251,7 +242,6 @@
                           </div>
                         </div>
                       </div>
-
                       <div class="escalation-setting-box mb-5">
                         <div
                           class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg">
@@ -317,7 +307,6 @@
                               <span (click)="toggleDropdown(tag.name)" style="cursor: pointer">
                                 {{ tag.name }}
                               </span>
-
                               <div *ngIf="showDropdownState[tag.name]">
                                 <div style="margin-left: 50px">
                                   <ng-container *ngFor="let key of tag.subTags">
@@ -337,7 +326,6 @@
                               <span (click)="toggleDropdown(key.name)" style="cursor: pointer">
                                 {{ key.name }}
                               </span>
-
                               <div *ngIf="showDropdownState[key.name]">
                                 <div style="margin-left: 50px">
                                   <ng-container *ngFor="let subkey of key.subTags">
@@ -372,7 +360,6 @@
               </li>
               </ng-container>
               </ul>
-
               <!-- <ul>
                           <li *ngFor="let item of subTags; index as j">
                             <span
@@ -429,7 +416,6 @@
               <label class="form-check-label coal" for="gridCheck">
                 Responder
               </label>
-
             </div>
             &nbsp;
             &nbsp;
@@ -438,13 +424,10 @@
               <label class="form-check-label coal" for="gridCheck">
                 Inbox
               </label>
-
             </div>
           </div>
-
         </div>
       </div>
-
       <footer class="footer">
         <div class="ps-3 pe-3">
           <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">

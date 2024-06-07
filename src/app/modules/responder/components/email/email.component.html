@@ -1,5 +1,4 @@
 <div class="tab-content position-relative" id="myTabContent">
-
     <div class="tab-pane fade  show active socila-channels-tab" id="emails" role="tabpanel"
         aria-labelledby="emails-tab">
         <div *ngIf="spinner1running">
@@ -12,13 +11,8 @@
             <div class="titleIcon d-flex align-items-center">
                 <i class="fal fa-envelope"></i>
                 <div class="titleLink ms-1">
-
                     /Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}}
                 </div>
-
-
-
-
             </div>
             <ul class="nav nav-tabs ms-3 h-100" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -87,14 +81,12 @@
                             </div>
                             <ng-container *ngFor="let grp of group.subjects | sort:criteria">
                                 <div class="email-content-header">
-
                                     <div class="heading-text">
                                         {{grp.message}}
                                     </div>
                                 </div>
                                 <ng-container *ngFor="let email of grp.items.items | sort:criteria; let i = index">
                                     <div class="accordion email-accordion" id="abc">
-
                                         <div class="accordion-item email-wrap mb-3">
                                             <div class="accordion-header " [id]="'heading'+email.id+i">
                                                 <button class="accordion-button collapsed" type="button"
@@ -152,7 +144,6 @@
                                                                 </button>
                                                                 <ul class="dropdown-menu"
                                                                     aria-labelledby="dropdownMenuButton1">
-
                                                                     <a class="dropdown-item"
                                                                         *ngIf="email.queryStatus != 'Responded'"
                                                                         (click)="commentStatus(email.id, email.contentType)">Read</a>
@@ -167,7 +158,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div [id]="'collapse'+email.id+i" class="accordion-collapse collapse"
                                                 [attr.aria-labelledby]="'heading'+email.id+i"
                                                 data-bs-parent="#accordionExample">
@@ -182,30 +172,22 @@
                                                         </small>
                                                     </div>
                                                     <p [innerHTML]="email.body"></p>
-
-
                                                     <div class="email-attachments">
                                                         <div *ngFor="let attachment of email.attachments">
                                                             <img class="whatsapp-single-img whatsappImgModalBtn"
                                                                 *ngIf="isImage(attachment)"
                                                                 [src]="attachment.attachmentUrl" controls>
-
-
                                                             <video class="video" *ngIf="isVideo(attachment)"
                                                                 src={{attachment.attachmentUrl}} controls></video>
-
                                                             <audio class="audio" *ngIf="isAudio(attachment)"
                                                                 src={{attachment.attachmentUrl}} controls></audio>
-
                                                             <a *ngIf="isOther(attachment)"
                                                                 [href]="attachment.attachmentUrl" target="_blank">
                                                                 <button class="download-button">{{
                                                                     attachment.name }}</button>
                                                             </a>
-
                                                         </div>
                                                     </div>
-
                                                     <button class="expand-referenced-msg badge btn rounded-pill "
                                                         (click)="expandEmailBody()">
                                                         <i class="fal fa-ellipsis-h"></i>
@@ -270,7 +252,6 @@
                                                             data-bs-toggle="modal" data-bs-target="#emailModalBtn"><i
                                                                 class="fal fa-arrow-alt-to-right"></i>
                                                             Forward</button>
-
                                                         <button type="button" class="btn btn-outline-secondary me-2"
                                                             id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                             data-bs-auto-close="outside"><i class="fal fa-tag"></i>
@@ -294,7 +275,6 @@
                                                                     <!-- <form class="custom-searchbar">
                                                                                 <input
                                                                                     class="form-control rounded-pill shadow-sm"
-                                                                                    
                                                                                     placeholder="Search"
                                                                                     aria-label="Search">
                                                                                 <span class="btn searchbar-btn"
@@ -309,7 +289,6 @@
                                                                         class="list-group list-group-flush dropend">
                                                                         <a data-bs-toggle="dropdown"
                                                                             class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
-
                                                                             <div class="w-100 list-txt">
                                                                                 <div
                                                                                     class="d-flex w-100 justify-content-between">
@@ -318,7 +297,6 @@
                                                                                     </h6>
                                                                                 </div>
                                                                             </div>
-
                                                                         </a>
                                                                         <ul class="dropdown-menu shadow">
                                                                             <form class="custom-searchbar">
@@ -373,7 +351,6 @@
                                                                 </li>
                                                             </ul>
                                                         </ul>
-
                                                         <span>
                                                             <button type="button" class="btn btn-outline-secondary me-2"
                                                                 id="sentimentButton" data-bs-toggle="dropdown"
@@ -407,20 +384,16 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </a>
-
                                                                             </div>
                                                                         </div>
                                                                     </li>
                                                                 </ul>
                                                             </ul>
                                                         </span>
-
-
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="accordion email-accordion " id="accordionExampleReply">
                                         <div class="accordion-item email-wrap mb-3 email-reply"
@@ -435,7 +408,6 @@
                                                     </div>
                                                     <div class="card-header-content" style="padding: 10px;">
                                                         <div class="card-header-top">
-
                                                             <h6 class="mb-1 darkblue">
                                                                 <small class="silver font-italic">
                                                                     <i class="fal fa-reply"></i>
@@ -444,7 +416,6 @@
                                                                 {{reply?.replyByName}}
                                                                 <!-- Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}} -->
                                                             </h6>
-
                                                         </div>
                                                         <div class="msg-snippet show-text">
                                                             <p class="mb-1 coal" data-maxlength="240">
@@ -453,9 +424,7 @@
                                                         <div class="msg-snippet show-text">
                                                             <p class="mb-1 coal"
                                                                 [innerHTML]="reply.message|replaceLineBreaks ">
-
                                                                 {{ reply.message|replaceLineBreaks }}
-
                                                             </p>
                                                         </div>
                                                     </div>
@@ -464,11 +433,9 @@
                                                     <div class="expanded-card-header-actions icons-list">
                                                         <small class="silver ms-2 me-2">{{reply.createdDate |
                                                             date:'MMMM dd, YYYY, h:mm a'}}</small>
-
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div [id]="'reply'+i" class="accordion-collapse collapse"
                                                 [attr.aria-labelledby]="'reply'+i" data-bs-parent="#accordionExample">
                                                 <div class="accordion-body">
@@ -479,27 +446,21 @@
                                                     <p [innerHTML]="reply.message">
                                                         {{reply.message}}
                                                     </p>
-
                                                     <!-- attachmentUrl       -->
                                                     <div class="email-attachments">
                                                         <div *ngFor="let attachment of reply.attachments">
                                                             <img class="whatsapp-single-img whatsappImgModalBtn"
                                                                 *ngIf="isImage(attachment)"
                                                                 src={{attachment.attachmentUrl}} controls>
-
                                                             <video class="video" *ngIf="isVideo(attachment)"
                                                                 src={{attachment.attachmentUrl}} controls></video>
-
                                                             <audio class="audio" *ngIf="isAudio(attachment)"
                                                                 src={{attachment.attachmentUrl}} controls></audio>
-
-
                                                             <a *ngIf="isOther(attachment)"
                                                                 [href]="attachment.attachmentUrl" target="_blank">
                                                                 <button class="download-button">{{
                                                                     attachment.name }}</button>
                                                             </a>
-
                                                         </div>
                                                     </div>
                                                     <button class="expand-referenced-msg badge btn rounded-pill "
@@ -550,22 +511,18 @@
         </div>
     </div>
 </div>
-
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
             <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
             <div class="toast-btn d-flex align-items-center">
-
                 <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
                     (click)="closeToaster()"><i class="fal fa-times"></i></button>
-
             </div>
         </div>
     </div>
 </div>
-
 <div [ngClass]="show == true? 'show':''" class="modal fade email-modal" id="emailModalBtn" tabindex="-1"
     aria-labelledby="deleteModalLabel" style="display: none;" aria-modal="true" role="dialog">
     <div class="modal-dialog modal-lg delete-modal">
@@ -584,7 +541,6 @@
             <form [formGroup]="emailReplyForm" (ngSubmit)="submitEmailReply()">
                 <div class="modal-body p-4 pt-2 pb-2">
                     <div class="email-reply-section">
-
                         <div class="reply-wrapper">
                             <div class="reply-header">
                                 <div class="reply-header-left">
@@ -595,7 +551,6 @@
                                             aria-describedby="basic-addon1">
                                     </div>
                                 </div>
-
                                 <div class="reply-header-right">
                                     <a class="cc-btn iconButton medium btn" (click)="OpenCc()"
                                         [ngStyle]="{'display': showCcBtn == true ? 'block':'none'}"> Cc
@@ -604,7 +559,6 @@
                                         [ngStyle]="{'display': showBccBtn == true ? 'block':'none'}">
                                         Bcc
                                     </a>
-
                                 </div>
                             </div>
                             <div class="invalid-feedback"
@@ -723,8 +677,6 @@
                                         <input type="file" formControlName="Image" class="form-control uplaoded-box"
                                             multiple (change)="onFileChanged()" #fileInput>
                                     </div>
-
-
                                 </div>
                                 <!--  <div class="d-inline-block">
                                                 <button id="btnGroupDrop1" type="button" class="btn sky dropdown-toggle"
@@ -765,7 +717,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="modal-footer shadow-sm saltBg justify-content-lg-start">
                     <button type="submit" class="btn pearlBg" data-bs-dismiss="modal" id="liveToastBtn"
                         [disabled]="emailReplyForm.invalid">

@@ -9,9 +9,7 @@ export class Logger {
         this.dialerService.updatePhoneLogs(text)
         // $("#phone_logs").append(text + "\n");
     }
-
     public static setDialerService(dialerService: PhoneDialerService){
         this.dialerService = dialerService;
     }
-
 }

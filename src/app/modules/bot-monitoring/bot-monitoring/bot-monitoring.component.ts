@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Subject, Subscription, interval, takeUntil } from 'rxjs';
 import { ChatVisibilityService } from '../services/chat-visibility.service';
 import { BotMonitoringService } from '../services/bot-monitoring.service';
-
 @Component({
   selector: 'app-bot-monitoring',
   templateUrl: './bot-monitoring.component.html',
@@ -13,13 +12,10 @@ export class BotMonitoringComponent implements OnInit {
   currentActiveChats: any[] = [];
   private newChatIdSubscription: Subscription | undefined;
   private apiCallInterval$: Subject<void> = new Subject<void>();
-
-
   constructor(
     private _chatVisibilityS: ChatVisibilityService,
     private _botMonitorS: BotMonitoringService
   ) { }
-
   getChatDetails(activeChat: any) {
     {
       const data = {
@@ -35,16 +31,13 @@ export class BotMonitoringComponent implements OnInit {
           this._chatVisibilityS.notifythirdActive(true);
         }
         const existingChatIndex = this.chats.findIndex(chat => chat[0].customer?.phone === activeChat.from);
-
         if (existingChatIndex != -1) {
           const isEqual = this.chats[existingChatIndex][0]['completed'] === activeChat['completed']
-
           if (isEqual) {
             this.chats.splice(existingChatIndex, 1);
             this._chatVisibilityS.notifythirdActive(false);
           } else {
             this._botMonitorS.getChatDetails(data).subscribe((res) => {
-
               res[0]['completed'] = activeChat['completed']
               this.chats[existingChatIndex] = res;
               const latObject = {
@@ -64,7 +57,6 @@ export class BotMonitoringComponent implements OnInit {
           }
         }
         else if (this.chats.length < 3) {
-
           this._botMonitorS.getChatDetails(data).subscribe((res) => {
             res[0]['completed'] = activeChat['completed'];
             this.chats.push(res);
@@ -87,8 +79,6 @@ export class BotMonitoringComponent implements OnInit {
         }
       } else {
         this._botMonitorS.getChatDetails(data).subscribe((res) => {
-
-
           res[0]['completed'] = activeChat['completed'];
           this.chats.push(res);
           const latObject = {
@@ -104,14 +94,11 @@ export class BotMonitoringComponent implements OnInit {
       }
     }
   }
-
   ngOnInit(): void {
     this.newChatIdSubscription = this._chatVisibilityS.newChatId$.subscribe((newChat: any) => {
       if (newChat) {
-
         this.getChatDetails(newChat);
       }
-
       interval(20000)
         .pipe(takeUntil(this.apiCallInterval$))
         .subscribe(() => {
@@ -123,7 +110,6 @@ export class BotMonitoringComponent implements OnInit {
                   if (this.currentActiveChats.length > 0) {
                     this.currentActiveChats.forEach((ch) => {
                       this._botMonitorS.getChatDetails(ch).subscribe((res) => {
-
                         const existingChatIndex = this.chats.findIndex(chat => chat[0].customer?.phone === ch.customerIdentifier);
                         const minimizeToggle = this.chats[existingChatIndex][0]['isMinimized'];
                         const completed = this.chats[existingChatIndex][0]['completed'];
@@ -146,14 +132,11 @@ export class BotMonitoringComponent implements OnInit {
         });
     });
   }
-
   // ngOnInit(): void {
   //   this.newChatIdSubscription = this._chatVisibilityS.newChatId$.subscribe((newChat: any) => {
   //     if (newChat) {
-
   //       this.getChatDetails(newChat);
   //     }
-
   //     this.apiCallIntervalSubscription = interval(30000).subscribe(() => {
   // if (this.currentActiveChats.length > 0) {
   //   this.currentActiveChats.forEach((ch) => {
@@ -175,13 +158,9 @@ export class BotMonitoringComponent implements OnInit {
   //     });
   //   });
   // }
-
   //     });
   //   });
-
-
   onMinimizeToggle(activeChat: any) {
-
   }
   ngOnDestroy(): void {
     this.apiCallInterval$.next();

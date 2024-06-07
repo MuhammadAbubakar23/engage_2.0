@@ -47,10 +47,8 @@
                 border-color: $ocean;
             }
         }
-    
     }
 }
-
 .tag-overlay {
     position: fixed;
     width: 100%;
@@ -90,7 +88,6 @@ googleplaybg
         opacity: 1;
         visibility: visible;
     }
-
     .card-body{
         padding: 1rem 0 !important;
         border-top: 1px solid #E5E6E8 !important;
@@ -106,18 +103,15 @@ googleplaybg
                 border:1px solid $silver;
                 color: $silver;
                 cursor: pointer;
-                
                 &.selected{
                     display: inline-flex;
                     color: $ice;
                     background: $navy;
                     border: 1px solid $navy;
-                    
                     &.whatsapp{
                         background-color: $mint;
                         border-color: $mint;
                     }
-                    
                     &.sms{
                         background-color: $cherry;
                         border-color: $cherry;
@@ -143,7 +137,6 @@ googleplaybg
                         border-color: $ocean;
                     }
                 }
-            
             }
         }
     }
@@ -196,7 +189,5 @@ googleplaybg
                 }
             }
         }
-        
     }
-    
 }

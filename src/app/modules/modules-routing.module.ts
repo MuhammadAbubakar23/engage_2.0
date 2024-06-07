@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TagsResolver } from '../shared/resolver/Tags Resolver/tags.resolver';
-
 const routes: Routes = [
   {
     path:'',
@@ -43,9 +42,7 @@ const routes: Routes = [
     loadChildren : () => import('./analytics/analytics.module').then(f=>f.AnalyticsModule),
     data: {preload: true}
   },
-
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

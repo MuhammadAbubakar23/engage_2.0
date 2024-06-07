@@ -8,7 +8,6 @@ import { CompaniesPropResolver } from './resolver/companies-prop.resolver';
 import { CompaniesRolesResolver } from './resolver/companies-roles.resolver';
 import { CompaniesTeamsResolver } from './resolver/companies-teams.resolver';
 import { CompanyResolver } from './resolver/company.resolver';
-
 const routes: Routes = [{ 
   path: '', 
   component: MultitenantComponent,
@@ -37,7 +36,6 @@ const routes: Routes = [{
     },
   }] 
 }];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

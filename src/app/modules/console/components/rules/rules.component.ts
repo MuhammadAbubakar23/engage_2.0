@@ -27,7 +27,6 @@ export class RulesComponent implements OnInit {
       this.refreshtableData()
     }
   }
-
   refreshtableData() {
     const data = {
       search: this.searchText,
@@ -41,19 +40,15 @@ export class RulesComponent implements OnInit {
         this.spinnerServerice.hide()
         this.tableData = response.Rules;
         this.totalCount = response.TotalCount
-
       },
       (error: any) => {
         this.spinnerServerice.hide()
-
         console.error(error);
       }
     );
   }
   selectedSortOption: any;
-
   setSortOption(option: string) {
-
     this.selectedSortOption = option;
     this.refreshtableData();
   }
@@ -65,22 +60,18 @@ export class RulesComponent implements OnInit {
     this.headerService.updateMessage(string);
   }
   editTemplate(message: any) {
-
     this.router.navigate(['/console/add-rules', message.id])
   }
   canEditOrDelete(row: any): boolean {
     // Add your condition here, for example:
     return row.companyId !== 0;
   }
-
   deleteTemplate(message: any) {
-
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
       this.commonService.DeleteRules(message.groupId).subscribe(
         () => {
           this.tableData = this.tableData.filter((msg: any) => msg.id !== message.id);
-
         },
         (error: any) => {
           console.error('Error deleting template:', error);
@@ -111,24 +102,19 @@ export class RulesComponent implements OnInit {
     this.refreshtableData()
   }
   goToPage(pageNumber: number): void {
-
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }
     this.refreshtableData()
   }
-
   getVisiblePageNumbers(): number[] {
     const maxPages = Math.ceil(this.totalCount / this.perPage);
     const visiblePages = 5;
-
     let startPage = Math.max(1, this.currentPage - Math.floor(visiblePages / 2));
     let endPage = Math.min(startPage + visiblePages - 1, maxPages);
-
     if (endPage - startPage + 1 < visiblePages) {
       startPage = Math.max(1, endPage - visiblePages + 1);
     }
-
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
 }

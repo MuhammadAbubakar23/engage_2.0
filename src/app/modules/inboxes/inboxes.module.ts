@@ -11,8 +11,6 @@ import { RouterModule } from '@angular/router';
 import { RightSidebarComponentsModule } from './right-sidebar-components/right-sidebar-components.module';
 import { InboxResponderComponent } from './components/inbox-responder/inbox-responder.component';
 import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard';
-
-
 @NgModule({
   declarations: [
     InboxesComponent,

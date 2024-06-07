@@ -21,10 +21,8 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <input type="date" class="form-control" [(ngModel)]="endDate"
-                                          
                                             [max]="maxEndDate"
                                                 placeholder="End Date" (change)="resetEndDate()" />
-
                                         </div>
                                     </div>
                                 </div>
@@ -56,12 +54,10 @@
                                     #radioInput10
                                         autocomplete="off" (click)="date_pagination(10)">
                                     <label class="btn btn-outline-secondary" for="btnradio1">10</label>
-
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
                                     #radioInput20
                                         autocomplete="off" (click)="date_pagination(20)">
                                     <label class="btn btn-outline-secondary" for="btnradio2">20</label>
-
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
                                 #radioInput30
                                         autocomplete="off" (click)="date_pagination(29)">
@@ -74,7 +70,6 @@
                         </ul>
                     </div>
                     <div class="row align-items-start h-auto mb-4">
-
                         <div class="col-lg-4 col-md-6">
                             <div class="card dashboard-card">
                                 <div class="card-body">
@@ -105,10 +100,7 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
-
                     <div class="row">
                         <ng-container *ngIf="isShowChart==false">
                             <div class="col-md-12" >
@@ -119,7 +111,6 @@
                                             <div #peopleViewed style="height: 400px; width: 700px;"></div>
                                         </div>
                                     </div>
-    
                                 </div>
                             </div>
                         </ng-container>
@@ -130,10 +121,8 @@
                                 <div class="graphcontainer align-items-end">
                                     <div class="text-center">
                                         <p>No data found</p>
-                    
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </ng-container>
@@ -145,10 +134,8 @@
                                 <div class="graphcontainer align-items-end">
                                     <div class="text-center">
                                         <div #pageReachabilty style="height: 400px; width: 700px;"></div>
-
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </ng-container>
@@ -162,25 +149,18 @@
                                         <p>No data found</p>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </ng-container>
-                   
-                     
                     </div>
-                     
                     <ng-container *ngIf="isShowDemographics==false">
-
                         <div class="card iceBg p-4 rounded mb-5">
                             <h5 class="section-heading mb-4 p-0">Audience Demographics</h5>
                             <div class="graphcontainer align-items-end">
                                 <div class="text-center">
                                     <div #audienceGraph style="height: 400px; width: 900px;"></div>
-    
                                 </div>
                             </div>
-    
                         </div>
                     </ng-container>
                     <ng-container *ngIf="isShowDemographics==true">
@@ -190,15 +170,10 @@
                                 <div class="text-center">
                                     <p >No data found</p>
                                     <!-- <div #audienceGraph style="height: 400px; width: 900px;"></div> -->
-    
                                 </div>
                             </div>
-    
                         </div>
                     </ng-container>
-
-
-
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card iceBg p-4 rounded mb-5">
@@ -216,8 +191,6 @@
                                         <span class="coal"> Total Engagement </span>
                                         <span class="fw-semibold">{{totalEngagements}}</span>
                                     </li>
-
-
                                 </ul>
                                 <div class="card dashboard-card">
                                     <div class="card-body">
@@ -250,7 +223,6 @@
                                         <span class="coal">Total Catered Workload </span>
                                         <span class="fw-semibold">{{instagra_report?.totalCateredWorkload}}</span>
                                     </li>
-
                                 </ul>
                                 <div class="card dashboard-card">
                                     <div class="card-body">
@@ -306,7 +278,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="card iceBg p-4 rounded">
                                 <div class="d-flex justify-content-between mb-3">
@@ -321,14 +292,12 @@
                                         <small class="coal"> Customer Comments </small>
                                         <p class="fw-semibold">{{agentReplies?.customerComment}}</p>
                                     </div>
-
                                 </div>
                                 <div class="row align-items-start">
                                     <div class="col">
                                         <small class="coal">Agent Comments </small>
                                         <p class="fw-semibold">{{agentReplies?.agentComment}}</p>
                                     </div>
-
                                     <div class="col">
                                         <small class="coal"> Mark As Completed </small>
                                         <p class="fw-semibold">{{agentReplies?.completedQuery}}</p>
@@ -395,7 +364,6 @@
                             </table>
                         </div>
                     </div>
-
                     <div class="card iceBg p-4 rounded mb-5">
                         <h5 class="section-heading mb-4 p-0">Recent Posts (Top 5)</h5>
                         <div class="table-section">

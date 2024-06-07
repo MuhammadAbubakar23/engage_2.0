@@ -20,18 +20,15 @@ import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-qu
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { ConnectionIdService } from 'src/app/services/connectionId/connection-id.service';
-
 @Component({
   selector: 'app-minimized-chat-widget',
   templateUrl: './minimized-chat-widget.component.html',
   styleUrls: ['./minimized-chat-widget.component.scss']
 })
 export class MinimizedChatWidgetComponent implements OnInit {
-
   id = this.maximizedChatService.id;
   platform = this.maximizedChatService.platform;
   slaId = this.fetchId.getSlaId();
-
   YoutubeData: any;
   YoutubeComments: any;
   pageNumber: any = 0;
@@ -53,15 +50,12 @@ export class MinimizedChatWidgetComponent implements OnInit {
   storeComId: any;
   AlterMsg: any = '';
   Keywords: any[] = [];
-  
   filterDto = new FiltersDto();
   ReplyDto = new ReplyDto();
   insertSentimentForFeedDto = new InsertSentimentForFeedDto();
   insertTagsForFeedDto = new InsertTagsForFeedDto();
   commentStatusDto = new CommentStatusDto();
-
   queryType = this.getQueryTypeService.getQueryType();
-
   show = false;
   isOpen = false;
   active = false;
@@ -70,7 +64,6 @@ export class MinimizedChatWidgetComponent implements OnInit {
   markAsComplete = false;
   toastermessage = false;
   querryCompleted = false;
-  
   constructor(
     private fetchId: FetchIdService,
     private toggleService: ToggleService,
@@ -86,14 +79,10 @@ export class MinimizedChatWidgetComponent implements OnInit {
     private getWing: GetWingsService,
     private getSkillSlug:SkillslugService,
     private getConnectionId:ConnectionIdService
-    
   ) {}
-
   ngOnInit(): void {
-
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
-    
     this.getYoutubeData();
     this.quickReplyList();
     // this.getTagList();
@@ -103,9 +92,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
   userName:any;
   profilePic:any;
   totalChats:any[]=[];
-
   getYoutubeData() {
-    
     if(this.maximizedChatService.id != null || undefined){
     this.filterDto = {
       // fromDate: new Date(),
@@ -136,7 +123,6 @@ export class MinimizedChatWidgetComponent implements OnInit {
         this.userName = this.YoutubeData[0].user.userName;
         this.profilePic = this.YoutubeData[0].user.profilePic;
         this.platform = this.YoutubeData[0].platform;
-
         this.YoutubeData.forEach((c: any) => {
           this.postId = c.postId;
           this.youtubePostStats();
@@ -168,7 +154,6 @@ export class MinimizedChatWidgetComponent implements OnInit {
         .subscribe((res: any) => {
           this.SpinnerService.hide();
           this.YoutubeData = res.List;
-  
           this.YoutubeData.forEach((c: any) => {
             this.postId = c.postId;
             this.youtubePostStats();
@@ -176,16 +161,11 @@ export class MinimizedChatWidgetComponent implements OnInit {
         });
       }
   }
-
-  
   postIdForStats:any;
-
   youtubePostStats() {
-    
     if (this.YoutubeData != null || undefined) {
       this.YoutubeData.forEach(async (post: any): Promise<void> => {
         this.postIdForStats = post.post.postId;
-
         await this.commondata
           .GetYoutubePostStats(this.postIdForStats)
           .subscribe((postStats: any) => {
@@ -194,22 +174,18 @@ export class MinimizedChatWidgetComponent implements OnInit {
       });
     }
   }
-
   closeMentionedReply() {
     this.show = false;
     this.clearInputField();
   }
-
   toggle(child: string, cmntId: any) {
     if (localStorage.getItem('child') == child) {
       this.toggleService.addTogglePanel('');
     } else {
       this.toggleService.addTogglePanel(child);
     }
-
     this.createTicketService.setCommentId(cmntId);
   }
-
   youtubeCommentReplyForm = new UntypedFormGroup({
     text: new UntypedFormControl(this.ReplyDto.text),
     commentId: new UntypedFormControl(this.ReplyDto.commentId),
@@ -217,16 +193,13 @@ export class MinimizedChatWidgetComponent implements OnInit {
     platform: new UntypedFormControl(this.ReplyDto.platform),
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
   });
-
   sendYoutubeCommentInformation(comId: any) {
     this.YoutubeData.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
         if (comment.id == comId) {
           // show mentioned reply
           this.show = true;
-
           // populate comment data
-
           this.youtubecommentId = comment.id;
           this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
@@ -235,10 +208,8 @@ export class MinimizedChatWidgetComponent implements OnInit {
       });
     });
   }
-
   text:string="";
   ImageName:any;
-
   submitYoutubeCommentReply() {
     if(this.youtubecommentId == 0){
       this.reloadComponent('selectComment');
@@ -262,7 +233,6 @@ export class MinimizedChatWidgetComponent implements OnInit {
         // profileId: this.profileId,
         // profilePageId: this.profilePageId,
       });
-  
       formData.append(
         'CommentReply',
         JSON.stringify(this.youtubeCommentReplyForm.value)
@@ -284,14 +254,10 @@ export class MinimizedChatWidgetComponent implements OnInit {
         this.reloadComponent('empty-input-field')
       }
     }
-   
   }
-
   likeByAdminDto = new LikeByAdminDto();
-
   likeByAdmin(comId: any, isLiked: boolean, userId:any, platform:any,profilePageId:any, profileId:any) {
     isLiked = !isLiked;
-
     this.likeByAdminDto ={
       platform : platform,
       commentId : comId,
@@ -322,39 +288,31 @@ export class MinimizedChatWidgetComponent implements OnInit {
       icon: 'fal fa-frown',
     },
   ];
-
   insertSentimentForFeed(comId: number, sentimenName: any) {
     this.insertTagsForFeedDto.feedId = comId;
     this.insertTagsForFeedDto.tagName = sentimenName;
     this.insertTagsForFeedDto.type = 'Sentiment';
     this.insertTagsForFeedDto.platform = '';
-
     this.commondata.InsertSentiment(this.insertTagsForFeedDto).subscribe((res: any) => {
         this.reloadComponent('Sentiment');
       });
 }
-
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
-
     this.text = abc?.text + " ";
-
     this.youtubeCommentReplyForm.patchValue({
       text: this.youtubecommentText,
     });
   }
-
   quickReplyList() {
     this.commondata.QuickReplyList().subscribe((res: any) => {
       this.QuickReplies = res;
     });
   }
-
   detectChanges(): void {
     // this.ImageName = this.fileInput.nativeElement.files;
     // this.text = this.textarea.nativeElement.value
   }
-
   getTagList() {
     this.commondata.GetTagsList().subscribe((res: any) => {
       this.TagsList = res;
@@ -365,13 +323,11 @@ export class MinimizedChatWidgetComponent implements OnInit {
       });
     });
   }
-
   insertTagsForFeed(id: any, comId: string) {
     // this.insertTagsForFeedDto.feedId = comId;
     // // this.insertTagsForFeedDto.tagId = id;
     // this.insertTagsForFeedDto.feedType = 'YC';
     // this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
-
     this.YoutubeData.forEach((abc: any) => {
       abc.comments.forEach((comment: any) => {
         if (comment.id == comId) {
@@ -389,7 +345,6 @@ export class MinimizedChatWidgetComponent implements OnInit {
                 this.reloadComponent('ApplyTag');
                 this.getYoutubeData();
                 //  alert(res.message);
-
                 this.activeTag = true;
                 this.checkTag = true;
               },
@@ -404,7 +359,6 @@ export class MinimizedChatWidgetComponent implements OnInit {
                 this.reloadComponent('ApplyTag');
                 this.getYoutubeData();
                 //  alert(res.message);
-
                 this.activeTag = true;
                 this.checkTag = true;
               },
@@ -417,18 +371,15 @@ export class MinimizedChatWidgetComponent implements OnInit {
       });
     });
   }
-
   removeTagFromFeed(id: any, comId: string) {
     // // this.insertTagsForFeedDto.feedId = comId;
     // // this.insertTagsForFeedDto.tagId = id;
     // this.insertTagsForFeedDto.feedType = 'YC';
     // this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
-
     this.commondata.RemoveTag(this.insertTagsForFeedDto).subscribe(
       (res: any) => {
         this.getYoutubeData();
         this.reloadComponent('RemoveTag');
-
         this.activeTag = false;
         this.checkTag = false;
       },
@@ -437,7 +388,6 @@ export class MinimizedChatWidgetComponent implements OnInit {
       }
     );
   }
-
   commentStatus(comId: any) {
     this.commentStatusDto = {
       id: comId,
@@ -457,7 +407,6 @@ export class MinimizedChatWidgetComponent implements OnInit {
       }
     );
   }
-
   markAsCompleteExpanded(comId: any) {
     this.YoutubeData.forEach((abc: any) => {
       abc.comments.forEach((comment: any) => {
@@ -467,7 +416,6 @@ export class MinimizedChatWidgetComponent implements OnInit {
       });
     });
   }
-
   reloadComponent(type: any) {
     if (type == 'empty-input-field') {
       this.AlterMsg = 'Please write something!';
@@ -519,12 +467,10 @@ export class MinimizedChatWidgetComponent implements OnInit {
       }, 4000);
     }
   }
-
   closeToaster() {
     this.toastermessage = false;
   }
   clearInputField() {
-    
     this.commentReply = '';
     this.youtubecommentText = '';
     this.show = false;
@@ -533,20 +479,15 @@ export class MinimizedChatWidgetComponent implements OnInit {
     this.platform = '';
     this.postType = '';
   }
-
   showChat=false;
-
   maximizeChat() {
-    
     if (this.maximizedChatService.id != null && this.maximizedChatService.platform != null){
       this.showChat = true;
     }
-    
   }
   minimizeChat(){
     this.showChat = false
   }
-
   updatevalue(
     string: any,
     id: any,
@@ -555,8 +496,6 @@ export class MinimizedChatWidgetComponent implements OnInit {
     platform:any,
     component:any
   ) {
-    
-    
    // this.socialHeader.getRouteParam('conversation');
     this.headerService.updateMessage(string);
     this.leftsidebar.updateMessage(leftExpandedMenu);
@@ -566,7 +505,6 @@ export class MinimizedChatWidgetComponent implements OnInit {
   }
   tagsListDropdown =false
   searchText : string = '';
-  
   openTagListDropdown() {
     this.searchText ='';
     this.tagsListDropdown = true;
@@ -575,12 +513,10 @@ export class MinimizedChatWidgetComponent implements OnInit {
     this.tagsListDropdown = false
     this.searchText = ''
   }
-
   closeQuickResponseSidebar(){
     // this.quickReplySearchText = '';
     // if(this.radioInput.nativeElement.checked = true){
             //   this.radioInput.nativeElement.checked = false;
             // }
-    
   }
 }

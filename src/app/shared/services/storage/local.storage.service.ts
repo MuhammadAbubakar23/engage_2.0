@@ -1,12 +1,9 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { BROWSER_LOCAL_STORAGE } from './storage-type';
-
-
 @Injectable({
   providedIn: 'any'
 })
 export class LocalStorageService {
-
   constructor(@Inject(BROWSER_LOCAL_STORAGE) public storage: Storage) {}
   set(key: string, value: string) {
     this.storage.setItem(key, value);

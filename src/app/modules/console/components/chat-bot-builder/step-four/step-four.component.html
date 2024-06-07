@@ -1,8 +1,5 @@
-
-
 <div  class="container">
   <div class="row d-flex justify-content-center">
-
       <h3>{{ intentName }}</h3>
       <div class="col-sm-6">
         <ul class="list-group list-group-flush">
@@ -10,7 +7,6 @@
         </ul>
         <hr>
       </div>
-
       <div class="col-sm-6">
         <ul class="list-group list-group-flush">
           <li class="list-group-item" *ngFor="let answer of answers">{{ answer }}</li>
@@ -21,5 +17,3 @@
       <button  type="button" class="btn btn-primary" (click)="createIntent()">Save</button>
     </div>
   </div>
-
-

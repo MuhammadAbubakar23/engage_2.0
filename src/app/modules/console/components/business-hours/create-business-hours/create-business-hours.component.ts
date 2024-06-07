@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-
 @Component({
   selector: 'app-create-business-hours',
   templateUrl: './create-business-hours.component.html',
@@ -23,9 +22,7 @@ export class CreateBusinessHoursComponent implements OnInit {
   getSelectedDaysCount(): number {
     return this.businessWorkingDays.controls.length;
   }
-
   messageForm!: FormGroup;
-
   get BusinessControls(): FormArray {
     return this.messageForm.get('businessWorkingDays') as FormArray;
   }
@@ -40,7 +37,6 @@ export class CreateBusinessHoursComponent implements OnInit {
     this.businessId = this._route.snapshot.paramMap.get('id')
     // this.patchFormValues(this.businessId)
     // const template = history.state.template;
-
     if (this.businessId) {
       this.patchFormValues(this.businessId);
     } else {
@@ -53,7 +49,6 @@ export class CreateBusinessHoursComponent implements OnInit {
       (control) => control.get('workingDay')?.value === day
     );
   }
-
   initializeForm(): void {
     this.messageForm = this.formBuilder.group({
       templateName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
@@ -74,7 +69,6 @@ export class CreateBusinessHoursComponent implements OnInit {
     });
   }
   patchFormValues(template: any): void {
-
     this.commonService.GetBusinessById(template).subscribe(
       (res: any) => {
         this.messageForm.patchValue({
@@ -96,7 +90,6 @@ export class CreateBusinessHoursComponent implements OnInit {
           );
         });
       })
-
   }
   clearBusinessWorkingDays(): void {
     const businessWorkingDays = this.messageForm.get('businessWorkingDays') as FormArray;
@@ -112,7 +105,6 @@ export class CreateBusinessHoursComponent implements OnInit {
     const existingIndex = formArray.controls.findIndex(
       (control) => control.get('workingDay')?.value === workingDay
     );
-
     if (existingIndex !== -1) {
       formArray.removeAt(existingIndex);
     } else {
@@ -129,7 +121,6 @@ export class CreateBusinessHoursComponent implements OnInit {
     const formArray = this.businessWorkingDays;
     const formGroup = formArray.at(index) as FormGroup;
     let formValue = formGroup.value.workingDay;
-
     switch (formValue) {
       case 'Mon':
         formValue = 'Monday';
@@ -158,10 +149,8 @@ export class CreateBusinessHoursComponent implements OnInit {
     this.businessWorkingDays.removeAt(index);
   }
   onSubmit(): void {
-
     if (this.messageForm.valid) {
       // const template = history.state.template;
-
       if (this.businessId) {
         const updatedTemplate = {
           // ...template,
@@ -173,7 +162,6 @@ export class CreateBusinessHoursComponent implements OnInit {
           customBusinessHours: this.messageForm.value.customBusinessHours,
           businessWorkingDays: this.messageForm.value.businessWorkingDays
         };
-
         this.commonService
           .UpdateBusinessHours(updatedTemplate)
           .subscribe(
@@ -198,7 +186,6 @@ export class CreateBusinessHoursComponent implements OnInit {
       // Handle form validation errors
     }
   }
-
   cancelForm(): void {
     this.router.navigate(['/console/business-hours']);
   }

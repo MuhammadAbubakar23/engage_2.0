@@ -14,11 +14,9 @@ public  sendData(newValue:any):void{
    return this.userData.asObservable()
   }
   public sendWordCloudDateTime(dateValue:any):void{
-    
     return this.wordCloudDatetime.next(dateValue)
   }
   public receivedWordCloudDateTime(){
-    
     return this.wordCloudDatetime.asObservable()
   }
 }

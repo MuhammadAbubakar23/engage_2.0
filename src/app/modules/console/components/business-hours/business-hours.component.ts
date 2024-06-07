@@ -5,7 +5,6 @@ import { Router, RouterModule } from '@angular/router';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-
 @Component({
   selector: 'app-business-hours',
   standalone: true,
@@ -40,33 +39,25 @@ export class BusinessHoursComponent implements OnInit {
     }
     this.spinnerServerice.show()
     this.commonService.GetBusinessHours(formData).subscribe(
-      
       (response: any) => {
         this.spinnerServerice.hide()
-
         this.messages = response.BusinessHours;
         this.totalCount = response.TotalCount
-
       },
       (error: any) => {
         this.spinnerServerice.hide()
-
         console.error(error);
       }
     );
   }
   setSortOption(option: string) {
-
     this.selectedSortOption = option;
     this.refreshMessages();
   }
-
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router , private spinnerServerice: NgxSpinnerService) { }
-
   ngOnInit(): void {
     this.refreshMessages()
   }
-
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
   }
@@ -75,14 +66,12 @@ export class BusinessHoursComponent implements OnInit {
       state: { template }
     });
   }
-
   deleteTemplate(template: any) {
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
       this.commonService.DeleteBusinessHours(template.id).subscribe(
         () => {
           window.location.reload()
-
           this.templates = this.templates.filter((msg) => msg.id !== template.id);
         },
         (error: any) => {
@@ -94,7 +83,6 @@ export class BusinessHoursComponent implements OnInit {
   disableTemplate(template: any) {
     template.disabled = true;
   }
-
   cloneTemplate(template: any) {
     const clonedTemplate = { ...template };
     clonedTemplate.name += ' (Cloned)';
@@ -119,24 +107,19 @@ export class BusinessHoursComponent implements OnInit {
     this.refreshMessages()
   }
   goToPage(pageNumber: number): void {
-    
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }
     this.refreshMessages()
   }
-
   getVisiblePageNumbers(): number[] {
     const maxPages = Math.ceil(this.totalCount / this.perPage);
     const visiblePages = 5;
-
     let startPage = Math.max(1, this.currentPage - Math.floor(visiblePages / 2));
     let endPage = Math.min(startPage + visiblePages - 1, maxPages);
-
     if (endPage - startPage + 1 < visiblePages) {
       startPage = Math.max(1, endPage - visiblePages + 1);
     }
-
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
 }

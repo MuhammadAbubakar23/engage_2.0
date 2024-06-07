@@ -1,5 +1,4 @@
 <div class="tab-pane fade active show position-relative" id="Focused" role="tabpanel" aria-labelledby="focused-tab">
-
   <div class="tab-content" id="myTabContent">
     <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
       <p style="color: white"> Loading... </p>
@@ -27,7 +26,6 @@
               <div class="perfect-scrollbar dd-scroll" data-scrollbar="true" tabindex="-1"
                 style="overflow: auto; outline: none;">
                 <div class="scroll-content">
-
                   <li>
                     <a class="dropdown-item d-flex contact-user" *ngFor="let customer of customersList"
                       (click)="getConversationListByCustomer(customer.fromId)">
@@ -42,8 +40,6 @@
                           </h6>
                           <p class="mb-1 coal">{{customer.fromId}}</p>
                         </div>
-
-
                       </div>
                     </a>
                   </li>
@@ -66,7 +62,6 @@
             </button>
             <ul class="dropdown-menu assignFirstDropdownList1" [ngClass]="anyTimeDropdown?'show':''"
               aria-labelledby="dropdownMenuButton1">
-
               <li class="dropdown-item" (click)="anyTime('Any Time')">
                 <a>Any Time</a>
               </li>
@@ -77,7 +72,6 @@
                 <a>Older then a month</a>
               </li>
               <li class="dropdown-item" (click)="anyTime('Older then a 6 months')">
-
                 <a> Older then a 6 months</a>
               </li>
               <li class="dropdown-item" (click)="anyTime('Older then a year')">
@@ -113,12 +107,10 @@
                     <label for="end-date">End Date</label>
                   </div>
                 </div>
-
                 <div class="text-end">
                   <button type="submit" class="btn skyBg btn-small">Apply</button>
                 </div>
               </form>
-
             </div>
           </div>
         </li>
@@ -138,18 +130,13 @@
           <button class="btn toggle-btn-checked fw-bold" (click)="hasBlueTick(false)">
             <i class="fa-sharp fa-regular fa-badge-check"></i> Verified Account</button>
         </li>
-
         <!-- Testinggggggggggggggggggggggggggggggggggggggggg -->
-
         <!-- <li class="list-inline-item">
           <input type="button" class="btn-check" id="btn-download-report" autocomplete="off">
           <label class="btn toggle-check-btn fw-bold" for="btn-download-report" (click)="download()">
             <i class="fal fa-paperclip"></i> Download .Csv</label>
         </li> -->
-
         <!-- Testinggggggggggggggggggggggggggggggggggggggggg -->
-
-
         <!-- <li>
                 </li>
                 <li class="list-inline-item">
@@ -169,7 +156,6 @@
                       <div class="perfect-scrollbar dd-scroll" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;"><div class="scroll-content">
                         <li>
                           <a class="dropdown-item d-flex contact-user" >
-
                             <div class="list-down-icon">
                               <div class="iconButton medium mintBg me-3">
                                 AK
@@ -181,7 +167,6 @@
                                 </h6>
                                 <p class="mb-1 coal">amin.khan@gmail.com</p>
                               </div>
-
                             </div>
                           </a></li>
                         <li>
@@ -195,8 +180,6 @@
                                 </h6>
                                 <p class="mb-1 coal">aniqa@gmail.com</p>
                               </div>
-
-
                             </div>
                           </a>
                           <a class="dropdown-item d-flex contact-user" value="Bilal Ali">
@@ -211,8 +194,6 @@
                                 </h6>
                                 <p class="mb-1 coal">bilal.ali@gmail.com</p>
                               </div>
-
-
                             </div>
                           </a>
                           <a class="dropdown-item d-flex contact-user" value="Aniqa Khan">
@@ -225,8 +206,6 @@
                                 </h6>
                                 <p class="mb-1 coal">ayesha@gmail.com</p>
                               </div>
-
-
                             </div>
                           </a>
                           <a class="dropdown-item d-flex contact-user" value="Jawad Khan">
@@ -239,8 +218,6 @@
                                 </h6>
                                 <p class="mb-1 coal">jawadkhan@gmail.com</p>
                               </div>
-
-
                             </div>
                           </a>
                           <a class="dropdown-item d-flex contact-user" value="Sana Khan">
@@ -255,8 +232,6 @@
                                 </h6>
                                 <p class="mb-1 coal">sana.khan@gmail.com</p>
                               </div>
-
-
                             </div>
                           </a>
                           <a class="dropdown-item d-flex contact-user" value="Tabish Ali">
@@ -271,8 +246,6 @@
                                 </h6>
                                 <p class="mb-1 coal">tabish.ali@gmail.com</p>
                               </div>
-
-
                             </div>
                           </a>
                           <a class="dropdown-item d-flex contact-user" value="Talha Iqbal">
@@ -285,8 +258,6 @@
                                 </h6>
                                 <p class="mb-1 coal">talhaiqbal@gmail.com</p>
                               </div>
-
-
                             </div>
                           </a>
                           <a class="dropdown-item d-flex contact-user" value="Umair Khan">
@@ -299,8 +270,6 @@
                                 </h6>
                                 <p class="mb-1 coal">umairkhan@gmail.com</p>
                               </div>
-
-
                             </div>
                           </a>
                         </li>
@@ -326,8 +295,6 @@
                 <i class="fa-light fa-xmark"></i>
               </span>
             </div>
-
-
           </header>
           <div class="search-body">
             <div class="row">
@@ -369,7 +336,6 @@
             <!-- <div class="mb-3 d-none">
               <div class="heading">Size</div>
               <div class="row">
-
                 <div class="col-5">
                   <select class="form-control">
                     <option selected="">greater then</option>
@@ -388,11 +354,9 @@
                 </div>
               </div>
             </div> -->
-
             <div class="mb-3">
               <div class="heading">Date within</div>
               <div class="row">
-
                 <div class="col-5">
                   <select class="form-control" formControlName="dateWithin">
                     <option disabled value="">Date Within</option>
@@ -409,10 +373,8 @@
                 <div class="col-7">
                   <input type="date" class="form-control" placeholder="Select Date" formControlName="fromDate">
                 </div>
-
               </div>
             </div>
-
             <!-- <div class="form-floating mb-3">
               <select class="form-select" id="floatingSelect" aria-label="Search">
                 <option selected="">All Mail</option>
@@ -438,7 +400,6 @@
               </div> -->
             </div>
           </div>
-
           <footer class="py-3">
             <div class="buttons-wrap d-flex justify-content-end">
               <button type="button" class="btn btn-outline-secondary closefilter"
@@ -448,7 +409,6 @@
           </footer>
         </div>
       </form>
-
     </div>
     <div class="filter-container">
       <ul class="list-group list-group-horizontal border-0">
@@ -492,7 +452,6 @@
           <i class="fal fa-redo-alt"></i>
         </li>
         <!-- <div [hidden]="flag == 'trash'"> -->
-
         <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'archived'"
           (click)="InsertTagInProfile('archived','Tag')" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="bottom" title="" data-bs-original-title="Archive"
@@ -551,13 +510,11 @@
                     data-bs-placement="bottom" title="" data-bs-original-title="Move to" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
                     <i class="fal fa-share-square"></i>
                 </li>
-
                 <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
                     data-bs-placement="bottom" title="" data-bs-original-title="Labels"
                     [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
                     <i class="fal fa-tags"></i>
                 </li> -->
-
         <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="top" title="" data-bs-original-title="More" [hidden]="flag == 'trash'"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
@@ -594,12 +551,10 @@
                             <li>
                                 <a class="dropdown-item" >Forward as Attachment</a>
                             </li> -->
-
             </ul>
           </div>
         </li>
         <!-- </div> -->
-
       </ul>
       <!-- <div class="selected-row" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
         Selected <span class="badge twltte-bg rounded-pill">{{Ids.length}}</span>
@@ -625,7 +580,6 @@
             conversations in Focused</a>
           <a class="clear-selection" style="display: none;">Clear selection</a>
         </div> -->
-
         <table class="table">
           <thead>
             <tr *ngIf="FlagForAssignToMe=='follow_up'">
@@ -684,7 +638,6 @@
                     aria-label="PlayStore"></i>
                 </td>
                 <td style="width: 300px;">
-                   
                   <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
                     <a
                       (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId, query.skillSlug)">
@@ -696,7 +649,6 @@
                           <span class="badge bg-danger rounded-pill"
                             *ngIf="query.unrespondedCount > 0">{{query.unrespondedCount}}</span></a>
                   </span>
-
                 </td>
                 <td>
                   <div class="maintext"
@@ -711,14 +663,11 @@
                     <small><strong>{{query?.follow_Up_Status | date: 'EE, MMM-dd, yyyy h:mm:ss a '}}</strong></small>
                   </span>
                 </td>
-
                 <!-- <td>
                         <div class="dropdown bookmark-dropdown">
-  
                           <button class="btn" type="button" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-bookmark mint"></i>
                           </button>
-  
                           <ul class="dropdown-menu dropdown-menu-start p-0 custom-dropdown large shadow mt-2 assignSecondDropdownList" aria-labelledby="drop2">
                             <div>
                               <ul class="dropdown-listing h-auto">
@@ -743,7 +692,6 @@
                                 </li>
                                 <li class="list-body small-list h-auto">
                                   <div class="list-group list-group-flush">
-  
                                     <a class="list-group-item d-flex level1Btn">
                                       <div class="form-check w-100 p-0 theme-check">
                                         <input class="form-check-input float-end" type="checkbox" id="gridCheck2">
@@ -796,7 +744,6 @@
                           </ul>
                         </div>
                       </td> -->
-
                 <!-- <td class="more-action-container">
                 <span class="more-action-btns">
                   <a  class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="1"
@@ -821,17 +768,14 @@
     </div>
   </div>
 </div>
-
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
   <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
     aria-live="assertive" aria-atomic="true">
     <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
       <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
       <div class="toast-btn d-flex align-items-center">
-
         <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
           (click)="closeToaster()"><i class="fal fa-times"></i></button>
-
       </div>
     </div>
   </div>

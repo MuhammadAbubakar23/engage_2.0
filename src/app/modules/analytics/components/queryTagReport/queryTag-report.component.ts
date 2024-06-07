@@ -13,7 +13,6 @@ import * as echarts from 'echarts';
 import { SharedModule } from '../../../../shared/shared.module';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
-
 @Component({
   standalone: true,
   selector: 'app-queryTag-report',
@@ -44,11 +43,9 @@ export class QueryTagReportComponent implements OnInit {
   platformsArray: any[] = []
   currentDate: any;
   maxEndDate: any;
-
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
-
   tagsPerChannel: any[] = [];
   private inboundOutboundChart:any;
   private sentimentChart:any;
@@ -89,7 +86,6 @@ export class QueryTagReportComponent implements OnInit {
         });
       }
     });
-
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
     this.AddGraph();
@@ -99,7 +95,6 @@ export class QueryTagReportComponent implements OnInit {
   mouseClickReset() {
     this.searchText = ''
   }
-
   onCheckboxChange() {
     this.AddGraph();
     this.cdr.detectChanges();
@@ -109,36 +104,29 @@ export class QueryTagReportComponent implements OnInit {
       .filter((item) => item.isSelected)
       .map((item) => item.name);
     this.selectedChannels = selectedChannelsArray.toString();
-
     let selectedContentTypesArray = this.contentTypes
       .filter((item) => item.isSelected)
       .map((item) => item.value);
     this.selectedContent = selectedContentTypesArray.toString();
-
     let selectedTagOptionArray = this.subTags
       .filter((item) => item.isSelected)
       .map((item) => item.slug);
     this.selectedTagOption = selectedTagOptionArray.toString();
-
     let selectedSentimentsArray = this.sentimentOptions
       .filter((item) => item.isSelected)
       .map((item) => item.slug);
     this.selectedSentiment = selectedSentimentsArray.toString();
-
     let selectedTagByArray = this.taggedByOptions
       .filter((item) => item.isSelected)
       .map((item) => item.id);
     this.selectedTagBy = selectedTagByArray.toString();
-
     let selectedTypeArray = this.typeOptions
       .filter((item) => item.isSelected)
       .map((item) => item.label);
     this.selectedType = selectedTypeArray.toString();
-
     if (this.startDate == '' && this.endDate == '') {
       const today = this.currentDate;
       this.endDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
-
       let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 7);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.endDate != '') {
@@ -153,7 +141,6 @@ export class QueryTagReportComponent implements OnInit {
         return;
       }
     }
-
     const requestData = {
       fromDate: this.startDate,
       toDate: this.endDate,
@@ -241,12 +228,9 @@ export class QueryTagReportComponent implements OnInit {
                     return dataPoint.y;
                   }),
                 },
-
               ]
             };
             this.inboundOutboundChart.setOption(option);
-            
-
             // Update the ChannelWiseGraph
             const dom = this.ChannelWiseGraph.nativeElement;
             this.averageResponseChart = echarts.init(dom, null, {
@@ -323,11 +307,9 @@ export class QueryTagReportComponent implements OnInit {
               renderer: 'canvas',
               useDirtyRect: false,
             });
-
             var option: echarts.EChartsOption;
             const tagReportData = this.Inbound_Outbound_Report.tagReportData;
             tagReportData.forEach((channel: any) => {
-
               if (!this.platformsArray.includes(channel.platform)) {
                 this.platformsArray.push(channel.platform);
               }
@@ -373,7 +355,6 @@ export class QueryTagReportComponent implements OnInit {
                 // }
               })),
             };
-
             this.tagsChart.setOption(option);
             // option = {
             //   tooltip: { trigger: 'axis' },
@@ -388,9 +369,7 @@ export class QueryTagReportComponent implements OnInit {
             //   yAxis: [{ type: 'value' }],
             //   series: this.tagsPerChannel,
             // };
-
             // mychart.setOption(option);
-
             // Update senitimentalGraph
             const myDoms = this.senitimentalGraph.nativeElement;
             this.sentimentChart = echarts.init(myDoms, null, {
@@ -480,7 +459,6 @@ export class QueryTagReportComponent implements OnInit {
                 },
               ],
             };
-
             option && this.sentimentChart.setOption(option);
           }
         },
@@ -501,7 +479,6 @@ export class QueryTagReportComponent implements OnInit {
     { id: '23', label: 'Hours' },
     { id: '94', label: 'Months' },
   ];
-
   channelOptions = [
     {
       id: '123',
@@ -625,14 +602,11 @@ export class QueryTagReportComponent implements OnInit {
   taggedByOptions = [{ id: '', name: '', isSelected: false }];
   subTags: any[] = [];
   searchText: string = '';
-
   closeToaster() {
     this.toastermessage = false;
   }
-
   responseReceived: boolean = false;
   getListUser() {
-
     if (!this.responseReceived) {
       this.responseReceived = true;
       this.commonService.GetUserList().subscribe(
@@ -647,7 +621,6 @@ export class QueryTagReportComponent implements OnInit {
       );
     }
   }
-
   makeChartResponsive(){
     window.addEventListener('resize', ()=>{
       if(this.inboundOutboundChart){

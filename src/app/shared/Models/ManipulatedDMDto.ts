@@ -13,7 +13,6 @@ export class DMData {
     profile: Profile=new Profile()
     dm: Dm[]=[]
   }
-  
   export class User {
     id: number=0;
     userId: string="";
@@ -23,7 +22,6 @@ export class DMData {
     followers_Count: any
     secondaryProfiles: any
   }
-  
   export class Profile {
     profile_Id: string="";
     page_Id: any
@@ -32,7 +30,6 @@ export class DMData {
     clientEmail: any
     channelId: any
   }
-  
   export class Dm {
     id: number=0;
     msgId: string="";
@@ -60,7 +57,6 @@ export class DMData {
     attachments: Attachment[]=[]
     dispositions: any
   }
-  
   export class Sentiment {
     platform: string="";
     name: string="";
@@ -70,7 +66,6 @@ export class DMData {
     createdByName: any
     wings: any
   }
-  
   export class Attachment {
     mediaType: string="";
     name: any

@@ -50,7 +50,6 @@ import {
 import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { ConnectionIdService } from 'src/app/services/connectionId/connection-id.service';
-
 @Component({
   selector: 'app-channel',
   templateUrl: './channel.component.html',
@@ -69,7 +68,6 @@ export class ChannelComponent implements OnInit {
     parentIndex: number | null;
     childIndex: number | null;
   } = { parentIndex: null, childIndex: null }; // Initialize to null
-
   showLikeBtnTo: string = 'facebook, linkedin, youtube';
   showHideBtnTo: string = 'facebook';
   showGifBtnOnChannels: any[] = ['FC', 'FCP', 'IM'];
@@ -84,13 +82,11 @@ export class ChannelComponent implements OnInit {
     'morinaga',
   ];
   showCustomerInformationForm: any[] = ['localhost', 'staging', 'morinaga'];
-
   DMTab: boolean = false;
   CmntTab: boolean = false;
   NewCmntTab: boolean = false;
   MentionTab: boolean = false;
   TweetTab: boolean = false;
-
   totalUnrespondedMentionCountByCustomer: number = 0;
   TotalMentionQueryCount: number = 0;
   mentionsArray: any[] = [];
@@ -98,7 +94,6 @@ export class ChannelComponent implements OnInit {
   groupedTweets: any[] = [];
   TMReply: boolean = false;
   TTReply: boolean = false;
-
   Emojies = [
     { id: 1, emoji: '🙁', tile: 'sad' },
     { id: 2, emoji: '😀', tile: 'happy' },
@@ -110,7 +105,6 @@ export class ChannelComponent implements OnInit {
     { id: 8, emoji: '👍', tile: 'thumbs up' },
     { id: 9, emoji: '🤩', tile: 'wow' },
   ];
-
   Gifs = [
     {
       id: 1,
@@ -293,7 +287,6 @@ export class ChannelComponent implements OnInit {
       src: `${this.baseUrl}${'/assets/images/Gifs/cool_14.gif'}`,
     },
   ];
-
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('textarea') textarea!: ElementRef;
   @ViewChild('Gif') Gif!: ElementRef;
@@ -304,17 +297,13 @@ export class ChannelComponent implements OnInit {
   onInput(textarea: HTMLTextAreaElement) {
     this.adjustTextareaHeight(textarea);
   }
-
   Newpost: any;
-
   totalComments: number = 0;
   totalMessages: number = 0;
-
   flag: string = '';
   commentDto = new commentsDto();
   messageDto = new messagesDto();
   newpostcommentDto = new newpostcommentDto();
-
   updatedComments: any;
   updatedMessages: any;
   newPostComment: any[] = [];
@@ -322,7 +311,6 @@ export class ChannelComponent implements OnInit {
   spinner1running = false;
   spinner2running = false;
   newcomment: any;
-
   addTags: any;
   removeTags: any;
   isAttachment = false;
@@ -333,7 +321,6 @@ export class ChannelComponent implements OnInit {
   isGifSelected: boolean = false;
   selectedGifFiles: any[] = [];
   userProfileId = 0;
-
   profileId: string = '';
   profilePageId: string = '';
   text: string = '';
@@ -350,7 +337,6 @@ export class ChannelComponent implements OnInit {
   queryStatus: any;
   userInformation: any;
   profileInformation: any;
-
   mentionedCommentOrMessageId: number = 0;
   agentId: any;
   platform: any;
@@ -367,16 +353,13 @@ export class ChannelComponent implements OnInit {
   AlterMsg: any = '';
   channelDM: ManipulatedDMDto[] = [];
   channelDMSingle: ManipulatedDMDto = new ManipulatedDMDto();
-
   TotalCmntQueryCount: number = 0;
   TotalMsgQueryCount: number = 0;
   TotalTweetQueryCount: number = 0;
   totalUnrespondedTweetCountByCustomer: number = 0;
-
   id = this.fetchId.getOption();
   slaId = this.fetchId.getSlaId();
   queryType = this.fetchPostType.postType;
-
   ReplyDto = new ReplyDto();
   ConverstationDetailDto = new conversationDetailDto();
   insertSentimentForFeedDto = new InsertSentimentForFeedDto();
@@ -386,7 +369,6 @@ export class ChannelComponent implements OnInit {
   filterDto = new FiltersDto();
   UploadedFile: FormData = new FormData();
   likeByAdminDto = new LikeByAdminDto();
-
   show = false;
   isOpen = false;
   active = false;
@@ -397,7 +379,6 @@ export class ChannelComponent implements OnInit {
   querryCompleted = false;
   markAsComplete = false;
   toastermessage = false;
-
   searchText: string = '';
   searchGif: string = '';
   PostStatsArray: postStatsDto[] = [];
@@ -405,22 +386,17 @@ export class ChannelComponent implements OnInit {
   quickRepliesList: any[] = [];
   HumanAgentTags: any[] = [];
   Keywords: any[] = [];
-
   commentsArray: any[] = [];
   groupArrays: any[] = [];
-
   messagesArray: any[] = [];
   groupedMessages: any[] = [];
   quickReplySearchText: string = '';
-
   teamPermissions: any;
   messagesStatus: any[] = [];
   Sentiments: any[] = [];
-
   fetchedPostType: string = '';
   public Subscription!: Subscription;
   public criteria!: SortCriteria;
-
   constructor(
     private fetchId: FetchIdService,
     private toggleService: ToggleService,
@@ -446,7 +422,6 @@ export class ChannelComponent implements OnInit {
     private getSkillSlug: SkillslugService,
     private getConnectionId: ConnectionIdService
   ) {}
-
   ngOnInit(): void {
     this.platform = this.fetchId.platform;
     this.flag = this.router.url.split('/')[2];
@@ -473,13 +448,10 @@ export class ChannelComponent implements OnInit {
     }
     // this.ImageName=[ {name: 'gif', lastModified: 1713945235285, lastModifiedDate:" Wed Apr 24 2024 12:53:55 GMT+0500 (Pakistan Standard Time)", webkitRelativePath: '', size: 1202167, }];
     this.fetchedPostType = this.fetchPostType.postType;
-
     const textarea = this.el.nativeElement as HTMLTextAreaElement;
     this.renderer.addClass(textarea, 'auto-resize');
     this.adjustTextareaHeight(textarea);
-
     this.teamPermissions = this.stor.retrive('permissionteam', 'O').local;
-
     const menu = this.stor.retrive('Tags', 'O').local;
     menu.forEach((item: any) => {
       if (item.name == 'Tags') {
@@ -504,19 +476,15 @@ export class ChannelComponent implements OnInit {
         });
       }
     });
-
     this.criteria = {
       property: 'createdDate',
       descending: true,
     };
-
     this.fetchData();
-
     // this.getComments();
     // this.getMessages();
     this.quickRepliesGeneric();
     this.humanAgentTags();
-
     this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
       this.addTags = res;
       this.addTagDataListener();
@@ -581,7 +549,6 @@ export class ChannelComponent implements OnInit {
           }
         }
       });
-
     this.ticketResponseService.getTicketId().subscribe((res) => {
       this.updateTicketId(res);
     });
@@ -653,11 +620,9 @@ export class ChannelComponent implements OnInit {
         ],
       },
     ];
-
     const channelWithFeature = channelFeatures.find(
       (x) => x.platform === this.platform
     );
-
     if (channelWithFeature != null) {
       this.filterDto = {
         // fromDate: new Date(),
@@ -695,7 +660,6 @@ export class ChannelComponent implements OnInit {
       }
     }
   }
-
   getClassOfHeaderBackground(platform: string) {
     if (platform == 'Facebook') {
       this.iconClass = 'fab fa-facebook-f';
@@ -726,15 +690,12 @@ export class ChannelComponent implements OnInit {
       this.backgroundColorClass = 'googleplaybg';
     }
   }
-
   getComments(filter: FiltersDto) {
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
-
       try {
         // this.spinner1running = true;
         // this.SpinnerService.show();
-
         this.commondata
           .GetChannelConversationDetail(filter)
           .subscribe((res: any) => {
@@ -751,12 +712,10 @@ export class ChannelComponent implements OnInit {
                 this.Comments[0].comments[0].id
               );
               this.commentsArray = [];
-
               this.Comments?.forEach((item: any) => {
                 this.commentsArray = [];
                 item.comments.forEach((cmnt: any) => {
                   this.commentsArray.push(cmnt);
-
                   let groupedItems = this.commentsArray.reduce(
                     (acc: any, aa: any) => {
                       const date = aa.createdDate.split('T')[0];
@@ -768,7 +727,6 @@ export class ChannelComponent implements OnInit {
                     },
                     {}
                   );
-
                   item['groupedComments'] = Object.keys(groupedItems).map(
                     (createdDate) => {
                       return {
@@ -777,14 +735,12 @@ export class ChannelComponent implements OnInit {
                       };
                     }
                   );
-
                   item['groupedComments'].forEach((x: any) => {
                     const groupdispostion = x.items;
                     this.groupAndModifyData(groupdispostion);
                   });
                 });
               });
-
               this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
               // this.SpinnerService.hide();
               // this.spinner1running = false;
@@ -798,7 +754,6 @@ export class ChannelComponent implements OnInit {
       }
     }
   }
-
   updateCommentsDataListener() {
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
@@ -848,13 +803,11 @@ export class ChannelComponent implements OnInit {
               this.postIdArray.push(item.post.postId);
               this.commentsArray = [];
               // this.newPostComment= [];
-
               if (this.postIdArray.includes(xyz.post.postId)) {
                 item.comments.push(this.commentDto);
                 item.comments.forEach((cmnt: any) => {
                   this.commentsArray.push(cmnt);
                 });
-
                 let groupedItems = this.commentsArray.reduce(
                   (acc: any, item: any) => {
                     const date = item.createdDate?.split('T')[0];
@@ -866,7 +819,6 @@ export class ChannelComponent implements OnInit {
                   },
                   {}
                 );
-
                 item['groupedComments'] = Object.keys(groupedItems).map(
                   (createdDate) => {
                     return {
@@ -939,7 +891,6 @@ export class ChannelComponent implements OnInit {
                           },
                           {}
                         );
-
                         item['groupedComments'] = Object.keys(groupedItems).map(
                           (createdDate) => {
                             return {
@@ -961,10 +912,8 @@ export class ChannelComponent implements OnInit {
         });
       });
     }
-
     this.changeDetect.detectChanges();
   }
-
   updateMessagesDataListener() {
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
@@ -997,7 +946,6 @@ export class ChannelComponent implements OnInit {
         localStorage.setItem('lastQueryId', this.messageDto.id.toString());
         this.messageOrDM.unshift(this.messageDto);
         this.messagesArray.unshift(this.messageDto);
-
         let groupedItems = this.messagesArray.reduce((acc: any, item: any) => {
           const date = item.createdDate?.split('T')[0];
           if (!acc[date]) {
@@ -1006,7 +954,6 @@ export class ChannelComponent implements OnInit {
           acc[date].push(item);
           return acc;
         }, {});
-
         this.groupedMessages = Object.keys(groupedItems).map((createdDate) => {
           return {
             createdDate,
@@ -1020,7 +967,6 @@ export class ChannelComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
-
   addTagDataListener() {
     this.Comments?.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
@@ -1152,7 +1098,6 @@ export class ChannelComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
-
   updateQueryStatusDataListener() {
     if (this.Comments) {
       this.Comments?.forEach((post: any) => {
@@ -1186,10 +1131,8 @@ export class ChannelComponent implements OnInit {
         }
       });
     }
-
     this.changeDetect.detectChanges();
   }
-
   updateBulkQueryStatusDataListener() {
     this.queryStatus.forEach((query: any) => {
       if (this.commentTab.includes(query.feedType)) {
@@ -1213,10 +1156,8 @@ export class ChannelComponent implements OnInit {
         });
       }
     });
-
     this.changeDetect.detectChanges();
   }
-
   replyDataListener() {
     if (this.commentTab.includes(this.newReply.contentType)) {
       this.Comments?.forEach((post: any) => {
@@ -1256,11 +1197,9 @@ export class ChannelComponent implements OnInit {
     }
     this.changeDetect.detectChanges();
   }
-
   async getMessages(filter: FiltersDto) {
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
-
       // this.spinner1running = true;
       // this.SpinnerService.show();
       try {
@@ -1278,10 +1217,8 @@ export class ChannelComponent implements OnInit {
               this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
               this.TotalMsgQueryCount = res.TotalQueryCount;
               localStorage.setItem('lastQueryId', this.messageOrDM[0].id);
-
               this.messagesArray = [];
               this.groupedMessages = [];
-
               this.messageOrDM.forEach((item: any) => {
                 this.messagesArray.push(item);
                 let groupedItems = this.messagesArray.reduce(
@@ -1295,7 +1232,6 @@ export class ChannelComponent implements OnInit {
                   },
                   {}
                 );
-
                 this.groupedMessages = Object.keys(groupedItems).map(
                   (createdDate) => {
                     return {
@@ -1320,7 +1256,6 @@ export class ChannelComponent implements OnInit {
   async getMentions(filter: FiltersDto) {
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
-
       // this.spinner1running = true;
       // this.SpinnerService.show();
       try {
@@ -1341,16 +1276,13 @@ export class ChannelComponent implements OnInit {
               this.totalUnrespondedMentionCountByCustomer = res.TotalCount;
               this.TotalMentionQueryCount = res.TotalQueryCount;
               localStorage.setItem('lastQueryId', this.TwitterMentions[0].id);
-
               this.mentionsArray = [];
               this.groupedMentions = [];
-
               // if (this.TwitterTweets.length == 0) {
               //   // this.TTReply = false;
               //   // this.TMReply = true;
               //   // this.TDMReply = false;
               // }
-
               this.TwitterMentions.forEach((item: any) => {
                 this.mentionsArray.push(item);
                 let groupedItems = this.mentionsArray.reduce(
@@ -1364,7 +1296,6 @@ export class ChannelComponent implements OnInit {
                   },
                   {}
                 );
-
                 this.groupedMentions = Object.keys(groupedItems).map(
                   (createdDate) => {
                     return {
@@ -1389,7 +1320,6 @@ export class ChannelComponent implements OnInit {
   async getTweets(filter: FiltersDto) {
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
-
       // this.spinner1running = true;
       // this.SpinnerService.show();
       try {
@@ -1401,15 +1331,12 @@ export class ChannelComponent implements OnInit {
               this.filterDto.queryType = 'TTR';
               this.TwitterTweets = res.List?.dm;
               this.userInformation = res.List?.user;
-
               this.userInfoService.shareUserInformation(res.List.user);
               this.pageName = res.List?.profile.clientAppName;
               this.totalUnrespondedTweetCountByCustomer = res.TotalCount;
               this.TotalTweetQueryCount = res.TotalQueryCount;
-
               this.commentsArray = [];
               this.groupedTweets = [];
-
               localStorage.setItem('lastQueryId', this.TwitterTweets[0].id);
               this.TwitterTweets.forEach((item: any) => {
                 this.commentsArray.push(item);
@@ -1424,7 +1351,6 @@ export class ChannelComponent implements OnInit {
                   },
                   {}
                 );
-
                 this.groupedTweets = Object.keys(groupedItems).map(
                   (createdDate) => {
                     return {
@@ -1434,7 +1360,6 @@ export class ChannelComponent implements OnInit {
                   }
                 );
               });
-
               // this.SpinnerService.hide();
               // this.spinner1running = false;
             }
@@ -1457,7 +1382,6 @@ export class ChannelComponent implements OnInit {
       }
       groupedData[createdDate].push(item);
     });
-
     // Step 2 and 3: Remove disposition object from all records except the one with the max insertionDate
     for (const key in groupedData) {
       if (groupedData.hasOwnProperty(key)) {
@@ -1467,7 +1391,6 @@ export class ChannelComponent implements OnInit {
             ? prev
             : current;
         });
-
         group.forEach((item) => {
           if (item !== maxInsertionDateItem) {
             item.dispositions = null;
@@ -1475,7 +1398,6 @@ export class ChannelComponent implements OnInit {
         });
       }
     }
-
     // Step 4: Restore the original state of the data
     const restoredData = [];
     for (const key in groupedData) {
@@ -1483,10 +1405,8 @@ export class ChannelComponent implements OnInit {
         restoredData.push(...groupedData[key]);
       }
     }
-
     return restoredData;
   }
-
   onFileChanged() {
     Array.from(this.fileInput.nativeElement.files).forEach((file: any) => {
       if (file.size > 4 * 1024 * 1024) {
@@ -1503,20 +1423,16 @@ export class ChannelComponent implements OnInit {
         const files = this.ImageArray.map((file: any) => file); // Create a new array with the remaining files
         const newFileList = new DataTransfer();
         files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
-
         this.ImageName = newFileList.files;
       }
     });
   }
-
   addGif(gifUrl: any) {
     this.selectedGifFiles = [];
-
     fetch(gifUrl)
       .then((response) => response.blob())
       .then((blob) => {
         // const originalFileName = gifUrl.src;
-
         const gifFile = new File([blob], '.gif', { type: 'image/gif' });
         if (this.selectedGifFiles.length === 0) {
           // If no GIF present, push the new one
@@ -1527,16 +1443,13 @@ export class ChannelComponent implements OnInit {
           this.newImageName = this.selectedGifFiles;
           this.changeDetect.detectChanges();
         }
-
         if (this.selectedGifFiles.some((item) => item.gifUrl === gifUrl)) {
         }
       });
   }
-
   sendGifAsFormData(gifFile: File, gifUrl: string) {
     this.sendSelectedGif = [];
     const formData = new FormData();
-
     this.selectedGifFiles.push({ gifFile, gifUrl });
     this.newImageName = this.selectedGifFiles;
     this.selectedGifFiles.forEach((x: any) => {
@@ -1559,19 +1472,16 @@ export class ChannelComponent implements OnInit {
     }
     this.changeDetect.detectChanges();
   }
-
   fbStats() {
     // this.shareFbResService.updateMessage(this.Comments);
     if (this.Comments != null || undefined) {
       this.Comments?.forEach(async (post: any): Promise<void> => {
         this.postIdForStats = post.post.postId;
         this.pageIdForStats = post.post?.postId.split('_')[0];
-
         await this.commondata
           .GetFbPostStats(this.pageIdForStats, this.postIdForStats)
           .subscribe((postStats: any) => {
             post.post['postStats'] = postStats;
-
             this.totalPostReactionsCount =
               postStats.reactioinsLIst.like +
               postStats.reactioinsLIst.love +
@@ -1590,12 +1500,10 @@ export class ChannelComponent implements OnInit {
     this.Comments?.forEach((post: any) => {
       post.comments.forEach(async (comment: any) => {
         this.commentIdForStats = comment.commentId;
-
         await this.commondata
           .GetFbCommentStats(this.pageIdForStats, this.commentIdForStats)
           .subscribe((commentStats: any) => {
             comment['comStats'] = commentStats;
-
             this.totalCommentReactionsCount =
               commentStats.reactioinsLIst.like +
               commentStats.reactioinsLIst.love +
@@ -1611,22 +1519,18 @@ export class ChannelComponent implements OnInit {
       });
     });
   }
-
   replyForm = new FormGroup({
-    text: new FormControl(this.ReplyDto.text, Validators.required),
-    commentId: new FormControl(this.ReplyDto.commentId),
-    platform: new FormControl(this.ReplyDto.platform),
-    contentType: new FormControl(this.ReplyDto.contentType),
-    profileId: new FormControl(this.ReplyDto.profileId),
-    profilePageId: new FormControl(this.ReplyDto.profilePageId),
-    userProfileId: new FormControl(this.ReplyDto.userProfileId),
-    responseByName: new FormControl(this.ReplyDto.responseByName),
-    instagramBusinessAccountId: new FormControl(
-      this.ReplyDto.instagramBusinessAccountId
-    ),
-    connectionId: new FormControl(this.ReplyDto.connectionId),
+    text: new FormControl('', Validators.required),
+    commentId: new FormControl(0),
+    platform: new FormControl(''),
+    contentType: new FormControl(''),
+    profileId: new FormControl(''),
+    profilePageId: new FormControl(''),
+    userProfileId: new FormControl(0),
+    responseByName: new FormControl(''),
+    instagramBusinessAccountId: new FormControl(''),
+    connectionId: new FormControl(''),
   });
-
   SendCommentInformation(comId: any) {
     this.Comments?.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
@@ -1644,7 +1548,6 @@ export class ChannelComponent implements OnInit {
       });
     });
   }
-
   SendnewCommentInformation(comId: any) {
     this.newPostComment?.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
@@ -1662,7 +1565,6 @@ export class ChannelComponent implements OnInit {
       });
     });
   }
-
   SendMessageInformation(id: any) {
     this.messageOrDM?.forEach((msg: any) => {
       if (msg.id == id) {
@@ -1678,19 +1580,16 @@ export class ChannelComponent implements OnInit {
       }
     });
   }
-
   closeMentionedReply() {
     this.show = false;
     this.clearInputField();
   }
-
   clearInputField() {
     this.ImageArray = [];
     this.show = false;
+    this.textarea.nativeElement.value = '';
+    this.text = '';
     this.mentionedCommentOrMessageId = 0;
-    this.agentId = '';
-    this.platform = '';
-    this.postType = '';
     this.isGifSelected = false;
     this.showAttachmentButton = true;
     this.newImageName = [];
@@ -1701,7 +1600,6 @@ export class ChannelComponent implements OnInit {
     this.sendSelectedGif = [];
     this.detectChanges();
   }
-
   submitReply() {
     if (this.mentionedCommentOrMessageId == 0) {
       this.reloadComponent('selectComment');
@@ -1712,7 +1610,6 @@ export class ChannelComponent implements OnInit {
           formData.append('File', this.ImageName[index]);
         }
       }
-
       if (this.text !== '') {
         this.replyForm.patchValue({
           text: this.text,
@@ -1729,7 +1626,6 @@ export class ChannelComponent implements OnInit {
         instagramBusinessAccountId: this.instagramBusinessAccountId,
         connectionId: this.getConnectionId.connectionId,
       });
-
       formData.append('CommentReply', JSON.stringify(this.replyForm.value));
       if (
         this.replyForm.value.text !== '' &&
@@ -1743,16 +1639,26 @@ export class ChannelComponent implements OnInit {
           this.replyForm.value.text !== null) ||
         (this?.ImageName?.length > 0 && this.ImageName != undefined)
       ) {
-        // this.spinner1running = true;
-        // this.SpinnerService.show();
+        this.spinner1running = true;
+        this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
-            // this.spinner1running = false;
-            // this.SpinnerService.hide();
+            this.spinner1running = false;
+            this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('fbmessage');
-            this.replyForm.reset();
-
+            this.replyForm.reset({
+              text: '',
+              commentId: 0,
+              platform: '',
+              contentType: '',
+              profileId: '',
+              profilePageId: '',
+              userProfileId: 0,
+              responseByName: '',
+              instagramBusinessAccountId: '',
+              connectionId: '',
+            });
             if (this.radioInput != undefined) {
               this.radioInput.nativeElement.checked = false;
             }
@@ -1769,7 +1675,6 @@ export class ChannelComponent implements OnInit {
     }
     this.quickReplySearchText = '';
   }
-
   toggle(child: string, cmntId: any) {
     if (localStorage.getItem('child') == child) {
       this.toggleService.addTogglePanel('');
@@ -1778,7 +1683,6 @@ export class ChannelComponent implements OnInit {
     }
     this.createTicketService.setCommentId(cmntId);
   }
-
   sendQuickReplyGeneric(value: any) {
     this.quickRepliesList.forEach((x: any) => {
       if (x.subReply === null && x.id === value) {
@@ -1789,7 +1693,6 @@ export class ChannelComponent implements OnInit {
       }
     });
   }
-
   nthLevel(replies: any[], value: any) {
     replies.forEach((reply: any) => {
       if (reply.subReply === null && reply.id === value) {
@@ -1800,13 +1703,11 @@ export class ChannelComponent implements OnInit {
       }
     });
   }
-
   quickRepliesGeneric() {
     this.commondata.QuickReplyList().subscribe((res: any) => {
       this.quickRepliesList = res;
     });
   }
-
   humanAgentTags() {
     this.commondata.GetHumanAgentTag().subscribe((res: any) => {
       this.HumanAgentTags = res;
@@ -1817,7 +1718,6 @@ export class ChannelComponent implements OnInit {
     this.text = abc?.text;
     this.replyForm.patchValue({ text: this.text });
   }
-
   insertTagsForFeed(comId: number, tagName: string, platform: string) {
     this.insertTagsForFeedDto = {
       feedId: comId,
@@ -1827,7 +1727,6 @@ export class ChannelComponent implements OnInit {
       wings: this.getWing.wings,
       connectionId: this.getConnectionId.connectionId,
     };
-
     this.Comments?.forEach((abc: any) => {
       abc.comments.forEach((comment: any) => {
         if (comment.id == comId) {
@@ -1836,7 +1735,6 @@ export class ChannelComponent implements OnInit {
               .InsertTag(this.insertTagsForFeedDto)
               .subscribe((res: any) => {
                 this.reloadComponent('ApplyTag');
-
                 this.activeTag = true;
                 this.checkTag = true;
               });
@@ -1849,7 +1747,6 @@ export class ChannelComponent implements OnInit {
                 .InsertTag(this.insertTagsForFeedDto)
                 .subscribe((res: any) => {
                   this.reloadComponent('ApplyTag');
-
                   this.activeTag = true;
                   this.checkTag = true;
                 });
@@ -1867,7 +1764,6 @@ export class ChannelComponent implements OnInit {
               .InsertTag(this.insertTagsForFeedDto)
               .subscribe((res: any) => {
                 this.reloadComponent('ApplyTag');
-
                 this.activeTag = true;
                 this.checkTag = true;
               });
@@ -1880,7 +1776,6 @@ export class ChannelComponent implements OnInit {
                 .InsertTag(this.insertTagsForFeedDto)
                 .subscribe((res: any) => {
                   this.reloadComponent('ApplyTag');
-
                   this.activeTag = true;
                   this.checkTag = true;
                 });
@@ -1896,7 +1791,6 @@ export class ChannelComponent implements OnInit {
             .InsertTag(this.insertTagsForFeedDto)
             .subscribe((res: any) => {
               this.reloadComponent('ApplyTag');
-
               this.activeTag = true;
               this.checkTag = true;
             });
@@ -1917,7 +1811,6 @@ export class ChannelComponent implements OnInit {
       }
     });
   }
-
   removeTagFromFeed(feedId: number, tagName: any, platform: string) {
     if (
       this.flag == 'focused' ||
@@ -1932,18 +1825,15 @@ export class ChannelComponent implements OnInit {
         wings: this.getWing.wings,
         connectionId: this.getConnectionId.connectionId,
       };
-
       this.commondata
         .RemoveTag(this.insertTagsForFeedDto)
         .subscribe((res: any) => {
           this.reloadComponent('RemoveTag');
-
           this.activeTag = false;
           this.checkTag = false;
         });
     }
   }
-
   insertSentimentForFeed(comId: number, sentimenName: any, platform: string) {
     this.insertTagsForFeedDto = {
       feedId: comId,
@@ -1953,14 +1843,12 @@ export class ChannelComponent implements OnInit {
       wings: this.getWing.wings,
       connectionId: this.getConnectionId.connectionId,
     };
-
     this.commondata
       .InsertSentiment(this.insertTagsForFeedDto)
       .subscribe((res: any) => {
         this.reloadComponent('Sentiment');
       });
   }
-
   commentStatus(comId: any, type: any) {
     this.commentStatusDto = {
       id: comId,
@@ -1973,7 +1861,6 @@ export class ChannelComponent implements OnInit {
     };
     this.commondata.CommentRespond(this.commentStatusDto).subscribe(() => {});
   }
-
   likeByAdmin(
     comId: any,
     isLiked: boolean,
@@ -1983,7 +1870,6 @@ export class ChannelComponent implements OnInit {
     userId: any
   ) {
     isLiked = !isLiked;
-
     this.likeByAdminDto = {
       platform: platform,
       commentId: comId,
@@ -2001,7 +1887,6 @@ export class ChannelComponent implements OnInit {
       }
     });
   }
-
   reloadComponent(type: any) {
     if (type == 'messageUnhided') {
       this.AlterMsg = 'Comment Unhided Sucessfully';
@@ -2059,7 +1944,6 @@ export class ChannelComponent implements OnInit {
         this.toastermessage = false;
       }, 4000);
     }
-
     if (type == 'empty-input-field') {
       this.AlterMsg = 'Please write something!';
       this.toastermessage = true;
@@ -2124,29 +2008,23 @@ export class ChannelComponent implements OnInit {
       }, 4000);
     }
   }
-
   closeToaster() {
     this.toastermessage = false;
   }
-
   removeAttachedFile(index: any) {
     const filesArray = Array.from(this.ImageName);
     filesArray.splice(index, 1);
     this.ImageArray.splice(index, 1);
-
     const files = filesArray.map((file: any) => file); // Create a new array with the remaining files
     const newFileList = new DataTransfer();
     files.forEach((file) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
-
     this.fileInput.nativeElement.files = newFileList.files;
     this.detectChanges();
-
     if (this.ImageName.length == 0) {
       this.isAttachment = false;
       this.showGifButton = true;
     }
   }
-
   removeAttachedFileGif(id: any) {
     const index = this.newImageName.findIndex(
       (item: any) => item.gifUrl.id === id
@@ -2157,14 +2035,12 @@ export class ChannelComponent implements OnInit {
     this.isGifSelected = false;
     this.showAttachmentButton = true;
   }
-
   detectChanges(): void {
     if (this.fileInput) {
       this.ImageName = this.fileInput.nativeElement.files;
     }
     this.text = this.textarea.nativeElement.value;
   }
-
   insertAtCaret(text: string) {
     const textarea = this.textarea.nativeElement;
     textarea.focus();
@@ -2182,18 +2058,15 @@ export class ChannelComponent implements OnInit {
       this.detectChanges();
     }
   }
-
   insertEmoji(emoji: any) {
     this.insertAtCaret(' ' + emoji + ' ');
   }
-
   onScrollComments() {
     if (this.TotalCmntQueryCount > this.filterDto.pageSize) {
       this.filterDto.pageSize = this.filterDto.pageSize + 10;
       this.getComments(this.filterDto);
     }
   }
-
   onScrollMessages() {
     if (this.TotalMsgQueryCount > this.filterDto.pageSize) {
       this.filterDto.pageSize = this.filterDto.pageSize + 10;
@@ -2212,7 +2085,6 @@ export class ChannelComponent implements OnInit {
       this.getTweets(this.filterDto);
     }
   }
-
   updateTicketId(res: any) {
     if (this.Comments) {
       this.Comments?.forEach((post: any) => {
@@ -2232,25 +2104,23 @@ export class ChannelComponent implements OnInit {
         }
       });
     }
-
     this.changeDetect.detectChanges();
   }
-
   closeQuickResponseSidebar() {
     this.quickReplySearchText = '';
     if (this.radioInput != undefined) {
       this.radioInput.nativeElement.checked = false;
     }
   }
-
   isImage(attachment: any): boolean {
-    return attachment?.mediaType?.toLowerCase().includes('image') || attachment?.mediaType?.toLowerCase().includes('photo');
+    return (
+      attachment?.mediaType?.toLowerCase().includes('image') ||
+      attachment?.mediaType?.toLowerCase().includes('photo')
+    );
   }
-
   isVideo(attachment: any): boolean {
     return attachment?.mediaType?.toLowerCase().startsWith('video');
   }
-
   isAudio(attachment: any): boolean {
     return attachment?.mediaType?.toLowerCase().startsWith('audio');
   }
@@ -2284,14 +2154,11 @@ export class ChannelComponent implements OnInit {
       });
     });
   }
-
   c_satForm() {
     let data = this.stor.retrive('main', 'O').local;
-
     const email = data.originalUserName;
     const customerId = localStorage.getItem('storeOpenedId');
     const channel = localStorage.getItem('parent');
-
     this.insertAtCaret(
       this.baseUrl +
         '/survey/customer_satisfaction?channel=' +
@@ -2302,18 +2169,15 @@ export class ChannelComponent implements OnInit {
         email
     );
   }
-
   c_informationForm() {
     const customerId = localStorage.getItem('storeOpenedId');
     this.insertAtCaret(
       this.baseUrl + '/survey/customer_details?customerId=' + customerId + ' '
     );
   }
-
   toggleCollapse(index: number) {
     this.activeDropdown = this.activeDropdown === index ? null : index;
   }
-
   toggleInnerCollapse(parentIndex: number, childIndex: number) {
     this.activeInnerDropdown =
       this.activeInnerDropdown.parentIndex === parentIndex &&
@@ -2321,18 +2185,15 @@ export class ChannelComponent implements OnInit {
         ? { parentIndex: null, childIndex: null }
         : { parentIndex, childIndex };
   }
-
   isDropdownActive(index: number): boolean {
     return this.activeDropdown === index;
   }
-
   isInnerDropdownActive(parentIndex: number, childIndex: number): boolean {
     return (
       this.activeInnerDropdown.parentIndex === parentIndex &&
       this.activeInnerDropdown.childIndex === childIndex
     );
   }
-
   handleTextareaKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();

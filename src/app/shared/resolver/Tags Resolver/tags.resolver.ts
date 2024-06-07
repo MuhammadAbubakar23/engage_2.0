@@ -8,15 +8,12 @@ import { map, tap } from 'lodash';
 import { Observable, of } from 'rxjs';
 import { CommonDataService } from '../../services/common/common-data.service';
 import { StorageService } from '../../services/storage/storage.service';
-
 @Injectable({
   providedIn: 'root'
 })
-
 export class TagsResolver implements Resolve<any> {
   constructor(private commonService: CommonDataService, private stor: StorageService){}
   resolve(): Promise<any> {
-    
     // return this.commonService.GetAllTags()
     return new Promise((resolve, reject)=>{
       this.commonService.GetAllTags().subscribe((res:any)=>{

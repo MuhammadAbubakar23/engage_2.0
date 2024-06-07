@@ -1,13 +1,10 @@
-
 export  class BaseClass
 {
 	private str: string;
-
 constructor(st: string)
 {
   this.str = st;
 }
-
   public m1()
   {
 	  let x:any = new SIP.UA(

@@ -7,13 +7,11 @@ import {
 import { Observable, of } from 'rxjs';
 import { MenuModel } from 'src/app/layouts/engage2/menu-state/menu.model';
 import { TeamsService } from '../../services/teams.service';
-
 @Injectable({
   providedIn: 'root'
 })
 export class TeamResolver implements Resolve<MenuModel[]> {
   constructor(private _teams:TeamsService){}
-
   menuModel: MenuModel = { mainId:0,
     name: "",
     emerging:"",

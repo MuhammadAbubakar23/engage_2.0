@@ -62,7 +62,6 @@ export class UniqueCustomersComponent implements OnInit {
       // let currentDate = new Date();
       // let prevDate = currentDate.setDate(currentDate.getDate() - 5);
       // this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
-
       // this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
       this.startDate = this.maxEndDate;
       this.endDate = this.maxEndDate;
@@ -144,11 +143,9 @@ export class UniqueCustomersComponent implements OnInit {
     }
     this.addUniqueData();
   }
-
   closeToaster() {
     this.toastermessage = false;
   }
-
   reloadComponent(type: any) {
     if (type == 'downloading') {
       this.AlterMsg = 'Downloading Started';

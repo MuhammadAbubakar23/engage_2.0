@@ -33,7 +33,6 @@ label{
   padding-bottom: 30px;
   display: flex;
   width: 100%;
-
 }
 .timeline li:before{
   content: "";
@@ -97,12 +96,9 @@ flex: 0 0 32px;
 }
 .timeline li article {
 padding-left: 12px !important;
-
 }
 .timeline li article:before {
-
 content: ".";
-
 }
 .morinaga-main{
 margin:0 !important;
@@ -119,8 +115,6 @@ background: #fff;
 border-top: 1px solid #c3c3c3 !important;
 }
 }
- 
-
   .scroll{
     height: calc(100vh - 200px);
     overflow: scroll;

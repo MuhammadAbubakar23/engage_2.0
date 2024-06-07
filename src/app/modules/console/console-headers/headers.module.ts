@@ -37,14 +37,8 @@ import { ConsoleHomeHeaderComponent } from './console-home-header/console-home-h
 import { ConsoleCreateBusinessHoursHeaderComponent } from './console-create-business-hours-header/console-create-business-hours-header.component';
 import { ConsoleCreateSkillsHeaderComponent } from './console-create-skills-header/console-create-skills-header.component';
 import { ConsoleCreatePreferencesHeaderComponent } from './console-create-preferences-header/console-create-preferences-header.component';
-
-
-
-
 @NgModule({
   declarations: [
-  
-  
     ConsoleUsersHeaderComponent,
           ConsoleTeamsHeaderComponent,
           ConsoleRulesHeaderComponent,
@@ -81,7 +75,6 @@ import { ConsoleCreatePreferencesHeaderComponent } from './console-create-prefer
           ConsoleCreateSkillsHeaderComponent,
           ConsoleCreatePreferencesHeaderComponent
       //    RightHeaderComponentsComponent
-
   ],
   imports: [
     CommonModule,
@@ -89,6 +82,5 @@ import { ConsoleCreatePreferencesHeaderComponent } from './console-create-prefer
   ],
   exports:[
   ]
-  
 })
 export class HeadersModule { }

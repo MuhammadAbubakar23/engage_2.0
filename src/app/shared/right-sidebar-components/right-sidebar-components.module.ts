@@ -15,8 +15,6 @@ import { CreateNewComponent } from './create-new/create-new.component';
 import { FormsModule } from '@angular/forms';
 import { RightSidebarComponentsRoutingModule } from './right-sidebar-components-routing.module';
 import { ComplaintTicketPanelComponent } from './complaint-ticket-panel/complaint-ticket-panel/complaint-ticket-panel.component';
-
-
 @NgModule({
   declarations: [
     TicketsComponent,

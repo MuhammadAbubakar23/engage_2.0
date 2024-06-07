@@ -1,11 +1,9 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { HeaderService } from 'src/app/shared/services/header.service';
-
 @Component({
   selector: 'app-whatsapp-report',
   templateUrl: './whatsapp-report.component.html',
@@ -27,18 +25,15 @@ export class WhatsappReportComponent implements OnInit {
   toDate: string = '';
   itemperPage: number = 20;
   totalPages: any;
-
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
-
   constructor(
     private commonService: CommonDataService,
     private datePipe: DatePipe,
     private _hS: HeaderService,
     private SpinnerService: NgxSpinnerService
   ) {}
-
   ngOnInit(): void {
     const newObj = {
       title: 'WhatsApp Raw Data',
@@ -50,17 +45,13 @@ export class WhatsappReportComponent implements OnInit {
     //   currentDate.getDate() - 1ll
     // );
  this.maxEndDate=currentDate.toISOString().split('T')[0];
-    
-
     this.GetWhatsAppRawData();
   }
-
   GetWhatsAppRawData() {
     if (this.toDate == '' && this.fromDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 1);
       this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
-
       this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
       // this.fromDate = this.maxEndDate;
       // this.toDate = this.maxEndDate;
@@ -83,10 +74,8 @@ export class WhatsappReportComponent implements OnInit {
       pageNumber: this.pageNumber,
       pageSize: this.itemperPage,
     };
-
       this.SpinnerService.show();
       this.commonService.GetWhatsAppReport(obj).subscribe((res: any) => {
-
         this.SpinnerService.hide();
         this.whatsAppRawData = res.List;
         this.totalCounts = res.TotalCount;
@@ -111,9 +100,7 @@ export class WhatsappReportComponent implements OnInit {
         this.SpinnerService.hide()
       }
       );
-    
   }
-
   DownloadWhatsAppRawData() {
     var obj = {
       fromDate: this.fromDate,
@@ -126,7 +113,6 @@ export class WhatsappReportComponent implements OnInit {
     this.commonService.DownloadWhatsAppReport(obj).subscribe((res: any) => {
       // var array = JSON.parse(res);
       // this.excelService.exportAsExcelFile(array, 'whatsapp_raw_data');
-
       const a = document.createElement('a');
       a.href = res;
       a.download = 'WhatsappRawDataReport' + this.fromDate + '.csv';
@@ -137,7 +123,6 @@ export class WhatsappReportComponent implements OnInit {
       this.reloadComponent('downloaded');
     });
   }
-
   nextPage(pageNumber: any) {
     let page = pageNumber + 1;
     if (page < this.totalPages + 1) {
@@ -145,7 +130,6 @@ export class WhatsappReportComponent implements OnInit {
       this.GetWhatsAppRawData();
     }
   }
-
   perviousPage(pageNumber: any) {
     if (pageNumber >= 1) {
       let page = pageNumber - 1;
@@ -155,7 +139,6 @@ export class WhatsappReportComponent implements OnInit {
     }
     this.GetWhatsAppRawData();
   }
-
   resetEndDate() {
     if (this.toDate >= this.fromDate) {
       this.GetWhatsAppRawData();
@@ -167,11 +150,9 @@ export class WhatsappReportComponent implements OnInit {
   resetStartDate(){
     this.toDate=''
   }
-
   closeToaster() {
     this.toastermessage = false;
   }
-
   reloadComponent(type: any) {
     if (type == 'downloading') {
       this.AlterMsg = 'Downloading Started';

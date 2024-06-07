@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -9,10 +8,8 @@ export class HeaderService {
   setHeader(obj: any): void {
     this.headerSubject.next(obj);
   }
-
   getHeader(): BehaviorSubject<any> {
     return this.headerSubject;
   }
   constructor() { }
-
 }

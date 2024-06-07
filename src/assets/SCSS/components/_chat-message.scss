@@ -13,7 +13,6 @@
     color: #fff;
     background-color: $googleplaycolor;
   }
-  
   .headerWrap {
     padding: 0px 20px;
   }
@@ -48,7 +47,6 @@
     display: flex;
     padding: 1.2em;
     color: $silver;
-
     &:before {
       content: "";
       position: absolute;
@@ -58,7 +56,6 @@
       left: 0;
       top: 50%;
     }
-
     .date {
       background: $salt;
       text-align: center;
@@ -120,7 +117,6 @@
             background-color: $snow;
             color: $night;
           }
-         
         }
       }
       &:last-child{
@@ -135,13 +131,11 @@
       &.msg-reply-wrap{
         margin-left: 1.5rem;
       }
-      
       &:hover{
         .complaintBtn{
           visibility: visible;
         }
       }
-
       .complaintBtn{
         margin-left:0.5rem;
         visibility: hidden;
@@ -151,7 +145,6 @@
           font-size: 1.4rem;
         }
       }
-      
     }
   }
   .message-box {
@@ -160,20 +153,17 @@
     border-radius: 5px 10px 15px 20px;
     overflow-wrap: break-word;
     width: fit-content;
-
     &.customer-message {
       border-radius: 2px 10px 10px 10px;
       border-color: $powder;
       background-color: $ice;
     }
-
     &.agent-message {
       border-radius: 10px 10px 2px 10px;
       border-color: $powder;
       background-color: $snow;
       display: flex;
       align-items: start;
-
       .message-header {
         margin-right: 0.5em;
       }
@@ -206,7 +196,6 @@
           padding-right: 0;
           padding-left: 0;
       }
-      
       &:nth-child(5) {
           padding-right: 0;
           padding-left: 0;
@@ -221,7 +210,6 @@
     .rightbar-expanded-wrapper {
       margin-right: 0%;
     }
-   
   }
 }
 .agent-message-time {
@@ -291,7 +279,6 @@
     }
   }
 }
-
 .likebht{
   .fas{
     display: none;
@@ -320,7 +307,6 @@
     }
   }
 }
-
 .mutebht{
   .fal{
     display: none;
@@ -334,8 +320,6 @@
     }
   }
 }
-
-
 .playbtn{
   .fa-pause{
     display: none;
@@ -343,7 +327,6 @@
   .fa-pause, .fa-play{
     font-size: 1.2rem;
   }
-
   &.active{
     .fa-play{
       display: none;
@@ -354,7 +337,6 @@
     }
   }
 }
-
 .emoji{
   width: 13px;
   img{
@@ -368,7 +350,6 @@
   width: 100%;
   background: white;
   border-radius: 10px 10px 0 0;
-
   .input-group{
     justify-content: flex-start;
     .form-control{
@@ -380,8 +361,6 @@
       }
     }
   }
-  
-
   .card{
     margin: 0.5rem 0 1rem;
     .card-body{
@@ -410,13 +389,11 @@
       //   border: 1px solid $lightGray;
       //   border-radius: .25rem;
       // }
-      
       &.show{
         display: block;
       }
     }
   }
-
   .attachment-block{
     padding-bottom: 10px;
     .close-icon{
@@ -448,7 +425,6 @@
 .email-list-item{
   cursor: pointer;
 }
-
 .textarea-field{
   width: 77%;
   textarea {
@@ -467,17 +443,14 @@
       position: absolute;
       right: -30px;
     }
-    
     /* Track */
     &::-webkit-scrollbar-track {
       background: #f1f1f1; 
     }
-     
     /* Handle */
     &::-webkit-scrollbar-thumb {
       background: #888; 
     }
-    
     /* Handle on hover */
     &::-webkit-scrollbar-thumb:hover {
       background: #555; 
@@ -506,20 +479,13 @@
       color:$silver;
     }
   }
-
 }
-
 // whatsapp chat room
-
 .socila-channels-tab{
-
- 
-
   .w-d-inline{
     display: inline-block;
     width: auto;
   }
-
   .card-header{
     display: flex;
     align-items: baseline;
@@ -528,23 +494,16 @@
     border:0;
   }
 }
-
 .audio-preload-bar{
   padding: 0.5rem 1rem 0 1rem;
   min-width: 240px;
 }
-
-
-
 .videoWrap{
   img{
     filter: blur(2px);
     -webkit-filter: blur(2px);
   }
 }
-
-
-
 .videoIconBtn{
   background: rgba(0,0,0,0.5);
     width: 35px;
@@ -564,15 +523,12 @@
       left: calc(100% - 22px);
     }
 }
-
 // facebook comments 
-
 .fb-comments{
   .comment-content{
     padding: 15px;
   }
 }
-
 .fb-comments-warp{
   .card{
     width: 100%;
@@ -581,9 +537,7 @@
     }
   }
 }
-
 // single image wrap
-
 .whatsapp-single-img{
   display: flex;
   justify-content: center;
@@ -604,9 +558,7 @@
     }
   }
 }
-
 // imagge collage wrap
-
 .msgImageWrap{
   position: relative;
   -webkit-box-flex: 0;
@@ -642,16 +594,12 @@
       }
     }
   }
-  
 }
-
 // pdf wrap
-
 .whatsapp-pdf{
   width: 325px;
   border:1px solid $ice;
   border-radius: 0.3rem;
- 
   .card-footer{
     display: flex;
     justify-content: flex-end;
@@ -682,10 +630,7 @@
     }
   }
 }
-
-
 // social channels post
-
 .chennels-post{
   .post-img-wrap{
     display: flex;
@@ -729,9 +674,7 @@
     border: 0;
   }
 }
-
 // phone channel wrap
-
 .phone-channel-tabs{
   .nav-tabs{
     .nav-item{
@@ -743,7 +686,6 @@
     }
   }
 }
-
 .callInfoWrap{
   background-color: $pearl10;
   border: 1px solid $pearl;
@@ -758,7 +700,6 @@
   .callDescription{
     font-size: 0.8rem;
   }
-
   .callAction{
     display: flex;
     flex-direction: column;
@@ -766,7 +707,6 @@
     justify-content: center;
     margin: 5px 8px; 
   }
-
   .callTags-wrapper{
       border-width: 1px 0 0 0;
       border-radius: 0;
@@ -782,7 +722,6 @@
       }
   }
 }
-
 .basicInfoDesc{
   .card{
     background-color: transparent;
@@ -794,7 +733,6 @@
     }
   }
 }
-
 .callNotes  {
   .bmd-form-group{
     position: relative;
@@ -821,6 +759,4 @@
       background: $lightyellow;
     }
   }
- 
-
 }

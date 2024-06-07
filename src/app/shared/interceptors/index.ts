@@ -5,9 +5,7 @@ import { JsonWebTokenInterceptor } from "./json-web-token.interceptor";
 import { ResponseErrorInterceptor } from "./response-error.interceptor";
 import { RetryInterceptor } from "./retry.interceptor";
 import { SuperTeamInterceptor } from "./super-team.interceptor";
-
 // import { authInterceptor } from "./auth.interceptor";
-
 export const customInterceptorProvider = 
 [     
     { provide: HTTP_INTERCEPTORS, useClass: JsonWebTokenInterceptor, multi: true },

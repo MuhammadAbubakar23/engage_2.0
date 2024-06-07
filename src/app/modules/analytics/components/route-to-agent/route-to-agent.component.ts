@@ -36,7 +36,6 @@ export class RouteToAgentComponent implements OnInit {
     private datePipe: DatePipe,
     private SpinnerService: NgxSpinnerService
   ) {}
-
   ngOnInit(): void {
     const obj = {
       title: 'Live Agent Interactions',
@@ -59,7 +58,6 @@ export class RouteToAgentComponent implements OnInit {
       // let currentDate = new Date();
       // let prevDate = currentDate.setDate(currentDate.getDate() - 5);
       // this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
-
       // this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
       this.startDate = this.maxEndDate;
       this.EndDate = this.maxEndDate;
@@ -114,7 +112,6 @@ export class RouteToAgentComponent implements OnInit {
       this.reloadComponent('downloaded');
     });
   }
-
   generateExcelFile() {
     const worksheet = XLSX.utils.json_to_sheet(this.downloadCsv);
     const workbook = XLSX.utils.book_new();
@@ -125,7 +122,6 @@ export class RouteToAgentComponent implements OnInit {
     });
     return blob;
   }
-
   // export() {
   //   const options = {
   //     fieldSeparator: ',',
@@ -140,7 +136,6 @@ export class RouteToAgentComponent implements OnInit {
   // };
   //  const csvExporter = new ExportToCsv(options);
   //   csvExporter.generateCsv(this.);
-
   getBystartDate() {
     this.EndDate = '';
   }
@@ -168,11 +163,9 @@ export class RouteToAgentComponent implements OnInit {
     }
     this.getRoutetoAgent();
   }
-
   closeToaster() {
     this.toastermessage = false;
   }
-
   reloadComponent(type: any) {
     if (type == 'downloading') {
       this.AlterMsg = 'Downloading Started';

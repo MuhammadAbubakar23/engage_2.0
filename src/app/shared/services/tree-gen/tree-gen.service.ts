@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
 export class TreeGenService<T> {
   constructor() { }
-  
   buildTree<T>(elements:any, parentId:number, subIndex:string="subMenu", mainId:string="mainId"): any {
     let _self = this;
     let branch:T[] = [];

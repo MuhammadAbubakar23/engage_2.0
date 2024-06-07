@@ -1,19 +1,14 @@
 // import { Component, OnInit } from '@angular/core';
-
 // @Component({
 //   selector: 'app-create-sentiment',
 //   templateUrl: './create-sentiment.component.html',
 //   styleUrls: ['./create-sentiment.component.scss']
 // })
 // export class CreateSentimentComponent implements OnInit {
-
 //   constructor() { }
-
 //   ngOnInit(): void {
 //   }
-
 // }
-
 import { AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -22,22 +17,17 @@ import { BotService } from '../../../services/bot.service';
 import { SentimentService } from '../../../services/sentiment.service';
 import { ChatwithsentimentComponent } from '../right-sidebar-components/chatwithsentiment/chatwithsentiment.component';
 import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
-
 @Component({
   selector: 'app-create-sentiment',
   templateUrl: './create-sentiment.component.html',
   styleUrls: ['./create-sentiment.component.scss']
 })
 export class  CreateSentimentComponent implements OnInit, AfterViewInit {
-
   @ViewChild('rightcontainer', { read: ViewContainerRef })
   rightcontainer!: ViewContainerRef;
   panelToggled: any;
   showPanel = false;
-
   public subscription!: Subscription;
-
-
   response="";
   language=""
   inputText=""
@@ -47,7 +37,6 @@ export class  CreateSentimentComponent implements OnInit, AfterViewInit {
   public stepThreeForm: FormGroup;
   toastermessage: string = "";
   isToaster: boolean = false;
-
   constructor(private senService:SentimentService,private fb: FormBuilder,
     private toggleService: ToggleService,
     private closePanelServices :ClosePanelService,
@@ -61,7 +50,6 @@ export class  CreateSentimentComponent implements OnInit, AfterViewInit {
     this.senService.login().subscribe((token: any) => {
       localStorage.setItem("token", token.access);
     });
-
     this.subscription = this.toggleService
       .getTogglePanel()
       .subscribe((msg3) => {
@@ -81,7 +69,6 @@ export class  CreateSentimentComponent implements OnInit, AfterViewInit {
         this.showPanel = res;
       })
   }
-
   ngAfterViewInit(): void {
     this.subscription = this.toggleService
       .getTogglePanel()
@@ -99,10 +86,6 @@ export class  CreateSentimentComponent implements OnInit, AfterViewInit {
         }
       });
   }
-
-
-
-
   onEnterKeyPressed(event: any) {
     this.response = "Positive";
     this.language = "English";
@@ -113,28 +96,21 @@ export class  CreateSentimentComponent implements OnInit, AfterViewInit {
       review: 'Select Review'
     });
   }
-
   get sentences(): FormArray {
     return this.stepThreeForm.get('sentences') as FormArray;
   }
-
   addSentence() {
     this.sentences.push(this.createSentenceControl());
   }
-
   removeSentence(index: number) {
     this.sentences.removeAt(index);
   }
   get labelName() {
     return this.stepThreeForm.get('review');
   }
-
   submitSenteces() {
-
     const data = { "data": this.stepThreeForm.value['sentences'] };
-
     this.senService.postSentimentApi(data).subscribe((res) => {
-
       this.toastermessage = 'Successfully Added';
       this.isToaster = true;
       setTimeout(() => {
@@ -142,10 +118,8 @@ export class  CreateSentimentComponent implements OnInit, AfterViewInit {
       }, 4000);
     })
   }
-
   trainModel(): void {
     this.senService.trainingApi({ "text": this.trainType }).subscribe((res) => {
-
       this.toastermessage = 'Trained successfully';
       this.isToaster = true;
       setTimeout(() => {
@@ -153,10 +127,8 @@ export class  CreateSentimentComponent implements OnInit, AfterViewInit {
       }, 4000);
     })
   }
-
   loadComponent(leftSideName: string, rightSideName: string) {
     let componentFactory: any = null;
-
     switch (leftSideName || rightSideName) {
       case 'sentiment-analysis':
         componentFactory = this.resolver.resolveComponentFactory(

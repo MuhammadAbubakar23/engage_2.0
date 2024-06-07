@@ -7,14 +7,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgChartsModule } from 'ng2-charts';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import { ExcelService } from '../../services/excel.service';
-
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-
-
 @Component({
   selector: 'app-reportlisting',
   standalone: true,
@@ -51,21 +48,16 @@ export class ReportlistingComponent implements OnInit {
   endPage: number = this.pageSize;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
   constructor(private reportService: ReportService, private _hS: HeaderService, private excelService: ExcelService) { }
-
   ngOnInit(): void {
-
     this.reportService.login().subscribe((token: any) => {
       localStorage.setItem("token", token.access);
       this.reportService.reportslistApi().subscribe((res: any) => {
         this.reports = res;
-
       });
     })
     const newObj = { title: 'Reports', url: '/analytics/reports' };
     this._hS.setHeader(newObj);
-
   }
   reportName: any = 'Please select Report';
   getReportData() {
@@ -84,23 +76,18 @@ export class ReportlistingComponent implements OnInit {
           this.endPage = res.total_count;
         }
       }
-
     });
   }
-  
   limitData(): void {
     this.startPage = 0;
     this.endPage = this.pageSize;
     this.reportService.reportExecuteApi({ 'reportName': this.reportName, page: this.page, page_size: this.pageSize }).subscribe((res: any) => {
-
       this.tableData = this.transformDataObject(res.table);
       this.totalCount = res.total_count;
       if (res.last_records < this.pageSize) {
         this.endPage = res.total_count;
       }
-
     });
-
   }
   getPaginatedData() {
     this.reportService.reportExecuteApi({ 'reportName': this.reportName, page: this.page, page_size: this.pageSize }).subscribe((res: any) => {
@@ -111,7 +98,6 @@ export class ReportlistingComponent implements OnInit {
       }
     });
   }
-
   exportAsXLSX(): void {
     this.excelService.exportAsExcelFile(this.tableData, 'sample');
   }
@@ -120,20 +106,15 @@ export class ReportlistingComponent implements OnInit {
     const keys = Object.keys(dataObject);
     this.dataKeys = keys;
     const maxLength = Math.max(...keys.map((key) => dataObject[key].length));
-
     for (let i = 0; i < maxLength; i++) {
       const row: any = {};
-
       for (const key of keys) {
         row[key] = i < dataObject[key].length ? dataObject[key][i] : null;
       }
-
       rows.push(row);
     }
-
     return rows;
   }
-
   incrementPage() {
     if (this.endPage + this.pageSize <= this.totalCount) {
       this.startPage += this.pageSize;
@@ -142,7 +123,6 @@ export class ReportlistingComponent implements OnInit {
       this.getPaginatedData();
     }
   }
-
   decrementPage() {
     if (this.startPage >= this.pageSize) {
       this.startPage -= this.pageSize;

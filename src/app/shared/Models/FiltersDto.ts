@@ -17,7 +17,6 @@ export class FiltersDto {
   hasBlueTick:boolean=false;
   skills:string[]=[];
   }
-
 export class FiltersDtolocal {
   fromDate?: any;
   toDate?: any;

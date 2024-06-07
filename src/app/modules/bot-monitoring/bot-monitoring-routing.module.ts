@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BotChatComponent } from './components/bot-chat/bot-chat.component';
 import { BotMonitoringComponent } from './bot-monitoring/bot-monitoring.component';
-
 const routes: Routes = [
   {
     path: '',
@@ -14,7 +13,6 @@ const routes: Routes = [
 ]
   }
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

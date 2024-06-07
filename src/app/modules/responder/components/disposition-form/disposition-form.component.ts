@@ -38,7 +38,6 @@ export class DispositionFormComponent implements OnInit {
   companyId = 0;
   previousUrl: any;
   currentTab:string=""
-
   constructor(
     private commonService: CommonDataService,
     private route: Router,
@@ -50,7 +49,6 @@ export class DispositionFormComponent implements OnInit {
     private getWing: GetWingsService,
     private getSkillSlug: SkillslugService
   ) {}
-
   ngOnInit(): void {
     this.currentTab=this.route.url.split('/')[2];
     this.dispositionForm = this.fb.group({

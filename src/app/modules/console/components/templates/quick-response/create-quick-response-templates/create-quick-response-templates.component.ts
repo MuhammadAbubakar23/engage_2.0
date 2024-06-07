@@ -30,11 +30,9 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
     if (this.messageForm.valid) {
       const messageContentValue = this.messageForm.value.text;
       const strippedMessageContent = messageContentValue.replace(/<[^>]+>|&nbsp;/g, '');
-
       const formData = {
         text: strippedMessageContent
       };
-
       const template = history.state.template;
       if (template) {
         this.commonService.UpdateQuickReply(template.id, formData).subscribe(
@@ -60,6 +58,5 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
   }
   cancelForm(): void {
     this.router.navigate(['/console/templates/quick-response']);
-
   }
 }

@@ -1,33 +1,26 @@
 // import { Component, OnInit } from '@angular/core';
-
 // @Component({
 //   selector: 'app-table-responsive',
 //   templateUrl: './table-responsive.component.html',
 //   styleUrls: ['./table-responsive.component.scss']
 // })
 // export class TableResponsiveComponent implements OnInit {
-
 //   constructor() { }
-
 //   ngOnInit(): void {
 //   }
-
 // }
-
 import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
 export interface UserData {
   id: string;
   name: string;
   progress: string;
   fruit: string;
 }
-
 /** Constants used to fill up our data base. */
 const FRUITS: string[] = [
   'blueberry',
@@ -60,7 +53,6 @@ const NAMES: string[] = [
   'Thomas',
   'Elizabeth',
 ];
-
 /**
  * @title Data table with sorting, pagination, and filtering.
  */
@@ -73,34 +65,27 @@ const NAMES: string[] = [
 })
 export class TableResponsiveComponent implements AfterViewInit {
   @Input() displayedColumns: any[] = [];
-
   //dataSource: MatTableDataSource<UserData>;
   @Input() dataSource: any = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
   constructor() {
     // const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-
     // Assign the data to the data source for the table to render
     // this.dataSource = new MatTableDataSource(users);
   }
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 }
-
 /** Builds and returns a new User. */
 function createNewUser(id: number): UserData {
   const name =
@@ -108,7 +93,6 @@ function createNewUser(id: number): UserData {
     ' ' +
     NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
     '.';
-
   return {
     id: id.toString(),
     name: name,

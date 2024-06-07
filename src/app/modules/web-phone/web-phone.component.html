@@ -5,7 +5,6 @@
                 <img src="../../../../assets/images/wave.svg" alt="">
             </div>
             <div class="dialerContent">
-
                 <div class="tab-content" #dialerTabContent>
                     <div id="dialer" class="tab-pane dialerTab dialerMainTabs show active" role="tabpanel" aria-labelledby="dialer">
                       <div class="d-flex justify-content-between py-3 px-3" *ngIf="isSipRegistered">
@@ -18,7 +17,6 @@
                       </div>
                       <div class="dialerTab-Content" [ngClass]="{'inboundCall' : inboundCall ,'on-transfered' : box2Show}">
                             <div class="call-without-transfered" [ngClass]="{'dialerScreen' : !inManualCall || (!inboundCall && transferringCall),'compress': !OBCallConnected && showManualTransferButtons && !callTransferred}">
-
                                 <div class="header dialerHeader" [ngClass]="{'compress' : callTransferred}">
                                     <div class="dialer-title">
                                         Smart Dialer
@@ -38,8 +36,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <div class="numberInputWrapper dialer-numberInputWrapper show" [ngClass]="{'d-none' : inManualCall || transferringCall || box2Show}">
                                     <div class="dialer-numberInput">
                                         <div class="person-number-input">
@@ -50,9 +46,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
                                 <div class="contact-details-wrapper accordion md-accordion" [ngClass]="{'show' : inManualCall && (transferringCall || !callTransferred)}" id="accordionExample" role="tablist" aria-multiselectable="true">
                                     <div class="contact-details">
                                         <div class="person-numbers-dropdown collapsed" [ngClass]="{'hide': transferringCall}" data-bs-parent="#accordionExample" data-bs-toggle="collapse" data-bs-target="#ContactOtherNum" aria-expanded="true" aria-controls="ContactOtherNum">
@@ -104,9 +97,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
                                 <div class="number-dialing" [ngClass]="{'show' : inManualCall || (transferringCall && !callTransferred)}">
                                     <div class="number">
                                         {{ manualDialNum }}
@@ -118,22 +108,16 @@
                                         </div>
                                         <div class="status-time" [ngClass]="{'d-none' : !OBCallConnected || transferringCall}">0:00</div>
                                     </div>
-
                                     <div class="dialing-time" [ngClass]="{'hide' : inManualCall && OBCallConnected && !transferringCall}">
                                         0:00
                                     </div>
                                 </div>
-
-
                                 <div class="inbound-call-transfer" [ngClass]="{'d-none' : transferringCall || callTransferred}">
                                     <div class="inbound-attended-transfer transfer-types-btn active btn" [ngClass]="{'active' : transferType =='attended'}" (click)="setTransferType('attended')">Attended Transfer</div>
                                     <div class="inbound-conference-transfer transfer-types-btn btn" [ngClass]="{'active' : transferType =='conference'}" (click)="setTransferType('conference')">Conference</div>
                                     <div class="inbound-direct-transfer transfer-types-btn btn" [ngClass]="{'active' : transferType =='blind'}" (click)="setTransferType('blind')">Direct Transfer
                                     </div>
                                 </div>
-
-
-
                                 <div class="keypad dialer-keypad open" [ngClass]="{'d-none' : inManualCall || transferringCall || callTransferred}">
                                     <div class="d-flex keypad-row">
                                         <button class="keypad-btn btn">1</button>
@@ -156,13 +140,7 @@
                                         <button class="keypad-btn btn">#</button>
                                     </div>
                                 </div>
-
-
-
                                 <div class="buttons-section">
-
-
-
                                     <div class="mainBtns-group show" [ngClass]="{'d-none': callTransferred || inboundCall}">
                                         <button class="actionBtn cancelCallBtn iceBg" (click)="confirmCancelCall()" [ngClass]="{'show' : manualDisconnect}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Cancel">
                                           <i class="fal fa-times ocean"></i>
@@ -177,7 +155,6 @@
                                           <i class="fal fa-phone-alt ice disconnectIcon"></i>
                                         </button>
                                     </div>
-
                                     <div class="callConnected-btns" [ngClass]="{'show' : OBCallConnected || box2Show, 'hide': transferringCall, 'd-none': transferringCall && !callTransferred}">
                                         <button class="smallBtn trans muteCallButton" (click)="toggleMute()" [ngClass]="{'active': isMute}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ isMute? 'Unmute' : 'Mute' }}">
                                           <i class="fal" [ngClass]="{'fa-microphone-slash' : isMute, 'fa-microphone' : !isMute }"></i>
@@ -195,14 +172,7 @@
                                           <i class="fal fa-wave-triangle"></i>
                                         </button>
                                     </div>
-
-
-
-
                                 </div>
-
-
-
                                 <div class="call-transfer-types d-none" [ngClass]="{'d-none': !showManualTransferButtons || transferringCall}">
                                     <div class="transfer-pill btn attended" [ngClass]="{'active' : transferType =='attended'}" (click)="setTransferType('attended')">
                                         Attended Transfer
@@ -214,9 +184,6 @@
                                         Blind Transfer
                                     </div>
                                 </div>
-
-
-
                                 <div class="keypad IVR-keypad d-none" [ngClass]="{'d-none': !OBCallConnected || callTransferred, 'open': !OBCallConnected && !showManualTransferButtons}">
                                     <div class="d-flex keypad-row">
                                         <button class="keypad-btn btn">1</button>
@@ -239,30 +206,20 @@
                                         <button class="keypad-btn btn">#</button>
                                     </div>
                                 </div>
-
-
-
                                 <div class="transfer-status-wrapper" [ngClass]="{'d-none': !box2Show}">
                                     <div class="content-wrapper">
                                         <div class="transfer-type text">Attended Transfer</div>
                                         <div class="transfer-time text">05:48</div>
                                     </div>
                                 </div>
-
-
-
                                 <div class="input-number-status d-none">
                                     <div class="number-status">Number Not Found</div>
                                 </div>
-
-
-
                                 <div class="dial-btn-inbound-transfer" [ngClass]="{'d-none': transferringCall}">
                                     <div class="btn emeraldBg dialContact" (click)="transferCall()">
                                         <i class="fal fa-phone-alt"></i>
                                     </div>
                                 </div>
-
                                 <div class="call-dialer-component" [ngClass]="{'show' : showSecondCallDialer}" id="callDialerComponent">
                                     <div class="dialerComponentBg">
                                         <img src="../../../../assets/images/wave.svg" alt="">
@@ -276,7 +233,6 @@
                                                 Outgoing Call
                                             </div>
                                         </div>
-
                                         <div class="numberInputWrapper show">
                                             <div class="dialer-numberInput">
                                                 <div class="person-number-input">
@@ -287,7 +243,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="keypad dialer-component-keypad open">
                                             <div class="d-flex keypad-row">
                                                 <button class="keypad-btn btn">1</button>
@@ -311,26 +266,21 @@
                                             </div>
                                         </div>
                                         <div class="buttons-section">
-
                                             <div class="mainBtns-group show" [ngClass]="{'d-none': callTransferred}">
                                                 <div class="actionBtn dialContact btn show" (click)="transferCall()">
                                                     <i class="fas fa-phone-alt ice"></i>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="cancel-dialer-wrapper">
                                             <div class="cancel-dialer-btn back-to-call" (click)="showSecondDialer(false)">
                                                 <i class="far fa-long-arrow-left ice"></i>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-
                             </div>
                             <div class="call-transfered" [ngClass]="{'flex' : callTransferred}">
-
                                 <div class="connected-person-box-wrapper">
                                     <div class="connected-person-box box1" [ngClass]="{'show': transferringCall || callTransferred}">
                                         <div class="boxWrapper">
@@ -420,8 +370,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                     <div class="keypad IVRSecond-keypad secondCallDTMP-keypad">
                                         <div class="d-flex keypad-row">
                                             <button class="keypad-btn btn">1</button>
@@ -444,7 +392,6 @@
                                             <button class="keypad-btn btn">#</button>
                                         </div>
                                     </div>
-
                                     <div class="merged-call-hanged-up connected-person-box">
                                         <div class="boxWrapper">
                                             <div class="boxBody">
@@ -481,9 +428,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
                                 <div class="merge-split-call-btns">
                                     <div class="mergeCallBtn btnWrap" [ngClass]="{'show': !callMerged && callTransferred}">
                                         <div class="btn">
@@ -504,9 +448,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
                                 <div class="leave-call-btn" [ngClass]="{'show': box2Show}">
                                     <div class="btn leaveCallBtn">
                                         Leave
@@ -517,12 +458,8 @@
                     </div>
                     <app-web-phone-contacts *ngIf="contacts == true" (callNumber)="callFromContacts($event)"
                                             (contactsComponent)="closeContactsComponent($event)"></app-web-phone-contacts>
-
-
                         <app-web-phone-call-list *ngIf="callList == true"></app-web-phone-call-list>
                 </div>
-
-
                 <div class="dialerActions" #dialerTabs>
                     <ul class="tabs nav nav-tabs" [ngClass]="{'show' : showDialerTabs || (showManualTransferButtons && !transferringCall)}" id="nav-tab" role="tablist">
                         <li class="tab nav-item contactBtn" (click)="loadComponent('contacts')">
@@ -554,4 +491,3 @@
         </div>
     </div>
   </nav>
-

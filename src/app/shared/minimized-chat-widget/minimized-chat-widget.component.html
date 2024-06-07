@@ -57,7 +57,6 @@
                                                     src={{attachment?.attachmentUrl}}>
                                             </a>
                                         </div>
-    
                                         <div class="card-body bg-light">
                                             <p class="card-text nignt mb-0">
                                                 {{youtubedata.post?.caption}}</p>
@@ -76,7 +75,6 @@
                                                 <!-- <a class="message-actionItem coal me-3">
                                                             23 Shares
                                                         </a> -->
-    
                                                 <!-- <a class="message-actionItem coal me-3">
                                                             <i class="fas fa-thumbs-down radical"></i>
                                                             100
@@ -91,7 +89,6 @@
                                 </div>
                             </div>
                         </div>
-    
                         <div *ngFor="let youtubecomment of youtubedata.comments">
                             <div class="date-wrap">
                                 <p class="date">{{youtubecomment?.createdDate | date:'EEEE, MMMM d, y'}}</p>
@@ -120,12 +117,10 @@
                                                     </button>
                                                     <ul class="dropdown-menu custom-dropdown"
                                                         aria-labelledby="dropdownMenuButton1">
-    
                                                         <li>
                                                             <a class="dropdown-item"
                                                                 (click)="commentStatus(youtubecomment?.id)">Read</a>
                                                         </li>
-    
                                                     </ul>
                                                 </div>
                                             </div>
@@ -133,7 +128,6 @@
                                             <div class="tags" *ngFor="let tag of youtubecomment?.tags">
                                                 <span (click)="removeTagFromFeed(tag.feedId, tag.name)"
                                                     class="badge rounded-pill tag youtube-pill tag1 selected">{{tag.name | tagSlugConversion}}</span>
-    
                                             </div>
                                         </div>
                                         <div class="message-bottom">
@@ -200,7 +194,6 @@
                                                                             class="list-group list-group-flush dropend">
                                                                             <a data-bs-toggle="dropdown"
                                                                                 class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
-    
                                                                                 <div class="w-100 list-txt">
                                                                                     <div
                                                                                         class="d-flex w-100 justify-content-between">
@@ -209,7 +202,6 @@
                                                                                         </h6>
                                                                                     </div>
                                                                                 </div>
-    
                                                                             </a>
                                                                             <ul class="dropdown-menu shadow">
                                                                                 <li class="list-body small-list"
@@ -245,7 +237,6 @@
                                                                                         </a>
                                                                                     </div>
                                                                                 </li>
-    
                                                                             </ul>
                                                                         </div>
                                                                     </li>
@@ -288,7 +279,6 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                         </a>
-    
                                                                             </div>
                                                                         </div>
                                                                     </li>
@@ -303,9 +293,7 @@
                                     <!-- <span class="complaintBtn" type="button" (click)="toggle('ticket', youtubecomment.id)"><i
                                             class="fal fa-plus-circle sky"></i></span> -->
                                 </div>
-    
                             </div>
-    
                             <div *ngFor="let reply of youtubecomment.replies">
                                 <div class="date-wrap">
                                     <p class="date">{{reply.createdDate | date:'EEEE, MMMM d, y'}}</p>
@@ -334,13 +322,11 @@
                                                 </div>
                                             </div>
                                         </div>
-    
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="date-wrap">
-    
                         </div>
                     </div>
                 </div>
@@ -387,7 +373,6 @@
                         </div>
                     </div>
                 </div>
-                
             </div>
             <form [formGroup]="youtubeCommentReplyForm" (submit)="submitYoutubeCommentReply()">
                 <div class="input-group input-group-lg">
@@ -415,16 +400,13 @@
         </div>
     </div>
     </div>
-
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
             <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
             <div class="toast-btn d-flex align-items-center">
-                
                 <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
                 (click)="closeToaster()"><i class="fal fa-times"></i></button>
-
             </div>
         </div>
     </div>
@@ -440,7 +422,6 @@
                 aria-label="Close" (click)="closeQuickResponseSidebar()"><i class="fal fa-times"></i></button>
         </div>
         <div class="offcanvas-body">
-
             <form class="custom-searchbar">
                 <input class="form-control me-2 rounded-pill shadow-sm" placeholder="Search" aria-label="Search">
                 <span class="btn searchbar-btn" type="submit">
@@ -458,12 +439,10 @@
                                     <label class="form-check-label" for={{qr.value}}>{{qr.text}}
                                     </label>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

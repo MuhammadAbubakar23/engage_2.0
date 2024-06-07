@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AnalyticsComponent } from './analytics.component';
-
-
 const routes: Routes = [
   // {
   //   path: ':channel',
@@ -12,7 +10,6 @@ const routes: Routes = [
   //   path: 'db-settings/create',
   //   component:ReportDbSettingsComponent
   // },
-
   {
     path: '',
     component: AnalyticsComponent,
@@ -20,32 +17,26 @@ const routes: Routes = [
     {
       path:'echarts',
       loadComponent: () => import('./components/echarts-testing/echarts-testing.component').then(c => c.EchartsTestingComponent),
-
     },
     {
       path:'report-designer',
       loadComponent: () => import('./components/report-designer/report-designer.component').then(c => c.ReportDesignerComponent),
-
     },
     {
       path:'reports',
       loadComponent: () => import('./components/reportlisting/reportlisting.component').then(c => c.ReportlistingComponent),
-
     },
     {
       path:'dashbaord-designer',
       loadComponent: () => import('./components/dashboard-designer/dashboard-designer.component').then(c => c.DashboardDesignerComponent),
-
     },
     {
       path:'db-settings',
       loadComponent: () => import('./components/dblisting/dblisting.component').then(c => c.DblistingComponent),
-
     },
     {
       path:'db-settings/create',
       loadComponent: () => import('./components/report-db-settings/report-db-settings.component').then(c => c.ReportDbSettingsComponent),
-
     },
     {
       path:'db-settings/update/:id',
@@ -59,7 +50,6 @@ const routes: Routes = [
       path:'dashboard',
       loadComponent: () => import('./components/analytics-dashboard/analytics-dashboard.component').then(c => c.AnalyticsDashboardComponent),
     },
-   
     {
       path:'route-to-agent',
       loadComponent: () => import('./components/route-to-agent/route-to-agent.component').then(c => c.RouteToAgentComponent),
@@ -116,7 +106,6 @@ const routes: Routes = [
       path:'querytag-report',
       loadComponent:()=>import('./components/queryTagReport/queryTag-report.component').then(c=>c.QueryTagReportComponent)
     },
-
     {
      path:'linkedin-report-scrm',
      loadComponent:()=>import('./archive-reports-components/linkedin-report-scrm/linkedin-report-scrm.component').then(c=>c.LinkedinReportScrmComponent)
@@ -132,9 +121,7 @@ const routes: Routes = [
     }
   ]
   }
-
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],

@@ -7,7 +7,6 @@ import { createTicketDto } from 'src/app/shared/Models/CreateTicketDto';
 import { GetOrderDetailDto } from 'src/app/shared/Models/getOrderDetailDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
-
 @Component({
   selector: 'app-responder-tickets',
   templateUrl: './responder-tickets.component.html',
@@ -19,10 +18,8 @@ export class ResponderTicketsComponent implements OnInit {
   Reasons: any[] = [];
   SubReasons: any[] = [];
   OrderStatuses: any[] = [];
-
   spinner1running=false
   spinner2running=false
-
   Error: any;
   constructor(
     private commonDataservice: CommonDataService,
@@ -60,7 +57,6 @@ export class ResponderTicketsComponent implements OnInit {
       customerProfileId: new FormControl('string'),
     });
   }
-
   ngOnInit(): void {
     this.getReasonTypes();
     this.getTicketStatus();
@@ -77,7 +73,6 @@ export class ResponderTicketsComponent implements OnInit {
     }
   }
   public getReasonTypes(): void {
-    
     this.spinnerService.show();
     this.spinner2running = true
     this.commonDataservice.GetReasonTypes().subscribe(
@@ -91,7 +86,6 @@ export class ResponderTicketsComponent implements OnInit {
       }
     );
   }
-
   public getMainReasons(type: any) {
     this.SubReasons = [];
     this.spinnerService.show();
@@ -99,7 +93,6 @@ export class ResponderTicketsComponent implements OnInit {
     this.commonDataservice
       .GetMainReasons(type.target.value)
       .subscribe((res: any) => {
-        
         this.spinnerService.hide();
         this.spinner2running = false
         this.Reasons = res.data;
@@ -116,21 +109,16 @@ export class ResponderTicketsComponent implements OnInit {
         this.SubReasons = res.data;
       });
   }
-
   ticketStatuses: any[]=[];
-
   getTicketStatus() {
     this.commonDataservice.GetTicketStatuses().subscribe((res: any) => {
       this.ticketStatuses = res.data;
     });
   }
-  
-
   ticketId: number = 0;
   createTicketDto = new createTicketDto();
   createTicketForm!: FormGroup;
   responseTicket:any;
-
   createTicket() {
     this.createTicketDto = {
       queryId: this.createTicketService.commentId,
@@ -160,7 +148,6 @@ export class ResponderTicketsComponent implements OnInit {
       channelType: this.createTicketForm.value.channelType,
       customerProfileId: this.createTicketForm.value.customerProfileId,
     };
-
     this.commonDataservice
       .CreateTicket(this.createTicketDto)
       .subscribe((res: any) => {
@@ -172,9 +159,7 @@ export class ResponderTicketsComponent implements OnInit {
         }, 1000);
       });
   }
-
   getOrderDetailDto = new GetOrderDetailDto();
-
   getOrderDetailForm = new FormGroup({
     emailAddressOrPhoneNumberOrProfileId: new FormControl(''),
     profileId: new FormControl(''),
@@ -182,9 +167,7 @@ export class ResponderTicketsComponent implements OnInit {
     phone: new FormControl(''),
     channel: new FormControl(''),
   });
-
   OrderDetails: any[]=[];
-
   getOrderByCustomerEmailAddressOrPhoneNumber() {
     this.spinnerService.show();
     this.spinner2running = true;
@@ -198,7 +181,6 @@ export class ResponderTicketsComponent implements OnInit {
         this.spinner2running = false
       });
   }
-
   LineItems: any;
   address: string = '';
   phone: any;
@@ -213,7 +195,6 @@ export class ResponderTicketsComponent implements OnInit {
       }
     });
   }
-
   closeTicketComponent(child: string) {
     if (localStorage.getItem('child') == child) {
       this.toggleService.addTogglePanel('');
@@ -221,7 +202,6 @@ export class ResponderTicketsComponent implements OnInit {
       this.toggleService.addTogglePanel(child);
     }
   }
-
   AlterMsg:any;
   toastermessage:any;
   reloadComponent(type: any) {

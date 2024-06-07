@@ -34,7 +34,6 @@
                                                 class="select2-selection__arrow" role="presentation"><b
                                                     role="presentation"></b></span></span></span><span
                                         class="dropdown-wrapper" aria-hidden="true"></span></span> -->
-
                             </li>
                         </ul>
                     </div>
@@ -45,15 +44,12 @@
                                 Create Company
                             </button>
                         </a>
-
                     </div>
                 </div>
             </div>
             <ng-template [ngIf]="showConsoleTable">
                 <console-table [filter]="filter" [TableModel]="model" [identifire]="identifire" ></console-table>
             </ng-template>
-            
-
             <!-- <div class="filter-container checkbox-reset">
                 <ul class="list-group list-group-horizontal border-0">
                     <li class="list-group-item border-0 all-check-boxes">
@@ -90,7 +86,6 @@
 </div>
 <!-- <div [class.show]="isActive==true" class="offcanvas offcanvas-end" tabindex="-1" id="addteammembers"
     aria-labelledby="offcanvasRightLabel" style="visibility: visible;" aria-hidden="true">
-   
     <app-add-team-members></app-add-team-members>
 </div> -->
 <overlay-right-panel [header]="'Add Company Resources'" [isActive]="isActive" [search]="true"></overlay-right-panel>

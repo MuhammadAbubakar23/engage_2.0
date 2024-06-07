@@ -16,7 +16,6 @@
       min-width: 100px;
     }
   }
- 
   textarea{
     &:focus{
       box-shadow: none;
@@ -88,7 +87,6 @@
             color: $white !important;
           }
         }
-       
       }
       &.twitterbg.active{
         background: linear-gradient(180deg, #59BAF7 0%, #24A4F2 100%);
@@ -228,7 +226,6 @@
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-   
     .upload-logo-input{
       width: 116px;
       height: 116px;
@@ -274,7 +271,6 @@
               font-size: 30px;
             }
           }
-        
           &:hover{
             &.lightinkbg{
               border-color: $lightink;
@@ -297,8 +293,6 @@
           }
         }
       }
-      
-  
       .buttons-wrap{
           display: flex;
           justify-content: center;
@@ -321,16 +315,13 @@
   transition: 0.5s;
   transition-delay: 0.3s;
   width: 75%;
-
   &.show {
     right: 0;
   }
 }
-
 .modal-open {
   transition: 0.5s;
 }
-
 .side-modal-dialog {
   width: 100%;
   max-width: 100%;
@@ -339,20 +330,17 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
-
   .modal-content {
     border-radius: 0;
     border: 0;
     height: 100%;
   }
 }
-
 .modal-footer {
   .icon-buttons-wrapper {
     width: 100%;
   }
 }
-
 .delete-modal {
   .modal-body {
     padding: 20px 140px 20px 20px;
@@ -364,15 +352,11 @@
     border-color: $powder;
   }
 }
-
-
-
 .task-modal{
   textarea{
     height: 10rem;
     border: none;
     margin-top: 1rem;
-  
     &:focus{
       box-shadow: none;
     }
@@ -383,20 +367,16 @@
       margin-top: 0.5rem ;
       li{
         padding:1rem 0 0 0;
-        
       }
     }
   }
-
   .badge-right{
     font-size: 12px;
   }
 }
-
 .whatsappImg-modal{
   z-index: 9999;
 }
-
 .custom-modal{
   .modal-heading{
     display: flex;
@@ -424,7 +404,6 @@
       }
     }
   }
-
   .modal-textarea{
     border-top: 1px solid $powder;
     padding: 20px 0;
@@ -433,12 +412,10 @@
       padding: 0;
     }
   }
-
   .modal-footer{
     justify-content: flex-start;
   }
 }
-
 .email-modal{
   .email-reply-section{
     display: flex;
@@ -490,7 +467,6 @@
         }
     }
   }
-
   .modal-textarea{
     textarea{
       height: 8rem;
@@ -499,12 +475,10 @@
       padding-left: 0;
     }
   }
-
   .modal-footer{
     justify-content: space-between
   }
 }
-
 .modal-dialog{
   position: absolute;
   left: 0;
@@ -512,19 +486,16 @@
   bottom: 0;
   margin: 1.75rem auto 0;
 }
-
 .log-call-sel-option{
   display: flex;
   align-items: center;
   border-bottom: 1px solid $powder;
   padding: 10px 0;
 }
-
 .modal-counter{
   display: flex;
  justify-content: flex-end;
 }
-
 // .startconvo{
 //   .progress{
 //     position: absolute;
@@ -545,21 +516,16 @@
 //   }
 //   $steps: 3;
 // @mixin progress_bar($steps) {
-
 //   $width: (100/$steps)*1%;
-
 //   @for $i from 1 through $steps {
-
 //     [data-progress='#{$i}']:after {
 //       width: $width*$i !important;
 //     }
-
 //     $steps: $steps - 1;
 //   }
 // }
 // @include progress_bar($steps);
 // }
-
 .modal-user-scroll{
     overflow-x: hidden;
     height: calc(100vh - 300px);

@@ -1,4 +1,3 @@
-
 export enum PhoneTypes {
     Avaya_PHONE,
     CCM_PHONE,

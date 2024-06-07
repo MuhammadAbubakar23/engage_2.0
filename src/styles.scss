@@ -2,21 +2,17 @@
 // // For more information: https://material.angular.io/guide/theming
 // @use '@angular/material' as mat;
 // // Plus imports for other components in your app.
-
 // // Include the common styles for Angular Material. We include this here so that you only
 // // have to load a single css file for Angular Material in your app.
 // // Be sure that you only ever include this mixin once!
 // @include mat.core();
-
 // // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // // hue. Available color palettes: https://material.io/design/color/
 // $Enteract.Engage2.0-primary: mat.define-palette(mat.$indigo-palette);
 // $Enteract.Engage2.0-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-
 // // The warn palette is optional (defaults to red).
 // $Enteract.Engage2.0-warn: mat.define-palette(mat.$red-palette);
-
 // // Create the theme object. A theme consists of configurations for individual
 // // theming systems such as "color" or "typography".
 // $Enteract.Engage2.0-theme: mat.define-light-theme((
@@ -26,19 +22,16 @@
 //     warn: $Enteract.Engage2.0-warn,
 //   )
 // ));
-
 // // Include theme styles for core and each component used in your app.
 // // Alternatively, you can import and @include the theme mixins for each component
 // // that you are using.
 // @include mat.all-component-themes($Enteract.Engage2.0-theme);
-
 @import "../node_modules/bootstrap/scss/functions";
 @import "./assets/SCSS/_bootstrap-variables.scss";
 @import "../node_modules/bootstrap/scss/_variables.scss";
 @import "../node_modules/bootstrap/scss/_mixins.scss";
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../node_modules/select2/src/scss/core.scss";
-
 //colors
 @import "./assets/SCSS/colors/_colors.scss";
 @import "./assets/SCSS/colors/_colors-classes.scss";
@@ -46,18 +39,14 @@
 @import "./assets/SCSS/components/bot-monitoring.scss";
 //Typography
 @import "./assets/SCSS/base/_typography.scss";
-
 //Mixins
 @import "./assets/SCSS/mixins/mixins.scss";
-
 //Base
 @import "./assets/SCSS/base/base.scss";
-
 //Layouts
 @import "assets/SCSS/layouts/header.scss";
 @import "./assets/SCSS/layouts/footer.scss";
 @import "./assets/SCSS/layouts/search-bar.scss";
-
 //Components
 @import "./assets/SCSS/components/avatar.scss";
 @import "./assets/SCSS/components/breadcrumb.scss";
@@ -90,7 +79,6 @@
 @import "./assets/SCSS/components/mark-as.scss";
 @import "./assets/SCSS/components/contact-merge.scss";
 @import "./assets/SCSS/components/score-card.scss";
-
 //Pages CSS
 @import "./assets/SCSS/pages/login.scss";
 @import "./assets/SCSS/pages/team-user.scss";
@@ -103,10 +91,8 @@
 @import "./assets/SCSS/pages/analytics.scss";
 @import "./assets/SCSS/pages/chatbot.scss";
 @import "./assets/SCSS/pages/ke.scss";
-
 // html, body { height: 100%; }
 // body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
 //font-awesome6
 @import "./assets/SCSS/font-awesome-6/fontawesome.scss";
 @import "./assets/SCSS/font-awesome-6/brands.scss";
@@ -116,49 +102,40 @@
 @import "./assets/SCSS/font-awesome-6/regular.scss";
 // Import ng-select component styles
 @import "~@ng-select/ng-select/themes/default.theme.css";
-
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
-
 /* Track */
 ::-webkit-scrollbar-track {
   background: #eee;
 }
-
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #c5c5c5;
   border-radius: 15px !important;
 }
-
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #979797;
 }
-
 .online-n-offline {
   left: 36px;
   bottom: 9px;
 }
-
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
   border-radius: 4px;
   padding: 15px;
   background-color: #fff;
 }
 //  for model only
-
 .modal-backdrop {
   z-index: 1040;
 }
-
 .modal {
   z-index: 1050;
 }
-
 .icon-circle {
   min-width: 90px;
   width: 90px;
@@ -167,7 +144,6 @@
   color: #34b3bc;
   font-size: 36px;
 }
-
 .modal .modal-content {
   border-radius: 0px;
 }
@@ -179,7 +155,6 @@
   margin-bottom: 0;
   line-height: 1.5;
 }
-
 .gif-dropdown {
   width: 650px;
    right: 0 !important;
@@ -192,7 +167,6 @@
    }
  }
  .dropdown-listing {
-  
    overflow: scroll;
    height: 400px;
  }

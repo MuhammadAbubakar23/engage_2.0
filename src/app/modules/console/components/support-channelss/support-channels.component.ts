@@ -5,7 +5,6 @@ import { environment } from 'src/environments/environment';
 import { RequestService } from 'src/app/shared/services/request/request.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SocialLoginService } from '../../services/sociallogin.service';
-
 @Component({
   selector: 'support-channels',
   standalone: true,
@@ -14,7 +13,6 @@ import { SocialLoginService } from '../../services/sociallogin.service';
   styleUrls: ['./support-channels.component.scss']
 })
 export class SupportChannelsComponent implements OnInit {
-
   private twitterApiUrl = 'https://api.twitter.com/1.1/account/verify_credentials.json';
   constructor(
     private _request: RequestService
@@ -23,13 +21,10 @@ export class SupportChannelsComponent implements OnInit {
     , private http: HttpClient
     , private socialService: SocialLoginService
   ) {
-
   }
-
   ngOnInit(): void {
     const authorizationCode = this._Activatedroute.snapshot.queryParams['code'];
     const socialtype = localStorage.getItem('socialtype')
-
     if (authorizationCode && socialtype == 'facebook') {
       this.socialService.getFaceBookData(authorizationCode).subscribe((response: any) => {
       }, (error: any) => {
@@ -56,7 +51,6 @@ export class SupportChannelsComponent implements OnInit {
       })
     }
   }
-
   connectFacebook(): void {
     localStorage.setItem('socialtype', 'facebook');
     const clientId = environment.facebookclientId;
@@ -66,7 +60,6 @@ export class SupportChannelsComponent implements OnInit {
     const loginUrl = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
     window.open(loginUrl, '_blank');
   }
-
   connectGoogle(): void {
     localStorage.setItem('socialtype', 'google');
     const clientId = environment.googleclientId;
@@ -74,7 +67,6 @@ export class SupportChannelsComponent implements OnInit {
     const loginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&&scope=https://www.googleapis.com/auth/userinfo.profile&response_type=code`;
     window.open(loginUrl, '_blank');
   }
-
   connectUtube() {
     localStorage.setItem('socialtype', 'utube');
     const clientId = environment.googleclientId;
@@ -82,7 +74,6 @@ export class SupportChannelsComponent implements OnInit {
     const loginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&&scope=https://www.googleapis.com/auth/youtube&response_type=code`;
     window.open(loginUrl, '_blank');
   }
-
   connectInstagram() {
     localStorage.setItem('socialtype', 'instagram');
     const clientId = environment.instagramclientId;
@@ -90,7 +81,6 @@ export class SupportChannelsComponent implements OnInit {
     const loginUrl = `https://api.instagram.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user_profile,user_media,basic+public_content&response_type=code`;
     window.open(loginUrl, '_blank');
   }
-
   connectLinkdIn() {
     localStorage.setItem('socialtype', 'linkdin');
     const clientId = environment.linkdinclientId;
@@ -107,6 +97,4 @@ export class SupportChannelsComponent implements OnInit {
     const authUrl = `https://api.twitter.com/oauth2/authenticate?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;
     window.location.href = authUrl;
   }
-
 }
-

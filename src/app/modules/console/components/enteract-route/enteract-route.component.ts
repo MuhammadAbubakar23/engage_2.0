@@ -13,7 +13,6 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 })
 export class EnteractRouteComponent implements OnInit {
   messageForm!: FormGroup;
-  
   users: any[] = [
     {
       name: 'Waqas Amjad',
@@ -86,8 +85,6 @@ export class EnteractRouteComponent implements OnInit {
     });
     // this.getSkills();
   }
-
-  
   // getSkills() {
   //   this.commonService.GetSkill().subscribe(
   //     (response) => {
@@ -98,7 +95,6 @@ export class EnteractRouteComponent implements OnInit {
   //     }
   //   );
   // }
-  
   onSubmit() {
     const formData = this.messageForm.value;
     this.commonService.AddEntractRoute(formData).subscribe(
@@ -111,7 +107,6 @@ export class EnteractRouteComponent implements OnInit {
       }
     );
   }
-  
   editBtn(template: any) {
   }
   deleteBtn(template: any) {

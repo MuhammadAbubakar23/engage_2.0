@@ -20,8 +20,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ResponderCustomerProfilingComponent } from './responder-customer-profiling/responder-customer-profiling.component';
 import { ResponderBotInteractionComponent } from './responder-bot-interaction/responder-bot-interaction.component';
-
-
 @NgModule({
   declarations: [
     ResponderComplaintTicketPanelComponent,

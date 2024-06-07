@@ -7,7 +7,6 @@ import {
 import { Observable, of } from 'rxjs';
 import { MenuModel } from 'src/app/layouts/engage2/menu-state/menu.model';
 import { SkillsService } from '../../services/skills.service';
-
 @Injectable({
   providedIn: 'root'
 })

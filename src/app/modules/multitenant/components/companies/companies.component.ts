@@ -7,7 +7,6 @@ import { MenuModel } from 'src/app/layouts/engage2/menu-state/menu.model';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CreateCompaniesComponent } from './create-companies/create-companies.component';
-
 @Component({
   selector: 'companies',
   standalone:true,
@@ -24,16 +23,13 @@ export class CompaniesComponent implements OnInit {
   showConsoleTable:boolean= false;
   isActive=false;
   //Companies: Array<any> = [];
- 
   constructor(private headerService: HeaderService, private _Activatedroute:ActivatedRoute) { }
-
   async ngOnInit() {
     this.filter = await this._Activatedroute.snapshot.data["companyJ"];
     if(typeof this.filter !== 'undefined'){
       this.showConsoleTable = true;
     }
   }  
-
   updatevalue(string:any){
     this.headerService.updateMessage(string);
   }
