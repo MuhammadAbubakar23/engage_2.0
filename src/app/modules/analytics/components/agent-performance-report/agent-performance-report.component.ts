@@ -119,7 +119,6 @@ export class AgentPerformanceReportComponent implements OnInit {
         this.totalAgents.forEach((x:any)=>{
           this.AgentIds.push(x.id)
         })
-        console.log(this.totalAgents);
       }, (error: any) => {
         console.error(error);
       });
@@ -530,7 +529,6 @@ this.SpinnerService.hide()
       }
 
 this. fillterdata= this.csatArray.filter((item:any)=>item.value!==0)
-console.log('This.fillterdata==>',this.fillterdata)
       this.getCSATGraph()
     }
     )

@@ -48,7 +48,6 @@ export class AppComponent {
   ) {}
 
   remove(index: number) {
-    console.log(index);
     this.toasters = this.toasters.filter((v, i) => i !== index);
     //this.toasts.splice(index, 1);
   }
@@ -91,46 +90,6 @@ export class AppComponent {
     }
   }
   B_Block() {
-    this.commonService.GetSkills([
-      18,
-      20,
-      22,
-      24,
-      26,
-      28,
-      30,
-      32,
-      34
-    ]).subscribe((skillNames: any) => {
-            
-      this.sendSkills.sendSkills(skillNames);
-      localStorage.setItem('skillSlug', skillNames[0]?.skilSlug)
-      // res?.loginResponse?.loginResponse?.roles.forEach((role:any) => {
-      var companyId = 651;
-      if (!this.rulesGroupIds.includes(skillNames[0].rules[0].groupId)) {
-        this.rulesGroupIds.push(skillNames[0].rules[0].groupId);
-      }
-      this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
-      skillNames.forEach((skill: any) => {
-        var groupName = skill.skillName + '_' + companyId;
-
-        this.signalRService.getConnectionState().subscribe((connected) => {
-            if (connected) {
-              this.signalRService.joinGroup(groupName);
-            }
-          });
-        var wingName = skill.wing;
-        if (!this.uniqueWings.includes(wingName)) {
-          this.uniqueWings.push(wingName);
-        }
-        this.sendWings.sendWings(this.uniqueWings.toString());
-        });
-      // });
-      
-      localStorage.setItem('defaultRuleIds', this.rulesGroupIds.toString());            
-      localStorage.setItem('defaultSkills', this.uniqueWings.toString());
-    });
-
     this.signalRService.reConnect();
 
     this.signalRService.removeTagDataListener();

@@ -41,9 +41,7 @@ export class CardBoxListComponent implements OnInit {
     this.menulistchecked.emit(this.childListChecked);
   }
   menulistChecked(childData:any){
-    //1 console.log(childData);
     this.childListChecked[childData.name] = childData.data;
-    //1 console.log(this.childListChecked);
     this.sendmenulistchecked();
     // for (var i = 0; i < this.childListChecked.length; i++) {
     //   if(this.childListChecked[i].name == childData.name){
@@ -54,12 +52,10 @@ export class CardBoxListComponent implements OnInit {
     //     }
     //   }        
     // }
-    // console.log(this.childListChecked); 
     // this.cardboxListChecked = [];
     // for (var i = 0; i < this.menulist.length; i++) {
     //   if(this.menulist[i].isSelected)
     //   this.cardboxListChecked.push(this.menulist[i]);
     // }
-    // console.log(this.cardboxListChecked);
   }
 }

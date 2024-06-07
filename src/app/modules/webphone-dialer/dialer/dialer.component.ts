@@ -73,7 +73,6 @@ export class DialerComponent implements OnInit, OnDestroy {
     }
   }
   phoneEvents = (res: any): void => {
-    console.log(res)
     if (res.event) {
       switch (res.event) {
         case 'callCompleted':
@@ -136,7 +135,6 @@ export class DialerComponent implements OnInit, OnDestroy {
     // if (!this.dialerService.getIsLoaded()) {
     this.dialerService.getEvent().subscribe((res: any) => {
       this.phoneEvents(res);
-      // console.log(this);
 
       if (res.event == 'sipRegistered') {
         this.sipPhone.login();
@@ -147,9 +145,6 @@ export class DialerComponent implements OnInit, OnDestroy {
       }
     });
     this.dialerService.getWsEvent().subscribe((res) => {
-      console.log(res);
-
-      // alert(res + 'From Construct');
     });
     this._shared.getMessage().subscribe((res) => { });
     // }
@@ -157,7 +152,6 @@ export class DialerComponent implements OnInit, OnDestroy {
 
     this.sipPhone = this.dialerService.getSipPhone();
 
-    // console.log(this.sipPhone);
 
     this.dialerService.setIsLoaded(true);
     if (this.sipPhone) {
@@ -195,7 +189,6 @@ export class DialerComponent implements OnInit, OnDestroy {
     this.sipPhone = AgentFactory.getAgent(config);
     this.sipPhone.loadPhone();
     this.dialerService.setSipPhone(this.sipPhone);
-    // // console.log("LoadPhone ===> " ,this.sipPhone);
     if (this.sipPhone) {
       // this.sipPhone.changeStatus('Manual Dial', '*12');
     }
@@ -213,7 +206,6 @@ export class DialerComponent implements OnInit, OnDestroy {
    */
 
   manualDial(to_number: string = ''): void | boolean {
-    // console.log(this.sipPhone);
     this.callConnected = false;
     let number = '';
     if (to_number == '') {

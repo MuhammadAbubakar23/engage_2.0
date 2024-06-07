@@ -137,7 +137,6 @@ export class SignalRService {
     }
     if(!this.storeLocally.includes(groupName)){
       this.storeLocally.push(groupName)
-      console.log('groyupsArray',this.storeLocally)
     }
   }
 

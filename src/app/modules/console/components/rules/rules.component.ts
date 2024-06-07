@@ -79,7 +79,6 @@ export class RulesComponent implements OnInit {
     if (confirmation) {
       this.commonService.DeleteRules(message.groupId).subscribe(
         () => {
-          console.log('message deleted:', message);
           this.tableData = this.tableData.filter((msg: any) => msg.id !== message.id);
 
         },
@@ -90,7 +89,6 @@ export class RulesComponent implements OnInit {
     }
   }
   disableTemplate(message: any) {
-    console.log('Disabling template:', message);
   }
   cloneTemplate(message: any) {
   }

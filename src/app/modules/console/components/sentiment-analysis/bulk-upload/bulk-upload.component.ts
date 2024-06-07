@@ -57,7 +57,6 @@ export class BulkUploadComponent implements OnInit, AfterViewInit {
   }
   ngOnInit(): void {
     this.senService.login().subscribe((token: any) => {
-      console.log(token, token.access);
       localStorage.setItem("token", token.access);
     });
 
@@ -115,7 +114,6 @@ export class BulkUploadComponent implements OnInit, AfterViewInit {
   }
 
   onEnterKeyPressed(event: any) {
-    console.log('Enter key pressed', this.inputText);
     this.response = "Positive";
     this.language = "English";
   }
@@ -145,9 +143,7 @@ export class BulkUploadComponent implements OnInit, AfterViewInit {
 
     const data = { "data": this.stepThreeForm.value['sentences'] };
 
-    console.log("Submitting...", data);
     this.senService.postSentimentApi(data).subscribe((res) => {
-      console.log("Sentiment", res);
 
       this.toastermessage = 'Successfully Added';
       this.isToaster = true;
@@ -158,9 +154,7 @@ export class BulkUploadComponent implements OnInit, AfterViewInit {
   }
 
   trainModel(): void {
-    console.log("Training", this.trainType);
     this.senService.trainingApi({ "text": this.trainType }).subscribe((res) => {
-      console.log("Sentiment", res);
 
       this.toastermessage = 'Trained successfully';
       this.isToaster = true;

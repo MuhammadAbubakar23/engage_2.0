@@ -24,7 +24,6 @@ export class DblistingComponent implements OnInit {
     this._rs.login().subscribe((token: any) => {
       localStorage.setItem("token", token.access);
       this._rs.listDbSetiingApi().subscribe((res) => {
-        console.log("Dblisting", res);
         this.connections = res;
       })
     })

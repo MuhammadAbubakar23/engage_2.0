@@ -31,7 +31,6 @@ export class CompaniesService {
     );
   }
   getCompanyById(id:any): Observable<MenuModel>{
-    //console.log(id);
     if(id == null || id<=0 || typeof id === 'undefined') return of(this.menuModel);
     return this.request.getBy<MenuModel>("AllTeams", "Out/"+id).pipe(
       map((response: MenuModel) => {
@@ -44,7 +43,6 @@ export class CompaniesService {
     //   map((res: any) => { return res }),
     //   tap(res => console.log( + " Response: ", res)),
     //   catchError(err => {
-    //     console.log('Handling error locally and rethrowing it...', err);
     //     return throwError(() => new Error(err));
     //   })
     // );

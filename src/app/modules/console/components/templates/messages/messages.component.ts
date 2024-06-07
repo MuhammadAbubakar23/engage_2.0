@@ -92,7 +92,6 @@ export class MessagesComponent implements OnInit {
       this.commonService.DeleteMessage(template.id).subscribe(
         () => {
           // Success callback
-          // console.log('Template deleted:', template);
           // Remove the deleted template from the messages array
           this.messages = this.messages.filter((msg) => msg.id !== template.id);
         },

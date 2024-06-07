@@ -121,7 +121,6 @@ export class InstagramReportComponent implements OnInit {
 
     this.commonDataService.PostInstagramReport(requestData).subscribe((res: any) => {
       this.spinerServices.hide()
-      // console.log("Api instagram",res)
       // this.endDate=this.datePipe.transform(requestData.to,'YYYY-dd-MM HH:mm:ss')||''
       this.instagramReport = res
 

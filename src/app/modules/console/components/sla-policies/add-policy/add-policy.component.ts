@@ -57,7 +57,6 @@ export class AddPolicyComponent implements OnInit {
   getPolicyById(policyId: string) {
     this.commonService.GetPolicyById(policyId).subscribe(
       (policy: any) => {
-        console.log("id===>", policy)
         this.messageForm.patchValue({
           policyName: policy.policyName,
           description: policy.description,
@@ -71,18 +70,15 @@ export class AddPolicyComponent implements OnInit {
         });
       },
       (error: any) => {
-        console.log('API error:', error);
       }
     );
   }
   getOperationalHours(): void {
     this.commonService.GetOperationalHours().subscribe(
       (response: any) => {
-        console.log('hours of operations', response);
         this.oprationalHours = response;
       },
       (error: any) => {
-        console.log('API error:', error);
       }
     );
   }
@@ -93,13 +89,11 @@ export class AddPolicyComponent implements OnInit {
       const formGroup = slaTargets.controls[index] as FormGroup;
       // formGroup.patchValue({ oprationHoursId: value });
 
-      // console.log("Operation hours ID", formGroup.value.oprationHoursId); // Corrected property name
     } else {
       console.error('Invalid index:', index);
     }
   }
   onSubmit() {
-    console.log('Form Data:', this.messageForm.value);
     const slaTargets = this.messageForm.get('slaTargets') as FormArray;
     // for (let i = slaTargets.controls.length - 1; i >= 0; i--) {
       // if (!slaTargets.controls[i].value.oprationHoursId) {
@@ -120,27 +114,22 @@ export class AddPolicyComponent implements OnInit {
         };
         this.commonService.UpdateSlaPolicy( updatedTemplate).subscribe(
           response => {
-            console.log('API response:', response);
             this.router.navigate(['/console/sla-policies']);
           },
           error => {
-            console.log('API error:', error);
           }
         );
       }
       else {
         this.commonService.AddSlaPolicy(this.messageForm.value).subscribe(
           response => {
-            console.log('API response:', response);
             this.router.navigate(['/console/sla-policies']);
           },
           error => {
-            console.log('API error:', error);
           }
         );
       }
     } else {
-      console.log('Form is invalid');
     }
   }
   cancelForm() {

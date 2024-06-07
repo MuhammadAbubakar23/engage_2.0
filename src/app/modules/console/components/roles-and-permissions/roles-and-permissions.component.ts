@@ -77,7 +77,6 @@ export class RolesAndPermissionsComponent implements OnInit {
       this.commonService.DeleteRoles(obj).subscribe(
         () => {
           // Success callback
-          console.log('message deleted:', message);
           // Remove the deleted message from the messages array
           this.messages = this.messages.filter((msg: { id: any; }) => msg.id !== message.id);
         },

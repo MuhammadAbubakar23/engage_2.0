@@ -832,7 +832,6 @@ export class ResponderHeaderComponent implements OnInit {
         this.commondata.RemoveAssignedQuery(body).subscribe((res: any) => {
           this.location.back();
           localStorage.setItem('assignedProfile', '');
-          console.log('remove Response===>', res);
         });
       }
     }

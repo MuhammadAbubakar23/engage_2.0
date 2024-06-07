@@ -73,14 +73,6 @@ export class CreateCompaniesComponent implements OnInit, OnDestroy {
     this.Companies = this._Activatedroute.snapshot.data["companies"];
     
     // this.CompaniesNAccessesPermissions = [...this.CompaniesNAccesses, ...this.CompaniesNPermissions];
-    // console.log(this.CompaniesNAccesses);
-    // console.log(this.CompaniesNPermissions);
-    // console.log(this.CompaniesNProperties);
-    // console.table(this.CompaniesNAccesses);
-    // console.table(this.CompaniesNPermissions);
-    // console.table(this.CompaniesNProperties);
-
-    //console.table(this.Companies);
    
     this._Activatedroute.paramMap.subscribe(paramMap => { 
       this.identity = Number(paramMap.get('id'));      
@@ -114,7 +106,6 @@ export class CreateCompaniesComponent implements OnInit, OnDestroy {
     //   }
     //   this.setform(form);
     // }
-    console.log(this.identity); 
 
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
@@ -136,7 +127,6 @@ export class CreateCompaniesComponent implements OnInit, OnDestroy {
 
   onSubmit() : void {
     let _self = this;
-    // console.log(this.companiesForm.value);
     const acesses: FormArray = this.companiesForm.get('acesses') as FormArray;
     while (acesses.length !== 0)  acesses.removeAt(0);
     this.CompaniesNAccessesChecked.forEach(function (jsonval:any) {
@@ -155,9 +145,7 @@ export class CreateCompaniesComponent implements OnInit, OnDestroy {
       acesses.push(new FormControl(jsonval)); //properties.push(new FormControl(jsonval));
     });
     
-    // console.log(this.companiesForm.value);
     // if (this.companiesForm.invalid) {
-    //   console.log("In invalid")
     //  // return;
     // }
     
@@ -166,16 +154,10 @@ export class CreateCompaniesComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.onDestroy$))
         .subscribe({ 
           next: (team:any) => {
-            console.log("------------------------res---------------------------");
-            console.log(team);
-            console.log("------------------------res---------------------------");
             _self.companiesservice.save("RoleProperties", this.companiesForm.value)
               .pipe(takeUntil(this.onDestroy$))
               .subscribe({ 
                 next: (role:any) => {
-                  console.log("------------------------000res000---------------------------");
-                  console.log(role);
-                  console.log("------------------------000res000---------------------------");
                 },
                 error: (err: HttpErrorResponse) => {
                   // this.errorMessage = err.message;
@@ -195,7 +177,6 @@ export class CreateCompaniesComponent implements OnInit, OnDestroy {
     // //let controllerRoute = "RoleProperties";
     // this.companiesservice.save("RoleProperties", this.companiesForm.value).pipe(takeUntil(this.onDestroy$)).subscribe({ 
     //   next: (res:any) => {
-    //     console.log(res)
     //   },
     //   error: (err: HttpErrorResponse) => {
     //     // this.errorMessage = err.message;
@@ -206,35 +187,29 @@ export class CreateCompaniesComponent implements OnInit, OnDestroy {
   setPropertiesList(PropertyData:any){
     let _self = this;
     this.CompaniesNPropertiesChecked = [];
-    // console.log(PropertyData);
     Object.values(PropertyData).forEach((innerArray:any) => {
       innerArray.forEach(function (jsonval:any) {
         _self.CompaniesNPropertiesChecked.push(jsonval.mainId);
       });      
     })
-    console.log(_self.CompaniesNPropertiesChecked);
   }
   setAccessList(AccessData:any){
     let _self = this;
     this.CompaniesNAccessesChecked = [];
-    // console.log(AccessData);
     Object.values(AccessData).forEach((innerArray:any) => {
       innerArray.forEach(function (jsonval:any) {
         _self.CompaniesNAccessesChecked.push(jsonval.mainId);
       });      
     })
-    console.log(_self.CompaniesNAccessesChecked);
   }
   setPermissionList(PermissionData:any){
     let _self = this;
     this.CompaniesNPermissionsChecked = [];
-    //console.log(PermissionData);
     Object.values(PermissionData).forEach((innerArray:any) => {
       innerArray.forEach(function (jsonval:any) {
         _self.CompaniesNPermissionsChecked.push(jsonval.mainId);
       });      
     })
-    console.log(_self.CompaniesNPermissionsChecked);
   }
   AddCompaniesFormArry(e:any){
     const checkArray: FormArray = this.companiesForm.get('checkArray') as FormArray;

@@ -82,7 +82,6 @@ export class SupportChannelsComponent implements OnInit {
               authResponse: response.authResponse,
             }
             this.commonService.AttachFacebookPage(obj).subscribe((res: any) => {
-              console.log(res);
               this.attachFacebookPageForm.reset();
             })
 
@@ -90,7 +89,6 @@ export class SupportChannelsComponent implements OnInit {
         })
         .catch((error: any) => console.error(error));
     } else {
-      console.log('Form is invalid');
       // Form is invalid, display error messages or take appropriate action
     }
   }
@@ -104,7 +102,6 @@ export class SupportChannelsComponent implements OnInit {
   // Scopes work
   // scopes: any[] = [];
   // onCheckChange(event: any) {
-  //   console.log(event);
   //   if (this.scopes.length == 0) {
   //     this.scopes.push(event.target.id);
   //   } else {
@@ -134,7 +131,6 @@ export class SupportChannelsComponent implements OnInit {
 
     this.commonService.GetConsoleChannels().subscribe((res: any) => {
       this.channels = res
-      console.log("channels====>", this.channels)
       // if (Object.keys(res).length > 0) {
       // this.channels = res[0].subMenu;
       // }

@@ -17,10 +17,7 @@ export class PhoneDialerComponent implements OnInit {
 
 
   }
-method()
-{
-  // // console.log(this.for);
-}
+
 show:any=false;
 click(val:any){
    

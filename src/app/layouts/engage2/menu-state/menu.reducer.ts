@@ -26,12 +26,7 @@ const _menuReducer = createReducer(
         
       })
     }
-    // console.log("LoadMenu State Starts");
     // //ages.filter()
-    // console.log(action.menus);
-    // console.log(state.menus.length)
-    // console.log(...state.menus);    
-    // console.log("LoadMenu State Ends");
     return {
       ...state,
       menus: action.menus,

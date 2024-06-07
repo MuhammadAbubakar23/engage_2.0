@@ -22,11 +22,8 @@ export class JsonWebTokenInterceptor implements HttpInterceptor {
     token = token == null ? allToken.session : token;
     token = token == null ? allToken.local : token;
 
-    //console.log("Jwt Token............"+ token)
-    // console.log(httpRequest.url);
     // const urlAL = "Authentication/Login"
     // httpRequest.url.includes("Login")
-    // console.log(httpRequest);
     if (
       token == null &&
       (!httpRequest.url.includes('Login') ||

@@ -73,7 +73,6 @@ export class AddSkillMembersComponent implements OnInit {
 
     this.isSelectedIdstostring=this.isSelectedIds.toString();
     this.teamMemberForm.value.numbersIds=this.isSelectedIdstostring;
-    console.log("this.teamMemberForm===>",this.teamMemberForm.value.numbersIds)
     this.toastermessage=true
     setTimeout(() => {
       this.toastermessage=false
@@ -90,7 +89,6 @@ toggleSelectionIds(id:number):void{
   else{
     this.isSelectedIds.push(id)
   }
- console.log("this.isSelectedIds==>",this.isSelectedIds)
 
 }
 

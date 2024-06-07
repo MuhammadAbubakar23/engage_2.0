@@ -71,8 +71,6 @@ export class TagsComponent implements OnInit {
   //    })
   //   }
   //  })
-
-  //       console.log(this.tags); // Verify that the data is populated correctly
   //     }, (error: any) => {
   //       this.spinnerServerice.hide()
   //       console.error(error);
@@ -88,7 +86,6 @@ export class TagsComponent implements OnInit {
     this.spinnerServerice.show()
     this.commonService.GetAllTag(obj).subscribe((res: any) => {
       this.spinnerServerice.hide()
-      console.log('All Tags===>', res)
       this.tags = res.Tags
       this.totoalCount = res.TotalCount
     }, error => {
@@ -121,13 +118,11 @@ export class TagsComponent implements OnInit {
 
   }
   disableTag(tag: Tag): void {
-    console.log('Disable tag:', tag);
   }
   cloneTag(tag: Tag): void {
     const cloneTag = { ...tag };
     cloneTag.name += ' (Cloned)';
     this.tags.push(cloneTag);
-    console.log('Cloned tag:', cloneTag);
   }
   setPerPage(perPage: number): void {
     this.perPage = perPage;

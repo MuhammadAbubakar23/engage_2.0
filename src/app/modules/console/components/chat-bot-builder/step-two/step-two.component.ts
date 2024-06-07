@@ -38,6 +38,5 @@ export class StepTwoComponent implements OnInit {
   }
 
   stepTwoSubmit() {
-    console.log(this.stepTwoForm.value.questions);
   }
 }

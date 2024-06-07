@@ -14,8 +14,6 @@ export default class Validation {
         return null;
       }
 
-      console.log(control?.value);
-      console.log(checkControl?.value);
 
       if (control?.value !== checkControl?.value) {
         controls.get(checkControlName)?.setErrors({ mismatch: true });

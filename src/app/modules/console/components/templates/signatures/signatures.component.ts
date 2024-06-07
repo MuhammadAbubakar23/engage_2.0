@@ -84,13 +84,11 @@ export class SignaturesComponent implements OnInit {
       this.commonService.DeleteMessage(template.id).subscribe(
         () => {
           // Success callback
-          // console.log('Template deleted:', template);
           // Remove the deleted template from the messages array
           this.signatures = this.signatures.filter((msg) => msg.id !== template.id);
         },
         (error: any) => {
           // Error callback
-          console.error('Error deleting template:', error);
         }
       );
     }
@@ -100,7 +98,6 @@ export class SignaturesComponent implements OnInit {
   disableTemplate(template: any) {
     // Logic for disabling the template
     template.disabled = true;
-    // console.log('Disable template:', template);
   }
 
   cloneTemplate(template: any) {
@@ -109,7 +106,6 @@ export class SignaturesComponent implements OnInit {
     clonedTemplate.name += ' (Cloned)';
     // You can modify other properties as well if needed
     this.signatures.push(clonedTemplate);
-    // console.log('Cloned template:', clonedTemplate);
   }
   setPerPage(perPage: number): void {
     this.perPage = perPage;

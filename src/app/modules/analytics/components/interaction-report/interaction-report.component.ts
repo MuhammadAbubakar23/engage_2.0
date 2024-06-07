@@ -94,7 +94,6 @@ export class InteractionReportComponent implements OnInit {
   ngOnInit(): void {
     this.activeChannel=window.location.origin
     this.baseUrl = window.location.pathname.split('/');
-    console.log(this.baseUrl);
    
     const newObj = {
       title: 'Interaction Report',
@@ -206,7 +205,6 @@ export class InteractionReportComponent implements OnInit {
   }
   getAgentsTeamList() {
     this.commonData.GetAgentsTeamList().subscribe((res: any) => {
-      console.log('agents data ====>', res);
       this.totalLoginsAgent = res;
       this.totalAgentsCount = res.length;
     });
@@ -223,7 +221,6 @@ export class InteractionReportComponent implements OnInit {
       this.selectedChannel.push(channel.name)
 
     }   
-    console.log('this.selectedChannel==>',this.selectedChannel)
  
   }
   mouseClickReset() {
@@ -237,7 +234,6 @@ export class InteractionReportComponent implements OnInit {
         this.totalAgents.forEach((x: any) => {
           this.AgentIds.push(x.id);
         });
-        console.log(this.totalAgents);
       },
       (error: any) => {
         console.error(error);
@@ -279,7 +275,6 @@ export class InteractionReportComponent implements OnInit {
       agents: this.selectedTagBy,
       channels: this.selectedChannel.toString() || '',
     };
-    console.log('data form===>', formData);
     this.SpinnerService.show();
     this.interactionStats = null;
     this.data = [];
@@ -433,10 +428,8 @@ export class InteractionReportComponent implements OnInit {
         );
       }
 
-      console.log('everage data===>', this.avgResponseTimeSum);
 
       // this.finalAverageFirstResponse = this.calculateAverageTime(this.interactionStats.agentPerformance, 'firstResponseTime');
-      console.log('interaction data ==>', this.data);
       this.newArray = []; 
       this.interactionData = res.dateWiseInteraction;
       this.sentimentDataPoints = [];

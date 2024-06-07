@@ -37,30 +37,25 @@ export class PhoneDialerService {
   }
 
   public updateEvent(event:string, data:any): void {
-    // // console.log({ event: event, ...data})
     this.eventObject.next({ event: event, ...data});
 
   }
 
   public updateWsEvent(event:string, data:any){
-    // // console.log({ event: event, data})
     this.wsEventObject.next({ event: event, data});
 
   }
 
 
   public updatePhoneLogs(text:any){
-    // // console.log("Update" + text)
     this.phoneLogs.next(text);
   }
 
   public setSipPhone(sipPhone : SipPhone){
     this.SipPhone = sipPhone;
-    // console.log(this.SipPhone);
   }
 
   public getSipPhone(): SipPhone{
-    // console.log(this.SipPhone);
     return this.SipPhone;
   }
 

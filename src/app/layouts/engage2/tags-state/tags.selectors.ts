@@ -15,7 +15,7 @@ export const getTagsByParentId = (id:number) => createSelector(getTags, (tagsMod
 //export const getTagsByParentId = (id:number) => createSelector(selectTagsModels, (tagsModels:TagsModel[]) => tagsModels.parentId );
 export const getEmarging = (emerging:string) => createSelector(getTags, (tagsModels:TagsModel[]) => (tagsModels)? tagsModels.filter((model) => model.emerging.includes(emerging)):ConstTagsModelState);
 export const getInSubEmarging = (startString:string, endString:string) => createSelector(getTags, (tagsModels:TagsModel[]) => {
-  //console.log(tagsModels);
+
   if (tagsModels) {
     return tagsModels.filter((model) => model.emerging.includes(startString) && model.emerging.includes(endString));
   } else {

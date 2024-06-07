@@ -26,7 +26,6 @@ export class CompaniesService {
     //   map((res: any) => { return res }),
     //   tap(res => // console.log( + " Response: ", res)),
     //   catchError(err => {
-    //     // console.log('Handling error locally and rethrowing it...', err);
     //     return throwError(() => new Error(err));
     //   })
     // );

@@ -26,7 +26,6 @@ export class ChatwithintentComponent implements OnInit {
    ngOnInit() {
     this.botService.conversation.subscribe((val:any) => {
     this.messages = this.messages.concat(val);
-    console.log("this.messages",this.messages);
   });
 }
 
@@ -41,7 +40,6 @@ export class ChatwithintentComponent implements OnInit {
    }
    trainModel():void{
     this.botService.trainApi().subscribe((result:any) => {
-      console.log("Train",result);
       alert("Success!");
       },(error:any) => {
        alert("Error!");

@@ -40,18 +40,15 @@ export class ChatBotComponent implements OnInit, AfterViewInit {
   ngOnInit(): void 
   {
     this.subscription = this.closePanelservices.receiveRightBarToggleValue().subscribe(res=>{
-      console.log("This.closePanelValue Response===>",res)
       this.showPanel = res;
     });
 // 
     this.botService.login().subscribe((token: any) => {
-      console.log(token, token.access);
       localStorage.setItem("token", token.access);
       this.botService.listofIntents().subscribe((res:any)=>{
         this.intents=res;
         this.intentName=res[0];
         this.selectIntent()
-        console.log("result",res);
        })
     });
 
@@ -96,7 +93,6 @@ export class ChatBotComponent implements OnInit, AfterViewInit {
 
 
     this.botService.intentDetails(this.intentName).subscribe((res: any) => {
-      console.log(res);
       this.intentsDetails.intentName = "";
       this.intentsDetails.intentName = res.categories[0];
 
@@ -130,7 +126,6 @@ window.location.reload();
 })
 }
 deleteIntentQA(obj: any): void {
-  console.log("deleteIntent", obj);
   const data = {'intent': obj.intentName, 'question': obj.question, 'answers': obj.answers};
   this.botService.deleteQA(data).subscribe((res: any) => {
     this.toastermessage = 'Successfully Deleted!';

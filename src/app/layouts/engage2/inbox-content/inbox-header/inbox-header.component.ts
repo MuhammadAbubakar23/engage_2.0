@@ -32,7 +32,6 @@ export class InboxHeaderComponent implements OnInit {
   this.reviceTotalCountServices.reciveTaotalCounts().subscribe((res:any)=>{
 
     this.followUpCount=res
-    console.log("FollowupCount===>",this.followUpCount)
   })
     const headerMenu = this.stor.retrive('Tags', 'O').local;
       headerMenu.forEach((item:any) => {

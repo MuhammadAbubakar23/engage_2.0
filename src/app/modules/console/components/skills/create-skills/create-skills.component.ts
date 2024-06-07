@@ -83,7 +83,6 @@ export class CreateSkillsComponent implements OnInit {
     this.selectedRules = this.subRules
       .filter(rule => rule.isSelected)
       .map(rule => rule.name);
-    console.log(this.selectedRules)
   }
   removeSelectedRule(rule: string) {
     const index = this.selectedRules.indexOf(rule);
@@ -128,7 +127,6 @@ export class CreateSkillsComponent implements OnInit {
     this.commondata.GetAllRules(data).subscribe((res: any) => {
       this.subRules = res.Rules.map((rule: any) => ({ ...rule, isSelected: false }));
     })
-    console.log("GetAllRules", this.subRules)
   }
   constructor(private formbuilder: FormBuilder, private router: Router,
     private ExchangeData: DataExchangeServicesService,
@@ -170,7 +168,6 @@ export class CreateSkillsComponent implements OnInit {
   selectRulesBasedOnSkillTags(selectedRules: any): void {
 
     this.selectedRules = [];
-    console.log("Checking tags", this.subRules)
     for (const rule of selectedRules) {
       this.selectRuleById(rule.id, this.subRules);
     }
@@ -187,7 +184,6 @@ export class CreateSkillsComponent implements OnInit {
   }
   checkTagsBasedOnSkillTags(skillTags: any): void {
 
-    console.log("Checking tags", this.TagsLists)
     for (const skillTag of skillTags) {
       this.checkTagById(skillTag.id, this.TagsLists);
     }
@@ -217,7 +213,6 @@ export class CreateSkillsComponent implements OnInit {
     if (this.id) {
       this.commondata.editSkill(this.id).subscribe((res: any) => {
 
-        console.log("the Edit Data===>", res);
 
         this.userForm.patchValue({
           "teamname": res.name,
@@ -241,7 +236,6 @@ export class CreateSkillsComponent implements OnInit {
     const data = {}
     this.commondata.GetBusinessHours(data).subscribe((res: any) => {
       this.isBusnisshours = res.BusinessHours
-      console.log("All business hours===>", res)
     })
   }
   // get all Sla Policies
@@ -249,7 +243,6 @@ export class CreateSkillsComponent implements OnInit {
     const data = {}
     this.commondata.GetSlaPolicy(data).subscribe((res: any) => {
       this.isSlaPolicies = res.SLAPolices
-      console.log("this.isSlaPolices==>", this.isSlaPolicies)
     })
   }
 
@@ -257,9 +250,7 @@ export class CreateSkillsComponent implements OnInit {
 
     this.commondata.GetTagsByCompanyId().subscribe((res: any) => {
       
-      console.log("Response", res)
       this.TagsLists = res
-      console.log("this.tagsLsiting===>", this.TagsLists)
       this.TagsLists.forEach((tag: any) => {
         tag['isChecked'] = false;
         if (tag.subTags) {
@@ -270,7 +261,6 @@ export class CreateSkillsComponent implements OnInit {
 
       })
     })
-    console.log("this.tagsLsiting1===>", this.TagsLists)
   }
 
   getAllWing() {
@@ -279,8 +269,6 @@ export class CreateSkillsComponent implements OnInit {
       this.isSelectedWing = res;
       // this.isSelectedWing = [...this.Wing.map(wing => ({ id: wing.id, name: wing.name, slug: wing.slug }))];
     })
-    // console.log("GetAllWings", this.Wing);
-    console.log("isSelectedWing", this.isSelectedWing);
   }
 
   checkedIds: number[] = [];
@@ -372,15 +360,12 @@ export class CreateSkillsComponent implements OnInit {
       }
       if (this.id && this.id !== null) {
         this.commondata.UpdateSkill(this.id, data).subscribe((res: any) => {
-          console.log("Update skills===>", res)
           this.router.navigateByUrl('/console/skills');
           this.sendtoastervalue = "updateSkill"
         })
       }
       else {
-        console.log("this.userForm.value===>", data);
         this.commondata.AddSkill(data).subscribe((res: any) => {
-          console.log("addSkills===>", res)
           this.sendtoastervalue = 'skilladd'
           this.userForm.reset()
           this.router.navigateByUrl('/console/skills')

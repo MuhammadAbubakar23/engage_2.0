@@ -30,7 +30,6 @@ export class ResponderBotInteractionComponent implements OnInit {
     }
     this.commonData.WhatsappBotInteraction(obj).subscribe((res: any) => {
       this.messages = res
-      console.log('bot interaction ====>', this.messages)
     },
       (error: any) => {
         console.error('Error occurred:', error);

@@ -311,7 +311,6 @@ export class TwitterReportComponent implements OnInit {
           this.totalDmSentPercentage = (this.totalDmSent / totalOutboundQueries) * 100;
           this.totalMentionSentPercentage = (this.totalMentionSent / totalOutboundQueries) * 100;
         }
-        console.log(res);
 
 
         if (this.allDates.length == 0) {

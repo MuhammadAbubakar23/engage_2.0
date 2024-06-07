@@ -49,7 +49,6 @@ export class CustomerDetailsSurveyComponent implements OnInit {
     }
   
     this.commondataService.AddSurvey(data).subscribe((res:any)=>{
-   console.log("Add Date Respons===>",res);
     this.toastermessage=true
     setTimeout(()=>{
       this.toastermessage=false

@@ -77,7 +77,6 @@ export class CreateBusinessHoursComponent implements OnInit {
 
     this.commonService.GetBusinessById(template).subscribe(
       (res: any) => {
-        console.log('Received template from service:', template);
         this.messageForm.patchValue({
           templateName: res.templateName,
           description: res.description,
@@ -179,7 +178,6 @@ export class CreateBusinessHoursComponent implements OnInit {
           .UpdateBusinessHours(updatedTemplate)
           .subscribe(
             (response: any) => {
-              console.log('Template updated:', response);
               this.router.navigate(['/console/business-hours']);
             },
             (error: any) => {
@@ -189,7 +187,6 @@ export class CreateBusinessHoursComponent implements OnInit {
       } else {
         this.commonService.AddBusinessHours(this.messageForm.value).subscribe(
           (response: any) => {
-            console.log('Template created:', response);
             this.router.navigate(['/console/business-hours']);
           },
           (error: any) => {
@@ -199,7 +196,6 @@ export class CreateBusinessHoursComponent implements OnInit {
       }
     } else {
       // Handle form validation errors
-      console.log('Form is invalid');
     }
   }
 

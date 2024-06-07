@@ -56,12 +56,10 @@ this.maxEndDate=this.currentDate.toISOString().split('T')[0]
     }
 this.commanService.GetScrmFacebookReport(obj).subscribe((res:any)=>{
   const facebookStats=res
-  console.log("Facebookreport===>",facebookStats)
 })
   }
   GetFortestingSCRM(){
     this.commanService.GetDatafortesting().subscribe((res:any)=>{
-      console.log("test response===>",res)
     })
   }
 getPublishinbehaviorGraph(){

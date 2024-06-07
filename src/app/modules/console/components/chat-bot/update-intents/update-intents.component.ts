@@ -32,7 +32,6 @@ export class UpdateIntentsComponent implements OnInit {
       this.oldData.intent=intentName;
       this.oldData.old_question=question;
       this.oldData.old_answers=answers;
-      console.log("this.oldData",this.oldData);
 
       this.formGroup?.patchValue({
         intentName: intentName,
@@ -41,7 +40,6 @@ export class UpdateIntentsComponent implements OnInit {
 
       this.setAnswers(answers); // Set the answers array
 
-      console.log("this", this.formGroup);
     });
   }
 

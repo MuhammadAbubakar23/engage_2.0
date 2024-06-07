@@ -35,17 +35,13 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     }
 
     let team = this.storage.retrive('nocompass', 'O').local;
-    // console.log(team);
     // if (typeof team === 'undefined' || team == null || team == '') {
-    //   //   console.log(this.storage.retrive("nocompass","O"));
     // } else if (
     //   typeof team.id === 'undefined' ||
     //   team.id == null ||
     //   team.id <= 0
     // ) {
     // } else {
-    //   
-    //   //console.log(team.id);
     //   request = request.clone({
 
     //     url: request.url,
@@ -61,7 +57,6 @@ export class SuperTeamInterceptor implements HttpInterceptor {
 
     if (typeof team === 'undefined' || team == null || team == '') {
       
-      //   console.log(this.storage.retrive("nocompass","O"));
       request = request.clone({
         url: request.url,
         //withCredentials: true,
@@ -76,7 +71,6 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     ) {
     } else {
       
-      //console.log(team.id);
       request = request.clone({
 
         url: request.url,

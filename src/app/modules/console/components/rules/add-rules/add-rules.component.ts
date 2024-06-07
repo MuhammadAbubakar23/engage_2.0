@@ -81,9 +81,6 @@ count=0;
 
   }
 
-test(){
-  console.log("testting")
-}
 
   processRules(rules: any[]) {
     rules?.forEach((rule: any) => {
@@ -91,17 +88,14 @@ test(){
             this.processRules(rule.rules);
         } else {
             const fieldConfig = this.entitySet.find((entity:any) => entity.entityName === rule.field);
-            console.log("field set confiye==>", fieldConfig)
             if (fieldConfig) {
                 rule.type = fieldConfig.entityType;
                 // rule.entity = rule.field; // Assuming entity should be the same as the field
                 if (Array.isArray(rule.value)) {
-                    console.log("ok");
                 } else if (rule.value !== undefined && rule.value !== null) {
                     rule.value = [rule.value];
                 }
             } else {
-                console.error(`Field config not found for field: ${rule.field}`);
             }
         }
     });
@@ -118,7 +112,6 @@ ngOnInit(): void {
 }
   // getRuleById(ruleId: string) {
   //   this._cs.GetRuleById(ruleId).subscribe((res: any) => {
-  //     console.log('getting', res)
   //     this.rulesForm.patchValue({
 
   //       description: res.description,
@@ -131,7 +124,6 @@ ngOnInit(): void {
   //     this.loadExistingRuleSet();
   //   },
   //     (error: any) => {
-  //       console.log('API error:', error);
   //     })
 
   // }
@@ -184,7 +176,6 @@ ngOnInit(): void {
 
 
           this.config.fields[obj.entityName] = fieldsObj;
-          console.log('changes process ==>' ,this.config.fields)
         });
         //this.loadExistingRuleSet();
       } else {
@@ -201,14 +192,12 @@ ngOnInit(): void {
   // }
 
   onClick() {
-    console.log("this.selectedRuleSet",this.selectedRuleSet)
     const ruleData = {
       "name": this.rulesForm.value['ruleName'],
       "description": this.rulesForm.value['description'],
       'rulesJson': JSON.stringify(this.selectedRuleSet),
       'tableName': this.selectedEntity
     };
-    console.log("json data ===>", this.selectedRuleSet)
     if (this.ruleId) {
       this._cs.UpdateRules({ ...ruleData, "id": this.ruleId }).subscribe((res: any) => {
         this.router.navigate(['console/rules']);

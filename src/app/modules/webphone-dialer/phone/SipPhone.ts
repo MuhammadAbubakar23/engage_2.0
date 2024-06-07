@@ -110,7 +110,6 @@ export class SipPhone
         //registration success
         this.wrtcPhone.on('registered', () =>
         {
-            // console.log(this);
             Logger.AddToStatusLogList('Register| Agent ID:' + SipPhone._sipPhone?.sipUser + '|Register Success');
 
             //emitting event

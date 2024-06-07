@@ -448,7 +448,6 @@ export class ConversationComponent implements OnInit {
     this.SpinnerService.show();
     this.changeDetect.detectChanges();
     // localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
-    console.log('filter dto', this.filterDto);
     this.commondata.GetConversationList(this.filterDto).subscribe(
       (res: any) => {
         if (Object.keys(res).length === 0) {
@@ -699,7 +698,7 @@ export class ConversationComponent implements OnInit {
         existingConversation.unrespondedCount++;
       } else {
         // Check skillSlug conditions and add new conversation to the list
-        if (this.skillSlug === 'all' || this.skillSlug === newMsg.skillSlug) {
+        if (this.skillSlug.length == 0 || this.skillSlug[0] === newMsg.skillSlug) {
           this.ConversationList.unshift(newMsg);
 
           if (this.ConversationList.length > this.pageSize) {
@@ -1049,7 +1048,6 @@ export class ConversationComponent implements OnInit {
             });
           }
         });
-        console.log(this.Ids);
         this.isChecked = true;
         this.isCheckedAll = true;
       } else {

@@ -25,7 +25,6 @@ export class ResponseErrorInterceptor implements HttpInterceptor {
         
         if (error.error instanceof ErrorEvent) {
           // A client-side error: Retrigger
-          // console.log('error event--->>>', error);
           errorMessage = this.handleError(error);        
           //return throwError(() => new Error(errorMessage));          
         }else{
@@ -33,7 +32,6 @@ export class ResponseErrorInterceptor implements HttpInterceptor {
           //if(error.status == 200 && error.ok === false) return error.message;
           // error.clone({body: this.jsonParser.parse(event.body)})
           // error.clone({body: null})
-          // console.log('error 22222 event--->>>', error);
           errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
           
         }
@@ -94,7 +92,6 @@ export class ResponseErrorInterceptor implements HttpInterceptor {
 
 // map((event: HttpEvent<any>) => {
 //   if (event instanceof HttpResponse) {
-//   //  console.log('event--->>>', event);
 //   }
 //   return event;
 // }), 

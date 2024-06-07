@@ -17,17 +17,13 @@ export class CacheInterceptor implements HttpInterceptor {
  
        const cached = this.cacheService.retrieve(req.url);
        if (cached) {
-          console.log('[CacheInterceptor] - Returning cached response.');
           return of(cached);
        }
  
-       console.log('[CacheInterceptor] - Request not found in cache.');
-       console.log('[CacheInterceptor] - Executing request...');
        return next.handle(req).pipe(
           tap(event => {
              if (event instanceof HttpResponse) {
                 this.cacheService.store(req.url, event);
-                console.log('[CacheInterceptor] - Response stored in cache.');
              }
           })
        );

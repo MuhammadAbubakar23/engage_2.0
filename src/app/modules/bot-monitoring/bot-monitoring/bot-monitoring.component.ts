@@ -35,7 +35,7 @@ export class BotMonitoringComponent implements OnInit {
           this._chatVisibilityS.notifythirdActive(true);
         }
         const existingChatIndex = this.chats.findIndex(chat => chat[0].customer?.phone === activeChat.from);
-        console.log("this.chats", this.chats)
+
         if (existingChatIndex != -1) {
           const isEqual = this.chats[existingChatIndex][0]['completed'] === activeChat['completed']
 
@@ -88,7 +88,7 @@ export class BotMonitoringComponent implements OnInit {
       } else {
         this._botMonitorS.getChatDetails(data).subscribe((res) => {
 
-          console.log(activeChat['completed'])
+
           res[0]['completed'] = activeChat['completed'];
           this.chats.push(res);
           const latObject = {
@@ -108,7 +108,7 @@ export class BotMonitoringComponent implements OnInit {
   ngOnInit(): void {
     this.newChatIdSubscription = this._chatVisibilityS.newChatId$.subscribe((newChat: any) => {
       if (newChat) {
-        console.log("New chat", newChat['completed'])
+
         this.getChatDetails(newChat);
       }
 
@@ -150,7 +150,7 @@ export class BotMonitoringComponent implements OnInit {
   // ngOnInit(): void {
   //   this.newChatIdSubscription = this._chatVisibilityS.newChatId$.subscribe((newChat: any) => {
   //     if (newChat) {
-  //       console.log("New chat", newChat['completed'])
+
   //       this.getChatDetails(newChat);
   //     }
 
@@ -181,7 +181,7 @@ export class BotMonitoringComponent implements OnInit {
 
 
   onMinimizeToggle(activeChat: any) {
-    console.log("this.chats", this.chats)
+
   }
   ngOnDestroy(): void {
     this.apiCallInterval$.next();

@@ -443,13 +443,14 @@ export class ChannelComponent implements OnInit {
     private renderer: Renderer2,
     private fetchPostType: FetchPostTypeService,
     private getWing: GetWingsService,
-    private getSkillSlug:SkillslugService,
-    private getConnectionId:ConnectionIdService
+    private getSkillSlug: SkillslugService,
+    private getConnectionId: ConnectionIdService
   ) {}
 
   ngOnInit(): void {
+    this.platform = this.fetchId.platform;
     this.flag = this.router.url.split('/')[2];
-    this.getClassOfHeaderBackground(this.fetchId.platform);
+    this.getClassOfHeaderBackground(this.platform);
     this.baseUrl = window.location.origin;
     if (this.baseUrl == 'https://keportal.enteract.live') {
       this.activeClient = 'ke';
@@ -585,8 +586,10 @@ export class ChannelComponent implements OnInit {
       this.updateTicketId(res);
     });
   }
-  skillIdArray:number[]=[];
+  skillIdArray: number[] = [];
   async fetchData() {
+    // this.spinner1running = true;
+    //   this.SpinnerService.show();
     const channelFeatures = [
       {
         platform: 'Facebook',
@@ -652,16 +655,16 @@ export class ChannelComponent implements OnInit {
     ];
 
     const channelWithFeature = channelFeatures.find(
-      (x) => x.platform === this.fetchId.platform
+      (x) => x.platform === this.platform
     );
-    
+
     if (channelWithFeature != null) {
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
         user: this.id,
         pageId: '',
-        plateForm: this.fetchId.platform,
+        plateForm: this.platform,
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
@@ -690,7 +693,6 @@ export class ChannelComponent implements OnInit {
           await this.getTweets(this.filterDto);
         }
       }
-      console.log('TTR,TM,TDM=====>', this.channelDM);
     }
   }
 
@@ -729,136 +731,39 @@ export class ChannelComponent implements OnInit {
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
 
-      this.spinner1running = true;
-      this.SpinnerService.show();
       try {
+        // this.spinner1running = true;
+        // this.SpinnerService.show();
+
         this.commondata
-        .GetChannelConversationDetail(filter)
-        .subscribe((res: any) => {
-          if (Object.keys(res).length > 0) {
-            this.activeTabValue = 'Cmnt';
-            this.ConverstationDetailDto = res;
-            this.Comments = this.ConverstationDetailDto.List;
-
-            console.log('Facebook Data===.?', this.Comments);
-            this.userInformation = res.List[0].user;
-            this.userInfoService.shareUserInformation(res.List[0].user);
-            this.TotalCmntQueryCount = res.TotalQueryCount;
-            this.pageName = this.Comments[0]?.post.profile.clientAppName;
-            localStorage.setItem('lastQueryId', this.Comments[0].comments[0].id);
-            this.commentsArray = [];
-
-            this.Comments?.forEach((item: any) => {
+          .GetChannelConversationDetail(filter)
+          .subscribe((res: any) => {
+            if (Object.keys(res).length > 0) {
+              this.activeTabValue = 'Cmnt';
+              this.ConverstationDetailDto = res;
+              this.Comments = this.ConverstationDetailDto.List;
+              this.userInformation = res.List[0].user;
+              this.userInfoService.shareUserInformation(res.List[0].user);
+              this.TotalCmntQueryCount = res.TotalQueryCount;
+              this.pageName = this.Comments[0]?.post.profile.clientAppName;
+              localStorage.setItem(
+                'lastQueryId',
+                this.Comments[0].comments[0].id
+              );
               this.commentsArray = [];
-              item.comments.forEach((cmnt: any) => {
-                this.commentsArray.push(cmnt);
 
-                let groupedItems = this.commentsArray.reduce(
-                  (acc: any, aa: any) => {
-                    const date = aa.createdDate.split('T')[0];
-                    if (!acc[date]) {
-                      acc[date] = [];
-                    }
-                    acc[date].push(aa);
-                    return acc;
-                  },
-                  {}
-                );
-
-                item['groupedComments'] = Object.keys(groupedItems).map(
-                  (createdDate) => {
-                    return {
-                      createdDate,
-                      items: groupedItems[createdDate],
-                    };
-                  }
-                );
-
-                item['groupedComments'].forEach((x: any) => {
-                  const groupdispostion = x.items;
-                  this.groupAndModifyData(groupdispostion);
-                });
-              });
-            });
-
-            this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-            this.SpinnerService.hide();
-            this.spinner1running = false;
-          }
-        });
-      } catch (error) {
-        console.error('Error fetching messages:', error);
-      } finally {
-        console.log('grouped messages', this.groupedMessages);
-        this.spinner1running = false;
-        this.SpinnerService.hide();
-      }
-    }
-  }
-
-  updateCommentsDataListener() {
-    if (!this.id) {
-      this.id = localStorage.getItem('storeOpenedId') || '{}';
-    }
-    // const openedContentType = localStorage.getItem('contentType');
-    if (this.updatedComments.length > 0) {
-      this.updatedComments?.forEach((xyz: any) => {
-        xyz.comments.forEach((abc: any) => {
-          // if (openedContentType == abc.contentType) {
-            if (this.id == xyz.user.userId) {
-              this.commentDto = {
-                id: abc.id,
-                wings: abc.wings,
-                postId: xyz.post.postId,
-                commentId: abc.commentId,
-                message: abc.message,
-                contentType: abc.contentType,
-                userName: abc.userName || abc.userId,
-                queryStatus: abc.queryStatus,
-                createdDate: abc.createdDate,
-                insertionDate: abc.insertionDate,
-                ticketId: abc.ticketId,
-                fromUserProfilePic: abc.fromUserProfilePic,
-                body: abc.body,
-                sentimentValue: abc.sentimentValue,
-                language: abc.language,
-                isHide: abc.isHide,
-                isLikedByAdmin: abc.isLikedByAdmin,
-                channelId: abc.channelId,
-                conversationId: abc.conversationId,
-                attachmentUrl: abc.attachmentUrl,
-                attachmentType: abc.attachmentType,
-                sendTo: abc.sendTo,
-                unrespondedCount: abc.unrespondedCount,
-                attachments: abc.attachments,
-                replies: abc.replies,
-                sentiment: abc.sentiment,
-                tags: abc.tags,
-                to: abc.to,
-                cc: abc.cc,
-                bcc: abc.bcc,
-                dispositions: abc.dispositions,
-                signalRGroupName: abc.signalRGroupName,
-              };
-              localStorage.setItem('lastQueryId', this.commentDto.id.toString());
               this.Comments?.forEach((item: any) => {
-                this.postIdArray.push(item.post.postId);
                 this.commentsArray = [];
-                // this.newPostComment= [];
-
-                if (this.postIdArray.includes(xyz.post.postId)) {
-                  item.comments.push(this.commentDto);
-                  item.comments.forEach((cmnt: any) => {
-                    this.commentsArray.push(cmnt);
-                  });
+                item.comments.forEach((cmnt: any) => {
+                  this.commentsArray.push(cmnt);
 
                   let groupedItems = this.commentsArray.reduce(
-                    (acc: any, item: any) => {
-                      const date = item.createdDate?.split('T')[0];
+                    (acc: any, aa: any) => {
+                      const date = aa.createdDate.split('T')[0];
                       if (!acc[date]) {
                         acc[date] = [];
                       }
-                      acc[date].push(item);
+                      acc[date].push(aa);
                       return acc;
                     },
                     {}
@@ -872,86 +777,186 @@ export class ChannelComponent implements OnInit {
                       };
                     }
                   );
-                }
-                // for new post
-                else {
-                  if (!this.postIdArray.includes(xyz.post.postId)) {
-                    this.Newpost.forEach((x: any) => {
-                      x.comments.forEach((z: any) => {
-                        this.newpostcommentDto = {
-                          id: z.id,
-                          postId: x.post.postId,
-                          commentId: z.commentId,
-                          message: z.message,
-                          contentType: z.contentType,
-                          userName: z.userName || z.userId,
-                          queryStatus: z.queryStatus,
-                          createdDate: z.createdDate,
-                          fromUserProfilePic: z.profilePic,
-                          body: z.body,
-                          to: z.toId,
-                          cc: z.cc,
-                          bcc: z.bcc,
-                          attachments: z.mediaAttachments,
-                          replies: [],
-                          sentiment: '',
-                          tags: z.tags,
-                        };
-                      });
-                      localStorage.setItem('lastQueryId', this.newpostcommentDto.id.toString());
-                      if (
-                        !this.newPostComment.find(
-                          (comment) => comment.post.postId === x.post.postId
-                        )
-                      ) {
-                        this.newPostComment.push(x);
-                      }
-                      this.newCmntReply = true;
-                      this.newPostComment.forEach((item: any) => {
-                        this.commentsArray = [];
-                        if (item.post.postId == x.post.postId) {
-                          if (
-                            !item.comments.find(
-                              (cmnt: any) =>
-                                cmnt.id === this.newpostcommentDto.id
-                            )
-                          ) {
-                            item.comments.push(this.newpostcommentDto);
-                          }
-                          item.comments.forEach((cmnt: any) => {
-                            if (!this.commentsArray.includes(cmnt.id)) {
-                              this.commentsArray.push(cmnt);
-                            }
-                          });
-                          let groupedItems = this.commentsArray.reduce(
-                            (acc: any, item: any) => {
-                              const date = item.createdDate?.split('T')[0];
-                              if (!acc[date]) {
-                                acc[date] = [];
-                              }
-                              acc[date].push(item);
-                              return acc;
-                            },
-                            {}
-                          );
 
-                          item['groupedComments'] = Object.keys(
-                            groupedItems
-                          ).map((createdDate) => {
+                  item['groupedComments'].forEach((x: any) => {
+                    const groupdispostion = x.items;
+                    this.groupAndModifyData(groupdispostion);
+                  });
+                });
+              });
+
+              this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+              // this.SpinnerService.hide();
+              // this.spinner1running = false;
+            }
+          });
+      } catch (error) {
+        console.error('Error fetching messages:', error);
+      } finally {
+        // this.spinner1running = false;
+        // this.SpinnerService.hide();
+      }
+    }
+  }
+
+  updateCommentsDataListener() {
+    if (!this.id) {
+      this.id = localStorage.getItem('storeOpenedId') || '{}';
+    }
+    // const openedContentType = localStorage.getItem('contentType');
+    if (this.updatedComments.length > 0) {
+      this.updatedComments?.forEach((xyz: any) => {
+        xyz.comments.forEach((abc: any) => {
+          // if (openedContentType == abc.contentType) {
+          if (this.id == xyz.user.userId) {
+            this.commentDto = {
+              id: abc.id,
+              wings: abc.wings,
+              postId: xyz.post.postId,
+              commentId: abc.commentId,
+              message: abc.message,
+              contentType: abc.contentType,
+              userName: abc.userName || abc.userId,
+              queryStatus: abc.queryStatus,
+              createdDate: abc.createdDate,
+              insertionDate: abc.insertionDate,
+              ticketId: abc.ticketId,
+              fromUserProfilePic: abc.fromUserProfilePic,
+              body: abc.body,
+              sentimentValue: abc.sentimentValue,
+              language: abc.language,
+              isHide: abc.isHide,
+              isLikedByAdmin: abc.isLikedByAdmin,
+              channelId: abc.channelId,
+              conversationId: abc.conversationId,
+              attachmentUrl: abc.attachmentUrl,
+              attachmentType: abc.attachmentType,
+              sendTo: abc.sendTo,
+              unrespondedCount: abc.unrespondedCount,
+              attachments: abc.attachments,
+              replies: abc.replies,
+              sentiment: abc.sentiment,
+              tags: abc.tags,
+              to: abc.to,
+              cc: abc.cc,
+              bcc: abc.bcc,
+              dispositions: abc.dispositions,
+              signalRGroupName: abc.signalRGroupName,
+            };
+            localStorage.setItem('lastQueryId', this.commentDto.id.toString());
+            this.Comments?.forEach((item: any) => {
+              this.postIdArray.push(item.post.postId);
+              this.commentsArray = [];
+              // this.newPostComment= [];
+
+              if (this.postIdArray.includes(xyz.post.postId)) {
+                item.comments.push(this.commentDto);
+                item.comments.forEach((cmnt: any) => {
+                  this.commentsArray.push(cmnt);
+                });
+
+                let groupedItems = this.commentsArray.reduce(
+                  (acc: any, item: any) => {
+                    const date = item.createdDate?.split('T')[0];
+                    if (!acc[date]) {
+                      acc[date] = [];
+                    }
+                    acc[date].push(item);
+                    return acc;
+                  },
+                  {}
+                );
+
+                item['groupedComments'] = Object.keys(groupedItems).map(
+                  (createdDate) => {
+                    return {
+                      createdDate,
+                      items: groupedItems[createdDate],
+                    };
+                  }
+                );
+              }
+              // for new post
+              else {
+                if (!this.postIdArray.includes(xyz.post.postId)) {
+                  this.Newpost.forEach((x: any) => {
+                    x.comments.forEach((z: any) => {
+                      this.newpostcommentDto = {
+                        id: z.id,
+                        postId: x.post.postId,
+                        commentId: z.commentId,
+                        message: z.message,
+                        contentType: z.contentType,
+                        userName: z.userName || z.userId,
+                        queryStatus: z.queryStatus,
+                        createdDate: z.createdDate,
+                        fromUserProfilePic: z.profilePic,
+                        body: z.body,
+                        to: z.toId,
+                        cc: z.cc,
+                        bcc: z.bcc,
+                        attachments: z.mediaAttachments,
+                        replies: [],
+                        sentiment: '',
+                        tags: z.tags,
+                      };
+                    });
+                    localStorage.setItem(
+                      'lastQueryId',
+                      this.newpostcommentDto.id.toString()
+                    );
+                    if (
+                      !this.newPostComment.find(
+                        (comment) => comment.post.postId === x.post.postId
+                      )
+                    ) {
+                      this.newPostComment.push(x);
+                    }
+                    this.newCmntReply = true;
+                    this.newPostComment.forEach((item: any) => {
+                      this.commentsArray = [];
+                      if (item.post.postId == x.post.postId) {
+                        if (
+                          !item.comments.find(
+                            (cmnt: any) => cmnt.id === this.newpostcommentDto.id
+                          )
+                        ) {
+                          item.comments.push(this.newpostcommentDto);
+                        }
+                        item.comments.forEach((cmnt: any) => {
+                          if (!this.commentsArray.includes(cmnt.id)) {
+                            this.commentsArray.push(cmnt);
+                          }
+                        });
+                        let groupedItems = this.commentsArray.reduce(
+                          (acc: any, item: any) => {
+                            const date = item.createdDate?.split('T')[0];
+                            if (!acc[date]) {
+                              acc[date] = [];
+                            }
+                            acc[date].push(item);
+                            return acc;
+                          },
+                          {}
+                        );
+
+                        item['groupedComments'] = Object.keys(groupedItems).map(
+                          (createdDate) => {
                             return {
                               createdDate,
                               items: groupedItems[createdDate],
                             };
-                          });
-                        }
-                      });
+                          }
+                        );
+                      }
                     });
-                  }
+                  });
                 }
-              });
-              this.totalUnrespondedCmntCountByCustomer =
-                this.totalUnrespondedCmntCountByCustomer + 1;
-            }
+              }
+            });
+            this.totalUnrespondedCmntCountByCustomer =
+              this.totalUnrespondedCmntCountByCustomer + 1;
+          }
           // }
         });
       });
@@ -967,55 +972,50 @@ export class ChannelComponent implements OnInit {
     // const openedContentType = localStorage.getItem('contentType');
     this.updatedMessages.forEach((xyz: any) => {
       // if (openedContentType == xyz.contentType) {
-        if (this.id == xyz.fromId) {
-          this.messageDto = {
-            id: xyz.id,
-            contentType: xyz.contentType,
-            queryStatus: xyz.queryStatus,
-            createdDate: xyz.createdDate,
-            attachments: xyz.attachments,
-            replies: [],
-            sentiment: '',
-            tags: [],
-            msgId: xyz.msgId,
-            fromId: xyz.fromId,
-            fromName: xyz.fromName,
-            fromProfilePic: xyz.fromProfilePic,
-            toId: xyz.toId,
-            toName: xyz.toName,
-            msgText: xyz.msgText,
-            agentId: '',
-            customerSocailProfileId: 0,
-            profileId: xyz.profileId,
-            profilePageId: xyz.profilePageId,
+      if (this.id == xyz.fromId) {
+        this.messageDto = {
+          id: xyz.id,
+          contentType: xyz.contentType,
+          queryStatus: xyz.queryStatus,
+          createdDate: xyz.createdDate,
+          attachments: xyz.attachments,
+          replies: [],
+          sentiment: '',
+          tags: [],
+          msgId: xyz.msgId,
+          fromId: xyz.fromId,
+          fromName: xyz.fromName,
+          fromProfilePic: xyz.fromProfilePic,
+          toId: xyz.toId,
+          toName: xyz.toName,
+          msgText: xyz.msgText,
+          agentId: '',
+          customerSocailProfileId: 0,
+          profileId: xyz.profileId,
+          profilePageId: xyz.profilePageId,
+        };
+        localStorage.setItem('lastQueryId', this.messageDto.id.toString());
+        this.messageOrDM.unshift(this.messageDto);
+        this.messagesArray.unshift(this.messageDto);
+
+        let groupedItems = this.messagesArray.reduce((acc: any, item: any) => {
+          const date = item.createdDate?.split('T')[0];
+          if (!acc[date]) {
+            acc[date] = [];
+          }
+          acc[date].push(item);
+          return acc;
+        }, {});
+
+        this.groupedMessages = Object.keys(groupedItems).map((createdDate) => {
+          return {
+            createdDate,
+            items: groupedItems[createdDate],
           };
-          localStorage.setItem('lastQueryId', this.messageDto.id.toString());
-          this.messageOrDM.unshift(this.messageDto);
-          this.messagesArray.unshift(this.messageDto);
-
-          let groupedItems = this.messagesArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate?.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
-              }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
-
-          this.groupedMessages = Object.keys(groupedItems).map(
-            (createdDate) => {
-              return {
-                createdDate,
-                items: groupedItems[createdDate],
-              };
-            }
-          );
-          this.totalUnrespondedMsgCountByCustomer =
-            this.totalUnrespondedMsgCountByCustomer + 1;
-        }
+        });
+        this.totalUnrespondedMsgCountByCustomer =
+          this.totalUnrespondedMsgCountByCustomer + 1;
+      }
       // }
     });
     this.changeDetect.detectChanges();
@@ -1261,8 +1261,8 @@ export class ChannelComponent implements OnInit {
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
 
-      this.spinner1running = true;
-      this.SpinnerService.show();
+      // this.spinner1running = true;
+      // this.SpinnerService.show();
       try {
         this.commondata
           .GetChannelMessageDetail(filter)
@@ -1279,7 +1279,6 @@ export class ChannelComponent implements OnInit {
               this.TotalMsgQueryCount = res.TotalQueryCount;
               localStorage.setItem('lastQueryId', this.messageOrDM[0].id);
 
-              
               this.messagesArray = [];
               this.groupedMessages = [];
 
@@ -1305,17 +1304,16 @@ export class ChannelComponent implements OnInit {
                     };
                   }
                 );
-                this.SpinnerService.hide();
-                this.spinner1running = false;
+                // this.SpinnerService.hide();
+                // this.spinner1running = false;
               });
             }
           });
       } catch (error) {
         console.error('Error fetching messages:', error);
       } finally {
-        console.log('grouped messages', this.groupedMessages);
-        this.spinner1running = false;
-        this.SpinnerService.hide();
+        // this.spinner1running = false;
+        // this.SpinnerService.hide();
       }
     }
   }
@@ -1323,8 +1321,8 @@ export class ChannelComponent implements OnInit {
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
 
-      this.spinner1running = true;
-      this.SpinnerService.show();
+      // this.spinner1running = true;
+      // this.SpinnerService.show();
       try {
         this.commondata
           .GetChannelMessageDetail(filter)
@@ -1375,17 +1373,16 @@ export class ChannelComponent implements OnInit {
                     };
                   }
                 );
-                this.SpinnerService.hide();
-                this.spinner1running = false;
+                // this.SpinnerService.hide();
+                // this.spinner1running = false;
               });
             }
           });
       } catch (error) {
         console.error('Error fetching messages:', error);
       } finally {
-        console.log('grouped messages', this.groupedMessages);
-        this.spinner1running = false;
-        this.SpinnerService.hide();
+        // this.spinner1running = false;
+        // this.SpinnerService.hide();
       }
     }
   }
@@ -1393,67 +1390,64 @@ export class ChannelComponent implements OnInit {
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
 
-      this.spinner1running = true;
-      this.SpinnerService.show();
+      // this.spinner1running = true;
+      // this.SpinnerService.show();
       try {
         this.commondata
-        .GetChannelMessageDetail(filter)
-        .subscribe((res: any) => {
-          if (Object.keys(res).length > 0) {
-            this.activeTabValue = 'TTR';
-            this.filterDto.queryType = 'TTR';
-            this.TwitterTweets = res.List?.dm;
-            this.userInformation = res.List?.user;
+          .GetChannelMessageDetail(filter)
+          .subscribe((res: any) => {
+            if (Object.keys(res).length > 0) {
+              this.activeTabValue = 'TTR';
+              this.filterDto.queryType = 'TTR';
+              this.TwitterTweets = res.List?.dm;
+              this.userInformation = res.List?.user;
 
-            this.userInfoService.shareUserInformation(res.List.user);
-            this.pageName = res.List?.profile.clientAppName;
-            this.totalUnrespondedTweetCountByCustomer = res.TotalCount;
-            this.TotalTweetQueryCount = res.TotalQueryCount;
+              this.userInfoService.shareUserInformation(res.List.user);
+              this.pageName = res.List?.profile.clientAppName;
+              this.totalUnrespondedTweetCountByCustomer = res.TotalCount;
+              this.TotalTweetQueryCount = res.TotalQueryCount;
 
-            this.commentsArray = [];
-            this.groupedTweets = [];
+              this.commentsArray = [];
+              this.groupedTweets = [];
 
-            localStorage.setItem('lastQueryId',this.TwitterTweets[0].id)
-            this.TwitterTweets.forEach((item: any) => {
-              this.commentsArray.push(item);
-              let groupedItems = this.commentsArray.reduce(
-                (acc: any, item: any) => {
-                  const date = item.createdDate?.split('T')[0];
-                  if (!acc[date]) {
-                    acc[date] = [];
+              localStorage.setItem('lastQueryId', this.TwitterTweets[0].id);
+              this.TwitterTweets.forEach((item: any) => {
+                this.commentsArray.push(item);
+                let groupedItems = this.commentsArray.reduce(
+                  (acc: any, item: any) => {
+                    const date = item.createdDate?.split('T')[0];
+                    if (!acc[date]) {
+                      acc[date] = [];
+                    }
+                    acc[date].push(item);
+                    return acc;
+                  },
+                  {}
+                );
+
+                this.groupedTweets = Object.keys(groupedItems).map(
+                  (createdDate) => {
+                    return {
+                      createdDate,
+                      items: groupedItems[createdDate],
+                    };
                   }
-                  acc[date].push(item);
-                  return acc;
-                },
-                {}
-              );
+                );
+              });
 
-              this.groupedTweets= Object.keys(groupedItems).map(
-                (createdDate) => {
-                  return {
-                    createdDate,
-                    items: groupedItems[createdDate],
-                  };
-                }
-              );
-            });
-            
-            this.SpinnerService.hide();
-            this.spinner1running = false;
-          }
-        });
+              // this.SpinnerService.hide();
+              // this.spinner1running = false;
+            }
+          });
       } catch (error) {
         console.error('Error fetching messages:', error);
       } finally {
-        console.log('grouped messages', this.groupedMessages);
-        this.spinner1running = false;
-        this.SpinnerService.hide();
+        // this.spinner1running = false;
+        // this.SpinnerService.hide();
       }
     }
   }
   groupAndModifyData(data: any[]) {
-    // console.log('dispostion data ==>',data)
-
     // Step 1: Group the data based on disposition.createdDate
     const groupedData: { [key: string]: any[] } = {};
     data.forEach((item) => {
@@ -1531,7 +1525,6 @@ export class ChannelComponent implements OnInit {
           // If GIF already present, replace it with the new one
           this.selectedGifFiles = [{ gifFile, gifUrl }];
           this.newImageName = this.selectedGifFiles;
-          console.log('this.selectedGifFiles ====>', this.ImageName);
           this.changeDetect.detectChanges();
         }
 
@@ -1564,7 +1557,6 @@ export class ChannelComponent implements OnInit {
     if (this.isGifSelected == true) {
       this.showAttachmentButton = false;
     }
-    console.log('this.selectedGifFiles ====>', this.ImageName);
     this.changeDetect.detectChanges();
   }
 
@@ -1629,7 +1621,9 @@ export class ChannelComponent implements OnInit {
     profilePageId: new FormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
-    instagramBusinessAccountId: new FormControl(this.ReplyDto.instagramBusinessAccountId),
+    instagramBusinessAccountId: new FormControl(
+      this.ReplyDto.instagramBusinessAccountId
+    ),
     connectionId: new FormControl(this.ReplyDto.connectionId),
   });
 
@@ -1676,7 +1670,7 @@ export class ChannelComponent implements OnInit {
         this.show = true;
         this.mentionedCommentOrMessage = msg.msgText;
         this.mentionedCommentOrMessageId = msg.id;
-        this.platform = this.fetchId.platform;
+        this.platform = this.platform;
         this.postType = msg.contentType;
         this.profileId = this.profileInformation.profile_Id;
         this.profilePageId = this.profileInformation.page_Id;
@@ -1733,7 +1727,7 @@ export class ChannelComponent implements OnInit {
         userProfileId: this.userProfileId,
         responseByName: this.pageName,
         instagramBusinessAccountId: this.instagramBusinessAccountId,
-        connectionId: this.getConnectionId.connectionId
+        connectionId: this.getConnectionId.connectionId,
       });
 
       formData.append('CommentReply', JSON.stringify(this.replyForm.value));
@@ -1749,12 +1743,12 @@ export class ChannelComponent implements OnInit {
           this.replyForm.value.text !== null) ||
         (this?.ImageName?.length > 0 && this.ImageName != undefined)
       ) {
-        this.spinner1running = true;
-        this.SpinnerService.show();
+        // this.spinner1running = true;
+        // this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
-            this.spinner1running = false;
-            this.SpinnerService.hide();
+            // this.spinner1running = false;
+            // this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('fbmessage');
             this.replyForm.reset();
@@ -1765,8 +1759,8 @@ export class ChannelComponent implements OnInit {
           },
           (error) => {
             alert(error.message);
-            this.spinner1running = false;
-            this.SpinnerService.hide();
+            // this.spinner1running = false;
+            // this.SpinnerService.hide();
           }
         );
       } else {
@@ -1831,7 +1825,7 @@ export class ChannelComponent implements OnInit {
       type: 'Tag',
       platform: platform,
       wings: this.getWing.wings,
-      connectionId: this.getConnectionId.connectionId
+      connectionId: this.getConnectionId.connectionId,
     };
 
     this.Comments?.forEach((abc: any) => {
@@ -1936,7 +1930,7 @@ export class ChannelComponent implements OnInit {
         type: 'Tag',
         platform: platform,
         wings: this.getWing.wings,
-        connectionId: this.getConnectionId.connectionId
+        connectionId: this.getConnectionId.connectionId,
       };
 
       this.commondata
@@ -1957,7 +1951,7 @@ export class ChannelComponent implements OnInit {
       type: 'Sentiment',
       platform: platform,
       wings: this.getWing.wings,
-      connectionId: this.getConnectionId.connectionId
+      connectionId: this.getConnectionId.connectionId,
     };
 
     this.commondata
@@ -1971,11 +1965,11 @@ export class ChannelComponent implements OnInit {
     this.commentStatusDto = {
       id: comId,
       type: type,
-      plateForm: this.fetchId.platform,
+      plateForm: this.platform,
       profileId: Number(localStorage.getItem('profileId')),
       wings: this.getWing.wings,
       skillSlug: this.getSkillSlug.skillSlug[0],
-      connectionId: this.getConnectionId.connectionId
+      connectionId: this.getConnectionId.connectionId,
     };
     this.commondata.CommentRespond(this.commentStatusDto).subscribe(() => {});
   }
@@ -2250,7 +2244,7 @@ export class ChannelComponent implements OnInit {
   }
 
   isImage(attachment: any): boolean {
-    return attachment?.mediaType?.toLowerCase().startsWith('image');
+    return attachment?.mediaType?.toLowerCase().includes('image') || attachment?.mediaType?.toLowerCase().includes('photo');
   }
 
   isVideo(attachment: any): boolean {
@@ -2349,11 +2343,11 @@ export class ChannelComponent implements OnInit {
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
   }
-  activeTabValue:string="";
-  activeTab (value:any){
+  activeTabValue: string = 'Cmnt';
+  activeTab(value: any) {
     this.activeTabValue = value;
-    if(value == 'DM'){
-      this.filterDto.queryType = 'TDM'
+    if (value == 'DM') {
+      this.filterDto.queryType = 'TDM';
     } else if (value == 'Cmnt') {
       this.filterDto.queryType = localStorage.getItem('contentType') || '';
     } else {

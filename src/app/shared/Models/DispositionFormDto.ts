@@ -7,6 +7,7 @@ export class DispositionFormDto {
     wings:string='';
     completedData: CompletedDataDto = new CompletedDataDto();
     skillSlug:string="";
+    tab:string="";
   }
 
   export class CompletedDataDto {

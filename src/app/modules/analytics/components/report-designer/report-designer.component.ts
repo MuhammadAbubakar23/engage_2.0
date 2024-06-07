@@ -163,7 +163,7 @@ export class ReportDesignerComponent implements OnInit {
     });
 
     this.sharedataservice.data$.subscribe((newData: any) => {
-      console.log("newData", newData);
+
       if (newData !== "Initial Data") {
         this.isGraph = true;
       }
@@ -237,7 +237,7 @@ export class ReportDesignerComponent implements OnInit {
       });
 
       this.subscription = this.closePanelservices.receiveRightBarToggleValue().subscribe(res=>{
-        console.log("this.closeServices==>",res)
+
         this.showPanel = res;
       })
   }
@@ -328,7 +328,7 @@ export class ReportDesignerComponent implements OnInit {
       },
       (error: any) => {
         // Error case
-        console.log(error);
+
         let errorMessage = 'An error occurred. Please try again later.';
 
         try {
@@ -375,7 +375,6 @@ export class ReportDesignerComponent implements OnInit {
     this.startPage = 1;
     this.endPage = this.pageSize;
     this.page = 1;
-    console.log('selectTable', this.tableName, this.DBC, this.dbName);
     localStorage.setItem('selectedtable', this.tableName);
     if (
       this.dbName !== 'All DataBases' &&
@@ -394,7 +393,6 @@ export class ReportDesignerComponent implements OnInit {
           this.isGraph = true;
           this.isStats = false;
           this.tableData = this.transformDataObject(res.table);
-          console.log("Res===>", res);
           this.totalCount = res.total_count;
           if (res.last_records < this.pageSize) {
             this.endPage = res.total_count;
@@ -434,7 +432,6 @@ export class ReportDesignerComponent implements OnInit {
       }
       this.isPaginated = true;
       this.tableData = this.transformDataObject(res.table);
-      console.log("Pagination Results", res)
     });
   }
   sortData(): void {
@@ -460,7 +457,6 @@ export class ReportDesignerComponent implements OnInit {
       this.startPage -= this.pageSize;
       this.endPage -= this.pageSize;
       this.page -= 1,
-        console.log('decrementPage', this.startPage, this.endPage);
       this.paginationApi()
     }
   }
@@ -482,7 +478,6 @@ export class ReportDesignerComponent implements OnInit {
         }
         this.isPaginated = true;
         this.tableData = this.transformDataObject(res.table);
-        console.log("Pagination Results", res)
       });
   }
   handleFilters(columntype: any, columnname: any): void {

@@ -1,7 +1,7 @@
 <div class="tab-content " id="myTabContent">
     <div class="tab-pane fade show active socila-channels-tab position-relative" id="channel" role="tabpanel"
         aria-labelledby="channel-tab">
-        <div *ngIf="spinner1running">
+        <div>
             <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
                 [fullScreen]="false">
                 <p style="color: white"> Loading... </p>
@@ -452,10 +452,10 @@
                                                                         *ngIf="isImage(attachment)"
                                                                         src={{attachment.attachmentUrl}} controls
                                                                         style="width: -webkit-fill-available;">
-                                                                    <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                                    <img *ngIf="attachment.mediaType == 'animated_image_share'"
                                                                         src={{attachment.attachmentUrl}}
                                                                         style="width: -webkit-fill-available;">
-                                                                    <img *ngIf="attachment.contentType == 'sticker'"
+                                                                    <img *ngIf="attachment.mediaType == 'sticker'"
                                                                         src={{attachment.attachmentUrl}}
                                                                         style="width: -webkit-fill-available;">
                                                                     <video class="video" *ngIf="isVideo(attachment)"
@@ -1391,11 +1391,50 @@
                                                                     | date:'h:mm:ss a'}}</small>
                                                             </p>
                                                         </div>
-                                                        <div class="whatsapp-single-img whatsappImgModalBtn"
-                                                            type="button">
-                                                            <img style="width: 375px;" src={{msgReply.attachmentUrl}}
-                                                                class="card-img-top rounded-3">
-                                                        </div>
+                                                        <div *ngFor="let attachment of msgReply.attachments"
+                                                                    style="width: 375px;">
+                                                                    <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                        *ngIf="isImage(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.contentType == 'sticker'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <video class="video" *ngIf="isVideo(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></video>
+                                                                    <audio class="audio" *ngIf="isAudio(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></audio>
+                                                                    <a *ngIf="isOther(attachment)"
+                                                                        [href]="attachment.attachmentUrl"
+                                                                        target="_blank">
+                                                                        <div
+                                                                            class="card-body pdf-body bg-light align-items-center row">
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'pdf'"
+                                                                                class="fas fa-file-pdf iconButton file-icon radical col-1"></i>
+                                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'document') || ((attachment.name | getFileTypeFromUrl) == 'docx')"
+                                                                                class="fas fa-file-word iconButton file-icon sky  col-1"></i>
+                                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'sheet') || ((attachment.name | getFileTypeFromUrl) == 'xlsx')"
+                                                                                class="fas fa-file-excel iconButton file-icon excelGreen  col-1"></i>
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'csv'"
+                                                                                class="fas fa-file-csv iconButton file-icon excelGreen  col-1"></i>
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) != 'csv' &&  
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'sheet' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'xlsx' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'document' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'docx' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'pdf'"
+                                                                                class="fas fa-file-lines iconButton file-icon  col-1">
+                                                                            </i>
+                                                                            <p class="card-text ms-3 col-10">{{
+                                                                                attachment.name}}</p>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
                                                         <p class="card-textnignt p-0">{{msgReply.message}}</p>
                                                     </div>
                                                     <div class="message-bottom">
@@ -1612,7 +1651,7 @@
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
                                                                                                     <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(tm.id, keyword.slug, 'TM')"
+                                                                                                        (click)="insertTagsForFeed(tm.id, keyword.slug, 'Twitter')"
                                                                                                         [ngClass]="activeTag==true?'active':''"
                                                                                                         *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                         <div
@@ -1717,12 +1756,50 @@
                                                                         | date:'h:mm:ss a'}}</small>
                                                                 </p>
                                                             </div>
-                                                            <div class="whatsapp-single-img whatsappImgModalBtn"
-                                                                type="button">
-                                                                <img style="width: 375px;"
-                                                                    src={{msgReply.attachmentUrl}}
-                                                                    class="card-img-top rounded-3">
-                                                            </div>
+                                                            <div *ngFor="let attachment of msgReply.attachments"
+                                                                    style="width: 375px;">
+                                                                    <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                        *ngIf="isImage(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.contentType == 'sticker'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <video class="video" *ngIf="isVideo(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></video>
+                                                                    <audio class="audio" *ngIf="isAudio(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></audio>
+                                                                    <a *ngIf="isOther(attachment)"
+                                                                        [href]="attachment.attachmentUrl"
+                                                                        target="_blank">
+                                                                        <div
+                                                                            class="card-body pdf-body bg-light align-items-center row">
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'pdf'"
+                                                                                class="fas fa-file-pdf iconButton file-icon radical col-1"></i>
+                                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'document') || ((attachment.name | getFileTypeFromUrl) == 'docx')"
+                                                                                class="fas fa-file-word iconButton file-icon sky  col-1"></i>
+                                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'sheet') || ((attachment.name | getFileTypeFromUrl) == 'xlsx')"
+                                                                                class="fas fa-file-excel iconButton file-icon excelGreen  col-1"></i>
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'csv'"
+                                                                                class="fas fa-file-csv iconButton file-icon excelGreen  col-1"></i>
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) != 'csv' &&  
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'sheet' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'xlsx' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'document' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'docx' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'pdf'"
+                                                                                class="fas fa-file-lines iconButton file-icon  col-1">
+                                                                            </i>
+                                                                            <p class="card-text ms-3 col-10">{{
+                                                                                attachment.name}}</p>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
                                                             <p class="card-textnignt p-0">{{msgReply.message}}</p>
                                                         </div>
                                                         <div class="message-bottom">
@@ -1939,7 +2016,7 @@
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
                                                                                                     <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(ttr.id, keyword.slug, 'TTR')"
+                                                                                                        (click)="insertTagsForFeed(ttr.id, keyword.slug, 'Twitter')"
                                                                                                         [ngClass]="activeTag==true?'active':''"
                                                                                                         *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                         <div
@@ -2044,12 +2121,50 @@
                                                                         | date:'h:mm:ss a'}}</small>
                                                                 </p>
                                                             </div>
-                                                            <div class="whatsapp-single-img whatsappImgModalBtn"
-                                                                type="button">
-                                                                <img style="width: 375px;"
-                                                                    src={{msgReply.attachmentUrl}}
-                                                                    class="card-img-top rounded-3">
-                                                            </div>
+                                                            <div *ngFor="let attachment of msgReply.attachments"
+                                                                    style="width: 375px;">
+                                                                    <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                        *ngIf="isImage(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.contentType == 'sticker'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <video class="video" *ngIf="isVideo(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></video>
+                                                                    <audio class="audio" *ngIf="isAudio(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></audio>
+                                                                    <a *ngIf="isOther(attachment)"
+                                                                        [href]="attachment.attachmentUrl"
+                                                                        target="_blank">
+                                                                        <div
+                                                                            class="card-body pdf-body bg-light align-items-center row">
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'pdf'"
+                                                                                class="fas fa-file-pdf iconButton file-icon radical col-1"></i>
+                                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'document') || ((attachment.name | getFileTypeFromUrl) == 'docx')"
+                                                                                class="fas fa-file-word iconButton file-icon sky  col-1"></i>
+                                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'sheet') || ((attachment.name | getFileTypeFromUrl) == 'xlsx')"
+                                                                                class="fas fa-file-excel iconButton file-icon excelGreen  col-1"></i>
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'csv'"
+                                                                                class="fas fa-file-csv iconButton file-icon excelGreen  col-1"></i>
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) != 'csv' &&  
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'sheet' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'xlsx' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'document' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'docx' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'pdf'"
+                                                                                class="fas fa-file-lines iconButton file-icon  col-1">
+                                                                            </i>
+                                                                            <p class="card-text ms-3 col-10">{{
+                                                                                attachment.name}}</p>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
                                                             <p class="card-textnignt p-0">{{msgReply.message}}</p>
                                                         </div>
                                                         <div class="message-bottom">

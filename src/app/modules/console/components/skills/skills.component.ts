@@ -85,7 +85,6 @@ export class SkillsComponent implements OnInit {
       this.spinnerServerice.hide()
 
       this.skills = res.Skills
-      console.log("  this.skills ", this.skills)
       this.TotalCount = res.TotalCount;
       if (this.pageNumber == 1) {
         this.startingPoint = 1;
@@ -98,7 +97,6 @@ export class SkillsComponent implements OnInit {
       } else {
         this.endingPoint = this.startingPoint + this.itemsPerPage - 1;
       }
-      console.log(res)
     })
 
   }
@@ -135,18 +133,14 @@ export class SkillsComponent implements OnInit {
 
 
   isSectedAll() {
-    console.log("isSectedAll() called");
     this.allSelected = !this.allSelected;
     this.isChecked = !this.isChecked;
-    console.log("allSelected:", this.allSelected);
-    console.log("isChecked:", this.isChecked);
     if (this.isChecked) {
       this.selectedIds = this.skills.map(item => item.id);
     }
     else {
       this.selectedIds = [];
     }
-    console.log("Selected All===>", this.selectedIds)
     if (this.selectedIds.length > 0) {
       this.showIcon = true
     }
@@ -247,13 +241,10 @@ export class SkillsComponent implements OnInit {
       "tottalusers": this.totaluser = totaluser,
       "Department": this.tottalDepartment = dep
     }
-
-    console.log("Send Data ==>", data)
     this.dataExChange.sendData(data)
   }
   editUser(id: any) {
     this.route.navigateByUrl(`/console/skills/create/${id}`);
-    console.log('After navigation', id);
   }
 
 }

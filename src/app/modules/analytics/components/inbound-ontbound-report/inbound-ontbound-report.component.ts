@@ -139,7 +139,6 @@ export class InboundOntboundReportComponent implements OnInit {
         tags.subTags.forEach((sentimentObj: any) => {
           if (!this.sentimentOptions.includes(sentimentObj)) {
             this.sentimentOptions.push(sentimentObj)
-            console.log("SemtimentValue===>", this.sentimentOptions)
           }
         });
       }

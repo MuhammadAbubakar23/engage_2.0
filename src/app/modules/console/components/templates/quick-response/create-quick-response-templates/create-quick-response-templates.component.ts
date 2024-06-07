@@ -39,7 +39,6 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
       if (template) {
         this.commonService.UpdateQuickReply(template.id, formData).subscribe(
           (response: any) => {
-            console.log('Template updated successfully', response);
             this.router.navigate(['/console/templates/quick-response']);
           },
           (error: any) => {
@@ -49,7 +48,6 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
       } else {
         this.commonService.AddQuickReply(formData).subscribe(
           (response: any) => {
-            console.log('Template created successfully', response);
             this.router.navigate(['/console/templates/quick-response']);
           },
           (error: any) => {
@@ -58,7 +56,6 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
         );
       }
     } else {
-      console.log('Form is invalid');
     }
   }
   cancelForm(): void {

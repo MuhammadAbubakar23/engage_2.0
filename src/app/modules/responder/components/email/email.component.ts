@@ -332,7 +332,6 @@ export class EmailComponent implements OnInit {
               subjects,
             };
           });
-          console.log(this.result);
 
           this.result?.forEach((sbjct: any) => {
             sbjct.subjects?.forEach((group: any) => {
@@ -505,7 +504,6 @@ export class EmailComponent implements OnInit {
                 subjects,
               };
             });
-            console.log(this.result);
 
             this.result?.forEach((sbjct: any) => {
               sbjct.subjects?.forEach((group: any) => {
@@ -652,7 +650,6 @@ export class EmailComponent implements OnInit {
               subjects,
             };
           });
-          console.log(this.result);
 
           this.result?.forEach((sbjct: any) => {
             sbjct.subjects?.forEach((group: any) => {
@@ -798,7 +795,6 @@ export class EmailComponent implements OnInit {
                 subjects,
               };
             });
-            console.log(this.result);
 
             this.result?.forEach((sbjct: any) => {
               sbjct.subjects?.forEach((group: any) => {
@@ -1453,13 +1449,11 @@ export class EmailComponent implements OnInit {
       textarea.selectionStart = startPos + text.length;
       textarea.selectionEnd = startPos + text.length;
       textarea.scrollTop = scrollTop;
-      // // console.log(this.textarea.nativeElement.value);
     }
   }
 
   insertEmoji(emoji: any) {
     this.insertAtCaret(emoji);
-    // // console.log(this.textarea.nativeElement.value);
   }
 
   commentStatus(comId: any, type: any) {
@@ -1664,7 +1658,6 @@ export class EmailComponent implements OnInit {
     } else {
       return text.slice(0, 1000) + '...';
     }
-    // console.log(text);
   }
 
   download(url: string, name: string) {
@@ -1674,7 +1667,6 @@ export class EmailComponent implements OnInit {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    // console.log(url);
   }
 
   // isImage(attachment: any): boolean {

@@ -57,7 +57,6 @@ customerInformationForm= new FormGroup({
         .SearchCustomerProfileDetails(obj)
         .subscribe((res: any) => {
           this.customerProfileInformation = res;
-          console.log(res);
         });
     } else if (this.searchProfileDetails == '') {
       this.profileId = localStorage.getItem('storeOpenedId') || '';
@@ -80,7 +79,6 @@ customerInformationForm= new FormGroup({
             }
             
           })
-          console.log(res);
         });
     }
   }
@@ -101,7 +99,6 @@ customerInformationForm= new FormGroup({
   //     };
   //   this.commonService.SearchCustomerProfileDetails(obj).subscribe((res: any) => {
   //     this.customerProfileInformation = res;
-  //     console.log(res);
   //   });
   // }
   type: string = '';
@@ -128,7 +125,6 @@ customerInformationForm= new FormGroup({
       phoneNumber: mobileNumber
     }
     this.commonService.DeattachProfileInformation(obj).subscribe((res:any)=>{
-      console.log("DeattachProfilerInformation===>",res)
       this.reloadComponent('deattachprofile')
       setTimeout(() => {
         this.closeProfileComponent('customer-profile');

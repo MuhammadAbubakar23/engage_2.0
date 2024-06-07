@@ -86,7 +86,6 @@ export class ResponderProfileComponent implements OnInit {
   //   this.commonService.GetChannels().subscribe((res: any) => {
   //     if (Object.keys(res).length > 0) {
   //     res[0].subMenu;
-  //     console.log("this.channels", this.channels);
   //     res[0].subMenu.forEach((item: any) => {
   //       switch (item.name) {
   //         case "Email":

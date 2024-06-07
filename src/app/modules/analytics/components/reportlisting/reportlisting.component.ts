@@ -59,7 +59,6 @@ export class ReportlistingComponent implements OnInit {
     this.reportService.login().subscribe((token: any) => {
       localStorage.setItem("token", token.access);
       this.reportService.reportslistApi().subscribe((res: any) => {
-        console.log("reportlisting", res);
         this.reports = res;
 
       });
@@ -75,7 +74,6 @@ export class ReportlistingComponent implements OnInit {
     this.endPage = this.pageSize;
     this.page = 1;
     this.reportService.reportExecuteApi({ 'reportName': this.reportName, page: this.page, page_size: this.pageSize }).subscribe((res: any) => {
-      console.log("Get Data", res);
       if (res.error) {
         alert(res.error);
       }
@@ -87,7 +85,6 @@ export class ReportlistingComponent implements OnInit {
         }
       }
 
-      console.log("Get Data", this.tableData)
     });
   }
   
@@ -95,25 +92,23 @@ export class ReportlistingComponent implements OnInit {
     this.startPage = 0;
     this.endPage = this.pageSize;
     this.reportService.reportExecuteApi({ 'reportName': this.reportName, page: this.page, page_size: this.pageSize }).subscribe((res: any) => {
-      console.log("Get Data", res);
+
       this.tableData = this.transformDataObject(res.table);
       this.totalCount = res.total_count;
       if (res.last_records < this.pageSize) {
         this.endPage = res.total_count;
       }
-      console.log("Get Data", this.tableData)
+
     });
 
   }
   getPaginatedData() {
     this.reportService.reportExecuteApi({ 'reportName': this.reportName, page: this.page, page_size: this.pageSize }).subscribe((res: any) => {
-      console.log("Get Data", res);
       this.tableData = this.transformDataObject(res.table);
       this.totalCount = res.total_count;
       if (res.last_records < this.pageSize) {
         this.endPage = res.total_count;
       }
-      console.log("Get Data", this.tableData)
     });
   }
 
@@ -124,7 +119,6 @@ export class ReportlistingComponent implements OnInit {
     const rows: any[] = [];
     const keys = Object.keys(dataObject);
     this.dataKeys = keys;
-    console.log("keys", keys);
     const maxLength = Math.max(...keys.map((key) => dataObject[key].length));
 
     for (let i = 0; i < maxLength; i++) {

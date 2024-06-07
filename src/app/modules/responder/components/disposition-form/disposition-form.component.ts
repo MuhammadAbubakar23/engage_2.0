@@ -37,6 +37,7 @@ export class DispositionFormComponent implements OnInit {
   userId = localStorage.getItem('storeHeaderOpenedId');
   companyId = 0;
   previousUrl: any;
+  currentTab:string=""
 
   constructor(
     private commonService: CommonDataService,
@@ -51,6 +52,7 @@ export class DispositionFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.currentTab=this.route.url.split('/')[2];
     this.dispositionForm = this.fb.group({
       disposition: ['completed', Validators.required],
       reasonId: [''],
@@ -105,6 +107,7 @@ export class DispositionFormComponent implements OnInit {
       comment: this.dispositionForm.value.comment,
       wings: this.getWing.wings,
       skillSlug: this.getSkillSlug.skillSlug[0],
+      tab:this.currentTab,
       completedData: {
         user: this.userId || '{}',
         plateFrom: this.platform || '{}',

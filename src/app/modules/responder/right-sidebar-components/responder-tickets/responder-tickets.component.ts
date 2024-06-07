@@ -170,7 +170,6 @@ export class ResponderTicketsComponent implements OnInit {
         setTimeout(() => {
           this.closeTicketComponent('ticket')
         }, 1000);
-        // // console.log('Ticket Id', this.ticketId);
       });
   }
 
@@ -197,7 +196,6 @@ export class ResponderTicketsComponent implements OnInit {
         this.OrderDetails = res.orders;
         this.spinnerService.hide();
         this.spinner2running = false
-        // // console.log(res);
       });
   }
 

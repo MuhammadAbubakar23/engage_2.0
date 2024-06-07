@@ -20,8 +20,7 @@ export class CreateUserResolver implements Resolve<any> {
   constructor(private roles:RolesAndPermissionsService, private teams:TeamsService, private skills: SkillsService ){}
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Observable<any>> {
-    //console.log(role); 
-   // console.log(team);
+
     await this.funcRoles();
     await this.funcTeams();
     await this.funcSkills();

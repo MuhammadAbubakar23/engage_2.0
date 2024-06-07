@@ -86,8 +86,6 @@ export class AgentAvayaPhoneImp extends Agent
                         {
                             setTimeout(() =>
                             {
-                                // console.log("SENDING WRAPUP");
-                                // console.log(this);
                                 this.changeStatus("WRAPUP", "AFTER_CALL")
                             }, 3000);
                         }

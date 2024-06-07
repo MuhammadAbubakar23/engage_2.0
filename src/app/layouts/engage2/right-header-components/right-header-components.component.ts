@@ -32,30 +32,20 @@ export class RightHeaderComponentsComponent implements OnInit {
     private router: Router,
     private commonService: CommonDataService,
     private agentDetailsService: AgentDetailsService,
-    private signalR: SignalRService,
+    private signalRService: SignalRService,
     private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     let data = this.storage.retrive('main', 'O').local;
     this.fullName = data.username;
-    console.table(data);
     this.email = data.originalUserName;
 
-    this.timer = setInterval(() => {
-      // // console.log("signalR state",this.signalR.hubconnection.state)
-      // // console.log("signalR conId",this.signalR.hubconnection.connectionId)
-      if (this.signalR?.hubconnection?.state == 'Disconnected') {
-        // this.signalR.hubconnection
-        //   .start()
-        //   .then(() => // console.log('Connection started'))
-        //   .then(() => this.signalR.getConnectionId())
-        //   .catch((err) =>
-        //      // console.log('Error while starting connection: ' + err)
-        //   );
-        this.signalR.startConnection();
-      }
-    }, 5000);
+    // this.timer = setInterval(() => {
+    //   if (this.signalR?.hubconnection?.state == 'Disconnected') {
+    //     this.signalR.startConnection();
+    //   }
+    // }, 5000);
 
     this.clickHandler();
   }
@@ -76,20 +66,10 @@ export class RightHeaderComponentsComponent implements OnInit {
         clearInterval(this.timer);
       },
       (error)=>{
-        console.log(error);
         localStorage.clear();
         this.router.navigateByUrl('/login');
         clearInterval(this.timer);
       });
-      
-      // if (this.signalR.hubconnection?.state == 'Connected') {
-      //   this.signalR.hubconnection
-      //     .stop()
-      //     .then(() =>  console.log('Connection stoped'))
-      //     .catch((err) =>
-      //        console.log('Error while stopping connection: ' + err)
-      //     );
-      // }
     } else {
       this.reloadComponent('querryAssigned');
     }
@@ -102,17 +82,16 @@ export class RightHeaderComponentsComponent implements OnInit {
       localStorage.getItem('assignedProfile') == undefined
     ) {
       
-      this.startBreak = true;
-
-      //  this.AgentDetails.onBreak = !this.AgentDetails.onBreak;
+      this.startBreak = !this.startBreak;
       this.commonService.UpdateBreak(this.startBreak).subscribe((res: any) => {
         if (res.status === 'BreakOn') {
           this.clickHandler();
           this.reloadComponent('breakStarted');
           this.timerStart();
-        } else if (res.message === 'Breakoff') {
+        } else if (res.status === 'BreakOff') {
           this.reloadComponent('breakOff');
           this.timerStop();
+          this.signalRService.getConnectionId();
         }
       });
     } else {
@@ -134,6 +113,7 @@ export class RightHeaderComponentsComponent implements OnInit {
   submit() {
     this.authService.login(this.loginForm.value).subscribe(
       (res: any) => {
+        this.updateBreak();
         this.router.navigateByUrl('/all-inboxes/focused/all');
         this.resetTimer();
         this.timerStop();

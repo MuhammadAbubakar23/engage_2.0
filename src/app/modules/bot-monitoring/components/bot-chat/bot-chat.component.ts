@@ -32,7 +32,7 @@ export class BotChatComponent implements OnInit {
     this.minimizeToggle.emit(clickedItem)
   }
   // toggleChatVisibility(clickedItem: any) {
-  //   console.log("ActiveConversation", this.activeConversation)
+
   //   //const activeItems = this.activeConversation.filter(item => item.active);
   //   clickedItem.active = !clickedItem.active;
   //   this.chatVisibilityService.notifyNewChatId(clickedItem);
@@ -40,7 +40,7 @@ export class BotChatComponent implements OnInit {
   constructor(private chatVisibilityService: ChatVisibilityService, private renderer: Renderer2) { }
 
   ngOnInit(): void {
-    console.log("chatArray", this.chat)
+
 
   }
 

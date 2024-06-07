@@ -70,7 +70,6 @@ export class CreateTagsComponent implements OnInit {
           x.subTags.forEach((xyz: any) => {
             this.childTags.push(xyz)
           })
-          // console.log("Child tags===>",this.childTags)
         })
       },
 
@@ -90,7 +89,6 @@ export class CreateTagsComponent implements OnInit {
           this.nestTags.push(abc)
         }
 
-        console.log("nested Tags===>", this.nestTags)
       }
     })
 
@@ -205,7 +203,6 @@ export class CreateTagsComponent implements OnInit {
       };
       this.commonService.UpdateTag(updatedTemplate.id, updatedTemplate).subscribe(
         (response: any) => {
-          console.log('Template updated:', response);
           this.router.navigate(['console/tags']);
         },
         (error: any) => {
@@ -224,11 +221,9 @@ export class CreateTagsComponent implements OnInit {
         })
       // this.commonService.AddTags(obj).subscribe(
       //   response => {
-      //     console.log('Tags added successfully', response);
       //     
       //   },
       //   (error:any) => {
-      //     console.error('Failed to add tags', error.error);
       //   }
       // );
     }

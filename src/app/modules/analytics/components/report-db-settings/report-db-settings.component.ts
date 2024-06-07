@@ -35,7 +35,7 @@ export class ReportDbSettingsComponent implements OnInit {
     this.initForm();
 
     this.id = this._activatedroute.snapshot.paramMap.get('id');
-    console.log("Id", this.id);
+
     if (this.id && this.id !== null) {
 
       this.reportService.getDbSettingById(this.id).subscribe((data) => {
@@ -56,7 +56,7 @@ export class ReportDbSettingsComponent implements OnInit {
     });
   }
   populateFormFields(data: any) {
-    console.log(data);
+
     this.dbSettingsForm.patchValue({
       ConnectionName: data.connection_name,
       ENGINE: data.engine,
@@ -86,23 +86,22 @@ export class ReportDbSettingsComponent implements OnInit {
       "port": this.dbSettingsForm.value.PORT
     };
 
-    console.log("Data:", data);
+
 
     if (this.id && this.id !== null) {
       this.reportService.updateDbSetiingApi(this.id, data).subscribe((res) => {
-        console.log("Update response:", res);
+
         alert("successfully updated");
         this._route.navigateByUrl('/analytics/db-settings');
       });
     } else {
 
       this.reportService.createDbSetiingApi(data).subscribe((res) => {
-        console.log("Create response:", res);
+
         alert(res);
         this._route.navigateByUrl('/analytics/db-settings');
       });
     }
 
-    console.log('Saving settings:', this.dbSettingsForm.value);
   }
 }

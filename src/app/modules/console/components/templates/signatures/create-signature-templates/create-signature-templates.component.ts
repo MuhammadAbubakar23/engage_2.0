@@ -66,7 +66,6 @@ export class CreateSignatureTemplatesComponent implements OnInit {
         this.commonService.UpdateTemplate(updatedTemplate.id, updatedTemplate).subscribe(
           (response: any) => {
             // Handle the successful response after updating the template
-            // console.log('Template updated:', response);
             this.router.navigate(['/console/templates/signature']);
           },
           (error: any) => {
@@ -78,7 +77,6 @@ export class CreateSignatureTemplatesComponent implements OnInit {
         this.commonService.Addtemplate(this.messageForm.value).subscribe(
           (response: any) => {
             // Handle the successful response after creating a new template
-            // console.log('Template created:', response);
             this.router.navigate(['/console/templates/signature']);
           },
           (error: any) => {
@@ -89,7 +87,6 @@ export class CreateSignatureTemplatesComponent implements OnInit {
       }
     } else {
       // Handle form validation errors
-      // console.log('Form is invalid');
     }
   }
   

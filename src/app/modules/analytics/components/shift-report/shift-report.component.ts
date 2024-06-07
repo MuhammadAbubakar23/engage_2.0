@@ -273,7 +273,6 @@ export class ShiftReportComponent implements OnInit {
       this.TagsStats.forEach((x:any)=>{
         this.str= x.name.toLowerCase().split(/[-_.\s]/).map((w:any) => `${w.charAt(0).toUpperCase()}${w.substr(1)}`).join(' ');
         this.SlugTagsArray.push({name:this.str,totalCount:x.totalCount})
-        console.log("SlugTagArray===>",this.SlugTagsArray)
       })
      
       this.tagsStatsTotalCounts = res.tagData.totalTagsCount;
@@ -292,10 +291,6 @@ export class ShiftReportComponent implements OnInit {
       this.slectedtagId.push(tag.slug);
     }
     this.changedateintostring = this.slectedtagId.toString();
-    console.log(
-      'this.changeDateIntoStringfor tags===>',
-      this.changedateintostring
-    );
     this.getShfitReport();
   }
 
@@ -434,7 +429,6 @@ value:any
             this.ActiveAgents.push(user);
             if(this.ActiveAgents.length>0){
               this.ActiveAgents.forEach((x:any)=>{
-                console.log("Active Agent ===>",x.name)
                 // const agentlength=3
                 // for(let i =x.name ;i<=agentlength; i++){
                 //   const showagentname= [i]+'<br>'
@@ -498,7 +492,6 @@ value:any
         picture: imageData
       }
       this.commandataService.EmailShiftReport(obj).subscribe((res:any)=>{
-        console.log('res',res)
       })
     });
   }

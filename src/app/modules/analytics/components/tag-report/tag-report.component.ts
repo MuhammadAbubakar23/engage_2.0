@@ -97,10 +97,8 @@ export class TagReportComponent implements OnInit {
     this.spinerServices.show();
     this.commonService.GetAllTagsReport(obj).subscribe((res: any) => {
       this.spinerServices.hide();
-      console.log('AllTags res===>', res);
 
       this.tagsReportDetails = res;
-      console.log("this group==>", this.groupedDataArray);
   
       this.facebookComments = res.tagsWisePercentageDtos;
       this.facebookComments.forEach((x: any) => {
@@ -144,7 +142,6 @@ x.tags.forEach((y:any)=>{
   tags:this.str
  })
 })
-console.log("Unique AgentDate===>",this.slugTagsArry)
 return this.uniqueAgentData;
 
 
@@ -157,7 +154,6 @@ return this.uniqueAgentData;
       //   this.groupedData.get(agentId).push(item)
       //   this. groupedDataArray = Array.from(this.groupedData, ([agentId, items]) => ({ agentId, items }));
 
-      //   console.log("groupDate===>",this.groupedDataArray)
       //   this.groupedDataArray.forEach((y:any)=>{
       //     y.items.forEach((abc:any)=>{
       //       let obj={
@@ -178,7 +174,6 @@ return this.uniqueAgentData;
           
       //       if(!this.agentName.includes(abc.agentName)){
       //         this.agentName.push(abc.agentName)
-      //         console.log("agentName===>",this.agentName)
       //       }
       //     })
       //   })      

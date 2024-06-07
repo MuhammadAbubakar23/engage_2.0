@@ -1022,7 +1022,6 @@ export class FacebookReportComponent implements OnInit {
     };
     this.commandataSerivecs.GetfacebookProfile(obj).subscribe((res: any) => {
       this.cutomerdata = res;
-      console.log('Top 5 Customer Data==>', res);
     });
   }
   closeToaster() {

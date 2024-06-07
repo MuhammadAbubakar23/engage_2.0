@@ -22,8 +22,6 @@ export class MonitoringMenuComponent implements OnInit {
   constructor(private chatVisibilityService: ChatVisibilityService, private _botMonitorS: BotMonitoringService) {
     this.activeIdSubscription = this.chatVisibilityService.activeId$.subscribe((active) => {
       if (active) {
-        
-        console.log("active Id ", active);
         const clickedItem1 = this.activeConversation.find(item => item.from === active.customerPhone && item.completed === active.completed);
         if (clickedItem1) {
           

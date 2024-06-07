@@ -136,13 +136,11 @@ export class QuickResponseComponent implements OnInit {
       this.commonService.DeleteQuickReply(template.id).subscribe(
         () => {
           // Success callback
-          console.log('Template deleted:', template);
           // Remove the deleted template from the messages array
           this.messages = this.messages.filter((msg: { id: any; }) => msg.id !== template.id);
         },
         (error: any) => {
           // Error callback
-          console.error('Error deleting template:', error);
         }
       );
     }
@@ -152,7 +150,6 @@ export class QuickResponseComponent implements OnInit {
   disableTemplate(template: any) {
     // Logic for disabling the template
     template.disabled = true;
-    console.log('Disable template:', template);
   }
 
   cloneTemplate(template: any) {
@@ -161,6 +158,5 @@ export class QuickResponseComponent implements OnInit {
     clonedTemplate.name += ' (Cloned)';
     // You can modify other properties as well if needed
     this.templates.push(clonedTemplate);
-    console.log('Cloned template:', clonedTemplate);
   }
 }

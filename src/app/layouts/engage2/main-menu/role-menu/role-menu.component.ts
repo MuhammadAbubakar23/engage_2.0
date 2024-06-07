@@ -75,12 +75,9 @@ export class RoleMenuComponent implements OnInit {
 
     // this.permissions$  = this.PermissionStore.select(getPermissionBySlug("_upur_"));
 
-    // console.log(this.permissions$);
     // .subscribe((item) => {
     //   this.menus$ = item;
     // })
-    // console.log(this.menu$);
-    // console.log("this.menu$");
   }
 
   assignedProfile = localStorage.getItem('assignedProfile');

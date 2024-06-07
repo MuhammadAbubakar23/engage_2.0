@@ -50,14 +50,11 @@ export class RequestService {
 
   get<T>(route: string, params?: any, routeparams: string = ""): Observable<T> {
 
-    console.log(params);
-    console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
     return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, routeparams), { params ,observe: 'response'}).pipe( 
       map ((res:any)=>{
         const headers: HttpHeaders = res.headers;
       const Pagination = JSON.parse(JSON.stringify(headers.get('X-Pagination')));
       this.paginationS.sendpaginationobj(JSON.parse(Pagination))
-      console.log("Response for header ====>",JSON.parse(Pagination))
         return res.body
       })
     )
@@ -65,45 +62,36 @@ export class RequestService {
       //   map((res: any) => { return res }),
       //   tap(res => console.log(route + " Response: ", res)),
       //   catchError(err => {
-      //     console.log('Handling error locally and rethrowing it...', err);
       //     return throwError(() => new Error(err));
       //   })
       // );
   }
   getFromConsole<T>(route: string, params?: any, routeparams: string = ""): Observable<T> {
-    console.log(params);
-    console.log(this.createCompleteRoute(this.env.paths[route], this.env.consoleBaseUrl));
     return this.http.get<T>(this.createCompleteRoute(this.env.console[route], this.env.consoleBaseUrl, routeparams), { params })
       .pipe(
         map((res: any) => { return res }),
         tap(res => console.log(route + " Response: ", res)),
         catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
           return throwError(() => new Error(err));
         })
       );
   }
   getBy<T>(route: string, params: string): Observable<T> {
-    console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
-    console.log(this.createCompleteRoute(params, this.createCompleteRoute(this.env.paths[route], this.env.baseUrl)));
     return this.http.get<T>(this.createCompleteRoute(params, this.createCompleteRoute(this.env.paths[route], this.env.baseUrl)))
       .pipe(
         map((res: any) => { return res }),
         tap(res => console.log(route + " Response: ", res)),
         catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
           return throwError(() => new Error(err));
         })
       );
   }
   post<T>(route: string, params?: any): Observable<T> {
-    console.log("this.createCompleteRoute(this.env.paths[route]", this.createCompleteRoute(this.env.paths[route], this.env.baseUrl))
     return this.http.post<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
       .pipe(
         map((res: any) => { return res }),
         tap(res => console.log(route + " Response: ", res)),
         catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
           return throwError(() => new Error(err));
         })
         // catchError( this.handleError<T>(route))

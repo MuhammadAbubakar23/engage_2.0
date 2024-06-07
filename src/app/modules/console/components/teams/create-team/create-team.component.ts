@@ -38,7 +38,6 @@ export class CreateTeamComponent implements OnInit {
     
     this.currentid = Number(this._aRoute.snapshot.paramMap.get('id'))
     this.commonService.TeamGetById(this.currentid).subscribe((res: any) => {
-      console.log("ResPonse", res);
       this.teamForm.patchValue({
         name: res.name,
         desc: res.desc,
@@ -47,8 +46,6 @@ export class CreateTeamComponent implements OnInit {
       })
     })
     // this._aRoute.params.subscribe((res) => {
-    //   
-    //   console.log("Params", res)
     //   this.currentid = Number(res);
     //   if (this.currentid !== 0 && this.currentid !== undefined) {
 
@@ -80,7 +77,6 @@ export class CreateTeamComponent implements OnInit {
 
     this.commonService.GetTeamType().subscribe((res: any) => {
       this.teamType = res
-      console.log("this.teamTyoe====>", this.teamType)
     })
   }
   closeToaster() {
@@ -106,7 +102,6 @@ export class CreateTeamComponent implements OnInit {
         }
         this.commonService.AddTeam(this.formData).subscribe(
           (response: any) => {
-            console.log("Add Team Response:", response);
             this.reloadComponent('teamAdd');
             this.router.navigate(['/console/teams']);
           },
@@ -129,7 +124,6 @@ export class CreateTeamComponent implements OnInit {
         };
         this.commonService.UpdateTeam(this.formData).subscribe(
           (res: any) => {
-            console.log("Update Response:", res);
             this.router.navigate(['/console/teams']);
           },
           (error: any) => {
@@ -140,7 +134,6 @@ export class CreateTeamComponent implements OnInit {
       }
 
     } else {
-      console.log('Form is invalid:', this.teamForm);
       // Handle invalid form data
 
     }

@@ -29,41 +29,30 @@ export class SupportChannelsComponent implements OnInit {
   ngOnInit(): void {
     const authorizationCode = this._Activatedroute.snapshot.queryParams['code'];
     const socialtype = localStorage.getItem('socialtype')
-    // console.log("authorizationCodebefore", authorizationCode, socialtype)
 
     if (authorizationCode && socialtype == 'facebook') {
       this.socialService.getFaceBookData(authorizationCode).subscribe((response: any) => {
-        // console.log("Profile===>", response);
       }, (error: any) => {
-        // console.log("Error==>", error)
       })
     }
     if (authorizationCode && socialtype == 'instagram') {
       this.socialService.getInstagramData(authorizationCode).subscribe((response: any) => {
-        // console.log("Profile===>", response);
       }, (error: any) => {
-        // console.log("Error==>", error)
       })
     }
     if (authorizationCode && socialtype == 'google') {
       this.socialService.getGoogleData(authorizationCode).subscribe((response: any) => {
-        // console.log("Profile===>", response);
       }, (error: any) => {
-        // console.log("Error==>", error)
       })
     }
     if (authorizationCode && socialtype == 'linkdin') {
       this.socialService.getLinkdinData(authorizationCode).subscribe((response: any) => {
-        // console.log("Profile===>", response);
       }, (error: any) => {
-        // console.log("Error==>", error)
       })
     }
     if (authorizationCode && socialtype == 'utube') {
       this.socialService.getUtubeData(authorizationCode).subscribe((response: any) => {
-        // console.log("Profile===>", response);
       }, (error: any) => {
-        // console.log("Error==>", error)
       })
     }
   }

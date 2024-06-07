@@ -96,7 +96,6 @@ export class TeamsComponent implements OnInit {
 
     this.commonService.DeleteSignalTeam(value).subscribe((res: any) => {
       location.reload();
-      console.log("res", res)
     })
   }
 

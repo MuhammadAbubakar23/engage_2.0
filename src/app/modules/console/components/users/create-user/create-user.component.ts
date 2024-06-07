@@ -76,9 +76,6 @@ export class CreateUserComponent implements OnInit {
     return this.userForm.controls;
   }
   ngOnInit(): void {
-    
-    // console.log(this._Activatedroute.snapshot.data["teams"]);
-    // console.log(this._Activatedroute.snapshot.data["roles"]);
     this.Roles = this._Activatedroute.snapshot.data["roles"];
     this.Teams = this._Activatedroute.snapshot.data["teams"].Teams;
     this.Skills = this._Activatedroute.snapshot.data["skills"];
@@ -114,11 +111,9 @@ export class CreateUserComponent implements OnInit {
       }
       this.setform(form);
     }
-    console.log(this.identity);
 
 
     // let vr = this.storsrv.retrive("main","o").local;
-    // console.log(vr);
     // this.Roles = vr.roles;
   }
   async setform(formVal: any): Promise<void> {
@@ -143,19 +138,17 @@ export class CreateUserComponent implements OnInit {
       });
     // await this.getRoles();
     // await this.getTeams();
-    // console.log("Roles --->>>",this.Roles);
-    // console.log("Teams --->>>",this.Teams);
     let roleForm: any = [];
     let teamForm: any = [];
     let skillForm: any = [];
-    if (formVal.roleId.length >= 1) {
+    if (formVal.roleId.length >= 1 && this.Roles.length != 0) {
       formVal.roleId.forEach((element: any) => {
         let mitem = this.Roles.filter((item: any) => item?.name == element);
         roleForm.push(mitem[0]);
       });
       this.RolesControl.setValue(roleForm);
     }
-    if (formVal.teamId.length >= 1) {
+    if (formVal.teamId.length >= 1 && this.Teams.length != 0) {
       formVal.teamId.forEach((element: any) => {
         let mitem = this.Teams.filter((item: any) => item?.id == element);
         teamForm.push(mitem[0]);
@@ -163,7 +156,7 @@ export class CreateUserComponent implements OnInit {
       this.TeamsControl.setValue(teamForm);
     }
 
-    if (formVal.skillId.length >= 1) {
+    if (formVal.skillId.length >= 1 && this.Skills.length != 0) {
       formVal.skillId.forEach((element: any) => {
         let mitem = this.Skills.filter((item: any) => item?.skillID == element);
         skillForm.push(mitem[0]);
@@ -176,7 +169,6 @@ export class CreateUserComponent implements OnInit {
   //   await this.roles.getMyRoles().subscribe({
   //     next: (res:any) => {
   //       this.Roles = res;
-  //       console.log(res)
   //     },
   //     error: (err: HttpErrorResponse) => {
   //       // this.errorMessage = err.message;
@@ -187,7 +179,6 @@ export class CreateUserComponent implements OnInit {
   // async getTeams():Promise<void>{
   //   await this.teams.getMyTeams().subscribe({
   //     next: (res:any) => { this.Teams = res;
-  //       console.log(res)
   //     },
   //     error: (err: HttpErrorResponse) => {
   //       // this.errorMessage = err.message;
@@ -200,7 +191,9 @@ export class CreateUserComponent implements OnInit {
     this.location.back();
     this.userForm.reset();
     this.userForm.controls['roleId'].reset();
-    this.userForm.controls['teamId'].reset();
+    this.userForm.reset({
+      teamId:[]
+    })
     this.userForm.controls['skillId'].reset();
   }
   onSubmit(): void {
@@ -211,9 +204,6 @@ export class CreateUserComponent implements OnInit {
     this.userForm.controls['skillId'].reset();
     //this.userForm.controls['roleId'].setValue('');
     //this.userForm.controls['teamId'].setValue('');
-    // console.log(this.userForm.value);
-    // console.log(this.Roles);
-    // console.log(this.RolesControl.value);
     this.submitted = true;
     // this.userForm.controls['roleId'].setValue(this.RolesControl.value);
 
@@ -253,33 +243,22 @@ export class CreateUserComponent implements OnInit {
     this.userForm.controls['teamId'].setValue(this.TeamIds);
     this.userForm.controls['skillId'].setValue(this.SkillIds);
 
-    console.log(this.userForm);
-    console.log(this.userForm.invalid);
-
-
-
-    // console.log("submitting");
     // return ;
-    // console.log(this.userForm.value);
-    // console.log();
     //breturn;
     let controllerRoute = "AddUser";
     if (this.userForm.value.id > 0) {
       controllerRoute = "UpdateUser";
     }
     if (controllerRoute != "UpdateUser" && this.userForm.invalid) {
-      console.log("In invalid")
       return;
     }
     if (controllerRoute == "AddUser" && this.userForm?.controls["password"].value !== this.userForm?.controls["confirmpassword"].value) {
-      console.log("In Add User");
       return;
     }
 
     this.uservc.save(controllerRoute, this.userForm.value).subscribe({
       next: (res: any) => {
         
-        console.log(res)
         _self.onReset();
         this.router.navigate(['/console/users']);
 
@@ -290,7 +269,6 @@ export class CreateUserComponent implements OnInit {
         // this.showError = true;
       }
     });
-    console.log(JSON.stringify(this.userForm.value, null, 2));
   }
 
   isShow = false;

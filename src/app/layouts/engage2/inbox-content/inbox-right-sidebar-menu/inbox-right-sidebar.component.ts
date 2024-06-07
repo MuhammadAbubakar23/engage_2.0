@@ -33,7 +33,6 @@ export class InboxRightSidebarComponent implements OnInit {
       let _self = this;      
       router.events.subscribe((event: Event) => {
         if (event instanceof NavigationEnd) {          
-            // console.log(event.url.toString());
             if(event.url.toString().toLowerCase().includes(this.keyword)){
               this.keyword = "inbox";
             }
@@ -65,7 +64,6 @@ export class InboxRightSidebarComponent implements OnInit {
         }
       // this.menus$ = item;
     });
-    console.log(this.menus$);
     // Array.from(document.querySelectorAll('[data-bs-toggle]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode))
     // this.getRightMenu();
@@ -95,7 +93,6 @@ export class InboxRightSidebarComponent implements OnInit {
   //         this.menus$.push(menu)
   //       }
   //     });
-  //     // console.log(this.menus$)
   //   })
   // }
 

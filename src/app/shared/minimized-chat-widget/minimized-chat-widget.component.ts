@@ -347,7 +347,6 @@ export class MinimizedChatWidgetComponent implements OnInit {
   quickReplyList() {
     this.commondata.QuickReplyList().subscribe((res: any) => {
       this.QuickReplies = res;
-      // // console.log('Quick Reply List ==>', this.QuickReplies);
     });
   }
 
@@ -363,9 +362,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
         xyz.keywordList.forEach((abc: any) => {
           this.Keywords.push(abc);
         });
-        // // console.log('keywords==>', this.Keywords);
       });
-      // // console.log('TagList', this.TagsList);
     });
   }
 

@@ -55,18 +55,15 @@ export class SentimentService {
     return this.http.post<string>(baseUrl + "getlang", data, httpOptions);
   }
   postSentimentApi(data: any): Observable<any> {
-    console.log("postSentimentApi", data);
     let httpOptions = this.gethttpOptions();
     return this.http.post(baseUrl + "singlesentence", data, httpOptions)
   }
 
   fileUploadApi(data: any) {
-    console.log("postSentimentApi", data);
     let httpOptions = this.gethttpOptionsforFile();
     return this.http.post(baseUrl + "uploadfile", data, httpOptions)
   }
   trainingApi(data: any) {
-    console.log("trainingApi", data);
     let httpOptions = this.gethttpOptionsforFile();
     return this.http.post(baseUrl + "trainmodel", data, httpOptions)
   }

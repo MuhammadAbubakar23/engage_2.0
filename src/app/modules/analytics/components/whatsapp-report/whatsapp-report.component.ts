@@ -94,7 +94,6 @@ export class WhatsappReportComponent implements OnInit {
           this.startingPoint=0
           this.endingPoint=0
         }
-        console.log('the res==>', res);
         this.whatsAppColumns = Object.keys(this.whatsAppRawData[0]);
         if (this.pageNumber == 1) {
           this.startingPoint = 1;

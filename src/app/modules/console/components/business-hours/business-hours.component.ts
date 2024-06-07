@@ -83,7 +83,6 @@ export class BusinessHoursComponent implements OnInit {
         () => {
           window.location.reload()
 
-          console.log('Template deleted:', template);
           this.templates = this.templates.filter((msg) => msg.id !== template.id);
         },
         (error: any) => {
@@ -94,14 +93,12 @@ export class BusinessHoursComponent implements OnInit {
   }
   disableTemplate(template: any) {
     template.disabled = true;
-    console.log('Disable template:', template);
   }
 
   cloneTemplate(template: any) {
     const clonedTemplate = { ...template };
     clonedTemplate.name += ' (Cloned)';
     this.templates.push(clonedTemplate);
-    console.log('Cloned template:', clonedTemplate);
   }
   setPerPage(perPage: number): void {
     this.perPage = perPage;
