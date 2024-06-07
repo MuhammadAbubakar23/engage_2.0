@@ -64,11 +64,13 @@ export class RightHeaderComponentsComponent implements OnInit {
         localStorage.clear();
         this.router.navigateByUrl('/login');
         clearInterval(this.timer);
+        this.signalRService.hubconnection.stop();
       },
       (error)=>{
         localStorage.clear();
         this.router.navigateByUrl('/login');
         clearInterval(this.timer);
+        this.signalRService.hubconnection.stop();
       });
     } else {
       this.reloadComponent('querryAssigned');

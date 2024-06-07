@@ -66,8 +66,8 @@ export class InboxHeaderComponent implements OnInit {
       user: '',
       pageId: '',
       plateForm: '',
-      pageNumber: 1,
-      pageSize: 30,
+      pageNumber: 0,
+      pageSize: 0,
       isAttachment: false,
       hasBlueTick: false,
       queryType: '',
@@ -76,8 +76,8 @@ export class InboxHeaderComponent implements OnInit {
       userName: '',
       notInclude: '',
       flag: '',
-      wings: '',
-      skills: [],
+      wings: this.getWing.wings,
+      skills: this.skillSlug,
     };
     this.commonService
       .GetFollowUpCount(this.filterDto)
