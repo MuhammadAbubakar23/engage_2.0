@@ -46,6 +46,7 @@ export class BotConfigurationComponent implements OnInit {
   currentPage: number = 1;
   totalCount: any;
   baseUrl: any = 'https://linked.360scrm.com/api/';
+  // baseUrl: any = 'https://newpurpleshop86.conveyor.cloud/api/';
   applySearchFilter() {
     if (this.searchText.trim() !== '') {
       this.refreshBots();
@@ -123,18 +124,26 @@ export class BotConfigurationComponent implements OnInit {
       this.commonService.DeleteBotConfig(id, type).subscribe(
         () => {
           this.botsArray = this.botsArray.filter((bot) => bot.id !== id);
+          this.refreshBots();
         },
         (error: any) => {
           console.error('Error deleting Bot:', error);
+          this.refreshBots();
         }
       );
     }
   }
 
-  statusChangeRequest(status: any, pageId: any, contentType: any){
-    this.commonService.UpdateBotStatus( pageId, contentType, !status).subscribe((res)=>{
-      console.log("success");
-    })
+  statusChangeRequest(id:any, status: any, pageId: any, contentType: any){
+    this.commonService.UpdateBotStatus(id, pageId, contentType, !status).subscribe(
+      (res)=>{
+        console.log("success");
+        this.refreshBots();
+      },
+      error=>{
+        this.refreshBots();
+      } 
+    )
     // this.apiService.api(!status).subscribe((res: any)=>{
     //   res.status;
     // })

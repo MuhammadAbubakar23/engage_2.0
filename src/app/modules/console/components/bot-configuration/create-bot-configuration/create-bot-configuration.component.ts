@@ -179,14 +179,21 @@ export class CreateBotConfigurationComponent implements OnInit {
     if(this.botsForm.valid){
 
       debugger
-      this.commonService.AddBotConfig(this.botsForm.value).subscribe((res: any) => {
+      this.commonService.AddBotConfig(this.botsForm.value).subscribe(
+      (res: any) => {
         debugger
         console.log("botsResponse--", res)
         this.botsForm.reset()
         this.router.navigate(['/console/bot-configuration'])
       },
-      error=>{
-
+      (error: any)=>{
+        debugger
+        console.error('Error occurred:', error);
+        this.router.navigate(['/console/bot-configuration'])
+      },
+      () => {
+        debugger
+        console.log('HTTP request completed.');
       }
     )
     }

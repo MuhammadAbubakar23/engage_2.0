@@ -130,6 +130,8 @@ consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 botBaseUrl: 'https://bot-engage.enteract.app/api/',
 botsBaseUrl: 'http://3.1.47.150:5000/bots/',
 botConfigBaseUrl: 'https://linked.360scrm.com/api/',
+// botConfigBaseUrl: 'https://newpurpleshop86.conveyor.cloud/api/',
+
 //for statging / Internal :companyId 650
 // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
 // CommonBaseUrl: 'https://comrox.enteract.app/api/',

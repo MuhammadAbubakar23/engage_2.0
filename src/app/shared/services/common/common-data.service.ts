@@ -522,8 +522,8 @@ AddFbResponed( body: any) {
     const url = `${this.botConfigBaseUrl}${this.deleteBotConfig}?PageId=${pageId}&Type=${Type}`;
     return this.http.get(url);
   }
-  UpdateBotStatus(pageId: any, contentType: any, Status: any){
-    const url = `${this.botConfigBaseUrl}${this.updateBotConfigDetail}?PageID=${pageId}&ContentType=${contentType}&status=${Status}`
+  UpdateBotStatus(id:any, pageId: any, contentType: any, Status: any){
+    const url = `${this.botConfigBaseUrl}${this.updateBotConfigDetail}?id=${id}&PageID=${pageId}&ContentType=${contentType}&status=${Status}`
     return this.http.post( url,"null")
   }
   GetQuickReply(body: any) {
