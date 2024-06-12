@@ -34,6 +34,7 @@ export class ComponentsComponent implements OnInit {
   }
 
   togglePhraseSelection(phrase: string) {
+    debugger
     const index = this.selectedPhrases.indexOf(phrase);
     if (index !== -1) {
       this.selectedPhrases.splice(index, 1);
@@ -96,6 +97,7 @@ export class ComponentsComponent implements OnInit {
     });
   }
   generateAugments() {
+    debugger
     console.log("this.newPhrase", this.IntendForm.value)
     
     this.BotId = localStorage.getItem('bot_id')
@@ -105,7 +107,7 @@ export class ComponentsComponent implements OnInit {
 
     this._botService.GenerateAugment(obj).subscribe((res: any) => {
       console.log(res);
-      const phrases = res.split('\n').filter((phrase: any) => phrase.trim() !== '');
+      const phrases = res.messages?.split('\n').filter((phrase: any) => phrase.trim() !== '');
       this.phrase = phrases.map((phrase: any, index: any) => ({ id: index + 1, label: phrase.trim() }));
       console.log(this.phrase);
       // this.newPhrase = '';
@@ -139,6 +141,7 @@ export class ComponentsComponent implements OnInit {
     });
   }
   saveChatbot() {
+    debugger
     console.log('Form Valid:', this.IntendForm.valid);
     console.log('Selected Phrases:', this.selectedPhrases);
     if (this.IntendForm.valid && (this.selectedPhrases.length > 0 || this.phrase.length > 0)) {

@@ -117,13 +117,12 @@ export class BotConfigurationComponent implements OnInit {
 
 
 
-  deleteBot(id: any, type: any) {
-
+  deleteBot(row: any) {
     const confirmation = confirm('Are you sure you want to delete this Bot?');
     if (confirmation) {
-      this.commonService.DeleteBotConfig(id, type).subscribe(
+      this.commonService.DeleteBotConfig(row.pageId, row.contentType).subscribe(
         () => {
-          this.botsArray = this.botsArray.filter((bot) => bot.id !== id);
+          this.botsArray = this.botsArray.filter((bot) => bot.id !== row.pageId);
           this.refreshBots();
         },
         (error: any) => {

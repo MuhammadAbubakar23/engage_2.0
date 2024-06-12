@@ -102,6 +102,7 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  
   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
 
   // //for statging / Internal :companyId 650
@@ -119,7 +120,7 @@ export const environment = {
   // flowBot: 'https://flowbot.enteract.app/',
   // intentBot: 'https://intentBot.enteract.app/',
   // autoresponderbaseurl: 'https://d387-203-135-1-210.ngrok-free.app/api/',
-  // profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
+
 // testing uiengage company id 657
 IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
 CommonBaseUrl: 'https://common-engage.enteract.app/api/',
@@ -130,6 +131,8 @@ consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 botBaseUrl: 'https://bot-engage.enteract.app/api/',
 botsBaseUrl: 'http://3.1.47.150:5000/bots/',
 botConfigBaseUrl: 'https://linked.360scrm.com/api/',
+// botConfigBaseUrl: 'https://newpurpleshop86.conveyor.cloud/api/',
+
 //for statging / Internal :companyId 650
 // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
 // CommonBaseUrl: 'https://comrox.enteract.app/api/',
@@ -139,7 +142,7 @@ botConfigBaseUrl: 'https://linked.360scrm.com/api/',
 // consoleBaseUrl: 'https://conrox.enteract.app/api/',
 // // for rule
 faceRoxBaseUrl: 'https://smallreddart56.conveyor.cloud/api/',
-
+// botBaseUrl: 'https://bot-engage.enteract.app/api/',
 botMoniteringBaseUrl: 'http://3.1.47.150:5000/',
 flowBot: 'https://flowbot.enteract.app/',
 intentBot: 'https://intentbot.enteract.app/',

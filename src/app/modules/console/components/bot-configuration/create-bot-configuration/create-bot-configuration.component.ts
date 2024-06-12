@@ -18,7 +18,7 @@ export class CreateBotConfigurationComponent implements OnInit {
   Ids: any = [{id: 1, name: "chat bot "},{id: 2, name: "email bot"},{id: 3, name: "comment bot"},{id: 4, name: "tag bot"}]
   channels: any;
   companyPages: any = [{name: 'Ibex Global',uniqueId: 3425346435547}, {name: 'Ibex Local',uniqueId: 35647634747}, {name: 'Virtual World VW',uniqueId: 938473285}];
-  contentTypes: any = [{id:1, name:"DM"},{id:2,name:"Comments"}];
+  contentTypes: any = [{id:1, name:"DM"},{id:2,name:"Comment"}];
   statuses: any = ["Active", "Inactive"];
   formDisabled = false;
   errorMessage = '';

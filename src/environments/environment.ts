@@ -102,6 +102,7 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  
   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
 
   // //for statging / Internal :companyId 650
