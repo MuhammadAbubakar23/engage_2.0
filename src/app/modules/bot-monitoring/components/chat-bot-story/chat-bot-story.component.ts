@@ -82,7 +82,7 @@ export class ChatBotStoryComponent implements OnInit {
     obj.append('bot_id', this.BotId)
     this._botService.GenerateAugment(obj).subscribe((res: any) => {
       console.log(res);
-      const phrases = res.split('\n').filter((phrase: any) => phrase.trim() !== '');
+      const phrases = res.messages.split('\n').filter((phrase: any) => phrase.trim() !== '');
       this.phrase = phrases.map((phrase: any, index: any) => ({ id: index + 1, label: phrase.trim() }));
       console.log(this.phrase);
     });
@@ -141,38 +141,34 @@ export class ChatBotStoryComponent implements OnInit {
   saveChatbot() {
     console.log('Form Valid:', this.storyForm.valid);
     console.log('Selected Phrases:', this.selectedPhrases);
+  
     if (this.storyForm.touched && (this.selectedPhrases.length > 0 || this.phrase.length > 0)) {
       const obj = new FormData();
       obj.append('intent', this.storyForm.value.intent);
       obj.append('bot_id', this.BotId);
-      // Append manually entered phrases
-      // this.phrase.forEach(item => {
-      //     obj.append('examples', item.label);
-      // });
+  
       this.selectedPhrases.forEach(phrase => {
         obj.append('examples', phrase);
       });
+  
       console.log('FormData:', obj);
-      this._botService.AddIntend(obj).subscribe((res: any) => {
-        console.log(res);
-        const newIntent = {
-          intent: this.storyForm.value.intent,
-          progress: 0,
-          label: '0',
-          strokeDasharray: '0',
-          strokeDashoffset: '0px',
-          strokeColor: '#333',
-          active: false
-        };
-        this.items.push(newIntent);
-        this.storyForm.reset();
-        this.selectedPhrases = [];
-        this.phrase = [];
-      }, (error) => {
-        console.error('Error saving intent:', error);
-      });
+  
+      this._botService.AddIntend(obj).subscribe(
+        (res: any) => {
+          console.log(res);
+          this.loadBotId();
+  
+          this.storyForm.reset(); 
+          this.selectedPhrases = []; 
+          this.phrase = []; 
+        },
+        (error) => {
+          console.error('Error saving intent:', error);
+        }
+      );
     }
   }
+  
   SaveResponse() {
     console.log('Form Valid:', this.storyForm.valid);
     console.log('Selected Phrases:', this.selectedPhrases);
@@ -184,6 +180,7 @@ export class ChatBotStoryComponent implements OnInit {
       console.log('FormData:', obj);
       this._botService.AddResponse(obj).subscribe((res: any) => {
         console.log(res);
+        this.ResponseList()
         const newResponse = {
           utterance: this.storyForm.value.response,
         };

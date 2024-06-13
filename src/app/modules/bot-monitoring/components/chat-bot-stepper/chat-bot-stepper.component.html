@@ -54,7 +54,7 @@
                                                 <li *ngFor="let item of items | chatBotIntentFilter:searchIntent">
                                                     <a class="dropdown-item" (click)="selectQuery(item)"
                                                         [ngClass]="{'selected': selectedQuery === item}">
-                                                        {{ formatUtterance(item.intent) }}
+                                                        {{ item.intent }}
                                                     </a>
                                                 </li>
                                                 <li>
@@ -106,7 +106,7 @@
                                                 <li *ngFor="let item of responseList | responsefilter:searchResponse">
                                                     <a class="dropdown-item" (click)="selectResponse(item)"
                                                         [ngClass]="{'selected': selectedResponse === item}">
-                                                        {{ formatUtterance(item?.utterance) }}
+                                                        {{item?.utterance }}
                                                     </a>
                                                 </li>
                                                 <li>

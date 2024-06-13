@@ -55,7 +55,7 @@ export class ChatBotStepperComponent implements OnInit {
     obj.append('bot_id', this.BotId)
     this._botService.GenerateAugment(obj).subscribe((res: any) => {
       console.log(res);
-      const phrases = res.split('\n').filter((phrase: any) => phrase.trim() !== '');
+      const phrases = res.messages.split('\n').filter((phrase: any) => phrase.trim() !== '');
       this.phrase = phrases.map((phrase: any, index: any) => ({ id: index + 1, label: phrase.trim() }));
       console.log(this.phrase);
       // this.newPhrase = '';
@@ -126,6 +126,8 @@ export class ChatBotStepperComponent implements OnInit {
       console.log('FormData:', obj);
       this._botService.AddIntend(obj).subscribe((res: any) => {
         console.log(res);
+        this.loadBotId();
+
         const newIntent = {
           intent: this.stepperForm.value.intent,
           progress: 0,
@@ -155,6 +157,8 @@ export class ChatBotStepperComponent implements OnInit {
       console.log('FormData:', obj);
       this._botService.AddResponse(obj).subscribe((res: any) => {
         console.log(res);
+        this.ResponseList()
+
         const newResponse = {
           utterance: this.stepperForm.value.response,
         };
