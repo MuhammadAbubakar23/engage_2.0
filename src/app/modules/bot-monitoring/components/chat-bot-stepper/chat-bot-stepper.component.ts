@@ -19,6 +19,8 @@ export class ChatBotStepperComponent implements OnInit {
   searchResponse: string = ''
   selectedResponse: any = null;
   selectedQuery: any = null;
+  toastermessage: boolean = false;
+  AlterMsg:any
   items: any[] = [];
   selectedPhrases: string[] = [];
   responseList: any[] = []
@@ -55,7 +57,7 @@ export class ChatBotStepperComponent implements OnInit {
     obj.append('bot_id', this.BotId)
     this._botService.GenerateAugment(obj).subscribe((res: any) => {
       console.log(res);
-      const phrases = res.split('\n').filter((phrase: any) => phrase.trim() !== '');
+      const phrases = res.messages.split('\n').filter((phrase: any) => phrase.trim() !== '');
       this.phrase = phrases.map((phrase: any, index: any) => ({ id: index + 1, label: phrase.trim() }));
       console.log(this.phrase);
       // this.newPhrase = '';
@@ -70,11 +72,11 @@ export class ChatBotStepperComponent implements OnInit {
     }
   }
   selectQuery(query: any) {
-    debugger
+    
     this.selectedQuery = query === this.selectedQuery ? null : query;
   }
   selectResponse(response: any) {
-    debugger
+    
     this.selectedResponse = response === this.selectedResponse ? null : response;
   }
   addManuallyEnteredPhrase() {
@@ -112,36 +114,42 @@ export class ChatBotStepperComponent implements OnInit {
   saveChatbot() {
     console.log('Form Valid:', this.stepperForm.valid);
     console.log('Selected Phrases:', this.selectedPhrases);
-    if (this.stepperForm.valid && (this.selectedPhrases.length > 0 || this.phrase.length > 0)) {
-      const obj = new FormData();
-      obj.append('intent', this.stepperForm.value.intent);
-      obj.append('bot_id', this.BotId);
-      // Append manually entered phrases
-      // this.phrase.forEach(item => {
-      //     obj.append('examples', item.label);
-      // });
-      this.selectedPhrases.forEach(phrase => {
-        obj.append('examples', phrase);
-      });
-      console.log('FormData:', obj);
-      this._botService.AddIntend(obj).subscribe((res: any) => {
-        console.log(res);
-        const newIntent = {
-          intent: this.stepperForm.value.intent,
-          progress: 0,
-          label: '0',
-          strokeDasharray: '0',
-          strokeDashoffset: '0px',
-          strokeColor: '#333',
-          active: false
-        };
-        this.items.push(newIntent);
-        this.stepperForm.reset();
-        this.selectedPhrases = [];
-        this.phrase = [];
-      }, (error) => {
-        console.error('Error saving intent:', error);
-      });
+    if(this.selectedPhrases.length >= 5){
+      if (this.stepperForm.valid && (this.selectedPhrases.length > 0 || this.phrase.length > 0)) {
+        const obj = new FormData();
+        obj.append('intent', this.stepperForm.value.intent);
+        obj.append('bot_id', this.BotId);
+        // Append manually entered phrases
+        // this.phrase.forEach(item => {
+        //     obj.append('examples', item.label);
+        // });
+        this.selectedPhrases.forEach(phrase => {
+          obj.append('examples', phrase);
+        });
+        console.log('FormData:', obj);
+        this._botService.AddIntend(obj).subscribe((res: any) => {
+          console.log(res);
+          this.loadBotId()
+          const newIntent = {
+            intent: this.stepperForm.value.intent,
+            progress: 0,
+            label: '0',
+            strokeDasharray: '0',
+            strokeDashoffset: '0px',
+            strokeColor: '#333',
+            active: false
+          };
+          this.items.push(newIntent);
+          this.stepperForm.reset();
+          this.selectedPhrases = [];
+          this.phrase = [];
+        }, (error) => {
+          console.error('Error saving intent:', error);
+        });
+      }
+    }
+    else{
+      this.reloadComponent('must 5');
     }
   }
   SaveResponse() {
@@ -155,6 +163,7 @@ export class ChatBotStepperComponent implements OnInit {
       console.log('FormData:', obj);
       this._botService.AddResponse(obj).subscribe((res: any) => {
         console.log(res);
+        this.ResponseList()
         const newResponse = {
           utterance: this.stepperForm.value.response,
         };
@@ -182,5 +191,22 @@ export class ChatBotStepperComponent implements OnInit {
         console.error('Error saving rule:', error);
       });
     }
+  }
+
+  reloadComponent(value:any){
+    
+    if(value=='must 5'){
+      this.toastermessage=true
+      this.AlterMsg="Please select atleast 5 phrases!"
+      setTimeout(() => {
+        this.toastermessage=false
+      }, 2000);
+
+    }
+   
+  }
+
+  closeToaster() {
+    this.toastermessage = false;
   }
 }

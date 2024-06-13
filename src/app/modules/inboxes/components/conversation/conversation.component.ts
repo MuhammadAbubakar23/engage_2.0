@@ -803,7 +803,7 @@ export class ConversationComponent implements OnInit {
     profileId: any,
     wing:any
   ) {
-    debugger
+    
     localStorage.setItem('previousUrl', this.currentUrl);
     if (
       this.currentUrl.split('/')[2] == 'focused' ||

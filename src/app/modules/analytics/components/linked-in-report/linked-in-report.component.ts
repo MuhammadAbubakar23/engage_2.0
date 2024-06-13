@@ -627,7 +627,7 @@ export class LinkedInReportComponent implements OnInit {
       this.linkedFollowerData=res.spanFollowers
       
       this.linkedFollowerData?.forEach((abc:any)=>{
-          debugger
+          
         if (!this.allDates.includes(this.datePipe.transform(abc.from,'dd MMM'))) {
           this.allDates.push(this.datePipe.transform(abc.from,'dd MMM'));
         }

@@ -29,7 +29,7 @@ export class CommonDataService {
   autoresponderbaseurl = environment.autoresponderbaseurl
   profileBaseUrl = environment.botConfigBaseUrl
   channelBaseUrl = environment.consoleBaseUrl
-  botsBaseUrl = environment.botsBaseUrl
+  botsBaseUrl = environment.botMoniteringBaseUrl
   botConfigBaseUrl = environment.botConfigBaseUrl
   // KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;
@@ -518,8 +518,8 @@ AddFbResponed( body: any) {
     const url = `${this.consoleBaseUrl}${this.deleteMessages}?Id=${deleteId}`;
     return this.http.get(url);
   }
-  DeleteBotConfig(pageId: any, Type: any): Observable<any> {
-    const url = `${this.botConfigBaseUrl}${this.deleteBotConfig}?PageId=${pageId}&Type=${Type}`;
+  DeleteBotConfig(id:any, pageId: any, Type: any): Observable<any> {
+    const url = `${this.botConfigBaseUrl}${this.deleteBotConfig}?id=${id}&PageId=${pageId}&Type=${Type}`;
     return this.http.get(url);
   }
   UpdateBotStatus(id:any, pageId: any, contentType: any, Status: any){

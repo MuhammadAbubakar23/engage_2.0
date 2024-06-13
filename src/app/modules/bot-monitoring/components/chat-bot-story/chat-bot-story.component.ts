@@ -21,6 +21,8 @@ export class ChatBotStoryComponent implements OnInit {
   selectedQuery: any = null;
   items: any[] = [];
   selectedPhrases: string[] = [];
+  toastermessage: boolean = false;
+  AlterMsg:any
   responseList: any[] = []
   generatedPhrases: any[] = [];
   phrase: { id: number, label: string }[] = [];
@@ -82,7 +84,7 @@ export class ChatBotStoryComponent implements OnInit {
     obj.append('bot_id', this.BotId)
     this._botService.GenerateAugment(obj).subscribe((res: any) => {
       console.log(res);
-      const phrases = res.split('\n').filter((phrase: any) => phrase.trim() !== '');
+      const phrases = res.messages.split('\n').filter((phrase: any) => phrase.trim() !== '');
       this.phrase = phrases.map((phrase: any, index: any) => ({ id: index + 1, label: phrase.trim() }));
       console.log(this.phrase);
     });
@@ -97,12 +99,12 @@ export class ChatBotStoryComponent implements OnInit {
   }
 
   selectQuery(query: any, index: number) {
-    debugger
+    
     this.selectedQueriesArray[index] = query;
 
   }
   selectResponse(response: any, index: number) {
-    debugger
+    
     this.selectedResponsesArray[index] = response;
 
   }
@@ -141,36 +143,42 @@ export class ChatBotStoryComponent implements OnInit {
   saveChatbot() {
     console.log('Form Valid:', this.storyForm.valid);
     console.log('Selected Phrases:', this.selectedPhrases);
-    if (this.storyForm.touched && (this.selectedPhrases.length > 0 || this.phrase.length > 0)) {
-      const obj = new FormData();
-      obj.append('intent', this.storyForm.value.intent);
-      obj.append('bot_id', this.BotId);
-      // Append manually entered phrases
-      // this.phrase.forEach(item => {
-      //     obj.append('examples', item.label);
-      // });
-      this.selectedPhrases.forEach(phrase => {
-        obj.append('examples', phrase);
-      });
-      console.log('FormData:', obj);
-      this._botService.AddIntend(obj).subscribe((res: any) => {
-        console.log(res);
-        const newIntent = {
-          intent: this.storyForm.value.intent,
-          progress: 0,
-          label: '0',
-          strokeDasharray: '0',
-          strokeDashoffset: '0px',
-          strokeColor: '#333',
-          active: false
-        };
-        this.items.push(newIntent);
-        this.storyForm.reset();
-        this.selectedPhrases = [];
-        this.phrase = [];
-      }, (error) => {
-        console.error('Error saving intent:', error);
-      });
+    if(this.selectedPhrases.length>=5){
+      if (this.storyForm.touched && (this.selectedPhrases.length > 0 || this.phrase.length > 0)) {
+        const obj = new FormData();
+        obj.append('intent', this.storyForm.value.intent);
+        obj.append('bot_id', this.BotId);
+        // Append manually entered phrases
+        // this.phrase.forEach(item => {
+        //     obj.append('examples', item.label);
+        // });
+        this.selectedPhrases.forEach(phrase => {
+          obj.append('examples', phrase);
+        });
+        console.log('FormData:', obj);
+        this._botService.AddIntend(obj).subscribe((res: any) => {
+          console.log(res);
+          this.loadBotId()
+          const newIntent = {
+            intent: this.storyForm.value.intent,
+            progress: 0,
+            label: '0',
+            strokeDasharray: '0',
+            strokeDashoffset: '0px',
+            strokeColor: '#333',
+            active: false
+          };
+          this.items.push(newIntent);
+          this.storyForm.reset();
+          this.selectedPhrases = [];
+          this.phrase = [];
+        }, (error) => {
+          console.error('Error saving intent:', error);
+        });
+      }
+    }
+    else{
+      this.reloadComponent('must 5');
     }
   }
   SaveResponse() {
@@ -184,6 +192,7 @@ export class ChatBotStoryComponent implements OnInit {
       console.log('FormData:', obj);
       this._botService.AddResponse(obj).subscribe((res: any) => {
         console.log(res);
+        this.ResponseList()
         const newResponse = {
           utterance: this.storyForm.value.response,
         };
@@ -195,7 +204,7 @@ export class ChatBotStoryComponent implements OnInit {
     }
   }
   CreateStory() {
-    debugger
+    
     console.log('Form Valid:', this.storyForm.valid);
     if (this.storyForm.touched
       && this.selectedQueriesArray && this.selectedResponsesArray) {
@@ -228,6 +237,22 @@ export class ChatBotStoryComponent implements OnInit {
         console.error('Error saving rule:', error);
       });
     }
+  }
+  reloadComponent(value:any){
+    
+    if(value=='must 5'){
+      this.toastermessage=true
+      this.AlterMsg="Please select atleast 5 phrases!"
+      setTimeout(() => {
+        this.toastermessage=false
+      }, 2000);
+
+    }
+   
+  }
+
+  closeToaster() {
+    this.toastermessage = false;
   }
 
 }

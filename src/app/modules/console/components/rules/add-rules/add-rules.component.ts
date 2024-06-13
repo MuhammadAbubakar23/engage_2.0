@@ -162,7 +162,7 @@ export class AddRulesComponent implements OnInit {
     });
   }
   addRule() {
-    debugger
+    
     this.rulesJsonFormArray.push(this.createRule());
   }
   // services: string[] = ['Facebook', 'Instagram', 'Twitter', 'WhatsApp', 'Engage', 'Outlook'];

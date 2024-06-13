@@ -15,7 +15,8 @@ export class ComponentsComponent implements OnInit {
   newPhrase: string = '';
   IntendForm!: FormGroup;
   searchIntent: any = ''
-
+  toastermessage: boolean = false;
+  AlterMsg:any
   searchResponse: string = ''
   items: any[] = [];
   selectedPhrases: string[] = [];
@@ -34,7 +35,7 @@ export class ComponentsComponent implements OnInit {
   }
 
   togglePhraseSelection(phrase: string) {
-    debugger
+    
     const index = this.selectedPhrases.indexOf(phrase);
     if (index !== -1) {
       this.selectedPhrases.splice(index, 1);
@@ -97,7 +98,7 @@ export class ComponentsComponent implements OnInit {
     });
   }
   generateAugments() {
-    debugger
+    
     console.log("this.newPhrase", this.IntendForm.value)
     
     this.BotId = localStorage.getItem('bot_id')
@@ -141,40 +142,48 @@ export class ComponentsComponent implements OnInit {
     });
   }
   saveChatbot() {
-    debugger
+    
     console.log('Form Valid:', this.IntendForm.valid);
     console.log('Selected Phrases:', this.selectedPhrases);
-    if (this.IntendForm.valid && (this.selectedPhrases.length > 0 || this.phrase.length > 0)) {
-        const obj = new FormData();
-        obj.append('intent', this.IntendForm.value.intent);
-        obj.append('bot_id', this.BotId);
+    if(this.selectedPhrases.length >= 5){
 
-        // Append manually entered phrases
-        // this.phrase.forEach(item => {
-        //     obj.append('examples', item.label);
-        // });
-        this.selectedPhrases.forEach(phrase => {
-            obj.append('examples', phrase);
-        });
-        console.log('FormData:', obj);
-        this._botService.AddIntend(obj).subscribe((res: any) => {
-            console.log(res);
-            const newIntent = {
-                intent: this.IntendForm.value.intent,
-                progress: 0,
-                label: '0',
-                strokeDasharray: '0',
-                strokeDashoffset: '0px',
-                strokeColor: '#333',
-                active: false
-            };
-            this.items.push(newIntent);
-            this.IntendForm.reset();
-            this.selectedPhrases = [];
-            this.phrase = [];
-        }, (error) => {
-            console.error('Error saving intent:', error);
-        });
+      if (this.IntendForm.valid && (this.selectedPhrases.length > 0 || this.phrase.length > 0)) {
+          const obj = new FormData();
+          obj.append('intent', this.IntendForm.value.intent);
+          obj.append('bot_id', this.BotId);
+
+          // Append manually entered phrases
+          // this.phrase.forEach(item => {
+          //     obj.append('examples', item.label);
+          // });
+          this.selectedPhrases.forEach(phrase => {
+              obj.append('examples', phrase);
+          });
+          console.log('FormData:', obj);
+          this._botService.AddIntend(obj).subscribe((res: any) => {
+              console.log(res);
+              const newIntent = {
+                  intent: this.IntendForm.value.intent,
+                  progress: 0,
+                  label: '0',
+                  strokeDasharray: '0',
+                  strokeDashoffset: '0px',
+                  strokeColor: '#333',
+                  active: false
+              };
+              this.items.push(newIntent);
+              this.IntendForm.reset();
+              this.selectedPhrases = [];
+              this.phrase = [];
+          }, (error) => {
+              console.error('Error saving intent:', error);
+          });
+      }
+    }
+    else{
+      
+    this.reloadComponent('must 5')
+  
     }
 }
 
@@ -198,6 +207,23 @@ export class ComponentsComponent implements OnInit {
         console.error('Error saving intent:', error);
       });
     }
+  }
+
+  reloadComponent(value:any){
+    
+    if(value=='must 5'){
+      this.toastermessage=true
+      this.AlterMsg="Please select atleast 5 phrases!"
+      setTimeout(() => {
+        this.toastermessage=false
+      }, 2000);
+
+    }
+   
+  }
+
+  closeToaster() {
+    this.toastermessage = false;
   }
 
 }

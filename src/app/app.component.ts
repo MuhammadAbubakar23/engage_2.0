@@ -91,7 +91,7 @@ export class AppComponent {
     }
   }
   B_Block() {
-    debugger
+    
     this.commonService.GetSkills([
       18,
       20,

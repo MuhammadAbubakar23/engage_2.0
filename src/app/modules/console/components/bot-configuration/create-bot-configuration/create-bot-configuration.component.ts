@@ -6,6 +6,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
+import { BotMonitoringService } from 'src/app/modules/bot-monitoring/services/bot-monitoring.service';
+
 @Component({
   selector: 'app-create-bot-configuration',
   templateUrl: './create-bot-configuration.component.html',
@@ -24,13 +26,15 @@ export class CreateBotConfigurationComponent implements OnInit {
   errorMessage = '';
   showEntitiesDropdown = false;
   botIds: any;
+  toastermessage: boolean = false;
+  AlterMsg:any
   botsForm!: FormGroup;
   currentId: any;
   status: any = true;
   broadcast: any = true
   type: any ;
 
-  constructor(private headerService: HeaderService, private formBuilder: FormBuilder, private commonService: CommonDataService, private router: Router, private _route: ActivatedRoute)
+  constructor(private headerService: HeaderService, private formBuilder: FormBuilder, private _botService: BotMonitoringService, private commonService: CommonDataService, private router: Router, private _route: ActivatedRoute)
   { }
 
   ngOnInit(): void {
@@ -72,7 +76,7 @@ export class CreateBotConfigurationComponent implements OnInit {
     })
   }
   patchFormValues(): void {
-    debugger
+    
     this.commonService.GetBotConfigById(this.currentId, this.type).subscribe(
       (res: any) => {
         this.botsForm.patchValue({
@@ -80,7 +84,7 @@ export class CreateBotConfigurationComponent implements OnInit {
           name: res.name,
           botUrl: res.botUrl,
           botToken: res.botToken,
-          platform: res.platform,
+          platform: 4,
           pageId: res.pageId,
           contentType: res.contentType,
           botToAgent: res.botToAgent,
@@ -92,15 +96,15 @@ export class CreateBotConfigurationComponent implements OnInit {
         });
         this.status = res.isActive;
         this.broadcast = res.isBroadcast
-        debugger
+        
         const days = this.botsForm.get('activeHoursDetails') as FormArray;
         res.activeHoursDetails.forEach((d: any) => {
-          debugger
+          
         var currentDay = days.controls.find(day=> day.value.day == d.day) 
         currentDay?.patchValue(d)
         });
       })
-      debugger
+      
       this.botsForm.disable();
 
   }
@@ -127,7 +131,7 @@ export class CreateBotConfigurationComponent implements OnInit {
     })
   }
   getBots(){
-    this.commonService.getBots().subscribe((res)=>{
+    this._botService.GetAllChatBot().subscribe((res)=>{
       this.botIds = res;
     })
   }
@@ -174,25 +178,29 @@ export class CreateBotConfigurationComponent implements OnInit {
     return !dayGroup?.get('activeFrom')!.disabled || false;
   }
   saveForm(){
-    debugger
+    
     console.log("d['activeFrom']",typeof(this.Days.controls[0].value['activeFrom']))
     if(this.botsForm.valid){
 
-      debugger
+      
       this.commonService.AddBotConfig(this.botsForm.value).subscribe(
       (res: any) => {
-        debugger
+        
         console.log("botsResponse--", res)
         this.botsForm.reset()
         this.router.navigate(['/console/bot-configuration'])
       },
       (error: any)=>{
-        debugger
+        
         console.error('Error occurred:', error);
-        this.router.navigate(['/console/bot-configuration'])
+        this.reloadComponent('must 5', error)
+        var existing:boolean = error.error.text.includes('Existing');
+        if(!existing){
+          this.router.navigate(['/console/bot-configuration'])
+        }
       },
       () => {
-        debugger
+        
         console.log('HTTP request completed.');
       }
     )
@@ -224,5 +232,22 @@ export class CreateBotConfigurationComponent implements OnInit {
   cancelForm(): void {
     this.updatevalue('bot-configuration')
     this.router.navigate(['/console/bot-configuration']);
+  }
+
+  reloadComponent(value:any, message: any){
+    
+    if(value=='must 5'){
+      this.toastermessage=true
+      this.AlterMsg=message.error.text;
+      setTimeout(() => {
+        this.toastermessage=false
+      }, 5000);
+
+    }
+   
+  }
+
+  closeToaster() {
+    this.toastermessage = false;
   }
 }

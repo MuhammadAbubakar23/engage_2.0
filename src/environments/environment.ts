@@ -143,7 +143,7 @@ botConfigBaseUrl: 'https://linked.360scrm.com/api/',
 // // for rule
 faceRoxBaseUrl: 'https://smallreddart56.conveyor.cloud/api/',
 // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-botMoniteringBaseUrl: 'http://3.1.47.150:5000/',
+botMoniteringBaseUrl: 'https://flowbot.enteract.app/',
 flowBot: 'https://flowbot.enteract.app/',
 intentBot: 'https://intentbot.enteract.app/',
 autoresponderbaseurl: 'https://officemail.360scrm.com/api/',

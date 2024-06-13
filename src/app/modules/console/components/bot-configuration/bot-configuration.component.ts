@@ -120,7 +120,7 @@ export class BotConfigurationComponent implements OnInit {
   deleteBot(row: any) {
     const confirmation = confirm('Are you sure you want to delete this Bot?');
     if (confirmation) {
-      this.commonService.DeleteBotConfig(row.pageId, row.contentType).subscribe(
+      this.commonService.DeleteBotConfig(row.id, row.pageId, row.contentType).subscribe(
         () => {
           this.botsArray = this.botsArray.filter((bot) => bot.id !== row.pageId);
           this.refreshBots();
@@ -189,7 +189,7 @@ export class BotConfigurationComponent implements OnInit {
   getChannels(){
     this.commonService.getChannelsList().subscribe((res)=>{
       const response = res as { [key: string]: string };
-      debugger
+      
       this.channels = Object.keys(response).map(key => ({
         id: Number(key),
         name: response[key]

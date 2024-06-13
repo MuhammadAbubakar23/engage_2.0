@@ -120,7 +120,7 @@ export const environment = {
   // flowBot: 'https://flowbot.enteract.app/',
   // intentBot: 'https://intentBot.enteract.app/',
   // autoresponderbaseurl: 'https://d387-203-135-1-210.ngrok-free.app/api/',
-
+  profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
 // testing uiengage company id 657
 IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
 CommonBaseUrl: 'https://common-engage.enteract.app/api/',
@@ -143,7 +143,7 @@ botConfigBaseUrl: 'https://linked.360scrm.com/api/',
 // // for rule
 faceRoxBaseUrl: 'https://smallreddart56.conveyor.cloud/api/',
 // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-botMoniteringBaseUrl: 'http://3.1.47.150:5000/',
+botMoniteringBaseUrl: 'https://flowbot.enteract.app/',
 flowBot: 'https://flowbot.enteract.app/',
 intentBot: 'https://intentbot.enteract.app/',
 autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
