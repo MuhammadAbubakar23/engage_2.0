@@ -92,7 +92,7 @@ export class InboundOntboundReportComponent implements OnInit {
       this.isChannelShow = 'KE';
       this.getChannel()
     }
-    else if (this.activeChannel == 'https://tppl.enteract.live') {
+    else if (this.activeChannel == 'https://tpplui.enteract.live') {
       this.isChannelShow = 'ttpl';
       this.getChannel()
     }
@@ -296,10 +296,11 @@ export class InboundOntboundReportComponent implements OnInit {
       tags: this.selectedTagOption,
       sentiments: this.selectedSentiment,
       agents: this.selectedTagBy,
-      inbound: false,
-      outbound: false,
-      inboundOutbound: false,
-      dateSubFilter: 0,
+      companyId: 0
+      // inbound: false,
+      // outbound: false,
+      // inboundOutbound: false,
+      // dateSubFilter: 0,
     };
     if (this.endDate >= this.startDate) {
       this.SpinnerService.show();

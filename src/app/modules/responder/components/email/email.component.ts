@@ -14,9 +14,11 @@ import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
 import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
@@ -101,7 +103,9 @@ export class EmailComponent implements OnInit {
     private getQueryTypeService: GetQueryTypeService,
     private router : Router,
     private stor : StorageService,
-    private userInfoService: UserInformationService
+    private userInfoService: UserInformationService,
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = null;
@@ -122,6 +126,7 @@ export class EmailComponent implements OnInit {
       profileId: new FormControl(''),
       profilePageId: new FormControl(''),
       userProfileId: new FormControl(0),
+      groupId: new FormControl([]),
     });
   }
 
@@ -193,7 +198,9 @@ export class EmailComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        var assignedProfileId = Number(localStorage.getItem('assignedProfile'))
         if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
+          if(res.contentCount.profileId == assignedProfileId){
         if (
           res.contentCount.contentType == 'Mail' ||
           res.contentCount.contentType == 'OMail'
@@ -201,6 +208,7 @@ export class EmailComponent implements OnInit {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
+      }
       }
       });
     this.Subscription = this.queryStatusService
@@ -244,7 +252,7 @@ export class EmailComponent implements OnInit {
           bcc: xyz.bcc,
           attachments: xyz.mediaAttachments,
           replies: [],
-          sentiment: '',
+          sentiment: xyz.sentiment,
           tags: [],
         };
         this.Emails?.forEach((item: any) => {
@@ -394,6 +402,8 @@ export class EmailComponent implements OnInit {
         notInclude: "",
         include: "",
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();
@@ -532,12 +542,13 @@ export class EmailComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         hasBlueTick:false,
-
         text : "",
         userName: "",
         notInclude: "",
         include: "",
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();
@@ -668,13 +679,14 @@ export class EmailComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: this.queryType,
         text : "",
         userName: "",
         notInclude: "",
         include: "",
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();
@@ -1189,7 +1201,8 @@ export class EmailComponent implements OnInit {
       contentType: this.postType,
       userProfileId: this.userProfileId,
       text: this.text,
-      profileId: this.profileId
+      profileId: this.profileId,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
     });
 
     formData.append('CommentReply', JSON.stringify(this.emailReplyForm.value));
@@ -1385,29 +1398,35 @@ export class EmailComponent implements OnInit {
   }
 
   commentStatus(comId: any, type: any) {
+    this.commentStatusDto = {
+      id: comId,
+      type: type,
+      plateForm: localStorage.getItem('parent') || '{}',
+      profileId: Number(localStorage.getItem('profileId')),
+      wings: this.getWing.wings,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+    };
     
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    // this.commentStatusDto.plateForm = this.parentPlatform;
-    this.commentStatusDto.plateForm = localStorage.getItem('parent') || '{}';
-    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
   }
 
-  queryCompleted(comId: any, type: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = this.parentPlatform;
-  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
-    this.commondata
-      .QueryCompleted(this.commentStatusDto)
-      .subscribe((res: any) => {
-        this.querryCompleted = true;
-      });
-  }
+  // queryCompleted(comId: any, type: any) {
+  //   this.commentStatusDto = {
+  //     id: comId,
+  //     type: type,
+  //     plateForm: localStorage.getItem('parent') || '{}',
+  //     profileId: Number(localStorage.getItem('profileId')),
+  //     wings: this.getWing.wings,
+  //     groupId: this.getRulesGroupIdsService.rulesGroupIds,
+  //   };
+  //   this.commondata
+  //     .QueryCompleted(this.commentStatusDto)
+  //     .subscribe((res: any) => {
+  //       this.querryCompleted = true;
+  //     });
+  // }
   markAsComplete = false;
 
   markAsCompleteExpanded(comId: any) {

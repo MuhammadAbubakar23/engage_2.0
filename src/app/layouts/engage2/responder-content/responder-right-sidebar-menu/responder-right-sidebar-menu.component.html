@@ -18,7 +18,7 @@
                 <i class="fal fa-ticket-alt"></i>
             </button>
         </div>
-        <div *ngIf="KEClient==true"  class="rightbar-btn-group" (click)="toggleRightBar('bot-interaction')" value="bot-interaction-rightbar-social">
+        <div  *ngIf="KEbaseUrl=='https://bzengage.enteract.live'" class="rightbar-btn-group" (click)="toggleRightBar('bot-interaction')" value="bot-interaction-rightbar-social">
             <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left"
                 aria-label="Bot Interaction" data-bs-original-title="Bot Interaction">
                 <i class="fal fa-message-bot"></i>

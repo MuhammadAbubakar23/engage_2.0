@@ -149,7 +149,7 @@ export class RulesComponent implements OnInit {
   }
 
   deleteTemplate(rule: ChannelRule, platform: string) {
-    debugger
+    
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
       const ruleId = platform === 'Exchange-email' ? (rule.rulesWihtCount.Rules[0] ? rule.rulesWihtCount.Rules[0].id : null) : (rule.rulesWihtCount.Rules[0] ? rule.rulesWihtCount.Rules[0].groupId : null);

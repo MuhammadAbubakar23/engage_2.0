@@ -10,6 +10,7 @@ const routes: Routes = [
     path: ':flag/:flag2',
     component: InboxContentComponent,
     canDeactivate: [ResponderGuardGuard],
+    // resolve:{ group : JoinGroupResolver},
     children: [
       {
         path: 'responder/:channel',

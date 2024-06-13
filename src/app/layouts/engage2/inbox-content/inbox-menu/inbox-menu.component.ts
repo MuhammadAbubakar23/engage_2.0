@@ -5,6 +5,9 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateListService } from 'src/app/services/UpdateListService/update-list.service';
 import { Router } from '@angular/router';
+import { SkillsService } from 'src/app/services/Skills/skills.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 
 @Component({
   selector: 'inbox-menu',
@@ -33,15 +36,20 @@ export class InboxMenuComponent implements OnInit {
   activeChannel: string = '';
   baseUrl: string = '';
   client: string = '';
+  allSkills: any[] = [];
   constructor(
     private filterService: FilterService,
     private commonService: CommonDataService,
     private unrespondedCountService: UnRespondedCountService,
     private updateListService: UpdateListService,
-    private router: Router
+    private router: Router,
+    private getSkills: SkillsService,
+    private sendWing: GetWingsService,
+    private sendRulesGroupIdsService: RulesGroupIdsService
   ) {}
 
   ngOnInit(): void {
+    this.allSkills = this.getSkills.skills;
     this.baseUrl = window.location.origin;
     if (this.baseUrl == 'https://engage.jazz.com.pk') {
       this.client = 'jazz';
@@ -49,7 +57,7 @@ export class InboxMenuComponent implements OnInit {
       this.client = 'ke';
     } else if (this.baseUrl == 'https://waengage.enteract.live') {
       this.client = 'morinaga';
-    } else if (this.baseUrl == 'https://tppl.enteract.live') {
+    } else if (this.baseUrl == 'https://tpplui.enteract.live') {
       this.client = 'tppl';
     } else if (this.baseUrl == 'http://localhost:4200') {
       this.client = 'localhost';
@@ -57,11 +65,10 @@ export class InboxMenuComponent implements OnInit {
       this.client = 'stagging';
     } else if (this.baseUrl == 'https://bzengage.enteract.live') {
       this.client = 'Bazaar';
+    } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
+      this.client = 'stagging';
     }
-    else if(this.baseUrl=='https://uiengagerox.enteract.app') {
-      this.client='stagging'
-    }
-    
+
     this.activeChannel = this.router.url.split('/')[3];
 
     this.flag = this.router.url.split('/')[2];
@@ -111,7 +118,6 @@ export class InboxMenuComponent implements OnInit {
 
       this.Subscription.add(
         this.updateListService.receiveList().subscribe((res) => {
-          
           res.forEach((platform: any) => {
             this.UnResponded += 1;
             switch (platform.platform) {
@@ -162,7 +168,6 @@ export class InboxMenuComponent implements OnInit {
   platformWiseCount: any[] = [];
 
   getAllChannelsUnrespondedCounts() {
-
     this.commonService
       .GetAllChannelsUnrespondedCount()
       .subscribe((res: any) => {
@@ -309,5 +314,40 @@ export class InboxMenuComponent implements OnInit {
 
   updatevalue(string: any) {
     this.filterService.addTogglePanel(string);
+  }
+  rulesGroupIds: any[] = [];
+  updateWing(rule: any, skillSlug:any, skillName:string) {
+    
+    if (rule == 'defaultRuleIds') {
+      this.rulesGroupIds = localStorage.getItem('defaultRuleIds')?.split(',') || []
+      this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
+    } else {
+      rule.forEach((x: any) => {
+        if (!this.rulesGroupIds.includes(x.groupId)) {
+          this.rulesGroupIds.push(x.groupId);
+        }
+      });
+    }
+
+    this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
+    localStorage.setItem('skillSlug',skillSlug)
+
+    if(skillName.toLowerCase().includes('facebook dm')){
+      localStorage.setItem('contentType','FCP')
+    } else if(skillName.toLowerCase().includes('facebook comment')){
+      localStorage.setItem('contentType','FC')
+    } else if(skillName.toLowerCase().includes('twitter tweet')){
+      localStorage.setItem('contentType','TTR')
+    } else if(skillName.toLowerCase().includes('twitter mention')){
+      localStorage.setItem('contentType','TM')
+    } else if(skillName.toLowerCase().includes('twitter dm')){
+      localStorage.setItem('contentType','TDM')
+    } else if(skillName.toLowerCase().includes('instagram comment')){
+      localStorage.setItem('contentType','IC')
+    } else if(skillName.toLowerCase().includes('instagram dm')){
+      localStorage.setItem('contentType','IM')
+    }  else if(skillName.toLowerCase().includes('linkedin comment')){
+      localStorage.setItem('contentType','LIC')
+    }
   }
 }

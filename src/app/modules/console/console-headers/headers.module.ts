@@ -39,6 +39,8 @@ import { ConsoleCreateSkillsHeaderComponent } from './console-create-skills-head
 import { ConsoleCreatePreferencesHeaderComponent } from './console-create-preferences-header/console-create-preferences-header.component';
 import { ConsoleAutoResponderHeaderComponent } from './console-auto-responder-header/console-auto-responder-header.component';
 import { CreateConsoleAutoResponderHeaderComponent } from './create-console-auto-responder-header/create-console-auto-responder-header.component';
+import { ConsoleBotConfigurationHeaderComponent } from './console-bot-configuration-header/console-bot-configuration-header.component';
+import { ConsoleCreateBotConfigurationHeaderComponent } from './console-create-bot-configuration-header/console-create-bot-configuration-header.component';
 
 
 
@@ -83,7 +85,9 @@ import { CreateConsoleAutoResponderHeaderComponent } from './create-console-auto
           ConsoleCreateSkillsHeaderComponent,
           ConsoleCreatePreferencesHeaderComponent,
           ConsoleAutoResponderHeaderComponent,
-          CreateConsoleAutoResponderHeaderComponent
+          CreateConsoleAutoResponderHeaderComponent,
+          ConsoleBotConfigurationHeaderComponent,
+          ConsoleCreateBotConfigurationHeaderComponent
       //    RightHeaderComponentsComponent
 
   ],

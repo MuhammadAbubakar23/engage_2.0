@@ -21,6 +21,8 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { Location } from '@angular/common';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 
 @Component({
   selector: 'responder-header',
@@ -124,7 +126,9 @@ export class ResponderHeaderComponent implements OnInit {
     private headerCountService: HeaderCountService,
     private stor: StorageService,
     private queryStatusService: QueryStatusService,
-    private location: Location
+    private location: Location,
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService
   ) {}
   unrespondedCount: number = 0;
   userInfo: any;
@@ -133,6 +137,8 @@ export class ResponderHeaderComponent implements OnInit {
   profileStatus: any[] = [];
   baseURL: string = '';
   KEBaseUrl: boolean = false;
+
+  wings = this.getWing.wings;
 
   ngOnInit(): void {
     this.baseURL = window.location.origin;
@@ -145,7 +151,6 @@ export class ResponderHeaderComponent implements OnInit {
     this.currentUrl = this._route.url;
 
     this.Subscription = this.userInfoService.userInfo$.subscribe((userInfo) => {
-      
       if (userInfo != null) {
         this.userInfo = userInfo;
         localStorage.setItem('storeHeaderOpenedId', this.userInfo.userId);
@@ -335,6 +340,8 @@ export class ResponderHeaderComponent implements OnInit {
       profileId: this.profileId,
       agentIds: 'string',
       platform: platform,
+      wings: this.wings,
+      skillSlug: localStorage.getItem('skillSlug') || ''
     };
 
     if (this.assignQuerryDto != null) {
@@ -855,7 +862,7 @@ export class ResponderHeaderComponent implements OnInit {
       }
     }
   }
-  onHold(){
+  onHold() {
     this.location.back();
     localStorage.setItem('assignedProfile', '');
   }
@@ -870,7 +877,12 @@ export class ResponderHeaderComponent implements OnInit {
       if (ProfileId == null || ProfileId == '') {
         this.location.back();
       } else {
-        this.commondata.RemoveAssignedQuery(ProfileId).subscribe((res: any) => {
+        var body= {
+          "profileId": Number(ProfileId),
+          "wings": this.wings,
+          "skillSlug": localStorage.getItem('skillSlug') || ''
+        };
+        this.commondata.RemoveAssignedQuery(body).subscribe((res: any) => {
           this.location.back();
           localStorage.setItem('assignedProfile', '');
           console.log('remove Response===>', res);
@@ -879,9 +891,15 @@ export class ResponderHeaderComponent implements OnInit {
     }
   }
   markAsComplete() {
-    this.markAsCompleteDto.user = this.userInfo.userId;
-    this.markAsCompleteDto.plateFrom = localStorage.getItem('parent') || '';
-    this.markAsCompleteDto.userId = Number(localStorage.getItem('agentId'));
+    this.markAsCompleteDto = {
+      user : this.userInfo.userId,
+      companyId : 0,
+      plateFrom : localStorage.getItem('parent') || '',
+      userId : Number(localStorage.getItem('agentId')),
+      wings : this.getWing.wings,
+      groupId : this.getRulesGroupIdsService.rulesGroupIds
+    }
+    
 
     this.commondata.MarkAsComplete(this.markAsCompleteDto).subscribe(
       (res: any) => {
@@ -917,16 +935,16 @@ export class ResponderHeaderComponent implements OnInit {
 
   customerProfileId = Number(localStorage.getItem('profileId'));
   sendAgentId(id: number) {
-    
-    var platform = localStorage.getItem('parent') || "";
+    var platform = localStorage.getItem('parent') || '';
     this.assignQuerryDto = {
       toUserId: id,
       profileId: this.customerProfileId,
       platform: platform,
+      wings: this.wings,
+      skillSlug: localStorage.getItem('skillSlug') || ''
     };
   }
   assignToAnotherAgent() {
-    
     this.commondata.AssignToAnotherAgent(this.assignQuerryDto).subscribe(
       (res: any) => {
         this.reloadComponent('queryallocatedtoanotheruser');
@@ -1092,11 +1110,15 @@ export class ResponderHeaderComponent implements OnInit {
   }
   commentStatusDto = new CommentStatusDto();
   markAllAsRead(comId: number = 0, type: string = '') {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = localStorage.getItem('parent') || '{}';
-    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-    // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    this.commentStatusDto = {
+      id : comId,
+      type : type,
+      plateForm : localStorage.getItem('parent') || '{}',
+      profileId : Number(localStorage.getItem('profileId')),
+      wings : this.wings,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+    }
+    
 
     this.commonService.MarkAllAsRead(this.commentStatusDto).subscribe(
       (res: any) => {

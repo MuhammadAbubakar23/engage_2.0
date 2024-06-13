@@ -94,7 +94,9 @@ export class StorageService { //extends GenericService { //  extends LocalStorag
         let storeData = this.type(this.types[obkey]).get(this.renewKey(key));
         if(storeData != null && storeData.length >= 1){
           if(subkey == null || subkey.length < 1){
-            this.data[obkey] = this.unmapTokenKey(JSON.parse(this.decrypt(storeData)), this.types[obkey]);
+            if(storeData !== "undefined" ){
+              this.data[obkey] = this.unmapTokenKey(JSON.parse(this.decrypt(storeData)), this.types[obkey]);
+            }
           }
           else
           {

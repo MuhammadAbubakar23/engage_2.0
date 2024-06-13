@@ -19,6 +19,8 @@ import { DatePipe } from '@angular/common';
 import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
 import { HeaderCountService } from 'src/app/services/headerCountService/header-count.service';
 import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
@@ -49,10 +51,10 @@ export class ConversationComponent implements OnInit {
   updatedList: any;
 
   isAttachment: boolean = false;
-  blueTick:boolean=false
+  blueTick: boolean = false;
   listingDto = new ListingDto();
   filterDto = new FiltersDto();
-  filterDtolocal= new FiltersDtolocal()
+  filterDtolocal = new FiltersDtolocal();
   assignQuerryDto = new AssignQuerryDto();
 
   public criteria!: SortCriteria;
@@ -84,9 +86,10 @@ export class ConversationComponent implements OnInit {
     private lodeModuleService: ModulesService,
     private removeAssignedQueryService: RemoveAssignedQuerryService,
     private datePipe: DatePipe,
-    private userInfoService: UserInformationService,
     private headerCountService: HeaderCountService,
-    private sendCount:ClosePanelService
+    private sendCount: ClosePanelService,
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService
   ) {
     this.criteria = {
       property: 'createdDate',
@@ -103,7 +106,7 @@ export class ConversationComponent implements OnInit {
       isAttachment: new FormControl(this.isAttachment),
       text: new FormControl(''),
       dateWithin: new FormControl(''),
-      hasBlueTick:new FormControl('')
+      hasBlueTick: new FormControl(''),
     });
 
     this.searchCustomerForm = new FormGroup({
@@ -116,22 +119,20 @@ export class ConversationComponent implements OnInit {
 
   ngOnInit(): void {
     
+    this.wings = this.getWing.wings;
+    const date_fillter = localStorage.getItem('datefillter');
+    if (date_fillter) {
+      this.filterDtolocal = JSON.parse(date_fillter);
+    }
 
-      const date_fillter= localStorage.getItem('datefillter')
-      if(date_fillter){
-        this.filterDtolocal=JSON.parse(date_fillter)
-      }
-
-    
     this.currentUrl = this.router.url;
     this.FlagForAssignToMe = this.currentUrl.split('/')[2];
     this.TodayDate = new Date();
 
     if (this.currentUrl.split('/')[2] == 'assigned_to_me') {
       this.SpinnerService.show();
-      
-   
- this.commondata.GetAllocatedProfiles().subscribe(
+      var skillSlug = localStorage.getItem('skillSlug') || ''
+      this.commondata.GetAllocatedProfiles(this.wings, skillSlug).subscribe(
         (res: any) => {
           this.SpinnerService.hide();
           this.ConversationList = res;
@@ -168,10 +169,12 @@ export class ConversationComponent implements OnInit {
         }
       );
     } else {
-      this.getConversationList();
-    }
+      this.SpinnerService.show();
+      setTimeout(() => {        
+        this.getConversationList();
+      }, 2000);
       
-     
+    }
 
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
       (tooltipNode) => new Tooltip(tooltipNode)
@@ -180,7 +183,6 @@ export class ConversationComponent implements OnInit {
     this.subscription = this.updateListService
       .receiveList()
       .subscribe((res) => {
-        
         this.updateListDataListener(res);
       });
 
@@ -253,6 +255,7 @@ export class ConversationComponent implements OnInit {
       }
     }, 1000);
   }
+  wingsList: any[] = [];
 
   totalPageNumbers: any;
   filter: any;
@@ -270,15 +273,45 @@ export class ConversationComponent implements OnInit {
   flag: string = '';
 
   customersList: any[] = [];
-
+  wings:any;
+  isverifiedAccount:boolean=false
   getConversationList() {
     
     // if (this.currentUrl.split('/')[2] == 'completed') {
     //   this.flag = 'sent';
     //   this.platform = this.currentUrl.split('/')[3];
     // } else {
+    
+    
     this.flag = this.currentUrl.split('/')[2];
-    this.platform = this.currentUrl.split('/')[3];
+    // this.platform = this.currentUrl.split('/')[3];
+    
+    if(this.currentUrl.toLowerCase().includes('facebook')){
+      this.platform = 'Facebook'
+    } else if(this.currentUrl.toLowerCase().includes('instagram')){
+      this.platform = 'Instagram'
+    } else if(this.currentUrl.toLowerCase().includes('twitter')){
+      this.platform = 'Twitter'
+    } else if(this.currentUrl.toLowerCase().includes('linkedin')){
+      this.platform = 'LinkedIn'
+    } else if(this.currentUrl.toLowerCase().includes('youtube')){
+      this.platform = 'Youtube'
+    } else if(this.currentUrl.toLowerCase().includes('whatsapp')){
+      this.platform = 'WhatsApp'
+    } else if(this.currentUrl.toLowerCase().includes('sms')){
+      this.platform = 'SMS'
+    } else if(this.currentUrl.toLowerCase().includes('webchat')){
+      this.platform = 'WebChat'
+    } else if(this.currentUrl.toLowerCase().includes('gmail')){
+      this.platform = 'Gmail'
+    } else if(this.currentUrl.toLowerCase().includes('outlook')){
+      this.platform = 'Outlook'
+    } else if(this.currentUrl.toLowerCase().includes('playstore')){
+      this.platform = 'PlayStore'
+    } else if(this.currentUrl.toLowerCase().includes('all')){
+      this.platform = "all"
+    }
+    
     // }
 
     if (this.searchForm.value.dateWithin == '1 day') {
@@ -349,16 +382,42 @@ export class ConversationComponent implements OnInit {
 
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
-    } else if ( this.searchForm.value.fromDate != null && (this.searchForm.value.toDate == null || this.searchForm.value.toDate == undefined)) {
+    } else if (
+      this.searchForm.value.fromDate != null &&
+      (this.searchForm.value.toDate == null ||
+        this.searchForm.value.toDate == undefined)
+    ) {
       this.fromDate = this.searchForm.value.fromDate + 'T00:00:00.000Z';
       this.toDate = this.searchForm.value.fromDate + 'T23:59:59.999Z';
-    } else if (this.searchForm.value.fromDate != null && this.searchForm.value.toDate != null) {
+    } else if (
+      this.searchForm.value.fromDate != null &&
+      this.searchForm.value.toDate != null
+    ) {
       this.fromDate = this.searchForm.value.fromDate + 'T00:00:00.000Z';
       this.toDate = this.searchForm.value.toDate + 'T23:59:59.999Z';
-    } 
-    else if ((this.searchForm.value.fromDate == null && this.searchForm.value.toDate == null) && (this.fromDate == undefined && this.toDate == undefined) && (this.flag == 'completed' || this.flag == 'sent')) {
-      this.fromDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
-      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+    } else if (
+      this.searchForm.value.fromDate == null &&
+      this.searchForm.value.toDate == null &&
+      this.fromDate == undefined &&
+      this.toDate == undefined &&
+      (this.flag == 'completed' || this.flag == 'sent')
+    ) {
+      // 1 day
+      // this.fromDate =
+      //   this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      // this.toDate =
+      //   this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+
+      // 30 days
+      let currentDate = new Date();
+      let prevDate = currentDate.setDate(currentDate.getDate() - 30);
+      const fromDate =
+        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      this.fromDate = fromDate;
+
+      this.toDate =
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+
     }
     // else if ((this.searchForm.value.fromDate != null && this.searchForm.value.toDate != null) && (this.fromDate != undefined && this.toDate != undefined) && (this.flag == 'completed' || this.flag == 'sent')) {
     //   this.fromDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
@@ -372,56 +431,62 @@ export class ConversationComponent implements OnInit {
       notInclude: this.notInclude,
       include: this.include,
       isAttachment: this.isAttachment,
-      hasBlueTick:this.blueTick
+      hasBlueTick: this.blueTick,
     });
-  if(this.filterDtolocal.fromDate!=undefined ){
- this.filterDto=this.filterDtolocal
-  }
-  else{
-    this.filterDto = {
-      fromDate: this.fromDate,
-      toDate: this.toDate,
-      user: this.searchForm.value.user,
-      pageId: '',
-      plateForm: this.platform,
-      pageNumber: this.pageNumber,
-      pageSize: this.pageSize,
-      isAttachment: this.searchForm.value.isAttachment,
-      queryType: '',
-      text: this.searchForm.value.text,
-      include: this.searchForm.value.include,
-      userName: this.searchForm.value.userName,
-      notInclude: this.searchForm.value.notInclude,
-      hasBlueTick:this.searchForm.value.hasBlueTick,
+    if (this.filterDtolocal.fromDate != undefined) {
+      this.filterDto = this.filterDtolocal;
+    } else {
       
-      flag: this.flag,
-    };
-  }
-    
-    
+      this.filterDto = {
+        fromDate: this.fromDate,
+        toDate: this.toDate,
+        user: this.searchForm.value.user,
+        pageId: '',
+        plateForm: this.platform,
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
+        isAttachment: this.searchForm.value.isAttachment,
+        queryType: '',
+        text: this.searchForm.value.text,
+        include: this.searchForm.value.include,
+        userName: this.searchForm.value.userName,
+        notInclude: this.searchForm.value.notInclude,
+        hasBlueTick: this.searchForm.value.hasBlueTick,
+        flag: this.flag,
+        wings: this.wings,
+        groupId:this.getRulesGroupIdsService.rulesGroupIds
+      };
+    }
+
     this.SpinnerService.show();
-    this.changeDetect.detectChanges()
-      // localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
+    this.changeDetect.detectChanges();
+    // localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
+    console.log("filter dto", this.filterDto)
     this.commondata.GetConversationList(this.filterDto).subscribe(
       (res: any) => {
-        if(Object.keys(res).length === 0){
-          this.groupByDateList=[];
-          this.to=0
-          this.TotalUnresponded=0
-          this.from=0
-          this.SpinnerService.hide()
+        
+        if (Object.keys(res).length === 0) {
+          this.groupByDateList = [];
+          this.to = 0;
+          this.TotalUnresponded = 0;
+          this.from = 0;
+          this.SpinnerService.hide();
         }
-       
+
         // for followTotalCounts
-      
-        res.List.forEach((x:any)=>{
-      
-          if(x.follow_Up_Status!==null){
-            this.sendCount.sendtotalCount(res.TotalCount)
+
+        res?.List?.forEach((x: any) => {
+          // if (x.follow_Up_Status !== null) {
+          //   this.sendCount.sendtotalCount(res.TotalCount);
+          // }
+          if(x.isVerified==true){
+            this.isverifiedAccount=true
           }
-        })
-      
-     
+          else{
+            this.isverifiedAccount=false
+          }
+        });
+
         if (Object.keys(res).length > 0) {
           this.searchForm.reset();
           this.SpinnerService.hide();
@@ -479,6 +544,9 @@ export class ConversationComponent implements OnInit {
           localStorage.clear();
           this.router.navigateByUrl('/login');
           this.SpinnerService.hide();
+        } else {
+           this.SpinnerService.hide();
+           alert(error.error.message)
         }
       }
     );
@@ -496,13 +564,15 @@ export class ConversationComponent implements OnInit {
       pageNumber: 1,
       pageSize: 30,
       isAttachment: false,
-      hasBlueTick:false,
+      hasBlueTick: false,
       queryType: '',
       text: '',
       include: '',
       userName: this.searchUser,
       notInclude: '',
       flag: '',
+      wings:'',
+      groupId:[]
     };
     this.commondata.GetCustomers(this.filterDto).subscribe((res: any) => {
       this.customersList = res;
@@ -518,7 +588,8 @@ export class ConversationComponent implements OnInit {
 
   anyTime(value: string) {
     if (value == 'Any Time') {
-      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+      this.toDate =
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
       this.fromDate = new Date('0001-01-01T23:59:59.999Z');
     } else if (value == 'Older then a week') {
       let currentDate = new Date();
@@ -581,23 +652,26 @@ export class ConversationComponent implements OnInit {
   }
   hasBlueTick(value: boolean) {
     this.blueTick = value;
-    this.getConversationList(); 
+    this.getConversationList();
   }
   isAttachmentChecked() {
     this.isAttachment = !this.isAttachment;
   }
 
   updateListDataListener(res: any) {
-  const username=localStorage.getItem('username')
-    if(this.searchUser=='' ){
+    const username = localStorage.getItem('username');
+    if (this.searchUser == '') {
       if (this.currentUrl.split('/')[2] === 'focused') {
         res.forEach((newMsg: any) => {
-          localStorage.setItem('username',newMsg.userName)
+          localStorage.setItem('username', newMsg.userName);
           if (newMsg?.profileStatus?.length == 0) {
             if (this.platform === newMsg.platform && !this.isAttachment) {
               this.updateConversationList(newMsg);
             } else if (newMsg.isAttachment && this.isAttachment) {
-              if (this.platform === newMsg.platform || this.platform === 'all') {
+              if (
+                this.platform === newMsg.platform ||
+                this.platform === 'all'
+              ) {
                 this.updateConversationList(newMsg);
               }
             } else if (this.platform === 'all' && !this.isAttachment) {
@@ -605,38 +679,40 @@ export class ConversationComponent implements OnInit {
             }
           }
         });
-  
+
         const groupedItems = this.groupItemsByDate();
         this.groupByDateList = Object.keys(groupedItems).map((createdDate) => ({
           createdDate,
           items: groupedItems[createdDate],
         }));
-  
+
         this.setFromAndToValues();
         this.changeDetect.detectChanges();
       }
     }
-   
   }
   updateConversationList(newMsg: any) {
-    const index = this.ConversationList.findIndex(
-      (obj: any) => obj.user === newMsg.user
-    );
-    this.listingDto = newMsg;
-    if (index >= 0) {
-      const main = this.ConversationList[index];
-      this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-      this.ConversationList[index] = this.listingDto;
-    } else {
-      this.ConversationList.unshift(this.listingDto);
-      if (this.ConversationList.length > this.pageSize) {
-        this.ConversationList.pop();
-        this.TotalUnresponded++;
-      } else if (this.ConversationList.length <= this.pageSize) {
-        this.TotalUnresponded++;
-        this.from++;
+    
+    var openedContentType = localStorage.getItem('contentType')
+    if(openedContentType == newMsg.postType){
+      const index = this.ConversationList.findIndex((obj: any) => obj.user === newMsg.user && obj.postType === newMsg.postType);
+      this.listingDto = newMsg;
+      if (index >= 0) {
+        const main = this.ConversationList[index];
+        this.listingDto.unrespondedCount = main.unrespondedCount + 1;
+        this.ConversationList[index] = this.listingDto;
+      } else {
+        this.ConversationList.unshift(this.listingDto);
+        if (this.ConversationList.length > this.pageSize) {
+          this.ConversationList.pop();
+          this.TotalUnresponded++;
+        } else if (this.ConversationList.length <= this.pageSize) {
+          this.TotalUnresponded++;
+          this.from++;
+        }
       }
     }
+    
   }
 
   groupItemsByDate() {
@@ -691,10 +767,6 @@ export class ConversationComponent implements OnInit {
   }
 
   Reload() {
-    
-
-
-
     if (this.FlagForAssignToMe == 'assigned_to_me') {
     }
     this.TotalUnresponded = 0;
@@ -715,9 +787,9 @@ export class ConversationComponent implements OnInit {
     this.from = 0;
     this.fromDate = null;
     this.toDate = null;
-    this.searchUser=''
-   localStorage.removeItem('username')
-    localStorage.removeItem('datefillter')
+    this.searchUser = '';
+    localStorage.removeItem('username');
+    localStorage.removeItem('datefillter');
     this.getConversationList();
   }
 
@@ -728,7 +800,8 @@ export class ConversationComponent implements OnInit {
     userName: any,
     profilePic: any,
     platform: any,
-    profileId: any
+    profileId: any,
+    wing:any
   ) {
     
     localStorage.setItem('previousUrl', this.currentUrl);
@@ -741,20 +814,22 @@ export class ConversationComponent implements OnInit {
         profileId: profileId,
         agentIds: 'string',
         platform: platform,
+        wings: wing,
+        skillSlug: localStorage.getItem('skillSlug') || ''
       };
       this.SpinnerService.show();
       this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(
         (res: any) => {
           this.SpinnerService.hide();
-          var userInfo = {
-            unrespondedCount: count,
-            userId: id,
-            postType: postType,
-            userName: userName,
-            profilePic: profilePic,
-            platform: platform,
-            profileId: profileId,
-          };
+          // var userInfo = {
+          //   unrespondedCount: count,
+          //   userId: id,
+          //   postType: postType,
+          //   userName: userName,
+          //   profilePic: profilePic,
+          //   platform: platform,
+          //   profileId: profileId,
+          // };
 
           // this.userInfoService.shareUserInformation(userInfo);
           this.headerCountService.shareUnresponedCount(count);
@@ -763,8 +838,10 @@ export class ConversationComponent implements OnInit {
           // this.headerService.updateMessage(string);
           // this.leftsidebar.updateMessage(leftExpandedMenu);
           this.fetchId.setPlatform(platform);
+          this.getWing.sendWings(wing)
           this.fetchId.setOption(id);
           // this.fetchId.setIds(id, userId, postType);
+
           this.fetchposttype.sendPostType(postType);
           localStorage.setItem('profileId', profileId);
           localStorage.setItem('assignedProfile', profileId);
@@ -785,10 +862,10 @@ export class ConversationComponent implements OnInit {
     } else if (this.currentUrl.split('/')[2] == 'trash') {
       this.reloadComponent('removeFromTrashToOpen');
     } else if (this.currentUrl.split('/')[2] == 'assigned_to_me') {
-      
       this.SpinnerService.show();
       this.headerCountService.shareUnresponedCount(count);
       this.fetchId.setPlatform(platform);
+      this.getWing.sendWings(wing)
       this.fetchId.setOption(id);
       this.fetchposttype.sendPostType(postType);
       localStorage.setItem('profileId', profileId);
@@ -800,6 +877,7 @@ export class ConversationComponent implements OnInit {
       this.SpinnerService.show();
       this.headerCountService.shareUnresponedCount(count);
       this.fetchId.setPlatform(platform);
+      this.getWing.sendWings(wing)
       this.fetchId.setOption(id);
       this.fetchposttype.sendPostType(postType);
       localStorage.setItem('profileId', profileId);
@@ -1126,7 +1204,7 @@ export class ConversationComponent implements OnInit {
   }
 
   CloseAdvanceSearch() {
-    localStorage.removeItem('datefillter')
+    localStorage.removeItem('datefillter');
     this.advanceSearch = false;
   }
 
@@ -1138,7 +1216,7 @@ export class ConversationComponent implements OnInit {
     this.notInclude = '';
     this.include = '';
     this.getConversationList();
-    localStorage.removeItem('datefillter')
+    localStorage.removeItem('datefillter');
   }
 
   anyTimeDropdown = false;
@@ -1162,6 +1240,8 @@ export class ConversationComponent implements OnInit {
         tagName: tagName,
         type: type,
         platform: query.platform,
+        wings: this.getWing.wings,
+        skillSlug: localStorage.getItem('skillSlug')
       };
       this.itemsToBeUpdated.push(obj);
     });
@@ -1183,6 +1263,7 @@ export class ConversationComponent implements OnInit {
         tagName: tagName,
         type: type,
         platform: query.platform,
+        wings: this.getWing.wings,
       };
       this.itemsToBeUpdated.push(obj);
     });

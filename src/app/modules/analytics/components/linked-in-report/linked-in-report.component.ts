@@ -127,9 +127,9 @@ export class LinkedInReportComponent implements OnInit {
   this.toDate=this.toDate
   this.fromDate=this.fromDate
  }
-
+//  76213578
     var obj = {
-      pageId: '76213578',
+      pageId: '103568',
       from: this.fromDate,
       to: this.toDate,
       lastPostId: 0,
@@ -615,7 +615,7 @@ export class LinkedInReportComponent implements OnInit {
     }
     
     let obj ={
-      "pageId": "76213578",
+      "pageId": "103568",
       "from":this.fromDate,
       "to": this.toDate,
       "lastPostId": 0
@@ -626,8 +626,8 @@ export class LinkedInReportComponent implements OnInit {
       this.linkedfollowerTotalcount=res.spanFollowers_TotalCount
       this.linkedFollowerData=res.spanFollowers
       
-      this.linkedFollowerData.forEach((abc:any)=>{
-        
+      this.linkedFollowerData?.forEach((abc:any)=>{
+          
         if (!this.allDates.includes(this.datePipe.transform(abc.from,'dd MMM'))) {
           this.allDates.push(this.datePipe.transform(abc.from,'dd MMM'));
         }

@@ -13,11 +13,87 @@
    min-width: 13rem;
 }
 
-.card-footer {
-   background-color: rgba(255, 255, 255, 0);
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropup {
+  position: relative;
+  display: inline-block;
+}
+
+.dropup-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  bottom: 50px;
+  z-index: 1;
+}
+
+.dropup-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropup-content a:hover {background-color: #ccc}
+
+.dropup:hover .dropup-content {
+  display: block;
+}
+
+.dropup:hover .dropbtn {
+  background-color: #2980B9;
 }
 
 textarea {
-   max-height: 100px;
-   overflow: auto;
- }
+ max-height: 100px;
+ overflow: auto;
+}
+.form-control.auto {
+ resize: none;
+ height: 40px;
+ min-height: 40px;
+ overflow: auto; 
+}
+
+.gif-container {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
+ gap: 10px;
+ overflow: hidden;
+}
+
+/* Style for individual gif items */
+.gif-item {
+ width: 100%;
+ height: auto;
+ border-radius: 8px;
+ overflow: hidden;
+}
+
+.gif-item img {
+ width: 100%;
+ height: auto;
+}

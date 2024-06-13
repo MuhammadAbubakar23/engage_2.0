@@ -65,24 +65,19 @@ export class AgentPerformanceReportComponent implements OnInit {
     private datePipe: DatePipe,
     private SpinnerService: NgxSpinnerService,
     private excelServices: ExcelService) { }
-
   ngOnInit(): void {
     // https://waengage.enteract.live/
     this.getBaseurl()
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split("T")[0];
-
     this.addAgentGraph();
     this.getListUser();
     const newObj = { title: 'Agent Performance Report', url: '/analytics/performance-report' };
     this._hS.setHeader(newObj);
     this.makeChartResponsive();
-
-
   }
   getBaseurl() {
     this.activeChannel = window.location.origin
-
     if (this.activeChannel == "https://waengage.enteract.live") {
       this.isChannelShow = 'morinaga'
       this.getChannel()
@@ -91,9 +86,8 @@ export class AgentPerformanceReportComponent implements OnInit {
       this.isChannelShow = 'KE'
       this.getChannel()
     }
-    else if (this.activeChannel == 'https://tppl.enteract.live') {
+    else if (this.activeChannel == 'https://tpplui.enteract.live') {
       this.isChannelShow = 'ttpl';
-
       this.getChannel()
     }
     else if (this.activeChannel === 'https://engage.jazz.com.pk') {
@@ -116,15 +110,13 @@ export class AgentPerformanceReportComponent implements OnInit {
       this.isChannelShow = 'local'
       this.getChannel()
     }
-
   }
   getListUser(): void {
     this.commonService.GetUserList()
       .subscribe((response: any) => {
-
         this.totalAgents = response;
+        this.totalAgentsEmail = response;
         this.totalAgents.forEach((x:any)=>{
-        
           this.AgentIds.push(x.id)
         })
         console.log(this.totalAgents);
@@ -154,14 +146,9 @@ export class AgentPerformanceReportComponent implements OnInit {
       this.cdr.detectChanges();
     }
   }
-
   resetEndDate() {
-
-
     if (this.endDate >= this.startDate) {
-
       this.addAgentGraph();
-
       this.radioInput10.nativeElement.checked = false;
       this.radioInput20.nativeElement.checked = false;
       this.radioInput30.nativeElement.checked = false;
@@ -172,7 +159,6 @@ export class AgentPerformanceReportComponent implements OnInit {
   }
   resetStartDate() {
     this.endDate = ''
-
   }
   calculateTotalTweets(): number {
     return this.agent_performance_report?.agentPerformance?.reduce(
@@ -206,13 +192,12 @@ export class AgentPerformanceReportComponent implements OnInit {
       let singleChanenelArray = this.channelOptions.filter((item: any) => item.isSelected).map((item: any) => item.name);
       this.AllChannels = singleChanenelArray.toString();
     }
+    
     let selectedTagByArray = this.totalAgents.filter(item => item.isSelected).map(item => item.id);
     this.selectedTagBy = selectedTagByArray.toString();
     if (this.startDate == "" && this.endDate == "") {
-
       const today = this.currentDate;
       this.endDate = this.datePipe.transform(today, "YYYY-MM-dd") || '';
-
       let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 6);
       this.startDate = this.datePipe.transform(prevDate, "YYYY-MM-dd") || '';
     }
@@ -230,9 +215,7 @@ export class AgentPerformanceReportComponent implements OnInit {
         return;
       }
     }
-
     if (this.AllChannels) {
-
       this.selectedChannelLabel = this.AllChannels;
     } else {
       this.selectedChannelLabel = 'Comments';
@@ -243,7 +226,6 @@ export class AgentPerformanceReportComponent implements OnInit {
       agents: this.selectedTagBy,
       channels: this.AllChannels
     };
-
     this.SpinnerService.show();
     this.commonService.AddAgentPerformance(requestData).subscribe(
       (response: any) => {
@@ -260,7 +242,6 @@ export class AgentPerformanceReportComponent implements OnInit {
             this.isShowCommentGraph = true
           }
         });
-
         // if (this.Agent_data.length > 0) {
         if (this.isChannelShow !== 'morinaga' && this.isChannelShow !== 'ttpl') {
           const doms = this.main.nativeElement;
@@ -269,7 +250,6 @@ export class AgentPerformanceReportComponent implements OnInit {
             useDirtyRect: false
           });
           var option: echarts.EChartsOption;
-
           function dataFormat(date: Date): string {
             const day: number = date.getDate();
             const monthNames: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -300,10 +280,10 @@ export class AgentPerformanceReportComponent implements OnInit {
               },
             },
             tooltip: {
-              show: true, // Show the tooltip
+              trigger: 'axis'
             },
             legend: {
-              data: [this.selectedChannelLabel],
+              data: ['Comments'],
               icon: 'circle',
               bottom: 0
             },
@@ -314,7 +294,7 @@ export class AgentPerformanceReportComponent implements OnInit {
             },
             series: [
               {
-                name: this.selectedChannelLabel,
+                name: 'Comments',
                 data: this.Agent_data.map(item => item.y),
                 type: 'line',
                 itemStyle: {
@@ -326,39 +306,27 @@ export class AgentPerformanceReportComponent implements OnInit {
               },
             ],
           };
-
           option && this.commentDateWiseGraph.setOption(option)
         }
-
-
-
-
-
-
-
         // }
         // messageDateWise
-
         const messageDateWise = this.agent_performance_report?.messageDateWise;
         messageDateWise?.forEach((data: any) => {
           const date = new Date(data.date);
           this.Message_data.push({ x: date, y: data.count });
         });
-
         const myDom = this.message.nativeElement;
         this.messageDateWiseGraph = echarts.init(myDom, null, {
           renderer: 'canvas',
           useDirtyRect: false
         });
         var option: echarts.EChartsOption;
-
         function formatDate(date: Date): string {
           const day: number = date.getDate();
           const monthNames: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
           const month: string = monthNames[date.getMonth()];
           return `${day} ${month}`;
         }
-
         option = {
           xAxis: {
             type: 'category',
@@ -409,22 +377,16 @@ export class AgentPerformanceReportComponent implements OnInit {
             },
           ],
         };
-
         option && this.messageDateWiseGraph.setOption(option);
-
         this.SpinnerService.hide()
       },
       (error: any) => {
         console.error('Error adding agent performance report:', error);
       });
-
-
-
   }
   totalAgents = [{ id: '', name: '', isSelected: false }];
-
+  totalAgentsEmail = [{ email: '', name: '', isSelected: false }];
   // channelOptions = [
-
   //   { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
   //   { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
   //   { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
@@ -438,10 +400,8 @@ export class AgentPerformanceReportComponent implements OnInit {
   //   // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
   // ];
   getChannel() {
-
     if (this.isChannelShow == "morinaga") {
       this.channelOptions = [
-
         { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
       ];
     }
@@ -470,10 +430,8 @@ export class AgentPerformanceReportComponent implements OnInit {
       ];
     };
     if (this.isChannelShow == 'local') {
-
       this.channelOptions = [
-
-        { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+        // { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
         { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
         { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
         { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
@@ -487,9 +445,7 @@ export class AgentPerformanceReportComponent implements OnInit {
       ];
     };
     if (this.isChannelShow == 'stagging') {
-
       this.channelOptions = [
-
         { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
         { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
         { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
@@ -504,9 +460,7 @@ export class AgentPerformanceReportComponent implements OnInit {
       ];
     };
     if (this.isChannelShow == 'Bazaar') {
-
       this.channelOptions = [
-
         { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
         { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
         { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
@@ -521,20 +475,16 @@ export class AgentPerformanceReportComponent implements OnInit {
     this.toastermessage = false;
   }
   date_pagination(event: any) {
-
     this.selectedDays = event
-
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - this.selectedDays);
     this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     this.endDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
     this.addAgentGraph()
   }
-
   export() {
     this.excelServices.exportAsExcelFile(this.agent_performance_report?.agentPerformance, 'Agent-Performance-Report')
   }
-
   makeChartResponsive() {
     window.addEventListener('resize', () => {
       if (this.commentDateWiseGraph) {
@@ -549,13 +499,17 @@ export class AgentPerformanceReportComponent implements OnInit {
     })
   }
   fillterdata:any[]=[]
+  selectedTagByEmail:any
   getAllCSATData() {
-
+    let selectedTagByArray = this.totalAgentsEmail
+    .filter((item) => item.isSelected)
+    .map((item) => item.email);
+  this.selectedTagByEmail = selectedTagByArray.toString();
     let obj = {
       "fromDate": this.startDate,
       "toDate": this.endDate,
-      "agents":this.selectedTagBy,
-      "plateForm": "string"
+      "agents":this.selectedTagByEmail,
+      "plateForm": this.AllChannels
     }
     this.csatArray = []
     this.fillterdata=[]
@@ -567,7 +521,6 @@ this.SpinnerService.hide()
       this.CSATobj = res
       if (!this.csatArray.includes({name:'Very Satisfied' && 'Unsatisfied' && 'Satisfied' && 'Not Satisfied' && 'Neutral'
       })) {
-    
         this.csatArray.push(
           { value: this.CSATobj.verSatisfiedCount, name: 'Very Satisfied' },
           { value: this.CSATobj.unsatisfiedCount, name: 'Unsatisfied' },
@@ -581,19 +534,14 @@ this. fillterdata= this.csatArray.filter((item:any)=>item.value!==0)
 console.log('This.fillterdata==>',this.fillterdata)
       this.getCSATGraph()
     }
-
     )
-
   }
   CSATGraph:any
   getCSATGraph() {
-    
     var chartDom = document.getElementById('main');
    this.CSATGraph = echarts.init(chartDom);
     var option;
-
     option = {
-
       tooltip: {
         trigger: 'item'
       },
@@ -612,13 +560,11 @@ console.log('This.fillterdata==>',this.fillterdata)
             itemStyle: {
               shadowBlur: 10,
               shadowOffsetX: 0,
-
             }
           }
         }
       ]
     };
-
     option && this.CSATGraph.setOption(option);
   }
 }

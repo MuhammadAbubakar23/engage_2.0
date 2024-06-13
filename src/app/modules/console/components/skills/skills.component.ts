@@ -81,7 +81,7 @@ export class SkillsComponent implements OnInit {
 
     }
     this.spinnerServerice.show()
-    this.commonData.GetSkill(obj).subscribe((res: any) => {
+    this.commonData.GetAllSkills(obj).subscribe((res: any) => {
       this.spinnerServerice.hide()
 
       this.skills = res.Skills

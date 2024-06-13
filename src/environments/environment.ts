@@ -22,8 +22,8 @@ export const environment = {
   title: 'abc',
   clientNumber: '923112744502',
   InstaBaseUrl: 'https://insta.360scrm.com/api/',
-  // FbBaseUrl: 'https://face.360scrm.com/api/',
-  FbBaseUrl: 'https://nextsparklypen70.conveyor.cloud/api/',
+  FbBaseUrl: 'https://firstyellowmouse47.conveyor.cloud/api/',
+  // FbBaseUrl: 'https://nextsparklypen70.conveyor.cloud/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
   TwitterBaseUrl: 'https://tweet.360scrm.com/api/',
   EmailBaseUrl: 'https://mail.360scrm.com/api/',
@@ -31,7 +31,7 @@ export const environment = {
   // WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WhatsappBaseUrl: 'https://waservice.enteract.live/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
-  LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
+
   KelisteningBaseUrl: 'https://listen.enteract.live/backend/api/',
   KemediaBaseUrl: 'https://kemedia.360scrm.com/api/',
   KescrmBaseUrl: 'https://kescrm.360scrm.com/',
@@ -39,33 +39,39 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  //  IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
+  // IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
   // CommonBaseUrl: 'https://comservices.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
   // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
   // ServiceBaseUrl: '',
   // consoleBaseUrl: 'https://console.enteract.live/api/',
+  // LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
   // botBaseUrl:'',
+
   // For Jazz
   // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
   // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
   // SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
   // ServiceBaseUrl: '',
-  // ProfileBaseUrl: '',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  // LinkedInBaseUrl:'',
 
   // For Total Parco
+  // IdentityBaseUrl: 'https://tt_identity.enteract.live/api/',
+  // CommonBaseUrl: 'https://ttcommon.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://ttcommon.enteract.live/',
+  // consoleBaseUrl: '',
+  // ServiceBaseUrl: '',
+  //  ProfileBaseUrl: '',
+  //  botBaseUrl:'',
+
+  // old Tppl
   // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api/',
   // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',
   // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
   // consoleBaseUrl: 'https://tpplcons.360scrm.com/api/',
-
-  // IdentityBaseUrl: 'https://tt_identity.enteract.live/api/',
-  // CommonBaseUrl: 'https://ttcommon.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://ttcommon.enteract.live/',
-  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  // ServiceBaseUrl: '',
-  //  ProfileBaseUrl: '',
 
   // For Morinaga
   // IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
@@ -74,8 +80,10 @@ export const environment = {
   // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: '',
+  // botBaseUrl: '',
+  // LinkedInBaseUrl:'',
 
-  // // For Bazaar
+  // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
@@ -83,50 +91,69 @@ export const environment = {
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
-  //  botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  // // For Testing
+  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+    // LinkedInBaseUrl:'',
+
+  // For Jazz Rox
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-  // // IdentityBaseUrl:'https://rep.enteract.app/api/',
-  // // TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
   // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
   // ServiceBaseUrl: '',
   // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  
+  LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
 
-  // testing uiengage company id 657
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  ServiceBaseUrl: '',
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-  botBaseUrl: 'https://bot-engage.enteract.app/api/',
-
-  //for statging / Internal :companyId 650
+  // //for statging / Internal :companyId 650
   // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
   // CommonBaseUrl: 'https://comrox.enteract.app/api/',
   // ServiceBaseUrl: '',
   // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://conrox.enteract.app/api/',
-  // // for rule
-  faceRoxBaseUrl: 'https://smallreddart56.conveyor.cloud/api/',
+  // // // for rule
+  // // company Id 100 for chatBot
+  // faceRoxBaseUrl: 'https://facerox.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  botMoniteringBaseUrl: 'https://flowbot.enteract.app/',
-  flowBot: 'https://flowbot.enteract.app/',
-  intentBot: 'https://intentBot.enteract.app/',
-  autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
+  // botMoniteringBaseUrl: 'http://3.1.47.150:5000/',
+  // flowBot: 'https://flowbot.enteract.app/',
+  // intentBot: 'https://intentBot.enteract.app/',
+  // autoresponderbaseurl: 'https://d387-203-135-1-210.ngrok-free.app/api/',
+  profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
+// testing uiengage company id 657
+IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+ServiceBaseUrl: '',
+SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+botBaseUrl: 'https://bot-engage.enteract.app/api/',
+botsBaseUrl: 'http://3.1.47.150:5000/bots/',
+botConfigBaseUrl: 'https://linked.360scrm.com/api/',
+// botConfigBaseUrl: 'https://newpurpleshop86.conveyor.cloud/api/',
 
-
-
+//for statging / Internal :companyId 650
+// IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+// CommonBaseUrl: 'https://comrox.enteract.app/api/',
+// ServiceBaseUrl: '',
+// SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
+// ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+// consoleBaseUrl: 'https://conrox.enteract.app/api/',
+// // for rule
+faceRoxBaseUrl: 'https://smallreddart56.conveyor.cloud/api/',
+// botBaseUrl: 'https://bot-engage.enteract.app/api/',
+botMoniteringBaseUrl: 'https://flowbot.enteract.app/',
+flowBot: 'https://flowbot.enteract.app/',
+intentBot: 'https://intentbot.enteract.app/',
+autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
   // consoleBaseUrl: 'http://10.111.11.93:45455/api/',
-  //  consoleBaseUrl: '',
+  // consoleBaseUrl: '',
 
   links: {
     identity: {
@@ -167,9 +194,13 @@ export const environment = {
       AddUser: 'Users/CreateUser',
       CreateMessageTemplate: 'Template/Add',
       getAllMessages: 'Template/GetAll',
+      botConfigDetails: 'ProfilePagesBotConfig/GetAll',
+      UpdateStatus :'ProfilePagesBotConfig/UpdateStatus',
+      ViewBotConfig: 'ProfilePagesBotConfig/GetById',
       addTemplate: 'Template/Add',
       updateTemplate: 'Template/Update',
       deleteMessages: 'Template/Delete',
+      deleteBotConfig: 'ProfilePagesBotConfig/Delete',
       getQuickReply: 'QuickReply/GetAll',
       addQuickReply: 'QuickReply/Add',
       updateQuickReply: 'QuickReply/Update',
@@ -190,8 +221,9 @@ export const environment = {
       addEntractRoute: 'EnteractRoute/Add',
       updateEntractRoute: 'EnteractRoute/Update',
       deleteEntractRoute: 'EnteractRoute/Delete',
-      getSkills: 'Skill/GetAll',
+      getAllSkills: 'Skill/GetAll',
       addSkill: 'Skill/Add',
+      addBotConfig: 'ProfilePagesBotConfig/Add',
       deleteSkill: 'Skill/Delete',
       getAllWing: 'Teams/GetAllWing',
 
@@ -205,7 +237,7 @@ export const environment = {
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
       getSkillsbyId: 'Skill/GetById',
-      getUserSkills: 'Skill/GetSkills',
+      getSkills: 'Skill/GetSkills',
       getAllProfile: 'Profile/GetAll',
       addProfile: 'Profile/Add',
       attachFacebookPage: 'ProfileManagement/RegisterProfile',
@@ -232,9 +264,12 @@ export const environment = {
       teamGetById: 'Teams/FetchTeamById',
       getTeamType: 'Teams/GetTypes',
       deleteMultipleTeams: 'Teams/DeleteMultiple',
-      getautoResponedFB: 'Configurations/GetCompanyTemplates',
-      addFbResponed: 'Configurations/CreateTemplate',
-      getCompanyPages: 'ProfileManagement/GetCompanyPages',
+      getautoResponedFB:'Configurations/GetCompanyTemplates',
+      addFbResponed:'Configurations/CreateTemplate',
+      getCompanyPages:'ProfileManagement/GetCompanyPages',
+      getProfileDetails:'ProfileManagement/GetProfileInfo?companyId=657', 
+      getServices:'ServicesStructure/GetServices',
+      getBotList: 'get_all',
       getActions: 'Configurations/GetAllAction',
       getPlatform: 'ServicesStructure/GetServices',
       getConsoleEntities: 'ServicesStructure/GetEntities',
@@ -245,6 +280,7 @@ export const environment = {
       getTemplateStatus: "Configurations/TemplateStatusToggler",
       deleteTemplate: 'Configurations/DeleteTemplate',
       getRuleStatus: 'RuleConfigs/UpdateRuleStatus'
+
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -282,7 +318,7 @@ export const environment = {
       MarkAsComplete: 'Social/MarkAsCompleted',
       SaveAsCompleted: 'Social/SaveAsCompleted',
       LikedByAdmin: 'Social/LikeByAdmin',
-      QuickReplyList: 'Social/GetQuickReplyList',
+       QuickReplyList: 'Social/GetQuickReplyList',
       AssignQuerry: 'Query/AssignQuery',
       AgentsTeamList: 'Query/GetActiveAgent',
       AssignToAnotherAgent: 'Query/QueryAssignMultiUser',
@@ -317,6 +353,7 @@ export const environment = {
       signOut: 'SignalRConnector/UserLogout',
       getCustomers: 'Customer/GetAllCustomersSocialProfile',
       updateStatus: 'Channel/UpdateMessageStatus',
+      updateBotStatus: 'ProfilePagesBotConfig/UpdateStatus',
       insertTagOnProfile: 'Tags/InsertTagsProfileFeed',
       removeTagOnProfile: 'Tags/RemoveTagProfileFeed',
       hideUnhideMessage: 'Publisher/HideQuery',
@@ -361,7 +398,7 @@ export const environment = {
       CSATReport: 'Report/GetCSATReport',
       getInteractionReport: 'Report/GetAgentPerformanceDashboard',
       // whatsapp bot interaction
-      whatsappBotInteraction: 'Whatsapp/GetBotInteractionHistory'
+      whatsappBotInteraction: 'Whatsapp/GetBotInteractionHistory',
     },
     facebook: {
       comments: 'Facebook/GetFbPost',

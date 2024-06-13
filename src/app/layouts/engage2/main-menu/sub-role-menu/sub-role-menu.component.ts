@@ -64,7 +64,7 @@ export class SubRoleMenuComponent implements OnInit {
          
         // }
         // else{
-          console.log(event.url.toString());
+          // console.log(event.url.toString());
           _self.SubMenuPages.forEach(function(subMenuPage:any) {
             if(event.url.toString().toLowerCase().includes(subMenuPage.slug)){
               _self.SubMenuPage = subMenuPage;

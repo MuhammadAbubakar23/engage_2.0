@@ -1,21 +1,22 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/identity/AuthService/auth.service';
-import { AgentDetailsService } from 'src/app/services/AgentDetailsService/agent-details.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { LoginDto } from 'src/app/shared/Models/LoginDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { DatePipe } from '@angular/common';
 import { VerificationDto } from 'src/app/shared/Models/verificationDto';
-
-
-
-
-
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { SkillsService } from 'src/app/services/Skills/skills.service';
+import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-login',
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
   verificationdto = new VerificationDto();
   isUserLoging: boolean = false;
   baseUrl: string = '';
-  ErrorMessage: string = "";
+  ErrorMessage: string = '';
   isVerificationcodeFailed: boolean = false;
   loginDisabled: boolean = false;
   matchTime: any;
@@ -44,14 +45,19 @@ export class LoginComponent implements OnInit {
   loginForm = new UntypedFormGroup({
     // actor: new UntypedFormControl(this.logindto.actor),
     email: new UntypedFormControl(this.logindto.userName),
-    userName: new UntypedFormControl(this.logindto.userName, [Validators.required]),
-    password: new UntypedFormControl(this.logindto.password, [Validators.required]),
+    userName: new UntypedFormControl(this.logindto.userName, [
+      Validators.required,
+    ]),
+    password: new UntypedFormControl(this.logindto.password, [
+      Validators.required,
+    ]),
     rememberMe: new UntypedFormControl(this.logindto.rememberMe),
   });
   verificationForm = new UntypedFormGroup({
     Verificationemail: new UntypedFormControl(this.verificationdto.email),
     verificationCode: new UntypedFormControl(
-      this.verificationdto.verificationCode, [Validators.required, Validators.minLength(6), Validators.maxLength(6)]
+      this.verificationdto.verificationCode,
+      [Validators.required, Validators.minLength(6), Validators.maxLength(6)]
     ),
   });
   Verificationemail: any;
@@ -64,16 +70,20 @@ export class LoginComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private signalRService: SignalRService,
     private commonService: CommonDataService,
-    private datePipe: DatePipe
-  ) { }
+    private datePipe: DatePipe,
+    private sendWings: GetWingsService,
+    private sendSkills: SkillsService,
+    private sendSkillIdsService: SkillIdsService,
+    private sendRulesGroupIdsService: RulesGroupIdsService
+  ) {}
 
   ngOnInit(): void {
     // this.getAllTags();
     this.baseUrl = window.location.origin;
   }
-
+  uniqueWings: any[] = [];
+  rulesGroupIds: any[] = [];
   login() {
-
     let obj = {
       // actor: this.loginForms.value.actor,
       userName: this.loginForm.value.userName,
@@ -83,20 +93,13 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(obj).subscribe(
       (res: any) => {
-
-        //only for testing purpose, remove after that
-        // res = { 'loginResponse': res }
-        // res = { 'loginResponse': res }
-        // res['isTwoFAEnabled'] = false;
-        //only for testing purpose, remove after that
-
-        if (res.isTwoFAEnabled == false) {
+        if (res.status == false || res.isTwoFAEnabled == false) {
           this.stor.store('token', res.loginResponse.loginResponse.accessToken);
           this.stor.store('main', res.loginResponse.loginResponse);
-          // this.stor.store(
-          //   'nocompass',
-          //   res.loginResponse.loginResponse.roles[0]
-          // );
+          this.stor.store(
+            'nocompass',
+            res?.loginResponse?.loginResponse?.roles[0]
+          );
           localStorage.setItem(
             'agentId',
             res.loginResponse.loginResponse.userId
@@ -106,10 +109,40 @@ export class LoginComponent implements OnInit {
             res.loginResponse.loginResponse.username
           );
 
-          this.commonService.UserLogin().subscribe((res: any) => {
-            console.log(res);
-          });
+          this.commonService.UserLogin().subscribe(() => {});
 
+          this.sendSkillIdsService.sendSkillIds(res?.loginResponse?.loginResponse?.skills);
+          localStorage.setItem('skills',res?.loginResponse?.loginResponse?.skills)
+
+          this.commonService.GetSkills(res?.loginResponse?.loginResponse?.skills).subscribe((skillNames: any) => {
+            
+            this.sendSkills.sendSkills(skillNames);
+            localStorage.setItem('skillSlug', skillNames[0]?.skilSlug)
+            res?.loginResponse?.loginResponse?.roles.forEach((role:any) => {
+            var companyId = role.id;
+            if (!this.rulesGroupIds.includes(skillNames[0].rules[0].groupId)) {
+              this.rulesGroupIds.push(skillNames[0].rules[0].groupId);
+            }
+            this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
+            skillNames.forEach((skill: any) => {
+              var groupName = skill.skillName + '_' + companyId;
+
+              this.signalRService.getConnectionState().subscribe((connected) => {
+                  if (connected) {
+                    this.signalRService.joinGroup(groupName);
+                  }
+                });
+              var wingName = skill.wing;
+              if (!this.uniqueWings.includes(wingName)) {
+                this.uniqueWings.push(wingName);
+              }
+              this.sendWings.sendWings(this.uniqueWings.toString());
+              });
+            });
+            
+            localStorage.setItem('defaultRuleIds', this.rulesGroupIds.toString());            
+            localStorage.setItem('defaultSkills', this.uniqueWings.toString());
+          });
           this.router.navigateByUrl('all-inboxes/focused/all');
           this.spinnerService.hide();
 
@@ -129,17 +162,21 @@ export class LoginComponent implements OnInit {
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
           // this.signalRService.updatePostList();
-        } else if (res.isTwoFAEnabled == true) {
-          this.Verificationemail =res.userName
-            // res.loginResponse.loginTwoFAResponse.userName;
+        } else if (res.status == true || res.isTwoFAEnabled == true) {
+          this.Verificationemail = res.userName;
+          // res.loginResponse.loginTwoFAResponse.userName;
           this.isUserLoging = true;
           this.isVerificationcodeFailed = false;
           this.spinnerService.hide();
         }
+
+        
+            // });
+        
       },
       (error: any) => {
-        this.spinnerService.hide()
-        this.ErrorMessage = error.error;
+        this.spinnerService.hide();
+        this.ErrorMessage = error.error.message;
         if (this.ErrorMessage?.includes('The account is locked out ')) {
           const LockedtiemEndpatteren = /lockoutEndTime = (.+)$/;
           this.matchTime = this.ErrorMessage.match(LockedtiemEndpatteren);
@@ -168,9 +205,7 @@ export class LoginComponent implements OnInit {
           this.loginDisabled = true;
           this.spinnerService.hide();
           this.reloadComponent('userblocked');
-        }
-        else {
-
+        } else {
           this.spinnerService.hide();
           this.reloadComponent('loginFailed');
         }
@@ -201,7 +236,6 @@ export class LoginComponent implements OnInit {
         // this.login()
       }
       if (seconds == 0) {
-
         clearInterval(timer);
       }
     }, 1000);
@@ -216,7 +250,7 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         this.stor.store('token', res.accessToken);
         this.stor.store('main', res);
-        // this.stor.store('nocompass', res.roles[0]);
+        this.stor.store('nocompass', res?.roles[0]);
         localStorage.setItem('agentId', res.userId);
         localStorage.setItem('agentName', res.username);
 
@@ -255,7 +289,6 @@ export class LoginComponent implements OnInit {
   AlterMsg: any;
   toastermessage: any;
   reloadComponent(type: any) {
-
     if (type == 'loginFailed') {
       this.AlterMsg = this.ErrorMessage;
       this.toastermessage = true;

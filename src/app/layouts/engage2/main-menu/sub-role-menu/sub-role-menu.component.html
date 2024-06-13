@@ -196,6 +196,12 @@
                 </a>
             </li>
             <li class="list-group-item list-group-item-action">
+                <a (click)="updatevalue('bot-configuration')" [routerLink]="['/console/bot-configuration']" class="d-flex align-items-center">
+                    <i class="fal fa-question-circle pe-2"></i>
+                    Bot Configuration
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
                 <a class="d-flex align-items-center">
                     <i class="fal fa-clipboard pe-2"></i>
                     Case Management
@@ -225,6 +231,7 @@
                     Help
                 </a>
             </li>
+          
         </div>
         <!-- <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1"
             style="overflow: auto; outline: none;">

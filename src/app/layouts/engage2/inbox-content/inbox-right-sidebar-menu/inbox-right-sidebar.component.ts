@@ -33,7 +33,7 @@ export class InboxRightSidebarComponent implements OnInit {
       let _self = this;      
       router.events.subscribe((event: Event) => {
         if (event instanceof NavigationEnd) {          
-            console.log(event.url.toString());
+            // console.log(event.url.toString());
             if(event.url.toString().toLowerCase().includes(this.keyword)){
               this.keyword = "inbox";
             }

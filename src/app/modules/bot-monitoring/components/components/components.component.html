@@ -137,7 +137,7 @@
                                             <li *ngFor="let item of items | chatBotIntentFilter:searchIntent"
                                                 class="list-group-item d-flex align-items-center justify-content-between rounded mb-2"
                                                 [class.active]="item.active">
-                                                <span>{{formatUtterance (item.intent) }}</span>
+                                                <span>{{ item.intent }}</span>
                                                 <div class="count-progress">
                                                     <!-- <div class="circular-progress-wrapper"
                                                         title="Please add at least 15 training phrases">
@@ -254,7 +254,7 @@
                                         <ul class="list-group list-group-flush component-list">
                                             <li *ngFor="let item of responseList | responsefilter:searchResponse"
                                                 class="list-group-item d-flex align-items-center justify-content-between rounded mb-2">
-                                                <span>{{ formatUtterance(item?.utterance) }}</span>
+                                                <span>{{ item?.utterance }}</span>
                                                 <span class="iconHover medium iconButton fadehide"
                                                     (click)="DeleteResponse(item.utterance)">
                                                     <i class="fa-light fa-trash radical"></i>
@@ -1160,4 +1160,19 @@
 
     </div>
 
+</div>
+
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
+
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+            </div>
+        </div>
+    </div>
 </div>

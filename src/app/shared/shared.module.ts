@@ -20,6 +20,7 @@ import { InitialLettersPipe } from './CustomPipes/initial-letters.pipe';
 import { BreaklinePipe } from './CustomPipes/replacelineBreaks/breakline.pipe';
 import { ChatBotIntentFilterPipe } from './CustomPipes/charBotIntentSearchFilter/chat-bot-intent-filter.pipe';
 import { ResponsefilterPipe } from './CustomPipes/charBotIntentSearchFilter/responsefilter.pipe';
+import { GifFilterPipe } from './CustomPipes/gifFilter.pipe';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { ResponsefilterPipe } from './CustomPipes/charBotIntentSearchFilter/resp
     GroupbydatePipe,
     FilterPipe,
     QuickReplySearchFilterPipe,
+    GifFilterPipe,
     SafePipe,
     NavigationBackDirective,
     SplitNameFromUrlPipe,
@@ -55,6 +57,7 @@ import { ResponsefilterPipe } from './CustomPipes/charBotIntentSearchFilter/resp
     GroupbydatePipe,
     FilterPipe,
     QuickReplySearchFilterPipe,
+    GifFilterPipe,
     SafePipe,
     ChatBotIntentFilterPipe,
     ResponsefilterPipe,

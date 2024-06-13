@@ -36,11 +36,18 @@ pathMatch:'full'
   // For KE
   // {
   //   path: 'analytics',
-  //   redirectTo: 'analytics/inbound-outbound-report',
+  //   redirectTo: 'analytics/whatsapp-report',
   //   pathMatch: 'full',
   // },
   // {path: 'monitoring', component: MonitoringMenuComponent },
 
+  
+  // For KE
+  {
+    path: 'analytics',
+    redirectTo: 'analytics/inbound-outbound-report',
+    pathMatch: 'full',
+  },
   {
     path: '',
     loadChildren: () =>

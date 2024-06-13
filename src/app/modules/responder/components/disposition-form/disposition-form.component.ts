@@ -8,6 +8,8 @@ import { ModulesService } from 'src/app/shared/services/module-service/modules.s
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { DatePipe } from '@angular/common';
 import { constant } from 'lodash';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 
 
 @Component({
@@ -34,7 +36,9 @@ export class DispositionFormComponent implements OnInit {
     private toggleService : ToggleService,
     private lodeModuleService : ModulesService,
     private stor : StorageService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService) { }
 
   platform = localStorage.getItem('parent');
   agentId = Number(localStorage.getItem('agentId'))
@@ -50,7 +54,7 @@ export class DispositionFormComponent implements OnInit {
       customerProfileId: [''],
       follow_Up_Date: [null],
       comment: ['Completed', Validators.required],
-
+      wings:[this.getWing.wings],
       user: [''],
       plateFrom: [''],
       userId: [''],
@@ -95,12 +99,15 @@ export class DispositionFormComponent implements OnInit {
       customerProfileId: this.customerProfileId,
       follow_Up_Date: this.dispositionForm.value.follow_Up_Date,
       comment: this.dispositionForm.value.comment,
+      wings:this.getWing.wings,
+      groupId : this.getRulesGroupIdsService.rulesGroupIds,
       completedData : 
         {
           user: this.userId ||'{}',
           plateFrom: this.platform ||'{}',
           userId: this.agentId,
           companyId: this.companyId,
+          LastQueryId: Number(localStorage.getItem('lastQueryId'))
         }
     };
     const customerNumber=localStorage.getItem('storeOpenedId')

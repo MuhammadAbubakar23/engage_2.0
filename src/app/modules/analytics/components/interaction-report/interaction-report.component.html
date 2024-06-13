@@ -29,7 +29,7 @@
                                 </li>
 
 
-                                <li class="list-inline-item">
+                                <!-- <li class="list-inline-item">
                                     <div class="dropdown icondropdown w-auto">
                                         <button (click)=" mouseClickReset()" class="btn dropdown-toggle" type="button"
                                             id="columnssort" data-bs-toggle="dropdown" aria-expanded="false"
@@ -73,6 +73,48 @@
                                             </div>
                                         </ul>
                                     </div>
+                                </li> -->
+                                <li class="list-inline-item">
+                                    <div class="dropdown icondropdown w-auto">
+                                        <button (click)=" mouseClickReset()" class="btn dropdown-toggle" type="button"
+                                            id="columnssort" data-bs-toggle="dropdown" aria-expanded="false"
+                                            data-bs-auto-close="outside">
+                                            Channels
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="columnssort">
+                                            <span>
+                                                <li class="dropdown-listing-header">
+                                                    <form class="custom-searchbar my-2 mx-0">
+                                                        <input class="form-control bg-light border-0 py-2"
+                                                            placeholder="Search" [(ngModel)]="searchText"
+                                                            aria-label="Search">
+                                                        <span class="btn searchbar-btn" type="submit">
+                                                            <i class="fal fa-search silver"></i>
+                                                        </span>
+                                                    </form>
+                                                </li>
+                                            </span>
+                                            <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
+                                                style="overflow: auto; height: auto;">
+                                                <div class="scroll-content">
+                                                    <div class="collapse-wrap mx-3" id="qr-ques1"
+                                                        *ngFor="let channel of channelOptions  | filter:searchText">
+                                                        <div class="dropdown-item d-flex align-items-center">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    name="flexRadioDefault" id={{channel.id}}
+                                                                    (change)="toggleChannelSelection(channel)">
+                                                                <label class="form-check-label" for={{channel.id}}>
+                                                                    <i [ngClass]="channel.icon"></i>{{channel.name}}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </div>
                                 </li>
                                 <li class="list-inline-item">
                                     <div class="dropdown w-auto">
@@ -95,14 +137,14 @@
                                             <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
                                                 style="overflow: auto; height: 400px;">
                                                 <div class="scroll-content">
-                                                    <li *ngFor="let option of totalAgents | filter:searchText">
+                                                    <li *ngFor="let agent of totalAgents | filter:searchText">
                                                         <a class="dropdown-item d-flex align-items-center">
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    [id]="option.id" [(ngModel)]="option.isSelected"
-                                                                    (change)="GetStatsInteractionReport()">
-                                                                <label class="form-check-label" [for]="option.id">{{
-                                                                    option.name }}</label>
+                                                                    [id]="agent.id" [(ngModel)]="agent.isSelected"
+                                                                    (change)="selectedAgents()">
+                                                                <label class="form-check-label" [for]="agent.id">{{
+                                                                    agent.name }}</label>
                                                             </div>
                                                         </a>
                                                     </li>
@@ -117,6 +159,11 @@
                                         </ul>
                                     </div>
                                 </li>
+                                <li class="list-inline-item">
+                                    <button type="button" (click)="GetStatsInteractionReport()"
+                                        class="btn btn-success ms-2 px-4">Search</button>
+                                </li>
+
                                 <li class="list-inline-item ms-auto">
                                     <div class="dropdown">
                                         <button class="btn btn-primary" type="button" data-bs-toggle="dropdown"
@@ -487,8 +534,7 @@
                                 <div class="col-md-6">
                                     <div class="graphcontainer align-items-end">
 
-                                        <!-- <img src="../images/g12.svg" class="img-fluid" alt="">
-                                 -->
+
                                         <div id="piechart" style="height: 400px; width: 900px;"></div>
 
                                     </div>
@@ -555,6 +601,7 @@
                                         <th>Average Response Time</th>
                                         <th>Min Cater Time</th>
                                         <th>Max Cater Time</th>
+                                        <th> Total Closed Queries</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -573,6 +620,7 @@
                                         <td>{{ item?.averageTime }}</td>
                                         <td>{{ item?.minimumTime }}</td>
                                         <td>{{ item?.maximumTime }}</td>
+                                        <td>{{item?.completedCount}}</td>
                                     </tr>
                                 </tbody>
                             </table>

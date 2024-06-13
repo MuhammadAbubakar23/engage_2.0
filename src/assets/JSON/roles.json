@@ -1,0 +1,90 @@
+{
+    "search": "",
+    "url": "AllTeams",
+    "urlparams": "WithOutType/0",
+    "pageno": 1,
+    "pagesize": 50,
+    "template": {
+        "toolbar": "top",
+        "refresh": true
+    },
+    "headers": [
+        {
+            "visible": true,
+            "index": [],
+            "name": "",
+            "type": "empty",
+            "wrap": "",
+            "icon": ""
+        },
+        {
+            "visible": true,
+            "index": [
+                "name"
+            ],
+            "name": "teams",
+            "type": "display",
+            "order": "ASC",
+            "search": true,
+            "group": -1,
+            "actions": false,
+            "wrap": "",
+            "icon": ""
+        },
+        {
+            "visible": true,
+            "index": [
+                "countUser"
+            ],
+            "name": "users",
+            "type": "icondisplay",
+            "order": null,
+            "search": false,
+            "group": 2,
+            "actions": false,
+            "wrap": "",
+            "icon": ""
+        },
+        {
+            "visible": true,
+            "index": [
+                "subMenu"
+            ],
+            "name": "accesses",
+            "type": "wrap",
+            "order": null,
+            "search": false,
+            "group": 2,
+            "actions": false,
+            "wrap": "name",
+            "icon": ""
+        },
+        {
+            "visible": true,
+            "index": [],
+            "name": "...",
+            "type": "action-list",
+            "order": null,
+            "search": false,
+            "group": 0,
+            "actions": [
+                {
+                    "name": "Edit",
+                    "type": "rute",
+                    "actionUrl": "console/teams/create",
+                    "icon": "fal fa-edit me-2",
+                    "permission": "_upur_"
+                },
+                {
+                    "name": "delete",
+                    "type": "service",
+                    "actionUrl": "Delete",
+                    "icon": "fal fa-trash me-2",
+                    "permission": "_rmvur_"
+                }
+            ],
+            "wrap": "",
+            "icon": ""
+        }
+    ]
+}

@@ -14,6 +14,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 // @ts-ignore
 import * as html2pdf from 'html2pdf.js';
 import { SharedModule } from '../../../../shared/shared.module';
+
 @Component({
   standalone: true,
   selector: 'app-interaction-report',
@@ -74,8 +75,12 @@ export class InteractionReportComponent implements OnInit {
   preAveragePercentage: number = 0;
   totalInteractionCount: any = 0;
   CSATGraph: any;
+  baseUrl: any;
   searchText: string = '';
   totalAgents = [{ id: '', name: '', isSelected: false }];
+  totalAgentsEmail = [{ email: '', name: '', isSelected: false }];
+  activeChannel:any
+
   AgentIds: any[] = [];
   selectedTagBy: string = '';
   constructor(
@@ -84,9 +89,13 @@ export class InteractionReportComponent implements OnInit {
     private SpinnerService: NgxSpinnerService,
     private cdr: ChangeDetectorRef,
     private datePipe: DatePipe
-  ) { }
+  ) {}
 
   ngOnInit(): void {
+    this.activeChannel=window.location.origin
+    this.baseUrl = window.location.pathname.split('/');
+    console.log(this.baseUrl);
+   
     const newObj = {
       title: 'Interaction Report',
       url: '/analytics/interaction-report',
@@ -99,24 +108,28 @@ export class InteractionReportComponent implements OnInit {
     this.GetStatsInteractionReport();
     this.makeChartResponsive();
     this.getListUser();
+    this.GetAllChannels()
     // charts
-    // this.interactionByDate()
+   
     // this.pieChart()
   }
 
-  platformIconMapping: any = {
-    Facebook: 'fa-brands fa-facebook fs-4 navy',
-    Twitter: 'fa-brands fa-twitter fs-4 sky',
-    Instagram: 'fa-brands fa-instagram fs-4 berry',
-    LinkedIn: 'fa-brands fa-linkedin fs-4 linkedinTxt',
-    Email: 'fa-light fa-envelope  fs-4 berry',
-    Youtube: 'fa-brands fa-youtube fs-4 radical',
-    SMS: 'fa-message-sms fs-4 cherry ',
-    WebChat: 'fa-light fa-messages fs-4 webchatcolor',
-    WhatsApp: 'fab fa-whatsapp fs-4 mint',
-    PlayStore: 'fa-brands fa-google-play fs-4 googleplaycolor',
-    OfficeEmail: 'fa-light fa-envelope  fs-4 navy ',
-  };
+   platformIconMapping :any= {
+      Facebook: 'fa-brands fa-facebook fs-4 navy',
+      Twitter: 'fa-brands fa-twitter fs-4 sky',
+      Instagram: 'fa-brands fa-instagram fs-4 berry',
+      LinkedIn: 'fa-brands fa-linkedin fs-4 linkedinTxt',
+      Email: 'fa-light fa-envelope  fs-4 berry',
+      Youtube: 'fa-brands fa-youtube fs-4 radical',
+      SMS: 'fa-message-sms fs-4 cherry ',
+      WebChat: 'fa-light fa-messages fs-4 webchatcolor',
+      WhatsApp: 'fab fa-whatsapp fs-4 mint',
+      PlayStore: 'fa-brands fa-google-play fs-4 googleplaycolor',
+      OfficeEmail: 'fa-light fa-envelope  fs-4 navy ',
+    };
+  
+
+  
   formatFirstResponseTime(timeString: string): string {
     if (!timeString) {
       return '';
@@ -149,24 +162,33 @@ export class InteractionReportComponent implements OnInit {
       return (value / 1000000000).toFixed(1) + ' B';
     }
   }
+  averageArray: any[] = [];
   calculateAverageTime(agentPerformance: any[], field: string) {
-
     let totalSeconds = 0;
     for (const agent of agentPerformance) {
-      totalSeconds += this.timeToSeconds(agent[field]);
+      if (
+        agent.averageTime !== '00:00:00' &&
+        agent.maximumTime !== '00:00:00'
+      ) {
+        totalSeconds += this.timeToSeconds(agent[field]);
+      }
+
+      agentPerformance = agentPerformance.filter((item: any) => {
+        return (
+          item.averageTime !== '00:00:00' && item.maximumTime !== '00:00:00'
+        );
+      });
     }
     const averageSeconds = totalSeconds / agentPerformance.length;
     return this.secondsToTime(averageSeconds);
   }
 
   timeToSeconds(timeStr: string): number {
-
     const [hours, minutes, seconds] = timeStr.split(':').map(Number);
     return hours * 3600 + minutes * 60 + seconds;
   }
 
   secondsToTime(seconds: number): string {
-
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = Math.floor(seconds % 60);
@@ -189,14 +211,20 @@ export class InteractionReportComponent implements OnInit {
       this.totalAgentsCount = res.length;
     });
   }
-  selectedChannel: any;
-  toggleChannelSelection(channel: string) {
-    if (this.selectedChannel === channel) {
-      this.selectedChannel = null;
-    } else {
-      this.selectedChannel = channel;
+  selectedChannel: any[]=[];
+  toggleChannelSelection(channel:any) {
+    
+    const index = this.selectedChannel.findIndex((x:any)=>x == channel.name)
+    if(index != -1){
+      this.selectedChannel.splice(index,1)
     }
-    this.GetStatsInteractionReport();
+    else{
+
+      this.selectedChannel.push(channel.name)
+
+    }   
+    console.log('this.selectedChannel==>',this.selectedChannel)
+ 
   }
   mouseClickReset() {
     this.searchText = '';
@@ -205,6 +233,7 @@ export class InteractionReportComponent implements OnInit {
     this.commonData.GetUserList().subscribe(
       (response: any) => {
         this.totalAgents = response;
+        this.totalAgentsEmail = response;
         this.totalAgents.forEach((x: any) => {
           this.AgentIds.push(x.id);
         });
@@ -215,11 +244,12 @@ export class InteractionReportComponent implements OnInit {
       }
     );
   }
-  GetStatsInteractionReport() {
-    let selectedTagByArray = this.totalAgents
-      .filter((item) => item.isSelected)
-      .map((item) => item.id);
+
+  selectedAgents() {
+    let selectedTagByArray = this.totalAgents.filter((item) => item.isSelected).map((item) => item.id);
     this.selectedTagBy = selectedTagByArray.toString();
+  }
+  GetStatsInteractionReport() {
     if (this.startDate == '' && this.endDate == '') {
       const today = new Date();
       const endDateTime = new Date(today);
@@ -247,7 +277,7 @@ export class InteractionReportComponent implements OnInit {
       fromDate: this.startDate,
       toDate: this.endDate,
       agents: this.selectedTagBy,
-      channels: this.selectedChannel || '',
+      channels: this.selectedChannel.toString() || '',
     };
     console.log('data form===>', formData);
     this.SpinnerService.show();
@@ -267,12 +297,12 @@ export class InteractionReportComponent implements OnInit {
     this.averageResponseData = 0;
     this.preAveragePercentage = 0;
     this.PreviousTotalInteractionCount = 0;
-    this.finalAverage = 0
-    this.finalAverageMinimum = 0
-    this.finalAverageMaximum = 0
-    this.avgMinCaterTime = 0
-    this.avgMaxCaterTime = 0
-    this.avgResponseTimeSum = 0
+    this.finalAverage = 0;
+    this.finalAverageMinimum = 0;
+    this.finalAverageMaximum = 0;
+    this.avgMinCaterTime = 0;
+    this.avgMaxCaterTime = 0;
+    this.avgResponseTimeSum = 0;
     this.averageResponseRateSum = 0;
     this.totalInteractionCount = 0;
     this.sentimentDataPoints = [];
@@ -281,13 +311,16 @@ export class InteractionReportComponent implements OnInit {
     this.channelCountsArray = [];
     this.allDates = [];
     this.newArray = [];
+
     this.commonData.GetInteractionReport(formData).subscribe((res: any) => {
       this.SpinnerService.hide();
       this.getAllCSATData();
 
       this.interactionStats = res;
       this.data = res.agentPerformance;
+
       this.socialMediaData = res.plateFormWiseInteraction;
+
       this.socialMediaData.forEach((x: any) => {
         this.inProgressCount += x.unRespondedCount;
         this.assignToMeCount += x.assignTomeCount;
@@ -303,7 +336,7 @@ export class InteractionReportComponent implements OnInit {
       this.averageResponseRateSum =
         this.inProgressCount + this.assignToMeCount + this.followUpCount;
       this.averageResponseData = Math.abs(
-        (this.averageResponseRateSum / this.completedCount) * 100
+        (this.completedCount / this.totalInteractionCount) * 100
       );
 
       this.previousSocialMediaData = res.previousPlateFormWiseInteraction;
@@ -360,14 +393,14 @@ export class InteractionReportComponent implements OnInit {
         this.avgResponseTimeSum = Math.abs(
           ((LastfinalAverageInSeconds - finalAverageInSeconds) /
             finalAverageInSeconds) *
-          100
+            100
         );
       }
       if (finalAverageInSeconds <= LastfinalAverageInSeconds) {
         this.avgResponseTimeSum = Math.abs(
           ((finalAverageInSeconds - LastfinalAverageInSeconds) /
             LastfinalAverageInSeconds) *
-          100
+            100
         );
       }
 
@@ -404,7 +437,11 @@ export class InteractionReportComponent implements OnInit {
 
       // this.finalAverageFirstResponse = this.calculateAverageTime(this.interactionStats.agentPerformance, 'firstResponseTime');
       console.log('interaction data ==>', this.data);
+      this.newArray = []; 
       this.interactionData = res.dateWiseInteraction;
+      this.sentimentDataPoints = [];
+      this._legend = [];
+      this.allDates = [];
       this.interactionData.forEach((platform: any) => {
         this._legend.push(platform.plateForm);
         const platformName = platform.plateForm;
@@ -414,7 +451,6 @@ export class InteractionReportComponent implements OnInit {
           if (!this.allDates.includes(date)) {
             this.allDates.push(date);
           }
-
           let sentimentCounts: { [key: string]: number } = {};
           sentimentCounts = interaction.count;
           this.newArray.push(sentimentCounts);
@@ -425,13 +461,14 @@ export class InteractionReportComponent implements OnInit {
           type: 'line',
           data: this.newArray, // Use newArray for each platform
         });
+       
       });
-
+      this.interactionByDate();
       // this.interactionData = res.dateWiseInteraction;
       // this.interactionData.forEach((platform: any) => {
       //   this._legend.push(platform.plateForm);
       //   const platformName = platform.plateForm;
-      //   this.newArray = []; 
+      //   this.newArray = [];
       //   platform.dateWiseInteraction.forEach((interaction: any) => {
       //     const date = this.datePipe.transform(interaction.date, 'dd/MMM');
       //     if (!this.allDates.includes(date)) {
@@ -473,7 +510,7 @@ export class InteractionReportComponent implements OnInit {
         this.interactionStats.sentimentData.find(
           (data: any) => data.name === 'neutral'
         )?.count || 0;
-      this.interactionByDate();
+  
     });
     this.getAgentsTeamList();
   }
@@ -506,48 +543,63 @@ export class InteractionReportComponent implements OnInit {
   }
   resetEndDate() {
     if (this.endDate >= this.startDate) {
-      this.GetStatsInteractionReport();
+      // this.GetStatsInteractionReport();
     } else {
-      alert('EndDate is lessthen StartDate');
+      alert('EndDate is less then StartDate');
       this.endDate = '';
     }
   }
+  fillterdata:any[]=[]
+  selectedTagByEmail: any;
   getAllCSATData() {
+    let selectedTagByArray = this.totalAgentsEmail
+      .filter((item) => item.isSelected)
+      .map((item) => item.email);
+    this.selectedTagByEmail = selectedTagByArray.toString();
     let obj = {
       fromDate: this.startDate,
       toDate: this.endDate,
-      agents: this.selectedTagBy,
-      plateForm: 'string',
+      agents: this.selectedTagByEmail,
+      plateForm: this.selectedChannel.toString() || '',
     };
     this.csatArray = [];
+    this.fillterdata=[]
     this.SpinnerService.show();
     this.cdr.detectChanges();
-    this.commonData.GetCSATReport(obj).subscribe((res: any) => {
-      this.SpinnerService.hide();
-      this.CSATobj = res;
-      if (
-        !this.csatArray.includes({
-          name:
-            'Very Satisfied' &&
-            'Unsatisfied' &&
-            'Satisfied' &&
-            'Not Satisfied' &&
-            'Neutral',
-        })
-      ) {
-        this.csatArray.push(
-          { value: this.CSATobj.verSatisfiedCount, name: 'Very Satisfied' },
-          { value: this.CSATobj.unsatisfiedCount, name: 'Unsatisfied' },
-          { value: this.CSATobj.satisfiedCount, name: 'Satisfied' },
-          { value: this.CSATobj.notSatisfiedCount, name: 'Not Satisfied' },
-          { value: this.CSATobj.neutralCount, name: 'Neutral' }
-        );
-      }
+    this.commonData.GetCSATReport(obj).subscribe(
+      (res: any) => {
+        this.SpinnerService.hide();
+        this.CSATobj = res;
+        if (
+          !this.csatArray.includes({
+            name:
+              'Very Satisfied' &&
+              'Unsatisfied' &&
+              'Satisfied' &&
+              'Not Satisfied' &&
+              'Neutral',
+          })
+        ) {
+          this.csatArray.push(
+            { value: this.CSATobj.verSatisfiedCount, name: 'Very Satisfied' },
+            { value: this.CSATobj.unsatisfiedCount, name: 'Unsatisfied' },
+            { value: this.CSATobj.satisfiedCount, name: 'Satisfied' },
+            { value: this.CSATobj.notSatisfiedCount, name: 'Not Satisfied' },
+            { value: this.CSATobj.neutralCount, name: 'Neutral' }
+          );
+          this. fillterdata= this.csatArray.filter((item:any)=>item.value!==0)
+        }
 
-      this.getCSATGraph();
-    });
+        this.getCSATGraph();
+      },
+
+      (error) => {
+        this.SpinnerService.hide();
+      }
+    );
   }
   interactionByDate() {
+    
     var chartDom = document.getElementById('interactions');
     this.interactionchart = echarts.init(chartDom);
     var option;
@@ -586,7 +638,8 @@ export class InteractionReportComponent implements OnInit {
       series: this.sentimentDataPoints,
     };
 
-    option && this.interactionchart.setOption(option);
+    option && this.interactionchart.setOption(option,true);
+
   }
 
   getCSATGraph() {
@@ -608,89 +661,158 @@ export class InteractionReportComponent implements OnInit {
           name: 'CUSTOMER SATISFACTION',
           type: 'pie',
           radius: '60%',
-          data: this.csatArray,
-          emphasis: {
-            itemStyle: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
+          data: this.fillterdata,
+          label: {
+            show: true,
+            fontSize: 14,
+            position: 'top', // Display label on top of each point
+            formatter: function (params: any) {
+              return params.name + ': ' + params.value; // Display both name and value
             },
           },
+          // emphasis: {
+          //   itemStyle: {
+          //     shadowBlur: 10,
+          //     shadowOffsetX: 0,
+          //   },
+          // },
         },
       ],
     };
 
     option && this.CSATGraph.setOption(option);
   }
+  channelOptions:any
+  GetAllChannels(){
+    if(this.activeChannel=='http://localhost:4200'){
+     this. channelOptions = [
+        // { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+        {
+          id: '11',
+          name: 'Twitter',
+          icon: 'fa-brands fa-twitter sky pe-2',
+          isSelected: false,
+        },
+        {
+          id: '12',
+          name: 'Instagram',
+          icon: 'fa-brands fa-instagram pe-2 berry',
+          isSelected: false,
+        },
+        {
+          id: '13',
+          name: 'LinkedIn',
+          icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2',
+          isSelected: false,
+        },
+        {
+          id: '14',
+          name: 'Facebook',
+          icon: 'fab fa-facebook navytext pe-2 radical',
+          isSelected: false,
+        },
+        {
+          id: '15',
+          name: 'YouTube',
+          icon: 'fa-brands fa-youtube pe-2',
+          isSelected: false,
+        },
+        {
+          id: '16',
+          name: 'SMS',
+          icon: 'fa-solid fa-comment-alt pe-2 cherry',
+          isSelected: false,
+        },
+        {
+          id: '17',
+          name: 'WhatsApp',
+          icon: 'fa-brands fa-whatsapp pe-2 mint',
+          isSelected: false,
+        },
+        {
+          id: '18',
+          name: 'Email',
+          icon: 'fa-solid fa-envelope pe-2',
+          isSelected: false,
+        },
+        {
+          id: '19',
+          name: 'OfficeEmail',
+          icon: 'fa-solid fa-envelope pe-2',
+          isSelected: false,
+        },
+        {
+          id: '20',
+          name: 'WebChat',
+          icon: 'fa-solid fa-comment-dots pe-2 webchatcolor',
+          isSelected: false,
+        },
+        {
+          id: '21',
+          name: 'PlayStore',
+          icon: '  fa-brands fa-google-play  googleplaycolor pe-2',
+          isSelected: false,
+        },
+      ];
+    }
+    if(this.activeChannel=='https://keportal.enteract.live'){
+      this. channelOptions = [
+        // { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+        {
+          id: '1',
+          name: 'Twitter',
+          icon: 'fa-brands fa-twitter sky pe-2',
+          isSelected: false,
+        },
+        {
+          id: '2',
+          name: 'Instagram',
+          icon: 'fa-brands fa-instagram pe-2 berry',
+          isSelected: false,
+        },
+        {
+          id: '3',
+          name: 'LinkedIn',
+          icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2',
+          isSelected: false,
+        },
+        {
+          id: '4',
+          name: 'Facebook',
+          icon: 'fab fa-facebook navytext pe-2 radical',
+          isSelected: false,
+        },
+      ];
+    }
 
-  channelOptions = [
-    // { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
-    {
-      id: '11',
-      name: 'Twitter',
-      icon: 'fa-brands fa-twitter sky pe-2',
-      isSelected: false,
-    },
-    {
-      id: '12',
-      name: 'Instagram',
-      icon: 'fa-brands fa-instagram pe-2 berry',
-      isSelected: false,
-    },
-    {
-      id: '13',
-      name: 'LinkedIn',
-      icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2',
-      isSelected: false,
-    },
-    {
-      id: '14',
-      name: 'Facebook',
-      icon: 'fab fa-facebook navytext pe-2 radical',
-      isSelected: false,
-    },
-    {
-      id: '15',
-      name: 'YouTube',
-      icon: 'fa-brands fa-youtube pe-2',
-      isSelected: false,
-    },
-    {
-      id: '16',
-      name: 'SMS',
-      icon: 'fa-solid fa-comment-alt pe-2 cherry',
-      isSelected: false,
-    },
-    {
-      id: '17',
-      name: 'WhatsApp',
-      icon: 'fa-brands fa-whatsapp pe-2 mint',
-      isSelected: false,
-    },
-    {
-      id: '18',
-      name: 'Email',
-      icon: 'fa-solid fa-envelope pe-2',
-      isSelected: false,
-    },
-    {
-      id: '19',
-      name: 'OfficeEmail',
-      icon: 'fa-solid fa-envelope pe-2',
-      isSelected: false,
-    },
-    {
-      id: '20',
-      name: 'WebChat',
-      icon: 'fa-solid fa-comment-dots pe-2 webchatcolor',
-      isSelected: false,
-    },
-    {
-      id: '21',
-      name: 'PlayStore',
-      icon: '  fa-brands fa-google-play  googleplaycolor pe-2',
-      isSelected: false,
-    },
-  ];
+    if(this.activeChannel=='https://bzengage.enteract.live'){
+            this.channelOptions=[
+              {
+                id: '1',
+                name: 'WhatsApp',
+                icon: 'fa-brands fa-whatsapp pe-2 mint',
+                isSelected: false,
+              },
+              {
+                id: '2',
+                name: 'Email',
+                icon: 'fa-solid fa-envelope pe-2',
+                isSelected: false,
+              },
+            ]
+    }
+    if(this.activeChannel=='https://tpplui.enteract.live' ||this.activeChannel=='https://waengage.enteract.live'){
+      this.channelOptions=[
+        {
+          id: '1',
+          name: 'WhatsApp',
+          icon: 'fa-brands fa-whatsapp pe-2 mint',
+          isSelected: false,
+        },
+      ]
+    }
+  }
+ 
   isDownloading: boolean = false;
 
   downloadPdf() {

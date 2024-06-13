@@ -72,7 +72,7 @@ import { MonitoringHeaderComponent } from './engage2/bot-monitoring-content/moni
 // import { MonitoringMenuComponent } from './engage2/bot-monitoring-content/monitoring-menu/monitoring-menu.component';
 import { BotMonitoringMenusComponent } from './engage2/bot-monitoring-content/bot-monitoring-menus/bot-monitoring-menus.component';
 import { BotChatComponent } from "../modules/bot-monitoring/components/bot-chat/bot-chat.component";
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
     declarations: [
         InboxContentComponent,
@@ -162,6 +162,7 @@ import { BotChatComponent } from "../modules/bot-monitoring/components/bot-chat/
         ReactiveFormsModule,
         RouterModule,
         SharedModule,
+        NgxSpinnerModule,
         //StoreModule.forFeature('menuPermission', { menus: menuReducer, permissions: permissionReducer  })
         StoreModule.forFeature('menus', menuReducer),
         StoreModule.forFeature('tagss', tagsReducer),

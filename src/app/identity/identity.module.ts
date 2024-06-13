@@ -8,7 +8,6 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { FacebookComponent } from '../modules/responder/components/Facebook/facebook.component';
 import { FormsModule } from '@angular/forms';
 
 
@@ -29,7 +28,6 @@ import { FormsModule } from '@angular/forms';
 
   ],
   providers:[
-    FacebookComponent,
     DatePipe
   ]
 })

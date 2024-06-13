@@ -15,44 +15,53 @@ export class CustomerSatisfactionComponent implements OnInit {
   toastermessage: boolean = false;
   feedbackSubmitted = false;
   activeButtonIndex: number | null = null;
-  constructor(private commanDateServices: CommonDataService,
-    private spinnerService : NgxSpinnerService,
-    private router: Router) {}
+  url: any;
 
-  ngOnInit(): void {}
+  constructor(
+    private commanDateServices: CommonDataService,
+    private spinnerService: NgxSpinnerService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.url = window.location.origin;
+  }
 
   markScore(value: any) {
     this.value = value;
     this.activeButtonIndex = value;
-    
   }
-
+  comanyId = 651;
   save() {
-   
+    if (this.url == 'https://keportal.enteract.live') {
+      this.comanyId = 651;
+    }
     const channel = this.router.url.split(/[=&]/)[1];
     const customerId = this.router.url.split(/[=&]/)[3];
-    const AgentId=Number(this.router.url.split(/[=&]/)[5]);
-    const id=Number(this.router.url.split(/[=&]/)[7])
+    const AgentId = 0;
+    const id = this.comanyId;
+    const email = this.router.url.split(/[=&]/)[5];
     let data = {
-
       customerId: customerId,
       attempts: 0,
       agentId: AgentId,
       rating: this.value,
       platform: channel,
-      id:id
+      id: id,
+      email: email,
     };
     this.spinnerService.show();
-    this.commanDateServices.CSATFormForKE(data).subscribe((res:any) => {
-      this.spinnerService.hide();
-      this.feedbackSubmitted = true;
-      this.toastermessage = true;
-      setTimeout(() => {
-        this.toastermessage = false;
-      }, 1000);
-    },
-    (error:any)=>{
-    });
+    this.commanDateServices.CSATFormForKE(data).subscribe(
+      (res: any) => {
+        this.spinnerService.hide();
+        this.feedbackSubmitted = true;
+        this.toastermessage = true;
+        setTimeout(() => {
+          this.toastermessage = false;
+        }, 1000);
+      },
+      (error: any) => {}
+    );
   }
 
   closeToaster() {

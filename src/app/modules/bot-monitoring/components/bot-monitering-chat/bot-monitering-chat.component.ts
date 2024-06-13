@@ -129,7 +129,7 @@ export class BotMoniteringChatComponent implements OnInit {
                   if (res && res.length > 0) {
                     if (existingChatIndex !== -1) {
                       const existingChat = this.chats[existingChatIndex][0];
-                      res[0]['completed'] = existingChat['completed'];http://localhost:4200/console/home
+                      res[0]['completed'] = existingChat['completed'];
                       res[0]['isMinimized'] = existingChat['isMinimized'];
                       console.log("res", res)
                       this.chats[existingChatIndex] = res;

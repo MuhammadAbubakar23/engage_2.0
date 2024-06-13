@@ -100,7 +100,6 @@ export class SlaComponent implements OnInit {
       plateForm: this.platform,
       pageNumber: this.pageNumber,
       hasBlueTick:false,
-
       pageSize: this.pageSize,
       isAttachment: false,
       queryType: '',
@@ -109,6 +108,8 @@ export class SlaComponent implements OnInit {
       notInclude: '',
       include: '',
       flag: '',
+      wings:'',
+      groupId:[]
     };
     this.SpinnerService.show();
     this.commondata
@@ -175,7 +176,9 @@ export class SlaComponent implements OnInit {
     userId: Number(localStorage.getItem('agentId')),
      profileId: profileId,
      agentIds: 'string',
-     platform: platform
+     platform: platform,
+     wings: '',
+     skillSlug: localStorage.getItem('skillSlug') || ''
    };
 
    this.commondata.AssignQuerry(this.assignQuerryDto).subscribe((res:any) =>{
