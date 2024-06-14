@@ -46,6 +46,7 @@ export class BotConfigurationComponent implements OnInit {
   currentPage: number = 1;
   totalCount: any;
   baseUrl: any = 'https://linked.360scrm.com/api/';
+  channelId: any = 2;
   // baseUrl: any = 'https://newpurpleshop86.conveyor.cloud/api/';
   applySearchFilter() {
     if (this.searchText.trim() !== '') {
@@ -112,7 +113,7 @@ export class BotConfigurationComponent implements OnInit {
   }
 
   viewBot(id: any, type: any) {
-    this.router.navigateByUrl(`/console/bot-configuration/${type}/${id}`);
+    this.router.navigateByUrl(`/console/bot-configuration/${type}/${this.channelId}/${id}`);
   }
 
 
@@ -120,7 +121,7 @@ export class BotConfigurationComponent implements OnInit {
   deleteBot(row: any) {
     const confirmation = confirm('Are you sure you want to delete this Bot?');
     if (confirmation) {
-      this.commonService.DeleteBotConfig(row.id, row.pageId, row.contentType).subscribe(
+      this.commonService.DeleteBotConfig(this.baseUrl ,row.id, row.pageId, row.contentType).subscribe(
         () => {
           this.botsArray = this.botsArray.filter((bot) => bot.id !== row.pageId);
           this.refreshBots();
@@ -134,7 +135,7 @@ export class BotConfigurationComponent implements OnInit {
   }
 
   statusChangeRequest(id:any, status: any, pageId: any, contentType: any){
-    this.commonService.UpdateBotStatus(id, pageId, contentType, !status).subscribe(
+    this.commonService.UpdateBotStatus(this.baseUrl, id, pageId, contentType, !status).subscribe(
       (res)=>{
         console.log("success");
         this.refreshBots();
@@ -197,27 +198,51 @@ export class BotConfigurationComponent implements OnInit {
     })
   }
   setChannel(id: any){
+    debugger
     switch(id){
       case(1):
-        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.channelId = id;
+        this.baseUrl = 'https://linked.360scrm.com/api/';
+        this.refreshBots();
       break;
       case(2):
-      this.baseUrl = 'https://linked.360scrm.com/api/'
+        this.channelId = id;
+        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.refreshBots();
       break;
       case(3):
+        this.channelId = id;
+        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.refreshBots();
       break;
       case(4):
+        this.channelId = id;
+        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.refreshBots();
       break;
       case(5):
+        this.channelId = id;
+        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.refreshBots();
       break;
       case(6):
+        this.channelId = id;
+        this.baseUrl = 'https://linked.360scrm.com/api/' 
       break;
       case(7):
+        this.channelId = id;
+        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.refreshBots();
       break;
       case(8):
+        this.channelId = id;
+        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.refreshBots();
       break;
       default:
+        this.channelId = id;
         this.baseUrl = 'https://linked.360scrm.com/api/'
+        this.refreshBots();
       break;
     }
   }

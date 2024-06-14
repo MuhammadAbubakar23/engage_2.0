@@ -181,7 +181,7 @@ const routes: Routes = [
 
       },
       {
-        path: 'bot-configuration/:type/:id',
+        path: 'bot-configuration/:type/:channelId/:id',
         loadComponent: () => import('./components/bot-configuration/create-bot-configuration/create-bot-configuration.component').then(c => c.CreateBotConfigurationComponent)
 
       },
