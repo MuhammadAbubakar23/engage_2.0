@@ -379,8 +379,8 @@ AddFbResponed( body: any) {
     return this.http.get(this.autoresponderbaseurl + this.getCompanyPages);
 
   }
-  GetProfileInfo(){
-    return this.http.get( this.profileBaseUrl + this.getProfileDetails)
+  GetProfileInfo(url:any){
+    return this.http.get( url + this.getProfileDetails)
   }
 
   GetActions(){
@@ -518,12 +518,12 @@ AddFbResponed( body: any) {
     const url = `${this.consoleBaseUrl}${this.deleteMessages}?Id=${deleteId}`;
     return this.http.get(url);
   }
-  DeleteBotConfig(id:any, pageId: any, Type: any): Observable<any> {
-    const url = `${this.botConfigBaseUrl}${this.deleteBotConfig}?id=${id}&PageId=${pageId}&Type=${Type}`;
+  DeleteBotConfig(baseUrl:any, id:any, pageId: any, Type: any): Observable<any> {
+    const url = `${baseUrl}${this.deleteBotConfig}?id=${id}&PageId=${pageId}&Type=${Type}`;
     return this.http.get(url);
   }
-  UpdateBotStatus(id:any, pageId: any, contentType: any, Status: any){
-    const url = `${this.botConfigBaseUrl}${this.updateBotConfigDetail}?id=${id}&PageID=${pageId}&ContentType=${contentType}&status=${Status}`
+  UpdateBotStatus(baseUrl:any, id:any, pageId: any, contentType: any, Status: any){
+    const url = `${baseUrl}${this.updateBotConfigDetail}?id=${id}&PageID=${pageId}&ContentType=${contentType}&status=${Status}`
     return this.http.post( url,"null")
   }
   GetQuickReply(body: any) {
@@ -609,8 +609,8 @@ AddFbResponed( body: any) {
   AddSkill(addSkill: any) {
     return this.http.post(this.consoleBaseUrl + this.addSkill, addSkill);
   }
-  AddBotConfig(body: any){
-    return this.http.post(this.botConfigBaseUrl + this.addBotConfig, body)
+  AddBotConfig(url:any,body: any){
+    return this.http.post(url + this.addBotConfig, body)
   }
   GetBotConfigById(pageId: any, Type: any){
     const url = `${this.botConfigBaseUrl}${this.ViewBotConfig}?PageID=${pageId}&Type=${Type}`

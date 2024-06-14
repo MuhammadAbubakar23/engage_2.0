@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
@@ -13,14 +13,15 @@ import { BotMonitoringService } from 'src/app/modules/bot-monitoring/services/bo
   templateUrl: './create-bot-configuration.component.html',
   styleUrls: ['./create-bot-configuration.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, NgSelectModule]
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, NgSelectModule, NgxSpinnerModule]
 })
 export class CreateBotConfigurationComponent implements OnInit {
   daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   Ids: any = [{id: 1, name: "chat bot "},{id: 2, name: "email bot"},{id: 3, name: "comment bot"},{id: 4, name: "tag bot"}]
   channels: any;
   companyPages: any = [{name: 'Ibex Global',uniqueId: 3425346435547}, {name: 'Ibex Local',uniqueId: 35647634747}, {name: 'Virtual World VW',uniqueId: 938473285}];
-  contentTypes: any = [{id:1, name:"DM"},{id:2,name:"Comment"}];
+  contentTypes: any;
+  contentTypess: any;
   statuses: any = ["Active", "Inactive"];
   formDisabled = false;
   errorMessage = '';
@@ -33,23 +34,22 @@ export class CreateBotConfigurationComponent implements OnInit {
   status: any = true;
   broadcast: any = true
   type: any ;
+  baseUrl: any = 'https://linked.360scrm.com/api/';
+  channelId: any;
 
-  constructor(private headerService: HeaderService, private formBuilder: FormBuilder, private _botService: BotMonitoringService, private commonService: CommonDataService, private router: Router, private _route: ActivatedRoute)
+  constructor(private spinnerServerice: NgxSpinnerService, private headerService: HeaderService, private formBuilder: FormBuilder, private _botService: BotMonitoringService, private commonService: CommonDataService, private router: Router, private _route: ActivatedRoute)
   { }
 
   ngOnInit(): void {
+    this.GetServicetree();
     this.getBots();
     this.getChannels();
     this.currentId = this._route.snapshot.paramMap.get('id')
     this.type = this._route.snapshot.paramMap.get('type')
-    if(this.currentId){
-      this.initializeForm();
-      this.getCompanyPages()
-      this.patchFormValues()
-    }
+    this.channelId = this._route.snapshot.paramMap.get('channelId')
     if(!this.currentId){
-      this.initializeForm();
-    }
+        this.initializeForm();
+      }
   }
   initializeForm(): void {
     this.botsForm = this.formBuilder.group({
@@ -76,17 +76,19 @@ export class CreateBotConfigurationComponent implements OnInit {
     })
   }
   patchFormValues(): void {
-    
     this.commonService.GetBotConfigById(this.currentId, this.type).subscribe(
       (res: any) => {
+        debugger
+        this.botsForm.get('contentType')?.setValue(res.contentType);
+        this.getContentTypes();
         this.botsForm.patchValue({
           botId: res.botId,
           name: res.name,
           botUrl: res.botUrl,
           botToken: res.botToken,
-          platform: 4,
+          platform: this.channelId,
           pageId: res.pageId,
-          contentType: res.contentType,
+          // contentType: res.contentType,
           botToAgent: res.botToAgent,
           sessionStartMessage: res.sessionStartMessage,
           sessionEndMessage: res.sessionEndMessage,
@@ -102,6 +104,7 @@ export class CreateBotConfigurationComponent implements OnInit {
           
         var currentDay = days.controls.find(day=> day.value.day == d.day) 
         currentDay?.patchValue(d)
+        this.spinnerServerice.hide()
         });
       })
       
@@ -115,10 +118,24 @@ export class CreateBotConfigurationComponent implements OnInit {
     }
   }
   getCompanyPages(){
-    this.commonService.GetProfileInfo().subscribe((res)=>{
+    this.spinnerServerice.show();
+    this.commonService.GetProfileInfo(this.baseUrl).subscribe((res)=>{
       this.companyPages=res;
-      
+      this.spinnerServerice.hide();
     });
+  }
+  getContentTypes(){
+    debugger
+    var channel:any;
+    if(this.botsForm.value.platform){
+      channel = this.contentTypes.find((x:any)=> x.id == this.botsForm.value.platform );
+    }
+    else{
+      channel = this.contentTypes.find((x:any)=> x.id == this.channelId );
+    }
+
+    this.contentTypess = channel?.subService;
+    // this.botsForm.get('contentTypes')?.reset;
   }
   getChannels(){
     this.commonService.getChannelsList().subscribe((res)=>{
@@ -133,6 +150,17 @@ export class CreateBotConfigurationComponent implements OnInit {
   getBots(){
     this._botService.GetAllChatBot().subscribe((res)=>{
       this.botIds = res;
+    })
+  }
+  GetServicetree(){
+    this.commonService.GetServicetree().subscribe((res)=>{
+      this.contentTypes = res;
+      if(this.currentId){
+        this.spinnerServerice.show();
+        this.initializeForm();
+        this.getCompanyPages()
+        this.patchFormValues()
+      }
     })
   }
   botIdTemp(){
@@ -183,7 +211,7 @@ export class CreateBotConfigurationComponent implements OnInit {
     if(this.botsForm.valid){
 
       
-      this.commonService.AddBotConfig(this.botsForm.value).subscribe(
+      this.commonService.AddBotConfig(this.baseUrl, this.botsForm.value).subscribe(
       (res: any) => {
         
         console.log("botsResponse--", res)
@@ -249,5 +277,48 @@ export class CreateBotConfigurationComponent implements OnInit {
 
   closeToaster() {
     this.toastermessage = false;
+  }
+
+  setChannel(){
+    debugger
+    var id = this.botsForm.value.platform;
+    switch(id){
+      case("1"):
+        this.baseUrl = 'https://linked.360scrm.com/api/';
+        this.getCompanyPages();
+      break;
+      case("2"):
+        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.getCompanyPages();
+      break;
+      case("3"):
+        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.getCompanyPages();
+      break;
+      case("4"):
+        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.getCompanyPages();
+      break;
+      case("5"):
+        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.getCompanyPages();
+      break;
+      case("6"):
+        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.getCompanyPages();
+      break;
+      case("7"):
+        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.getCompanyPages();
+      break;
+      case("8"):
+        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.getCompanyPages();
+      break;
+      default:
+        this.baseUrl = 'https://linked.360scrm.com/api/'
+        this.getCompanyPages();
+      break;
+    }
   }
 }
