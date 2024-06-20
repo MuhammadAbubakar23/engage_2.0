@@ -177,7 +177,7 @@
                                                 <div class="mb-3">
                                                     <input type="text" class="form-control" cols="16" rows="4"
                                                         placeholder="Enter Response" formControlName="response"
-                                                        [disabled]="isIntentSelected">
+                                                        [disabled]="isResponseSelected">
                                                     <div *ngIf="IntendForm.get('response')?.invalid && IntendForm.get('response')?.touched"
                                                         class="text-danger mt-2">Invalid input. Only alphabets,
                                                         numerics,
@@ -193,15 +193,15 @@
                                                 <div class="mb-3">
                                                     <textarea name="" class="form-control" cols="16" rows="4"
                                                         placeholder="Enter new training pharase......"
-                                                        formControlName="text" [disabled]="isIntentSelected"></textarea>
+                                                        formControlName="text" [disabled]="isResponseSelected"></textarea>
                                                 </div>
                                                 <div class="text-end mb-3">
-                                                    <button *ngIf="!isViewMode" type="button"
+                                                    <button *ngIf="!isResponseView" type="button"
                                                         class="btn btn-primary btn-small"
                                                         (click)="SaveResponse()">Save</button>
                                                     <button class="btn btn-sm btn-danger ms-auto" type="button"
-                                                        *ngIf="isViewMode"
-                                                        (click)="cancelIntentSelection()">Cancel</button>
+                                                        *ngIf="isResponseView"
+                                                        (click)="cancelResponseSelection()">Cancel</button>
                                                 </div>
                                                 <ul class="list-group list-group-flush training-list"
                                                     data-scrollbar="true" tabindex="-1"

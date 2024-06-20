@@ -27,7 +27,10 @@ export class ComponentsComponent implements OnInit {
   BotId: any
   selectedIntent: any = null;
   isIntentSelected: boolean = false; 
+  isResponseSelected: boolean = false; 
+
   isViewMode: boolean = false;
+  isResponseView: boolean = false;
   constructor(private _botService: BotMonitoringService, private chatBotIdS: ChatbotIdService, private spinnerServerice: NgxSpinnerService) {
     this.BotId = localStorage.getItem('bot_id');
   }
@@ -106,20 +109,35 @@ DeleteResponse(response: string, event: Event) {
         console.error('Error fetching intent details:', error);
     });
 }
-  cancelIntentSelection() {
-    this.isViewMode = false;
-    this.selectedIntent = null;
-    this.IntendForm.get('intent')?.enable();
-    this.IntendForm.get('response')?.enable();
-    this.IntendForm.get('text')?.enable();
-    this.IntendForm.reset();
-    this.selectedPhrases = [];
-    this.phrase = [];
-  }
-  
+cancelIntentSelection() {
+  this.isViewMode = false;
+  this.isIntentSelected = false;
+  this.selectedIntent = null;
+  this.IntendForm.patchValue({
+    intent: '',
+    newPhrase: '',
+    examples: ''
+  });
+  this.IntendForm.get('intent')?.enable();
+  this.selectedPhrases = [];
+  this.phrase = [];
+}
+
+cancelResponseSelection() {
+  this.isResponseView = false;
+  this.isResponseSelected = false;
+
+  this.IntendForm.patchValue({
+    response: '',
+    text: ''
+  });
+  this.IntendForm.get('response')?.enable();
+  this.IntendForm.get('text')?.enable();
+}
+
 viewResponse(response: any) {
-  this.isIntentSelected = true; 
-  this.isViewMode = true;
+  this.isResponseSelected = true; 
+  this.isResponseView = true;
   this.IntendForm.get('response')?.disable();
   this.IntendForm.get('text')?.disable();
   this._botService.ViewResponse(this.BotId).subscribe((res: any) => {
