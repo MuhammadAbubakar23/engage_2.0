@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BotMonitoringService } from '../../services/bot-monitoring.service';
 import { SharedModule } from "../../../../shared/shared.module";
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-chat-bot-story',
   templateUrl: './chat-bot-story.component.html',
   styleUrls: ['./chat-bot-story.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule]
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule, NgxSpinnerModule]
 })
 export class ChatBotStoryComponent implements OnInit {
   newPhrase: string = '';
@@ -22,7 +23,7 @@ export class ChatBotStoryComponent implements OnInit {
   items: any[] = [];
   selectedPhrases: string[] = [];
   toastermessage: boolean = false;
-  AlterMsg:any
+  AlterMsg: any
   responseList: any[] = []
   generatedPhrases: any[] = [];
   phrase: { id: number, label: string }[] = [];
@@ -30,7 +31,7 @@ export class ChatBotStoryComponent implements OnInit {
   BotId: any
   selectedQueriesArray: any[] = [];
   selectedResponsesArray: any[] = [];
-  constructor(private _botService: BotMonitoringService,) {
+  constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService) {
     this.BotId = localStorage.getItem('bot_id');
   }
   ngOnInit(): void {
@@ -99,12 +100,12 @@ export class ChatBotStoryComponent implements OnInit {
   }
 
   selectQuery(query: any, index: number) {
-    
+
     this.selectedQueriesArray[index] = query;
 
   }
   selectResponse(response: any, index: number) {
-    
+
     this.selectedResponsesArray[index] = response;
 
   }
@@ -121,11 +122,17 @@ export class ChatBotStoryComponent implements OnInit {
       console.error('BotId not found in localStorage.');
       return;
     }
+    this.spinnerServerice.show();
+
     this._botService.GetIntents(this.BotId).subscribe((res: any) => {
       console.log('Intent data=====>', res)
+      this.spinnerServerice.hide();
+
       this.items = res;
     }, (error) => {
       console.error('Error fetching intent:', error);
+      this.spinnerServerice.hide();
+
     });
   }
   ResponseList() {
@@ -133,17 +140,23 @@ export class ChatBotStoryComponent implements OnInit {
       console.error('BotId not found in localStorage.');
       return;
     }
+    this.spinnerServerice.show();
+
     this._botService.GetReponse(this.BotId).subscribe((intent: any) => {
+      this.spinnerServerice.hide();
+
       console.log('Response daya=====>', intent)
       this.responseList = intent;
     }, (error) => {
       console.error('Error fetching intent:', error);
+      this.spinnerServerice.hide();
+
     });
   }
   saveChatbot() {
     console.log('Form Valid:', this.storyForm.valid);
     console.log('Selected Phrases:', this.selectedPhrases);
-    if(this.selectedPhrases.length>=5){
+    if (this.selectedPhrases.length >= 5) {
       if (this.storyForm.touched && (this.selectedPhrases.length > 0 || this.phrase.length > 0)) {
         const obj = new FormData();
         obj.append('intent', this.storyForm.value.intent);
@@ -156,8 +169,14 @@ export class ChatBotStoryComponent implements OnInit {
           obj.append('examples', phrase);
         });
         console.log('FormData:', obj);
+        this.spinnerServerice.show();
+
         this._botService.AddIntend(obj).subscribe((res: any) => {
+          this.reloadComponent('Intent Create')
+
           console.log(res);
+          this.spinnerServerice.hide();
+
           this.loadBotId()
           const newIntent = {
             intent: this.storyForm.value.intent,
@@ -174,14 +193,18 @@ export class ChatBotStoryComponent implements OnInit {
           this.phrase = [];
         }, (error) => {
           console.error('Error saving intent:', error);
+          this.spinnerServerice.hide();
+
         });
       }
     }
-    else{
+    else {
       this.reloadComponent('must 5');
+      this.reloadComponent('intent missing')
+
     }
   }
-  
+
   SaveResponse() {
     console.log('Form Valid:', this.storyForm.valid);
     console.log('Selected Phrases:', this.selectedPhrases);
@@ -191,9 +214,15 @@ export class ChatBotStoryComponent implements OnInit {
       obj.append('bot_id', this.BotId);
       obj.append('text', this.storyForm.value.text);
       console.log('FormData:', obj);
+      this.spinnerServerice.show();
+
       this._botService.AddResponse(obj).subscribe((res: any) => {
+        this.reloadComponent('Response Create')
+
         console.log(res);
         this.ResponseList()
+        this.spinnerServerice.hide();
+
         const newResponse = {
           utterance: this.storyForm.value.response,
         };
@@ -201,11 +230,17 @@ export class ChatBotStoryComponent implements OnInit {
         this.storyForm.reset();
       }, (error) => {
         console.error('Error saving intent:', error);
+        this.spinnerServerice.hide();
+
       });
+    }
+    else {
+      this.reloadComponent('Response missing')
+
     }
   }
   CreateStory() {
-    
+
     console.log('Form Valid:', this.storyForm.valid);
     if (this.storyForm.touched
       && this.selectedQueriesArray && this.selectedResponsesArray) {
@@ -226,8 +261,15 @@ export class ChatBotStoryComponent implements OnInit {
       storyFlowArray.forEach((flow) => {
         obj.append('storyFlow', flow);
       });
+      this.spinnerServerice.show();
 
       this._botService.CreateStory(obj).subscribe((res: any) => {
+
+        this.reloadComponent('Story Create')
+
+
+        this.spinnerServerice.hide();
+
         console.log(res);
         this.storyForm.reset();
         this.selectedQuery = null;
@@ -236,20 +278,85 @@ export class ChatBotStoryComponent implements OnInit {
         this.selectedResponsesArray = [];
       }, (error) => {
         console.error('Error saving rule:', error);
+        this.spinnerServerice.hide();
+        this.reloadComponent('intent same')
+
+
       });
     }
+    else {
+      this.reloadComponent('Story  missing')
+
+
+    }
   }
-  reloadComponent(value:any){
-    
-    if(value=='must 5'){
-      this.toastermessage=true
-      this.AlterMsg="Please select atleast 5 phrases!"
+  reloadComponent(value: any) {
+
+    if (value == 'must 5') {
+      this.toastermessage = true
+      this.AlterMsg = "Please select atleast 5 phrases!"
       setTimeout(() => {
-        this.toastermessage=false
+        this.toastermessage = false
       }, 2000);
 
     }
-   
+    if (value == 'Story Create') {
+      this.toastermessage = true
+      this.AlterMsg = "Story Created Successfully!"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+    if (value == 'Intent Create') {
+      this.toastermessage = true
+      this.AlterMsg = "Intent Creaed Sucessfully!"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+    if (value == 'Response Create') {
+      this.toastermessage = true
+      this.AlterMsg = "Response Creaed Sucessfully!"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+    if (value == 'intent missing') {
+      this.toastermessage = true
+      this.AlterMsg = "intent is missing please add intent first !"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+    if (value == 'Response missing') {
+      this.toastermessage = true
+      this.AlterMsg = "Response is missing please add Response first !"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+    if (value == 'Story  missing') {
+      this.toastermessage = true
+      this.AlterMsg = "Story is missing!"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+    if (value == 'intent same') {
+      this.toastermessage = true
+      this.AlterMsg = "Intent with that name already exists in a rule!"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+
   }
 
   closeToaster() {

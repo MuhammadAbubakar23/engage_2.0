@@ -9,21 +9,23 @@ import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { environment } from 'src/environments/environment';
 import { ChatbotIdService } from 'src/app/services/chatBot_idService/chatbot-id.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-chat-bot',
   templateUrl: './chat-bot.component.html',
   styleUrls: ['./chat-bot.component.scss'],
   standalone: true,
-  imports: [CommonModule, SharedModule, ReactiveFormsModule, RouterModule, FormsModule,],
+  imports: [CommonModule, SharedModule, ReactiveFormsModule, RouterModule, FormsModule, NgxSpinnerModule],
 })
 export class ChatBotComponent implements OnInit {
   chatbots: any[] = []
   chatbotForm: FormGroup;
+  
   BotId: any
   constructor(private _botService: BotMonitoringService,
     private chatBotIdS: ChatbotIdService,
     private route: Router,
-    private formBuilder: FormBuilder, private headerService: HeaderService) {
+    private formBuilder: FormBuilder, private headerService: HeaderService ,private spinnerServerice: NgxSpinnerService) {
     this.chatbotForm = new FormGroup({
       name: new FormControl(''),
       timeout: new FormControl(''),
@@ -38,10 +40,19 @@ export class ChatBotComponent implements OnInit {
   }
 
   getChatBotList() {
+    this.spinnerServerice.show();
     this._botService.GetAllChatBot().subscribe((res: any) => {
+      this.spinnerServerice.hide();
+
       this.chatbots = res
+      
       console.log("Bot=====>", this.chatbots)
+    },
+    (error: any) => {
+      this.spinnerServerice.hide();
+      console.error(error);
     })
+    
   }
   updatevalue(string: any) {
     
@@ -86,8 +97,12 @@ export class ChatBotComponent implements OnInit {
         default:
           break;
       }
+      this.spinnerServerice.show();
 
       this._botService.Addbot(formData).subscribe((res: any) => {
+        this.getChatBotList();
+        this.spinnerServerice.hide();
+
         const newChatbot = {
           bot_id: res.bot_id,
           name: this.chatbotForm.value.name,
@@ -99,6 +114,8 @@ export class ChatBotComponent implements OnInit {
         console.log('New Chatbot Added:', newChatbot);
       }, (error: any) => {
         console.error('Error:', error);
+        this.spinnerServerice.hide();
+
       });
     } else {
       console.log('Form is invalid!');

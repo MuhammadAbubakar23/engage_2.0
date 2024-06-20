@@ -1,7 +1,9 @@
 <div class="content-box-wrapper d-flex w-100">
-
     <div class="middle-content d-flex">
-
+        <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+            [fullScreen]="false">
+            <p style="color: white"> Loading... </p>
+        </ngx-spinner>
         <div class="page-content-wrapper custom-scroll" data-scrollbar="true" tabindex="-1"
             style="overflow: auto; outline: none;">
 
@@ -9,14 +11,14 @@
                 <div class="p-4">
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-md-7">
                                     <h6>STORY</h6>
                                 </div>
                                 <div class="col-md-5">
                                     <h6>FORM</h6>
                                 </div>
-                            </div>
+                            </div> -->
                             <ul class="nav nav-tabs nav-fill linetabs" id="myTab1" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="query-tab" data-bs-toggle="tab"
@@ -29,92 +31,11 @@
                                         aria-controls="profile-tab-pane" aria-selected="false"
                                         tabindex="-1">Response</button>
                                 </li>
-                                <!-- <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="actions-tab" data-bs-toggle="tab"
-                                        data-bs-target="#actions-tab-pane" type="button" role="tab"
-                                        aria-controls="contact-tab-pane" aria-selected="false"
-                                        tabindex="-1">Actions</button>
-                                </li>
-                                <li class="nav-item ms-4" role="presentation">
-                                    <button class="nav-link" id="variables-tab" data-bs-toggle="tab"
-                                        data-bs-target="#variables-tab-pane" type="button" role="tab"
-                                        aria-controls="home-tab-pane" aria-selected="false"
-                                        tabindex="-1">Variables</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="variablesmappings-tab" data-bs-toggle="tab"
-                                        data-bs-target="#variablesmappings-tab-pane" type="button" role="tab"
-                                        aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">Variables
-                                        Mappings</button>
-                                </li> -->
+
                             </ul>
                         </div>
 
-                        <!-- <div class="col-md-5 ps-5">
-                            <h6>Corresponding Stories</h6>
-                            <div class="d-flex w-100 align-items-center">
-                                <ul class="list-inline m-0">
-                                    <li class="list-inline-item p-0 mb-2 border-0">
-                                        <a href="">
-                                            <span class="d-inline-flex align-items-center rounded-pill outline-badge">
-                                                <span class="iconButton small skyBg">
-                                                    H
-                                                </span>
-                                                happy path
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item p-0 mb-2 border-0">
-                                        <a href="">
-                                            <span class="d-inline-flex align-items-center rounded-pill outline-badge">
-                                                <span class="iconButton small skyBg">
-                                                    S
-                                                </span>
-                                                Sad path
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
 
-                                <div class="dropdown iconButton medium ms-3">
-                                    <button class="iconButton medium snowBg night" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span>
-                                            +3
-                                        </span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">
-                                                <span
-                                                    class="d-inline-flex align-items-center rounded-pill outline-badge">
-                                                    <span class="iconButton small skyBg">
-                                                        H
-                                                    </span>
-                                                    happy path
-                                                </span>
-                                            </a></li>
-                                        <li><a class="dropdown-item" href="#">
-                                                <span
-                                                    class="d-inline-flex align-items-center rounded-pill outline-badge">
-                                                    <span class="iconButton small skyBg">
-                                                        H
-                                                    </span>
-                                                    happy path
-                                                </span>
-                                            </a></li>
-                                        <li><a class="dropdown-item" href="#">
-                                                <span
-                                                    class="d-inline-flex align-items-center rounded-pill outline-badge">
-                                                    <span class="iconButton small skyBg">
-                                                        H
-                                                    </span>
-                                                    happy path
-                                                </span>
-                                            </a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
                     <form [formGroup]="IntendForm">
 
@@ -136,28 +57,12 @@
                                         <ul class="list-group list-group-flush component-list">
                                             <li *ngFor="let item of items | chatBotIntentFilter:searchIntent"
                                                 class="list-group-item d-flex align-items-center justify-content-between rounded mb-2"
-                                                [class.active]="item.active">
+                                                [class.active]="item.active" (click)="selectIntent(item)" style="cursor: pointer;">
                                                 <span>{{ item.intent }}</span>
                                                 <div class="count-progress">
-                                                    <!-- <div class="circular-progress-wrapper"
-                                                        title="Please add at least 15 training phrases">
-                                                        <div class="progress-contain text-warning" role="progressbar"
-                                                            [attr.aria-valuenow]="item.progress">
-                                                            <svg class="progress-svg" viewBox="22 22 44 44">
-                                                                <circle class="MuiCircularProgress-circle" cx="44"
-                                                                    cy="44" r="20.2" fill="none" stroke-width="3.6"
-                                                                    [style.stroke-dasharray]="item.strokeDasharray"
-                                                                    [style.stroke-dashoffset]="item.strokeDashoffset"
-                                                                    [style.stroke]="item.strokeColor">
-                                                                </circle>
-                                                            </svg>
-                                                        </div>
-                                                        <div class="label-cnt">
-                                                            <div class="label-caption">{{ item.label }}</div>
-                                                        </div>
-                                                    </div> -->
+
                                                     <span class="iconHover medium iconButton fadehide"
-                                                        (click)="DeleteIntent(item.intent)">
+                                                        (click)="DeleteIntent(item.intent , $event)">
                                                         <i class="fa-light fa-trash radical"></i>
                                                     </span>
                                                 </div>
@@ -166,11 +71,7 @@
                                     </div>
                                     <div class="col-md-9">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <!-- 
-                                            <div class="icon-input">
-                                                <i class="fa-light fa-magnifying-glass"></i>
-                                                <input class="form-control" placeholder="Search training phrase...">
-                                            </div> -->
+
                                         </div>
                                         <div class="card">
                                             <div
@@ -178,21 +79,24 @@
                                                 <h5 class="ms-3"> Add Intent</h5>
                                             </div>
                                             <div class="card-body">
-                                                <input type="text" class="form-control" cols="16" rows="4"
-                                                    placeholder="Enter Intent" formControlName="intent">
+                                                <input type="text" class="form-control" placeholder="Enter Intent"
+                                                    formControlName="intent" [disabled]="isIntentSelected">
                                                 <div *ngIf="IntendForm.get('intent')?.invalid && IntendForm.get('intent')?.touched"
-                                                    class="text-danger mt-2">Invalid input. Only alphabets, numerics,
-                                                    and spaces are allowed.</div>
+                                                    class="text-danger mt-2">
+                                                    Invalid input. Only alphabets, numerics, and spaces are allowed.
+                                                </div>
                                             </div>
                                             <div
                                                 class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
                                                 <h5 class="m-0"> Training Phrases</h5>
                                                 <button class="btn snowBg btn-sm night" type="button"
-                                                    (click)="generateAugments()">Generate Training Phrases</button>
+                                                    (click)="generateAugments()" *ngIf="!isViewMode">Generate Training
+                                                    Phrases</button>
                                             </div>
                                             <div class="card-body">
                                                 <div class="mb-3">
-                                                    <textarea name="" class="form-control" cols="16" rows="4"
+                                                    <textarea *ngIf="!isViewMode" name="" class="form-control" cols="16"
+                                                        rows="4"
                                                         placeholder="Enter new training pharase manually or click on Generate training ....."
                                                         formControlName="newPhrase"
                                                         (keyup.enter)="addManuallyEnteredPhrase()"></textarea>
@@ -205,7 +109,8 @@
                                                             <li *ngFor="let item of phrase"
                                                                 class="list-group-item d-flex align-items-center justify-content-between">
                                                                 <div>
-                                                                    <input class="form-check-input me-1" type="checkbox"
+                                                                    <input *ngIf="!isViewMode"
+                                                                        class="form-check-input me-1" type="checkbox"
                                                                         [id]="'checkbox' + item.id" [value]="item.label"
                                                                         (change)="togglePhraseSelection(item.label)">
 
@@ -213,24 +118,18 @@
                                                                         [for]="'checkbox' + item.id">{{ item.label
                                                                         }}</label>
                                                                 </div>
-                                                                <div class="action-icons d-flex align-items-center">
-                                                                    <span class="iconButton small iconHover me-2">
-                                                                        <i class="fa-light fa-edit"></i>
-                                                                    </span>
-                                                                    <span class="iconButton small iconHover">
-                                                                        <i class="fa-light fa-trash radical"></i>
-                                                                    </span>
-                                                                </div>
+
                                                             </li>
                                                         </ul>
                                                     </div>
                                                     <div class="text-end mb-3">
-                                                        <!-- <button class="btn btn-link" data-bs-toggle="modal"
-                                                            data-bs-target="#addentity"><i
-                                                                class="fa-light fa-rectangle-history-circle-plus"></i> Add
-                                                            Entity For</button> -->
-                                                        <button type="button" class="btn btn-primary btn-small"
+
+                                                        <button *ngIf="!isViewMode" type="button"
+                                                            class="btn btn-primary btn-small"
                                                             (click)="saveChatbot()">Save</button>
+                                                        <button class="btn btn-sm btn-danger ms-auto" type="button"
+                                                            *ngIf="isViewMode"
+                                                            (click)="cancelIntentSelection()">Cancel</button>
                                                     </div>
                                                 </ul>
                                             </div>
@@ -253,10 +152,11 @@
                                         </form>
                                         <ul class="list-group list-group-flush component-list">
                                             <li *ngFor="let item of responseList | responsefilter:searchResponse"
-                                                class="list-group-item d-flex align-items-center justify-content-between rounded mb-2">
+                                                class="list-group-item d-flex align-items-center justify-content-between rounded mb-2"
+                                                (click)="viewResponse(item)">
                                                 <span>{{ item?.utterance }}</span>
                                                 <span class="iconHover medium iconButton fadehide"
-                                                    (click)="DeleteResponse(item.utterance)">
+                                                    (click)="DeleteResponse(item.utterance , $event)">
                                                     <i class="fa-light fa-trash radical"></i>
                                                 </span>
                                             </li>
@@ -266,10 +166,7 @@
                                     <div class="col-md-9">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
                                             <h6>Select Responses</h6>
-                                            <div class="icon-input">
-                                                <i class="fa-light fa-magnifying-glass"></i>
-                                                <input class="form-control" placeholder="Search training phrase...">
-                                            </div>
+
                                         </div>
                                         <div class="card">
                                             <div
@@ -279,7 +176,8 @@
                                             <div class="card-body">
                                                 <div class="mb-3">
                                                     <input type="text" class="form-control" cols="16" rows="4"
-                                                        placeholder="Enter Response" formControlName="response">
+                                                        placeholder="Enter Response" formControlName="response"
+                                                        [disabled]="isIntentSelected">
                                                     <div *ngIf="IntendForm.get('response')?.invalid && IntendForm.get('response')?.touched"
                                                         class="text-danger mt-2">Invalid input. Only alphabets,
                                                         numerics,
@@ -295,11 +193,15 @@
                                                 <div class="mb-3">
                                                     <textarea name="" class="form-control" cols="16" rows="4"
                                                         placeholder="Enter new training pharase......"
-                                                        formControlName="text"></textarea>
+                                                        formControlName="text" [disabled]="isIntentSelected"></textarea>
                                                 </div>
                                                 <div class="text-end mb-3">
-                                                    <button type="button" class="btn btn-primary btn-small"
+                                                    <button *ngIf="!isViewMode" type="button"
+                                                        class="btn btn-primary btn-small"
                                                         (click)="SaveResponse()">Save</button>
+                                                    <button class="btn btn-sm btn-danger ms-auto" type="button"
+                                                        *ngIf="isViewMode"
+                                                        (click)="cancelIntentSelection()">Cancel</button>
                                                 </div>
                                                 <ul class="list-group list-group-flush training-list"
                                                     data-scrollbar="true" tabindex="-1"
@@ -307,12 +209,7 @@
                                                     <div class="scroll-content">
                                                         <li
                                                             class="list-group-item d-flex align-items-center justify-content-between">
-                                                            <!-- <div>
-                                                                <input class="form-check-input me-1" type="checkbox"
-                                                                    id="123">
-                                                                <label class="form-check-label" for="123"> life is tough
-                                                                </label>
-                                                            </div> -->
+
                                                             <div class="action-icons d-flex align-items-center">
                                                                 <span class="iconButton small iconHover me-2">
                                                                     <i class="fa-light fa-edit"></i>
@@ -338,810 +235,9 @@
 
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="actions-tab-pane" role="tabpanel"
-                                aria-labelledby="actions-tab" tabindex="0">
-                                <div class="row align-items-start pb-5">
-                                    <div class="col-md-3">
-                                        <div class="icon-input mb-3">
-                                            <i class="fa-light fa-magnifying-glass"></i>
-                                            <input class="form-control" placeholder="Search or Add ">
-                                        </div>
-                                        <div class="accordion accordion-flush action-accordion" id="actionapiaccordion">
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                    <button class="accordion-button" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                                        aria-expanded="true" aria-controls="collapseOne">
-                                                        <span><i class="fa-solid fa-shield-halved"></i> New
-                                                            Actions</span>
-                                                    </button>
-                                                </h2>
-                                                <div id="collapseOne" class="accordion-collapse collapse show"
-                                                    data-bs-parent="#actionapiaccordion">
-                                                    <div class="accordion-body p-0">
-                                                        <ul class="innerlist list-0">
-                                                            <li
-                                                                class="d-flex align-items-center justify-content-between">
-                                                                <a class="w-100">Api Name </a>
-                                                                <span class="iconHover medium iconButton fadehide">
-                                                                    <i class="fa-light fa-trash radical"></i>
-                                                                </span>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="mx-2 mb-2">
-                                                            <button
-                                                                class="btn btn-outline-primary rounded-pill newapi-btn"><i
-                                                                    class="fa-light fa-plus"></i> Add New</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                                        aria-expanded="false" aria-controls="collapseTwo">
-                                                        <span><i class="fa-solid fa-shield-halved"></i> Reset Variable
-                                                            Actions</span>
-                                                    </button>
-                                                </h2>
-                                                <div id="collapseTwo" class="accordion-collapse collapse"
-                                                    data-bs-parent="#actionapiaccordion">
-                                                    <div class="accordion-body p-0">
-                                                        <ul class="innerlist list-0">
-                                                            <li
-                                                                class="d-flex align-items-center justify-content-between">
-                                                                <a class="w-100"> Name </a>
-                                                                <span class="iconHover medium iconButton fadehide">
-                                                                    <i class="fa-light fa-trash radical"></i>
-                                                                </span>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="mx-2 mb-2">
-                                                            <button
-                                                                class="btn btn-outline-primary rounded-pill add-reset-btn"><i
-                                                                    class="fa-light fa-plus"></i> Add New</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                                        aria-expanded="false" aria-controls="collapseThree">
-                                                        <span><i class="fa-solid fa-envelope"></i> Email Action</span>
-                                                    </button>
-                                                </h2>
-                                                <div id="collapseThree" class="accordion-collapse collapse"
-                                                    data-bs-parent="#actionapiaccordion">
-                                                    <div class="accordion-body p-0">
-                                                        <ul class="innerlist list-0">
-                                                            <li
-                                                                class="d-flex align-items-center justify-content-between">
-                                                                <a class="w-100"> Name </a>
-                                                                <span class="iconHover medium iconButton fadehide">
-                                                                    <i class="fa-light fa-trash radical"></i>
-                                                                </span>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="mx-2 mb-2">
-                                                            <button
-                                                                class="btn btn-outline-primary rounded-pill email-action-btn"><i
-                                                                    class="fa-light fa-plus"></i> Add New</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#googleaction-collapse" aria-expanded="false"
-                                                        aria-controls="googleaction-collapse">
-                                                        <span><i class="fa-brands fa-google"></i> Google Action</span>
-                                                    </button>
-                                                </h2>
-                                                <div id="googleaction-collapse" class="accordion-collapse collapse"
-                                                    data-bs-parent="#actionapiaccordion">
-                                                    <div class="accordion-body p-0 pb-3">
-                                                        <ul class="innerlist list-0">
-                                                            <li
-                                                                class="d-flex align-items-center justify-content-between">
-                                                                <a class="w-100"> Name </a>
-                                                                <span class="iconHover medium iconButton fadehide">
-                                                                    <i class="fa-light fa-trash radical"></i>
-                                                                </span>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="mx-2 mb-2">
-                                                            <button
-                                                                class="btn btn-outline-primary rounded-pill googleaction-btn"><i
-                                                                    class="fa-light fa-plus"></i> Add New</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-9">
-                                        <div id="apiaction">
-                                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                                <h6>Select API Action</h6>
-                                                <div class="icon-input">
-                                                    <i class="fa-light fa-magnifying-glass"></i>
-                                                    <input class="form-control" placeholder="Search training phrase...">
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div
-                                                    class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
-                                                    <h5 class="m-0"> API Action</h5>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="mb-3">
-                                                        <label for="">Action name*</label>
-                                                        <textarea name="" class="form-control" cols="16" rows="4"
-                                                            placeholder="Action Name"></textarea>
-                                                    </div>
-                                                    <div class="row align-items-start mb-4">
-                                                        <div class="col-3">
-                                                            <label for="">Method*
-                                                            </label>
-                                                            <select class="form-select"
-                                                                aria-label="Default select example">
-                                                                <option selected="">GET</option>
-                                                                <option value="1">User Message</option>
-                                                                <option value="2">Sender ID</option>
-                                                                <option value="3">Slot</option>
-                                                                <option value="3">Intent</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-3">
-                                                            <label for="">Content Type*</label>
-                                                            <select class="form-select"
-                                                                aria-label="Default select example">
-                                                                <option selected="">application/x-222-form-urlencoded
-                                                                </option>
-                                                                <option value="1">application/json</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col">
-                                                            <label for="">URL*</label>
-                                                            <input class="form-control" placeholder="Enter request URL">
-                                                            <div class="form-text">
-                                                                Enter $ to see path parameter options
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <ul class="nav nav-tabs linetabs" id="myTab" role="tablist">
-                                                        <li class="nav-item" role="presentation">
-                                                            <button class="nav-link active tabs-icon-main" id="home-tab"
-                                                                data-bs-toggle="tab" data-bs-target="#home-tab-pane"
-                                                                type="button" role="tab" aria-controls="home-tab-pane"
-                                                                aria-selected="true">Header (0)
-                                                                <span class="iconButton small iconHover tabicon"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    data-bs-title="Add Headers"><i
-                                                                        class="fa-light fa-plus-circle"></i></span>
-                                                            </button>
-                                                        </li>
-                                                        <li class="nav-item" role="presentation">
-                                                            <button class="nav-link tabs-icon-main" id="profile-tab"
-                                                                data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
-                                                                type="button" role="tab"
-                                                                aria-controls="profile-tab-pane" aria-selected="false"
-                                                                tabindex="-1">Body (0) <span
-                                                                    class="iconButton small iconHover tabicon"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    data-bs-title="Add Parameters"><i
-                                                                        class="fa-light fa-plus-circle"></i></span></button>
-                                                        </li>
-                                                        <li class="nav-item" role="presentation">
-                                                            <button class="nav-link tabs-icon-main" id="contact-tab"
-                                                                data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
-                                                                type="button" role="tab"
-                                                                aria-controls="contact-tab-pane" aria-selected="false"
-                                                                tabindex="-1">Response Slots (0) <span
-                                                                    class="iconButton small iconHover tabicon"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    data-bs-title="Add Response Slot"><i
-                                                                        class="fa-light fa-plus-circle"></i></span></button>
-                                                        </li>
-
-                                                    </ul>
-                                                    <div class="tab-content p-3" id="myTabContent">
-                                                        <div class="tab-pane fade show active" id="home-tab-pane"
-                                                            role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                                                            <div class="d-flex w-100 align-items-center">
-                                                                <div class="row mb-3">
-
-                                                                    <div class="col-4 mb-3">
-                                                                        <label for="">Header Type*</label>
-                                                                        <input class="form-control">
-                                                                    </div>
-                                                                    <div class="col-4 mb-3">
-                                                                        <label for="">Key*</label>
-                                                                        <input class="form-control" placeholder="Key">
-                                                                    </div>
-                                                                    <div class="col-4 mb-3">
-                                                                        <label for="">Value*</label>
-                                                                        <input class="form-control" placeholder="">
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        <label for="">Response Text*</label>
-                                                                        <textarea name="" class="form-control" cols="16"
-                                                                            rows="4"
-                                                                            placeholder="type your response here "></textarea>
-                                                                    </div>
-                                                                </div>
-                                                                <span class="iconButton medium ms-5 iconHover">
-                                                                    <i class="fa-light fa-trash radical"></i>
-                                                                </span>
-                                                            </div>
-
-
-                                                        </div>
-                                                        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel"
-                                                            aria-labelledby="profile-tab" tabindex="0">
-                                                            <div
-                                                                class="form-check form-switch mb-4 p-0 d-flex flex-column">
-                                                                <label class="form-check-label mb-2"
-                                                                    for="flexSwitchCheckDefault">Toggle
-                                                                    Dynamic Request
-                                                                    Body</label>
-                                                                <input class="form-check-input m-0" type="checkbox"
-                                                                    role="switch" id="flexSwitchCheckDefault">
-                                                            </div>
-
-                                                            <div class="d-flex w-100 align-items-center">
-                                                                <div class="row mb-3">
-                                                                    <div class="col-4 mb-3">
-                                                                        <label for="">Header Type*</label>
-                                                                        <input class="form-control">
-                                                                    </div>
-                                                                    <div class="col-4 mb-3">
-                                                                        <label for="">Key*</label>
-                                                                        <input class="form-control" placeholder="Key">
-                                                                    </div>
-                                                                    <div class="col-4 mb-3">
-                                                                        <label for="">Value*</label>
-                                                                        <input class="form-control" placeholder="">
-                                                                    </div>
-
-                                                                </div>
-                                                                <span class="iconButton medium ms-5 iconHover">
-                                                                    <i class="fa-light fa-trash radical"></i>
-                                                                </span>
-                                                            </div>
-
-                                                            <div class="mb-3">
-                                                                <label for="">Response Text*</label>
-                                                                <textarea name="" class="form-control" cols="16"
-                                                                    rows="4"
-                                                                    placeholder="type your response here "></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel"
-                                                            aria-labelledby="contact-tab" tabindex="0">
-
-                                                            <div class="mb-3">
-                                                                <label for="">Response Text*</label>
-                                                                <textarea name="" class="form-control" cols="16"
-                                                                    rows="4"
-                                                                    placeholder="type your response here "></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="d-flex align-items-center mb-3 single-toggle">
-                                                        <button
-                                                            class="btn d-flex py-4 text-start w-100 bg-light collapsed"
-                                                            type="button" data-bs-toggle="collapse"
-                                                            data-bs-target="#collapseExample" aria-expanded="false"
-                                                            aria-controls="collapseExample">
-                                                            Advance Options
-                                                            <span class="ms-auto">
-                                                                <i class="fs-5 fa-light fa-angle-down"></i>
-                                                            </span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="collapse" id="collapseExample">
-                                                        <div class="card card-body">
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <label class="form-check-label d-block"
-                                                                        for="flexSwitchCheckDefault">Dispatch
-                                                                        Response</label>
-                                                                    <div class="form-check form-switch">
-                                                                        <input class="form-check-input" type="checkbox"
-                                                                            role="switch" id="flexSwitchCheckDefault">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <label for="">Response Evaluation Type*</label>
-                                                                    <select class="form-select"
-                                                                        aria-label="Default select example">
-                                                                        <option selected="">Expression</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <label for="">Dispatch Type*</label>
-                                                                    <select class="form-select"
-                                                                        aria-label="Default select example">
-                                                                        <option selected="">Text</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="text-end mb-3 p-3">
-                                                        <button class="btn btn-primary btn-small">Save</button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-none" id="googleaction">
-                                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                                <h6>Select Google Action</h6>
-                                                <div class="icon-input">
-                                                    <i class="fa-light fa-magnifying-glass"></i>
-                                                    <input class="form-control" placeholder="Search training phrase...">
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div
-                                                    class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
-                                                    <h5 class="m-0"> Reset Google Actions</h5>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="mb-3">
-                                                        <label for="">Name*</label>
-                                                        <input class="form-control" placeholder="Action name">
-                                                    </div>
-                                                    <div class="row align-items-start mb-4">
-                                                        <div class="col-6 mb-3">
-                                                            <label for="">API Token Type*</label>
-                                                            <input class="form-control" placeholder="">
-                                                        </div>
-                                                        <div class="col-6 mb-3">
-                                                            <label for="">Search Engine ID*</label>
-                                                            <input class="form-control" placeholder="Engine ID*">
-                                                        </div>
-                                                        <div class="col-6 mb-3">
-                                                            <label for="">Failure Response</label>
-                                                            <input class="form-control" placeholder="">
-                                                        </div>
-                                                        <div class="col-6 mb-3">
-                                                            <label for="">Set Slot</label>
-                                                            <select name="" class="form-select">
-                                                                <option value=""></option>
-                                                            </select>
-                                                        </div>
-
-                                                        <div class="col-6 mb-3">
-                                                            <label for="">Number of results</label>
-                                                            <select name="" class="form-select">
-                                                                <option value=""></option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-6 mb-3">
-                                                            <div class="form-check form-switch mt-4 pt-1">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    role="switch" id="dpresponse">
-                                                                <label class="form-check-label ms-2"
-                                                                    for="dpresponse">Dispatch
-                                                                    Response</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
 
 
 
-                                                    <div class="text-end mb-3 p-3">
-                                                        <button class="btn btn-primary btn-small">Save</button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-none" id="emailaction">
-                                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                                <h6>Select Email Action</h6>
-                                                <div class="icon-input">
-                                                    <i class="fa-light fa-magnifying-glass"></i>
-                                                    <input class="form-control" placeholder="Search training phrase...">
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div
-                                                    class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
-                                                    <h5 class="m-0"> Email Action</h5>
-                                                </div>
-                                                <div class="card-body">
-
-                                                    <div class="row align-items-start mb-4">
-                                                        <div class="col-6 mb-3">
-                                                            <label for="">Name*</label>
-                                                            <input class="form-control" placeholder="Action name">
-                                                        </div>
-                                                        <div class="col-6 mb-3">
-                                                            <label for="">SMTP URL*</label>
-                                                            <input class="form-control" placeholder="SMTP_address.com">
-                                                        </div>
-                                                        <div class="col-6 mb-3">
-                                                            <label for="">SMTP Port*</label>
-                                                            <input class="form-control" placeholder="Engine ID*">
-                                                        </div>
-                                                        <div class="col-6 mb-3">
-                                                            <label for="">Subject*</label>
-                                                            <input class="form-control" placeholder="">
-                                                        </div>
-                                                        <div class="col-6 mb-3">
-                                                            <label for="">SMTP UserId</label>
-                                                            <input class="form-control" placeholder="Engine ID*">
-                                                        </div>
-                                                        <div class="col-6 mb-3">
-                                                            <label for="">SMTP Password</label>
-                                                            <select name="" class="form-select">
-                                                                <option value=""></option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-6 mb-3">
-                                                            <label for="">Custom Text Type</label>
-                                                            <select name="" class="form-select">
-                                                                <option value=""></option>
-                                                            </select>
-                                                        </div>
-
-                                                        <div class="col-6 mb-3">
-                                                            <label for="">From Email*</label>
-                                                            <input class="form-control"
-                                                                placeholder="e.g. John.deo@address.com">
-                                                        </div>
-                                                        <div class="col-12 mb-3">
-                                                            <label for="">To Email*</label>
-                                                            <select name=""
-                                                                class="form-select py-3 select2-multiple select2-hidden-accessible"
-                                                                data-select2-id="select2-data-1-1137" multiple=""
-                                                                tabindex="-1" aria-hidden="true">
-                                                                <option value="0" data-select2-id="select2-data-3-21wu">
-                                                                    farooq.shad@ibex.co</option>
-                                                            </select><span
-                                                                class="select2 select2-container select2-container--classic"
-                                                                dir="ltr" data-select2-id="select2-data-2-h3k0"
-                                                                style="width: auto;"><span class="selection"><span
-                                                                        class="select2-selection select2-selection--multiple"
-                                                                        role="combobox" aria-haspopup="true"
-                                                                        aria-expanded="false" tabindex="-1"
-                                                                        aria-disabled="false">
-                                                                        <ul class="select2-selection__rendered"
-                                                                            id="select2--lw-container">
-                                                                            <li class="select2-selection__choice"
-                                                                                title="farooq.shad@ibex.co"
-                                                                                data-select2-id="select2-data-4-ksu8">
-                                                                                <button type="button"
-                                                                                    class="select2-selection__choice__remove"
-                                                                                    tabindex="-1" title="Remove item"
-                                                                                    aria-label="Remove item"
-                                                                                    aria-describedby="select2--lw-container-choice-k8pn-0"><span
-                                                                                        aria-hidden="true">×</span></button><span
-                                                                                    class="select2-selection__choice__display"
-                                                                                    id="select2--lw-container-choice-k8pn-0">farooq.shad@ibex.co</span>
-                                                                            </li>
-                                                                        </ul><span
-                                                                            class="select2-search select2-search--inline"><textarea
-                                                                                class="select2-search__field"
-                                                                                type="search" tabindex="0"
-                                                                                autocorrect="off" autocapitalize="none"
-                                                                                spellcheck="false" role="searchbox"
-                                                                                aria-autocomplete="list"
-                                                                                autocomplete="off" aria-label="Search"
-                                                                                aria-describedby="select2--lw-container"
-                                                                                placeholder=""
-                                                                                style="width: 0.75em;"></textarea></span>
-                                                                    </span></span><span class="dropdown-wrapper"
-                                                                    aria-hidden="true"></span></span>
-                                                            <div class="coal mt-1 small">
-                                                                Enter comma separated email ids: johm.deo@example,
-                                                                marry.jane@example.com
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-12 mb-3">
-                                                            <label for="">Response*</label>
-                                                            <input class="form-control" placeholder="Response">
-
-                                                        </div>
-                                                        <div class="col-6 mb-3">
-                                                            <div class="form-check form-switch mt-2 pt-1">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    role="switch" id="tls">
-                                                                <label class="form-check-label ms-2" for="tls">TLS
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    <div class="text-end mb-3 p-3">
-                                                        <button class="btn btn-primary btn-small">Save</button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-none" id="resetaction">
-                                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                                <h6>Select Reset Variable Action</h6>
-                                                <div class="icon-input">
-                                                    <i class="fa-light fa-magnifying-glass"></i>
-                                                    <input class="form-control" placeholder="Search training phrase...">
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div
-                                                    class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
-                                                    <h5 class="m-0"> Reset Variable Actions</h5>
-                                                </div>
-                                                <div class="card-body">
-
-                                                    <div class="row align-items-start mb-4">
-                                                        <div class="col-12 mb-3">
-                                                            <label for="">Name*</label>
-                                                            <input class="form-control" placeholder="Action name">
-                                                        </div>
-                                                        <div class="col-6 mb-3">
-                                                            <button class="btn btn-outline-secondary">Add shot</button>
-                                                            <button class="btn btn-outline-secondary">Remove All
-                                                                Shots</button>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="d-flex w-100 align-items-center">
-                                                        <div class="row mb-3 w-100">
-                                                            <div class="col-4 mb-3">
-                                                                <label for="">Slot*</label>
-                                                                <select name="" class="form-select">
-                                                                    <option value=""></option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-4 mb-3">
-                                                                <label for="">Type of action*</label>
-                                                                <select name="" class="form-select">
-                                                                    <option value=""></option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-4 mb-3">
-                                                                <label for="">Value*</label>
-                                                                <input class="form-control" placeholder="">
-                                                            </div>
-
-                                                        </div>
-                                                        <span class="iconButton medium ms-5 iconHover">
-                                                            <i class="fa-light fa-trash radical"></i>
-                                                        </span>
-                                                    </div>
-
-
-
-                                                    <div class="text-end mb-3 p-3">
-                                                        <button class="btn btn-primary btn-small">Save</button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="variables-tab-pane" role="tabpanel"
-                                aria-labelledby="variables-tab" tabindex="0">
-                                <div class="row align-items-start pb-5">
-                                    <div class="col-md-3">
-                                        <div class="icon-input mb-3">
-                                            <i class="fa-light fa-magnifying-glass"></i>
-                                            <input class="form-control" placeholder="Search or Add ">
-                                        </div>
-                                        <ul class="list-group list-group-flush component-list">
-                                            <li
-                                                class="list-group-item d-flex align-items-center justify-content-between rounded mb-2">
-                                                <span>bot</span>
-                                                <span class="iconHover medium iconButton fadehide">
-                                                    <i class="fa-light fa-trash radical"></i>
-                                                </span>
-                                            </li>
-                                            <li
-                                                class="list-group-item d-flex align-items-center justify-content-between rounded mb-2">
-                                                <span>kiron_action_response</span>
-                                                <span class="iconHover medium iconButton fadehide">
-                                                    <i class="fa-light fa-trash radical"></i>
-                                                </span>
-                                            </li>
-                                            <li
-                                                class="list-group-item d-flex align-items-center justify-content-between rounded mb-2">
-                                                <span>order</span>
-                                                <span class="iconHover medium iconButton fadehide">
-                                                    <i class="fa-light fa-trash radical"></i>
-                                                </span>
-                                            </li>
-                                            <li
-                                                class="list-group-item d-flex align-items-center justify-content-between rounded mb-2">
-                                                <span>image</span>
-                                                <span class="iconHover medium iconButton fadehide">
-                                                    <i class="fa-light fa-trash radical"></i>
-                                                </span>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <h6> Select Variables</h6>
-                                            <div class="icon-input">
-                                                <i class="fa-light fa-magnifying-glass"></i>
-                                                <input class="form-control" placeholder="Search training phrase...">
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div
-                                                class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
-                                                <h5 class="m-0"> Variables</h5>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label for="">Name</label>
-                                                        <input class="form-control" name="">
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="">Initial Value</label>
-                                                        <input class="form-control" name=""
-                                                            value="65e57f6bed7b44af4a578e09">
-                                                    </div>
-                                                    <div class="col-md-12 mb-3">
-                                                        <label for=""> Type</label>
-                                                        <select name="" class="form-select">
-                                                            <option value="">Categorical</option>
-                                                            <option value="">Number</option>
-                                                            <option value="">List</option>
-                                                            <option value="">Boolean</option>
-                                                            <option value="">Text</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                role="switch" id="autofill">
-                                                            <label class="form-check-label" for="autofill">Auto
-                                                                Fill</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                role="switch" id="influence">
-                                                            <label class="form-check-label" for="influence">Influence
-                                                                Conversation</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="text-end mb-3">
-                                                    <button class="btn btn-primary btn-small">Update</button>
-                                                    <button class="btn btn-outline-danger btn-small">Delete</button>
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="variablesmappings-tab-pane" role="tabpanel"
-                                aria-labelledby="variablesmappings-tab" tabindex="0">
-                                <div class="row align-items-start pb-5">
-                                    <div class="col-md-3">
-                                        <div class="icon-input mb-3">
-                                            <i class="fa-light fa-magnifying-glass"></i>
-                                            <input class="form-control" placeholder="Search or Add ">
-                                        </div>
-                                        <div class="mx-auto bg-white p-4 mb-2 text-center">
-                                            <button class="btn btn-outline-primary rounded-pill"><i
-                                                    class="fa-light fa-plus"></i> Add
-                                                New</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <h6> Select Variables Mappings</h6>
-                                            <div class="icon-input">
-                                                <i class="fa-light fa-magnifying-glass"></i>
-                                                <input class="form-control" placeholder="Search training phrase...">
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div
-                                                class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
-                                                <h5 class="m-0"> Variables Mappings</h5>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row">
-
-                                                    <div class="col-md-12 mb-3">
-                                                        <label for=""> Variable Name*</label>
-                                                        <select name="" class="form-control">
-                                                            <option value="">Categorical</option>
-                                                            <option value="">Number</option>
-                                                            <option value="">List</option>
-                                                            <option value="">Boolean</option>
-                                                            <option value="">Text</option>
-                                                        </select>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="text-end mb-3">
-                                                    <button class="btn btn-outline-primary btn-small"
-                                                        data-bs-toggle="collapse" data-bs-target="#addall"
-                                                        aria-expanded="false"
-                                                        aria-controls="collapseExample">Add</button>
-                                                    <button class="btn btn-outline-danger btn-small">Delete All</button>
-
-                                                </div>
-                                                <div class="collapse mb-3" id="addall">
-                                                    <div class="card card-body">
-                                                        <div
-                                                            class="d-flex align-items-center justify-content-between mb-3">
-                                                            <h6> Mapping - 1</h6>
-                                                            <span class="iconHover medium iconButton fadehide">
-                                                                <i class="fa-light fa-trash radical"></i>
-                                                            </span>
-                                                        </div>
-                                                        <div class="mb-3 row">
-                                                            <label for="" class="col-md-2">Type</label>
-                                                            <div class="col-md-10">
-                                                                <select name="" class="form-select">
-                                                                    <option value="">Form Entity</option>
-                                                                    <option value="">Form Intent</option>
-                                                                    <option value="">Form Text</option>
-                                                                    <option value="">Form Trigger Intent</option>
-                                                                </select>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="mb-3 row">
-                                                            <label for="" class="col-md-2">Intent</label>
-                                                            <div class="col-md-10">
-                                                                <select name="" class="form-select">
-                                                                    <option value="">Greet</option>
-                                                                    <option value="">Goodby</option>
-                                                                </select>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="mb-3 row">
-                                                            <label for="" class="col-md-2">Not Intent</label>
-                                                            <div class="col-md-10">
-                                                                <select name="" class="form-select">
-                                                                    <option value="">Greet</option>
-                                                                    <option value="">Goodby</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <button class="btn btn-primary btn-small">Save</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </form>
 

@@ -1,5 +1,9 @@
 <div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
+        <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+            [fullScreen]="false">
+            <p style="color: white"> Loading... </p>
+        </ngx-spinner>
         <div class="page-content-wrapper custom-scroll pb-5 mb-5" data-scrollbar="true" tabindex="-1"
             style="overflow: auto; outline: none;">
             <form [formGroup]="storyForm">
@@ -39,10 +43,9 @@
                                             <div class="accordion-body">
                                                 <div class="d-flex">
                                                     <div class="dropdown">
-                                                        <button class="btn coal border px-4 fs-5" type="button"
-                                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                                            Select queries <i class="fa-light fa-angle-down"></i>
-                                                        </button>
+                                                        <button class="btn coal border px-4 fs-5" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            {{ selectedQueriesArray[i]?.intent || 'Select queries' }} <i class="fa-light fa-angle-down"></i>
+                                                          </button>
                                                         <ul class="dropdown-menu scroll-container">
                                                             <li>
                                                                 <h5 class="dropdown-header text-dark fs-5"><i
@@ -77,10 +80,9 @@
                                                         </ul>
                                                     </div>
                                                     <div class="dropdown mt-3">
-                                                        <button class="btn coal border px-4 fs-5" type="button"
-                                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                                            Select response <i class="fa-light fa-angle-down"></i>
-                                                        </button>
+                                                        <button class="btn coal border px-4 fs-5" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            {{ selectedResponsesArray[i]?.utterance || 'Select response' }} <i class="fa-light fa-angle-down"></i>
+                                                          </button>
                                                         <ul class="dropdown-menu scroll-container">
                                                             <li>
                                                                 <h5 class="dropdown-header text-dark fs-5">

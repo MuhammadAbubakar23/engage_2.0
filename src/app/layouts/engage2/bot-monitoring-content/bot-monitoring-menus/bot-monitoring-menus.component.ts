@@ -122,25 +122,27 @@ export class BotMonitoringMenusComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getActiveConversation();
-    this.apiCallInterval1 = interval(20000).subscribe(() => {
-      this.getActiveConversation();
-    });
-    this.apiCallInterval2 = interval(3000).subscribe(() => {
-      this.getCompletedConversation();
-    });
-    this.menu$ = this.store.select(getEmargingNotEqual("role_console_left_menu")).subscribe((item) => {
-      this.menus$ = item;
-      this.menus$ = this.treegen.buildTree(item, 400);
-    })
+//  comment kia hey dubara uncomment ker k chala sakty ho 
 
-    let main = this.storage.retrive("main", "o").local;
-    let selectedRole = this.storage.retrive("nocompass", "O").local;
-    this.SuperTeamSelected = selectedRole.id;
-    this.SuperTeamOptions = main.roles;
-    if (this.SuperTeamOptions.length >= 2) {
-      this.SuperTeamShow = false;
-    }
+    // this.getActiveConversation();
+    // this.apiCallInterval1 = interval(20000).subscribe(() => {
+    //   this.getActiveConversation();
+    // });
+    // this.apiCallInterval2 = interval(3000).subscribe(() => {
+    //   this.getCompletedConversation();
+    // });
+    // this.menu$ = this.store.select(getEmargingNotEqual("role_console_left_menu")).subscribe((item) => {
+    //   this.menus$ = item;
+    //   this.menus$ = this.treegen.buildTree(item, 400);
+    // })
+
+    // let main = this.storage.retrive("main", "o").local;
+    // let selectedRole = this.storage.retrive("nocompass", "O").local;
+    // this.SuperTeamSelected = selectedRole.id;
+    // this.SuperTeamOptions = main.roles;
+    // if (this.SuperTeamOptions.length >= 2) {
+    //   this.SuperTeamShow = false;
+    // }
   }
 
   toggleChatVisibility(clickedItem: any) {
