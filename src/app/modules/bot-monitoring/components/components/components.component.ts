@@ -48,7 +48,7 @@ export class ComponentsComponent implements OnInit {
     }
   }
   DeleteIntent(intent: string, event: Event) {
-    event.stopPropagation(); // Stops event propagation
+    event.stopPropagation();
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
         this.BotId = localStorage.getItem('bot_id');
@@ -65,7 +65,7 @@ export class ComponentsComponent implements OnInit {
 
 
 DeleteResponse(response: string, event: Event) {
-  event.stopPropagation(); // Stops event propagation
+  event.stopPropagation(); 
 
   const confirmation = confirm('Are you sure you want to delete this template?');
   if (confirmation) {
