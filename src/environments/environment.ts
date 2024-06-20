@@ -305,7 +305,9 @@ autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
       responseDelete: 'responses/delete',
       deleteChatBot: 'bots/deactivate',
       createRule: 'rules/create',
-      createStory:'stories/create'
+      createStory:'stories/create',
+      viewIntent:'intents/get',
+      viewResponse:'responses/get'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

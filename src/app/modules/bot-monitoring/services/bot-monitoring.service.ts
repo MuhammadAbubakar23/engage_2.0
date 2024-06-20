@@ -22,6 +22,8 @@ export class BotMonitoringService {
   deleteChatBot = environment.links.bot.deleteChatBot
   createRule= environment.links.bot.createRule
   createStory= environment.links.bot.createStory
+  viewIntent = environment.links.bot.viewIntent
+  viewResponse=environment.links.bot.viewResponse
 
   constructor(private http: HttpClient) { }
 
@@ -70,5 +72,11 @@ export class BotMonitoringService {
   }
   GetReponse(botId: number): Observable<any> {
     return this.http.get(`${this.botMoniteringBaseUrl}${this.getReponse}?bot_id=${botId}`);
+  }
+  ViewIntent(botId: number): Observable<any> {
+    return this.http.get(`${this.botMoniteringBaseUrl}${this.viewIntent}?bot_id=${botId}`);
+  }
+  ViewResponse(botId: number): Observable<any> {
+    return this.http.get(`${this.botMoniteringBaseUrl}${this.viewResponse}?bot_id=${botId}`);
   }
 }

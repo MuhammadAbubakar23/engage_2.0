@@ -41,10 +41,19 @@ export class ChatBotComponent implements OnInit {
   }
 
   getChatBotList() {
+    this.spinnerServerice.show();
     this._botService.GetAllChatBot().subscribe((res: any) => {
+      this.spinnerServerice.hide();
+
       this.chatbots = res
+      
       console.log("Bot=====>", this.chatbots)
+    },
+    (error: any) => {
+      this.spinnerServerice.hide();
+      console.error(error);
     })
+    
   }
   updatevalue(string: any) {
     
@@ -111,8 +120,12 @@ export class ChatBotComponent implements OnInit {
         default:
           break;
       }
+      this.spinnerServerice.show();
 
       this._botService.Addbot(formData).subscribe((res: any) => {
+        this.getChatBotList();
+        this.spinnerServerice.hide();
+
         const newChatbot = {
           bot_id: res.bot_id,
           name: this.chatbotForm.value.name,
@@ -124,6 +137,8 @@ export class ChatBotComponent implements OnInit {
         console.log('New Chatbot Added:', newChatbot);
       }, (error: any) => {
         console.error('Error:', error);
+        this.spinnerServerice.hide();
+
       });
     } else {
       console.log('Form is invalid!');

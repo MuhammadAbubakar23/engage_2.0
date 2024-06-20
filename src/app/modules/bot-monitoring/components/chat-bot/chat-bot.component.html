@@ -3,6 +3,9 @@
 </ngx-spinner>
 <div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
+        <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+            <p style="color: white"> Loading... </p>
+        </ngx-spinner>
         <div class="page-content-wrapper custom-scroll chatbot-main">
             <div class="p-4">
                 <div class="filter-toolbar mb-3 d-flex align-items-center justify-content-between mt-1">
@@ -75,10 +78,11 @@
                     </ng-container>
 
                     <div class="col-md-4">
-                        <div class="card zoom-in chatbotcard addchatcard" data-bs-toggle="modal" data-bs-target="#create-chatbot">
-                          <div class="card-body">
-                            <i class="fa-light fa-plus"></i>
-                          </div>
+                        <div class="card zoom-in chatbotcard addchatcard" data-bs-toggle="modal"
+                            data-bs-target="#create-chatbot">
+                            <div class="card-body">
+                                <i class="fa-light fa-plus"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -119,7 +123,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary"  data-bs-dismiss="modal">Save</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
                     </div>
                 </form>
             </div>

@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BotMonitoringService } from '../../services/bot-monitoring.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-chat-bot-stepper',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule, NgxSpinnerModule],
   templateUrl: './chat-bot-stepper.component.html',
   styleUrls: ['./chat-bot-stepper.component.scss']
 })
@@ -20,14 +21,14 @@ export class ChatBotStepperComponent implements OnInit {
   selectedResponse: any = null;
   selectedQuery: any = null;
   toastermessage: boolean = false;
-  AlterMsg:any
+  AlterMsg: any
   items: any[] = [];
   selectedPhrases: string[] = [];
   responseList: any[] = []
   generatedPhrases: any[] = [];
   phrase: { id: number, label: string }[] = [];
   BotId: any
-  constructor(private _botService: BotMonitoringService,) {
+  constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService) {
     this.BotId = localStorage.getItem('bot_id');
   }
   ngOnInit(): void {
@@ -72,11 +73,11 @@ export class ChatBotStepperComponent implements OnInit {
     }
   }
   selectQuery(query: any) {
-    
+
     this.selectedQuery = query === this.selectedQuery ? null : query;
   }
   selectResponse(response: any) {
-    
+
     this.selectedResponse = response === this.selectedResponse ? null : response;
   }
   addManuallyEnteredPhrase() {
@@ -104,17 +105,23 @@ export class ChatBotStepperComponent implements OnInit {
       console.error('BotId not found in localStorage.');
       return;
     }
+    this.spinnerServerice.show();
+
     this._botService.GetReponse(this.BotId).subscribe((intent: any) => {
       console.log('Response daya=====>', intent)
+      this.spinnerServerice.hide();
+
       this.responseList = intent;
     }, (error) => {
       console.error('Error fetching intent:', error);
+      this.spinnerServerice.hide();
+
     });
   }
   saveChatbot() {
     console.log('Form Valid:', this.stepperForm.valid);
     console.log('Selected Phrases:', this.selectedPhrases);
-    if(this.selectedPhrases.length >= 5){
+    if (this.selectedPhrases.length >= 5) {
       if (this.stepperForm.valid && (this.selectedPhrases.length > 0 || this.phrase.length > 0)) {
         const obj = new FormData();
         obj.append('intent', this.stepperForm.value.intent);
@@ -127,7 +134,12 @@ export class ChatBotStepperComponent implements OnInit {
           obj.append('examples', phrase);
         });
         console.log('FormData:', obj);
+        this.spinnerServerice.show();
+
         this._botService.AddIntend(obj).subscribe((res: any) => {
+          this.reloadComponent('Intent Create')
+          this.spinnerServerice.hide();
+
           console.log(res);
           this.loadBotId()
           const newIntent = {
@@ -145,11 +157,15 @@ export class ChatBotStepperComponent implements OnInit {
           this.phrase = [];
         }, (error) => {
           console.error('Error saving intent:', error);
+          this.spinnerServerice.hide();
+
         });
       }
     }
-    else{
+    else {
       this.reloadComponent('must 5');
+      this.reloadComponent('intent missing')
+
     }
   }
   SaveResponse() {
@@ -161,7 +177,12 @@ export class ChatBotStepperComponent implements OnInit {
       obj.append('bot_id', this.BotId);
       obj.append('text', this.stepperForm.value.text);
       console.log('FormData:', obj);
+      this.spinnerServerice.show();
+
       this._botService.AddResponse(obj).subscribe((res: any) => {
+        this.reloadComponent('Response Create')
+        this.spinnerServerice.hide();
+
         console.log(res);
         this.ResponseList()
         const newResponse = {
@@ -171,7 +192,14 @@ export class ChatBotStepperComponent implements OnInit {
         this.stepperForm.reset();
       }, (error) => {
         console.error('Error saving intent:', error);
+        this.spinnerServerice.hide();
+      this.reloadComponent('Response missing')
+
+
       });
+    }
+    else {
+
     }
   }
   SaveRule() {
@@ -182,7 +210,13 @@ export class ChatBotStepperComponent implements OnInit {
       obj.append('rule', this.stepperForm.value.rule);
       obj.append('intent', this.selectedQuery.intent);
       obj.append('response', this.selectedResponse.utterance);
+      this.spinnerServerice.show();
+
       this._botService.CreateRule(obj).subscribe((res: any) => {
+        this.spinnerServerice.hide();
+
+        this.reloadComponent('Rule Create');
+
         console.log(res);
         this.stepperForm.reset();
         this.selectedQuery = null;
@@ -191,19 +225,70 @@ export class ChatBotStepperComponent implements OnInit {
         console.error('Error saving rule:', error);
       });
     }
+    else {
+      this.reloadComponent('Rule missing')
+
+    }
   }
 
-  reloadComponent(value:any){
-    
-    if(value=='must 5'){
-      this.toastermessage=true
-      this.AlterMsg="Please select atleast 5 phrases!"
+  reloadComponent(value: any) {
+
+    if (value == 'must 5') {
+      this.toastermessage = true
+      this.AlterMsg = "Please select atleast 5 phrases!"
       setTimeout(() => {
-        this.toastermessage=false
+        this.toastermessage = false
       }, 2000);
 
     }
-   
+    if (value == 'Rule Create') {
+      this.toastermessage = true
+      this.AlterMsg = "Rule Created Successfully!"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+    if (value == 'Intent Create') {
+      this.toastermessage = true
+      this.AlterMsg = "Intent Creaed Sucessfully!"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+    if (value == 'Response Create') {
+      this.toastermessage = true
+      this.AlterMsg = "Response Creaed Sucessfully!"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+    if (value == 'intent missing') {
+      this.toastermessage = true
+      this.AlterMsg = "intent is missing please add intent first !"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+    if (value == 'Response missing') {
+      this.toastermessage = true
+      this.AlterMsg = "Response is missing please add Response first !"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+    if (value == 'Rule  missing') {
+      this.toastermessage = true
+      this.AlterMsg = "Rule is missing!"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
   }
 
   closeToaster() {
