@@ -9,20 +9,23 @@ import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { environment } from 'src/environments/environment';
 import { ChatbotIdService } from 'src/app/services/chatBot_idService/chatbot-id.service';
 import { Router } from '@angular/router';
+import { Modal } from 'bootstrap';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-chat-bot',
   templateUrl: './chat-bot.component.html',
   styleUrls: ['./chat-bot.component.scss'],
   standalone: true,
-  imports: [CommonModule, SharedModule, ReactiveFormsModule, RouterModule, FormsModule,],
+  imports: [CommonModule, SharedModule, ReactiveFormsModule, RouterModule, FormsModule, NgxSpinnerModule],
 })
 export class ChatBotComponent implements OnInit {
   chatbots: any[] = []
   chatbotForm: FormGroup;
-  BotId: any
+  BotId: any;
+  isDeleteAction: boolean = false;
   constructor(private _botService: BotMonitoringService,
     private chatBotIdS: ChatbotIdService,
-    private route: Router,
+    private route: Router, private spinnerServerice: NgxSpinnerService,
     private formBuilder: FormBuilder, private headerService: HeaderService) {
     this.chatbotForm = new FormGroup({
       name: new FormControl(''),
@@ -48,25 +51,47 @@ export class ChatBotComponent implements OnInit {
     this.headerService.updateMessage(string)
   }
   viewChatbotDetails(botId: number): void {
+    this.spinnerServerice.show();
     this._botService.GetBotDetailsById(botId).subscribe((res: any) => {
+      this.spinnerServerice.hide();
       console.log('Chatbot Details: ', res);
+      this.chatbotForm.get('name')?.setValue(res.name);
+      this.chatbotForm.get('timeout')?.setValue(res.timeout);
     }, (error: any) => {
       console.error('Error fetching chatbot details: ', error);
     });
   }
-  DeleteChat(botId: any) {
-    
+  resetForm(){
+    this.chatbotForm.reset();
+  }
+  DeleteChat(botId: any, event:Event) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.isDeleteAction = true;
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
       const obj = new FormData();
       obj.append('bot_id', botId);
-      this._botService.DeleteChatBot(botId).subscribe((res: any) => {
+      this._botService.DeleteChatBot(obj).subscribe((res: any) => {
         console.log(res);
         this.chatbots = this.chatbots.filter((item: any) => item.bot_id !== botId);
       }, (error: any) => {
         console.error('Error deleting chatbot:', error);
       });
+    } else {
+      this.isDeleteAction = false;
     }
+  }
+  onCardBodyClick(botId: any) {
+    if (!this.isDeleteAction) {
+      this.viewChatbotDetails(botId);
+      const modalElement = document.getElementById('view-chatbot');
+      if (modalElement) {
+        const modal = new Modal(modalElement);
+        modal.show();
+      }
+    }
+    this.isDeleteAction = false;
   }
   saveChatbot(): void {
     if (this.chatbotForm.valid) {
@@ -105,17 +130,26 @@ export class ChatBotComponent implements OnInit {
     }
   }
 
-  shareValue(value: any) {
+  shareValue(value: any, event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.isDeleteAction = true;
     localStorage.setItem('bot_id', value.bot_id)
     this.chatBotIdS.setOption(value.bot_id)
     this.route.navigateByUrl('/bot-monitoring/components')
   }
-  shareValueStepper(value: any) {
+  shareValueStepper(value: any, event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.isDeleteAction = true;
     localStorage.setItem('bot_id', value.bot_id)
     this.chatBotIdS.setOption(value.bot_id)
     this.route.navigateByUrl('/bot-monitoring/chatBot-Rule')
   }
-  shareValueStory(value: any) {
+  shareValueStory(value: any, event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.isDeleteAction = true;
     localStorage.setItem('bot_id', value.bot_id)
     this.chatBotIdS.setOption(value.bot_id)
     this.route.navigateByUrl('/bot-monitoring/chatBot-Story')
