@@ -12,7 +12,6 @@ export const getMenuById = (id:number) => createSelector(getMenus, (menuModels:M
 //export const getMenuByParentId = (id:number) => createSelector(selectMenuModels, (menuModels:MenuModel[]) => menuModels.parentId );
 export const getEmarging = (emerging:string) => createSelector(getMenus, (menuModels:MenuModel[]) => (menuModels)? menuModels.filter((model) => model.emerging.includes(emerging)):ConstMenuModelState);
 export const getInSubEmarging = (startString:string, endString:string) => createSelector(getMenus, (menuModels:MenuModel[]) => {
-  //console.log(menuModels);
   if (menuModels) {
     return menuModels.filter((model) => model.emerging.includes(startString) && model.emerging.includes(endString));
   } else {

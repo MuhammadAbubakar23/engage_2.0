@@ -1,12 +1,9 @@
-
 <div class="container">
   <div class="d-flex justify-content-center" style="max-height: 650px;overflow-y: auto;">
     <div class="col-lg-6">
       <form [formGroup]="stepThreeForm" (ngSubmit)="stepThreeSubmit()" autocomplete="off" novalidate #formRef="ngForm">
         <div class="mt-3" formArrayName="answers">
           <div class="row" *ngFor="let answer of answers.controls; let i = index;" [formGroupName]="i">
-
-
             <div class="col-sm-10" style="position: relative; margin-top:10px">
               <div class="business-detail-wrap">
                 <div class="business-detail-wrap">
@@ -23,7 +20,6 @@
                 </div>
               </div>
             </div>
-
             <div *ngIf="i===0;else removebutton" class="col-sm-2">
               <button class="btn btn-primary" (click)="addAnswer()">+</button>
             </div>
@@ -33,7 +29,6 @@
             </div>
           </ng-template>
           </div>
-
         </div>
         <div class="mt-3">
           <button class="btn btn-success" cdkStepperPrevious>Previous</button>

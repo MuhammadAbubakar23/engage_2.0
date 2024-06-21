@@ -7,7 +7,6 @@
               <div class="col-md-3">
                 <div class="card">
                   <div class="card-body">
-          
                     <form
                       (ngSubmit)="onSubmit()"
                       enctype="multipart/form-data"
@@ -70,7 +69,6 @@
                       <div *ngIf="i === 0; else removebutton" class="col-sm-2 mt-1 pt-2">
                         <button class="btn btn-primary" (click)="addSentence()">+</button>
                       </div>
-          
                       <ng-template #removebutton>
                         <div class="col-sm-2 mt-1 pt-2">
                           <button
@@ -100,14 +98,11 @@
                   </div>
                   <div class="col-sm-2">
                    <button class="btn btn-primary" (click)="trainModel()">Train</button>
-          
                   </div>
                 </div>
               </div>
-          
             </div>
           </div>
-          
         </div>
         <div class="rightbar-expanded-wrapper">
             <template #rightcontainer>
@@ -116,4 +111,3 @@
     </div>
     <bot-right-sidebar></bot-right-sidebar>
 </div>
-

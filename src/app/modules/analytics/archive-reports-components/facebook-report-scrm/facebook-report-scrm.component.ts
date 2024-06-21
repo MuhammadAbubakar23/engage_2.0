@@ -22,7 +22,6 @@ maxEndDate:any
     private datepipe:DatePipe,
     private commanService:CommonDataService,
   ) { }
-
   ngOnInit(): void {
  let obj={title:'Facebook Report',url:'/analytics/facebook-report-scrm'};
  this.currentDate= new Date()
@@ -56,19 +55,16 @@ this.maxEndDate=this.currentDate.toISOString().split('T')[0]
     }
 this.commanService.GetScrmFacebookReport(obj).subscribe((res:any)=>{
   const facebookStats=res
-  console.log("Facebookreport===>",facebookStats)
 })
   }
   GetFortestingSCRM(){
     this.commanService.GetDatafortesting().subscribe((res:any)=>{
-      console.log("test response===>",res)
     })
   }
 getPublishinbehaviorGraph(){
   var chartDom = document.getElementById('publishinBehavior');
 var myChart = echarts.init(chartDom);
 var option;
-
 option = {
   xAxis: {
     type: 'category',
@@ -84,14 +80,12 @@ option = {
     }
   ]
 };
-
 option && myChart.setOption(option);
 }
 getAudienceGrowthGraph(){
   var chartDom = document.getElementById('audiencegrowth');
 var myChart = echarts.init(chartDom);
 var option;
-
 option = {
   color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
   title: {
@@ -274,16 +268,13 @@ option = {
     }
   ]
 };
-
 option && myChart.setOption(option);
 }
 getAudinceEngagementGraph()
 {
-
   var chartDom = document.getElementById('audienceEngagements');
   var myChart = echarts.init(chartDom);
   var option;
-  
   option = {
     color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
     title: {
@@ -466,14 +457,12 @@ getAudinceEngagementGraph()
       }
     ]
   };
-  
   option && myChart.setOption(option);
 }
 getPeopleWhoViewdGraph(){
   var chartDom = document.getElementById('peopleWhoviwed');
 var myChart = echarts.init(chartDom);
 var option;
-
 option = {
   title: {
     text: 'Stacked Line'
@@ -536,14 +525,12 @@ option = {
     }
   ]
 };
-
 option && myChart.setOption(option);
 }
 getReactionGraph(){
   var chartDom = document.getElementById('reactionGraph');
 var myChart = echarts.init(chartDom);
 var option;
-
 option = {
   xAxis: {
     type: 'category',
@@ -566,7 +553,6 @@ getPageReachablityGraph(){
   var chartDom = document.getElementById('pagereachability');
 var myChart = echarts.init(chartDom);
 var option;
-
 option = {
   xAxis: {
     type: 'category',
@@ -582,7 +568,6 @@ option = {
       smooth: true
     }
   ]
-  
 };
 option && myChart.setOption(option);
 }
@@ -590,7 +575,6 @@ getExternalSourcesGraph(){
   var chartDom = document.getElementById('main');
 var myChart = echarts.init(chartDom);
 var option;
-
 option = {
   tooltip: {
     trigger: 'item'
@@ -603,7 +587,6 @@ option = {
     {
       name: 'Access From',
       type: 'pie',
-
       avoidLabelOverlap: false,
       label: {
         show: false,
@@ -629,10 +612,6 @@ option = {
     }
   ]
 };
-
 option && myChart.setOption(option);
-
 }
 }
-
-

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-
 @Component({
   selector: 'app-customer-details-survey',
   templateUrl: './customer-details-survey.component.html',
@@ -24,14 +23,9 @@ export class CustomerDetailsSurveyComponent implements OnInit {
   otherFoumulauser:new FormControl('',Validators.required),
   timeduration2:new FormControl('',Validators.required),
   reason2:new FormControl('',Validators.required)
-
-
  })
-
   ngOnInit(): void {
-
   }
-
   save(){
     let data={
      "createdDate":this.morinageForm.value.date,
@@ -44,23 +38,17 @@ export class CustomerDetailsSurveyComponent implements OnInit {
      "duration":this.morinageForm.value.timeduration1,
      "reason":this.morinageForm.value.reason1,
      "otherFormula":this.morinageForm.value.otherFoumulauser,
-
-
     }
-  
     this.commondataService.AddSurvey(data).subscribe((res:any)=>{
-   console.log("Add Date Respons===>",res);
     this.toastermessage=true
     setTimeout(()=>{
       this.toastermessage=false
     },1000)
     this.morinageForm.reset()
     })
-   
   }
   closeToaster(){
     this.toastermessage=false
-
   }
   clearForm(){
     this.morinageForm.reset()

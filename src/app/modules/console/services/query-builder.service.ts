@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +14,6 @@ export class QueryBuilderService {
   getRuleEntityProperties = environment.links.console.getRuleEntityProperties
   consoleBaseUrl = environment.consoleBaseUrl;
   constructor(private http:HttpClient) { }
-
   GetAllRules() {
     return this.http.get(this.consoleBaseUrl + this.getAllRules)
   }
@@ -35,10 +33,8 @@ export class QueryBuilderService {
   }
   GetEntitiesRule() {
     return this.http.get(this.consoleBaseUrl + this.getEntitiesRule);
-
   }
   GetRuleEntityProperties() {
     return this.http.get(this.consoleBaseUrl + this.getRuleEntityProperties);
-
   }
 }

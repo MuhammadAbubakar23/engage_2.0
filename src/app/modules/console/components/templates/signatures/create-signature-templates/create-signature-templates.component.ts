@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
@@ -13,13 +12,10 @@ export class CreateSignatureTemplatesComponent implements OnInit {
   templateName!: string;
   subject!: string;
   editorContent!: string;
- 
   editorConfig = {
     // Add any desired configuration options here
   };
- 
   constructor(private formBuilder: FormBuilder , private commonService :CommonDataService , private router: Router) { }
-
   ngOnInit(): void {
     this.messageForm = this.formBuilder.group({
       templateName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
@@ -27,14 +23,12 @@ export class CreateSignatureTemplatesComponent implements OnInit {
       message: ['', Validators.required],
       templateType:['']
     });
-  
     const template = history.state.template; // Get the template value from the state
     if (template) {
       // Update the form values with the selected template
       this.templateName = template.templateName;
       this.subject = template.subject;
       this.editorContent = template.message;
-  
       // You can also set other form fields if needed
       this.messageForm.patchValue({
         templateName: this.templateName,
@@ -53,7 +47,6 @@ export class CreateSignatureTemplatesComponent implements OnInit {
       this.messageForm.patchValue({
         templateType: "Signature"
       });
-  
       const template = history.state.template; // Get the template value from the state
       if (template) {
         const updatedTemplate = {
@@ -62,11 +55,9 @@ export class CreateSignatureTemplatesComponent implements OnInit {
           subject: this.messageForm.value.subject,
           message: this.messageForm.value.message
         };
-  
         this.commonService.UpdateTemplate(updatedTemplate.id, updatedTemplate).subscribe(
           (response: any) => {
             // Handle the successful response after updating the template
-            // console.log('Template updated:', response);
             this.router.navigate(['/console/templates/signature']);
           },
           (error: any) => {
@@ -78,7 +69,6 @@ export class CreateSignatureTemplatesComponent implements OnInit {
         this.commonService.Addtemplate(this.messageForm.value).subscribe(
           (response: any) => {
             // Handle the successful response after creating a new template
-            // console.log('Template created:', response);
             this.router.navigate(['/console/templates/signature']);
           },
           (error: any) => {
@@ -89,11 +79,8 @@ export class CreateSignatureTemplatesComponent implements OnInit {
       }
     } else {
       // Handle form validation errors
-      // console.log('Form is invalid');
     }
   }
-  
-      
       cancelForm(): void {
          this.router.navigate(['/console/templates/signature']);
       }

@@ -10,7 +10,6 @@ import { MenuModel } from '../layouts/engage2/menu-state/menu.model';
 import { getEmargingEqual, getMenusLoading } from '../layouts/engage2/menu-state/menu.selectors';
 import { getPermissionBySlug } from '../layouts/engage2/permission-state/permission.selectors';
 import { SignalRService } from '../services/SignalRService/signal-r.service';
-
 @Component({
   selector: 'app-modules',
   templateUrl: './modules.component.html',
@@ -29,9 +28,7 @@ export class ModulesComponent implements OnInit {
     this.Permission$ = this.PermissionStore.select(getPermissionBySlug("_upur_"));
     //this.RoleMenu$ = this.menu$.pipe(share(), startWith(false));
   }
-
   ngOnInit() {
-    
     this.Tags = this.route.snapshot.data['tags'];
     this.MenuStore.dispatch(loadMenusList());
    // this.MenuStore.dispatch(updateMenusList());
@@ -42,15 +39,12 @@ export class ModulesComponent implements OnInit {
 // this.menu$ = this.MenuStore.select(getEmargingEqual('team_main_left_menu'));
 // this.loading$ = this.MenuStore.select(getMenusLoading);
 // this.MenuStore.dispatch(loadMenusList());
-
 // this.permission$ = this.PermissionStore.select(getPermissionBySlug("_upur_"));
 // this.loading$ = this.PermissionStore.select(getPermissionsLoading);
 // this.PermissionStore.dispatch(loadPermissionsLetters());
-
 //  this.menu$ = this.MenuStore.select(getEmargingEqual("role_main_left_menu"));
 //  this.loading$ = this.MenuStore.select(getMenusLoading);
 //  this.MenuStore.dispatch(updateMenusList());
-  
 //  this.permission$ = this.PermissionStore.select(getPermissionBySlug("_upur_"));
 //  this.loading$ = this.PermissionStore.select(getPermissionsLoading);
 //  this.PermissionStore.dispatch(updatePermissionsLetters());

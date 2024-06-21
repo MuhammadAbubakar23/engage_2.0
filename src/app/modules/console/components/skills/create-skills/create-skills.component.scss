@@ -1,13 +1,11 @@
 .escalation-setting-box {
     position: relative;
   }
-
   .dropdown-menu {
     width: 100%; /* Set the width to 100% */
     left: 0; /* Align with the left edge of the container */
     margin-top: 0; /* Remove default top margin to align with the container */
   }
-
   .dropdown-menu .dd-scroll {
     max-height: 400px; /* Set the maximum height for scrolling */
   }

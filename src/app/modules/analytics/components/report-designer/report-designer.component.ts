@@ -14,10 +14,8 @@ import { ShareddataService } from '../../services/shareddata.service';
 import { ActionsComponent } from '../actions/actions.component';
 import { ToastrComponent } from '../toastr/toastr.component';
 import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
-
 @Component({
   selector: 'app-report-designer',
-
   standalone: true,
   imports: [
     CommonModule,
@@ -70,14 +68,12 @@ export class ReportDesignerComponent implements OnInit {
   isGraph: boolean = false;
   Labels = [];
   graphLabels: any = [];
-
   selectedGraph = '';
   selectedLabels: any[] = [];
   selectedColumns: any[] = [];
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     responsive: false,
   };
-
   isVisual = false;
   isTabular = false;
   isPie = false;
@@ -141,7 +137,6 @@ export class ReportDesignerComponent implements OnInit {
     private closePanelservices:ClosePanelService,
     private resolver: ComponentFactoryResolver,
     private toggleService: ToggleService,
-
     private _hS: HeaderService
   ) { }
   ngOnInit(): void {
@@ -156,18 +151,14 @@ export class ReportDesignerComponent implements OnInit {
     this.sharedataservice.query$.subscribe((res: any) => {
       this.query = res;
     });
-
     this.sharedataservice.charttype$.subscribe((res: any) => {
       this.selectedGraph = res;
       this.selectGraph();
     });
-
     this.sharedataservice.data$.subscribe((newData: any) => {
-      console.log("newData", newData);
       if (newData !== "Initial Data") {
         this.isGraph = true;
       }
-
       this.sharedataservice.updateQuery(newData.query);
       this.visualizeData();
       if (newData.isStats == false) {
@@ -180,14 +171,11 @@ export class ReportDesignerComponent implements OnInit {
             this.selectedColumns
           );
         }
-
         this.dataKeys = newData.columnswithdtypes;
       } else {
         this.isStats = true;
-
         this.statsdataKeys = Object.keys(newData.table);
         this.tableData = this.transformDataObject(newData.table);
-
         if (this.tableData.length === 0) {
           this.toastermessage = 'No Data Found!';
           this.isToaster = true;
@@ -200,17 +188,13 @@ export class ReportDesignerComponent implements OnInit {
     this.sharedataservice.visual$.subscribe((res) => {
       if (res !== 'Initial Data') {
         this.finalGrapData = res.graph_data;
-
         const keys: string[] = [];
-
         Object.values(res.graph_data).forEach((values: any) => {
           values.forEach((item: { [key: string]: unknown }) => {
             keys.push(...Object.keys(item));
           });
         });
-
         const uniqueKeys: string[] = [...new Set(keys)];
-
         this.graphLabels = uniqueKeys;
         this.graphFormatData(res.graph_data);
       }
@@ -219,7 +203,6 @@ export class ReportDesignerComponent implements OnInit {
       this.refreshkeys();
       this.refreshLabels();
     });
-
     this.subscription = this.toggleService
       .getTogglePanel()
       .subscribe((msg3) => {
@@ -235,35 +218,26 @@ export class ReportDesignerComponent implements OnInit {
           localStorage.setItem('child', '');
         }
       });
-
       this.subscription = this.closePanelservices.receiveRightBarToggleValue().subscribe(res=>{
-        console.log("this.closeServices==>",res)
         this.showPanel = res;
       })
   }
-
   componentRef: any;
-
   @ViewChild('rightcontainer', { read: ViewContainerRef })
   rightcontainer!: ViewContainerRef;
-
   childComponentName!: any;
   public subscription!: Subscription;
   panelToggled: any;
-
   ngAfterViewInit() {
     this.rightcontainer?.clear();
-
     if (this.childComponentName != null) {
       this.showPanel = true;
       this.closePanelservices.sendLeftBarToggleValue(false)
       this.loadComponent(this.childComponentName);
     }
   }
-
   loadComponent(rightSideName: string) {
     let componentFactory = null;
-
     switch (rightSideName) {
       case 'contacts':
         componentFactory =
@@ -277,7 +251,6 @@ export class ReportDesignerComponent implements OnInit {
         break;
     }
   }
-
   graphFormatData(data: any) {
     const barChartData: ChartConfiguration<'bar'>['data'] = {
       labels: [],
@@ -291,12 +264,9 @@ export class ReportDesignerComponent implements OnInit {
       const d = values.map((obj: any) => Number(Object.values(obj)[0]));
       barChartData.datasets.push({ data: d, label: item });
     });
-
     this.barChartData = barChartData;
-
     return this.barChartData;
   }
-
   selectDataBase(): void {
     this.reportservice
       .selectDatabaseApi({ dbName: this.dbName, connection_name: this.DBC })
@@ -328,9 +298,7 @@ export class ReportDesignerComponent implements OnInit {
       },
       (error: any) => {
         // Error case
-        console.log(error);
         let errorMessage = 'An error occurred. Please try again later.';
-
         try {
           const errorObj = JSON.parse(error.error);
           if (errorObj && errorObj.error) {
@@ -339,7 +307,6 @@ export class ReportDesignerComponent implements OnInit {
         } catch (parseError) {
           console.error('Error parsing error response:', parseError);
         }
-
         this.toastermessage = errorMessage;
         this.isToaster = true;
         setTimeout(() => {
@@ -347,35 +314,25 @@ export class ReportDesignerComponent implements OnInit {
         }, 4000);
       }
     );
-
-
   }
-
   transformDataObject(dataObject: any): any[] {
     const rows: any[] = [];
     const keys = Object.keys(dataObject);
     const maxLength = Math.max(...keys.map((key) => dataObject[key].length));
-
     for (let i = 0; i < maxLength; i++) {
       const row: any = {};
-
       for (const key of keys) {
         row[key] = i < dataObject[key].length ? dataObject[key][i] : null;
       }
-
       rows.push(row);
     }
-
     return rows;
   }
-
   selectTable(): void {
-
     this.pageSize = 10
     this.startPage = 1;
     this.endPage = this.pageSize;
     this.page = 1;
-    console.log('selectTable', this.tableName, this.DBC, this.dbName);
     localStorage.setItem('selectedtable', this.tableName);
     if (
       this.dbName !== 'All DataBases' &&
@@ -394,14 +351,12 @@ export class ReportDesignerComponent implements OnInit {
           this.isGraph = true;
           this.isStats = false;
           this.tableData = this.transformDataObject(res.table);
-          console.log("Res===>", res);
           this.totalCount = res.total_count;
           if (res.last_records < this.pageSize) {
             this.endPage = res.total_count;
             this.limitValue = res.total_count;
           }
           this.finalTableData = this.tableData;
-
           if (this.tableData.length === 0) {
             this.toastermessage = 'No Data Available';
             this.isToaster = true;
@@ -417,7 +372,6 @@ export class ReportDesignerComponent implements OnInit {
         });
     }
   }
-
   limitData(): void {
     this.startPage = 0;
     this.endPage = this.pageSize;
@@ -434,7 +388,6 @@ export class ReportDesignerComponent implements OnInit {
       }
       this.isPaginated = true;
       this.tableData = this.transformDataObject(res.table);
-      console.log("Pagination Results", res)
     });
   }
   sortData(): void {
@@ -443,7 +396,6 @@ export class ReportDesignerComponent implements OnInit {
     const connection = localStorage.getItem('connection_name')
     this.reportservice.sortDataApi({ 'db': db, 'tableName': selectedtable, 'column': this.columnName, 'order': this.order, 'connection_name': connection }).subscribe((res: any) => {
       this.sharedataservice.updateData(res);
-
     });
   }
   incrementPage() {
@@ -454,19 +406,15 @@ export class ReportDesignerComponent implements OnInit {
       this.paginationApi()
     }
   }
-
   decrementPage() {
     if (this.startPage >= this.pageSize) {
       this.startPage -= this.pageSize;
       this.endPage -= this.pageSize;
       this.page -= 1,
-        console.log('decrementPage', this.startPage, this.endPage);
       this.paginationApi()
     }
   }
   paginationApi() {
-
-
     this.reportservice
       .paginatedDataApi({
         db: this.dbName,
@@ -482,7 +430,6 @@ export class ReportDesignerComponent implements OnInit {
         }
         this.isPaginated = true;
         this.tableData = this.transformDataObject(res.table);
-        console.log("Pagination Results", res)
       });
   }
   handleFilters(columntype: any, columnname: any): void {
@@ -537,7 +484,6 @@ export class ReportDesignerComponent implements OnInit {
         this.dataKeys = res.columnswithdtypes;
       });
   }
-
   visualizeData(): void {
     const db = localStorage.getItem('dbName');
     const connection = localStorage.getItem('connection_name');
@@ -578,7 +524,6 @@ export class ReportDesignerComponent implements OnInit {
       this.isPolar = false;
       this.isPie = true;
       this.isRadar = false;
-
       const labels1: string[] = this.barChartData.datasets.map(
         (dataset: any) => dataset.label
       );
@@ -601,7 +546,6 @@ export class ReportDesignerComponent implements OnInit {
         labels: labels1,
         datasets: datasets1,
       };
-
       this.pieChartData = output1;
     } else if (this.selectedGraph === 'Line Chart') {
       this.isBar = false;
@@ -609,7 +553,6 @@ export class ReportDesignerComponent implements OnInit {
       this.isLine = true;
       this.isPolar = false;
       this.isRadar = false;
-
       const labels2: string[] = this.barChartData.datasets.map(
         (dataset: any) => dataset.label
       );
@@ -632,7 +575,6 @@ export class ReportDesignerComponent implements OnInit {
         labels: labels2,
         datasets: datasets2,
       };
-
       this.lineChartData = output2;
     } else if (this.selectedGraph === 'Polar Area Chart') {
       this.isBar = false;
@@ -640,7 +582,6 @@ export class ReportDesignerComponent implements OnInit {
       this.isLine = false;
       this.isPolar = true;
       this.isRadar = false;
-
       const labels3: string[] = this.barChartData.datasets.map(
         (dataset: any) => dataset.label
       );
@@ -663,7 +604,6 @@ export class ReportDesignerComponent implements OnInit {
         labels: labels3,
         datasets: datasets3,
       };
-
       this.polarAreaChartData = output3;
     } else if (this.selectedGraph === 'Radar Chart') {
       this.isBar = false;
@@ -702,10 +642,8 @@ export class ReportDesignerComponent implements OnInit {
       this.isRadar = false;
     }
   }
-
   filterObjectByColumns(obj: any, columnNames: string[]): any {
     const filteredObj: any = {};
-
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         const filteredData: any = obj[key].filter((item: any) =>
@@ -714,10 +652,8 @@ export class ReportDesignerComponent implements OnInit {
         filteredObj[key] = filteredData;
       }
     }
-
     return filteredObj;
   }
-
   filterTableByColumns(arr: any[], columnNames: string[]): any[] {
     return arr.map((obj) => {
       const filteredObj: { [key: string]: any } = {};
@@ -737,7 +673,6 @@ export class ReportDesignerComponent implements OnInit {
       return filteredObj;
     });
   }
-
   selectLabel() {
     const filteredObject = this.filterObjectByColumns(
       this.finalGrapData,
@@ -753,7 +688,6 @@ export class ReportDesignerComponent implements OnInit {
     );
     this.tableData = filteredArray;
   }
-
   refreshkeys() {
     if (this.isPaginated) {
       this.selectedColumns = [];
@@ -763,8 +697,6 @@ export class ReportDesignerComponent implements OnInit {
       this.selectedColumns = [];
       this.tableData = this.finalTableData;
     }
-
-
   }
   refreshLabels() {
     this.selectedLabels = [];

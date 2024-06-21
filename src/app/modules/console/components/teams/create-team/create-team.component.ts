@@ -7,9 +7,6 @@ import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { TeamsService } from '../../../services/teams.service';
 import { AddTeamMembersComponent } from '../add-team-members/add-team-members.component';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-
-
-
 @Component({
   selector: 'app-create-team',
   standalone: true,
@@ -18,8 +15,6 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   styleUrls: ['./create-team.component.scss']
 })
 export class CreateTeamComponent implements OnInit {
-
-
   identity: number = 0;
   errormessage: any
   AlterMsg: any;
@@ -27,18 +22,11 @@ export class CreateTeamComponent implements OnInit {
   toastermessage: boolean = false
   constructor(private headerService: HeaderService, private _aRoute: ActivatedRoute, private formbuilder: UntypedFormBuilder,
     private commonService: CommonDataService, private teamservice: TeamsService, private router: Router) { }
-
-
-
   teamForm !: FormGroup
   currentid: any;
-
-
   ngOnInit() {
-    
     this.currentid = Number(this._aRoute.snapshot.paramMap.get('id'))
     this.commonService.TeamGetById(this.currentid).subscribe((res: any) => {
-      console.log("ResPonse", res);
       this.teamForm.patchValue({
         name: res.name,
         desc: res.desc,
@@ -47,22 +35,16 @@ export class CreateTeamComponent implements OnInit {
       })
     })
     // this._aRoute.params.subscribe((res) => {
-    //   
-    //   console.log("Params", res)
     //   this.currentid = Number(res);
     //   if (this.currentid !== 0 && this.currentid !== undefined) {
-
-
     //   }
     // })
     this.initializeForm();
     this.getTeamType();
     // this.getClient()
   }
-
   initializeForm() {
     this.teamForm = this.formbuilder.group({
-
       name: ['', Validators.required],
       desc: ['', [Validators.required]],
       timeZone: ['', Validators.required],
@@ -71,16 +53,11 @@ export class CreateTeamComponent implements OnInit {
       typeId: ['', Validators.required],
       // type: ['', Validators.required],
       // active:['1',Validators.required]
-
-
     });
-
   }
   getTeamType() {
-
     this.commonService.GetTeamType().subscribe((res: any) => {
       this.teamType = res
-      console.log("this.teamTyoe====>", this.teamType)
     })
   }
   closeToaster() {
@@ -88,12 +65,9 @@ export class CreateTeamComponent implements OnInit {
   }
   formData: any
   onSubmit() {
-    
     if (this.teamForm.valid) {
       // if(this.currentid !==0){
-
       // }
-
       if (this.currentid == 0) {
         this.formData = {
           typeId: Number(this.teamForm.value.typeId),
@@ -106,7 +80,6 @@ export class CreateTeamComponent implements OnInit {
         }
         this.commonService.AddTeam(this.formData).subscribe(
           (response: any) => {
-            console.log("Add Team Response:", response);
             this.reloadComponent('teamAdd');
             this.router.navigate(['/console/teams']);
           },
@@ -129,7 +102,6 @@ export class CreateTeamComponent implements OnInit {
         };
         this.commonService.UpdateTeam(this.formData).subscribe(
           (res: any) => {
-            console.log("Update Response:", res);
             this.router.navigate(['/console/teams']);
           },
           (error: any) => {
@@ -138,22 +110,16 @@ export class CreateTeamComponent implements OnInit {
           }
         );
       }
-
     } else {
-      console.log('Form is invalid:', this.teamForm);
       // Handle invalid form data
-
     }
   }
-
   private handleError(error: any) {
     this.errormessage = error.error.message;
     this.reloadComponent('error');
   }
-
   cancelForm() {
     this.router.navigate(['/console/teams']);
-
   }
   reloadComponent(value: any) {
     if (value == 'error') {
@@ -171,8 +137,4 @@ export class CreateTeamComponent implements OnInit {
       }, 2000)
     }
   }
-
 }
-
-
-

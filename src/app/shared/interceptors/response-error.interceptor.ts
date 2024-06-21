@@ -10,10 +10,8 @@ import {
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage/storage.service';
-
 @Injectable()
 export class ResponseErrorInterceptor implements HttpInterceptor {
-
   constructor(private router: Router, private ls:StorageService) { }
   //responseErro
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -22,10 +20,8 @@ export class ResponseErrorInterceptor implements HttpInterceptor {
     return next.handle(req)
     .pipe(
       catchError((error: HttpErrorResponse) => {
-        
         if (error.error instanceof ErrorEvent) {
           // A client-side error: Retrigger
-          // console.log('error event--->>>', error);
           errorMessage = this.handleError(error);        
           //return throwError(() => new Error(errorMessage));          
         }else{
@@ -33,17 +29,12 @@ export class ResponseErrorInterceptor implements HttpInterceptor {
           //if(error.status == 200 && error.ok === false) return error.message;
           // error.clone({body: this.jsonParser.parse(event.body)})
           // error.clone({body: null})
-          // console.log('error 22222 event--->>>', error);
           errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-          
         }
         return throwError(() => new Error(errorMessage));
-
       })
     )
-
   }
-
   private handleError = (error: HttpErrorResponse) : any => {
     if(error.status === 404){
       return this.handleNotFound(error);
@@ -54,7 +45,6 @@ export class ResponseErrorInterceptor implements HttpInterceptor {
     else if(error.status === 401) {
       return this.handleUnauthorized(error);
     }
-   
     return error.message;
   }
   private handleJsonResponse = (error: HttpErrorResponse): string => {
@@ -65,7 +55,6 @@ export class ResponseErrorInterceptor implements HttpInterceptor {
     this.router.navigate(['/404']);
     return error.message;
   }
-  
   private handleUnauthorized = (error: HttpErrorResponse) => {
     this.ls.clear();
     if(this.router.url === '/identity/login') {
@@ -76,14 +65,11 @@ export class ResponseErrorInterceptor implements HttpInterceptor {
       return error.message;
     }
   }
-
   private handleBadRequest = (error: HttpErrorResponse): string => {
     if(this.router.url === '/identity/register'){
       let message = '';
       const values = Object.values(error.error.errors);
-
       values.map( m => { message += m + '<br>'; })
-      
       return message.slice(0, -4);
     }
     else{
@@ -91,10 +77,8 @@ export class ResponseErrorInterceptor implements HttpInterceptor {
     }
   }
 }
-
 // map((event: HttpEvent<any>) => {
 //   if (event instanceof HttpResponse) {
-//   //  console.log('event--->>>', event);
 //   }
 //   return event;
 // }), 

@@ -6,21 +6,17 @@ import { BotService } from '../../services/bot.service';
 import { SentimentService } from '../../services/sentiment.service';
 import { ChatwithsentimentComponent } from './right-sidebar-components/chatwithsentiment/chatwithsentiment.component';
 import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
-
 @Component({
   selector: 'app-sentiment-analysis',
   templateUrl: './sentiment-analysis.component.html',
   styleUrls: ['./sentiment-analysis.component.scss']
 })
 export class SentimentAnalysisComponent implements OnInit, AfterViewInit {
-
   @ViewChild('rightcontainer', { read: ViewContainerRef })
   rightcontainer!: ViewContainerRef;
   panelToggled: any;
   showPanel = false;
-
   public subscription!: Subscription;
-
   selectedFile: File | null = null;
   response="";
   language=""
@@ -31,7 +27,6 @@ export class SentimentAnalysisComponent implements OnInit, AfterViewInit {
   public stepThreeForm: FormGroup;
   toastermessage: string = "";
   isToaster: boolean = false;
-
   constructor(private botService:BotService,private senService:SentimentService,private fb: FormBuilder,
     private toggleService: ToggleService,
     private closePanelServices:ClosePanelService,
@@ -43,10 +38,8 @@ export class SentimentAnalysisComponent implements OnInit, AfterViewInit {
   }
   ngOnInit(): void {
     this.senService.login().subscribe((token: any) => {
-      console.log(token, token.access);
       localStorage.setItem("token", token.access);
     });
-
     this.subscription = this.toggleService
       .getTogglePanel()
       .subscribe((msg3) => {
@@ -58,7 +51,6 @@ export class SentimentAnalysisComponent implements OnInit, AfterViewInit {
           this.loadComponent('', msg3);
         } else {
           this.showPanel = false;
-          
           this.rightcontainer?.clear();
           localStorage.setItem('child', '');
         }
@@ -67,7 +59,6 @@ export class SentimentAnalysisComponent implements OnInit, AfterViewInit {
         this.showPanel = res;
       })
   }
-
   ngAfterViewInit(): void {
     this.subscription = this.toggleService
       .getTogglePanel()
@@ -85,18 +76,14 @@ export class SentimentAnalysisComponent implements OnInit, AfterViewInit {
         }
       });
   }
-
   onFileChange(event: any) {
     this.selectedFile = event.target.files[0];
   }
-
   onSubmit() {
     if (this.selectedFile) {
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile, this.selectedFile.name);
       this.senService.fileUploadApi(formData).subscribe((res: any) => {
-        
-
         this.toastermessage = 'File uploaded successfully';
         this.isToaster = true;
         setTimeout(() => {
@@ -105,9 +92,7 @@ export class SentimentAnalysisComponent implements OnInit, AfterViewInit {
       })
     }
   }
-
   onEnterKeyPressed(event: any) {
-    console.log('Enter key pressed', this.inputText);
     this.response = "Positive";
     this.language = "English";
   }
@@ -117,30 +102,21 @@ export class SentimentAnalysisComponent implements OnInit, AfterViewInit {
       review: 'Please Select Review'
     });
   }
-
   get sentences(): FormArray {
     return this.stepThreeForm.get('sentences') as FormArray;
   }
-
   addSentence() {
     this.sentences.push(this.createSentenceControl());
   }
-
   removeSentence(index: number) {
     this.sentences.removeAt(index);
   }
   get labelName() {
     return this.stepThreeForm.get('review');
   }
-
   submitSenteces() {
-
     const data = { "data": this.stepThreeForm.value['sentences'] };
-
-    console.log("Submitting...", data);
     this.senService.postSentimentApi(data).subscribe((res) => {
-      console.log("Sentiment", res);
-
       this.toastermessage = 'Successfully Added';
       this.isToaster = true;
       setTimeout(() => {
@@ -148,12 +124,8 @@ export class SentimentAnalysisComponent implements OnInit, AfterViewInit {
       }, 4000);
     })
   }
-
   trainModel(): void {
-    console.log("Training", this.trainType);
     this.senService.trainingApi({ "text": this.trainType }).subscribe((res) => {
-      console.log("Sentiment", res);
-
       this.toastermessage = 'Trained successfully';
       this.isToaster = true;
       setTimeout(() => {
@@ -161,10 +133,8 @@ export class SentimentAnalysisComponent implements OnInit, AfterViewInit {
       }, 4000);
     })
   }
-
   loadComponent(leftSideName: string, rightSideName: string) {
     let componentFactory: any = null;
-
     switch (leftSideName || rightSideName) {
       case 'sentiment-analysis':
         componentFactory = this.resolver.resolveComponentFactory(

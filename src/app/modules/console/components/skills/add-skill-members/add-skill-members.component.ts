@@ -18,17 +18,11 @@ export class AddSkillMembersComponent implements OnInit {
   AlterMsg='Team Members Added Successfully'
   toastermessage:boolean=false
   constructor() { }
-  
   teamMemberForm=new FormGroup({
  numbersIds:new FormControl('',Validators.required)
   })
-
   ngOnInit(): void {
-
-
-
   }
-  
   teamMemberDetails:any[]=[
     {
       imageUrl:"../../../../../../assets/images/avatar-16.jpg",
@@ -39,7 +33,6 @@ export class AddSkillMembersComponent implements OnInit {
       imageUrl:"../../../../../../assets/images/avatar-11.jpg",
       name:"Ahmad Khan",
       id:2
-
     },
     {
       imageUrl:"../../../../../../assets/images/avatar-11.jpg",
@@ -65,24 +58,17 @@ export class AddSkillMembersComponent implements OnInit {
       imageUrl:"../../../../../../assets/images/avatar-10.jpg",
       name:"Abu Bakar",
       id:7
-
     }
   ]
-  
   save(){
-
     this.isSelectedIdstostring=this.isSelectedIds.toString();
     this.teamMemberForm.value.numbersIds=this.isSelectedIdstostring;
-    console.log("this.teamMemberForm===>",this.teamMemberForm.value.numbersIds)
     this.toastermessage=true
     setTimeout(() => {
       this.toastermessage=false
     }, 2000);
   }
-
-
 toggleSelectionIds(id:number):void{
-
   const index =this.isSelectedIds.findIndex((x:any)=>x==id)
   if(index >=0){
     this.isSelectedIds.splice(index,1)
@@ -90,11 +76,7 @@ toggleSelectionIds(id:number):void{
   else{
     this.isSelectedIds.push(id)
   }
- console.log("this.isSelectedIds==>",this.isSelectedIds)
-
 }
-
-
 closeToaster(){
   this.toastermessage=false
 }

@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-
 @Component({
   selector: 'app-connect-form',
   templateUrl: './connect-form.component.html',
   styleUrls: ['./connect-form.component.scss']
 })
 export class ConnectFormComponent implements OnInit {
-
-
   connectForm : UntypedFormGroup = new UntypedFormGroup({
     firstname : new UntypedFormControl(),
     lastname : new UntypedFormControl(),
@@ -22,11 +19,8 @@ export class ConnectFormComponent implements OnInit {
     roles : new UntypedFormControl(),
   });
   submitted = false;
-  
   constructor(private formbuilder : UntypedFormBuilder) { }
-
   ngOnInit() : void {
-
     this.connectForm = this.formbuilder.group({
       name: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       websiteurl: ['',[Validators.required]],
@@ -35,34 +29,23 @@ export class ConnectFormComponent implements OnInit {
       business: ['', [Validators.required]],
       information: ['', [Validators.required]],
     })
-   
   }
-
-  
   onSubmit() : void {
-    // console.log(this.connectForm.value);
   }
-
   isShow=false;
   isActive=false;
-
   ManageSkills(){
     this.isShow=!this.isShow;
   }
-
   ManageSkillsSwitch(){
     this.isActive=!this.isActive;
   }
-
   SupportChannelsControl = new UntypedFormControl(null, Validators.required);
   SupportChannels: string[] = ['Corporate Teams','Sales Teams', 'Add channels'];
-
   LanguagesControl = new UntypedFormControl(null, Validators.required);
   Languages: string[] = ['English', 'Urdu'];
-
   RolesControl = new UntypedFormControl(null, Validators.required);
   Roles: string[] = ['Agent', 'Accounts','Sales'];
-
   SkillsControl = new UntypedFormControl(null, Validators.required);
   Skills: string[] = ['English', 'Urdu'];
   /**
@@ -75,7 +58,6 @@ export class ConnectFormComponent implements OnInit {
     this.removeFirst(SupportChannels, cat);
     this.SupportChannelsControl.setValue(SupportChannels); // To trigger change detection
   }
-
   onCatRemovedLanguage(cat: string) {
     const Languages = this.LanguagesControl.value as string[];
     this.removeFirst(Languages, cat);
@@ -96,10 +78,7 @@ export class ConnectFormComponent implements OnInit {
    *
    * method logical code
    */
-  
-  
   private removeFirst(array: any[], toRemove: any): void {
-
     const index = array.indexOf(toRemove);
     if (index !== -1) {
       array.splice(index, 1);

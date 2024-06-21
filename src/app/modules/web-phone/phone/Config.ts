@@ -1,6 +1,5 @@
 import { PhoneTypes } from "./PhoneTypes";
 import { PhoneDialerService } from '../services/DialerService/phone-dialer.service';
-
 export class Config
 {
     public sipWs!: string;
@@ -19,21 +18,17 @@ export class Config
     public dialerService!: PhoneDialerService;
     //phone type
     public phoneType!: PhoneTypes;
-
     public addStunServer(serverIp: string, port: number)
     {
         this.stunServers.push(
             { urls: "stun:" + serverIp + ":" + port }
         );
     }
-
     public getStunServers()
     {
         return this.stunServers;
     }
-
     public getDialerService(){
       return this.dialerService;
     }
-
 }

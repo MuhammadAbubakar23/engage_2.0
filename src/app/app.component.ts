@@ -9,7 +9,6 @@ import { SkillIdsService } from './services/sendSkillIds/skill-ids.service';
 import { SignalRService } from './services/SignalRService/signal-r.service';
 import { SkillsService } from './services/Skills/skills.service';
 import { CommonDataService } from './shared/services/common/common-data.service';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,7 +17,6 @@ import { CommonDataService } from './shared/services/common/common-data.service'
 export class AppComponent {
   rulesGroupIds: any[]=[];
   uniqueWings: any[]=[];
-  
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHandler(event: Event) {
     if (!this.isInternalNavigation()) {
@@ -46,30 +44,23 @@ export class AppComponent {
     private sendRulesGroupIdsService: RulesGroupIdsService,
     private sendWings : GetWingsService
   ) {}
-
   remove(index: number) {
-    console.log(index);
     this.toasters = this.toasters.filter((v, i) => i !== index);
     //this.toasts.splice(index, 1);
   }
   ngOnInit() {
-
-
     this.activeChannel = window.location.origin;
-
     this.toaster.toaster$.subscribe((toaster) => {
       if (toaster !== null) {
         this.toasters = [toaster, ...this.toasters];
         setTimeout(() => this.toasters.pop(), toaster.delay || 6000);
       }
     });
-
     if (this.activeChannel == 'http://localhost:4200' || this.activeChannel == 'https://localhost:4200') {
       this.B_Block();
     } else {
       this.A_Block();
     }
-
   }
   A_Block() {
     if (localStorage.getItem('signalRConnectionId')) {
@@ -91,49 +82,7 @@ export class AppComponent {
     }
   }
   B_Block() {
-    
-    this.commonService.GetSkills([
-      18,
-      20,
-      22,
-      24,
-      26,
-      28,
-      30,
-      32,
-      34
-    ]).subscribe((skillNames: any) => {
-            
-      this.sendSkills.sendSkills(skillNames);
-      localStorage.setItem('skillSlug', skillNames[0]?.skilSlug)
-      // res?.loginResponse?.loginResponse?.roles.forEach((role:any) => {
-      var companyId = 651;
-      if (!this.rulesGroupIds.includes(skillNames[0].rules[0].groupId)) {
-        this.rulesGroupIds.push(skillNames[0].rules[0].groupId);
-      }
-      this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
-      skillNames.forEach((skill: any) => {
-        var groupName = skill.skillName + '_' + companyId;
-
-        this.signalRService.getConnectionState().subscribe((connected) => {
-            if (connected) {
-              this.signalRService.joinGroup(groupName);
-            }
-          });
-        var wingName = skill.wing;
-        if (!this.uniqueWings.includes(wingName)) {
-          this.uniqueWings.push(wingName);
-        }
-        this.sendWings.sendWings(this.uniqueWings.toString());
-        });
-      // });
-      
-      localStorage.setItem('defaultRuleIds', this.rulesGroupIds.toString());            
-      localStorage.setItem('defaultSkills', this.uniqueWings.toString());
-    });
-
     this.signalRService.reConnect();
-
     this.signalRService.removeTagDataListener();
     this.signalRService.addTagDataListener();
     this.signalRService.unRespondedCountDataListener();
@@ -147,5 +96,4 @@ export class AppComponent {
     // for new post
     // this.signalRService.updatePostList()
   }
-
 }

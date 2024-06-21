@@ -120,9 +120,6 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
       }
     }
     //this.pagingParams$ = paging;
-    // console.log(this.pagingParams$);
-    // console.log("paging");
-    // console.log(paging);
     //this.pagingParams$ = paging;
     this._fetchData();
   }
@@ -133,7 +130,6 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
    _fetchData() { //}: Observable<T>{ // (page: number, pagesize: number)  {
     
     if (typeof this.filter?.url === 'undefined') return;
-    // console.log(this.filter)
     // let pam:any = {
     //     pageno: this.filter.pageno
     //   , pagesize: this.filter.pagesize
@@ -204,7 +200,6 @@ this.spinerService.hide()
     //   // this.Data = next.data.item1;
     //   // this.total = next.data.item2 * this.pagesize
     // }, (error: any) => {
-    //   console.log(error);
     // });
   }
   perviousPage(pagingIndex:any){
@@ -226,10 +221,6 @@ if(page < this.totalPage + 1 ){
 }
   }
   procedure(params: any) {
-    console.log("sent val --- >>>", params.param)
-    console.log("added Data --- >>>", params.data)
-    console.log("I m func action");
-
     if (params.param.type == "rute") {
 
       this.navigateToPage(params);
@@ -241,10 +232,6 @@ if(page < this.totalPage + 1 ){
 
   }
   navigateToPage(params: any) {
-    console.log(params);
-    console.log(params.param.actionUrl);
-    console.log(this.identifire);
-    console.log(params.data[this.identifire]);
 
     this._router.navigate([params.param.actionUrl, params.data[this.identifire]]);
   }

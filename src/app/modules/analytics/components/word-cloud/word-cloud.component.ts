@@ -40,15 +40,11 @@ export class WordCloudComponent implements OnInit {
     private spinerS:NgxSpinnerService,
   ) { }
   ngOnChanges(){
-    
     this.item=this.wordCloud
     this.getWordCloud()
   }
   ngOnInit(): void {
- 
-
    this.getWordCloud()
- 
   }
   getWordCloud() {
          let obj={
@@ -71,13 +67,8 @@ export class WordCloudComponent implements OnInit {
               if(this.data!==null && this.data!==undefined){
                 this.data.push(obj);
               }
-             
-    
             });
-         
           }
-
         });
-    
       }
 }

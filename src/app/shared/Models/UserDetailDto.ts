@@ -6,7 +6,6 @@ export class UserDetailDto {
     customerDetails: CustomerDetailDto[] = [];
     secondaryProfiles: SecondaryProfileDto[] = [];
   }
-
   export class CustomerDetailDto {
     email: string = '';
     phoneNumber: string = '';
@@ -20,7 +19,6 @@ export class UserDetailDto {
     education: string = '';
     bloodGroup: string = '';
   }
-
   export class SecondaryProfileDto {
     customerUniqueId: string = '';
     platform: string = '';

@@ -24,7 +24,6 @@ export class ClosePanelService {
     this.totalCount.next(value)
   }
   public reciveTaotalCounts():Observable<any>{
-    
     return this.totalCount.asObservable()
   }
 }

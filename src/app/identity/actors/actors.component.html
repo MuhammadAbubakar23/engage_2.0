@@ -1,0 +1,228 @@
+<div class="console-landing-page console-body-wrapper" data-scrollbar="true" tabindex="-1"
+    style="overflow-y:auto; outline: none;">
+    <aside>
+        <div class="circlebg topleft"></div>
+        <div class="circlebg bottomright">
+            <p></p>
+        </div>
+   </aside>
+    <div class="scroll-content">
+        <div class="p-4">
+            <div class="landing-page-header">
+                <div class="row justify-content-between">
+                    <div class="col-lg-8 col-md-8">
+                        <h2 class="radical heading-large">Enteract Engage</h2>
+                        <h4 class="radical heading">Workspace to run your application effortlessly</h4>
+                        <p class="text">From onboarding to reporting, orchestrating workflows across channels is
+                            centralized on the new platform.</p>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <img style="float: right;" src="../../../../assets/images/console-landing.svg" alt="-" height="140">
+                    </div>
+                </div>
+            </div>
+            <h4 class="darkblue heading">
+                <a href="javascript:;">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-sm-center ps-0">
+                            <span class="iconButton large" style="margin-right: 5px;" >
+                                <app-avatar-photo [photoUrl]="imagename" [name]="fullName"></app-avatar-photo> 
+                            </span>
+                            <div class="ms-2 me-auto coal">
+                                <div class="fw-bold night">{{fullName}}</div>
+                                {{email}}
+                            </div>
+                        </li>
+                    </ul>
+                </a>
+            </h4>
+            <div class="row console-landing-shortcuts h-100">
+                <!-- <div class="col-lg-4 h-100">
+                    <ul class="full_dropdown p-0 text-small user-profile-dropdown shadow h-100"
+                        aria-labelledby="dropdownUser1">
+                        <li class="user-dropdown-header dropdown-header">
+                            <ul>
+                                <li>
+                                    <a  class="link-dark text-decoration-none" id="dropdownUser1"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="https://github.com/mdo.png" class="profile-pic rounded-circle"
+                                            alt="mdo" width="50" height="50">
+                                        <span class="online-n-offline on-off-btn"></span>
+                                        <div class="name-n-info lh-sm">
+                                            <h6 class="night m-0 text">Syed Salman Khan</h6>
+                                            <small>@salmankhan</small>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <button class="iconButton medium iconHover">
+                                <i class="fal fa-cog"></i>
+                            </button>
+                        </li>
+                        <li class="user-dropdown-body dropdown-body">
+                            <ul>
+                                <li>
+                                    <a class="dropdown-item" >
+                                        <div class="form-check theme-check w-100 p-0">
+                                            <input class="form-check-input float-end" type="radio"
+                                                name="userScheduleCheck" id="userScheduleCheck2" checked="">
+                                            <label class="form-check-label d-flex align-items-center"
+                                                for="userScheduleCheck2">
+                                                <span class="btn iconButton iconHover medium radicalBg me-1 mt-2">
+                                                    <i class="fal fa-bell-slash"></i>
+                                                </span>
+                                                <div class="ms-2 me-auto coal lh-1">
+                                                    <h6 class="night mb-0 text">Out of office</h6>
+                                                    <small class="small-text">Mute notifications and unassign new
+                                                        messages</small>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" >
+                                        <div class="form-check theme-check w-100 p-0">
+                                            <input class="form-check-input float-end" type="radio"
+                                                name="userScheduleCheck" id="userScheduleCheck3">
+                                            <label class="form-check-label d-flex align-items-center"
+                                                for="userScheduleCheck3">
+                                                <span class="btn iconButton iconHover medium mangoTransBg me-1 mt-1">
+                                                    <i class="fal fa-moon"></i>
+                                                </span>
+                                                <div class="ms-2 me-auto coal lh-1">
+                                                    <h6 class="night mb-0 text">Do not disturb</h6>
+                                                    <small class="small-text">Mute notifications</small>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex" >
+                                        <span class="btn iconButton iconHover medium mangoTransBg me-1 mt-2">
+                                            <i class="fal fa-clock"></i>
+                                        </span>
+                                        <div class="ms-2 me-auto coal lh-1">
+                                            <h6 class="night mb-1 text">Schedule</h6>
+                                            <div class="d-flex w-100">
+                                                <input class="form-control form-control-sm small-text"
+                                                    placeholder="6:00 PM" aria-label=".form-control-sm example">
+                                                <span class="p-1 small-text">to</span>
+                                                <input class="form-control form-control-sm small-text"
+                                                    placeholder="6:00 AM" aria-label=".form-control-sm example">
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div> -->
+                    <div class="col-lg-12 row justify-content-between">
+                        <div class="col-lg-3 col-md-4 col-sm-6 shortcut-box">
+                            <div class="card-body h-100 p-3 shadow d-flex iceBg">
+                                <button class="iconButton medium">
+                                    <i class="far fa-inbox"></i>
+                                </button>
+                                <div class="ms-3">
+                                    <h5 class="night mb-0 mt-0 lh-base text fw-bold">Manage inboxes</h5>
+                                    <p class="coal lh-base small-text">Add your work email as a personal inbox to manage
+                                        in enteract.</p>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 shortcut-box">
+                            <div class="card-body h-100 p-3 shadow d-flex iceBg">
+                                <button class="iconButton medium">
+                                    <i class="far fa-tree-palm"></i>
+                                </button>
+                                <div class="ms-3">
+                                    <h5 class="night mb-0 mt-0 lh-base text fw-bold">Set a vacation responder</h5>
+                                    <p class="coal lh-base small-text">Save auto-replies and set timing so you can
+                                        vacation worry-free</p>
+                               
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 shortcut-box">
+                            <div class="card-body h-100 p-3 shadow d-flex iceBg">
+                                <button class="iconButton medium">
+                                    <i class="far fa-tachometer-fastest"></i>
+                                </button>
+                                <div class="ms-3">
+                                    <h5 class="night mb-0 mt-0 lh-base text fw-bold">Manage message templates</h5>
+                                    <p class="coal lh-base small-text">Save templates to common question and respond
+                                        faster to message.</p>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 shortcut-box">
+                            <div class="card-body h-100 p-3 shadow d-flex iceBg">
+                                <button class="iconButton medium">
+                                    <i class="far fa-leaf"></i>
+                                </button>
+                                <div class="ms-3">
+                                    <h5 class="night mb-0 mt-0 lh-base text fw-bold">Manage signatures</h5>
+                                    <p class="coal lh-base small-text">Create custom signatures for replying from
+                                        different inboxes.</p>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <!-- <h4 class="heading darkblue mt-5 mb-3">Get the most out of interact</h4>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="h-100 d-flex">
+                        <button class="iconButton medium skyBg">
+                            <i class="far fa-tag"></i>
+                        </button>
+                        <div class="ms-3">
+                            <h5 class="night mb-0 mt-0 lh-base text fw-bold">Organize your work with tags</h5>
+                            <p class="coal lh-base small-text">Private tags replace personal folders. Pin tags to your
+                                workspace to easily find what you need.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="h-100 d-flex">
+                        <button class="iconButton medium darkblueBg">
+                            <i class="far fa-cog"></i>
+                        </button>
+                        <div class="ms-3">
+                            <h5 class="night mb-0 mt-0 lh-base text fw-bold">Improve your productivity in Front</h5>
+                            <p class="coal lh-base small-text">Snooze messages, control your notifications, and make
+                                your work day work for you.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="h-100 d-flex">
+                        <button class="iconButton medium cherryBg">
+                            <i class="far fa-share-alt"></i>
+                        </button>
+                        <div class="ms-3">
+                            <h5 class="night mb-0 mt-0 lh-base text fw-bold">All about shared inboxes</h5>
+                            <p class="coal lh-base small-text">Learn how to take action in shared inboxes and improve
+                                your team's efficiency.</p>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+        <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1295px; transform: translate3d(0px, 0px, 0px);">
+        </div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-y" style="display: block;">
+        <div class="scrollbar-thumb scrollbar-thumb-y"
+            style="height: 304.024px; transform: translate3d(0px, 0px, 0px);">
+        </div>
+    </div> -->
+</div>

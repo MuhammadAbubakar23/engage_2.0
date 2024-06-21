@@ -26,7 +26,6 @@ import { RightNavService } from 'src/app/services/RightNavService/RightNav.servi
 import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard';
-
 @Component({
   selector: 'app-inbox-responder',
   templateUrl: './inbox-responder.component.html',
@@ -37,23 +36,18 @@ export class InboxResponderComponent implements OnInit {
     read: ViewContainerRef,
   })
   target!: ViewContainerRef;
-
   @ViewChild('rightcontainer', {
     read: ViewContainerRef,
   })
   rightcontainer!: ViewContainerRef;
-
   @Output() someEvent = new EventEmitter<string>();
-
   componentName!: any;
   oldComponent: any;
   childComponentName!: any;
   public subscription!: Subscription;
   panelToggled: any;
   showPanel = false;
-
   assignedProfile = localStorage.getItem('assignedProfile')
-
   constructor(
     private resolver: ComponentFactoryResolver,
     private route: ActivatedRoute,
@@ -62,7 +56,6 @@ export class InboxResponderComponent implements OnInit {
     private toggleService: ToggleService,
     private closePanelservices: ClosePanelService
   ) { }
-
   ngOnInit(): void {
     this.subscription = this.closePanelservices.receiveRightBarToggleValue().subscribe(res => {
       this.showPanel = res;
@@ -70,15 +63,12 @@ export class InboxResponderComponent implements OnInit {
     // window.onbeforeunload = () => this.onBeforeUnload();
     window.addEventListener('beforeunload', this.onBeforeUnload);
     this.route.params.subscribe((routeParams) => {
-
       if (routeParams['channel'] != undefined && routeParams['channel'] != "undefined") {
         this.componentName = (routeParams['channel']);
       }
       this.childComponentName = routeParams['ticket'];
       let ffff = this.componentName + this.childComponentName;
-
       this.rightNavService.updateChildComponent(this.childComponentName);
-
       localStorage.setItem('child', this.childComponentName);
       if (this.childComponentName != null) {
         this.childComponentName = localStorage.getItem('child');
@@ -86,17 +76,11 @@ export class InboxResponderComponent implements OnInit {
       if (this.componentName != undefined) {
         localStorage.setItem('parent', this.componentName);
       }
-
       this.sharedService.updateMessage(this.componentName);
-
       this.target?.clear();
       this.rightcontainer?.clear();
-      // console.log("Locaded component name is=====>",localStorage.getItem('parent'));
-      // console.log("Old Component====>",this.oldComponent);
       if (this.oldComponent != undefined) {
-
         if (localStorage.getItem('parent') != undefined && localStorage.getItem('parent') != this.oldComponent) {
-
           this.loadComponent(this.componentName, '');
           this.oldComponent = this.componentName;
         }
@@ -110,9 +94,7 @@ export class InboxResponderComponent implements OnInit {
         this.loadComponent('', this.childComponentName);
       }
     });
-
     this.subscription = this.toggleService.getTogglePanel().subscribe(msg3 => {
-
       if (msg3) {
         this.rightcontainer?.clear();
         localStorage.setItem('child', msg3)
@@ -125,9 +107,7 @@ export class InboxResponderComponent implements OnInit {
         this.rightcontainer?.clear();
         localStorage.setItem('child', '')
       }
-
       // this.subscription = this.toggleService.getDispositionForm().subscribe(value=>{
-
       //   if(value){
       //     this.target?.clear();
       //     this.loadComponent(value,'')
@@ -135,25 +115,21 @@ export class InboxResponderComponent implements OnInit {
       // })
     });
   }
-
   // private onBeforeUnload(): void {
   //   
   //   this.responderGuard.setCanDeactivateFlag(false)
   // }
   private reloadConfirmationMessage = 'Are you sure you want to reload?';
-
   private onBeforeUnload(event: BeforeUnloadEvent): void {
     if (!this.canReload()) {
       event.preventDefault();
       event.returnValue = this.reloadConfirmationMessage;
     }
   }
-
   private canReload(): boolean {
     // Add your condition here
     // Return true if the reload is allowed or false if it should be prevented
     // For example:
-
     if (
       localStorage.getItem('assignedProfile') == null ||
       localStorage.getItem('assignedProfile') == '' ||
@@ -163,29 +139,22 @@ export class InboxResponderComponent implements OnInit {
     } else {
       return confirm('Are you sure you want to reload?');
     }
-
   }
-
   ngOnDestroy(): void {
-
     // window.onbeforeunload = null;
     window.removeEventListener('beforeunload', this.onBeforeUnload);
   }
-
   ngAfterViewInit() {
-
     this.target?.clear();
     this.rightcontainer?.clear();
     this.oldComponent = this.componentName;
     this.loadComponent(this.componentName, '');
-    // console.log("Old Component====>",this.oldComponent);
     if (this.childComponentName != null) {
       this.showPanel = true;
       this.closePanelservices.sendLeftBarToggleValue(false)
       this.loadComponent('', this.childComponentName);
     }
     this.subscription = this.toggleService.getDispositionForm().subscribe(value => {
-
       if (value == 'disposition-form') {
         this.target?.clear();
         this.loadComponent(value, '')
@@ -197,11 +166,8 @@ export class InboxResponderComponent implements OnInit {
       }
     })
   }
-
   loadComponent(leftSideName: string, rightSideName: string) {
-
     let componentFactory = null;
-
     switch (leftSideName || rightSideName) {
       case 'Facebook':
         this.showPanel = false;
@@ -210,14 +176,12 @@ export class InboxResponderComponent implements OnInit {
           this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         break;
-
       case 'Instagram':
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
-
         break;
       case 'PlayStore':
         this.showPanel = false;
@@ -225,7 +189,6 @@ export class InboxResponderComponent implements OnInit {
         componentFactory =
           this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
-
         break;
       case 'Twitter':
         this.showPanel = false;
@@ -285,13 +248,11 @@ export class InboxResponderComponent implements OnInit {
         );
         this.target?.createComponent(componentFactory);
         break;
-
       case 'ticket':
         componentFactory =
           this.resolver.resolveComponentFactory(ResponderTicketsComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
-
       case 'contacts':
         componentFactory =
           this.resolver.resolveComponentFactory(ResponderContactsComponent);
@@ -307,7 +268,6 @@ export class InboxResponderComponent implements OnInit {
           this.resolver.resolveComponentFactory(ResponderCreateNewComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
-
       case 'task':
         componentFactory = this.resolver.resolveComponentFactory(ResponderTaskComponent);
         this.rightcontainer?.createComponent(componentFactory);
@@ -348,7 +308,6 @@ export class InboxResponderComponent implements OnInit {
           this.resolver.resolveComponentFactory(ResponderScheduleComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
-
       case 'complaint-ticket-panel':
         componentFactory = this.resolver.resolveComponentFactory(
           ResponderComplaintTicketPanelComponent
@@ -385,7 +344,6 @@ export class InboxResponderComponent implements OnInit {
         );
         this.target?.createComponent(componentFactory);
         break;
-
       default:
         componentFactory = this.resolver.resolveComponentFactory(
           ChannelComponent

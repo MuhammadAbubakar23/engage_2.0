@@ -22,8 +22,9 @@ import { ModulesService } from 'src/app/shared/services/module-service/modules.s
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { Location } from '@angular/common';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
-import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
-
+import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
+import { ConnectionIdService } from 'src/app/services/connectionId/connection-id.service';
+import { InsertTagInProfileFeedDto } from 'src/app/shared/Models/InsertTagaInProfileFeedDto';
 @Component({
   selector: 'responder-header',
   templateUrl: './responder-header.component.html',
@@ -44,22 +45,16 @@ export class ResponderHeaderComponent implements OnInit {
   // EmailUnrespondedCmntCountByCustomer: number = 0;
   // YoutubeUnrespondedCmntCountByCustomer: number = 0;
   // LinkedInUnrespondedCmntCountByCustomer: number = 0;
-
   // FbUnrespondedMsgCountByCustomer: number = 0;
   // TwitterUnrespondedMsgCountByCustomer: number = 0;
   // InstaUnrespondedMsgCountByCustomer: number = 0;
-
   // TwitterUnrespondedMentionCountByCustomer: number = 0;
-
   // totalFbUnrespondedCountByCustomer: number = 0;
   // totalInstaUnrespondedCountByCustomer: number = 0;
   // totalTwitterUnrespondedCountByCustomer: number = 0;
-
   headerDto = new HeaderDto();
-
   filterDto = new FiltersDto();
   assignQuerryDto = new AssignQuerryDto();
-
   facebookTab = false;
   instagramTab = false;
   whatsappTab = false;
@@ -71,7 +66,6 @@ export class ResponderHeaderComponent implements OnInit {
   webChatTab = false;
   linkedInTab = false;
   playStoreTab = false;
-
   facebookComment = false;
   facebookMessage = false;
   instagram = false;
@@ -85,7 +79,6 @@ export class ResponderHeaderComponent implements OnInit {
   webChat = false;
   linkedIn = false;
   playStore = false;
-
   facebookId: any;
   instagramId: any;
   whatsappId: any;
@@ -97,16 +90,54 @@ export class ResponderHeaderComponent implements OnInit {
   webChatId: any;
   linkedInId: any;
   playStoreId: any;
-
   platformsArray: any[] = [];
   platformsArrayForMessages: any[] = [];
-
   public Subscription!: Subscription;
-
   currentUrl: string = '';
   flag: string = '';
   flag2: string = '';
   teamPermissions: any;
+
+  unrespondedCount: number = 0;
+  userInfo: any;
+  activeChannel: string = '';
+  finalStatus: any[] = [];
+  profileStatus: any[] = [];
+  baseURL: string = '';
+  KEBaseUrl: boolean = false;
+  wings = this.getWing.wings;
+  draftDto = new DraftDto();
+  assignedProfile = localStorage.getItem('assignedProfile');
+  platform: any;
+  userId: string = '';
+  userName: any;
+  profilePic: any;
+  queryType = this.fetchposttype.postType;
+  totalCount: any;
+  id = this.fetchId.id;
+  profileId: any;
+  FacebookData: any;
+  InstagramData: any;
+  TwitterData: any;
+  YoutubeData: any;
+  EmailData: any;
+  OfficeMailData: any;
+  WhatsappData: any;
+  SmsData: any;
+  WebchatData: any;
+  LinkedinData: any;
+  AgentsTeamList: any;
+  AgentDetails: any;
+  searchText: string = '';
+  ActiveAgents: any[] = [];
+  markAsCompleteDto = new MarkAsCompleteDto();
+  showAgentsList: boolean = false;
+  showMoreOptions: boolean = false;
+  customerProfileId = Number(localStorage.getItem('profileId'));
+  AlterMsg: any;
+  toastermessage = false;
+  commentStatusDto = new CommentStatusDto();
+  itemsToBeUpdated: any[] = [];
 
   constructor(
     private fetchId: FetchIdService,
@@ -128,18 +159,9 @@ export class ResponderHeaderComponent implements OnInit {
     private queryStatusService: QueryStatusService,
     private location: Location,
     private getWing: GetWingsService,
-    private getRulesGroupIdsService : RulesGroupIdsService
+    private getSkillSlug: SkillslugService,
+    private getConnectionId: ConnectionIdService
   ) {}
-  unrespondedCount: number = 0;
-  userInfo: any;
-  activeChannel: string = '';
-  finalStatus: any[] = [];
-  profileStatus: any[] = [];
-  baseURL: string = '';
-  KEBaseUrl: boolean = false;
-
-  wings = this.getWing.wings;
-
   ngOnInit(): void {
     this.baseURL = window.location.origin;
     if (this.baseURL == 'https://keportal.enteract.live') {
@@ -149,7 +171,6 @@ export class ResponderHeaderComponent implements OnInit {
     this.flag2 = this._route.url.split('/')[3];
     this.activeChannel = this._route.url.split('/')[5];
     this.currentUrl = this._route.url;
-
     this.Subscription = this.userInfoService.userInfo$.subscribe((userInfo) => {
       if (userInfo != null) {
         this.userInfo = userInfo;
@@ -162,11 +183,9 @@ export class ResponderHeaderComponent implements OnInit {
         // localStorage.setItem('unrespondedCount', this.userInfo.userId);
       }
     });
-
     if (this.userInfo == undefined) {
       this.userInfo = this.stor.retrive('userInfo', 'O').local;
     }
-
     const menu = this.stor.retrive('Tags', 'O').local;
     menu.forEach((item: any) => {
       if (item.name == 'Final Status') {
@@ -192,7 +211,6 @@ export class ResponderHeaderComponent implements OnInit {
         });
       }
     });
-
     this.teamPermissions = this.store.retrive('permissionteam', 'O').local;
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
       (tooltipNode) => new Tooltip(tooltipNode)
@@ -200,7 +218,6 @@ export class ResponderHeaderComponent implements OnInit {
       {
         trigger: 'hover',
       };
-
     this.Subscription = this.updateMessagesService
       .receiveMessage()
       .subscribe((res) => {
@@ -214,7 +231,6 @@ export class ResponderHeaderComponent implements OnInit {
           });
         }
       });
-
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
@@ -230,7 +246,6 @@ export class ResponderHeaderComponent implements OnInit {
           }
         }
       });
-
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
@@ -244,7 +259,6 @@ export class ResponderHeaderComponent implements OnInit {
           }
         }
       });
-
     this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
@@ -257,83 +271,68 @@ export class ResponderHeaderComponent implements OnInit {
         }
       });
   }
-
-  draftDto = new DraftDto();
-  assignedProfile = localStorage.getItem('assignedProfile');
-
   updatevalue(id: any, platform: any) {
     if (platform == 'WhatsApp' && this.WhatsappData?.List.length > 0) {
       this.commonService.GetProfileDetails(id).subscribe((res: any) => {
         this.profileId = this.WhatsappData?.id;
-
         this.assignQuerry(id, platform);
       });
     }
     if (platform == 'Facebook' && this.FacebookData?.List.length > 0) {
       this.commonService.GetProfileDetails(id).subscribe((res: any) => {
         this.profileId = res?.id;
-
         this.assignQuerry(id, platform);
       });
     }
     if (platform == 'Instagram' && this.InstagramData?.List.length > 0) {
       this.commonService.GetProfileDetails(id).subscribe((res: any) => {
         this.profileId = res?.id;
-
         this.assignQuerry(id, platform);
       });
     }
     if (platform == 'Twitter' && this.TwitterData?.List.length > 0) {
       this.commonService.GetProfileDetails(id).subscribe((res: any) => {
         this.profileId = res?.id;
-
         this.assignQuerry(id, platform);
       });
     }
     if (platform == 'LinkedIn' && this.LinkedinData?.List.length > 0) {
       this.commonService.GetProfileDetails(id).subscribe((res: any) => {
         this.profileId = res?.id;
-
         this.assignQuerry(id, platform);
       });
     }
     if (platform == 'WebChat' && this.WebchatData?.List.length > 0) {
       this.commonService.GetProfileDetails(id).subscribe((res: any) => {
         this.profileId = res?.id;
-
         this.assignQuerry(id, platform);
       });
     }
     if (platform == 'SMS' && this.SmsData?.List.length > 0) {
       this.commonService.GetProfileDetails(id).subscribe((res: any) => {
         this.profileId = res?.id;
-
         this.assignQuerry(id, platform);
       });
     }
     if (platform == 'Email' && this.EmailData?.List.length > 0) {
       this.commonService.GetProfileDetails(id).subscribe((res: any) => {
         this.profileId = res?.id;
-
         this.assignQuerry(id, platform);
       });
     }
     if (platform == 'OfficeEmail' && this.OfficeMailData?.List.length > 0) {
       this.commonService.GetProfileDetails(id).subscribe((res: any) => {
         this.profileId = res?.id;
-
         this.assignQuerry(id, platform);
       });
     }
     if (platform == 'Youtube' && this.YoutubeData?.List.length > 0) {
       this.commonService.GetProfileDetails(id).subscribe((res: any) => {
         this.profileId = res?.id;
-
         this.assignQuerry(id, platform);
       });
     }
   }
-
   assignQuerry(id: any, platform: any) {
     this.assignQuerryDto = {
       userId: Number(localStorage.getItem('agentId')),
@@ -341,9 +340,8 @@ export class ResponderHeaderComponent implements OnInit {
       agentIds: 'string',
       platform: platform,
       wings: this.wings,
-      skillSlug: localStorage.getItem('skillSlug') || ''
+      skillSlug: '',
     };
-
     if (this.assignQuerryDto != null) {
       this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(
         (res: any) => {
@@ -356,10 +354,8 @@ export class ResponderHeaderComponent implements OnInit {
               '/responder/' +
               platform
           );
-
           this.fetchId.setPlatform(platform);
           this.fetchId.setOption(id);
-
           localStorage.setItem('profileId', this.profileId);
         },
         (_error) => {
@@ -368,7 +364,6 @@ export class ResponderHeaderComponent implements OnInit {
       );
     }
   }
-
   // minimizeChat() {
   //   if (this.fetchId.platform == 'Facebook') {
   //     this.totalCount = this.FbUnrespondedCmntCountByCustomer;
@@ -394,14 +389,12 @@ export class ResponderHeaderComponent implements OnInit {
   //   ) {
   //     this.totalCount = this.EmailUnrespondedCmntCountByCustomer;
   //   }
-
   //   if (this.fetchId.platform == 'Youtube') {
   //     this.totalCount = this.YoutubeUnrespondedCmntCountByCustomer;
   //   }
   //   if (this.fetchId.platform == 'LinkedIn') {
   //     this.totalCount = this.LinkedInUnrespondedCmntCountByCustomer;
   //   }
-
   //   this.draftDto = {
   //     userId: this.userId,
   //     userName: this.userName,
@@ -412,27 +405,6 @@ export class ResponderHeaderComponent implements OnInit {
   //   };
   //   this._sharedService.sendUserInfo(this.draftDto);
   // }
-
-  platform: any;
-  userId: string = '';
-  userName: any;
-  profilePic: any;
-  queryType = this.fetchposttype.postType;
-  totalCount: any;
-  id = this.fetchId.id;
-  profileId: any;
-
-  FacebookData: any;
-  InstagramData: any;
-  TwitterData: any;
-  YoutubeData: any;
-  EmailData: any;
-  OfficeMailData: any;
-  WhatsappData: any;
-  SmsData: any;
-  WebchatData: any;
-  LinkedinData: any;
-
   // getSecondaryProfileDetails(id: string, platform: string) {
   //   this.filterDto = {
   //     user: id,
@@ -460,7 +432,6 @@ export class ResponderHeaderComponent implements OnInit {
   //   this.platform = res.List[0].platform;
   //   this.postType = res.List[0].comments[0].contentType;
   //   this.profileId = res.List[0].user.id;
-
   //   this.platformsArray = [];
   //   this.facebookComment = false;
   //   this.instagram = false;
@@ -474,10 +445,8 @@ export class ResponderHeaderComponent implements OnInit {
   //   this.linkedIn = false;
   //   this.playStore = false;
   //   this.platformsArray.push(res.List[0].platform);
-
   //   res.List[0].user.secondaryProfiles.forEach((profiles: any) => {
   //     this.platformsArray.push(profiles.platform);
-
   //     if (profiles.platform == 'Facebook') {
   //       this.facebookId = profiles.customerUniqueId;
   //     }
@@ -506,7 +475,6 @@ export class ResponderHeaderComponent implements OnInit {
   //       this.smsId = profiles.customerUniqueId;
   //     }
   //   });
-
   //   if (this.platformsArray.includes('Facebook')) {
   //     this.facebookComment = true;
   //   }
@@ -555,7 +523,6 @@ export class ResponderHeaderComponent implements OnInit {
   //  this.FbUnrespondedMsgCountByCustomer = 0;
   // this.TwitterUnrespondedMsgCountByCustomer = 0;
   //   this.InstaUnrespondedMsgCountByCustomer = 0;
-
   //   if (this.fetchId.platform == 'Facebook') {
   //     this.FbUnrespondedCmntCountByCustomer = res.TotalCount;
   //     if (this.FbUnrespondedMsgCountByCustomer == 0) {
@@ -577,7 +544,6 @@ export class ResponderHeaderComponent implements OnInit {
   //     this.WcUnrespondedCmntCountByCustomer = res.TotalCount;
   //   }
   //   if (this.fetchId.platform == 'SMS') {
-
   //     this.SmsUnrespondedCmntCountByCustomer = res.TotalCount;
   //   }
   //   if (this.fetchId.platform == 'Twitter') {
@@ -599,7 +565,6 @@ export class ResponderHeaderComponent implements OnInit {
   // if (this.fetchId.platform == 'Instagram') {
   //   this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
   // }
-
   //   if (this.fetchId.platform == 'Instagram') {
   //     this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
   //     if (this.InstaUnrespondedMsgCountByCustomer == 0) {
@@ -614,11 +579,9 @@ export class ResponderHeaderComponent implements OnInit {
   //         this.InstaUnrespondedMsgCountByCustomer;
   //     }
   //   }
-
   //   if (this.fetchId.platform == 'Email' || this.fetchId.platform == 'OfficeEmail') {
   //     this.EmailUnrespondedCmntCountByCustomer = res.TotalCount;
   //   }
-
   //   if (this.fetchId.platform == 'Youtube') {
   //     this.YoutubeUnrespondedCmntCountByCustomer = res.TotalCount;
   //   }
@@ -684,15 +647,12 @@ export class ResponderHeaderComponent implements OnInit {
   //   this.profilePic = res.List?.user.profilePic;
   //   this.platform = res.List?.platform;
   //   this.postType = res.List?.dm.contentType;
-
   //   this.platformsArrayForMessages = [];
   //   this.facebookMessage = false;
   //   this.twitterMessage = false;
   //   this.platformsArray.push(res.List?.platform);
-
   //   res.List?.user.secondaryProfiles.forEach((profiles: any) => {
   //     this.platformsArray.push(profiles.platform);
-
   //     if (profiles.platform == 'Facebook') {
   //       this.facebookId = profiles.customerUniqueId;
   //     }
@@ -721,7 +681,6 @@ export class ResponderHeaderComponent implements OnInit {
   //       this.smsId = profiles.customerUniqueId;
   //     }
   //   });
-
   //   if (this.platformsArray.includes('Facebook')) {
   //     this.facebookMessage = true;
   //     this.facebookComment = true;
@@ -729,7 +688,6 @@ export class ResponderHeaderComponent implements OnInit {
   //   if (this.platformsArray.includes('SMS')) {
   //     this.sms = true;
   //   }
-
   //   if (this.platformsArray.includes('Twitter')) {
   //     this.twitterMessage = true;
   //     this.twitterComment = true;
@@ -758,7 +716,6 @@ export class ResponderHeaderComponent implements OnInit {
   //   if (this.platformsArray.includes('Youtube')) {
   //     this.youtube = true;
   //   }
-
   //   // this.FbUnrespondedCmntCountByCustomer = 0;
   //   this.WtsapUnrespondedCmntCountByCustomer = 0;
   //   this.WcUnrespondedCmntCountByCustomer = 0;
@@ -774,7 +731,6 @@ export class ResponderHeaderComponent implements OnInit {
   //   this.totalTwitterUnrespondedCountByCustomer = 0;
   //   this.FbUnrespondedMsgCountByCustomer = 0;
   //   this.TwitterUnrespondedMsgCountByCustomer = 0;
-
   //   if (this.fetchId.platform == 'Facebook') {
   //     this.FbUnrespondedMsgCountByCustomer = res.TotalCount;
   //     if (this.FbUnrespondedMsgCountByCustomer == 0) {
@@ -822,11 +778,6 @@ export class ResponderHeaderComponent implements OnInit {
   // }
   // });
   // }
-
-  AgentsTeamList: any;
-  AgentDetails: any;
-  searchText: string = '';
-  ActiveAgents: any[] = [];
   getAgentsTeamList() {
     this.commondata.GetAgentsTeamList().subscribe((res: any) => {
       if (Object.keys(res).length > 0) {
@@ -840,13 +791,11 @@ export class ResponderHeaderComponent implements OnInit {
       }
     });
   }
-
   getAgentById() {
     this.commondata.GetAgentById(this.agentId).subscribe((res: any) => {
       this.AgentDetails = res;
     });
   }
-
   completeQuery(slug: string) {
     if (this.KEBaseUrl == true) {
       if (slug == 'save') {
@@ -866,8 +815,6 @@ export class ResponderHeaderComponent implements OnInit {
     this.location.back();
     localStorage.setItem('assignedProfile', '');
   }
-  markAsCompleteDto = new MarkAsCompleteDto();
-  // only for KE
   removeAssignedQuery() {
     const ProfileId = localStorage.getItem('assignedProfile');
     if (this.currentUrl.split('/')[2] == 'assigned_to_me') {
@@ -877,30 +824,27 @@ export class ResponderHeaderComponent implements OnInit {
       if (ProfileId == null || ProfileId == '') {
         this.location.back();
       } else {
-        var body= {
-          "profileId": Number(ProfileId),
-          "wings": this.wings,
-          "skillSlug": localStorage.getItem('skillSlug') || ''
+        var body = {
+          profileId: Number(ProfileId),
+          wings: this.wings,
+          skillSlug: this.getSkillSlug.skillSlug[0],
         };
         this.commondata.RemoveAssignedQuery(body).subscribe((res: any) => {
           this.location.back();
           localStorage.setItem('assignedProfile', '');
-          console.log('remove Response===>', res);
         });
       }
     }
   }
   markAsComplete() {
     this.markAsCompleteDto = {
-      user : this.userInfo.userId,
-      companyId : 0,
-      plateFrom : localStorage.getItem('parent') || '',
-      userId : Number(localStorage.getItem('agentId')),
-      wings : this.getWing.wings,
-      groupId : this.getRulesGroupIdsService.rulesGroupIds
-    }
-    
-
+      user: this.userInfo.userId,
+      companyId: 0,
+      plateFrom: localStorage.getItem('parent') || '',
+      userId: Number(localStorage.getItem('agentId')),
+      wings: this.getWing.wings,
+      skillSlug: this.getSkillSlug.skillSlug[0],
+    };
     this.commondata.MarkAsComplete(this.markAsCompleteDto).subscribe(
       (res: any) => {
         if (res.message === 'Success Responded') {
@@ -915,15 +859,11 @@ export class ResponderHeaderComponent implements OnInit {
       }
     );
   }
-
-  showAgentsList: boolean = false;
-  showMoreOptions: boolean = false;
   showTeamList() {
     this.getAgentsTeamList();
     this.showAgentsList = true;
     this.showMoreOptions = false;
   }
-
   hideTeamList() {
     this.showAgentsList = false;
     this.showMoreOptions = true;
@@ -932,8 +872,6 @@ export class ResponderHeaderComponent implements OnInit {
     this.showAgentsList = false;
     this.showMoreOptions = false;
   }
-
-  customerProfileId = Number(localStorage.getItem('profileId'));
   sendAgentId(id: number) {
     var platform = localStorage.getItem('parent') || '';
     this.assignQuerryDto = {
@@ -941,7 +879,7 @@ export class ResponderHeaderComponent implements OnInit {
       profileId: this.customerProfileId,
       platform: platform,
       wings: this.wings,
-      skillSlug: localStorage.getItem('skillSlug') || ''
+      skillSlug: '',
     };
   }
   assignToAnotherAgent() {
@@ -960,8 +898,6 @@ export class ResponderHeaderComponent implements OnInit {
       }
     );
   }
-  AlterMsg: any;
-  toastermessage = false;
   reloadComponent(type: any) {
     if (type == 'spam') {
       this.AlterMsg = 'Profile(s) has been marked as spam!';
@@ -1108,39 +1044,22 @@ export class ResponderHeaderComponent implements OnInit {
   closeToaster() {
     this.toastermessage = false;
   }
-  commentStatusDto = new CommentStatusDto();
   markAllAsRead(comId: number = 0, type: string = '') {
     this.commentStatusDto = {
-      id : comId,
-      type : type,
-      plateForm : localStorage.getItem('parent') || '{}',
-      profileId : Number(localStorage.getItem('profileId')),
-      wings : this.wings,
-      groupId: this.getRulesGroupIdsService.rulesGroupIds,
-    }
-    
-
+      id: comId,
+      type: type,
+      plateForm: localStorage.getItem('parent') || '{}',
+      profileId: Number(localStorage.getItem('profileId')),
+      wings: this.wings,
+      skillSlug: this.getSkillSlug.skillSlug[0],
+      connectionId: this.getConnectionId.connectionId,
+    };
     this.commonService.MarkAllAsRead(this.commentStatusDto).subscribe(
-      (res: any) => {
+      () => {
         this.reloadComponent('markAllAsRead');
         if (this.KEBaseUrl == true) {
           this.markAsComplete();
         }
-
-        // this.FbUnrespondedCmntCountByCustomer = 0;
-        // this.WtsapUnrespondedCmntCountByCustomer = 0;
-        // this.WcUnrespondedCmntCountByCustomer = 0;
-        // this.SmsUnrespondedCmntCountByCustomer = 0;
-        // this.TwitterUnrespondedCmntCountByCustomer = 0;
-        // this.InstaUnrespondedCmntCountByCustomer = 0;
-        // this.EmailUnrespondedCmntCountByCustomer = 0;
-        // this.YoutubeUnrespondedCmntCountByCustomer = 0;
-        // this.LinkedInUnrespondedCmntCountByCustomer = 0;
-        // this.totalFbUnrespondedCountByCustomer = 0;
-        // this.totalInstaUnrespondedCountByCustomer = 0;
-        // this.totalTwitterUnrespondedCountByCustomer = 0;
-        // this.FbUnrespondedMsgCountByCustomer = 0;
-        // this.TwitterUnrespondedMsgCountByCustomer = 0;
       },
       (error: any) => {
         this.reloadComponent('alreadyAllQueriesMarkedRead');
@@ -1150,45 +1069,42 @@ export class ResponderHeaderComponent implements OnInit {
       }
     );
   }
-
-  itemsToBeUpdated: any[] = [];
+  insertTagInProfileFeedDto = new InsertTagInProfileFeedDto();
 
   InsertTagInProfile(tagName: string, type: string, profileId: any) {
-    const ProfileId = localStorage.getItem('assignedProfile');
-    var obj = {
+    this.insertTagInProfileFeedDto = {
       feedId: profileId,
       tagName: tagName,
       type: type,
       platform: this.activeChannel,
+      wings: this.getWing.wings,
+      skillSlug: this.getSkillSlug.skillSlug[0],
     };
-    this.itemsToBeUpdated.push(obj);
+    this.itemsToBeUpdated.push(this.insertTagInProfileFeedDto);
     this.commondata
       .InsertTagInProfile(this.itemsToBeUpdated)
       .subscribe((res: any) => {
         if (res.message === 'Data Added Successfully') {
-          this.markAllAsRead();
           if (tagName == 'black_list') {
-            this.commondata.RemoveAssignedQuery(ProfileId).subscribe(() => {
-              localStorage.setItem('assignedProfile', '');
-            });
+            this.removeAssignedQuery();
           }
           this.itemsToBeUpdated = [];
           this.reloadComponent(tagName);
           localStorage.setItem('assignedProfile', '');
-          this.route.navigateByUrl('/all-inboxes/focused/all');
           this.lodeModuleService.updateModule('all-inboxes');
         }
       });
   }
-
   RemoveTagInProfile(tagName: string, type: string, profileId: any) {
-    var obj = {
+    this.insertTagInProfileFeedDto = {
       feedId: profileId,
       tagName: tagName,
       type: type,
       platform: this.activeChannel,
+      wings: this.getWing.wings,
+      skillSlug: this.getSkillSlug.skillSlug[0],
     };
-    this.itemsToBeUpdated.push(obj);
+    this.itemsToBeUpdated.push(this.insertTagInProfileFeedDto);
     this.commondata
       .RemoveTagInProfile(this.itemsToBeUpdated)
       .subscribe((res: any) => {
@@ -1199,91 +1115,4 @@ export class ResponderHeaderComponent implements OnInit {
         }
       });
   }
-  // spamStatus: boolean = false;
-  // blockStatus: boolean = false;
-
-  // Spam(id: any) {
-  //   var obj = {
-  //     channel: '',
-  //     flag: 'spam',
-  //     status: true,
-  //     messageId: 0,
-  //     profileId: id,
-  //   };
-  //   this.itemsToBeUpdated.push(obj);
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.itemsToBeUpdated = [];
-  //         this.spamStatus = true;
-  //         this.reloadComponent('spam');
-  //       }
-  //     });
-  // }
-
-  // RemoveSpam(id: any) {
-  //   var obj = {
-  //     channel: '',
-  //     flag: 'spam',
-  //     status: false,
-  //     messageId: 0,
-  //     profileId: id,
-  //   };
-  //   this.itemsToBeUpdated.push(obj);
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.itemsToBeUpdated = [];
-  //         this.spamStatus = false;
-  //         this.reloadComponent('removeSpam');
-  //       }
-  //     });
-  // }
-
-  // Block(id: any) {
-  //   var obj = {
-  //     channel: '',
-  //     flag: 'blacklist',
-  //     status: true,
-  //     messageId: 0,
-  //     profileId: id,
-  //   };
-  //   this.itemsToBeUpdated.push(obj);
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.markAllAsRead();
-  //         this.itemsToBeUpdated = [];
-  //         this.blockStatus = true;
-  //         this.reloadComponent('block');
-  //         localStorage.setItem('assignedProfile', '');
-  //         this.route.navigateByUrl('/all-inboxes/focused/all');
-  //         this.lodeModuleService.updateModule('all-inboxes');
-  //       }
-  //     });
-  // }
-
-  // Unblock(id: any) {
-  //   var obj = {
-  //     channel: '',
-  //     flag: 'blacklist',
-  //     status: false,
-  //     messageId: 0,
-  //     profileId: id,
-  //   };
-  //   this.itemsToBeUpdated.push(obj);
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.itemsToBeUpdated = [];
-  //         this.blockStatus = false;
-  //         this.reloadComponent('unblock');
-  //         this._route.navigateByUrl('all-inboxes/black_list/all');
-  //       }
-  //     });
-  // }
 }

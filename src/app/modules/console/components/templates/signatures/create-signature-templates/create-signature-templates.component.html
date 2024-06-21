@@ -22,26 +22,22 @@
                       <div class="invalid-feedback" *ngIf="messageForm.get('subject')?.errors?.['required']">Subject is required.</div>
                     </div>
                   </div>
-
                   <div class="text-area-section pb-5">
                     <ckeditor [(ngModel)]="editorContent" formControlName="message"></ckeditor>
                     <div class="invalid-feedback" *ngIf="messageForm.get('message')?.invalid && (messageForm.get('message')?.dirty || messageForm.get('message')?.touched)">Message is required.</div>
                   </div>
-
             </div>
             <footer class="footer">
                 <div class="ps-3 pe-3">
                     <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
                         <div class="row w-100">
                             <div class="col-md-4">
-
                                 <div class="f-icon-txt-wrapper d-flex align-items-center">
                                     <button class="iconButton medium iconHover" id="deleteModalBtn">
                                         <!-- <i class="fal fa-trash radical"></i> -->
                                     </button>
                                     <!-- <p class="f-icon-txt radical ms-1 m-0">Delete Message</p> -->
                                 </div>
-
                             </div>
                             <div class="col-md-8 justify-content-end d-flex">
                                 <div class="buttons-wrap d-flex">

@@ -47,7 +47,6 @@
                                                 </div>
                                                 <div class="valid-feedback"
                                                     *ngIf="companiesForm.get('name')!.valid && companiesForm.get('name')!.touched">
-
                                                     Looks Good!
                                                 </div>
                                             </div>
@@ -63,7 +62,6 @@
                                                 <label for="floatingTextarea2" >Description</label>
                                                 <div class="invalid-feedback" *ngIf="(companiesForm.get('description')!.errors && (companiesForm.get('description')!.touched ||
                                                                                 companiesForm.get('description')!.dirty))">
-
                                                     <div *ngIf="companiesForm.get('description')!.errors?.['required']">
                                                         Description is required!
                                                     </div>
@@ -124,7 +122,6 @@
                                                         </li>     -->
                                                         <engage2-card-box-list [menulist]="CompaniesNPermissions" [menulistselectall]="permissionlistselectall" (menulistchecked)="setPermissionList($event)"></engage2-card-box-list>
                                                     </ul>
-                                                    
                                                 </div>
                                                 <div id="accesses-tab" class="tab-pane fade show" role="tabpanel" aria-labelledby="accesses">
                                                     <ul class="list-group  list-group-flush">
@@ -156,7 +153,6 @@
                                                     <div *ngIf="companiesForm.get('businesshours')!.errors?.['required']">
                                                         Please select Business Hours
                                                     </div>
-                                                    
                                                 </div>
                                                 <div class="valid-feedback"
                                                     *ngIf="companiesForm.get('businesshours')!.valid && companiesForm.get('businesshours')!.touched">
@@ -183,8 +179,6 @@
                                                     <div *ngIf="companiesForm.get('supportchannelhour')!.errors?.['required']">
                                                         Please select Hours
                                                     </div>
-                                                   
-    
                                                 </div>
                                                 <div class="valid-feedback"
                                                     *ngIf="companiesForm.get('supportchannelhour')!.valid && companiesForm.get('supportchannelhour')!.touched">
@@ -212,7 +206,6 @@
                                                 </div>
                                                 <div class="valid-feedback"
                                                     *ngIf="companiesForm.get('supportchannelcompanies')!.valid && companiesForm.get('supportchannelcompanies')!.touched">
-    
                                                     Looks Good!
                                                 </div>
                                             </div>
@@ -259,7 +252,6 @@
                                                             <a href="javascript:">EnteractRoute settings.</a>
                                                         </div>
                                                     </div>
-                
                                                     <div class="form-check mb-3">
                                                         <input class="form-check-input" type="radio" name="flexRadioDefault"
                                                             id="flexRadioDefault1">
@@ -272,7 +264,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                
                                                 <div>
                                                     <h5 class="mb-3 mt-5 fw-bold darkblue">Agent availability</h5>
                                                     <div class="form-check mb-3">
@@ -308,7 +299,6 @@
                                         <div class="border mb-3"></div> -->
                                     <!-- </div> -->
                                     <!-- </div> -->
-                                
                             </div>
                         </div>   
                     <!-- </div> -->
@@ -348,13 +338,10 @@
                                                             class="select2-selection__arrow" role="presentation"><b
                                                                 role="presentation"></b></span></span></span><span
                                                     class="dropdown-wrapper" aria-hidden="true"></span></span>
-
                                         </li>
                                     </ul>
-
                                 </div>
                                 <div class="col-lg-6 d-flex align-items-center justify-content-end">
-
                                     <button (click)="AddCompaniesMembers()" type="button" class="btn btn-success"
                                         data-bs-toggle="offcanvas" data-bs-target="#addcompaniesmembers"
                                         aria-controls="offcanvasRight">
@@ -365,15 +352,12 @@
                             </div>
                         </div>
                         <div class="filter-container">
-
                             <ul class="list-group list-group-horizontal border-0">
-
                                 <li class="list-group-item border-0 refreshicon" aria-label="..."
                                     data-bs-toggle="tooltip" data-bs-placement="bottom"
                                     data-bs-original-title="Refresh">
                                     <i class="fal fa-redo"></i>
                                 </li>
-
                             </ul>
                             <div class="selected-row" style="display:none;">
                                 Selected <span class="badge skyBg rounded-pill">05<span>
@@ -633,13 +617,10 @@
         <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
             <div class="row w-100">
                 <div class="col-md-4">
-
-
                 </div>
                 <div class="col-md-8 justify-content-end d-flex">
                     <div class="buttons-wrap d-flex">
                         <button type="reset" class="btn btn-outline-secondary btn-medium me-2 px-4">Cancel </button>
-                        
                         <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn" >Save</button>
                     </div>
                 </div>

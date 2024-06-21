@@ -15,6 +15,7 @@ import { loadMenusList } from '../../menu-state/menu.actions';
 import { MenuModel } from '../../menu-state/menu.model';
 import { getEmarging, getEmargingEqual, getEmargingNotEqual, getMenusLoading } from '../../menu-state/menu.selectors';
 import { MenuState } from '../../menu-state/menu.state';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'sub-role-menu',
@@ -34,7 +35,7 @@ export class SubRoleMenuComponent implements OnInit {
   EmargeType$?:string;
   EmargeParent$?:number=400;//470
   EmargeShow$?:boolean=true;
-  
+  activeChannels:any
   anymenus$ :any;
   menus$ :any;
 
@@ -50,6 +51,7 @@ export class SubRoleMenuComponent implements OnInit {
     private treegen: TreeGenService<MenuModel>, 
     private headerService: HeaderService, 
     private storage:StorageService, 
+    private cdr:ChangeDetectorRef,
     private router: Router) {
     
     let _self = this;
@@ -59,20 +61,15 @@ export class SubRoleMenuComponent implements OnInit {
         // _self.SubMenuPage = this.SubMenuPages.filter(function(element:any) {
         //   return event.url.toString().toLowerCase().includes(element.slug);
         // }); // because return array index;
-        //console.log(_self.SubMenuPage);
         // if(event.url.toString().toLowerCase().includes("undefined")){
          
         // }
         // else{
-          // console.log(event.url.toString());
           _self.SubMenuPages.forEach(function(subMenuPage:any) {
             if(event.url.toString().toLowerCase().includes(subMenuPage.slug)){
               _self.SubMenuPage = subMenuPage;
-              console.log(subMenuPage);
               //  _self.store.select(getEmarging(subMenuPage.slug)).subscribe((item) => {
-              //   console.log(item);
               //   _self.menus$ = _self.treegen.buildTree(item, subMenuPage.parentId);
-              //   console.log(_self.menus$);
               // });
             }
           });
@@ -86,26 +83,19 @@ export class SubRoleMenuComponent implements OnInit {
     
     this.menus$ = [];
     let _self = this;
-    console.log(_self.SubMenuPage);    
-    _self.store.select(getEmarging(_self.SubMenuPage.slug)).subscribe((item:any) => {
-      console.log(item);      
+    _self.store.select(getEmarging(_self.SubMenuPage.slug)).subscribe((item:any) => {    
       if(item.length > 0)
         _self.menus$ = _self.treegen.buildTree(item, _self.SubMenuPage.parentId);      
-        console.log(_self.menus$);
     });
 
     // this.router.events.subscribe((event: Event) => {
     //   if (event instanceof NavigationStart) {        
     //     _self.SubMenuPages.forEach(function(subMenuPage:any, index:number) {
-    //       console.log(subMenuPage);
     //       if(event.url.toString().toLowerCase().includes(subMenuPage.slug)){
-    //         console.log(subMenuPage);
     //         _self.EmargeType$ = subMenuPage.name;
     //         _self.menu$ = _self.store.select(getEmarging(subMenuPage.slug)).subscribe((item) => {
     //           // this.menus$ = item;
-    //           console.log(item);
     //           _self.menus$ = _self.treegen.buildTree(item, subMenuPage.parentId);
-    //           console.log(_self.menus$);
     //         });
     //       }        
     //     });
@@ -121,25 +111,18 @@ export class SubRoleMenuComponent implements OnInit {
         //   this.HeaderEmargeType="Analytics";
         //   this.LoadDataEmargeType="analytics";
         // }
-        // console.log(resultConsole);
-        // console.log(resultAnalytics);
-        // console.log(event.url.toString().split('/'));
         // if(event.url.toString())
-        // console.log('NavigationStart --- ', event.url);
       // }
     // });
     // this.menu$ = this.store.select(getEmarging(this.LoadDataEmargeType)).subscribe((item) => {
     //   this.menus$ = item;
-    //   console.log(item);
     //   this.menus$ = this.treegen.buildTree(item, 400);
-    //   console.log(this.anymenus$);
     // })
     
     let main = this.storage.retrive("main","o").local;
     let selectedRole = this.storage.retrive("nocompass","O").local;
     this.SuperTeamSelected = selectedRole.id;  
     this.SuperTeamOptions = main.roles;
-    //console.log(this.SuperTeamOptions);
    
 
     if(this.SuperTeamOptions.length >= 2){
@@ -148,6 +131,8 @@ export class SubRoleMenuComponent implements OnInit {
   }
   
   updatevalue(string:any){    
+    this.activeChannels=this.router.url.split('/')[2]
+    this.cdr.detectChanges()
     this.headerService.updateMessage(string);
   }
 }

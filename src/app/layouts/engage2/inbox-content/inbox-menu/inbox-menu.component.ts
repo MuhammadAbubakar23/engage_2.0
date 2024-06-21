@@ -7,8 +7,7 @@ import { UpdateListService } from 'src/app/services/UpdateListService/update-lis
 import { Router } from '@angular/router';
 import { SkillsService } from 'src/app/services/Skills/skills.service';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
-import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
-
+import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 @Component({
   selector: 'inbox-menu',
   templateUrl: './inbox-menu.component.html',
@@ -16,7 +15,6 @@ import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group
 })
 export class InboxMenuComponent implements OnInit {
   allChannels: any = [];
-
   public Subscription!: Subscription;
   UnResponded: number = 0;
   SlaUnResponded: number = 0;
@@ -31,7 +29,6 @@ export class InboxMenuComponent implements OnInit {
   LinkedInUnResponded: number = 0;
   PlaystoreUnResponded: number = 0;
   YoutubeUnResponded: number = 0;
-
   flag: string = '';
   activeChannel: string = '';
   baseUrl: string = '';
@@ -44,10 +41,9 @@ export class InboxMenuComponent implements OnInit {
     private updateListService: UpdateListService,
     private router: Router,
     private getSkills: SkillsService,
-    private sendWing: GetWingsService,
-    private sendRulesGroupIdsService: RulesGroupIdsService
+    private getWing: GetWingsService,
+    private skillSlugService: SkillslugService
   ) {}
-
   ngOnInit(): void {
     this.allSkills = this.getSkills.skills;
     this.baseUrl = window.location.origin;
@@ -68,9 +64,7 @@ export class InboxMenuComponent implements OnInit {
     } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
       this.client = 'stagging';
     }
-
     this.activeChannel = this.router.url.split('/')[3];
-
     this.flag = this.router.url.split('/')[2];
     if (this.flag == 'focused') {
       this.Subscription = this.unrespondedCountService
@@ -115,7 +109,6 @@ export class InboxMenuComponent implements OnInit {
             }
           });
         });
-
       this.Subscription.add(
         this.updateListService.receiveList().subscribe((res) => {
           res.forEach((platform: any) => {
@@ -158,18 +151,18 @@ export class InboxMenuComponent implements OnInit {
           });
         })
       );
-
       this.getAllChannelsUnrespondedCounts();
     }
   }
-
   channels: any[] = [];
-
   platformWiseCount: any[] = [];
-
   getAllChannelsUnrespondedCounts() {
+    var obj = {
+      "wings": this.getWing.wings,
+      "skills": this.skillSlugService.skillSlug
+    }
     this.commonService
-      .GetAllChannelsUnrespondedCount()
+      .GetAllChannelsUnrespondedCount(obj)
       .subscribe((res: any) => {
         // this.GetChannels();
         this.UnResponded = res.totalCount;
@@ -211,143 +204,14 @@ export class InboxMenuComponent implements OnInit {
         });
       });
   }
-
-  GetChannels() {
-    this.commonService.GetChannels().subscribe((res: any) => {
-      if (Object.keys(res).length > 0) {
-        this.channels = res[0].subMenu;
-        console.log('this.channels', this.channels);
-        const newArray = res[0].subMenu.map((item: any) => {
-          let newItem = {};
-          switch (item.name) {
-            case 'Email':
-              newItem = {
-                icon: '<i class="fas fa-envelope coal"></i>',
-                title: 'Emails',
-                subtitle: '/Gmail',
-                color: 'iconButton medium whiteBg',
-                count: this.EmailUnResponded,
-              };
-              break;
-            case 'WhatsApp':
-              newItem = {
-                icon: '<i class="fab fa-whatsapp"></i>',
-                title: 'WhatsApp',
-                subtitle: '',
-                color: 'iconButton medium mintBg',
-                count: this.WaUnResponded,
-              };
-              break;
-            case 'SMS':
-              newItem = {
-                icon: '<i class="fal fa-comment-alt-lines"></i>',
-                title: 'SMS',
-                subtitle: '',
-                color: 'iconButton medium cherryBg',
-                count: this.SmsUnResponded,
-              };
-              break;
-            case 'Facebook':
-              newItem = {
-                icon: '<i class="fab fa-facebook-f"></i>',
-                title: 'Facebook',
-                subtitle: '/ibex.connect',
-                color: 'iconButton medium navyBg',
-                count: this.FbUnResponded,
-              };
-              break;
-            case 'Chat':
-              newItem = {
-                icon: '<i class="fa-light fa-messages"></i>',
-                title: 'WebChat',
-                subtitle: '',
-                color: 'iconButton medium webchatbg',
-                count: this.WebchatUnResponded,
-              };
-              break;
-            case 'Twitter':
-              newItem = {
-                icon: '<i class="fab fa-twitter"></i>',
-                title: 'Twitter',
-                subtitle: '',
-                color: 'iconButton medium oceanBg',
-                count: this.TwitterUnResponded,
-              };
-              break;
-            case 'Instagram':
-              newItem = {
-                icon: '<i class="fab fa-instagram"></i>',
-                title: 'Instagram',
-                subtitle: '',
-                color: 'iconButton medium instabg',
-                count: this.InstaUnResponded,
-              };
-              break;
-            case 'LinkedIn':
-              newItem = {
-                icon: '<i class="fa-brands fa-linkedin-in"></i>',
-                title: 'LinkedIn',
-                subtitle: '',
-                color: 'iconButton medium linkedinbg',
-                count: this.LinkedInUnResponded,
-              };
-              break;
-            case 'Youtube':
-              newItem = {
-                icon: '<i class="fab fa-youtube"></i>',
-                title: 'Youtube',
-                subtitle: '',
-                color: 'iconButton medium radicalBg',
-                count: this.YoutubeUnResponded,
-              };
-              break;
-            default:
-              // Keep newItem empty for cases not handled
-              break;
-          }
-          return newItem;
-        });
-        this.allChannels = newArray;
-      }
-    });
-  }
-
   updatevalue(string: any) {
     this.filterService.addTogglePanel(string);
   }
-  rulesGroupIds: any[] = [];
-  updateWing(rule: any, skillSlug:any, skillName:string) {
-    
-    if (rule == 'defaultRuleIds') {
-      this.rulesGroupIds = localStorage.getItem('defaultRuleIds')?.split(',') || []
-      this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
+  updateWing(skillSlug:string) {
+    if(skillSlug === ''){
+      this.skillSlugService.sendSkillSlug([]);
     } else {
-      rule.forEach((x: any) => {
-        if (!this.rulesGroupIds.includes(x.groupId)) {
-          this.rulesGroupIds.push(x.groupId);
-        }
-      });
-    }
-
-    this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
-    localStorage.setItem('skillSlug',skillSlug)
-
-    if(skillName.toLowerCase().includes('facebook dm')){
-      localStorage.setItem('contentType','FCP')
-    } else if(skillName.toLowerCase().includes('facebook comment')){
-      localStorage.setItem('contentType','FC')
-    } else if(skillName.toLowerCase().includes('twitter tweet')){
-      localStorage.setItem('contentType','TTR')
-    } else if(skillName.toLowerCase().includes('twitter mention')){
-      localStorage.setItem('contentType','TM')
-    } else if(skillName.toLowerCase().includes('twitter dm')){
-      localStorage.setItem('contentType','TDM')
-    } else if(skillName.toLowerCase().includes('instagram comment')){
-      localStorage.setItem('contentType','IC')
-    } else if(skillName.toLowerCase().includes('instagram dm')){
-      localStorage.setItem('contentType','IM')
-    }  else if(skillName.toLowerCase().includes('linkedin comment')){
-      localStorage.setItem('contentType','LIC')
+      this.skillSlugService.sendSkillSlug([skillSlug]);
     }
   }
 }

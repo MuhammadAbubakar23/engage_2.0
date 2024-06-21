@@ -4,7 +4,6 @@ import { InboxContentComponent } from 'src/app/layouts/engage2/inbox-content/inb
 import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard';
 import { InboxResponderComponent } from './components/inbox-responder/inbox-responder.component';
 import { InboxesComponent } from './inboxes.component';
-
 const routes: Routes = [
   {
     path: ':flag/:flag2',
@@ -26,7 +25,6 @@ const routes: Routes = [
     ],
   },
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

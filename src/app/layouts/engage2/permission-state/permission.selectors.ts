@@ -12,15 +12,12 @@ export const getPermissionsError = createSelector(getPermissionsState, state => 
 // export const getPermissionByParentId = (id:number) => createSelector(selectPermissionModels, (permissionModels:PermissionModel[]) => permissionModels.parentId );
 
 export const getAllPermission = () => createSelector(getPermissions, (permissions: PermissionModel) => {
-  //console.log("--------per-------"+permissions?.priviledge+"--------per-------");
+
   return permissions?.priviledge;
    
 });
 
 export const getPermissionBySlug = (permition:string) => createSelector(getPermissions, (permissions: PermissionModel) => {
-  //console.log("--------per-------"+permition+"--------per-------");
-  // console.log(permissions);
-  //console.log("--------per-------"+permissions?.priviledge+"--------per-------");
   //let a = permissions
   return (permissions?.toString()?.includes(permition))?true:false;
    

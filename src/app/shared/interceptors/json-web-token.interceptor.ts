@@ -8,11 +8,9 @@ import {
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage/storage.service';
-
 @Injectable()
 export class JsonWebTokenInterceptor implements HttpInterceptor {
   constructor(private router: Router, private ls: StorageService) {}
-
   intercept(
     httpRequest: HttpRequest<any>,
     next: HttpHandler
@@ -21,12 +19,8 @@ export class JsonWebTokenInterceptor implements HttpInterceptor {
     let token = allToken.local; // allToken.cookie
     token = token == null ? allToken.session : token;
     token = token == null ? allToken.local : token;
-
-    //console.log("Jwt Token............"+ token)
-    // console.log(httpRequest.url);
     // const urlAL = "Authentication/Login"
     // httpRequest.url.includes("Login")
-    // console.log(httpRequest);
     if (
       token == null &&
       (!httpRequest.url.includes('Login') ||
@@ -51,12 +45,10 @@ export class JsonWebTokenInterceptor implements HttpInterceptor {
         },
       });
     }
-
     // else{
     //   this.router.navigate(['/identity/login']);
     //   //return error.message;
     // }
-
     return next.handle(httpRequest);
   }
 }

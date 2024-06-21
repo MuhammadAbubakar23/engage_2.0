@@ -13,20 +13,16 @@
           font-weight: 100;
         }
       }
-  
       // font-size: 16px;
       color: $night;
       font-weight: normal;
-  
       a {
         color: $coal;
       }
-  
       &:first-child {
         color: $night;
         font-weight: 500;
         // font-size: 16px;
-  
         a {
           color: $night;
           font-weight: 500;
@@ -35,7 +31,6 @@
       }
     }
   }
-
   //Right Panel BreadCrumb
   .right-bar-wrapper .bodyWrapper .bd-crumb{
     .breadcrumb-item {
@@ -46,6 +41,5 @@
   i {
     font-size: 14px ;
     font-family: 'roboto_lightregular';
-  
 }
   } 

@@ -6,7 +6,6 @@ export class CreateSLAPoliciesDto {
   timeZone: string = '';
   slaTargets: SlaTargetsDto[] = [];
 }
-
 export class SlaTargetsDto {
   id: number = 0;
   priority: string = '';

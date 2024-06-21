@@ -66,7 +66,6 @@
     }
   }
 }
-
 .list-cards{
   height: 130px;
   overflow-y: auto !important;
@@ -82,14 +81,12 @@
   border-radius: 10px;
   background-color: #E4E4E4;
 }
-
 .list-cards::-webkit-scrollbar {
   width: 6px;
   height: 8px;
   background-color: #E4E4E4;
   border-radius: 10px;
 }
-
 .list-cards::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #B7BDC1;

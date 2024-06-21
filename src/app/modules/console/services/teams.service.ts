@@ -3,12 +3,10 @@ import { map, Observable } from 'rxjs';
 import { MenuModel } from 'src/app/layouts/engage2/menu-state/menu.model';
 import { IdNameDto } from 'src/app/shared/Models/IdNameDto';
 import { RequestService } from 'src/app/shared/services/request/request.service';
-
 @Injectable({
   providedIn: 'root'
 })
 export class TeamsService {
-
   constructor(private request:RequestService) { }
   getAllParams(rout:string, id:any): Observable<MenuModel[]> {
     return this.request.post<MenuModel[]>(rout,id).pipe(
@@ -24,7 +22,6 @@ export class TeamsService {
     //   map((res: any) => { return res }),
     //   tap(res => console.log( + " Response: ", res)),
     //   catchError(err => {
-    //     console.log('Handling error locally and rethrowing it...', err);
     //     return throwError(() => new Error(err));
     //   })
     // );

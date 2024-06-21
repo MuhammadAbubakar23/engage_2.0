@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ShareFacebookResponseService } from 'src/app/services/share-facebook-response.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-
 @Component({
   selector: 'post-stats',
   templateUrl: './post-stats.component.html',
@@ -16,26 +15,19 @@ export class PostStatsComponent implements OnInit {
   totalCommentReactionsCount: number = 0;
   commentIdForStats: any;
   public Subscription !: Subscription
-
   constructor(private commonService : CommonDataService,
     private shareFbResService : ShareFacebookResponseService) {}
-
   ngOnInit(): void {
-    
     this.Subscription = this.shareFbResService.getMessage().subscribe((res) => {
-      
       this.FacebookData = res;
-      
       if (this.FacebookData != null || undefined) {
         this.FacebookData.forEach(async (post: any): Promise<void> => {
           this.postIdForStats = post.post.postId;
           this.pageIdForStats = post.post?.postId.split('_')[0];
-  
           await this.commonService
             .GetFbPostStats(this.pageIdForStats, this.postIdForStats)
             .subscribe((postStats: any) => {
               post.post['postStats'] = postStats;
-  
               this.totalPostReactionsCount =
                 postStats.reactioinsLIst.like +
                 postStats.reactioinsLIst.love +
@@ -54,12 +46,10 @@ export class PostStatsComponent implements OnInit {
       this.FacebookData.forEach((post: any) => {
         post.comments.forEach(async (comment: any) => {
           this.commentIdForStats = comment.commentId;
-  
           await this.commonService
             .GetFbCommentStats(this.pageIdForStats, this.commentIdForStats)
             .subscribe((commentStats: any) => {
               comment['comStats'] = commentStats;
-  
               this.totalCommentReactionsCount =
                 commentStats.reactioinsLIst.like +
                 commentStats.reactioinsLIst.love +
@@ -75,22 +65,17 @@ export class PostStatsComponent implements OnInit {
         });
       });
     });
-
     this.fbStats();
   }
-
   fbStats() {
-    
     if (this.FacebookData != null || undefined) {
       this.FacebookData.forEach(async (post: any): Promise<void> => {
         this.postIdForStats = post.post.postId;
         this.pageIdForStats = post.post?.postId.split('_')[0];
-
         await this.commonService
           .GetFbPostStats(this.pageIdForStats, this.postIdForStats)
           .subscribe((postStats: any) => {
             post.post['postStats'] = postStats;
-
             this.totalPostReactionsCount =
               postStats.reactioinsLIst.like +
               postStats.reactioinsLIst.love +
@@ -109,12 +94,10 @@ export class PostStatsComponent implements OnInit {
     this.FacebookData.forEach((post: any) => {
       post.comments.forEach(async (comment: any) => {
         this.commentIdForStats = comment.commentId;
-
         await this.commonService
           .GetFbCommentStats(this.pageIdForStats, this.commentIdForStats)
           .subscribe((commentStats: any) => {
             comment['comStats'] = commentStats;
-
             this.totalCommentReactionsCount =
               commentStats.reactioinsLIst.like +
               commentStats.reactioinsLIst.love +

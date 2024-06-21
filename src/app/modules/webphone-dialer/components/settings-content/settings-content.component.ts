@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { TabsArr } from '../../shared/interfaces';
-
 @Component({
   selector: 'app-settings-content',
   templateUrl: './settings-content.component.html',
@@ -8,5 +7,4 @@ import { TabsArr } from '../../shared/interfaces';
 })
 export class SettingsContentComponent {
   @Input() tabsArr:TabsArr = ({} as any) as TabsArr;
-
 }

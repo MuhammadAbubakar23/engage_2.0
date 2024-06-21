@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { HeaderService } from 'src/app/shared/services/header.service';
-
 @Component({
   standalone: true,
   imports: [CommonModule, FormsModule, NgxSpinnerModule],
@@ -26,7 +25,6 @@ export class SocialRawDataComponent implements OnInit {
   toDate: string = '';
   itemperPage: number = 25;
   totalPages: any;
-  currentDate: any;
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
@@ -35,8 +33,7 @@ export class SocialRawDataComponent implements OnInit {
     private datePipe: DatePipe,
     private _hS: HeaderService,
     private SpinnerService: NgxSpinnerService
-  ) { }
-
+  ) {}
   ngOnInit(): void {
     const newObj = {
       title: 'Social Raw Data',
@@ -44,17 +41,14 @@ export class SocialRawDataComponent implements OnInit {
     };
 
     this._hS.setHeader(newObj);
-    this.currentDate = new Date();
-    this.maxEndDate = this.currentDate.toISOString().split('T')[0];
-    // const currentDate = new Date();
-    // const oneDayBeforeCurrentDate = currentDate.setDate(
-    //   currentDate.getDate() - 1
-    // );
-    // this.maxEndDate = this.datePipe.transform(
-    //   oneDayBeforeCurrentDate,
-    //   'YYYY-MM-dd'
-    // );
-
+    const currentDate = new Date();
+    const oneDayBeforeCurrentDate = currentDate.setDate(
+      currentDate.getDate() - 1
+    );
+    this.maxEndDate = this.datePipe.transform(
+      oneDayBeforeCurrentDate,
+      'YYYY-MM-dd'
+    );
     this.GetSocialRawData();
   }
   getEndDate() {
@@ -69,26 +63,13 @@ export class SocialRawDataComponent implements OnInit {
     this.toDate = '';
   }
   GetSocialRawData() {
-    // if (this.toDate == '' && this.fromDate == '') {
-    //   let currentDate = new Date();
-    //   let prevDate = currentDate.setDate(currentDate.getDate() - 5);
-    //   this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
-
-    //   this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
-    //   this.fromDate = this.maxEndDate;
-    //   this.toDate = this.maxEndDate;
-    // } else if (this.fromDate != '' && this.toDate != '') {
-    //   this.fromDate = this.fromDate;
-    //   this.toDate = this.fromDate;
-    // }
-    // to and from date filter 
-
-    if (this.fromDate == '' && this.toDate == '') {
-      const today = this.currentDate;
-      this.toDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
-
-      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 5);
-      this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
+    if (this.toDate == '' && this.fromDate == '') {
+      // let currentDate = new Date();
+      // let prevDate = currentDate.setDate(currentDate.getDate() - 5);
+      // this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
+      // this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
+      this.fromDate = this.maxEndDate;
+      this.toDate = this.maxEndDate;
     } else if (this.fromDate != '' && this.toDate != '') {
       this.fromDate = this.fromDate;
       this.toDate = this.toDate;
@@ -132,7 +113,6 @@ export class SocialRawDataComponent implements OnInit {
       alert('select end date greater then start date');
     }
   }
-
   DownloadSocialRawData() {
     var obj = {
       fromDate: this.fromDate,
@@ -169,15 +149,12 @@ export class SocialRawDataComponent implements OnInit {
     }
     this.GetSocialRawData();
   }
-
   resetEndDate() {
     this.toDate = '';
   }
-
   closeToaster() {
     this.toastermessage = false;
   }
-
   reloadComponent(type: any) {
     if (type == 'downloading') {
       this.AlterMsg = 'Downloading Started';

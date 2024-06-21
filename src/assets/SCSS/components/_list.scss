@@ -1,6 +1,4 @@
 .list-group-section{
-    
-
     .list-group{
         &.list-group-flush {
             .list-group-item{
@@ -8,28 +6,24 @@
                 &:last-child {
                     border-bottom-width: 1px;
                 }
-
                 .icons-list{
                     opacity: 0;
                     visibility: hidden;
                     -webkit-transition: 0.5s;
                     transition: 0.5s;
                 }
-
                 &:hover{
                     border-color: $sky;
                     .icons-list{
                         opacity: 1;
                         visibility: visible; 
                     }
-
                     .user-selection-box{
                         i{
                             visibility: visible;
                         }
                     }
                 }
-
                 &.small-list-item{
                     padding: 0.5rem;
                 }
@@ -44,14 +38,12 @@
                     }
                 }
             }
-            
         }
         a{
             text-decoration: none;
         }
     }
 }
-
 .collapse-toggle-card {
     &.open {
         .chevron-icon{
@@ -68,7 +60,6 @@
         }
     }
 }
-
 .timeline{
     border-width: 0 0 0px !important;
     &:after{
@@ -88,7 +79,6 @@
         }
     }
 }
-
 .user-selection-box{
     position: absolute;
     right: 0;
@@ -104,7 +94,6 @@
         visibility: hidden;
     }
 }
-
 .user-selected{
     .user-selection-box{
         background-color: $ocean;
@@ -115,7 +104,6 @@
         }
     }
 }
-
 .small-list{
     .list-group{
         .list-group-item{

@@ -4,7 +4,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UserDetailDto } from 'src/app/shared/Models/UserDetailDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-
 @Component({
   selector: 'app-responder-profile',
   templateUrl: './responder-profile.component.html',
@@ -24,7 +23,6 @@ export class ResponderProfileComponent implements OnInit {
   webchatUniqueId: any;
   spinner1running = false;
   spinner2running = false;
-
   isEmail = false;
   isWhatsApp = false;
   isSms = false;
@@ -35,11 +33,8 @@ export class ResponderProfileComponent implements OnInit {
   isLinkdin = false;
   isYoutube = false;
   userDetailDto = new UserDetailDto();
-
   userDetailForm!: FormGroup;
-
   openedChannel: string = "";
-
   channels: any = [];
   constructor(
     private commonService: CommonDataService,
@@ -52,7 +47,6 @@ export class ResponderProfileComponent implements OnInit {
       customerId: new FormControl(''),
       fromName: new FormControl(''),
       fromProfilePic: new FormControl(''),
-
       email: new FormControl(''),
       organization: new FormControl(''),
       role: new FormControl(''),
@@ -64,7 +58,6 @@ export class ResponderProfileComponent implements OnInit {
       fatherName: new FormControl(''),
       education: new FormControl(''),
       bloodGroup: new FormControl(''),
-
       fbUniqueId: new FormControl(''),
       instaUniqueId: new FormControl(''),
       twitterUniqueId: new FormControl(''),
@@ -76,7 +69,6 @@ export class ResponderProfileComponent implements OnInit {
       webchatUniqueId: new FormControl(''),
     });
   }
-
   ngOnInit(): void {
     this.id = localStorage.getItem('storeOpenedId');
     this.openedChannel = localStorage.getItem('parent') || '{}';
@@ -86,7 +78,6 @@ export class ResponderProfileComponent implements OnInit {
   //   this.commonService.GetChannels().subscribe((res: any) => {
   //     if (Object.keys(res).length > 0) {
   //     res[0].subMenu;
-  //     console.log("this.channels", this.channels);
   //     res[0].subMenu.forEach((item: any) => {
   //       switch (item.name) {
   //         case "Email":
@@ -121,13 +112,11 @@ export class ResponderProfileComponent implements OnInit {
   //       }
   //     });
   //   }
-
   //   })
   // }
   getProfileDetails() {
     this.commonService.GetProfileDetails(this.id).subscribe((res: any) => {
       // this.GetChannels();
-      
       this.profileDetails = res;
       this.spinnerService.show();
       this.spinner2running = true;
@@ -139,7 +128,6 @@ export class ResponderProfileComponent implements OnInit {
       });
       this.spinnerService.hide();
       this.spinner2running = false;
-
       if (res.customerDetail) {
         this.userDetailForm.patchValue({
           email: res.customerDetail.email,
@@ -280,7 +268,6 @@ export class ResponderProfileComponent implements OnInit {
       };
       secondaryProfiles.push(obj);
     }
-
     this.userDetailDto = {
       customerId: this.userDetailForm.value.customerId,
       fromName: this.userDetailForm.value.fromName,
@@ -303,7 +290,6 @@ export class ResponderProfileComponent implements OnInit {
       ],
       secondaryProfiles: secondaryProfiles,
     };
-
     this.commonService.UpdateProfileDetails(this.userDetailDto).subscribe(
       (res: any) => {
         this.reloadComponent('profileUpdated');
@@ -316,7 +302,6 @@ export class ResponderProfileComponent implements OnInit {
       }
     );
   }
-
   AlterMsg: any;
   toastermessage: any;
   reloadComponent(type: any) {
@@ -387,7 +372,6 @@ export class ResponderProfileComponent implements OnInit {
   closeToaster() {
     this.toastermessage = false;
   }
-
   closeProfileComponent(child: string) {
     if (localStorage.getItem('child') == child) {
       this.toggleService.addTogglePanel('');
@@ -395,7 +379,6 @@ export class ResponderProfileComponent implements OnInit {
       this.toggleService.addTogglePanel(child);
     }
   }
-
   Cities = [
     { id: 1,  name: 'Abbottabad' },
     { id: 2,  name: 'Chakwal' },

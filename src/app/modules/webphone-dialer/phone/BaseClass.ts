@@ -1,13 +1,10 @@
-
 export  class BaseClass
 {
 	private str: string;
-
 constructor(st: string)
 {
   this.str = st;
 }
-
   public m1()
   {
 	  let x:any = new SIP.UA(
@@ -30,6 +27,5 @@ constructor(st: string)
                     level: 3,
                 }
             });
-    // console.log("Class1 -> m1 " + this.str);
   }
 }

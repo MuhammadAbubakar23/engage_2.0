@@ -6,7 +6,6 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 // import { FormsModule } from '@angular/forms';
-
 @Component({
   selector: 'app-create-tags',
   standalone: true,
@@ -47,7 +46,6 @@ export class CreateTagsComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id')
     // 
     this.editTagbyId()
-
   }
   editTagbyId() {
     const template = history.state.tag;
@@ -62,7 +60,6 @@ export class CreateTagsComponent implements OnInit {
     }
   }
   addTag() {
-
     this.commonService.GetTagsByCompayId().subscribe(
       (response: any) => {
         this.parentTags = response;
@@ -70,31 +67,23 @@ export class CreateTagsComponent implements OnInit {
           x.subTags.forEach((xyz: any) => {
             this.childTags.push(xyz)
           })
-          // console.log("Child tags===>",this.childTags)
         })
       },
-
       (error: any) => {
         alert(error.error)
       }
     );
   }
   selectParentTag(parentId: any) {
-
     const id = Number(parentId.target.value)
     this.nestTags = []
     this.childTags.forEach((abc: any) => {
-
       if (id == abc.parentId) {
         if (!this.nestTags.includes(abc)) {
           this.nestTags.push(abc)
         }
-
-        console.log("nested Tags===>", this.nestTags)
       }
     })
-
-
     // this.selectedParentTag = parentId;
     // this.commonService.GetTagById(obj).subscribe(
     //   (response: any) => {
@@ -150,18 +139,15 @@ export class CreateTagsComponent implements OnInit {
       }
     );
   }
-
   showPopup: boolean = false;
   selectedColor: string = '';
   openPopup() {
     this.showPopup = !this.showPopup
   }
   onTextColorChange(event: any) {
-
     this.selectedTextColor = event.target.value
   }
   saveVisuals() {
-
     this.showPopup = false
   }
   selectTags() {
@@ -172,14 +158,11 @@ export class CreateTagsComponent implements OnInit {
   }
   errormessage: any;
   onSave() {
-
     // if(this.form.value.parentId == 0){
     //   this.form.value.parentId =  this.form.value.baseId 
     //  }
     // const tagNames = [this.form.value];
-
     let obj = {
-
       "id": 0,
       "companyId": 0,
       "name": this.form.value.name,
@@ -192,20 +175,14 @@ export class CreateTagsComponent implements OnInit {
       "level": 0,
       "type": 0,
       "color": this.selectedTextColor
-
     }
-
-
-
     const template = history.state.tag;
     if (template) {
       const updatedTemplate = {
         ...template,
-
       };
       this.commonService.UpdateTag(updatedTemplate.id, updatedTemplate).subscribe(
         (response: any) => {
-          console.log('Template updated:', response);
           this.router.navigate(['console/tags']);
         },
         (error: any) => {
@@ -216,7 +193,6 @@ export class CreateTagsComponent implements OnInit {
       this.commonService.AddTags(obj).subscribe((res: any) => {
         this.reload('addtag')
         this.router.navigate(['console/tags']);
-
       },
         error => {
           this.errormessage = error.error.message
@@ -224,11 +200,9 @@ export class CreateTagsComponent implements OnInit {
         })
       // this.commonService.AddTags(obj).subscribe(
       //   response => {
-      //     console.log('Tags added successfully', response);
       //     
       //   },
       //   (error:any) => {
-      //     console.error('Failed to add tags', error.error);
       //   }
       // );
     }
@@ -236,7 +210,6 @@ export class CreateTagsComponent implements OnInit {
   markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
-
       if (control instanceof FormGroup) {
         this.markFormGroupTouched(control);
       }

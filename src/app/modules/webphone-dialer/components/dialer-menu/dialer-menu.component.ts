@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { TabsArr } from '../../shared/interfaces';
-
 @Component({
   selector: 'app-dialer-menu',
   templateUrl: './dialer-menu.component.html',
@@ -12,9 +11,7 @@ export class DialerMenuComponent {
   resetTabsArr: TabsArr = ({} as any) as TabsArr;
   tabsArr: TabsArr = ({} as any) as TabsArr;
   constructor() {
-
   }
-
   selectActiveTab = (value: string) => {
     if (this.activeTab == value) {
       this.tabsArr = { ...this.resetTabsArr}

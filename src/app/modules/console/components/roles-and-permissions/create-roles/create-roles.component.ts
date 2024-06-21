@@ -7,7 +7,6 @@ import { MenuModel } from 'src/app/layouts/engage2/menu-state/menu.model';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { RolesAndPermissionsService } from '../roles-and-permissions.service';
-
 @Component({
   selector: 'app-create-roles',
   standalone:true,
@@ -26,19 +25,13 @@ export class CreateRolesComponent implements OnInit {
     acesses: this.formbuilder.array([]),
     permissions: this.formbuilder.array([]),
     properties: this.formbuilder.array([]),
-    
   });
   idnetity:number=0;
   submitted = false;
   RolesNPermissionsChecked:Array<any>=[];
   constructor(private location: Location, private headerService: HeaderService, private _Activatedroute:ActivatedRoute, private formbuilder : UntypedFormBuilder, private roleService : RolesAndPermissionsService, private router: Router) { }
-
   ngOnInit(): void {
     this.RolesNPermission = this._Activatedroute.snapshot.data["rolesnpermission"];
-    console.log(this.RolesNPermission);
-    console.table(this.RolesNPermission);
-
-
     this.roleForm = this.formbuilder.group({
       name: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
       description: ['',[Validators.required]],     
@@ -46,11 +39,9 @@ export class CreateRolesComponent implements OnInit {
       // businesshours:['', [Validators.required]],
       // supportchannelhour:['', [Validators.required]],
       // supportchannelteam:['', [Validators.required]]
-      
     })
   }
   onSubmit() : void {
-    // console.log(this.teamForm.value);
     const permissions: FormArray = this.roleForm.get('permissions') as FormArray;
     while (permissions.length !== 0) {
       permissions.removeAt(0)
@@ -58,44 +49,31 @@ export class CreateRolesComponent implements OnInit {
     this.RolesNPermissionsChecked.forEach(function (jsonval:any) {
       permissions.push(new FormControl(jsonval));
     });
-    console.log(this.roleForm.value);
     // if (this.teamForm.invalid) {
-    //   console.log("In invalid")
     //  // return;
     // }
-    // console.log(this.userForm.value);
-    // console.log();
     //breturn;
     let controllerRoute = "AddRole";
     this.roleService.save(controllerRoute, this.roleForm.value).subscribe({ 
       next: (res:any) => {
-        console.log(res)
         this.router.navigate(['/console/roles-permissions']);
-
       },
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;
         // this.showError = true;
       }
     });
-    
-    
   }
   setMenuList(menuData:any){
     let _self = this;
     this.RolesNPermissionsChecked = [];
-    console.log(menuData);
     // let val = Object.values(menuData);
-    // console.log(val);
     //Object.entries(menuData).
     Object.values(menuData).forEach((innerArray:any) => {
-      //console.log(innerArray);
       innerArray.forEach(function (jsonval:any) {
         _self.RolesNPermissionsChecked.push(jsonval.mainId);
-        //console.log(jsonval);
       });      
     })
-    console.log(_self.RolesNPermissionsChecked);
   }
   onBtnClick(){
     // Navigate to /products page

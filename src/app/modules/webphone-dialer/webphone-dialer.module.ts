@@ -1,6 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { WebphoneDialerRoutingModule } from './webphone-dialer-routing.module';
 import { WebphoneDialerComponent } from './webphone-dialer.component';
 import { DialerComponent } from './dialer/dialer.component';
@@ -15,8 +14,6 @@ import { SettingsContentComponent } from './components/settings-content/settings
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
-
 @NgModule({
   declarations: [
     WebphoneDialerComponent,

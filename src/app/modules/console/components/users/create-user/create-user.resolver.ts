@@ -9,7 +9,6 @@ import { SkillsService } from '../../../services/skills.service';
 import { TeamsService } from '../../../services/teams.service';
 import { RolesAndPermissionsService } from '../../roles-and-permissions/roles-and-permissions.service';
 // import { TeamsService } from '../../teams/teams.service';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -18,10 +17,7 @@ export class CreateUserResolver implements Resolve<any> {
   resteams?:[];
   resskills?:[];
   constructor(private roles:RolesAndPermissionsService, private teams:TeamsService, private skills: SkillsService ){}
-
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Observable<any>> {
-    //console.log(role); 
-   // console.log(team);
     await this.funcRoles();
     await this.funcTeams();
     await this.funcSkills();
@@ -31,11 +27,9 @@ export class CreateUserResolver implements Resolve<any> {
     this.roles.getMyRoles().subscribe((response: any) => this.resroles = response);
   }
   async funcTeams(){
-    
     this.teams.getMyTeams().subscribe({ next: (res: any) => this.resteams = res });
   }
   async funcSkills(){
-    
     this.skills.getMySkills().subscribe({ next: (res: any) => this.resskills = res });
   }
 }

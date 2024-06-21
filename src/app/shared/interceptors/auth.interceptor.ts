@@ -3,21 +3,16 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { Router } from "@angular/router";
-
 @Injectable()
 export class authInterceptor implements HttpInterceptor{
     constructor(private router: Router){
-
     }
-
    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-       
        const key = localStorage.getItem('token');
         if (key != null) {
             const clonedReq = req.clone({
                 headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
             });
-            
             return next.handle(clonedReq).pipe(
                 tap(
                     succ => { },
@@ -35,7 +30,5 @@ export class authInterceptor implements HttpInterceptor{
         else
             return next.handle(req.clone());
     }
-    
 }
-
 export const authInterceptorProvider = { provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true }

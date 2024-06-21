@@ -8,10 +8,8 @@ import { RuleWithCount } from '../../Models/ChannelRule';
   providedIn: 'root',
 })
 export class CommonDataService {
-
   // for testing purpose
   consoleBaseUrl = environment.consoleBaseUrl;
-
   resultData: any;
   CCMSURL = environment.CCMSURL;
   JomoAccessToken = environment.JomoAccessToken;
@@ -24,7 +22,8 @@ export class CommonDataService {
   LinkedInBaseUrl = environment.LinkedInBaseUrl;
   KemediaBaseUrl = environment.KemediaBaseUrl;
   KescrmBaseUrl = environment.KescrmBaseUrl;
-  WhatsappBaseUrl = environment.WhatsappBaseUrl
+  WhatsappBaseUrl = environment.WhatsappBaseUrl;
+  KeReportsBaseUrl=environment.keReportsBaseUrl
   faceRoxBaseUrl=environment.faceRoxBaseUrl
   autoresponderbaseurl = environment.autoresponderbaseurl
   profileBaseUrl = environment.botConfigBaseUrl
@@ -61,7 +60,6 @@ export class CommonDataService {
   twitterTweetStats = environment.links.common.TwitterTweetStats;
   linkedInPostStats = environment.links.common.LinkedInPostStats;
   menu = environment.links.common.Menu;
-  queryCompleted = environment.links.common.queryCompleted;
   profileDetails = environment.links.common.profileDetails;
   updateProfile = environment.links.common.updateProfile;
   reason_types = environment.links.CCMS.reason_types;
@@ -127,7 +125,6 @@ export class CommonDataService {
   emailShiftReport = environment.links.common.emailShiftReport;
   getFollowUpCount = environment.links.common.getFollowUpCount;
   getAllWing= environment.links.console.getAllWing
-
   downloadTagReport = environment.links.common.downloadTagReport;
   regionwiseReport = environment.links.common.regionwiseReport;
   wordCloud = environment.links.common.wordCloud;
@@ -157,7 +154,6 @@ export class CommonDataService {
   updateSlaPolicy = environment.links.console.updateSlaPolicy;
   getPolicyById = environment.links.console.getPolicyById;
   getBusinessHoursById = environment.links.console.getBusinessHoursById;
-
   deleteSlaPolicy = environment.links.console.deleteSlaPolicy;
   getOperationalHours = environment.links.console.getOperationalHours;
   getBusinessHours = environment.links.console.getBusinessHours;
@@ -201,7 +197,6 @@ export class CommonDataService {
   softDeleteFb = environment.links.console.softDeleteFb
   getEntitiesProperties = environment.links.console.getEntitiesProperties
   getRuleEntityProperties = environment.links.console.getRuleEntityProperties;
-
   getChannels = environment.links.identity.channels;
   consoleChannel= environment.links.identity.consoleChannls
   deleteRoles = environment.links.identity.deleteRoles;
@@ -241,7 +236,6 @@ export class CommonDataService {
   activeChannel: any
   constructor(private http: HttpClient) {
     this.activeChannel = window.location.origin
-
     localStorage.setItem('activeChannel', this.activeChannel)
   }
   gethttpOptions() {
@@ -249,7 +243,6 @@ export class CommonDataService {
       'Content-Type': 'application/json',
       'Authorization': "Bearer " + localStorage.getItem('token')
     });
-
     let httpOptions = {
       headers: headers_object
     };
@@ -262,55 +255,39 @@ export class CommonDataService {
   GetTagsList() {
     return this.http.get(this.CommonBaseUrl + this.tagsList);
   }
-
   InsertTag(form: any) {
     return this.http.post(this.CommonBaseUrl + this.insertTags, form);
   }
-
   RemoveTag(form: any) {
     return this.http.post(this.CommonBaseUrl + this.removeTags, form);
   }
-
   InsertSentiment(form: any) {
     return this.http.post(this.CommonBaseUrl + this.insertSentiments, form);
   }
-
   MarkAsComplete(data: any) {
     return this.http.post(this.CommonBaseUrl + this.markAsComplete, data);
   }
-
   QuickReplyList() {
     return this.http.get(this.CommonBaseUrl + this.quickReplyList);
   }
-
   QuickReplyListForBazaarOnly() {
     return this.http.get(this.consoleBaseUrl + this.quickReplyListForBazaar);
   }
-
   CommentRespond(form: any) {
     return this.http.post(this.CommonBaseUrl + this.commentRespond, form);
   }
-
-  QueryCompleted(form: any) {
-    return this.http.post(this.CommonBaseUrl + this.queryCompleted, form);
-  }
-
   LikedByAdmin(form: any) {
     return this.http.post(this.CommonBaseUrl + this.likedByAdmin, form);
   }
-
   AssignQuerry(data: any) {
     return this.http.post(this.CommonBaseUrl + this.assignQuerry, data);
   }
-
   GetAgentsTeamList() {
     return this.http.get(this.CommonBaseUrl + this.agentsTeamList);
   }
-
   AssignToAnotherAgent(data: any) {
     return this.http.post(this.CommonBaseUrl + this.assignToAnotherAgent, data);
   }
-
   GetSlaList(data: any) {
     return this.http.post(this.CommonBaseUrl + this.slaList, data);
   }
@@ -320,26 +297,21 @@ export class CommonDataService {
   GetSlaDM(data: any) {
     return this.http.post(this.CommonBaseUrl + this.slaDM, data);
   }
-
   GetConversationList(data: any) {
     return this.http.post(this.CommonBaseUrl + this.mainChannelList, data);
   }
-
   GetRepliesList(data: any) {
     return this.http.post(this.CommonBaseUrl + this.repliesList, data);
   }
-
   GetChannelConversationDetail(data: any) {
     return this.http.post(this.CommonBaseUrl + this.conversationDetail, data);
   }
-
   GetChannelMessageDetail(data: any) {
     return this.http.post(this.CommonBaseUrl + this.messageDetail, data);
   }
   ReplyComment(formData: any) {
     return this.http.post(this.CommonBaseUrl + this.replyComment, formData);
   }
-
   GetHumanAgentTag() {
     return this.http.get(this.CommonBaseUrl + this.humanAgentTags);
   }
@@ -449,58 +421,46 @@ AddFbResponed( body: any) {
   GetSubReasons(reasonId: number) {
     return this.http.get(this.CommonBaseUrl + this.subReasons + reasonId);
   }
-
   GetTicketStatuses() {
     return this.http.get(this.CommonBaseUrl + this.getTicketStatuses);
   }
-
   GetOrderByCustomerEmailAddressOrPhoneNumber(form: any) {
     return this.http.post(
       this.CommonBaseUrl + this.getOrderByCustomerEmailAddressOrPhoneNumber,
       form
     );
   }
-
   CreateTicket(form: any) {
     return this.http.post(this.CommonBaseUrl + this.createTicket, form);
   }
-
-  GetAllChannelsUnrespondedCount() {
-
-    return this.http.get(
-      this.CommonBaseUrl + this.allChannelsUnrespondedCounts
+  GetAllChannelsUnrespondedCount(body:any) {
+    return this.http.post(
+      this.CommonBaseUrl + this.allChannelsUnrespondedCounts, body
     );
   }
-
   SubmitDispositionForm(form: any) {
     return this.http.post(this.CommonBaseUrl + this.saveAsCompleted, form);
   }
-
   GetDispositionHistory(body: any) {
     return this.http.post(this.CommonBaseUrl + this.dispositionHistory, body);
   }
   MarkAllAsRead(body: any) {
     return this.http.post(this.CommonBaseUrl + this.markAllAsRead, body);
   }
-
   GetAgentReport(body: any) {
     return this.http.post(this.CommonBaseUrl + this.getAgentReport, body, {
       responseType: 'text',
     });
   }
-
   GetAllocatedProfiles(wing:string,skillSlug:string) {
     return this.http.get(this.CommonBaseUrl + this.getAllocatedProfiles + '?Wings='+wing+'&SkillSlug='+skillSlug);
   }
-
   // CreateMessageTemplate(body: any) {
   //   return this.http.post(this.CommonBaseUrl + this.createMessageTemplate, body);
   // }
-
   // CreateSlaPolicy(body: any) {
   //   return this.http.post('https://10.111.32.97:45458/api/SLAPolicies/Add', body);
   // }
-
   GetAllMessages(templates: any) {
     return this.http.post(this.consoleBaseUrl + this.getAllMessages, templates);
   }
@@ -633,11 +593,9 @@ AddFbResponed( body: any) {
     let httpOptions = this.gethttpOptions();
     return this.http.post(this.FacebookBaseUrl + this.attachFacebookPage, body, httpOptions);
   }
-
   SignOut() {
     return this.http.get(this.CommonBaseUrl + this.signOut);
   }
-
   GetTags() {
     return this.http.get(this.consoleBaseUrl + this.getTags);
   }
@@ -663,13 +621,10 @@ AddFbResponed( body: any) {
     const url = `${this.IdentityBaseUrl}${this.deleteRoles}`;
     return this.http.post(url, delRolId);
   }
-
   GetTagsByCompayId() {
     return this.http.get(this.consoleBaseUrl + this.getTagsByComayId);
   }
-
   // rules
-
   GetAllRules(body: any) {
     return this.http.post(this.consoleBaseUrl + this.getAllRules, body);
   }
@@ -715,30 +670,24 @@ AddFbResponed( body: any) {
       `${this.consoleBaseUrl}${this.getRuleEntityProperties}?tableName=${entity}`
     );
   }
-
   GetCustomers(body: any) {
     return this.http.post(this.CommonBaseUrl + this.getCustomers, body);
   }
-
   GetChannels() {
     return this.http.get(this.IdentityBaseUrl + this.getChannels);
   }
   GetConsoleChannels(){
     return this.http.get(this.consoleBaseUrl+this.consoleChannel)
   }
-
   UpdateStatus(body: any) {
     return this.http.post(this.CommonBaseUrl + this.updateStatus, body);
   }
-
   InsertTagInProfile(body: any) {
     return this.http.post(this.CommonBaseUrl + this.insertTagOnProfile, body);
   }
-
   RemoveTagInProfile(body: any) {
     return this.http.post(this.CommonBaseUrl + this.removeTagOnProfile, body);
   }
-
   HideUnhideMessage(body: any) {
     // const url = this.CommonBaseUrl + this.hideUnhideMessage + '?QueryId=' + queryId + '&Status=' + status;
     // return this.http.get(url);
@@ -751,7 +700,6 @@ AddFbResponed( body: any) {
   AddCSATSurvey(body: any) {
     return this.http.post(this.ServiceBaseUrl + this.addCSAT, body);
   }
-
   GetDispositionTags() {
     return this.http.get(this.CommonBaseUrl + this.dispositionTags);
   }
@@ -763,7 +711,6 @@ AddFbResponed( body: any) {
   GetRouteToAgents(body: any) {
     return this.http.post(this.CommonBaseUrl + this.routeToAgents, body);
   }
-
   AddUniqueCustomer(body: any) {
     return this.http.post(this.CommonBaseUrl + this.addUniqueCustomer, body);
   }
@@ -780,48 +727,39 @@ AddFbResponed( body: any) {
       responseType: 'text',
     });
   }
-
   Addinboundoutbound(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.addinboundoutbound, body);
+    return this.http.post(this.KeReportsBaseUrl + this.addinboundoutbound, body);
   }
-
   GetTwitterReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.twitterReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.twitterReport, body);
   }
-
   GetTwitterSLAReport(body: any) {
     return this.http.post(this.CommonBaseUrl + this.twitterSLAReport, body);
   }
-
   GetTwitterProfileWiseReport(body: any) {
     return this.http.post(
-      this.CommonBaseUrl + this.twitterProfileWiseReport,
+      this.KeReportsBaseUrl + this.twitterProfileWiseReport,
       body
     );
   }
-
   GetUserList() {
     return this.http.get(this.IdentityBaseUrl + this.getUserList);
   }
   GetSentimentData() {
     return this.http.get(this.CommonBaseUrl + this.getSentimentData);
   }
-
   AddAgentPerformance(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.addAgentPerformance, body);
+    return this.http.post(this.KeReportsBaseUrl + this.addAgentPerformance, body);
   }
-
   GetShiftReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.shiftReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.shiftReport, body);
   }
-
   GetWhatsAppReport(body: any) {
     return this.http.post(
       this.CommonBaseUrl + this.getWhatsAppRawDataReport,
       body
     );
   }
-
   DownloadWhatsAppReport(body: any) {
     return this.http.post(
       this.CommonBaseUrl + this.downloadWhatsAppRawDataReport,
@@ -829,7 +767,6 @@ AddFbResponed( body: any) {
       { responseType: 'text' }
     );
   }
-
   DownloadSocialRawData(body: any) {
     return this.http.post(
       this.CommonBaseUrl + this.downloadSocialRawData,
@@ -842,48 +779,40 @@ AddFbResponed( body: any) {
   }
   // facebookreport
   Getfacebookreport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.facebookReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.facebookReport, body);
   }
   GetfacebookProfile(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.facebookProfile, body);
+    return this.http.post(this.KeReportsBaseUrl + this.facebookProfile, body);
   }
   // Executive Dashboard
   GetAllSocialMatrics(body: any) {
     return this.http.post(this.CommonBaseUrl + this.getAllSocialMatrics, body);
   }
-
   PostInstagramReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.instagramReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.instagramReport, body);
   }
-
   GetInstagramProfile(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.instagramProfile, body);
+    return this.http.post(this.KeReportsBaseUrl + this.instagramProfile, body);
   }
-
   GetAllTags(): Observable<any> {
-    
     return this.http.get(this.consoleBaseUrl + this.getAllTags);
   }
   GetAllTag(body: any) {
-    
     return this.http.post(this.consoleBaseUrl + this.getTagsAll, body)
   }
-
   GetAllTagsReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.getTagReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.getTagReport, body);
   }
   DownloadTagsReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.downloadTagReport, body, {
+    return this.http.post(this.KeReportsBaseUrl + this.downloadTagReport, body, {
       responseType: 'text',
     });
   }
-
   RemoveAssignedQuery(body: any) {
     // const url = `${this.CommonBaseUrl}${this.removeAssignedQuery}?ProfileId=${ProfileId}`;
     // return this.http.get(url);
     return this.http.post(this.CommonBaseUrl + this.removeAssignedQuery, body);
   }
-
   getWordCloud(fromDate: string, toDate: string): Observable<any> {
     return this.http.get(`https://tiktokcrawl.enteract.live/GetWordCloud?fromdate=${fromDate}&todate=${toDate}`)
   }
@@ -891,22 +820,17 @@ getSessionId(customerNumber:any,ClientNumber:any){
 return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentifier=${customerNumber}&clientIdentifier=${ClientNumber}`)
 }
   GetLinkedInReportData(body:any){
-
     return this.http.post(this.LinkedInBaseUrl + this.getLinkedInReport, body);
   }
   GetLinkedInReportFollwers(body: any) {
     return this.http.post(this.LinkedInBaseUrl + this.getLinkedInFollowers, body)
-
   }
-
   EmailShiftReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.emailShiftReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.emailShiftReport, body);
   }
-
   CSATFormForKE(body: any) {
     return this.http.post(this.ProfileBaseUrl + this.KECSAT, body);
   }
-
   GetCustomerProfileDetails(body: any) {
     return this.http.post(this.ProfileBaseUrl + this.getProfileInformationByID, body);
     // return this.http.post("http://10.111.32.52:45455/api/" + this.getProfileInformationByID, body);
@@ -936,7 +860,6 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
     return this.http.post(this.KemediaBaseUrl + this.PrintFeed, body)
   }
   GetKarachiCoordinates() {
-
     return this.http.get("../../../../../assets/karachiHeatMaoCoordinates.json")
   }
   GetFollowUpCount(body: any) {
@@ -949,7 +872,6 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
   GetScrmFacebookReport(body: any) {
     return this.http.post(this.KescrmBaseUrl + this.facebookscrmReport, body)
   }
-
   GetDatafortesting() {
     return this.http.get(this.KescrmBaseUrl + this.getfortesting)
   }
@@ -971,14 +893,12 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
   }
   UpdateTeam(body: any) {
     return this.http.post(this.IdentityBaseUrl + this.updateTeam, body)
-
   }
   GetTeamType(){
     return this.http.get(this.IdentityBaseUrl + this.getTeamType)
   }
   DeleteSignalTeam(id: any) {
     return this.http.get(`${this.IdentityBaseUrl}${this.deleteTeams}?id=${id}`)
-
   }
   TeamGetById(id: number){
     const url = `${this.IdentityBaseUrl}${this.teamGetById}/${id}`;
@@ -991,7 +911,7 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
     return this.http.post(this.WhatsappBaseUrl + this.whatsappBotInteraction, body)
   }
   GetInteractionReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.getInteractionReport, body)
+    return this.http.post(this.KeReportsBaseUrl + this.getInteractionReport, body)
   }
   GetAllWing(){
     return this.http.get(this.IdentityBaseUrl + this.getAllWing);
@@ -1030,5 +950,3 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
     return this.http.get<any>(url, {});
   }
 }
-
-

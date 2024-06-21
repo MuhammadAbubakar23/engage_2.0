@@ -15,6 +15,7 @@ import { UpdateListService } from '../UpdateListService/update-list.service';
 import { UpdateMessagesService } from '../UpdateMessagesService/update-messages.service';
 import { CompanyidService } from '../companyidService/companyid.service';
 import { BehaviorSubject } from 'rxjs';
+import { ConnectionIdService } from '../connectionId/connection-id.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -27,21 +28,16 @@ export class SignalRService {
   temporaryListObject: any;
   temporaryCommentObject: any;
   temporaryDMObject: any;
-
   token = localStorage.getItem('token');
   signalRStatus = localStorage.getItem('signalRStatus');
   companyId: number = 651;
-  baseUrl: string = "";
-
+  baseUrl: string = '';
   public hubconnection!: signalR.HubConnection;
   public connectionId!: string;
   public broadcastedData!: any[];
-
   SignalRCommonBaseUrl = environment.SignalRCommonBaseUrl;
-
   private connectionStateSubject: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
-
   constructor(
     private storage: StorageService,
     private addTagService: AddTagService,
@@ -54,7 +50,8 @@ export class SignalRService {
     private queryStatusService: QueryStatusService,
     private removeAssignedQueryService: RemoveAssignedQuerryService,
     private applySentimentService: ApplySentimentService,
-    private comanyidService: CompanyidService
+    private comanyidService: CompanyidService,
+    private sendConnectionId : ConnectionIdService
   ) {
     this.baseUrl = window.location.origin;
     if (this.baseUrl == 'https://keportal.enteract.live') {
@@ -75,7 +72,6 @@ export class SignalRService {
     this.comanyidService.sendcompanyid(this.companyId);
   }
   flag: string = '';
-
   startConnection() {
     // this.flag = this.router.url.split('/')[1];
     // if(this.flag == 'all-inboxes'){
@@ -87,13 +83,11 @@ export class SignalRService {
       headers: { 'X-Super-Team': JSON.stringify(this.companyId) },
       // headers: { "X-Super-Team": JSON.stringify(team.id) }
     };
-
     this.hubconnection = new signalR.HubConnectionBuilder()
       .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub')
       .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
       .build();
-
     this.hubconnection
       .start()
       .then(() => {
@@ -102,26 +96,22 @@ export class SignalRService {
       })
       .then(() => this.getConnectionId())
       .catch((err) => console.log('Error while starting connection: ' + err));
-
     // }
-
     // Handle reconnection
     this.hubconnection.onreconnected(() => {
-      
       console.log("SignalR reconnected, rejoining group");
+      this.getConnectionId()
       // this.connectionStateSubject.next(true)
       this.storeLocally?.forEach((x:any)=>{
         this.joinGroup(x);
       })
     });
   }
-  
   public getConnectionState(): BehaviorSubject<boolean> {
     return this.connectionStateSubject;
   }
   storeLocally:any[]=[];
   joinGroup(groupName: any) {
-    
     if (this.hubconnection) {
       this.hubconnection
         .invoke('JoinGroup', groupName)
@@ -134,10 +124,8 @@ export class SignalRService {
     }
     if(!this.storeLocally.includes(groupName)){
       this.storeLocally.push(groupName)
-      console.log('groyupsArray',this.storeLocally)
     }
   }
-
   reConnect() {
     // // this.flag = this.router.url.split('/')[1];
     // // if(this.flag == 'all-inboxes'){
@@ -161,9 +149,7 @@ export class SignalRService {
     //   .catch((err) => console.log('Error while starting connection: ' + err));
     // // }
   }
-
   public updateListAndDetailDataListener = () => {
-    
     this.hubconnection?.on('SendData', (data) => {
       if (
         data.conversationQueues != null &&
@@ -223,77 +209,70 @@ export class SignalRService {
       }
     });
   };
-
   public addTagDataListener = () => {
     this.hubconnection?.on('ApplyTags', (addTags) => {
       this.addTagService.sendTags(addTags);
     });
   };
-
   public removeTagDataListener = () => {
     this.hubconnection?.on('RemoveTags', (removeTags) => {
       this.removeTagService.sendTags(removeTags);
     });
   };
-
   public unRespondedCountDataListener = () => {
     this.hubconnection?.on('UnrespondedCount', (UnrespondedCount) => {
       this.unrespondedCountService.sendUnRespondedCount(UnrespondedCount);
     });
   };
-
   public replyDataListener = () => {
     this.hubconnection?.on('QueryReply', (reply) => {
       this.replyService.sendReply(reply);
     });
   };
-
   public queryStatusDataListener = () => {
     this.hubconnection?.on('QueryStatusProcess', (queryStatus) => {
       this.queryStatusService.sendQueryStatus(queryStatus);
     });
   };
-
   public updateMessageStatusDataListener = () => {
     this.hubconnection?.on('UpdateMessageStatus', (queryStatus) => {
       this.queryStatusService.sendQueryStatus(queryStatus);
     });
   };
-
   public bulkQueryStatusDataListener = () => {
     this.hubconnection?.on('ListQueryStatusProcess', (queryStatus) => {
       this.queryStatusService.bulkSendQueryStatus(queryStatus);
     });
   };
-
   public assignQueryResponseListner = () => {
     this.hubconnection?.on('AssignQueryResponse', (removeAssignedQuerry) => {
       this.removeAssignedQueryService.sendAssignedQuerry(removeAssignedQuerry);
     });
   };
-
   public applySentimentListner = () => {
     this.hubconnection?.on('ApplySentimentTags', (appliedSentiment) => {
       this.applySentimentService.sendSentiment(appliedSentiment);
     });
   };
-
   public checkConnectionStatusListener = () => {
     this.hubconnection?.on('GetMessage', (status) => {
       this.hubconnection.invoke('SetConnection').then((data) => {});
     });
   };
-
   public getAllocatedProfilesListner = () => {
     this.hubconnection?.on('GetAllocatedProfiles', (res) => {
       // this.addTagService.sendTags(res);
     });
   };
-
   public getConnectionId = () => {
-    this.hubconnection.invoke('GetConnectionId').then((data) => {
+    let obj={
+      'Bearer': localStorage.getItem('token') ,
+      'companyId':this.companyId
+    }
+    this.hubconnection.invoke('GetConnectionId',obj).then((data) => {
       this.connectionId = data;
-      localStorage.setItem('signalRConnectionId', this.connectionId);
+      localStorage.setItem('signalRConnectionId', this.connectionId)
+      this.sendConnectionId.sendConnectionId(this.connectionId)
     });
   };
 }

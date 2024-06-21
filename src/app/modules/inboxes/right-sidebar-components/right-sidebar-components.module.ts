@@ -14,8 +14,6 @@ import { HelpComponent } from './help/help.component';
 import { CreateNewComponent } from './create-new/create-new.component';
 import { FormsModule } from '@angular/forms';
 import { ComplaintTicketPanelComponent } from './complaint-ticket-panel/complaint-ticket-panel/complaint-ticket-panel.component';
-
-
 @NgModule({
   declarations: [
     TicketsComponent,

@@ -1,6 +1,5 @@
 keEdApp.controller('HeatMapController', ['$scope', '$cookies', '$window', 'NgMap', '$interval', 'DashboardService', '$uibModal',
     function ($scope, $cookies, $window, NgMap, $interval, DashboardService, $uibModal) {
-
         $scope.googleMapsUrl = googleMap;
         var defence, clifton, korangi, landhi, northNazimabad, northKarachi, nazimabad, liaquatabab, binQasim, baldia, bahdurabad, FBArea, garden, gulshan, malir, shahFaisal, surjani, tipuSultan, saddar, gadap, uthal, orangi, jauhar, lyari, simz, vm = this;
         var j = 0;
@@ -644,7 +643,6 @@ keEdApp.controller('HeatMapController', ['$scope', '$cookies', '$window', 'NgMap
             [24.877266, 66.964689],
             [24.87191, 66.974631]]
         };
-
         $scope.DefencePath = $scope.AreaArray.DefencePath;
         $scope.CliftonPath = $scope.AreaArray.CliftonPath;
         $scope.KorangiPath = $scope.AreaArray.KorangiPath;
@@ -670,7 +668,6 @@ keEdApp.controller('HeatMapController', ['$scope', '$cookies', '$window', 'NgMap
         $scope.JauharPath = $scope.AreaArray.JauharPath;
         $scope.LyariPath = $scope.AreaArray.LyariPath;
         $scope.SIMZPath = $scope.AreaArray.SIMZPath;
-
         NgMap.getMap().then(function (map) {
             vm.map = map;
             defence = map.shapes.defence;
@@ -698,14 +695,7 @@ keEdApp.controller('HeatMapController', ['$scope', '$cookies', '$window', 'NgMap
             jauhar = map.shapes.jauhar;
             lyari = map.shapes.lyari;
             simz = map.shapes.simz;
-
-
         });
-
-
-
-
-
         vm.getRegionWiseChartDrillDown = function (event, category) {
             var dateFrom = moment($scope.date.startDate).add(5, "hours").toDate();
             var dateTo = moment($scope.date.endDate).add(5, "hours").toDate();
@@ -713,7 +703,6 @@ keEdApp.controller('HeatMapController', ['$scope', '$cookies', '$window', 'NgMap
                 dateFrom: dateFrom, dateTo: dateTo, category: category
             };
             //$scope.items = { title: "" };
-
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: '/scripts/Views/Shared/_ViewRegionWiseDrillDown.html',
@@ -729,11 +718,8 @@ keEdApp.controller('HeatMapController', ['$scope', '$cookies', '$window', 'NgMap
             }, function () {
             });
         }
-
-
         $scope.fetchAreaReport = function () {
             ;
-
             var dateFrom = moment($scope.date.startDate).add(5, "hours").toDate();
             var dateTo = moment($scope.date.endDate).add(5, "hours").toDate();
             DashboardService.GetAreaReport(dateFrom, dateTo).then(function (l) {
@@ -864,7 +850,6 @@ keEdApp.controller('HeatMapController', ['$scope', '$cookies', '$window', 'NgMap
                                 orangi.set('strokeColor', fillColor)
                             }
                         });
-
                     }
                 }
             }, function (err) {

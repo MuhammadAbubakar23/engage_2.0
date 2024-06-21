@@ -16,16 +16,13 @@ export class ConsoleContactsComponent implements OnInit {
 searchName:any
 currentPage: number = 1;
 itemsPerPage: number = 10;
-
 totalCounts:any;
   constructor(private headerService: HeaderService,
     private commanService:CommonDataService) { }
-
   ngOnInit(): void {
     this.getAllContacts()
   }
 getAllContacts(){
-  
   let obj={
     "fromDate": null,
     "toDate": null,
@@ -48,51 +45,39 @@ getAllContacts(){
   })
 }
 filltername(){
-  
   if(this.searchName.length>=2){
     this.getAllContacts()
   }
   if(this.searchName.length==0){
     this.getAllContacts()
   }
- 
 }
   updatevalue(string:any){
     this.headerService.updateMessage(string);
   }
-
   setPerPage(evt:any){
 this.itemsPerPage=evt
 this.currentPage=1
 this.getAllContacts()
- 
   }
   previousPage(){
-
   }
   getVisiblePageNumbers(){
-    
     const maxPages = Math.ceil(this.totalCounts / this.itemsPerPage);
     const visiblePages = 5;
-
     let startPage = Math.max(1, this.currentPage - Math.floor(visiblePages / 2));
     let endPage = Math.min(startPage + visiblePages - 1, maxPages);
-
     if (endPage - startPage + 1 < visiblePages) {
       startPage = Math.max(1, endPage - visiblePages + 1);
     }
-
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
-  
   goToPage(evt:any){
-    
     if (evt >= 1 && evt <= Math.ceil(this.totalCounts / this.itemsPerPage)) {
       this.currentPage = evt;
     }
   this.getAllContacts()
   }
   nextPage(){
-
   }
 }

@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
-
 @Injectable({
   providedIn: 'any'
 })
 export class CookieStorageService {
-
   private cookieStore: any = {};
-
   constructor() {
       this.parseCookies(document.cookie);
   }
-
   public parseCookies(cookies = document.cookie) {
       this.cookieStore = {};
       if (!!cookies === false) { return; }
@@ -33,5 +29,4 @@ export class CookieStorageService {
   clean(){
     this.cookieStore = null;
   }
-
 }

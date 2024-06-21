@@ -74,7 +74,6 @@ export class CreateSkillsComponent implements OnInit {
   selectedRules: string[] = [];
   showPopup: boolean = false;
   updateSelectedRules(id: number) {
-
     this.subRules.forEach((item: any) => {
       if (item.id === id) {
         item.isSelected = true;
@@ -83,14 +82,12 @@ export class CreateSkillsComponent implements OnInit {
     this.selectedRules = this.subRules
       .filter(rule => rule.isSelected)
       .map(rule => rule.name);
-    console.log(this.selectedRules)
   }
   removeSelectedRule(rule: string) {
     const index = this.selectedRules.indexOf(rule);
     if (index !== -1) {
       this.selectedRules.splice(index, 1);
     }
-
     // Update isSelected property in subRules array
     const selectedRule = this.subRules.find(r => r.name === rule);
     if (selectedRule) {
@@ -98,7 +95,6 @@ export class CreateSkillsComponent implements OnInit {
     }
   }
   onTextColorChange(event: any) {
-
     this.selectedTextColor = event.target.value
   }
   openPopup() {
@@ -110,10 +106,8 @@ export class CreateSkillsComponent implements OnInit {
   // businesshours : new UntypedFormControl(),
   // supportchannelhour : new UntypedFormControl(),
   // skillRules : new UntypedFormControl(),
-
   // });
   submitted = false;
-
   username: string = ''
   public subscription!: Subscription
   subRules: any[] = []
@@ -124,18 +118,15 @@ export class CreateSkillsComponent implements OnInit {
       pageNumber: 1,
       pageSize: 100
     }
-
     this.commondata.GetAllRules(data).subscribe((res: any) => {
       this.subRules = res.Rules.map((rule: any) => ({ ...rule, isSelected: false }));
     })
-    console.log("GetAllRules", this.subRules)
   }
   constructor(private formbuilder: FormBuilder, private router: Router,
     private ExchangeData: DataExchangeServicesService,
     private changeDetecte: ChangeDetectorRef,
     private commondata: CommonDataService,
     private activeRoute: ActivatedRoute) {
-
   }
   userForm = new FormGroup({
     teamname: new FormControl('', [Validators.required,
@@ -156,7 +147,6 @@ export class CreateSkillsComponent implements OnInit {
     }
     return null;
   }
-
   ngOnInit() {
     this.GetRules()
     this.getTagsList()
@@ -166,18 +156,13 @@ export class CreateSkillsComponent implements OnInit {
     this.getAllWing()
     // this.getAllkeyword()
   }
-
   selectRulesBasedOnSkillTags(selectedRules: any): void {
-
     this.selectedRules = [];
-    console.log("Checking tags", this.subRules)
     for (const rule of selectedRules) {
       this.selectRuleById(rule.id, this.subRules);
     }
   }
-
   selectRuleById(id: number, rules: any[]): void {
-
     this.selectedRules = [];
     const ruleToCheck = rules.find(rule => rule.id === id);
     if (ruleToCheck) {
@@ -186,17 +171,13 @@ export class CreateSkillsComponent implements OnInit {
     }
   }
   checkTagsBasedOnSkillTags(skillTags: any): void {
-
-    console.log("Checking tags", this.TagsLists)
     for (const skillTag of skillTags) {
       this.checkTagById(skillTag.id, this.TagsLists);
     }
   }
   checkTagById(id: number, tags: any[]): void {
     this.checkedIds = []
-
     const tagToCheck = tags.find(tag => tag.mainId === id);
-
     if (tagToCheck) {
       tagToCheck.isChecked = true;
       this.checkedIds.push(tagToCheck.mainId)
@@ -207,18 +188,11 @@ export class CreateSkillsComponent implements OnInit {
         }
       }
     }
-
   }
-
-
   getSkillsById() {
-
     this.id = Number(this.activeRoute.snapshot.paramMap.get('id'));
     if (this.id) {
       this.commondata.editSkill(this.id).subscribe((res: any) => {
-
-        console.log("the Edit Data===>", res);
-
         this.userForm.patchValue({
           "teamname": res.name,
           "description": res.descreption,
@@ -228,12 +202,9 @@ export class CreateSkillsComponent implements OnInit {
         });
         this.checkTagsBasedOnSkillTags(res.skillTags);
         this.selectRulesBasedOnSkillTags(res.skillRules);
-
       });
     }
-
   }
-
   AddTeamMembers() {
     this.isActive = !this.isActive;
   }// get all business Hours
@@ -241,7 +212,6 @@ export class CreateSkillsComponent implements OnInit {
     const data = {}
     this.commondata.GetBusinessHours(data).subscribe((res: any) => {
       this.isBusnisshours = res.BusinessHours
-      console.log("All business hours===>", res)
     })
   }
   // get all Sla Policies
@@ -249,17 +219,11 @@ export class CreateSkillsComponent implements OnInit {
     const data = {}
     this.commondata.GetSlaPolicy(data).subscribe((res: any) => {
       this.isSlaPolicies = res.SLAPolices
-      console.log("this.isSlaPolices==>", this.isSlaPolicies)
     })
   }
-
   getTagsList() {
-
     this.commondata.GetTagsByCompanyId().subscribe((res: any) => {
-      
-      console.log("Response", res)
       this.TagsLists = res
-      console.log("this.tagsLsiting===>", this.TagsLists)
       this.TagsLists.forEach((tag: any) => {
         tag['isChecked'] = false;
         if (tag.subTags) {
@@ -267,44 +231,31 @@ export class CreateSkillsComponent implements OnInit {
             subTag['isChecked'] = false;
           });
         }
-
       })
     })
-    console.log("this.tagsLsiting1===>", this.TagsLists)
   }
-
   getAllWing() {
-
     this.commondata.GetAllWing().subscribe((res: any) => {
       this.isSelectedWing = res;
       // this.isSelectedWing = [...this.Wing.map(wing => ({ id: wing.id, name: wing.name, slug: wing.slug }))];
     })
-    // console.log("GetAllWings", this.Wing);
-    console.log("isSelectedWing", this.isSelectedWing);
   }
-
   checkedIds: number[] = [];
   checkParent(parentIndex: number): void {
-
     const parent = this.TagsLists[parentIndex];
     parent.isChecked = !parent.isChecked;
-
     if (parent.subTags) {
       for (const child of parent.subTags) {
         child.isChecked = parent.isChecked;
       }
     }
-
     this.updateParentCheckedState(parent);
   }
-
   checkChild(parentIndex: number, child: any): void {
     const parent = this.TagsLists[parentIndex];
     child.isChecked = !child.isChecked;
-
     this.updateParentCheckedState(parent);
   }
-
   updateParentCheckedState(parent: any): void {
     const anyChildChecked = parent.subTags ? parent.subTags.some((c: any) => c.isChecked) : false;
     if (parent.subTags) {
@@ -315,31 +266,23 @@ export class CreateSkillsComponent implements OnInit {
       }
     }
   }
-
-
   toggleDropdown(tagName: string) {
-
     this.showDropdownState[tagName] = !this.showDropdownState[tagName];
   }
-
   private markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
-
       if (control instanceof FormGroup) {
         this.markFormGroupTouched(control);
       }
     });
   }
   getCheckedIds(): number[] {
-
     const checkedIds: number[] = [];
-
     this.TagsLists.forEach(parent => {
       if (parent.isChecked) {
         checkedIds.push(parent.mainId);
       }
-
       if (parent.subTags) {
         parent.subTags.forEach((child: any) => {
           if (child.isChecked) {
@@ -348,7 +291,6 @@ export class CreateSkillsComponent implements OnInit {
         });
       }
     });
-
     return checkedIds;
   }
   isresponderchecked: boolean = false
@@ -368,37 +310,25 @@ export class CreateSkillsComponent implements OnInit {
         "inbox": this.isInboxChecked,
         "color": this.selectedTextColor,
         "icon": this.userForm.value.icon,
-
       }
       if (this.id && this.id !== null) {
         this.commondata.UpdateSkill(this.id, data).subscribe((res: any) => {
-          console.log("Update skills===>", res)
           this.router.navigateByUrl('/console/skills');
           this.sendtoastervalue = "updateSkill"
         })
       }
       else {
-        console.log("this.userForm.value===>", data);
         this.commondata.AddSkill(data).subscribe((res: any) => {
-          console.log("addSkills===>", res)
           this.sendtoastervalue = 'skilladd'
           this.userForm.reset()
           this.router.navigateByUrl('/console/skills')
         })
-
       }
     }
     else {
       this.markFormGroupTouched(this.userForm);
     }
-
-
   }
-
-
-
-
-
   routerLink() {
     this.router.navigateByUrl('/console/skills')
   }

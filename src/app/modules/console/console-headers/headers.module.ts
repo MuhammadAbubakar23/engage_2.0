@@ -47,8 +47,6 @@ import { ConsoleCreateBotConfigurationHeaderComponent } from './console-create-b
 
 @NgModule({
   declarations: [
-  
-  
     ConsoleUsersHeaderComponent,
           ConsoleTeamsHeaderComponent,
           ConsoleRulesHeaderComponent,
@@ -89,7 +87,6 @@ import { ConsoleCreateBotConfigurationHeaderComponent } from './console-create-b
           ConsoleBotConfigurationHeaderComponent,
           ConsoleCreateBotConfigurationHeaderComponent
       //    RightHeaderComponentsComponent
-
   ],
   imports: [
     CommonModule,
@@ -97,6 +94,5 @@ import { ConsoleCreateBotConfigurationHeaderComponent } from './console-create-b
   ],
   exports:[
   ]
-  
 })
 export class HeadersModule { }

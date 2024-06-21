@@ -1,5 +1,4 @@
 <div class="tab-content position-relative" id="myTabContent">
-
     <div class="tab-pane fade  show active socila-channels-tab" id="emails" role="tabpanel"
         aria-labelledby="emails-tab">
         <div *ngIf="spinner1running">
@@ -12,13 +11,8 @@
             <div class="titleIcon d-flex align-items-center">
                 <i class="fal fa-envelope"></i>
                 <div class="titleLink ms-1">
-                 
-                   /Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}}
-                    </div> 
-
-
-
-
+                    /Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}}
+                </div>
             </div>
             <ul class="nav nav-tabs ms-3 h-100" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -70,10 +64,10 @@
                     <div class="tab-pane fade show active" id="post" role="tabpanel" aria-labelledby="post-tab">
                         <div *ngFor="let group of result">
                             <!-- <div *ngFor="let group of list.groupedComments | sort:criteria"> -->
-                                <div class="header-subheading text silver">
-                                    {{group.date | date:'MMMM dd, YYYY'}}
-                                    <!-- Mar 6, 2023, 2:43 PM (4 days ago) -->
-                                    <!-- <span class="tag-icon">
+                            <div class="header-subheading text silver">
+                                {{group.date | date:'MMMM dd, YYYY'}}
+                                <!-- Mar 6, 2023, 2:43 PM (4 days ago) -->
+                                <!-- <span class="tag-icon">
                                     <i class="fas fa-bookmark"></i>
                                     </span>
                                     <small class="tag skyTransBg charcoal">
@@ -84,235 +78,203 @@
                                     Feedback
                                     <i class="fal fa-times"></i>
                                     </small> -->
-                                </div>
-                                <ng-container *ngFor="let grp of group.subjects | sort:criteria">
-                                    <div class="email-content-header">
-
-                                        <div class="heading-text">
-                                            {{grp.message}}
-                                        </div>
+                            </div>
+                            <ng-container *ngFor="let grp of group.subjects | sort:criteria">
+                                <div class="email-content-header">
+                                    <div class="heading-text">
+                                        {{grp.message}}
                                     </div>
-                                    <ng-container *ngFor="let email of grp.items.items | sort:criteria; let i = index">
-                                        <ng-container *ngIf="email.queryStatus != 'QueryCompleted'">
-                                            <div class="accordion email-accordion" id="abc">
-
-                                                <div class="accordion-item email-wrap mb-3">
-                                                    <div class="accordion-header " [id]="'heading'+email.id+i">
-                                                        <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse"
-                                                            [attr.data-bs-target]="'#collapse'+email.id+i"
-                                                            aria-expanded="true"
-                                                            [attr.aria-controls]="'collapse'+email.id+i"
-                                                            [ngClass]="email.queryStatus == 'Unresponded'?'unread':''">
-                                                            <div class="avatar large">
-                                                                <!-- <img src={{list.user.profilePic}}> -->
-                                                                <!-- <console-table-with-image [name]="fullName" [subname]="''" [imagename]="''"></console-table-with-image> -->
-                                                                <a>
-                                                                    <ul class="list-group list-group-flush">
-                                                                        <li
-                                                                            class="list-group-item d-flex justify-content-between align-items-sm-center ps-0">
-                                                                            <span class="iconButton large"
-                                                                                style="margin-right: 5px;">
-                                                                                <app-avatar-photo [photoUrl]="imagename" [name]="fullName"></app-avatar-photo>
-                                                                                <!-- <img [src]="imagename" alt="-" class="rounded-circle w-100 h-100"> -->
-                                                                            </span>
-                                                                            <!-- <div class="ms-2 me-auto coal">
+                                </div>
+                                <ng-container *ngFor="let email of grp.items.items | sort:criteria; let i = index">
+                                    <div class="accordion email-accordion" id="abc">
+                                        <div class="accordion-item email-wrap mb-3">
+                                            <div class="accordion-header " [id]="'heading'+email.id+i">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse"
+                                                    [attr.data-bs-target]="'#collapse'+email.id+i" aria-expanded="true"
+                                                    [attr.aria-controls]="'collapse'+email.id+i"
+                                                    [ngClass]="email.queryStatus == 'Unresponded'?'unread':''">
+                                                    <div class="avatar large">
+                                                        <!-- <img src={{list.user.profilePic}}> -->
+                                                        <!-- <console-table-with-image [name]="fullName" [subname]="''" [imagename]="''"></console-table-with-image> -->
+                                                        <a>
+                                                            <ul class="list-group list-group-flush">
+                                                                <li
+                                                                    class="list-group-item d-flex justify-content-between align-items-sm-center ps-0">
+                                                                    <span class="iconButton large"
+                                                                        style="margin-right: 5px;">
+                                                                        <app-avatar-photo [photoUrl]="imagename"
+                                                                            [name]="fullName"></app-avatar-photo>
+                                                                        <!-- <img [src]="imagename" alt="-" class="rounded-circle w-100 h-100"> -->
+                                                                    </span>
+                                                                    <!-- <div class="ms-2 me-auto coal">
                                                                     <div class="fw-bold night">{{name}}</div>{{subname}}
                                                                 </div> -->
-                                                                        </li>
-                                                                    </ul>
-                                                                </a>
-                                                            </div>
-                                                            <div class="card-header-content">
-                                                                <div class="card-header-top">
-                                                                    <h6 class="mb-1 darkblue">{{email?.userName}} </h6>
-                                                                            <!--.split('<')[0] <small class="silver me-2 full-date">{{email.createdDate |  date:'MMMM d, y, h:mm:ss a'}}</small> -->
-                                                                </div>
-                                                                <div class="msg-snippet show-text">
-                                                                    <!-- <p class="mb-1 coal " data-maxlength="240" [innerHTML]="trimText(email.body)"></p> -->
-                                                                    <p class="mb-1 coal " data-maxlength="240"
-                                                                        [innerHTML]="email.message"></p>
-                                                                </div>
-                                                            </div>
-                                                        </button>
-                                                        <div class="top-right">
-                                                            <!-- expanded header -->
-                                                            <div class="expanded-card-header-actions icons-list">
-                                                                <small class="silver ms-2 me-2">{{email.createdDate |
-                                                                    date:'MMMM d, y, h:mm:ss a'}}</small>
-                                                                <ng-container
-                                                                    *ngIf="email.queryStatus != 'Responded' && email.queryStatus != 'Completed'">
-                                                                    <small>{{email.queryStatus}}</small>
-                                                                    <div class="dropdown w-auto">
-                                                                        <button class="btn icon p-0 iconHover"
-                                                                            type="button" id="dropdownMenuButton1"
-                                                                            data-bs-toggle="dropdown"
-                                                                            aria-expanded="false">
-                                                                            <span class="iconButton small btn">
-                                                                                <i
-                                                                                    class="far fa-ellipsis-v charcoal"></i>
-                                                                            </span>
-                                                                        </button>
-                                                                        <ul class="dropdown-menu"
-                                                                            aria-labelledby="dropdownMenuButton1">
-
-                                                                            <a class="dropdown-item"
-                                                                                *ngIf="email.queryStatus != 'Responded'"
-                                                                                (click)="commentStatus(email.id, email.contentType)">Read</a>
-                                                                            <!-- <a class="dropdown-item" *ngIf="email.queryStatus == 'Responded'" (click)="queryCompleted(email.id, email.contentType)">Completed</a> -->
-                                                                        </ul>
-                                                                    </div>
-                                                                </ng-container>
-                                                                <div class="w-auto"
-                                                                    *ngIf="email.queryStatus == 'Responded' || email.queryStatus == 'Completed'"
-                                                                    style="margin-left: 20px;">
-                                                                    <small>{{email.queryStatus}} </small>
-                                                                </div>
-                                                            </div>
+                                                                </li>
+                                                            </ul>
+                                                        </a>
+                                                    </div>
+                                                    <div class="card-header-content">
+                                                        <div class="card-header-top">
+                                                            <h6 class="mb-1 darkblue">{{email?.userName}} </h6>
+                                                            <!--.split('<')[0] <small class="silver me-2 full-date">{{email.createdDate |  date:'MMMM d, y, h:mm:ss a'}}</small> -->
+                                                        </div>
+                                                        <div class="msg-snippet show-text">
+                                                            <!-- <p class="mb-1 coal " data-maxlength="240" [innerHTML]="trimText(email.body)"></p> -->
+                                                            <p class="mb-1 coal " data-maxlength="240"
+                                                                [innerHTML]="email.message"></p>
                                                         </div>
                                                     </div>
-
-                                                    <div [id]="'collapse'+email.id+i"
-                                                        class="accordion-collapse collapse"
-                                                        [attr.aria-labelledby]="'heading'+email.id+i"
-                                                        data-bs-parent="#accordionExample">
-                                                        <div class="accordion-body">
-                                                            <div class="mail-recepients silver mb-3"
-                                                                *ngIf="email.multipleTo">
-                                                                <small>to:
-                                                                    <!-- <span *ngFor="let to of email.to">
+                                                </button>
+                                                <div class="top-right">
+                                                    <!-- expanded header -->
+                                                    <div class="expanded-card-header-actions icons-list">
+                                                        <small class="silver ms-2 me-2">{{email.createdDate |
+                                                            date:'MMMM d, y, h:mm:ss a'}}</small>
+                                                        <ng-container
+                                                            *ngIf="email.queryStatus != 'Responded' && email.queryStatus != 'Completed'">
+                                                            <small>{{email.queryStatus}}</small>
+                                                            <div class="dropdown w-auto">
+                                                                <button class="btn icon p-0 iconHover" type="button"
+                                                                    id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                                    aria-expanded="false">
+                                                                    <span class="iconButton small btn">
+                                                                        <i class="far fa-ellipsis-v charcoal"></i>
+                                                                    </span>
+                                                                </button>
+                                                                <ul class="dropdown-menu"
+                                                                    aria-labelledby="dropdownMenuButton1">
+                                                                    <a class="dropdown-item"
+                                                                        *ngIf="email.queryStatus != 'Responded'"
+                                                                        (click)="commentStatus(email.id, email.contentType)">Read</a>
+                                                                </ul>
+                                                            </div>
+                                                        </ng-container>
+                                                        <div class="w-auto"
+                                                            *ngIf="email.queryStatus == 'Responded' || email.queryStatus == 'Completed'"
+                                                            style="margin-left: 20px;">
+                                                            <small>{{email.queryStatus}} </small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div [id]="'collapse'+email.id+i" class="accordion-collapse collapse"
+                                                [attr.aria-labelledby]="'heading'+email.id+i"
+                                                data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="mail-recepients silver mb-3" *ngIf="email.multipleTo">
+                                                        <small>to:
+                                                            <!-- <span *ngFor="let to of email.to">
                                                             {{to.emailAddress}}
                                                         </span> -->
-                                                        Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}}
-                                                                    <!-- {{email.multipleTo}} -->
-                                                                </small>
-                                                            </div>
-                                                            <p [innerHTML]="email.body"></p>
-                                                           
-                                                           
-                                                            <div class="email-attachments">
-                                                                <div *ngFor="let attachment of email.attachments">
-                                                                    <img class="whatsapp-single-img whatsappImgModalBtn"
-                                                                    *ngIf="isImage(attachment)"
-                                                                    [src]="attachment.attachmentUrl" 
-                                                                    controls>
-                                                                
-
-                                                                    <video class="video" *ngIf="isVideo(attachment)"
-                                                                        src={{attachment.attachmentUrl}}
-                                                                        controls></video>
-
-                                                                    <audio class="audio" *ngIf="isAudio(attachment)"
-                                                                        src={{attachment.attachmentUrl}}
-                                                                        controls></audio>
-
-                                                                    <a *ngIf="isOther(attachment)"
-                                                                        [href]="attachment.attachmentUrl"
-                                                                        target="_blank">
-                                                                        <button class="download-button">{{
-                                                                            attachment.name }}</button>
-                                                                    </a>
-
-                                                                </div>
-                                                            </div>
-
-                                                            <button
-                                                                class="expand-referenced-msg badge btn rounded-pill "
-                                                                (click)="expandEmailBody()">
-                                                                <i class="fal fa-ellipsis-h"></i>
-                                                            </button>
-                                                            <div class="mail-reference-msg-wrap"
-                                                                [ngClass]="expandedEmailBody == false? 'd-none':''">
-                                                                <div class="msg-ref-info">
-                                                                    <strong>From:</strong>
-                                                                    {{email.userName}}
-                                                                </div>
-                                                                <div class="msg-ref-info">
-                                                                    <strong>Sent:</strong>
-                                                                    {{email.createdDate | date:'EEEE d, y'}}
-                                                                </div>
-                                                                <div class="msg-ref-info" *ngIf="email.multipleTo">
-                                                                    <strong>To:</strong>
-                                                                    <!-- {{email.multipleTo}} -->
-                                                                    Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}}
-                                                                </div>
-                                                                <div class="msg-ref-info" *ngIf="email.multipleCc">
-                                                                    <strong>Cc:</strong>
-                                                                    {{email.multipleCc}}
-                                                                </div>
-                                                                <div class="msg-ref-info">
-                                                                    <strong>Subject:</strong>
-                                                                    {{email.message}}
-                                                                </div>
-                                                                <div class="ref-msg" [innerHTML]="email.body">
-                                                                    {{email.body}}
-                                                                </div>
-                                                            </div>
-                                                            <div class="tags">
-                                                                <span *ngFor="let tag of email.tags"
-                                                                    (click)="removeTagFromFeed(tag.feedId, tag.name)"
-                                                                    class="badge rounded-pill email tag tag1 selected"
-                                                                    style="margin-right:5px">{{tag.name | tagSlugConversion}}</span>
-                                                            </div>
-                                                            <!-- For Sentiment Pills -->
-                                                            <div class="tags" *ngIf="email.sentiment">
-                                                                <span
-                                                                    class="badge rounded-pill email tag tag1 selected">{{email.sentiment?.name}}</span>
-                                                            </div>
-                                                            <!-- For Sentiment Pills -->
-                                                            <button
-                                                                class="expand-referenced-msg badge btn rounded-pill d-none">
-                                                                <i class="fal fa-ellipsis-h"></i>
-                                                            </button>
-                                                            <div class="btn-groups">
-                                                                <button (click)="sendReplyInformation(email.id)"
-                                                                    type="button"
-                                                                    class="btn btn-outline-secondary me-2 emailModalBtn"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#emailModalBtn"><i
-                                                                        class="fal fa-reply"></i>
-                                                                    Reply</button>
-                                                                <button type="button"
-                                                                    (click)="sendReplyAllInformation(email.id)"
-                                                                    class="btn btn-outline-secondary me-2 emailModalBtn"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#emailModalBtn"><i
-                                                                        class="fal fa-reply-all"></i>
-                                                                    Reply all </button>
-                                                                <button type="button"
-                                                                    (click)="sendForwardInformation(email.id)"
-                                                                    class="btn btn-outline-secondary me-2"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#emailModalBtn"><i
-                                                                        class="fal fa-arrow-alt-to-right"></i>
-                                                                    Forward</button>
-
-                                                                <button type="button"
-                                                                    class="btn btn-outline-secondary me-2"
-                                                                    id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                                    data-bs-auto-close="outside"><i
-                                                                        class="fal fa-tag"></i>
-                                                                    Tag</button>
-                                                                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                    aria-labelledby="dropdownMenuButton2">
-                                                                    <ul class="dropdown-listing">
-                                                                        <li class="dropdown-listing-header">
-                                                                            <div class="head-section">
-                                                                                <div class="left">
-                                                                                    <h6>Tags
-                                                                                    </h6>
-                                                                                </div>
-                                                                                <!-- <a class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
+                                                            Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}}
+                                                            <!-- {{email.multipleTo}} -->
+                                                        </small>
+                                                    </div>
+                                                    <p [innerHTML]="email.body"></p>
+                                                    <div class="email-attachments">
+                                                        <div *ngFor="let attachment of email.attachments">
+                                                            <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                *ngIf="isImage(attachment)"
+                                                                [src]="attachment.attachmentUrl" controls>
+                                                            <video class="video" *ngIf="isVideo(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls></video>
+                                                            <audio class="audio" *ngIf="isAudio(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls></audio>
+                                                            <a *ngIf="isOther(attachment)"
+                                                                [href]="attachment.attachmentUrl" target="_blank">
+                                                                <button class="download-button">{{
+                                                                    attachment.name }}</button>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <button class="expand-referenced-msg badge btn rounded-pill "
+                                                        (click)="expandEmailBody()">
+                                                        <i class="fal fa-ellipsis-h"></i>
+                                                    </button>
+                                                    <div class="mail-reference-msg-wrap"
+                                                        [ngClass]="expandedEmailBody == false? 'd-none':''">
+                                                        <div class="msg-ref-info">
+                                                            <strong>From:</strong>
+                                                            {{email.userName}}
+                                                        </div>
+                                                        <div class="msg-ref-info">
+                                                            <strong>Sent:</strong>
+                                                            {{email.createdDate | date:'EEEE d, y'}}
+                                                        </div>
+                                                        <div class="msg-ref-info" *ngIf="email.multipleTo">
+                                                            <strong>To:</strong>
+                                                            <!-- {{email.multipleTo}} -->
+                                                            Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}}
+                                                        </div>
+                                                        <div class="msg-ref-info" *ngIf="email.multipleCc">
+                                                            <strong>Cc:</strong>
+                                                            {{email.multipleCc}}
+                                                        </div>
+                                                        <div class="msg-ref-info">
+                                                            <strong>Subject:</strong>
+                                                            {{email.message}}
+                                                        </div>
+                                                        <div class="ref-msg" [innerHTML]="email.body">
+                                                            {{email.body}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="tags">
+                                                        <span *ngFor="let tag of email.tags"
+                                                            (click)="removeTagFromFeed(tag.feedId, tag.name)"
+                                                            class="badge rounded-pill email tag tag1 selected"
+                                                            style="margin-right:5px">{{tag.name |
+                                                            tagSlugConversion}}</span>
+                                                    </div>
+                                                    <!-- For Sentiment Pills -->
+                                                    <div class="tags" *ngIf="email.sentiment">
+                                                        <span
+                                                            class="badge rounded-pill email tag tag1 selected">{{email.sentiment?.name}}</span>
+                                                    </div>
+                                                    <!-- For Sentiment Pills -->
+                                                    <button class="expand-referenced-msg badge btn rounded-pill d-none">
+                                                        <i class="fal fa-ellipsis-h"></i>
+                                                    </button>
+                                                    <div class="btn-groups">
+                                                        <button (click)="sendReplyInformation(email.id)" type="button"
+                                                            class="btn btn-outline-secondary me-2 emailModalBtn"
+                                                            data-bs-toggle="modal" data-bs-target="#emailModalBtn"><i
+                                                                class="fal fa-reply"></i>
+                                                            Reply</button>
+                                                        <button type="button"
+                                                            (click)="sendReplyAllInformation(email.id)"
+                                                            class="btn btn-outline-secondary me-2 emailModalBtn"
+                                                            data-bs-toggle="modal" data-bs-target="#emailModalBtn"><i
+                                                                class="fal fa-reply-all"></i>
+                                                            Reply all </button>
+                                                        <button type="button" (click)="sendForwardInformation(email.id)"
+                                                            class="btn btn-outline-secondary me-2"
+                                                            data-bs-toggle="modal" data-bs-target="#emailModalBtn"><i
+                                                                class="fal fa-arrow-alt-to-right"></i>
+                                                            Forward</button>
+                                                        <button type="button" class="btn btn-outline-secondary me-2"
+                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                            data-bs-auto-close="outside"><i class="fal fa-tag"></i>
+                                                            Tag</button>
+                                                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                            aria-labelledby="dropdownMenuButton2">
+                                                            <ul class="dropdown-listing">
+                                                                <li class="dropdown-listing-header">
+                                                                    <div class="head-section">
+                                                                        <div class="left">
+                                                                            <h6>Tags
+                                                                            </h6>
+                                                                        </div>
+                                                                        <!-- <a class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
                                                                                 (click)="closeTagListDropdown()"
                                                                                     id="dropdownMenuButton3" data-bs-toggle="dropdown"
                                                                                     aria-expanded="false">
                                                                                     <i class="fal fa-times silver"></i>
                                                                                 </a> -->
-                                                                            </div>
-                                                                            <!-- <form class="custom-searchbar">
+                                                                    </div>
+                                                                    <!-- <form class="custom-searchbar">
                                                                                 <input
                                                                                     class="form-control rounded-pill shadow-sm"
-                                                                                    
                                                                                     placeholder="Search"
                                                                                     aria-label="Search">
                                                                                 <span class="btn searchbar-btn"
@@ -321,107 +283,49 @@
                                                                                         class="fal fa-search silver"></i>
                                                                                 </span>
                                                                             </form> -->
-                                                                        </li>
-                                                                        <li class="dropend">
-                                                                            <div *ngFor="let tag of TagsList"
-                                                                                class="list-group list-group-flush dropend">
-                                                                                <a data-bs-toggle="dropdown"
-                                                                                    class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
-
-                                                                                    <div class="w-100 list-txt">
-                                                                                        <div
-                                                                                            class="d-flex w-100 justify-content-between">
-                                                                                            <h6
-                                                                                                class="mb-1 darkblue">
-                                                                                                {{tag.name}}
-                                                                                            </h6>
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                </a>
-                                                                                <ul
-                                                                                    class="dropdown-menu shadow">
-                                                                                    <form
-                                                                                        class="custom-searchbar">
-                                                                                        <input
-                                                                                            class="form-control rounded-pill shadow-sm"
-                                                                                            [(ngModel)]="searchText"
-                                                                                            placeholder="Search"
-                                                                                            aria-label="Search">
-                                                                                        <span
-                                                                                            class="btn searchbar-btn"
-                                                                                            type="submit">
-                                                                                            <i
-                                                                                                class="fal fa-search silver"></i>
-                                                                                        </span>
-                                                                                    </form>
-                                                                                    <li class="list-body small-list"
-                                                                                        data-scrollbar="true"
-                                                                                        tabindex="-1"
-                                                                                        style="overflow-y: auto; outline: none;">
-                                                                                        <div class="scroll-content"
-                                                                                            style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
-                                                                                            <div
-                                                                                                class="list-group list-group-flush">
-                                                                                                <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                    (click)="insertTagsForFeed(email.id, keyword.slug)"
-                                                                                                    [ngClass]="activeTag==true?'active':''"
-                                                                                                    *ngFor="let keyword of tag.subTags | filter: searchText">
-                                                                                                    <div
-                                                                                                        class="list-down-icon">
-                                                                                                        <span
-                                                                                                            class="btn iconButton iconHover medium">
-                                                                                                            <i
-                                                                                                                class="fal fa-tag coal"></i>
-                                                                                                        </span>
-                                                                                                    </div>
-                                                                                                    <div
-                                                                                                        class="w-100 list-txt">
-                                                                                                        <div
-                                                                                                            class="d-flex w-100 justify-content-between">
-                                                                                                            <h6
-                                                                                                                class="mb-1 darkblue">
-                                                                                                                {{keyword.name}}
-                                                                                                            </h6>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <small
-                                                                                                        *ngIf="keyword.id == tag.id">
-                                                                                                        <i [ngClass]="checkTag==true?'fa-check-circle':''"
-                                                                                                            class="fal sky"></i>
-                                                                                                    </small>
-                                                                                                </a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                </ul>
+                                                                </li>
+                                                                <li class="dropend">
+                                                                    <div *ngFor="let tag of TagsList"
+                                                                        class="list-group list-group-flush dropend">
+                                                                        <a data-bs-toggle="dropdown"
+                                                                            class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+                                                                            <div class="w-100 list-txt">
+                                                                                <div
+                                                                                    class="d-flex w-100 justify-content-between">
+                                                                                    <h6 class="mb-1 darkblue">
+                                                                                        {{tag.name}}
+                                                                                    </h6>
+                                                                                </div>
                                                                             </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </ul>
-
-                                                                <span>
-                                                                    <button type="button"
-                                                                        class="btn btn-outline-secondary me-2"
-                                                                        id="sentimentButton" data-bs-toggle="dropdown"
-                                                                        aria-expanded="true"><i
-                                                                            class="fal fa-smile"></i>
-                                                                        Sentiment </button>
-                                                                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                        aria-labelledby="dropdownMenuButton2"
-                                                                        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);"
-                                                                        data-popper-placement="bottom-start">
-                                                                        <ul class="dropdown-listing">
+                                                                        </a>
+                                                                        <ul class="dropdown-menu shadow">
+                                                                            <form class="custom-searchbar">
+                                                                                <input
+                                                                                    class="form-control rounded-pill shadow-sm"
+                                                                                    [(ngModel)]="searchText"
+                                                                                    placeholder="Search"
+                                                                                    aria-label="Search">
+                                                                                <span class="btn searchbar-btn"
+                                                                                    type="submit">
+                                                                                    <i class="fal fa-search silver"></i>
+                                                                                </span>
+                                                                            </form>
                                                                             <li class="list-body small-list"
                                                                                 data-scrollbar="true" tabindex="-1"
-                                                                                style="overflow: auto; outline: none;">
-                                                                                <div class="scroll-content">
-                                                                                    <div class="list-group list-group-flush"
-                                                                                        *ngFor="let sentiment of Sentiments">
-                                                                                        <a class="list-group-item d-flex level1Btn "
-                                                                                            (click)="insertSentimentForFeed(email.id, sentiment.slug)">
+                                                                                style="overflow-y: auto; outline: none;">
+                                                                                <div class="scroll-content"
+                                                                                    style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
+                                                                                    <div
+                                                                                        class="list-group list-group-flush">
+                                                                                        <a class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                            (click)="insertTagsForFeed(email.id, keyword.slug)"
+                                                                                            [ngClass]="activeTag==true?'active':''"
+                                                                                            *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                             <div class="list-down-icon">
-                                                                                                <span class="btn iconButton iconHover medium" [innerHTML]="sentiment.icon">
+                                                                                                <span
+                                                                                                    class="btn iconButton iconHover medium">
+                                                                                                    <i
+                                                                                                        class="fal fa-tag coal"></i>
                                                                                                 </span>
                                                                                             </div>
                                                                                             <div class="w-100 list-txt">
@@ -429,227 +333,176 @@
                                                                                                     class="d-flex w-100 justify-content-between">
                                                                                                     <h6
                                                                                                         class="mb-1 darkblue">
-                                                                                                        {{sentiment.name}}
+                                                                                                        {{keyword.name}}
                                                                                                     </h6>
                                                                                                 </div>
                                                                                             </div>
+                                                                                            <small
+                                                                                                *ngIf="keyword.id == tag.id">
+                                                                                                <i [ngClass]="checkTag==true?'fa-check-circle':''"
+                                                                                                    class="fal sky"></i>
+                                                                                            </small>
                                                                                         </a>
-
                                                                                     </div>
                                                                                 </div>
                                                                             </li>
                                                                         </ul>
-                                                                    </ul>
-                                                                </span>
-
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="accordion email-accordion " id="accordionExampleReply">
-                                                <div class="accordion-item email-wrap mb-3 email-reply"
-                                                    *ngFor="let reply of email.replies | sort:criteria; let i =index">
-                                                    <div class="accordion-header"
-                                                        [ngClass]="{ 'open': i === email.id }">
-                                                        <button class="accordion-button " (click)="openEmail(i)"
-                                                            [ngClass]="{ '': i === email.id }" type="button"
-                                                            data-bs-toggle="collapse" [attr.data-bs-target]="'#reply'+i"
-                                                            aria-expanded="true" [attr.aria-controls]="'reply'+i">
-                                                            <div class="avatar large" *ngIf="reply.profilePic != null">
-                                                                <img src={{reply.profilePic}}>
-                                                            </div>
-                                                            <div class="card-header-content" style="padding: 10px;">
-                                                                <div class="card-header-top">
-
-                                                                    <h6 class="mb-1 darkblue">
-                                                                        <small class="silver font-italic">
-                                                                            <i class="fal fa-reply"></i>
-                                                                            &nbsp;Reply by:&nbsp;
-                                                                        </small>
-                                                                        {{reply?.replyByName}}
-                                                                        <!-- Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}} -->
-                                                                    </h6>
-
-                                                                </div>
-                                                                <div class="msg-snippet show-text">
-                                                                    <p class="mb-1 coal" data-maxlength="240">
-                                                                        {{reply.subject}}</p>
-                                                                </div>
-                                                                <div class="msg-snippet show-text">
-                                                                    <p class="mb-1 coal"
-                                                                    [innerHTML]="reply.message|replaceLineBreaks "
-                                                                    >
-                                                                       
-                                                                    {{ reply.message|replaceLineBreaks }}
-                                                                     
-                                                                       </p>
-                                                                </div>
-                                                            </div>
-                                                        </button>
-                                                        <div class="top-right">
-                                                            <div class="expanded-card-header-actions icons-list">
-                                                                <small class="silver ms-2 me-2">{{reply.createdDate |
-                                                                    date:'MMMM dd, YYYY, h:mm a'}}</small>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div [id]="'reply'+i" class="accordion-collapse collapse"
-                                                        [attr.aria-labelledby]="'reply'+i"
-                                                        data-bs-parent="#accordionExample">
-                                                        <div class="accordion-body">
-                                                            <div class="mail-recepients silver mb-3">
-                                                                <!--  -->
-                                                                <!-- <small>to: {{email.userName}}</small> -->
-                                                            </div>
-                                                            <p [innerHTML]="reply.message">
-                                                                {{reply.message}}
-                                                            </p>
-                                                      
-                                                            <!-- attachmentUrl       -->
-                                                            <div class="email-attachments">
-                                                                <div *ngFor="let attachment of reply.attachments">
-                                                                    <img class="whatsapp-single-img whatsappImgModalBtn"
-                                                                    *ngIf="isImage(attachment)"
-                                                                        src={{attachment.attachmentUrl}} controls>
-
-                                                                    <video class="video" *ngIf="isVideo(attachment)"
-                                                                        src={{attachment.attachmentUrl}}
-                                                                        controls></video>
-
-                                                                    <audio class="audio" *ngIf="isAudio(attachment)"
-                                                                        src={{attachment.attachmentUrl}}
-                                                                        controls></audio>
-
-                                                                  
-                                                                    <a *ngIf="isOther(attachment)"
-                                                                        [href]="attachment.attachmentUrl"
-                                                                        target="_blank">
-                                                                        <button class="download-button">{{
-                                                                            attachment.name }}</button>
-                                                                    </a> 
-
-                                                                </div>
-                                                            </div>
-                                                            <button
-                                                                class="expand-referenced-msg badge btn rounded-pill "
-                                                                (click)="expandEmailBody()">
-                                                                <i class="fal fa-ellipsis-h"></i>
-                                                            </button>
-                                                            <div [ngClass]="expandedEmailBody == false? 'd-none':''"
-                                                                class="mail-reference-msg-wrap">
-                                                                <div class="msg-ref-info">
-                                                                    <strong>From:</strong>
-                                                                    Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}}
-                                                                </div>
-                                                                <div class="msg-ref-info">
-                                                                    <strong>Sent:</strong>
-                                                                    {{reply.createdDate | date:'EEEE d, y'}}
-                                                                </div>
-                                                                <div class="msg-ref-info"
-                                                                    *ngIf="reply.multipleToInReply">
-                                                                    <strong>To:</strong>
-                                                                    {{reply.multipleToInReply}}
-                                                                </div>
-                                                                <div class="msg-ref-info"
-                                                                    *ngIf="reply.multipleCcInReply">
-                                                                    <strong>Cc:</strong>
-                                                                    {{reply.multipleCcInReply}}
-                                                                </div>
-                                                                <div class="msg-ref-info"
-                                                                    *ngIf="reply.multipleBccInReply">
-                                                                    <strong>Bcc:</strong>
-                                                                    {{reply.multipleBccInReply}}
-                                                                </div>
-                                                                <div class="msg-ref-info">
-                                                                    <strong>Subject:</strong>
-                                                                    {{reply.subject}}
-                                                                </div>
-                                                                <div class="ref-msg" [innerHTML]="reply.message">
-                                                                    {{reply.message}}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </ng-container>
-                                        <ng-container *ngIf="email.queryStatus == 'QueryCompleted'">
-                                            <div class="accordion email-accordion" id="accordionExample"
-                                                (click)="markAsCompleteExpanded(email.id)" style="display:block">
-                                                <div class="accordion-item email-wrap marked-wrap mt-3 mb-3">
-                                                    <div [ngClass]="markAsComplete == true?'open':'collaps-wrap'"
-                                                        class="accordion-header" id="emailwrap7">
-                                                        <button [ngClass]="markAsComplete == true?'':'collapsed'"
-                                                            class="accordion-button" type="button">
-                                                            <div class="avatar large coal">
-                                                                <i class="fal fa-check-double"></i>
-                                                            </div>
-                                                            <div class="card-header-content p-0">
-                                                                <div class="card-header-top">
-                                                                    <div class="d-block">
-                                                                        <h6 class="mb-1 night">
-                                                                            Marked as Completed
-                                                                        </h6>
-                                                                        <small class="night">
-                                                                            <span>by: <h6
-                                                                                    class="d-inline fw-bold charcoal">
-                                                                                    Agent Name </h6>
-                                                                            </span>
-                                                                            <span>Complaint Id <a class="sky"
-                                                                                    href="">FP-325687</a>
-                                                                            </span>
-                                                                        </small>
                                                                     </div>
-                                                                    <small class="silver full-date">{{ TodayDate |
-                                                                        date:'MMMM dd, yyyy, h:mm a'}}</small>
-                                                                </div>
-                                                                <div class="msg-snippet show-text">
-                                                                    <p class="mb-1 coal" data-maxlength="240"
-                                                                        [innerHTML]="email.body.length < 80 ? email.body: (email.body | slice:0:80) +'...'">
-                                                                    </p>
-                                                                </div>
-                                                                <div class="marked-info">
-                                                                    <p class="card-text mb-0 coal">
-                                                                        <small>First Response: <span class="night"> July
-                                                                                7, 2021, 2:30 PM (4
-                                                                                days
-                                                                                ago)</span></small>
-                                                                    </p>
-                                                                    <p class="card-text mb-0 coal">
-                                                                        <small>Last Response: <span class="night"> July
-                                                                                14, 2021, 9:30 AM (6
-                                                                                days
-                                                                                ago)</span></small>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </button>
-                                                        <div class="top-right">
-                                                            <div class="expanded-card-header-actions icons-list">
-                                                                <small class="silver ms-2 me-2">{{ TodayDate
-                                                                    | date:'MMMM dd, yyyy, h:mm a'}}</small>
-
-                                                            </div>
+                                                                </li>
+                                                            </ul>
+                                                        </ul>
+                                                        <span>
+                                                            <button type="button" class="btn btn-outline-secondary me-2"
+                                                                id="sentimentButton" data-bs-toggle="dropdown"
+                                                                aria-expanded="true"><i class="fal fa-smile"></i>
+                                                                Sentiment </button>
+                                                            <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                                aria-labelledby="dropdownMenuButton2"
+                                                                style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);"
+                                                                data-popper-placement="bottom-start">
+                                                                <ul class="dropdown-listing">
+                                                                    <li class="list-body small-list"
+                                                                        data-scrollbar="true" tabindex="-1"
+                                                                        style="overflow: auto; outline: none;">
+                                                                        <div class="scroll-content">
+                                                                            <div class="list-group list-group-flush"
+                                                                                *ngFor="let sentiment of Sentiments">
+                                                                                <a class="list-group-item d-flex level1Btn "
+                                                                                    (click)="insertSentimentForFeed(email.id, sentiment.slug)">
+                                                                                    <div class="list-down-icon">
+                                                                                        <span
+                                                                                            class="btn iconButton iconHover medium"
+                                                                                            [innerHTML]="sentiment.icon">
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div class="w-100 list-txt">
+                                                                                        <div
+                                                                                            class="d-flex w-100 justify-content-between">
+                                                                                            <h6 class="mb-1 darkblue">
+                                                                                                {{sentiment.name}}
+                                                                                            </h6>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </ul>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion email-accordion " id="accordionExampleReply">
+                                        <div class="accordion-item email-wrap mb-3 email-reply"
+                                            *ngFor="let reply of email.replies | sort:criteria; let i =index">
+                                            <div class="accordion-header" [ngClass]="{ 'open': i === email.id }">
+                                                <button class="accordion-button " (click)="openEmail(i)"
+                                                    [ngClass]="{ '': i === email.id }" type="button"
+                                                    data-bs-toggle="collapse" [attr.data-bs-target]="'#reply'+i"
+                                                    aria-expanded="true" [attr.aria-controls]="'reply'+i">
+                                                    <div class="avatar large" *ngIf="reply.profilePic != null">
+                                                        <img src={{reply.profilePic}}>
+                                                    </div>
+                                                    <div class="card-header-content" style="padding: 10px;">
+                                                        <div class="card-header-top">
+                                                            <h6 class="mb-1 darkblue">
+                                                                <small class="silver font-italic">
+                                                                    <i class="fal fa-reply"></i>
+                                                                    &nbsp;Reply by:&nbsp;
+                                                                </small>
+                                                                {{reply?.replyByName}}
+                                                                <!-- Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}} -->
+                                                            </h6>
+                                                        </div>
+                                                        <div class="msg-snippet show-text">
+                                                            <p class="mb-1 coal" data-maxlength="240">
+                                                                {{reply.subject}}</p>
+                                                        </div>
+                                                        <div class="msg-snippet show-text">
+                                                            <p class="mb-1 coal"
+                                                                [innerHTML]="reply.message|replaceLineBreaks ">
+                                                                {{ reply.message|replaceLineBreaks }}
+                                                            </p>
                                                         </div>
                                                     </div>
-
-                                                    <div class="accordion-collapse collapse"
-                                                        [ngClass]="markAsComplete == true?'show':''">
-                                                        <div class="accordion-body">
-                                                            <p [innerHTML]="email.body">
-                                                            </p>
+                                                </button>
+                                                <div class="top-right">
+                                                    <div class="expanded-card-header-actions icons-list">
+                                                        <small class="silver ms-2 me-2">{{reply.createdDate |
+                                                            date:'MMMM dd, YYYY, h:mm a'}}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div [id]="'reply'+i" class="accordion-collapse collapse"
+                                                [attr.aria-labelledby]="'reply'+i" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="mail-recepients silver mb-3">
+                                                        <!--  -->
+                                                        <!-- <small>to: {{email.userName}}</small> -->
+                                                    </div>
+                                                    <p [innerHTML]="reply.message">
+                                                        {{reply.message}}
+                                                    </p>
+                                                    <!-- attachmentUrl       -->
+                                                    <div class="email-attachments">
+                                                        <div *ngFor="let attachment of reply.attachments">
+                                                            <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                *ngIf="isImage(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls>
+                                                            <video class="video" *ngIf="isVideo(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls></video>
+                                                            <audio class="audio" *ngIf="isAudio(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls></audio>
+                                                            <a *ngIf="isOther(attachment)"
+                                                                [href]="attachment.attachmentUrl" target="_blank">
+                                                                <button class="download-button">{{
+                                                                    attachment.name }}</button>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <button class="expand-referenced-msg badge btn rounded-pill "
+                                                        (click)="expandEmailBody()">
+                                                        <i class="fal fa-ellipsis-h"></i>
+                                                    </button>
+                                                    <div [ngClass]="expandedEmailBody == false? 'd-none':''"
+                                                        class="mail-reference-msg-wrap">
+                                                        <div class="msg-ref-info">
+                                                            <strong>From:</strong>
+                                                            Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}}
+                                                        </div>
+                                                        <div class="msg-ref-info">
+                                                            <strong>Sent:</strong>
+                                                            {{reply.createdDate | date:'EEEE d, y'}}
+                                                        </div>
+                                                        <div class="msg-ref-info" *ngIf="reply.multipleToInReply">
+                                                            <strong>To:</strong>
+                                                            {{reply.multipleToInReply}}
+                                                        </div>
+                                                        <div class="msg-ref-info" *ngIf="reply.multipleCcInReply">
+                                                            <strong>Cc:</strong>
+                                                            {{reply.multipleCcInReply}}
+                                                        </div>
+                                                        <div class="msg-ref-info" *ngIf="reply.multipleBccInReply">
+                                                            <strong>Bcc:</strong>
+                                                            {{reply.multipleBccInReply}}
+                                                        </div>
+                                                        <div class="msg-ref-info">
+                                                            <strong>Subject:</strong>
+                                                            {{reply.subject}}
+                                                        </div>
+                                                        <div class="ref-msg" [innerHTML]="reply.message">
+                                                            {{reply.message}}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </ng-container>
-                                    </ng-container>
+                                        </div>
+                                    </div>
                                 </ng-container>
+                            </ng-container>
                             <!-- </div> -->
                         </div>
                     </div>
@@ -658,22 +511,18 @@
         </div>
     </div>
 </div>
-
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
             <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
             <div class="toast-btn d-flex align-items-center">
-
                 <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
                     (click)="closeToaster()"><i class="fal fa-times"></i></button>
-
             </div>
         </div>
     </div>
 </div>
-
 <div [ngClass]="show == true? 'show':''" class="modal fade email-modal" id="emailModalBtn" tabindex="-1"
     aria-labelledby="deleteModalLabel" style="display: none;" aria-modal="true" role="dialog">
     <div class="modal-dialog modal-lg delete-modal">
@@ -692,7 +541,6 @@
             <form [formGroup]="emailReplyForm" (ngSubmit)="submitEmailReply()">
                 <div class="modal-body p-4 pt-2 pb-2">
                     <div class="email-reply-section">
-
                         <div class="reply-wrapper">
                             <div class="reply-header">
                                 <div class="reply-header-left">
@@ -703,7 +551,6 @@
                                             aria-describedby="basic-addon1">
                                     </div>
                                 </div>
-
                                 <div class="reply-header-right">
                                     <a class="cc-btn iconButton medium btn" (click)="OpenCc()"
                                         [ngStyle]="{'display': showCcBtn == true ? 'block':'none'}"> Cc
@@ -712,7 +559,6 @@
                                         [ngStyle]="{'display': showBccBtn == true ? 'block':'none'}">
                                         Bcc
                                     </a>
-
                                 </div>
                             </div>
                             <div class="invalid-feedback"
@@ -767,14 +613,9 @@
                                         <!-- <textarea formControlName="text" id="text" [(ngModel)]="text"
                                             class="form-control" placeholder="Take notes for users in your account...."
                                             id="floatingTextarea"></textarea>  -->
-                                         <!-- Rich text editer -->
-                                         <ckeditor
-                                         name="ckeditor_text"
-                                         formControlName="text"
-                                         [(ngModel)]="text"
-                                         [config]="ckEditorConfig"
-                                     
-                                       ></ckeditor>
+                                        <!-- Rich text editer -->
+                                        <ckeditor name="ckeditor_text" formControlName="text" [(ngModel)]="text"
+                                            [config]="ckEditorConfig"></ckeditor>
                                     </div>
                                 </div>
                                 <!-- <div class="row">
@@ -836,8 +677,6 @@
                                         <input type="file" formControlName="Image" class="form-control uplaoded-box"
                                             multiple (change)="onFileChanged()" #fileInput>
                                     </div>
-
-
                                 </div>
                                 <!--  <div class="d-inline-block">
                                                 <button id="btnGroupDrop1" type="button" class="btn sky dropdown-toggle"
@@ -878,7 +717,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="modal-footer shadow-sm saltBg justify-content-lg-start">
                     <button type="submit" class="btn pearlBg" data-bs-dismiss="modal" id="liveToastBtn"
                         [disabled]="emailReplyForm.invalid">

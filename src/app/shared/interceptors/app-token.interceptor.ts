@@ -7,14 +7,10 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EnvService } from 'src/app/shared/services/env/env.service';
-
 @Injectable()
 export class AppTokenInterceptor implements HttpInterceptor {
-
   constructor(private envUrl: EnvService) { }
-
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    
       httpRequest = httpRequest.clone({
         url:  httpRequest.url,
       //  withCredentials: true,
@@ -23,7 +19,6 @@ export class AppTokenInterceptor implements HttpInterceptor {
           // 'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
         }
       });
-    
     return next.handle(httpRequest);
   }
 }

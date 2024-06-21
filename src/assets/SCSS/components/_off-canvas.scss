@@ -1,7 +1,6 @@
 .offcanvas-end{
     width: 75%;
 }
-
 .offcanvas{
     .off-canvas-wrap{
         .offcanvas-body{
@@ -17,7 +16,6 @@
                         }
                     }
                 }
-
                 .checkbox-tick{
                     display: flex;
                     justify-content: space-between;
@@ -33,7 +31,6 @@
                         top: 0;
                         width: 20px;
                         margin: 10px 15px;
-    
                         &:before{
                             border: 1px solid #6B7983;
                             border-top: none;
@@ -72,15 +69,12 @@
                             }
                         }
                     }
-                    
                     .checkbox-txt{
                         margin-left: 25px;
                     }
-
                     &.checkbox-minus{
                         .form-check-input{
                             &:before{
-                              
                                 left: 4px;
                                 position: absolute;
                                 top: 6px;
@@ -89,7 +83,6 @@
                                 border-left: 0;
                             }
                             &:after{
-                               
                                 left: 3px;
                                 position: absolute;
                                 top: 4px;
@@ -124,7 +117,6 @@
             }
         }
     }
-
     .collapse-wrap{
         .qrItem{
             display: flex;

@@ -15,7 +15,6 @@
                   <div class="col-lg-4">
                   </div>
                   <div class="col-lg-8 d-flex align-items-center justify-content-end">
-
                     <a [routerLink]="['/analytics/db-settings/create']" class="ms-2">
                       <button type="button" class="btn btn-success">
                         <i class="fal fa-plus me-2"></i>
@@ -54,7 +53,6 @@
                           {{con.user}}
                         </div>
                       </td>
-
                       <td>
                         <div class="d-flex align-items-center darkblue">
                           {{con.host}}
@@ -78,22 +76,17 @@
                             <i class="far fa-ellipsis-v"></i>
                           </button>
                           <ul class="dropdown-menu fade">
-
                             <li>
                               <a  [routerLink]="['/analytics/db-settings/update', con.id]"
                                 class="dropdown-item"
-
                               >
                                 <i class="fal fa-edit me-2"></i> Edit</a
                           >
                             </li>
-
-
                             <li>
                               <a
                                 class="dropdown-item delete-dd"
                                 (click)="deletecon(con.id)"
-
                               >
                                 <i class="fal fa-trash me-2"></i> Delete</a
                               >
@@ -103,7 +96,6 @@
                       </td>
                     </tr>
                   </tbody>
-
                 </table>
               </div>
             </div>
@@ -113,5 +105,3 @@
       </div>
   </div>
 </div>
-
-

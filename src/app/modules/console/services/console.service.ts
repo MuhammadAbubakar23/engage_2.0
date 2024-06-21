@@ -3,16 +3,12 @@ import { map, Observable } from 'rxjs';
 import { MenuModel } from 'src/app/layouts/engage2/menu-state/menu.model';
 import { ToasterService } from 'src/app/layouts/engage2/toaster/toaster.service';
 import { RequestService } from 'src/app/shared/services/request/request.service';
-
 @Injectable({
   providedIn: 'root'
 })
 export class ConsoleService {
-
   constructor(private request:RequestService, private toaster:ToasterService) { }
-
   channels():Observable<MenuModel[]>{
-
     //this.showErrorToaster();
     return this.request.get<MenuModel[]>("channels", {}).pipe(
       map((response: MenuModel[]) => {

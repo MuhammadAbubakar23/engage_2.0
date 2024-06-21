@@ -2,14 +2,11 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { MenuModel } from 'src/app/layouts/engage2/menu-state/menu.model';
 import { IdNameDto } from 'src/app/shared/Models/IdNameDto';
-
 import { RequestService } from 'src/app/shared/services/request/request.service';
-
 @Injectable({
   providedIn: 'root'
 })
 export class CompaniesService {
-
   constructor(private request:RequestService) { }
   // getMyCompaniesPermissions(): Observable<MenuModel[]> {
   //   return this.request.get<MenuModel[]>("CompaniesAccesses",{}).pipe(
@@ -20,13 +17,11 @@ export class CompaniesService {
   //     })
   //   );
   // }
-
   getMyCompanies(): Observable<IdNameDto[]> {
     // return this.http.get("http://localhost:5036/api/Roles",{}).pipe(
     //   map((res: any) => { return res }),
     //   tap(res => // console.log( + " Response: ", res)),
     //   catchError(err => {
-    //     // console.log('Handling error locally and rethrowing it...', err);
     //     return throwError(() => new Error(err));
     //   })
     // );
@@ -57,5 +52,4 @@ export class CompaniesService {
   save(route:string, form:any ):any{
     return this.request.post<any>(route, form);
   }
-
 }

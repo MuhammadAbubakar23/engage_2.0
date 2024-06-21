@@ -31,7 +31,6 @@
                 </div>
             </div>
         </div>
-
           <div class="col-lg-8 d-flex align-items-center justify-content-end">
             <a href="javascript:" class="search-btn">
               <button class="iconButton medium">
@@ -39,7 +38,6 @@
               </button>
               <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
                 (ngModelChange)="searchText ? applySearchFilter() : refreshMessages()">
-
             </a>
             <a (click)="updatevalue('consoleCreateSlaPolicyHeader')" [routerLink]="['/console/sla-policy/create']"
               class="ms-2">
@@ -126,7 +124,6 @@
                   </ul>
                 </nav>
               </td>
-
               <td>
                 <div class="tags-per-page d-flex align-items-center justify-content-end mt-3 mb-3 coal">
                   Per page
@@ -155,5 +152,4 @@
       </div>
     </div>
   </div>
-
 </div>

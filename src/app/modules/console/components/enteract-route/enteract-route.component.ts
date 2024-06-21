@@ -13,7 +13,6 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 })
 export class EnteractRouteComponent implements OnInit {
   messageForm!: FormGroup;
-  
   users: any[] = [
     {
       name: 'Waqas Amjad',
@@ -86,26 +85,20 @@ export class EnteractRouteComponent implements OnInit {
     });
     // this.getSkills();
   }
-
-  
   // getSkills() {
   //   this.commonService.GetSkill().subscribe(
   //     (response) => {
-  //       console.log('GetSkill API response:', response);
   //       this.users = response as any[]; // Assign the response to the users variable
   //     },
   //     (error) => {
-  //       console.error('GetSkill API error:', error);
   //       Handle the error as needed
   //     }
   //   );
   // }
-  
   onSubmit() {
     const formData = this.messageForm.value;
     this.commonService.AddEntractRoute(formData).subscribe(
       response => {
-        // console.log('API response:', response);
         // Handle the response as needed
       },
       error => {
@@ -114,9 +107,7 @@ export class EnteractRouteComponent implements OnInit {
       }
     );
   }
-  
   editBtn(template: any) {
-    // console.log("button edit", template)
   }
   deleteBtn(template: any) {
     const confirmation = confirm('Are you sure you want to delete this template?');
@@ -124,7 +115,6 @@ export class EnteractRouteComponent implements OnInit {
       this.commonService.DeleteSkill(template.id).subscribe(
         () => {
           // Success callback
-          // console.log('Template deleted:', template);
           // Remove the deleted template from the messages array
           this.users = this.users.filter((msg) => msg.id !== template.id);
         },

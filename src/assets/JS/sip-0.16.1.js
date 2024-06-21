@@ -134,7 +134,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ([
 /* 0 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "name", function() { return name; });
@@ -142,252 +141,138 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _version__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ContentTypeUnsupportedError", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["ContentTypeUnsupportedError"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RequestPendingError", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["RequestPendingError"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SessionDescriptionHandlerError", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["SessionDescriptionHandlerError"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SessionTerminatedError", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["SessionTerminatedError"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "StateTransitionError", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["StateTransitionError"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Bye", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["Bye"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "_makeEmitter", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["_makeEmitter"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Info", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["Info"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Invitation", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["Invitation"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Inviter", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["Inviter"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Message", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["Message"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Messager", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["Messager"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Notification", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["Notification"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PublisherState", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["PublisherState"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Publisher", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["Publisher"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Referral", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["Referral"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RegistererState", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["RegistererState"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Registerer", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["Registerer"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SessionState", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["SessionState"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Session", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["Session"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Subscriber", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["Subscriber"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SubscriptionState", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["SubscriptionState"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Subscription", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["Subscription"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TransportState", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["TransportState"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SIPExtension", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["SIPExtension"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserAgentRegisteredOptionTags", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["UserAgentRegisteredOptionTags"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserAgentState", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["UserAgentState"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserAgent", function() { return _api__WEBPACK_IMPORTED_MODULE_1__["UserAgent"]; });
-
 /* harmony import */ var _grammar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Grammar", function() { return _grammar__WEBPACK_IMPORTED_MODULE_2__["Grammar"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NameAddrHeader", function() { return _grammar__WEBPACK_IMPORTED_MODULE_2__["NameAddrHeader"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Parameters", function() { return _grammar__WEBPACK_IMPORTED_MODULE_2__["Parameters"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "URI", function() { return _grammar__WEBPACK_IMPORTED_MODULE_2__["URI"]; });
-
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5);
 /* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "Core", function() { return _core__WEBPACK_IMPORTED_MODULE_3__; });
 /* harmony import */ var _platform_web__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(114);
 /* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "Web", function() { return _platform_web__WEBPACK_IMPORTED_MODULE_4__; });
 // Helpful name and version exports
-
 const version = _version__WEBPACK_IMPORTED_MODULE_0__["LIBRARY_VERSION"];
 const name = "sip.js";
-
 // Export api
-
 // Export grammar
-
 // Export namespaced core
-
-
 // Export namespaced web
-
-
-
-
 /***/ }),
 /* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LIBRARY_VERSION", function() { return LIBRARY_VERSION; });
 const LIBRARY_VERSION = "0.16.1";
-
-
 /***/ }),
 /* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _exceptions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ContentTypeUnsupportedError", function() { return _exceptions__WEBPACK_IMPORTED_MODULE_0__["ContentTypeUnsupportedError"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RequestPendingError", function() { return _exceptions__WEBPACK_IMPORTED_MODULE_0__["RequestPendingError"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SessionDescriptionHandlerError", function() { return _exceptions__WEBPACK_IMPORTED_MODULE_0__["SessionDescriptionHandlerError"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SessionTerminatedError", function() { return _exceptions__WEBPACK_IMPORTED_MODULE_0__["SessionTerminatedError"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "StateTransitionError", function() { return _exceptions__WEBPACK_IMPORTED_MODULE_0__["StateTransitionError"]; });
-
 /* harmony import */ var _bye__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(86);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Bye", function() { return _bye__WEBPACK_IMPORTED_MODULE_1__["Bye"]; });
-
 /* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(87);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "_makeEmitter", function() { return _emitter__WEBPACK_IMPORTED_MODULE_2__["_makeEmitter"]; });
-
 /* harmony import */ var _info__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(88);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Info", function() { return _info__WEBPACK_IMPORTED_MODULE_3__["Info"]; });
-
 /* harmony import */ var _invitation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(89);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Invitation", function() { return _invitation__WEBPACK_IMPORTED_MODULE_4__["Invitation"]; });
-
 /* harmony import */ var _inviter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(96);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Inviter", function() { return _inviter__WEBPACK_IMPORTED_MODULE_5__["Inviter"]; });
-
 /* harmony import */ var _message__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(91);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Message", function() { return _message__WEBPACK_IMPORTED_MODULE_6__["Message"]; });
-
 /* harmony import */ var _messager__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(97);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Messager", function() { return _messager__WEBPACK_IMPORTED_MODULE_7__["Messager"]; });
-
 /* harmony import */ var _notification__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(92);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Notification", function() { return _notification__WEBPACK_IMPORTED_MODULE_8__["Notification"]; });
-
 /* harmony import */ var _publisher_state__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(98);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PublisherState", function() { return _publisher_state__WEBPACK_IMPORTED_MODULE_9__["PublisherState"]; });
-
 /* harmony import */ var _publisher__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(99);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Publisher", function() { return _publisher__WEBPACK_IMPORTED_MODULE_10__["Publisher"]; });
-
 /* harmony import */ var _referral__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(93);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Referral", function() { return _referral__WEBPACK_IMPORTED_MODULE_11__["Referral"]; });
-
 /* harmony import */ var _registerer_state__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(100);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RegistererState", function() { return _registerer_state__WEBPACK_IMPORTED_MODULE_12__["RegistererState"]; });
-
 /* harmony import */ var _registerer__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(101);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Registerer", function() { return _registerer__WEBPACK_IMPORTED_MODULE_13__["Registerer"]; });
-
 /* harmony import */ var _session_state__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(94);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SessionState", function() { return _session_state__WEBPACK_IMPORTED_MODULE_14__["SessionState"]; });
-
 /* harmony import */ var _session__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(90);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Session", function() { return _session__WEBPACK_IMPORTED_MODULE_15__["Session"]; });
-
 /* harmony import */ var _subscriber__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(102);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Subscriber", function() { return _subscriber__WEBPACK_IMPORTED_MODULE_16__["Subscriber"]; });
-
 /* harmony import */ var _subscription_state__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(104);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SubscriptionState", function() { return _subscription_state__WEBPACK_IMPORTED_MODULE_17__["SubscriptionState"]; });
-
 /* harmony import */ var _subscription__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(103);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Subscription", function() { return _subscription__WEBPACK_IMPORTED_MODULE_18__["Subscription"]; });
-
 /* harmony import */ var _transport_state__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(105);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TransportState", function() { return _transport_state__WEBPACK_IMPORTED_MODULE_19__["TransportState"]; });
-
 /* harmony import */ var _user_agent_options__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(95);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SIPExtension", function() { return _user_agent_options__WEBPACK_IMPORTED_MODULE_20__["SIPExtension"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserAgentRegisteredOptionTags", function() { return _user_agent_options__WEBPACK_IMPORTED_MODULE_20__["UserAgentRegisteredOptionTags"]; });
-
 /* harmony import */ var _user_agent_state__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(106);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserAgentState", function() { return _user_agent_state__WEBPACK_IMPORTED_MODULE_21__["UserAgentState"]; });
-
 /* harmony import */ var _user_agent__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(107);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserAgent", function() { return _user_agent__WEBPACK_IMPORTED_MODULE_22__["UserAgent"]; });
-
 /**
  * A simple yet powerful API which takes care of SIP signaling and WebRTC media sessions for you.
  * @packageDocumentation
  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /***/ }),
 /* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _content_type_unsupported__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ContentTypeUnsupportedError", function() { return _content_type_unsupported__WEBPACK_IMPORTED_MODULE_0__["ContentTypeUnsupportedError"]; });
-
 /* harmony import */ var _request_pending__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RequestPendingError", function() { return _request_pending__WEBPACK_IMPORTED_MODULE_1__["RequestPendingError"]; });
-
 /* harmony import */ var _session_description_handler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(83);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SessionDescriptionHandlerError", function() { return _session_description_handler__WEBPACK_IMPORTED_MODULE_2__["SessionDescriptionHandlerError"]; });
-
 /* harmony import */ var _session_terminated__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(84);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SessionTerminatedError", function() { return _session_terminated__WEBPACK_IMPORTED_MODULE_3__["SessionTerminatedError"]; });
-
 /* harmony import */ var _state_transition__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(85);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "StateTransitionError", function() { return _state_transition__WEBPACK_IMPORTED_MODULE_4__["StateTransitionError"]; });
-
-
-
-
-
-
-
-
 /***/ }),
 /* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ContentTypeUnsupportedError", function() { return ContentTypeUnsupportedError; });
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
-
 /**
  * An exception indicating an unsupported content type prevented execution.
  * @public
@@ -397,197 +282,108 @@ class ContentTypeUnsupportedError extends _core__WEBPACK_IMPORTED_MODULE_0__["Ex
         super(message ? message : "Unsupported content type.");
     }
 }
-
-
 /***/ }),
 /* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dialogs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Dialog", function() { return _dialogs__WEBPACK_IMPORTED_MODULE_0__["Dialog"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SessionDialog", function() { return _dialogs__WEBPACK_IMPORTED_MODULE_0__["SessionDialog"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SubscriptionDialog", function() { return _dialogs__WEBPACK_IMPORTED_MODULE_0__["SubscriptionDialog"]; });
-
 /* harmony import */ var _exceptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Exception", function() { return _exceptions__WEBPACK_IMPORTED_MODULE_1__["Exception"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TransactionStateError", function() { return _exceptions__WEBPACK_IMPORTED_MODULE_1__["TransactionStateError"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TransportError", function() { return _exceptions__WEBPACK_IMPORTED_MODULE_1__["TransportError"]; });
-
 /* harmony import */ var _log__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(66);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Levels", function() { return _log__WEBPACK_IMPORTED_MODULE_2__["Levels"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LoggerFactory", function() { return _log__WEBPACK_IMPORTED_MODULE_2__["LoggerFactory"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return _log__WEBPACK_IMPORTED_MODULE_2__["Logger"]; });
-
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Grammar", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["Grammar"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NameAddrHeader", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["NameAddrHeader"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Parameters", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["Parameters"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "URI", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["URI"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "C", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["C"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fromBodyLegacy", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["fromBodyLegacy"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isBody", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["isBody"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getBody", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["getBody"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DigestAuthentication", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["DigestAuthentication"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "IncomingMessage", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["IncomingMessage"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "IncomingRequestMessage", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["IncomingRequestMessage"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "IncomingResponseMessage", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["IncomingResponseMessage"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "OutgoingRequestMessage", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["OutgoingRequestMessage"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "constructOutgoingResponse", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["constructOutgoingResponse"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Parser", function() { return _messages__WEBPACK_IMPORTED_MODULE_3__["Parser"]; });
-
 /* harmony import */ var _session__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(28);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SessionState", function() { return _session__WEBPACK_IMPORTED_MODULE_4__["SessionState"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SignalingState", function() { return _session__WEBPACK_IMPORTED_MODULE_4__["SignalingState"]; });
-
 /* harmony import */ var _subscription__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(62);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SubscriptionState", function() { return _subscription__WEBPACK_IMPORTED_MODULE_5__["SubscriptionState"]; });
-
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(31);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ClientTransaction", function() { return _transactions__WEBPACK_IMPORTED_MODULE_6__["ClientTransaction"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InviteClientTransaction", function() { return _transactions__WEBPACK_IMPORTED_MODULE_6__["InviteClientTransaction"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InviteServerTransaction", function() { return _transactions__WEBPACK_IMPORTED_MODULE_6__["InviteServerTransaction"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NonInviteClientTransaction", function() { return _transactions__WEBPACK_IMPORTED_MODULE_6__["NonInviteClientTransaction"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NonInviteServerTransaction", function() { return _transactions__WEBPACK_IMPORTED_MODULE_6__["NonInviteServerTransaction"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ServerTransaction", function() { return _transactions__WEBPACK_IMPORTED_MODULE_6__["ServerTransaction"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TransactionState", function() { return _transactions__WEBPACK_IMPORTED_MODULE_6__["TransactionState"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Transaction", function() { return _transactions__WEBPACK_IMPORTED_MODULE_6__["Transaction"]; });
-
 /* harmony import */ var _user_agent_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(70);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserAgentCore", function() { return _user_agent_core__WEBPACK_IMPORTED_MODULE_7__["UserAgentCore"]; });
-
 /* harmony import */ var _user_agents__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(72);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ByeUserAgentClient", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["ByeUserAgentClient"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ByeUserAgentServer", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["ByeUserAgentServer"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CancelUserAgentClient", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["CancelUserAgentClient"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InfoUserAgentClient", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["InfoUserAgentClient"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InfoUserAgentServer", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["InfoUserAgentServer"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InviteUserAgentClient", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["InviteUserAgentClient"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InviteUserAgentServer", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["InviteUserAgentServer"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MessageUserAgentClient", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["MessageUserAgentClient"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MessageUserAgentServer", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["MessageUserAgentServer"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NotifyUserAgentClient", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["NotifyUserAgentClient"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NotifyUserAgentServer", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["NotifyUserAgentServer"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PublishUserAgentClient", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["PublishUserAgentClient"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PrackUserAgentClient", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["PrackUserAgentClient"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PrackUserAgentServer", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["PrackUserAgentServer"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ReInviteUserAgentClient", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["ReInviteUserAgentClient"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ReInviteUserAgentServer", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["ReInviteUserAgentServer"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ReSubscribeUserAgentClient", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["ReSubscribeUserAgentClient"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ReSubscribeUserAgentServer", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["ReSubscribeUserAgentServer"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ReferUserAgentClient", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["ReferUserAgentClient"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ReferUserAgentServer", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["ReferUserAgentServer"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RegisterUserAgentClient", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["RegisterUserAgentClient"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RegisterUserAgentServer", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["RegisterUserAgentServer"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SubscribeUserAgentClient", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["SubscribeUserAgentClient"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SubscribeUserAgentServer", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["SubscribeUserAgentServer"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserAgentClient", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["UserAgentClient"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserAgentServer", function() { return _user_agents__WEBPACK_IMPORTED_MODULE_8__["UserAgentServer"]; });
-
 /* harmony import */ var _timers__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(30);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Timers", function() { return _timers__WEBPACK_IMPORTED_MODULE_9__["Timers"]; });
-
 /**
  * A core library implementing low level SIP protocol elements.
  * @packageDocumentation
  */
 // Directories
-
-
-
-
-
-
-
-
-
 // Files
-
-
-
 /***/ }),
 /* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dialog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Dialog", function() { return _dialog__WEBPACK_IMPORTED_MODULE_0__["Dialog"]; });
-
 /* harmony import */ var _session_dialog__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SessionDialog", function() { return _session_dialog__WEBPACK_IMPORTED_MODULE_1__["SessionDialog"]; });
-
 /* harmony import */ var _subscription_dialog__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(61);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SubscriptionDialog", function() { return _subscription_dialog__WEBPACK_IMPORTED_MODULE_2__["SubscriptionDialog"]; });
-
-
-
-
-
-
 /***/ }),
 /* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Dialog", function() { return Dialog; });
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
-
 /**
  * Dialog.
  * @remarks
@@ -1111,104 +907,61 @@ class Dialog {
         return true;
     }
 }
-
-
 /***/ }),
 /* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _grammar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Grammar", function() { return _grammar__WEBPACK_IMPORTED_MODULE_0__["Grammar"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NameAddrHeader", function() { return _grammar__WEBPACK_IMPORTED_MODULE_0__["NameAddrHeader"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Parameters", function() { return _grammar__WEBPACK_IMPORTED_MODULE_0__["Parameters"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "URI", function() { return _grammar__WEBPACK_IMPORTED_MODULE_0__["URI"]; });
-
 /* harmony import */ var _methods__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "C", function() { return _methods__WEBPACK_IMPORTED_MODULE_1__["C"]; });
-
 /* harmony import */ var _body__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(17);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fromBodyLegacy", function() { return _body__WEBPACK_IMPORTED_MODULE_2__["fromBodyLegacy"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isBody", function() { return _body__WEBPACK_IMPORTED_MODULE_2__["isBody"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getBody", function() { return _body__WEBPACK_IMPORTED_MODULE_2__["getBody"]; });
-
 /* harmony import */ var _digest_authentication__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(23);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DigestAuthentication", function() { return _digest_authentication__WEBPACK_IMPORTED_MODULE_3__["DigestAuthentication"]; });
-
 /* harmony import */ var _incoming_message__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(19);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "IncomingMessage", function() { return _incoming_message__WEBPACK_IMPORTED_MODULE_4__["IncomingMessage"]; });
-
 /* harmony import */ var _incoming_request_message__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(18);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "IncomingRequestMessage", function() { return _incoming_request_message__WEBPACK_IMPORTED_MODULE_5__["IncomingRequestMessage"]; });
-
 /* harmony import */ var _incoming_response_message__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(21);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "IncomingResponseMessage", function() { return _incoming_response_message__WEBPACK_IMPORTED_MODULE_6__["IncomingResponseMessage"]; });
-
 /* harmony import */ var _outgoing_request_message__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(22);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "OutgoingRequestMessage", function() { return _outgoing_request_message__WEBPACK_IMPORTED_MODULE_7__["OutgoingRequestMessage"]; });
-
 /* harmony import */ var _outgoing_response__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(25);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "constructOutgoingResponse", function() { return _outgoing_response__WEBPACK_IMPORTED_MODULE_8__["constructOutgoingResponse"]; });
-
 /* harmony import */ var _parser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(26);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Parser", function() { return _parser__WEBPACK_IMPORTED_MODULE_9__["Parser"]; });
-
 // Grammar
-
 // Directories
-
 // Files
-
-
-
-
-
-
-
-
-
-
 /***/ }),
 /* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _grammar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Grammar", function() { return _grammar__WEBPACK_IMPORTED_MODULE_0__["Grammar"]; });
-
 /* harmony import */ var _name_addr_header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NameAddrHeader", function() { return _name_addr_header__WEBPACK_IMPORTED_MODULE_1__["NameAddrHeader"]; });
-
 /* harmony import */ var _parameters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Parameters", function() { return _parameters__WEBPACK_IMPORTED_MODULE_2__["Parameters"]; });
-
 /* harmony import */ var _uri__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(14);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "URI", function() { return _uri__WEBPACK_IMPORTED_MODULE_3__["URI"]; });
-
-
-
-
-
-
-
 /***/ }),
 /* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Grammar", function() { return Grammar; });
 /* harmony import */ var _pegjs_dist_grammar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
 /* eslint-disable @typescript-eslint/no-namespace */
 /* eslint-disable no-inner-declarations */
-
 /**
  * Grammar.
  * @internal
@@ -1256,12 +1009,9 @@ var Grammar;
     }
     Grammar.URIParse = URIParse;
 })(Grammar || (Grammar = {}));
-
-
 /***/ }),
 /* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SyntaxError", function() { return SyntaxError; });
@@ -1294,8 +1044,6 @@ __webpack_require__.r(__webpack_exports__);
 // Generated by PEG.js v. 0.10.0 (ts-pegjs plugin v. 0.2.6 )
 //
 // https://pegjs.org/   https://github.com/metadevpro/ts-pegjs
-
-
 class SyntaxError extends Error {
     constructor(message, expected, found, location) {
         super();
@@ -2769,17 +2517,13 @@ function peg$parse(input, options) {
     }
 }
 const parse = peg$parse;
-
-
 /***/ }),
 /* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NameAddrHeader", function() { return NameAddrHeader; });
 /* harmony import */ var _parameters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
-
 /**
  * Name Address SIP header.
  * @public
@@ -2821,12 +2565,9 @@ class NameAddrHeader extends _parameters__WEBPACK_IMPORTED_MODULE_0__["Parameter
         return body;
     }
 }
-
-
 /***/ }),
 /* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Parameters", function() { return Parameters; });
@@ -2875,18 +2616,14 @@ class Parameters {
         this.parameters = {};
     }
 }
-
-
 /***/ }),
 /* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "URI", function() { return URI; });
 /* harmony import */ var _parameters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 /**
  * URI.
  * @public
@@ -3075,24 +2812,16 @@ class URI extends _parameters__WEBPACK_IMPORTED_MODULE_0__["Parameters"] {
         return hname;
     }
 }
-
-
 /***/ }),
 /* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(16);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "C", function() { return _constants__WEBPACK_IMPORTED_MODULE_0__["C"]; });
-
-
-
-
 /***/ }),
 /* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "C", function() { return C; });
@@ -3118,12 +2847,9 @@ var C;
     C.REFER = "REFER";
     C.PRACK = "PRACK";
 })(C || (C = {}));
-
-
 /***/ }),
 /* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fromBodyLegacy", function() { return fromBodyLegacy; });
@@ -3132,9 +2858,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _incoming_request_message__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
 /* harmony import */ var _incoming_response_message__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
 /* harmony import */ var _outgoing_request_message__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
-
-
-
 // If the Content-Disposition header field is missing, bodies of
 // Content-Type application/sdp imply the disposition "session", while
 // other content types imply "render".
@@ -3250,17 +2973,13 @@ function getBody(message) {
         content
     };
 }
-
-
 /***/ }),
 /* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IncomingRequestMessage", function() { return IncomingRequestMessage; });
 /* harmony import */ var _incoming_message__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
-
 /**
  * Incoming request message.
  * @public
@@ -3270,19 +2989,14 @@ class IncomingRequestMessage extends _incoming_message__WEBPACK_IMPORTED_MODULE_
         super();
     }
 }
-
-
 /***/ }),
 /* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IncomingMessage", function() { return IncomingMessage; });
 /* harmony import */ var _grammar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(20);
-
-
 /**
  * Incoming message.
  * @public
@@ -3410,12 +3124,9 @@ class IncomingMessage {
         return this.data;
     }
 }
-
-
 /***/ }),
 /* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createRandomToken", function() { return createRandomToken; });
@@ -3561,17 +3272,13 @@ function headerize(str) {
 function utf8Length(str) {
     return encodeURIComponent(str).replace(/%[A-F\d]{2}/g, "U").length;
 }
-
-
 /***/ }),
 /* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IncomingResponseMessage", function() { return IncomingResponseMessage; });
 /* harmony import */ var _incoming_message__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
-
 /**
  * Incoming response message.
  * @public
@@ -3581,19 +3288,14 @@ class IncomingResponseMessage extends _incoming_message__WEBPACK_IMPORTED_MODULE
         super();
     }
 }
-
-
 /***/ }),
 /* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OutgoingRequestMessage", function() { return OutgoingRequestMessage; });
 /* harmony import */ var _grammar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(20);
-
-
 /**
  * Outgoing SIP request message.
  * @public
@@ -3820,19 +3522,14 @@ class OutgoingRequestMessage {
         return msg;
     }
 }
-
-
 /***/ }),
 /* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DigestAuthentication", function() { return DigestAuthentication; });
 /* harmony import */ var _md5__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(20);
-
-
 function MD5(s) {
     return _md5__WEBPACK_IMPORTED_MODULE_0__["Md5"].hashStr(s);
 }
@@ -3976,12 +3673,9 @@ class DigestAuthentication {
         }
     }
 }
-
-
 /***/ }),
 /* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Md5", function() { return Md5; });
@@ -3990,31 +3684,23 @@ __webpack_require__.r(__webpack_exports__);
 // Scoped from: https://github.com/cotag/ts-md5
 //
 /*
-
 TypeScript Md5
 ==============
-
 Based on work by
 * Joseph Myers: http://www.myersdaily.org/joseph/javascript/md5-text.html
 * André Cruz: https://github.com/satazor/SparkMD5
 * Raymond Hill: https://github.com/gorhill/yamd5.js
-
 Effectively a TypeScrypt re-write of Raymond Hill JS Library
-
 The MIT License (MIT)
-
 Copyright (C) 2014 Raymond Hill
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in
 all copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -4022,24 +3708,15 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
-
-
             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
                     Version 2, December 2004
-
  Copyright (C) 2015 André Cruz <amdfcruz@gmail.com>
-
  Everyone is permitted to copy and distribute verbatim or modified
  copies of this license document, and changing it is allowed as long
  as the name is changed.
-
             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-
   0. You just DO WHAT THE FUCK YOU WANT TO.
-
-
 */
 class Md5 {
     constructor() {
@@ -4384,17 +4061,13 @@ Md5.onePassHasher = new Md5();
 if (Md5.hashStr('hello') !== '5d41402abc4b2a76b9719d911017c592') {
     console.error('Md5 self test failed.');
 }
-
-
 /***/ }),
 /* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "constructOutgoingResponse", function() { return constructOutgoingResponse; });
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20);
-
 /**
  * When a UAS wishes to construct a response to a request, it follows
  * the general procedures detailed in the following subsections.
@@ -4520,12 +4193,9 @@ function constructOutgoingResponse(message, options) {
     }
     return { message: response };
 }
-
-
 /***/ }),
 /* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Parser", function() { return Parser; });
@@ -4534,9 +4204,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _incoming_response_message__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(21);
 /* eslint-disable no-inner-declarations */
 /* eslint-disable @typescript-eslint/no-namespace */
-
-
-
 /**
  * Extract and parse every header of a SIP message.
  * @internal
@@ -4773,12 +4440,9 @@ var Parser;
     }
     Parser.parseMessage = parseMessage;
 })(Parser || (Parser = {}));
-
-
 /***/ }),
 /* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SessionDialog", function() { return SessionDialog; });
@@ -4801,25 +4465,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_agents_refer_user_agent_client__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(59);
 /* harmony import */ var _user_agents_refer_user_agent_server__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(60);
 /* harmony import */ var _dialog__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(7);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * Session Dialog.
  * @public
@@ -5693,26 +5338,17 @@ class SessionDialog extends _dialog__WEBPACK_IMPORTED_MODULE_18__["Dialog"] {
         }
     }
 }
-
-
 /***/ }),
 /* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _session__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(29);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SessionState", function() { return _session__WEBPACK_IMPORTED_MODULE_0__["SessionState"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SignalingState", function() { return _session__WEBPACK_IMPORTED_MODULE_0__["SignalingState"]; });
-
-
-
-
 /***/ }),
 /* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SessionState", function() { return SessionState; });
@@ -5757,12 +5393,9 @@ var SignalingState;
     SignalingState["Stable"] = "Stable";
     SignalingState["Closed"] = "Closed";
 })(SignalingState || (SignalingState = {}));
-
-
 /***/ }),
 /* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Timers", function() { return Timers; });
@@ -5789,58 +5422,34 @@ const Timers = {
     TIMER_N: 64 * T1,
     PROVISIONAL_RESPONSE_INTERVAL: 60000 // See RFC 3261 Section 13.3.1.1
 };
-
-
 /***/ }),
 /* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _client_transaction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(32);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ClientTransaction", function() { return _client_transaction__WEBPACK_IMPORTED_MODULE_0__["ClientTransaction"]; });
-
 /* harmony import */ var _invite_client_transaction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(39);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InviteClientTransaction", function() { return _invite_client_transaction__WEBPACK_IMPORTED_MODULE_1__["InviteClientTransaction"]; });
-
 /* harmony import */ var _invite_server_transaction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(41);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InviteServerTransaction", function() { return _invite_server_transaction__WEBPACK_IMPORTED_MODULE_2__["InviteServerTransaction"]; });
-
 /* harmony import */ var _non_invite_client_transaction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(43);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NonInviteClientTransaction", function() { return _non_invite_client_transaction__WEBPACK_IMPORTED_MODULE_3__["NonInviteClientTransaction"]; });
-
 /* harmony import */ var _non_invite_server_transaction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(44);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NonInviteServerTransaction", function() { return _non_invite_server_transaction__WEBPACK_IMPORTED_MODULE_4__["NonInviteServerTransaction"]; });
-
 /* empty/unused harmony star reexport *//* harmony import */ var _server_transaction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(42);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ServerTransaction", function() { return _server_transaction__WEBPACK_IMPORTED_MODULE_5__["ServerTransaction"]; });
-
 /* harmony import */ var _transaction_state__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(40);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TransactionState", function() { return _transaction_state__WEBPACK_IMPORTED_MODULE_6__["TransactionState"]; });
-
 /* harmony import */ var _transaction__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(33);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Transaction", function() { return _transaction__WEBPACK_IMPORTED_MODULE_7__["Transaction"]; });
-
-
-
-
-
-
-
-
-
-
-
-
 /***/ }),
 /* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ClientTransaction", function() { return ClientTransaction; });
 /* harmony import */ var _transaction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(33);
-
 /**
  * Client Transaction.
  * @remarks
@@ -5900,20 +5509,15 @@ class ClientTransaction extends _transaction__WEBPACK_IMPORTED_MODULE_0__["Trans
         }
     }
 }
-
-
 /***/ }),
 /* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Transaction", function() { return Transaction; });
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(34);
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _exceptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35);
-
-
 /**
  * Transaction.
  * @remarks
@@ -6015,12 +5619,9 @@ class Transaction extends events__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"] {
         return "UnknownType";
     }
 }
-
-
 /***/ }),
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -6042,16 +5643,12 @@ class Transaction extends events__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"] {
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
 var R = typeof Reflect === 'object' ? Reflect : null
 var ReflectApply = R && typeof R.apply === 'function'
   ? R.apply
   : function ReflectApply(target, receiver, args) {
     return Function.prototype.apply.call(target, receiver, args);
   }
-
 var ReflectOwnKeys
 if (R && typeof R.ownKeys === 'function') {
   ReflectOwnKeys = R.ownKeys
@@ -6065,37 +5662,29 @@ if (R && typeof R.ownKeys === 'function') {
     return Object.getOwnPropertyNames(target);
   };
 }
-
 function ProcessEmitWarning(warning) {
   if (console && console.warn) console.warn(warning);
 }
-
 var NumberIsNaN = Number.isNaN || function NumberIsNaN(value) {
   return value !== value;
 }
-
 function EventEmitter() {
   EventEmitter.init.call(this);
 }
 module.exports = EventEmitter;
-
 // Backwards-compat with node 0.10.x
 EventEmitter.EventEmitter = EventEmitter;
-
 EventEmitter.prototype._events = undefined;
 EventEmitter.prototype._eventsCount = 0;
 EventEmitter.prototype._maxListeners = undefined;
-
 // By default EventEmitters will print a warning if more than 10 listeners are
 // added to it. This is a useful default which helps finding memory leaks.
 var defaultMaxListeners = 10;
-
 function checkListener(listener) {
   if (typeof listener !== 'function') {
     throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
   }
 }
-
 Object.defineProperty(EventEmitter, 'defaultMaxListeners', {
   enumerable: true,
   get: function() {
@@ -6108,18 +5697,14 @@ Object.defineProperty(EventEmitter, 'defaultMaxListeners', {
     defaultMaxListeners = arg;
   }
 });
-
 EventEmitter.init = function() {
-
   if (this._events === undefined ||
       this._events === Object.getPrototypeOf(this)._events) {
     this._events = Object.create(null);
     this._eventsCount = 0;
   }
-
   this._maxListeners = this._maxListeners || undefined;
 };
-
 // Obviously not all Emitters should be limited to 10. This function allows
 // that to be increased. Set to zero for unlimited.
 EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
@@ -6129,28 +5714,23 @@ EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
   this._maxListeners = n;
   return this;
 };
-
 function _getMaxListeners(that) {
   if (that._maxListeners === undefined)
     return EventEmitter.defaultMaxListeners;
   return that._maxListeners;
 }
-
 EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
   return _getMaxListeners(this);
 };
-
 EventEmitter.prototype.emit = function emit(type) {
   var args = [];
   for (var i = 1; i < arguments.length; i++) args.push(arguments[i]);
   var doError = (type === 'error');
-
   var events = this._events;
   if (events !== undefined)
     doError = (doError && events.error === undefined);
   else if (!doError)
     return false;
-
   // If there is no 'error' event listener then throw.
   if (doError) {
     var er;
@@ -6166,12 +5746,9 @@ EventEmitter.prototype.emit = function emit(type) {
     err.context = er;
     throw err; // Unhandled 'error' event
   }
-
   var handler = events[type];
-
   if (handler === undefined)
     return false;
-
   if (typeof handler === 'function') {
     ReflectApply(handler, this, args);
   } else {
@@ -6180,17 +5757,13 @@ EventEmitter.prototype.emit = function emit(type) {
     for (var i = 0; i < len; ++i)
       ReflectApply(listeners[i], this, args);
   }
-
   return true;
 };
-
 function _addListener(target, type, listener, prepend) {
   var m;
   var events;
   var existing;
-
   checkListener(listener);
-
   events = target._events;
   if (events === undefined) {
     events = target._events = Object.create(null);
@@ -6201,14 +5774,12 @@ function _addListener(target, type, listener, prepend) {
     if (events.newListener !== undefined) {
       target.emit('newListener', type,
                   listener.listener ? listener.listener : listener);
-
       // Re-assign `events` because a newListener handler could have caused the
       // this._events to be assigned to a new object
       events = target._events;
     }
     existing = events[type];
   }
-
   if (existing === undefined) {
     // Optimize the case of one listener. Don't need the extra array object.
     existing = events[type] = listener;
@@ -6224,7 +5795,6 @@ function _addListener(target, type, listener, prepend) {
     } else {
       existing.push(listener);
     }
-
     // Check for listener leak
     m = _getMaxListeners(target);
     if (m > 0 && existing.length > m && !existing.warned) {
@@ -6242,21 +5812,16 @@ function _addListener(target, type, listener, prepend) {
       ProcessEmitWarning(w);
     }
   }
-
   return target;
 }
-
 EventEmitter.prototype.addListener = function addListener(type, listener) {
   return _addListener(this, type, listener, false);
 };
-
 EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-
 EventEmitter.prototype.prependListener =
     function prependListener(type, listener) {
       return _addListener(this, type, listener, true);
     };
-
 function onceWrapper() {
   if (!this.fired) {
     this.target.removeListener(this.type, this.wrapFn);
@@ -6266,7 +5831,6 @@ function onceWrapper() {
     return this.listener.apply(this.target, arguments);
   }
 }
-
 function _onceWrap(target, type, listener) {
   var state = { fired: false, wrapFn: undefined, target: target, type: type, listener: listener };
   var wrapped = onceWrapper.bind(state);
@@ -6274,35 +5838,28 @@ function _onceWrap(target, type, listener) {
   state.wrapFn = wrapped;
   return wrapped;
 }
-
 EventEmitter.prototype.once = function once(type, listener) {
   checkListener(listener);
   this.on(type, _onceWrap(this, type, listener));
   return this;
 };
-
 EventEmitter.prototype.prependOnceListener =
     function prependOnceListener(type, listener) {
       checkListener(listener);
       this.prependListener(type, _onceWrap(this, type, listener));
       return this;
     };
-
 // Emits a 'removeListener' event if and only if the listener was removed.
 EventEmitter.prototype.removeListener =
     function removeListener(type, listener) {
       var list, events, position, i, originalListener;
-
       checkListener(listener);
-
       events = this._events;
       if (events === undefined)
         return this;
-
       list = events[type];
       if (list === undefined)
         return this;
-
       if (list === listener || list.listener === listener) {
         if (--this._eventsCount === 0)
           this._events = Object.create(null);
@@ -6313,7 +5870,6 @@ EventEmitter.prototype.removeListener =
         }
       } else if (typeof list !== 'function') {
         position = -1;
-
         for (i = list.length - 1; i >= 0; i--) {
           if (list[i] === listener || list[i].listener === listener) {
             originalListener = list[i].listener;
@@ -6321,36 +5877,27 @@ EventEmitter.prototype.removeListener =
             break;
           }
         }
-
         if (position < 0)
           return this;
-
         if (position === 0)
           list.shift();
         else {
           spliceOne(list, position);
         }
-
         if (list.length === 1)
           events[type] = list[0];
-
         if (events.removeListener !== undefined)
           this.emit('removeListener', type, originalListener || listener);
       }
-
       return this;
     };
-
 EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
-
 EventEmitter.prototype.removeAllListeners =
     function removeAllListeners(type) {
       var listeners, events, i;
-
       events = this._events;
       if (events === undefined)
         return this;
-
       // not listening for removeListener, no need to emit
       if (events.removeListener === undefined) {
         if (arguments.length === 0) {
@@ -6364,7 +5911,6 @@ EventEmitter.prototype.removeAllListeners =
         }
         return this;
       }
-
       // emit removeListener for all listeners on all events
       if (arguments.length === 0) {
         var keys = Object.keys(events);
@@ -6379,9 +5925,7 @@ EventEmitter.prototype.removeAllListeners =
         this._eventsCount = 0;
         return this;
       }
-
       listeners = events[type];
-
       if (typeof listeners === 'function') {
         this.removeListener(type, listeners);
       } else if (listeners !== undefined) {
@@ -6390,35 +5934,26 @@ EventEmitter.prototype.removeAllListeners =
           this.removeListener(type, listeners[i]);
         }
       }
-
       return this;
     };
-
 function _listeners(target, type, unwrap) {
   var events = target._events;
-
   if (events === undefined)
     return [];
-
   var evlistener = events[type];
   if (evlistener === undefined)
     return [];
-
   if (typeof evlistener === 'function')
     return unwrap ? [evlistener.listener || evlistener] : [evlistener];
-
   return unwrap ?
     unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
 }
-
 EventEmitter.prototype.listeners = function listeners(type) {
   return _listeners(this, type, true);
 };
-
 EventEmitter.prototype.rawListeners = function rawListeners(type) {
   return _listeners(this, type, false);
 };
-
 EventEmitter.listenerCount = function(emitter, type) {
   if (typeof emitter.listenerCount === 'function') {
     return emitter.listenerCount(type);
@@ -6426,41 +5961,33 @@ EventEmitter.listenerCount = function(emitter, type) {
     return listenerCount.call(emitter, type);
   }
 };
-
 EventEmitter.prototype.listenerCount = listenerCount;
 function listenerCount(type) {
   var events = this._events;
-
   if (events !== undefined) {
     var evlistener = events[type];
-
     if (typeof evlistener === 'function') {
       return 1;
     } else if (evlistener !== undefined) {
       return evlistener.length;
     }
   }
-
   return 0;
 }
-
 EventEmitter.prototype.eventNames = function eventNames() {
   return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
 };
-
 function arrayClone(arr, n) {
   var copy = new Array(n);
   for (var i = 0; i < n; ++i)
     copy[i] = arr[i];
   return copy;
 }
-
 function spliceOne(list, index) {
   for (; index + 1 < list.length; index++)
     list[index] = list[index + 1];
   list.pop();
 }
-
 function unwrapListeners(arr) {
   var ret = new Array(arr.length);
   for (var i = 0; i < ret.length; ++i) {
@@ -6468,32 +5995,20 @@ function unwrapListeners(arr) {
   }
   return ret;
 }
-
-
 /***/ }),
 /* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _exception__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(36);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Exception", function() { return _exception__WEBPACK_IMPORTED_MODULE_0__["Exception"]; });
-
 /* harmony import */ var _transaction_state_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(37);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TransactionStateError", function() { return _transaction_state_error__WEBPACK_IMPORTED_MODULE_1__["TransactionStateError"]; });
-
 /* harmony import */ var _transport_error__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(38);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TransportError", function() { return _transport_error__WEBPACK_IMPORTED_MODULE_2__["TransportError"]; });
-
-
-
-
-
-
 /***/ }),
 /* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Exception", function() { return Exception; });
@@ -6508,17 +6023,13 @@ class Exception extends Error {
         Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain
     }
 }
-
-
 /***/ }),
 /* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TransactionStateError", function() { return TransactionStateError; });
 /* harmony import */ var _exception__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(36);
-
 /**
  * Indicates that the operation could not be completed given the current transaction state.
  * @public
@@ -6528,17 +6039,13 @@ class TransactionStateError extends _exception__WEBPACK_IMPORTED_MODULE_0__["Exc
         super(message ? message : "Transaction state error.");
     }
 }
-
-
 /***/ }),
 /* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TransportError", function() { return TransportError; });
 /* harmony import */ var _exception__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(36);
-
 /**
  * Transport error.
  * @public
@@ -6548,21 +6055,15 @@ class TransportError extends _exception__WEBPACK_IMPORTED_MODULE_0__["Exception"
         super(message ? message : "Unspecified transport error.");
     }
 }
-
-
 /***/ }),
 /* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InviteClientTransaction", function() { return InviteClientTransaction; });
 /* harmony import */ var _timers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(30);
 /* harmony import */ var _client_transaction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(32);
 /* harmony import */ var _transaction_state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40);
-
-
-
 /**
  * INVITE Client Transaction.
  * @remarks
@@ -7027,12 +6528,9 @@ class InviteClientTransaction extends _client_transaction__WEBPACK_IMPORTED_MODU
         }
     }
 }
-
-
 /***/ }),
 /* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TransactionState", function() { return TransactionState; });
@@ -7050,12 +6548,9 @@ var TransactionState;
     TransactionState["Terminated"] = "Terminated";
     TransactionState["Trying"] = "Trying";
 })(TransactionState || (TransactionState = {}));
-
-
 /***/ }),
 /* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InviteServerTransaction", function() { return InviteServerTransaction; });
@@ -7063,10 +6558,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _timers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(30);
 /* harmony import */ var _server_transaction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(42);
 /* harmony import */ var _transaction_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(40);
-
-
-
-
 /**
  * INVITE Server Transaction.
  * @remarks
@@ -7439,17 +6930,13 @@ class InviteServerTransaction extends _server_transaction__WEBPACK_IMPORTED_MODU
         }
     }
 }
-
-
 /***/ }),
 /* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ServerTransaction", function() { return ServerTransaction; });
 /* harmony import */ var _transaction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(33);
-
 /**
  * Server Transaction.
  * @remarks
@@ -7472,21 +6959,15 @@ class ServerTransaction extends _transaction__WEBPACK_IMPORTED_MODULE_0__["Trans
         return this._request;
     }
 }
-
-
 /***/ }),
 /* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NonInviteClientTransaction", function() { return NonInviteClientTransaction; });
 /* harmony import */ var _timers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(30);
 /* harmony import */ var _client_transaction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(32);
 /* harmony import */ var _transaction_state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40);
-
-
-
 /**
  * Non-INVITE Client Transaction.
  * @remarks
@@ -7717,21 +7198,15 @@ class NonInviteClientTransaction extends _client_transaction__WEBPACK_IMPORTED_M
         }
     }
 }
-
-
 /***/ }),
 /* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NonInviteServerTransaction", function() { return NonInviteServerTransaction; });
 /* harmony import */ var _timers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(30);
 /* harmony import */ var _server_transaction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(42);
 /* harmony import */ var _transaction_state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40);
-
-
-
 /**
  * Non-INVITE Server Transaction.
  * @remarks
@@ -7947,21 +7422,15 @@ class NonInviteServerTransaction extends _server_transaction__WEBPACK_IMPORTED_M
         }
     }
 }
-
-
 /***/ }),
 /* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ByeUserAgentClient", function() { return ByeUserAgentClient; });
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(46);
-
-
-
 /**
  * BYE UAC.
  * @public
@@ -7973,19 +7442,14 @@ class ByeUserAgentClient extends _user_agent_client__WEBPACK_IMPORTED_MODULE_2__
         dialog.dispose();
     }
 }
-
-
 /***/ }),
 /* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserAgentClient", function() { return UserAgentClient; });
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
-
-
 /**
  * User Agent Client (UAC).
  * @remarks
@@ -8293,19 +7757,14 @@ class UserAgentClient {
         this.core.userAgentClients.set(userAgentClientId, this);
     }
 }
-
-
 /***/ }),
 /* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ByeUserAgentServer", function() { return ByeUserAgentServer; });
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48);
-
-
 /**
  * BYE UAS.
  * @public
@@ -8315,12 +7774,9 @@ class ByeUserAgentServer extends _user_agent_server__WEBPACK_IMPORTED_MODULE_1__
         super(_transactions__WEBPACK_IMPORTED_MODULE_0__["NonInviteServerTransaction"], dialog.userAgentCore, message, delegate);
     }
 }
-
-
 /***/ }),
 /* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserAgentServer", function() { return UserAgentServer; });
@@ -8328,10 +7784,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
 /* harmony import */ var _messages_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(20);
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(31);
-
-
-
-
 /**
  * User Agent Server (UAS).
  * @remarks
@@ -8550,21 +8002,15 @@ class UserAgentServer {
         this.core.userAgentServers.set(transaction.id, this);
     }
 }
-
-
 /***/ }),
 /* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InfoUserAgentClient", function() { return InfoUserAgentClient; });
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(46);
-
-
-
 /**
  * INFO UAC.
  * @public
@@ -8575,19 +8021,14 @@ class InfoUserAgentClient extends _user_agent_client__WEBPACK_IMPORTED_MODULE_2_
         super(_transactions__WEBPACK_IMPORTED_MODULE_1__["NonInviteClientTransaction"], dialog.userAgentCore, message, delegate);
     }
 }
-
-
 /***/ }),
 /* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InfoUserAgentServer", function() { return InfoUserAgentServer; });
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48);
-
-
 /**
  * INFO UAS.
  * @public
@@ -8597,19 +8038,14 @@ class InfoUserAgentServer extends _user_agent_server__WEBPACK_IMPORTED_MODULE_1_
         super(_transactions__WEBPACK_IMPORTED_MODULE_0__["NonInviteServerTransaction"], dialog.userAgentCore, message, delegate);
     }
 }
-
-
 /***/ }),
 /* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageUserAgentClient", function() { return MessageUserAgentClient; });
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(46);
-
-
 /**
  * MESSAGE UAC.
  * @public
@@ -8619,19 +8055,14 @@ class MessageUserAgentClient extends _user_agent_client__WEBPACK_IMPORTED_MODULE
         super(_transactions__WEBPACK_IMPORTED_MODULE_0__["NonInviteClientTransaction"], core, message, delegate);
     }
 }
-
-
 /***/ }),
 /* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageUserAgentServer", function() { return MessageUserAgentServer; });
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48);
-
-
 /**
  * MESSAGE UAS.
  * @public
@@ -8641,21 +8072,15 @@ class MessageUserAgentServer extends _user_agent_server__WEBPACK_IMPORTED_MODULE
         super(_transactions__WEBPACK_IMPORTED_MODULE_0__["NonInviteServerTransaction"], core, message, delegate);
     }
 }
-
-
 /***/ }),
 /* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotifyUserAgentClient", function() { return NotifyUserAgentClient; });
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(46);
-
-
-
 /**
  * NOTIFY UAS.
  * @public
@@ -8666,19 +8091,14 @@ class NotifyUserAgentClient extends _user_agent_client__WEBPACK_IMPORTED_MODULE_
         super(_transactions__WEBPACK_IMPORTED_MODULE_1__["NonInviteClientTransaction"], dialog.userAgentCore, message, delegate);
     }
 }
-
-
 /***/ }),
 /* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotifyUserAgentServer", function() { return NotifyUserAgentServer; });
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48);
-
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function instanceOfDialog(object) {
     return object.userAgentCore !== undefined;
@@ -8698,21 +8118,15 @@ class NotifyUserAgentServer extends _user_agent_server__WEBPACK_IMPORTED_MODULE_
         super(_transactions__WEBPACK_IMPORTED_MODULE_0__["NonInviteServerTransaction"], userAgentCore, message, delegate);
     }
 }
-
-
 /***/ }),
 /* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PrackUserAgentClient", function() { return PrackUserAgentClient; });
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(46);
-
-
-
 /**
  * PRACK UAC.
  * @public
@@ -8724,19 +8138,14 @@ class PrackUserAgentClient extends _user_agent_client__WEBPACK_IMPORTED_MODULE_2
         dialog.signalingStateTransition(message);
     }
 }
-
-
 /***/ }),
 /* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PrackUserAgentServer", function() { return PrackUserAgentServer; });
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48);
-
-
 /**
  * PRACK UAS.
  * @public
@@ -8760,21 +8169,15 @@ class PrackUserAgentServer extends _user_agent_server__WEBPACK_IMPORTED_MODULE_1
         return super.accept(options);
     }
 }
-
-
 /***/ }),
 /* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReInviteUserAgentClient", function() { return ReInviteUserAgentClient; });
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(46);
-
-
-
 /**
  * Re-INVITE UAC.
  * @remarks
@@ -8880,19 +8283,14 @@ class ReInviteUserAgentClient extends _user_agent_client__WEBPACK_IMPORTED_MODUL
         }
     }
 }
-
-
 /***/ }),
 /* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReInviteUserAgentServer", function() { return ReInviteUserAgentServer; });
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48);
-
-
 /**
  * Re-INVITE UAS.
  * @remarks
@@ -8977,21 +8375,15 @@ class ReInviteUserAgentServer extends _user_agent_server__WEBPACK_IMPORTED_MODUL
         return super.reject(options);
     }
 }
-
-
 /***/ }),
 /* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReferUserAgentClient", function() { return ReferUserAgentClient; });
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(46);
-
-
-
 /**
  * REFER UAC.
  * @public
@@ -9002,19 +8394,14 @@ class ReferUserAgentClient extends _user_agent_client__WEBPACK_IMPORTED_MODULE_2
         super(_transactions__WEBPACK_IMPORTED_MODULE_1__["NonInviteClientTransaction"], dialog.userAgentCore, message, delegate);
     }
 }
-
-
 /***/ }),
 /* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReferUserAgentServer", function() { return ReferUserAgentServer; });
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48);
-
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function instanceOfSessionDialog(object) {
     return object.userAgentCore !== undefined;
@@ -9034,12 +8421,9 @@ class ReferUserAgentServer extends _user_agent_server__WEBPACK_IMPORTED_MODULE_1
         super(_transactions__WEBPACK_IMPORTED_MODULE_0__["NonInviteServerTransaction"], userAgentCore, message, delegate);
     }
 }
-
-
 /***/ }),
 /* 61 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SubscriptionDialog", function() { return SubscriptionDialog; });
@@ -9050,13 +8434,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_agents_notify_user_agent_server__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(54);
 /* harmony import */ var _user_agents_re_subscribe_user_agent_client__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(65);
 /* harmony import */ var _dialog__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7);
-
-
-
-
-
-
-
 /**
  * Subscription Dialog.
  * @remarks
@@ -9521,24 +8898,16 @@ class SubscriptionDialog extends _dialog__WEBPACK_IMPORTED_MODULE_6__["Dialog"] 
         }
     }
 }
-
-
 /***/ }),
 /* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _subscription__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(63);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SubscriptionState", function() { return _subscription__WEBPACK_IMPORTED_MODULE_0__["SubscriptionState"]; });
-
-
-
-
 /***/ }),
 /* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SubscriptionState", function() { return SubscriptionState; });
@@ -9556,17 +8925,13 @@ var SubscriptionState;
     SubscriptionState["Active"] = "Active";
     SubscriptionState["Terminated"] = "Terminated";
 })(SubscriptionState || (SubscriptionState = {}));
-
-
 /***/ }),
 /* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AllowedMethods", function() { return AllowedMethods; });
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
-
 /**
  * FIXME: TODO: Should be configurable/variable.
  */
@@ -9584,21 +8949,15 @@ const AllowedMethods = [
     _messages__WEBPACK_IMPORTED_MODULE_0__["C"].REGISTER,
     _messages__WEBPACK_IMPORTED_MODULE_0__["C"].SUBSCRIBE
 ];
-
-
 /***/ }),
 /* 65 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReSubscribeUserAgentClient", function() { return ReSubscribeUserAgentClient; });
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(46);
-
-
-
 /**
  * Re-SUBSCRIBE UAC.
  * @public
@@ -9661,32 +9020,20 @@ class ReSubscribeUserAgentClient extends _user_agent_client__WEBPACK_IMPORTED_MO
         super.receiveResponse(message);
     }
 }
-
-
 /***/ }),
 /* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _levels__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(67);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Levels", function() { return _levels__WEBPACK_IMPORTED_MODULE_0__["Levels"]; });
-
 /* harmony import */ var _logger_factory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(68);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LoggerFactory", function() { return _logger_factory__WEBPACK_IMPORTED_MODULE_1__["LoggerFactory"]; });
-
 /* harmony import */ var _logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(69);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return _logger__WEBPACK_IMPORTED_MODULE_2__["Logger"]; });
-
-
-
-
-
-
 /***/ }),
 /* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Levels", function() { return Levels; });
@@ -9701,19 +9048,14 @@ var Levels;
     Levels[Levels["log"] = 2] = "log";
     Levels[Levels["debug"] = 3] = "debug";
 })(Levels || (Levels = {}));
-
-
 /***/ }),
 /* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoggerFactory", function() { return LoggerFactory; });
 /* harmony import */ var _levels__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(67);
 /* harmony import */ var _logger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(69);
-
-
 /**
  * Logger.
  * @public
@@ -9815,17 +9157,13 @@ class LoggerFactory {
         }
     }
 }
-
-
 /***/ }),
 /* 69 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return Logger; });
 /* harmony import */ var _levels__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(67);
-
 /**
  * Logger.
  * @public
@@ -9852,24 +9190,16 @@ class Logger {
         this.logger.genericLog(level, this.category, this.label, content);
     }
 }
-
-
 /***/ }),
 /* 70 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_agent_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(71);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserAgentCore", function() { return _user_agent_core__WEBPACK_IMPORTED_MODULE_0__["UserAgentCore"]; });
-
-
-
-
 /***/ }),
 /* 71 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserAgentCore", function() { return UserAgentCore; });
@@ -9877,10 +9207,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
 /* harmony import */ var _user_agents__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(72);
 /* harmony import */ var _allowed_methods__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(64);
-
-
-
-
 /**
  * This is ported from UA.C.ACCEPTED_BODY_TYPES.
  * FIXME: TODO: Should be configurable/variable.
@@ -10659,131 +9985,71 @@ class UserAgentCore {
         }
     }
 }
-
-
 /***/ }),
 /* 72 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bye_user_agent_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(45);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ByeUserAgentClient", function() { return _bye_user_agent_client__WEBPACK_IMPORTED_MODULE_0__["ByeUserAgentClient"]; });
-
 /* harmony import */ var _bye_user_agent_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(47);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ByeUserAgentServer", function() { return _bye_user_agent_server__WEBPACK_IMPORTED_MODULE_1__["ByeUserAgentServer"]; });
-
 /* harmony import */ var _cancel_user_agent_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(73);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CancelUserAgentClient", function() { return _cancel_user_agent_client__WEBPACK_IMPORTED_MODULE_2__["CancelUserAgentClient"]; });
-
 /* harmony import */ var _info_user_agent_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(49);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InfoUserAgentClient", function() { return _info_user_agent_client__WEBPACK_IMPORTED_MODULE_3__["InfoUserAgentClient"]; });
-
 /* harmony import */ var _info_user_agent_server__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(50);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InfoUserAgentServer", function() { return _info_user_agent_server__WEBPACK_IMPORTED_MODULE_4__["InfoUserAgentServer"]; });
-
 /* harmony import */ var _invite_user_agent_client__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(74);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InviteUserAgentClient", function() { return _invite_user_agent_client__WEBPACK_IMPORTED_MODULE_5__["InviteUserAgentClient"]; });
-
 /* harmony import */ var _invite_user_agent_server__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(75);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InviteUserAgentServer", function() { return _invite_user_agent_server__WEBPACK_IMPORTED_MODULE_6__["InviteUserAgentServer"]; });
-
 /* harmony import */ var _message_user_agent_client__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(51);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MessageUserAgentClient", function() { return _message_user_agent_client__WEBPACK_IMPORTED_MODULE_7__["MessageUserAgentClient"]; });
-
 /* harmony import */ var _message_user_agent_server__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(52);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MessageUserAgentServer", function() { return _message_user_agent_server__WEBPACK_IMPORTED_MODULE_8__["MessageUserAgentServer"]; });
-
 /* harmony import */ var _notify_user_agent_client__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(53);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NotifyUserAgentClient", function() { return _notify_user_agent_client__WEBPACK_IMPORTED_MODULE_9__["NotifyUserAgentClient"]; });
-
 /* harmony import */ var _notify_user_agent_server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(54);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NotifyUserAgentServer", function() { return _notify_user_agent_server__WEBPACK_IMPORTED_MODULE_10__["NotifyUserAgentServer"]; });
-
 /* harmony import */ var _publish_user_agent_client__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(76);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PublishUserAgentClient", function() { return _publish_user_agent_client__WEBPACK_IMPORTED_MODULE_11__["PublishUserAgentClient"]; });
-
 /* harmony import */ var _prack_user_agent_client__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(55);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PrackUserAgentClient", function() { return _prack_user_agent_client__WEBPACK_IMPORTED_MODULE_12__["PrackUserAgentClient"]; });
-
 /* harmony import */ var _prack_user_agent_server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(56);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PrackUserAgentServer", function() { return _prack_user_agent_server__WEBPACK_IMPORTED_MODULE_13__["PrackUserAgentServer"]; });
-
 /* harmony import */ var _re_invite_user_agent_client__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(57);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ReInviteUserAgentClient", function() { return _re_invite_user_agent_client__WEBPACK_IMPORTED_MODULE_14__["ReInviteUserAgentClient"]; });
-
 /* harmony import */ var _re_invite_user_agent_server__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(58);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ReInviteUserAgentServer", function() { return _re_invite_user_agent_server__WEBPACK_IMPORTED_MODULE_15__["ReInviteUserAgentServer"]; });
-
 /* harmony import */ var _re_subscribe_user_agent_client__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(65);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ReSubscribeUserAgentClient", function() { return _re_subscribe_user_agent_client__WEBPACK_IMPORTED_MODULE_16__["ReSubscribeUserAgentClient"]; });
-
 /* harmony import */ var _re_subscribe_user_agent_server__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(77);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ReSubscribeUserAgentServer", function() { return _re_subscribe_user_agent_server__WEBPACK_IMPORTED_MODULE_17__["ReSubscribeUserAgentServer"]; });
-
 /* harmony import */ var _refer_user_agent_client__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(59);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ReferUserAgentClient", function() { return _refer_user_agent_client__WEBPACK_IMPORTED_MODULE_18__["ReferUserAgentClient"]; });
-
 /* harmony import */ var _refer_user_agent_server__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(60);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ReferUserAgentServer", function() { return _refer_user_agent_server__WEBPACK_IMPORTED_MODULE_19__["ReferUserAgentServer"]; });
-
 /* harmony import */ var _register_user_agent_client__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(78);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RegisterUserAgentClient", function() { return _register_user_agent_client__WEBPACK_IMPORTED_MODULE_20__["RegisterUserAgentClient"]; });
-
 /* harmony import */ var _register_user_agent_server__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(79);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RegisterUserAgentServer", function() { return _register_user_agent_server__WEBPACK_IMPORTED_MODULE_21__["RegisterUserAgentServer"]; });
-
 /* harmony import */ var _subscribe_user_agent_client__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(80);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SubscribeUserAgentClient", function() { return _subscribe_user_agent_client__WEBPACK_IMPORTED_MODULE_22__["SubscribeUserAgentClient"]; });
-
 /* harmony import */ var _subscribe_user_agent_server__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(81);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SubscribeUserAgentServer", function() { return _subscribe_user_agent_server__WEBPACK_IMPORTED_MODULE_23__["SubscribeUserAgentServer"]; });
-
 /* harmony import */ var _user_agent_client__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(46);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserAgentClient", function() { return _user_agent_client__WEBPACK_IMPORTED_MODULE_24__["UserAgentClient"]; });
-
 /* harmony import */ var _user_agent_server__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(48);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserAgentServer", function() { return _user_agent_server__WEBPACK_IMPORTED_MODULE_25__["UserAgentServer"]; });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /***/ }),
 /* 73 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CancelUserAgentClient", function() { return CancelUserAgentClient; });
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(46);
-
-
 /**
  * CANCEL UAC.
  * @public
@@ -10793,12 +10059,9 @@ class CancelUserAgentClient extends _user_agent_client__WEBPACK_IMPORTED_MODULE_
         super(_transactions__WEBPACK_IMPORTED_MODULE_0__["NonInviteClientTransaction"], core, message, delegate);
     }
 }
-
-
 /***/ }),
 /* 74 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InviteUserAgentClient", function() { return InviteUserAgentClient; });
@@ -10806,10 +10069,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _session__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28);
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(46);
-
-
-
-
 /**
  * INVITE UAC.
  * @remarks
@@ -11121,12 +10380,9 @@ class InviteUserAgentClient extends _user_agent_client__WEBPACK_IMPORTED_MODULE_
         throw new Error(`Executing what should be an unreachable code path receiving ${statusCode} response.`);
     }
 }
-
-
 /***/ }),
 /* 75 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InviteUserAgentServer", function() { return InviteUserAgentServer; });
@@ -11136,12 +10392,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_core_allowed_methods__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(64);
 /* harmony import */ var _user_agent_server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(48);
-
-
-
-
-
-
 /**
  * INVITE UAS.
  * @remarks
@@ -11368,19 +10618,14 @@ class InviteUserAgentServer extends _user_agent_server__WEBPACK_IMPORTED_MODULE_
         return super.reject(options);
     }
 }
-
-
 /***/ }),
 /* 76 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PublishUserAgentClient", function() { return PublishUserAgentClient; });
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(46);
-
-
 /**
  * PUBLISH UAC.
  * @public
@@ -11390,19 +10635,14 @@ class PublishUserAgentClient extends _user_agent_client__WEBPACK_IMPORTED_MODULE
         super(_transactions__WEBPACK_IMPORTED_MODULE_0__["NonInviteClientTransaction"], core, message, delegate);
     }
 }
-
-
 /***/ }),
 /* 77 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReSubscribeUserAgentServer", function() { return ReSubscribeUserAgentServer; });
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48);
-
-
 /**
  * Re-SUBSCRIBE UAS.
  * @public
@@ -11412,19 +10652,14 @@ class ReSubscribeUserAgentServer extends _user_agent_server__WEBPACK_IMPORTED_MO
         super(_transactions__WEBPACK_IMPORTED_MODULE_0__["NonInviteServerTransaction"], dialog.userAgentCore, message, delegate);
     }
 }
-
-
 /***/ }),
 /* 78 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterUserAgentClient", function() { return RegisterUserAgentClient; });
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(46);
-
-
 /**
  * REGISTER UAC.
  * @public
@@ -11434,19 +10669,14 @@ class RegisterUserAgentClient extends _user_agent_client__WEBPACK_IMPORTED_MODUL
         super(_transactions__WEBPACK_IMPORTED_MODULE_0__["NonInviteClientTransaction"], core, message, delegate);
     }
 }
-
-
 /***/ }),
 /* 79 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterUserAgentServer", function() { return RegisterUserAgentServer; });
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48);
-
-
 /**
  * REGISTER UAS.
  * @public
@@ -11457,12 +10687,9 @@ class RegisterUserAgentServer extends _user_agent_server__WEBPACK_IMPORTED_MODUL
         this.core = core;
     }
 }
-
-
 /***/ }),
 /* 80 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SubscribeUserAgentClient", function() { return SubscribeUserAgentClient; });
@@ -11471,11 +10698,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _timers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(30);
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(46);
-
-
-
-
-
 /**
  * SUBSCRIBE UAC.
  * @remarks
@@ -11758,19 +10980,14 @@ class SubscribeUserAgentClient extends _user_agent_client__WEBPACK_IMPORTED_MODU
         }
     }
 }
-
-
 /***/ }),
 /* 81 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SubscribeUserAgentServer", function() { return SubscribeUserAgentServer; });
 /* harmony import */ var _transactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
 /* harmony import */ var _user_agent_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48);
-
-
 /**
  * SUBSCRIBE UAS.
  * @public
@@ -11781,17 +10998,13 @@ class SubscribeUserAgentServer extends _user_agent_server__WEBPACK_IMPORTED_MODU
         this.core = core;
     }
 }
-
-
 /***/ }),
 /* 82 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RequestPendingError", function() { return RequestPendingError; });
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
-
 /**
  * An exception indicating an outstanding prior request prevented execution.
  * @public
@@ -11802,17 +11015,13 @@ class RequestPendingError extends _core__WEBPACK_IMPORTED_MODULE_0__["Exception"
         super(message ? message : "Request pending.");
     }
 }
-
-
 /***/ }),
 /* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SessionDescriptionHandlerError", function() { return SessionDescriptionHandlerError; });
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
-
 /**
  * An exception indicating a session description handler error occured.
  * @public
@@ -11822,17 +11031,13 @@ class SessionDescriptionHandlerError extends _core__WEBPACK_IMPORTED_MODULE_0__[
         super(message ? message : "Unspecified session description handler error.");
     }
 }
-
-
 /***/ }),
 /* 84 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SessionTerminatedError", function() { return SessionTerminatedError; });
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
-
 /**
  * An exception indicating the session terminated before the action completed.
  * @public
@@ -11842,17 +11047,13 @@ class SessionTerminatedError extends _core__WEBPACK_IMPORTED_MODULE_0__["Excepti
         super("The session has terminated.");
     }
 }
-
-
 /***/ }),
 /* 85 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StateTransitionError", function() { return StateTransitionError; });
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
-
 /**
  * An exception indicating an invalid state transition error occured.
  * @public
@@ -11862,12 +11063,9 @@ class StateTransitionError extends _core__WEBPACK_IMPORTED_MODULE_0__["Exception
         super(message ? message : "An error occurred during state transition.");
     }
 }
-
-
 /***/ }),
 /* 86 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Bye", function() { return Bye; });
@@ -11895,12 +11093,9 @@ class Bye {
         return Promise.resolve();
     }
 }
-
-
 /***/ }),
 /* 87 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_makeEmitter", function() { return _makeEmitter; });
@@ -11934,12 +11129,9 @@ function _makeEmitter(eventEmitter, eventName = "event") {
         }
     };
 }
-
-
 /***/ }),
 /* 88 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Info", function() { return Info; });
@@ -11967,12 +11159,9 @@ class Info {
         return Promise.resolve();
     }
 }
-
-
 /***/ }),
 /* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Invitation", function() { return Invitation; });
@@ -11982,12 +11171,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _session__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(90);
 /* harmony import */ var _session_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(94);
 /* harmony import */ var _user_agent_options__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(95);
-
-
-
-
-
-
 /**
  * An invitation is an offer to establish a {@link Session} (incoming INVITE).
  * @public
@@ -12660,12 +11843,9 @@ class Invitation extends _session__WEBPACK_IMPORTED_MODULE_3__["Session"] {
         this.waitingForPrackReject = undefined;
     }
 }
-
-
 /***/ }),
 /* 90 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Session", function() { return Session; });
@@ -12682,18 +11862,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _notification__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(92);
 /* harmony import */ var _referral__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(93);
 /* harmony import */ var _session_state__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(94);
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * A session provides real time communication between one or more participants.
  *
@@ -13844,12 +13012,9 @@ class Session {
         return referTo;
     }
 }
-
-
 /***/ }),
 /* 91 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Message", function() { return Message; });
@@ -13877,12 +13042,9 @@ class Message {
         return Promise.resolve();
     }
 }
-
-
 /***/ }),
 /* 92 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Notification", function() { return Notification; });
@@ -13910,17 +13072,13 @@ class Notification {
         return Promise.resolve();
     }
 }
-
-
 /***/ }),
 /* 93 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Referral", function() { return Referral; });
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
-
 /**
  * A request to establish a {@link Session} elsewhere (incoming REFER).
  * @public
@@ -13995,12 +13153,9 @@ class Referral {
         return this.inviter;
     }
 }
-
-
 /***/ }),
 /* 94 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SessionState", function() { return SessionState; });
@@ -14050,12 +13205,9 @@ var SessionState;
      */
     SessionState["Terminated"] = "Terminated";
 })(SessionState || (SessionState = {}));
-
-
 /***/ }),
 /* 95 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SIPExtension", function() { return SIPExtension; });
@@ -14111,12 +13263,9 @@ const UserAgentRegisteredOptionTags = {
     timer: true,
     uui: true // RFC 7433
 };
-
-
 /***/ }),
 /* 96 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Inviter", function() { return Inviter; });
@@ -14125,11 +13274,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _session__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(90);
 /* harmony import */ var _session_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(94);
 /* harmony import */ var _user_agent_options__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(95);
-
-
-
-
-
 /**
  * An inviter offers to establish a {@link Session} (outgoing INVITE).
  * @public
@@ -15083,17 +14227,13 @@ class Inviter extends _session__WEBPACK_IMPORTED_MODULE_2__["Session"] {
         }
     }
 }
-
-
 /***/ }),
 /* 97 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Messager", function() { return Messager; });
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
-
 /**
  * A messager sends a {@link Message} (outgoing MESSAGE).
  * @public
@@ -15152,12 +14292,9 @@ class Messager {
         return Promise.resolve();
     }
 }
-
-
 /***/ }),
 /* 98 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PublisherState", function() { return PublisherState; });
@@ -15183,12 +14320,9 @@ var PublisherState;
     PublisherState["Unpublished"] = "Unpublished";
     PublisherState["Terminated"] = "Terminated";
 })(PublisherState || (PublisherState = {}));
-
-
 /***/ }),
 /* 99 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Publisher", function() { return Publisher; });
@@ -15197,10 +14331,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
 /* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(87);
 /* harmony import */ var _publisher_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(98);
-
-
-
-
 /**
  * A publisher publishes a publication (outgoing PUBLISH).
  * @public
@@ -15524,12 +14654,9 @@ class Publisher {
         }
     }
 }
-
-
 /***/ }),
 /* 100 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegistererState", function() { return RegistererState; });
@@ -15555,12 +14682,9 @@ var RegistererState;
     RegistererState["Unregistered"] = "Unregistered";
     RegistererState["Terminated"] = "Terminated";
 })(RegistererState || (RegistererState = {}));
-
-
 /***/ }),
 /* 101 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Registerer", function() { return Registerer; });
@@ -15570,11 +14694,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(87);
 /* harmony import */ var _exceptions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3);
 /* harmony import */ var _registerer_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(100);
-
-
-
-
-
 /**
  * A registerer registers a contact for an address of record (outgoing REGISTER).
  * @public
@@ -16227,12 +15346,9 @@ Registerer.defaultOptions = {
     regId: 0,
     registrar: new _core__WEBPACK_IMPORTED_MODULE_1__["URI"]("sip", "anonymous", "anonymous.invalid")
 };
-
-
 /***/ }),
 /* 102 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Subscriber", function() { return Subscriber; });
@@ -16241,11 +15357,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(92);
 /* harmony import */ var _subscription__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(103);
 /* harmony import */ var _subscription_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(104);
-
-
-
-
-
 /**
  * A subscriber establishes a {@link Subscription} (outgoing SUBSCRIBE).
  *
@@ -16668,12 +15779,9 @@ class SubscriberRequest {
         });
     }
 }
-
-
 /***/ }),
 /* 103 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Subscription", function() { return Subscription; });
@@ -16681,9 +15789,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(87);
 /* harmony import */ var _subscription_state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(104);
-
-
-
 /**
  * A subscription provides {@link Notification} of events.
  *
@@ -16784,12 +15889,9 @@ class Subscription {
         }
     }
 }
-
-
 /***/ }),
 /* 104 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SubscriptionState", function() { return SubscriptionState; });
@@ -16813,12 +15915,9 @@ var SubscriptionState;
     SubscriptionState["Subscribed"] = "Subscribed";
     SubscriptionState["Terminated"] = "Terminated";
 })(SubscriptionState || (SubscriptionState = {}));
-
-
 /***/ }),
 /* 105 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TransportState", function() { return TransportState; });
@@ -16860,12 +15959,9 @@ var TransportState;
      */
     TransportState["Disconnected"] = "Disconnected";
 })(TransportState || (TransportState = {}));
-
-
 /***/ }),
 /* 106 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserAgentState", function() { return UserAgentState; });
@@ -16884,12 +15980,9 @@ var UserAgentState;
     UserAgentState["Started"] = "Started";
     UserAgentState["Stopped"] = "Stopped";
 })(UserAgentState || (UserAgentState = {}));
-
-
 /***/ }),
 /* 107 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserAgent", function() { return UserAgent; });
@@ -16907,19 +16000,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _notification__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(92);
 /* harmony import */ var _user_agent_options__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(95);
 /* harmony import */ var _user_agent_state__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(106);
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * A user agent sends and receives requests using a `Transport`.
  *
@@ -17764,24 +16844,16 @@ UserAgent.defaultOptions = {
     userAgentString: "SIP.js/" + _version__WEBPACK_IMPORTED_MODULE_5__["LIBRARY_VERSION"],
     viaHost: ""
 };
-
-
 /***/ }),
 /* 108 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _session_description_handler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(109);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SessionDescriptionHandler", function() { return _session_description_handler__WEBPACK_IMPORTED_MODULE_0__["SessionDescriptionHandler"]; });
-
-
-
-
 /***/ }),
 /* 109 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SessionDescriptionHandler", function() { return SessionDescriptionHandler; });
@@ -17791,9 +16863,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modifiers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(110);
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-
-
 function defer() {
     const deferred = {};
     deferred.promise = new Promise((resolve, reject) => {
@@ -18432,40 +17501,26 @@ class SessionDescriptionHandler extends events__WEBPACK_IMPORTED_MODULE_0__["Eve
         return this.iceGatheringDeferred ? this.iceGatheringDeferred.promise : Promise.resolve();
     }
 }
-
-
 /***/ }),
 /* 110 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modifiers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(111);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stripTcpCandidates", function() { return _modifiers__WEBPACK_IMPORTED_MODULE_0__["stripTcpCandidates"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stripTelephoneEvent", function() { return _modifiers__WEBPACK_IMPORTED_MODULE_0__["stripTelephoneEvent"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "cleanJitsiSdpImageattr", function() { return _modifiers__WEBPACK_IMPORTED_MODULE_0__["cleanJitsiSdpImageattr"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stripG722", function() { return _modifiers__WEBPACK_IMPORTED_MODULE_0__["stripG722"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stripRtpPayload", function() { return _modifiers__WEBPACK_IMPORTED_MODULE_0__["stripRtpPayload"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stripVideo", function() { return _modifiers__WEBPACK_IMPORTED_MODULE_0__["stripVideo"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "addMidLines", function() { return _modifiers__WEBPACK_IMPORTED_MODULE_0__["addMidLines"]; });
-
 /**
  * SessionDescriptionHandlerModifer functions for web browsers.
  * @packageDocumentation
  */
-
-
-
 /***/ }),
 /* 111 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stripTcpCandidates", function() { return stripTcpCandidates; });
@@ -18617,28 +17672,20 @@ function addMidLines(description) {
     }
     return Promise.resolve(description);
 }
-
-
 /***/ }),
 /* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _transport__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(113);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Transport", function() { return _transport__WEBPACK_IMPORTED_MODULE_0__["Transport"]; });
-
 /**
  * A Transport implementation for web browsers.
  * @packageDocumentation
  */
-
-
-
 /***/ }),
 /* 113 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Transport", function() { return Transport; });
@@ -18648,11 +17695,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _api_exceptions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
 /* harmony import */ var _api_transport_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(105);
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5);
-
-
-
-
-
 /**
  * Transport for SIP over secure WebSocket (WSS).
  * @public
@@ -19328,73 +18370,45 @@ Transport.defaultOptions = {
     keepAliveDebounce: 10,
     traceSip: true
 };
-
-
 /***/ }),
 /* 114 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modifiers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(110);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stripTcpCandidates", function() { return _modifiers__WEBPACK_IMPORTED_MODULE_0__["stripTcpCandidates"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stripTelephoneEvent", function() { return _modifiers__WEBPACK_IMPORTED_MODULE_0__["stripTelephoneEvent"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "cleanJitsiSdpImageattr", function() { return _modifiers__WEBPACK_IMPORTED_MODULE_0__["cleanJitsiSdpImageattr"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stripG722", function() { return _modifiers__WEBPACK_IMPORTED_MODULE_0__["stripG722"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stripRtpPayload", function() { return _modifiers__WEBPACK_IMPORTED_MODULE_0__["stripRtpPayload"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stripVideo", function() { return _modifiers__WEBPACK_IMPORTED_MODULE_0__["stripVideo"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "addMidLines", function() { return _modifiers__WEBPACK_IMPORTED_MODULE_0__["addMidLines"]; });
-
 /* harmony import */ var _session_description_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(108);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SessionDescriptionHandler", function() { return _session_description_handler__WEBPACK_IMPORTED_MODULE_1__["SessionDescriptionHandler"]; });
-
 /* harmony import */ var _simple_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(115);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SimpleUser", function() { return _simple_user__WEBPACK_IMPORTED_MODULE_2__["SimpleUser"]; });
-
 /* harmony import */ var _transport__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(112);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Transport", function() { return _transport__WEBPACK_IMPORTED_MODULE_3__["Transport"]; });
-
-
-
-
-
-
-
 /***/ }),
 /* 115 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _simple_user__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(116);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SimpleUser", function() { return _simple_user__WEBPACK_IMPORTED_MODULE_0__["SimpleUser"]; });
-
 /**
  * A simple SIP user implementation for web browsers.
  * @packageDocumentation
  */
-
-
-
 /***/ }),
 /* 116 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SimpleUser", function() { return SimpleUser; });
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 /* harmony import */ var _session_description_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(108);
 /* harmony import */ var _transport__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(112);
-
-
-
 /**
  * A simple SIP user class.
  * @remarks
@@ -20300,8 +19314,6 @@ class SimpleUser {
         return Promise.resolve();
     }
 }
-
-
 /***/ })
 /******/ ]);
 });

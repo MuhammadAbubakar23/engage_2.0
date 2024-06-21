@@ -2,16 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StorageService } from '../services/storage/storage.service';
-
 @Injectable()
 export class SuperTeamInterceptor implements HttpInterceptor {
   companyId: number = 651;
   baseUrl: string = "";
   constructor(private storage: StorageService) { }
-
   intercept(request: HttpRequest<unknown>,
     next: HttpHandler): Observable<HttpEvent<unknown>> {
-
     this.baseUrl = window.location.origin
     if (this.baseUrl == 'https://keportal.enteract.live') {
       this.companyId = 651;
@@ -33,21 +30,15 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
       this.companyId = 658
     }
-
     let team = this.storage.retrive('nocompass', 'O').local;
-    // console.log(team);
     // if (typeof team === 'undefined' || team == null || team == '') {
-    //   //   console.log(this.storage.retrive("nocompass","O"));
     // } else if (
     //   typeof team.id === 'undefined' ||
     //   team.id == null ||
     //   team.id <= 0
     // ) {
     // } else {
-    //   
-    //   //console.log(team.id);
     //   request = request.clone({
-
     //     url: request.url,
     //     //withCredentials: true,
     //     setHeaders: {
@@ -55,13 +46,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     //     },
     //   });
     // }
-
-
-
-
     if (typeof team === 'undefined' || team == null || team == '') {
-      
-      //   console.log(this.storage.retrive("nocompass","O"));
       request = request.clone({
         url: request.url,
         //withCredentials: true,
@@ -75,10 +60,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
       team.id <= 0
     ) {
     } else {
-      
-      //console.log(team.id);
       request = request.clone({
-
         url: request.url,
         //withCredentials: true,
         setHeaders: {

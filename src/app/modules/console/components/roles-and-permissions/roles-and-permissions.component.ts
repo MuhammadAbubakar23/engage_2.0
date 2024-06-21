@@ -6,7 +6,6 @@ import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CreateRolesComponent } from './create-roles/create-roles.component';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-
 @Component({
   selector: 'app-roles-and-permissions',
   standalone: true,
@@ -19,17 +18,14 @@ export class RolesAndPermissionsComponent implements OnInit {
   RolesCount: number = 0;
   searchText: string = '';
   selectedSortOption: string = 'All';
-
   applySearchFilter() {
     const searchTextLower = this.searchText.toLowerCase();
     this.Roles = this._Activatedroute.snapshot.data["roles"].filter((role: { name: any }) => {
       const roleNameLower = (role.name || '').toLowerCase();
       return roleNameLower.includes(searchTextLower);
     });
-  
     this.sortRoles(); // Reapply sorting after filtering the roles
   }
-  
   messages: any[] = [];
   //Teams: Array<any> = [];
   constructor(private headerService: HeaderService, private _Activatedroute: ActivatedRoute, private router: Router, private commonService: CommonDataService) { }
@@ -43,7 +39,6 @@ export class RolesAndPermissionsComponent implements OnInit {
     this.selectedSortOption = status;
     this.sortRoles(); // Reapply sorting when changing the selected status
   }
-    
   sortRoles() {
     switch (this.selectedSortOption) {
       case 'Ascending':
@@ -57,12 +52,10 @@ export class RolesAndPermissionsComponent implements OnInit {
         break;
     }
   }
-  
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
   }
   deleteTemplate(message: any) {
-
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
       var obj = {
@@ -77,7 +70,6 @@ export class RolesAndPermissionsComponent implements OnInit {
       this.commonService.DeleteRoles(obj).subscribe(
         () => {
           // Success callback
-          console.log('message deleted:', message);
           // Remove the deleted message from the messages array
           this.messages = this.messages.filter((msg: { id: any; }) => msg.id !== message.id);
         },
@@ -89,4 +81,3 @@ export class RolesAndPermissionsComponent implements OnInit {
     }
   }
 }
-

@@ -2,14 +2,12 @@
   <app-toastr [toasterMsg]="toastermessage"  [isToaster]="isToaster"></app-toastr>
   <ng-stepper #cdkStepper [linear]="true">
     <cdk-step [stepControl]="stepOne.stepOneForm" [optional]="false">
-
       <ng-template cdkStepLabel>
         <div class="step-bullet">1</div>
         <div class="step-title">Intent Details <span class="required">*</span></div>
       </ng-template>
       <app-step-one #stepOne></app-step-one>
     </cdk-step>
-
     <cdk-step [stepControl]="stepTwo.stepTwoForm" [optional]="true">
       <ng-template cdkStepLabel>
         <div class="step-bullet">2</div>
@@ -17,7 +15,6 @@
       </ng-template>
       <app-step-two #stepTwo ></app-step-two>
     </cdk-step>
-
     <cdk-step [stepControl]="stepThree.stepThreeForm" [optional]="false">
       <ng-template cdkStepLabel>
         <div class="step-bullet">3</div>
@@ -25,7 +22,6 @@
       </ng-template>
       <app-step-three #stepThree (childEventpreview)="preview(stepOne.stepOneForm,stepTwo.stepTwoForm,stepThree.stepThreeForm)"></app-step-three>
     </cdk-step>
-
     <cdk-step  [optional]="true" [state]="stepFour.state">
       <ng-template cdkStepLabel>
         <div class="step-bullet" (click)="preview(stepOne.stepOneForm,stepTwo.stepTwoForm,stepThree.stepThreeForm)">4</div>

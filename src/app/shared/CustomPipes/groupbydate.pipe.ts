@@ -1,12 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
 @Pipe({
   name: 'groupbydate'
 })
 export class GroupbydatePipe implements PipeTransform {
-
   transform(collection: Array<any>, property: string = 'createdDate'): Array<any> {
-    
     if(!collection) {
         // return null;
     }
@@ -19,5 +16,4 @@ export class GroupbydatePipe implements PipeTransform {
     }, {});
     return Object.keys(gc).map(date => ({ date: date, events: gc[date] }));
 }
-
 }

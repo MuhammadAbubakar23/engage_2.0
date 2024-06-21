@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
-
- 
-
   private siblingMsg2 = new Subject<string>();
-
   private userInfo = new Subject<any>();
   private totalCount = new Subject<number>();
   private totalSlaCount = new Subject<number>();
@@ -17,15 +12,11 @@ export class SharedService {
   private smscount = new Subject<number>();
   private fbcount = new Subject<number>();
   private emailcount = new Subject<number>();
-
   draft:any;
-  
   constructor() { }
-
   public getInfo(info:any){
     this.draft = info
   }
-
   public updateInfo(){
     return this.draft;
   }
@@ -39,11 +30,8 @@ export class SharedService {
    * @param {string} message : siblingMsg
    */
   public updateMessage(message2: string): void {
-    
     this.siblingMsg2.next(message2);
   }
-
-
   public unRespondedCount(count: number): void{
     this.totalCount.next(count);
   }
@@ -65,7 +53,6 @@ export class SharedService {
   public emailUnRespondedCount(count: number): void{
     this.emailcount.next(count);
   }
-
   public getCount(): Observable<number>{
     return this.totalCount.asObservable();
   }

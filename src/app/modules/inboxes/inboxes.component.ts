@@ -12,7 +12,6 @@ import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { WebPhoneComponent } from '../web-phone/web-phone.component';
 import { ConversationComponent } from './components/conversation/conversation.component';
-import { SlaComponent } from './components/SLA/sla.component';
 import { ComplaintTicketPanelComponent } from './right-sidebar-components/complaint-ticket-panel/complaint-ticket-panel/complaint-ticket-panel.component';
 import { ContactsComponent } from './right-sidebar-components/contacts/contacts.component';
 import { CreateNewComponent } from './right-sidebar-components/create-new/create-new.component';
@@ -31,7 +30,6 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { SkillsService } from 'src/app/services/Skills/skills.service';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
-
 @Component({
   selector: 'app-inboxes',
   templateUrl: './inboxes.component.html',
@@ -42,13 +40,11 @@ export class InboxesComponent implements OnInit {
   @ViewChild('container', { read: ViewContainerRef }) target!: ViewContainerRef;
   @ViewChild('rightcontainer', { read: ViewContainerRef })
   rightcontainer!: ViewContainerRef;
-
   componentName!: any;
   childComponentName!: any;
   public subscription!: Subscription;
   panelToggled: any;
   showPanel = false;
-
   constructor(
     private resolver: ComponentFactoryResolver,
     private route: ActivatedRoute,
@@ -68,7 +64,6 @@ export class InboxesComponent implements OnInit {
       }
       this.childComponentName = routeParams['ticket'];
       this.rightNavService.updateChildComponent(this.childComponentName);
-
       localStorage.setItem('child', this.childComponentName);
       if (this.childComponentName != null) {
         this.childComponentName = localStorage.getItem('child');
@@ -76,9 +71,7 @@ export class InboxesComponent implements OnInit {
       if (this.componentName != undefined) {
         localStorage.setItem('parent', this.componentName);
       }
-
       this.sharedService.updateMessage(this.componentName);
-
       this.target?.clear();
       this.rightcontainer?.clear();
       this.loadComponent(this.componentName, '');
@@ -90,7 +83,6 @@ export class InboxesComponent implements OnInit {
         this.loadComponent('', this.childComponentName);
       }
     });
-
     this.subscription = this.toggleService
       .getTogglePanel()
       .subscribe((msg3) => {
@@ -106,21 +98,17 @@ export class InboxesComponent implements OnInit {
         }
       });
   }
-
   ngAfterViewInit() {
     this.target.clear();
     this.rightcontainer?.clear();
-
     this.loadComponent(this.componentName, '');
     if (this.childComponentName != null) {
       this.showPanel = true;
       this.loadComponent('', this.childComponentName);
     }
   }
-
   loadComponent(leftSideName: string, rightSideName: string) {
     let componentFactory = null;
-
     switch (leftSideName || rightSideName) {
       case 'sent':
         componentFactory = this.resolver.resolveComponentFactory(
@@ -128,16 +116,11 @@ export class InboxesComponent implements OnInit {
         );
         this.target?.createComponent(componentFactory);
         break;
-      case 'sla':
-        componentFactory = this.resolver.resolveComponentFactory(SlaComponent);
-        this.target?.createComponent(componentFactory);
-        break;
       case 'ticket':
         componentFactory =
           this.resolver.resolveComponentFactory(TicketsComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
-
       case 'contacts':
         componentFactory =
           this.resolver.resolveComponentFactory(ContactsComponent);
@@ -153,7 +136,6 @@ export class InboxesComponent implements OnInit {
           this.resolver.resolveComponentFactory(CreateNewComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
-
       case 'task':
         componentFactory = this.resolver.resolveComponentFactory(TaskComponent);
         this.rightcontainer?.createComponent(componentFactory);
@@ -194,7 +176,6 @@ export class InboxesComponent implements OnInit {
           this.resolver.resolveComponentFactory(ScheduleComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
-
       case 'complaint-ticket-panel':
         componentFactory = this.resolver.resolveComponentFactory(
           ComplaintTicketPanelComponent

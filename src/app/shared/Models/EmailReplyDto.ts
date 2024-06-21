@@ -27,10 +27,7 @@ export class EmailReplyDto {
     name: string="";
     data: string="";
     comment : Comment=new Comment()
-
-
 }
-
 export class Comment{
     id:string="";
 }

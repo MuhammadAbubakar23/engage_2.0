@@ -80,10 +80,7 @@ export class InboundOntboundReportComponent implements OnInit {
     private location: Location
   ) { }
   ngOnInit(): void {
-
-
     this.activeChannel = window.location.origin
-
     if (this.activeChannel == 'https://waengage.enteract.live') {
       this.isChannelShow = "morinaga";
       this.getChannel()
@@ -116,7 +113,6 @@ export class InboundOntboundReportComponent implements OnInit {
       this.isChannelShow = 'loc'
       this.getChannel()
     }
-
     const newObj = {
       title: 'Inbound/Outbound Report',
       url: '/analytics/inbound-outbound-report',
@@ -139,12 +135,10 @@ export class InboundOntboundReportComponent implements OnInit {
         tags.subTags.forEach((sentimentObj: any) => {
           if (!this.sentimentOptions.includes(sentimentObj)) {
             this.sentimentOptions.push(sentimentObj)
-            console.log("SemtimentValue===>", this.sentimentOptions)
           }
         });
       }
     });
-
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
     this.AddGraph();
@@ -154,13 +148,9 @@ export class InboundOntboundReportComponent implements OnInit {
   mouseClickReset() {
     this.searchText = ''
   }
-  
   getChannel() {
- 
-
     if (this.isChannelShow == "morinaga") {
       this.channelOptions = [
-
         { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
       ];
     }
@@ -174,7 +164,6 @@ export class InboundOntboundReportComponent implements OnInit {
         { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
         { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
         { id: '18', name: 'Playstore', icon: 'fa-brands fa-google-play pe-2', isSelected: false },
-        
       ];
     }
     else if (this.isChannelShow == "ttpl") {
@@ -220,9 +209,7 @@ export class InboundOntboundReportComponent implements OnInit {
       ];
     }
     if (this.isChannelShow == 'Bazaar') {
-
       this.channelOptions = [
-
         { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
         { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
         { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
@@ -238,36 +225,29 @@ export class InboundOntboundReportComponent implements OnInit {
       .filter((item) => item.isSelected)
       .map((item) => item.name);
     this.selectedChannels = selectedChannelsArray.toString();
-
     let selectedContentTypesArray = this.contentTypes
       .filter((item) => item.isSelected)
       .map((item) => item.value);
     this.selectedContent = selectedContentTypesArray.toString();
-
     let selectedTagOptionArray = this.subTags
       .filter((item) => item.isSelected)
       .map((item) => item.slug);
     this.selectedTagOption = selectedTagOptionArray.toString();
-
     let selectedSentimentsArray = this.sentimentOptions
       .filter((item) => item.isSelected)
       .map((item) => item.slug);
     this.selectedSentiment = selectedSentimentsArray.toString();
-
     let selectedTagByArray = this.taggedByOptions
       .filter((item) => item.isSelected)
       .map((item) => item.id);
     this.selectedTagBy = selectedTagByArray.toString();
-
     let selectedTypeArray = this.typeOptions
       .filter((item) => item.isSelected)
       .map((item) => item.label);
     this.selectedType = selectedTypeArray.toString();
-
     if (this.startDate == '' && this.endDate == '') {
       const today = this.currentDate;
       this.endDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
-
       let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 7);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.endDate != '') {
@@ -326,7 +306,6 @@ export class InboundOntboundReportComponent implements OnInit {
               this.isShowTagReport = true
             }
             this.sentimentArray = this.Inbound_Outbound_Report.sentimentReportData
-
             if (this.sentimentArray.length == 0) {
               this.isShowSentimentGraph = true
             }
@@ -343,15 +322,11 @@ export class InboundOntboundReportComponent implements OnInit {
             })
             this.tagReportData = this.Inbound_Outbound_Report.tagReportData;
             this.tagReportData.forEach((channel: any) => {
-               
                if (!this.platformsArray.includes(channel.platform)) {
                  this.platformsArray.push(channel.platform);
                }
-         
                channel.data.forEach((tag: any) => {
-                 
                  this.str= tag.name.toLowerCase().split(/[-_.\s]/).map((w:any) => `${w.charAt(0).toUpperCase()}${w.substr(1)}`).join(' ');
-                
                  const name = this.str;
                  const count = tag.count;
             const existingNameCount = this.tagsPerChannel.find((n) => n.name === name);
@@ -365,11 +340,9 @@ export class InboundOntboundReportComponent implements OnInit {
                      data: [count],
                    });
                  }
-         
                });
              });
               this.getTagperChannelReport()
-            
             if (this.isShowInboundoutboundGraph == false) {
               const doms = this.inboundOutboundReport.nativeElement;
               this.inboundOutboundChart = echarts.init(doms, null, {
@@ -377,13 +350,10 @@ export class InboundOntboundReportComponent implements OnInit {
                 useDirtyRect: false,
               });
               var option: echarts.EChartsOption;
-
               option = {
                 color: ['rgba(255,189,61,255)', 'rgba(96,191,235,255)'],
                 tooltip: {
-
                   trigger: 'axis',
-
                 },
                 legend: {
                   data: ['Inbound', 'OutBound'],
@@ -423,26 +393,17 @@ export class InboundOntboundReportComponent implements OnInit {
                   {
                     name: 'Inbound',
                     type: 'line',
-
                     data: this.inboundData
                   },
                   {
                     name: 'OutBound',
                     type: 'line',
-
                     data: this.outboundData
                   },
-
                 ]
               };
-
               this.inboundOutboundChart.setOption(option);
             }
-
-
-
-
-
             // var option: echarts.EChartsOption;
             // option = {
             //   color: ['rgba(255,189,61,255)', 'rgba(96,191,235,255)'],
@@ -451,7 +412,6 @@ export class InboundOntboundReportComponent implements OnInit {
             //   },
             //   legend: {
             //     bottom:0,
-
             //     data: ['Inbound', 'OutBound'],
             //     icon:'circle'
             //   },
@@ -492,12 +452,9 @@ export class InboundOntboundReportComponent implements OnInit {
             //         return dataPoint.y;
             //       }),
             //     },
-
             //   ]
             // };
             // this.inboundOutboundChart.setOption(option);
-
-
             // Update the ChannelWiseGraph
             const dom = this.ChannelWiseGraph.nativeElement;
             this.averageResponseChart = echarts.init(dom, null, {
@@ -570,7 +527,6 @@ export class InboundOntboundReportComponent implements OnInit {
             };
             this.averageResponseChart.setOption(option);
             // Update TagsPerChannel
-            
             // option = {
             //   tooltip: { trigger: 'axis' },
             //   toolbox: {
@@ -584,9 +540,7 @@ export class InboundOntboundReportComponent implements OnInit {
             //   yAxis: [{ type: 'value' }],
             //   series: this.tagsPerChannel,
             // };
-
             // mychart.setOption(option);
-
             // Update senitimentalGraph
             if (this.isShowSentimentGraph == false) {
               const myDoms = this.senitimentalGraph.nativeElement;
@@ -604,13 +558,11 @@ export class InboundOntboundReportComponent implements OnInit {
                 Neutral: number;
               }[] = [];
               sentimentReportData.forEach((platformData: any) => {
-                
                 const platformName = platformData.platform;
                 const sentimentCounts: { [key: string]: number } = {};
                 platformData.data.forEach((sentiment: any) => {
                   // Change the slug into name
                  this. str = sentiment.name ? sentiment.name.charAt(0).toUpperCase() + sentiment.name.substr(1).toLowerCase() : '';
-              
                   sentimentCounts[this.str] = sentiment.count;
                 });
                 sentimentDataPoints.push({
@@ -693,11 +645,8 @@ export class InboundOntboundReportComponent implements OnInit {
                   },
                 ],
               };
-
               option && this.sentimentChart.setOption(option);
             }
-
-
           }
         },
         (error: any) => {
@@ -717,7 +666,6 @@ export class InboundOntboundReportComponent implements OnInit {
     { id: '23', label: 'Hours' },
     { id: '94', label: 'Months' },
   ];
-
   // channelOptions = [
   //   {
   //     id: '123',
@@ -841,7 +789,6 @@ export class InboundOntboundReportComponent implements OnInit {
   taggedByOptions = [{ id: '', name: '', isSelected: false }];
   subTags: any[] = [];
   searchText: string = '';
-
   closeToaster() {
     this.toastermessage = false;
   }

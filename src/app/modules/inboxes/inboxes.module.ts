@@ -7,18 +7,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConversationComponent } from './components/conversation/conversation.component';
-import { SlaComponent } from './components/SLA/sla.component';
 import { RouterModule } from '@angular/router';
 import { RightSidebarComponentsModule } from './right-sidebar-components/right-sidebar-components.module';
 import { InboxResponderComponent } from './components/inbox-responder/inbox-responder.component';
 import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard';
-
-
 @NgModule({
   declarations: [
     InboxesComponent,
     ConversationComponent,
-    SlaComponent,
     InboxResponderComponent
   ],
   imports: [

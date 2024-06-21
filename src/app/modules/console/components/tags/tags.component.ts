@@ -7,7 +7,6 @@ import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { NgxSpinnerModule, } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
-
 interface Tag {
   color: any;
   mainId: any;
@@ -27,7 +26,6 @@ export class TagsComponent implements OnInit {
   status: string = 'All';
   currentPage: number = 1;
   itemsPerPage: number = 10;
-
   tags: Tag[] = [];
   perPage: number = 10;
   totoalCount: any
@@ -36,7 +34,6 @@ export class TagsComponent implements OnInit {
   searchText: string = '';
   selectedTextColor = ' #FF0000';
   applySearchFilter(): void {
-
     if (this.searchText.length >= 2) {
       this.getTags()
     }
@@ -44,7 +41,6 @@ export class TagsComponent implements OnInit {
       this.getTags()
     }
   }
-
   constructor(private headerService: HeaderService, private spinnerServerice: NgxSpinnerService,
     private commonService: CommonDataService, private router: Router) { }
   ngOnInit(): void {
@@ -52,7 +48,6 @@ export class TagsComponent implements OnInit {
     // this.GetAllTags()
   }
   // getTags(): void {
-
   //   this.spinnerServerice.show()
   //   this.tags=[]
   //   this.commonService.GetTags()
@@ -66,13 +61,10 @@ export class TagsComponent implements OnInit {
   //     if( !this.tags.includes(abc)){
   //       this.tags.push(abc)
   //     }
-
   //    })
   //    })
   //   }
   //  })
-
-  //       console.log(this.tags); // Verify that the data is populated correctly
   //     }, (error: any) => {
   //       this.spinnerServerice.hide()
   //       console.error(error);
@@ -88,7 +80,6 @@ export class TagsComponent implements OnInit {
     this.spinnerServerice.show()
     this.commonService.GetAllTag(obj).subscribe((res: any) => {
       this.spinnerServerice.hide()
-      console.log('All Tags===>', res)
       this.tags = res.Tags
       this.totoalCount = res.TotalCount
     }, error => {
@@ -97,37 +88,29 @@ export class TagsComponent implements OnInit {
     )
   }
   sortTags(item: any): void {
-
     this.sortby = item.target.text.toLowerCase()
     this.getTags()
   }
-
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
   }
-
   editTag(tag: Tag): void {
-
     // this.router.navigate(['/console/tag/create/0'], {
     //   state: { tag }
     // })
     this.router.navigate(['/console/tag/create/', tag.mainId])
   }
   deleteTemplate(message: any) {
-
     this.commonService.DeleteTags(message.mainId).subscribe((res: any) => {
       this.getTags()
     })
-
   }
   disableTag(tag: Tag): void {
-    console.log('Disable tag:', tag);
   }
   cloneTag(tag: Tag): void {
     const cloneTag = { ...tag };
     cloneTag.name += ' (Cloned)';
     this.tags.push(cloneTag);
-    console.log('Cloned tag:', cloneTag);
   }
   setPerPage(perPage: number): void {
     this.perPage = perPage;
@@ -148,25 +131,19 @@ export class TagsComponent implements OnInit {
     this.getTags()
   }
   goToPage(pageNumber: number): void {
-    
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totoalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }
     this.getTags()
   }
-
   getVisiblePageNumbers(): number[] {
     const maxPages = Math.ceil(this.totoalCount / this.perPage);
     const visiblePages = 5;
-
     let startPage = Math.max(1, this.currentPage - Math.floor(visiblePages / 2));
     let endPage = Math.min(startPage + visiblePages - 1, maxPages);
-
     if (endPage - startPage + 1 < visiblePages) {
       startPage = Math.max(1, endPage - visiblePages + 1);
     }
-
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
-
 }

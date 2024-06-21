@@ -4,11 +4,9 @@
 @import "node_modules/bootstrap/scss/_mixins.scss";
 @import "node_modules/bootstrap/scss/bootstrap.scss";
 @import "node_modules/select2/src/scss/core.scss";
-
 //colors
 @import "./colors/colors.scss";
 @import "./colors/colors-classes.scss";
-
 //font-awesome6
 @import "./font-awesome-6/fontawesome.scss";
 @import "./font-awesome-6/brands.scss";
@@ -16,22 +14,16 @@
 @import "./font-awesome-6/solid.scss";
 @import "./font-awesome-6/thin.scss";
 @import "./font-awesome-6/regular.scss";
-
 //Typography
 @import "./base/typography.scss";
-
 //Mixins
 @import "./mixins/mixins.scss";
-
 //Base
 @import "./base/base.scss";
-
 //Layouts
 @import "./layouts/header.scss";
 @import "./layouts/footer.scss";
 @import "./layouts/search-bar.scss";
-
-
 //Components
 @import "./components/avatar.scss";
 @import "./components/breadcrumb.scss";
@@ -62,25 +54,15 @@
 @import "./components/contact-merge.scss";
 @import "./components/document.scss";
 @import "./components/score-card.scss";
-
-
 //Pages CSS
 @import "./pages/login.scss";
-
 @import "./pages/team-user.scss";
-
 @import "./pages/create-business-hour.scss";
-
 @import "./pages/sla-polices.scss";
-
 @import "./pages/dashboard.scss";
-
 @import "./pages/console-page.scss";
-
 @import "./pages/console-landing.scss";
-
 @import "./pages/dialer.scss";
-
 @import "./pages/analytics.scss";
 @import "./pages/chatbot.scss";
 @import "./pages/custom.scss";

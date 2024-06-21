@@ -21,9 +21,7 @@ export class InstagramReportComponent implements OnInit {
   // @ViewChild('radioInput', { static: false })
   // radioInput!: ElementRef<HTMLInputElement>;
   @ViewChild('radioInput10', { static: false }) radioInput10!: ElementRef;
-  
   @ViewChild('radioInput20', { static: false }) radioInput20!: ElementRef;
-  
   @ViewChild('radioInput30', { static: false }) radioInput30!: ElementRef
   instagramReport: any;
   startDate: string = '';
@@ -66,22 +64,18 @@ export class InstagramReportComponent implements OnInit {
     private spinerServices: NgxSpinnerService,
     private datePipe: DatePipe
   ) { }
-
   ngOnInit(): void {
     const newObj = {
       title: 'Instagram Report',
-      url: '/analytics/inbound-outbound-report',
+      url: '/analytics/instagram-report',
     };
     this._hS.setHeader(newObj);
     const currentDate = new Date();
     this.maxEndDate = currentDate.toISOString().split('T')[0]
-
-
     this.GetInstagramReport()
     this.gettopfiveCutomer()
   }
   GetInstagramReport() {
-
     if (this.endDate == '' && this.startDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 5);
@@ -100,7 +94,6 @@ export class InstagramReportComponent implements OnInit {
         return;
       }
     }
-
     let requestData = {
       pageId: '17841400250284169',
       from: this.startDate,
@@ -118,13 +111,10 @@ export class InstagramReportComponent implements OnInit {
     this.isShowDemographics = false
     this.isShowEngagments = false
     this.spinerServices.show()
-
     this.commonDataService.PostInstagramReport(requestData).subscribe((res: any) => {
       this.spinerServices.hide()
-      // console.log("Api instagram",res)
       // this.endDate=this.datePipe.transform(requestData.to,'YYYY-dd-MM HH:mm:ss')||''
       this.instagramReport = res
-
       //  total People Who Viewed
       this.totalPeopleWhoViewed = this.instagramReport.span_profile_views
       this.totalPeopleWhoViewed?.forEach((x: any) => {
@@ -134,7 +124,6 @@ export class InstagramReportComponent implements OnInit {
         this.totalPeopleWhoViewedCount.push(x.activityCount)
       })
       if (this.totalPeopleWhoViewedDates.length == 0) {
-
         this.isShowChart = true
       }
       // Page Reachability
@@ -144,7 +133,6 @@ export class InstagramReportComponent implements OnInit {
           this.pagereachablityDates.push(this.datePipe.transform(x.dateValue, 'dd/MMM'))
           this.pagereachablityCounts.push(x.activityCount)
         }
-
       });
       if (this.pagereachablityDates.length == 0) {
         this.isShowEngagments = true
@@ -152,7 +140,6 @@ export class InstagramReportComponent implements OnInit {
       // Audience Demographics
       this.totalfollowers = this.instagramReport.span_follower_count
       this.totalfollowers?.forEach((x: any) => {
-        
         if (!this.totalfollowersDates.includes(this.datePipe.transform(x.dateValue, 'dd/MMM'))) {
           this.totalfollowersDates.push(this.datePipe.transform(x.dateValue, 'dd/MMM'))
         }
@@ -174,7 +161,6 @@ export class InstagramReportComponent implements OnInit {
       // instagram Stats by page
       this.InstagramStats = this.instagramReport.pageStats
       this.InstagramStatsExport = this.instagramReport.pageStats
-
       this.getPeopleViewedGraph()
       this.getPageReachGraph()
       this.getAudienceGraph()
@@ -192,11 +178,8 @@ export class InstagramReportComponent implements OnInit {
       this.topfiveCustomer = res;
     });
   }
-
   getPeopleViewedGraph() {
-
     if (this.isShowChart == false) {
-
       const myDom = this.peopleViewed.nativeElement;
       const myChart = echarts.init(myDom, null, {
         renderer: 'canvas',
@@ -212,12 +195,10 @@ export class InstagramReportComponent implements OnInit {
       option = {
         xAxis: {
           type: 'category',
-
           data: this.totalPeopleWhoViewedDates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime()).reverse(),
           axisLabel: {
             show: true,
             rotate: 45,
-
             // formatter: function (value: string) {
             //   return value;
             // },
@@ -240,7 +221,6 @@ export class InstagramReportComponent implements OnInit {
           data: ['Engagement Rate'],
           icon: 'circle',
           bottom: 'bottom',
-
         },
         toolbox: {
           feature: {
@@ -262,22 +242,16 @@ export class InstagramReportComponent implements OnInit {
         ],
       };
       option && myChart.setOption(option);
-
     }
-
-
-
   }
   getPageReachGraph() {
     if (this.isShowEngagments == false) {
-      
       const myDom = this.pageReachabilty.nativeElement;
       const myChart = echarts.init(myDom, null, {
         renderer: 'canvas',
         useDirtyRect: false,
       });
       var option: echarts.EChartsOption;
-
       option = {
         xAxis: {
           type: 'category',
@@ -330,13 +304,11 @@ export class InstagramReportComponent implements OnInit {
           },
         ],
       };
-
       option && myChart.setOption(option);
     }
   }
   getAudienceGraph() {
     if (this.isShowDemographics == false) {
-      
       const myDom = this.audienceGraph.nativeElement;
       const myChart = echarts.init(myDom, null, {
         renderer: 'canvas',
@@ -404,7 +376,6 @@ export class InstagramReportComponent implements OnInit {
           {
             name: 'Total Followers',
             data: this.totalfollowersCounts,
-
             type: 'line',
             itemStyle: {
               color: '#00d3a2',
@@ -415,15 +386,12 @@ export class InstagramReportComponent implements OnInit {
           },
         ],
       };
-
       option && myChart.setOption(option);
     }
   }
   resetEndDate() {
-    
     if (this.endDate >= this.startDate) {
       this.GetInstagramReport();
-      
       if (this.radioInput10!==undefined) {
         this.radioInput10.nativeElement.checked = false;
       }
@@ -438,7 +406,6 @@ export class InstagramReportComponent implements OnInit {
       alert('EndDate is greater than StartDate');
     }
   }
-  
   // resetEndDate() {
   //   if (this.endDate >= this.startDate) {
   //     this.GetInstagramReport();
@@ -458,7 +425,6 @@ export class InstagramReportComponent implements OnInit {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 5);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
-
       this.endDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.endDate != '') {
       this.startDate = this.startDate;

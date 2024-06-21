@@ -1,4 +1,3 @@
-
 import { Component, EventEmitter, HostListener, OnDestroy, OnInit, Output } from '@angular/core';
 import { TabsArr } from '../shared/interfaces';
 import { PhoneDialerService } from '../services/DialerService/phone-dialer.service';
@@ -8,15 +7,11 @@ import { AgentFactory } from './../phone/AgentFactory';
 import { Logger } from './../phone/Logger';
 import { PhoneTypes } from './../phone/PhoneTypes';
 import { SipPhone } from '../phone/SipPhone';
-
-
-
 @Component({
   selector: 'app-dialer',
   templateUrl: './dialer.component.html',
   styleUrls: ['./dialer.component.scss']
 })
-
 export class DialerComponent implements OnInit, OnDestroy {
   connecting = false;
   dialerReady = false;
@@ -48,7 +43,6 @@ export class DialerComponent implements OnInit, OnDestroy {
     // sip_domain: 'webphone.ibexglobal.com',
     // extension: '15266',
     // ws_sip_server: 'webphone.ibexglobal.com:8089/ws',
-
     sip_server: 'lhracd1.ibexglobal.com',
     sip_name: '15157',
     sip_password: '1234',
@@ -61,11 +55,7 @@ export class DialerComponent implements OnInit, OnDestroy {
     private dialerService: PhoneDialerService,
     private _shared: SharedService,
   ) {
-
   }
-
-
-
   @HostListener('window:beforeunload')
   doSomething(e: any) {
     if (this.sipPhone) {
@@ -73,7 +63,6 @@ export class DialerComponent implements OnInit, OnDestroy {
     }
   }
   phoneEvents = (res: any): void => {
-    console.log(res)
     if (res.event) {
       switch (res.event) {
         case 'callCompleted':
@@ -136,8 +125,6 @@ export class DialerComponent implements OnInit, OnDestroy {
     // if (!this.dialerService.getIsLoaded()) {
     this.dialerService.getEvent().subscribe((res: any) => {
       this.phoneEvents(res);
-      // console.log(this);
-
       if (res.event == 'sipRegistered') {
         this.sipPhone.login();
         this.isSipRegistered = true;
@@ -147,27 +134,17 @@ export class DialerComponent implements OnInit, OnDestroy {
       }
     });
     this.dialerService.getWsEvent().subscribe((res) => {
-      console.log(res);
-
-      // alert(res + 'From Construct');
     });
     this._shared.getMessage().subscribe((res) => { });
     // }
-
-
     this.sipPhone = this.dialerService.getSipPhone();
-
-    // console.log(this.sipPhone);
-
     this.dialerService.setIsLoaded(true);
     if (this.sipPhone) {
       this.isSipRegistered = true;
       // this.connecting = false;
       this.dialerReady = true;
-
     }
   }
-
   cancelCall(arg1: any, arg2: any, sessionNum: number, callFailed: any): void {
     if (sessionNum == 1) {
       this.hangup();
@@ -175,8 +152,6 @@ export class DialerComponent implements OnInit, OnDestroy {
       // this.resetTransferredCall();
     }
   }
-
-
   loadPhone = (): void => {
     this.connecting = true;
     let config = new Config();
@@ -195,7 +170,6 @@ export class DialerComponent implements OnInit, OnDestroy {
     this.sipPhone = AgentFactory.getAgent(config);
     this.sipPhone.loadPhone();
     this.dialerService.setSipPhone(this.sipPhone);
-    // // console.log("LoadPhone ===> " ,this.sipPhone);
     if (this.sipPhone) {
       // this.sipPhone.changeStatus('Manual Dial', '*12');
     }
@@ -207,13 +181,10 @@ export class DialerComponent implements OnInit, OnDestroy {
       this.dialerReady = true;
     }, 1000)
   }
-
   /**
    * manualDial
    */
-
   manualDial(to_number: string = ''): void | boolean {
-    // console.log(this.sipPhone);
     this.callConnected = false;
     let number = '';
     if (to_number == '') {
@@ -236,7 +207,6 @@ export class DialerComponent implements OnInit, OnDestroy {
     if (this.lead_id < 1) {
       error += 'Please Fetch or Create Lead <br>';
     }
-
     if (this.sipPhone.inManual || this.sipPhone.inWrapup) {
       in_manual = true;
     } else {
@@ -248,7 +218,6 @@ export class DialerComponent implements OnInit, OnDestroy {
       return false;
     }
     this.callConnecting = true;
-
     if (in_manual) {
       this.sipPhone.manualDial(
         number,
@@ -257,8 +226,6 @@ export class DialerComponent implements OnInit, OnDestroy {
         manual_time_id,
         this.skill_id
       );
-
-
       // $dialer.manualCallConnecting(number);
       // $('.rbExpInner.dialer .callInProgress').removeClass('hide');
       // $('.rbExpInner.dialer .callStart').addClass('hide');
@@ -270,7 +237,6 @@ export class DialerComponent implements OnInit, OnDestroy {
   public setDisposition = (dispositon: string): void => {
     this.disposition = dispositon
   }
-
   /**
    * hangupCall
    */
@@ -280,28 +246,22 @@ export class DialerComponent implements OnInit, OnDestroy {
     }
     this.sipPhone.hangup(line);
   }
-
   /**
    * hangup
    */
   public hangup = (): void => {
-
     if (this.dispositionRequired) {
       if (this.callConnected) {
         this.callCompleted = true;
         // this.callConnected = false;
-
       } else {
         this.submitForm();
       }
     } else {
       this.callConnected = false;
       this.callConnecting = false;
-
     }
-
   }
-
   /**
    * addManualDialNum
    */
@@ -315,12 +275,10 @@ export class DialerComponent implements OnInit, OnDestroy {
     this.dialerReady = false;
     this.dialerConnected = true;
   }
-
   public setTabsArr = ({ newTabsArr, activeTab }: { newTabsArr: TabsArr; activeTab: string }): void => {
     this.tabsArr = newTabsArr;
     this.activeTab = activeTab
   }
-
   public selectActiveTab = (value: string) => {
     let currTabsArr = { ...this.resetTabsArr };
     let currActiveTab = '';
@@ -332,11 +290,8 @@ export class DialerComponent implements OnInit, OnDestroy {
       newTabsArr: currTabsArr,
       activeTab: currActiveTab
     }
-
     this.setTabsArr(data)
-
   }
-
   /**
    * minimizeDialer
    */
@@ -345,15 +300,12 @@ export class DialerComponent implements OnInit, OnDestroy {
     this.dialerReady = true;
     this.tabsArr = { ...this.resetTabsArr }
   }
-
-
   /**
    * submitForm
    */
   public submitForm = () => {
     this.resetDialer();
   }
-
   /**
    * resetDialer
    */
@@ -364,11 +316,9 @@ export class DialerComponent implements OnInit, OnDestroy {
     this.manualDisconnect = false;
     this.inboundCall = false;
   }
-
   public changeStatus = (status: string, code: string): void => {
     this.sipPhone.changeStatus(status, code);
   }
-
   public changeWrapup = (): void => {
     this.sipPhone.changeStatus("unwrapup", "*10");
   }

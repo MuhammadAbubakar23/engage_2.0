@@ -1,13 +1,11 @@
 .btn-outline-success{
     border-color:  $mint;
     color: $mint;
-
     &:hover{
         background-color: $mint;
         border-color:  $mint;
         color: $ice;
     }
-    
     &:active{
         background-color: $mint;
         border-color:  $mint;
@@ -22,18 +20,15 @@
         box-shadow: 1px 2px 8px #fff !important;
     }
 }
-
 .btn-success{
     background-color: $pearl;
     border-color:  $pearl;
     color: $ice;
-
     &:hover{
         background-color: $ice;
         border-color:  $pearl;
         color: $pearl;
     }
-    
     &:active{
         background-color: $pearl;
         border-color:  $pearl;
@@ -48,7 +43,6 @@
         box-shadow: 1px 2px 8px #fff !important;
     }
 }
-
 .badge{
     padding: 0.39em 0.66em !important;
     line-height: 1.1;

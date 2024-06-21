@@ -14,7 +14,6 @@ export class BotMonitoringContentComponent implements OnInit {
   constructor(private _chatVS:ChatVisibilityService) {
     this._chatVS.thirdActive$.subscribe((third:any)=>{
       this.thirdActive=third;
-      console.log("this.thirdActive",this.thirdActive);
     })
   }
 

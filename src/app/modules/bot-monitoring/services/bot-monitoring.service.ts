@@ -26,7 +26,6 @@ export class BotMonitoringService {
   viewResponse=environment.links.bot.viewResponse
 
   constructor(private http: HttpClient) { }
-
   getChats(data: any): Observable<any> {
     return this.http.post(baseUrl + "WhatsAppBot/GetWhatsAppBotlisting", data)
   }

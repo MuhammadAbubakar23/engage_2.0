@@ -34,7 +34,6 @@ const routes: Routes = [
   {
     path: '',
     component: ConsoleComponent,
-
     children: [
       {
         path: 'home',
@@ -116,13 +115,10 @@ const routes: Routes = [
       }, {
         path: 'tags',
         loadComponent: () => import('./components/tags/tags.component').then(c => c.TagsComponent)
-
       }, {
         path: 'rules',
         loadComponent: () => import('./components/rules/rules.component').then(c => c.RulesComponent)
-
       },
-
       {
         path: 'add-rules/:id',
         loadComponent: () => import('./components/rules/add-rules/add-rules.component').then(c => c.AddRulesComponent)
@@ -141,7 +137,6 @@ const routes: Routes = [
       {
         path: 'add-rules',
         loadComponent: () => import('./components/rules/add-rules/add-rules.component').then(c => c.AddRulesComponent)
-
       }, {
         path: 'skills',
         loadComponent: () => import('./components/skills/skills.component').then(c => c.SkillsComponent),
@@ -153,22 +148,18 @@ const routes: Routes = [
       }, {
         path: 'routes',
         loadComponent: () => import('./components/enteract-route/enteract-route.component').then(c => c.EnteractRouteComponent)
-
       },
       {
         path: 'sla-policies',
         loadComponent: () => import('./components/sla-policies/sla-policies.component').then(c => c.SlaPoliciesComponent)
-
       },
         {
         path: 'contact',
         loadComponent: () => import('./components/contacts/contacts.component').then(c => c.ConsoleContactsComponent)
-
       },
       {
         path: 'business-hours',
         loadComponent: () => import('./components/business-hours/business-hours.component').then(c => c.BusinessHoursComponent)
-
       },
       {
         path: 'bot-configuration',
@@ -201,26 +192,21 @@ const routes: Routes = [
         path: 'templates/messages/create',
         // loadComponent: () => import('../console/components/templates/messages/create-message-templates/create-message-templates.component').then(c => c.CreateMessageTemplatesComponent)
         component: CreateMessageTemplatesComponent
-
       },
       {
         path: 'templates/createSignatures',
         component: CreateSignatureTemplatesComponent
-
         // loadComponent: () => import('./components/templates/signatures/create-signature-templates/create-signature-templates.component').then(c => c.CreateSignatureTemplatesComponent)
       },
       {
         path: 'createresponse',
         component: CreateQuickResponseTemplatesComponent
-
         // loadComponent: () => import('./components/templates/signatures/create-signature-templates/create-signature-templates.component').then(c => c.CreateSignatureTemplatesComponent)
       },
       {
         path: 'sla-policies',
         loadComponent: () => import('./components/sla-policies/sla-policies.component').then(c => c.SlaPoliciesComponent)
-
       },
-
       {
         path: 'sla-policy/create/:id',
         component: AddPolicyComponent
@@ -290,7 +276,6 @@ const routes: Routes = [
     //   component:ConsoleComponent
   }
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

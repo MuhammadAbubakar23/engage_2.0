@@ -10,13 +10,10 @@ import { UserPaginationService } from 'src/app/services/userpaginationServices/u
 export class RequestService {
   params: HttpParams = new HttpParams();
   headers: HttpHeaders = new HttpHeaders();
-
   constructor(private http: HttpClient, private env: EnvService,
     private paginationS:UserPaginationService,
      private messagingService: MessagingService) { }
-
   private requestHeaderOptions(options?: any) {
-
     let opt = (!options) ? {} : options;
     let headers = (opt.headers) ? opt.headers : new HttpHeaders();
     // headers.append('Content-type', 'application/json');
@@ -27,37 +24,25 @@ export class RequestService {
     let opt = (!options) ? {} : options;
     let params = (opt.params) ? opt.params : new HttpParams();
     //opt.params =
-
   }
   private createCompleteRoute = (route: string, envAddress: string, routeparams?: any) => {
-
     if (routeparams === undefined) {
       routeparams = "";
-
     }
     if(route ===undefined){
       route ='Skill/GetSkills'
     }
     if(route===undefined){
-
       route='Skill/GetSkills'
     }
-
       return (routeparams != "" || routeparams.length > 0) ? `${envAddress}${route}${routeparams}` : `${envAddress}${route}`
-   
- 
   };
-
   get<T>(route: string, params?: any, routeparams: string = ""): Observable<T> {
-
-    console.log(params);
-    console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
     return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, routeparams), { params ,observe: 'response'}).pipe( 
       map ((res:any)=>{
         const headers: HttpHeaders = res.headers;
       const Pagination = JSON.parse(JSON.stringify(headers.get('X-Pagination')));
       this.paginationS.sendpaginationobj(JSON.parse(Pagination))
-      console.log("Response for header ====>",JSON.parse(Pagination))
         return res.body
       })
     )
@@ -65,45 +50,36 @@ export class RequestService {
       //   map((res: any) => { return res }),
       //   tap(res => console.log(route + " Response: ", res)),
       //   catchError(err => {
-      //     console.log('Handling error locally and rethrowing it...', err);
       //     return throwError(() => new Error(err));
       //   })
       // );
   }
   getFromConsole<T>(route: string, params?: any, routeparams: string = ""): Observable<T> {
-    console.log(params);
-    console.log(this.createCompleteRoute(this.env.paths[route], this.env.consoleBaseUrl));
     return this.http.get<T>(this.createCompleteRoute(this.env.console[route], this.env.consoleBaseUrl, routeparams), { params })
       .pipe(
         map((res: any) => { return res }),
         tap(res => console.log(route + " Response: ", res)),
         catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
           return throwError(() => new Error(err));
         })
       );
   }
   getBy<T>(route: string, params: string): Observable<T> {
-    console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
-    console.log(this.createCompleteRoute(params, this.createCompleteRoute(this.env.paths[route], this.env.baseUrl)));
     return this.http.get<T>(this.createCompleteRoute(params, this.createCompleteRoute(this.env.paths[route], this.env.baseUrl)))
       .pipe(
         map((res: any) => { return res }),
         tap(res => console.log(route + " Response: ", res)),
         catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
           return throwError(() => new Error(err));
         })
       );
   }
   post<T>(route: string, params?: any): Observable<T> {
-    console.log("this.createCompleteRoute(this.env.paths[route]", this.createCompleteRoute(this.env.paths[route], this.env.baseUrl))
     return this.http.post<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
       .pipe(
         map((res: any) => { return res }),
         tap(res => console.log(route + " Response: ", res)),
         catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
           return throwError(() => new Error(err));
         })
         // catchError( this.handleError<T>(route))
@@ -126,7 +102,6 @@ export class RequestService {
       );
   }
   delete<T>(route: string, routeparams: any, params?: any): Observable<T> {
-
     return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, "?Id=" + routeparams), params)
       .pipe(
         map((res: any) => { return res }),
@@ -179,13 +154,10 @@ export class RequestService {
   // }
   public handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
       // TODO: send the error to remote logging infrastructure
       // console.error(error); // log to console instead
-
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message} `);
-
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };

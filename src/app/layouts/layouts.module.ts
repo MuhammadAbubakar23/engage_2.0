@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
-
 import { InboxContentComponent } from './engage2/inbox-content/inbox-content.component';
 import { ResponderContentComponent } from './engage2/responder-content/responder-content.component';
 import { ConsoleContentComponent } from './engage2/console-content/console-content.component';
@@ -32,7 +31,6 @@ import { CardBoxListCheckboxComponent } from './engage2/card-box-list/card-box-l
 import { permissionReducer } from './engage2/permission-state/permission.reducer';
 import { AdminContentComponent } from './engage2/admin-content/admin-content.component';
 import { AdminMenuComponent } from './engage2/admin-content/admin-menu/admin-menu.component';
-
 import { ConsoleTableComponent } from './engage2/console-table/console-table.component';
 import { ConsoleTableToolbarComponent } from './engage2/console-table/console-table-toolbar/console-table-toolbar.component';
 import { ConsoleTableWrapComponent } from './engage2/console-table/console-table-wrap/console-table-wrap.component';

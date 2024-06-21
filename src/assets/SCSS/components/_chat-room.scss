@@ -7,7 +7,6 @@
         }
     }
 }
-
 .chat-room-header{
     border-bottom: 1px solid $powder;
     padding: 0 1rem;
@@ -28,10 +27,8 @@
             .breadcrumbs{
                 margin: 0.4rem 0.7rem 0 0;
             }
-            
         }
     }
-   
     .newChatHeader{
         display: flex;
         justify-content: space-between;
@@ -52,7 +49,6 @@
 .bodyWrapper{
     padding: 0 1rem;
 }
-
 .messenger{
     .messenger-wraper{
         display: flex;
@@ -66,7 +62,6 @@
         }
     }
 }
-
 .newGroupWrapper{
     .selected-users{
         height: 0;
@@ -94,12 +89,10 @@
                     text-align: center;
                     display: block;
                 }
-                
             }
         }
     }
 }
-
 .new-group-chat-initiated{
     .scroll-content{
         height: 100%;
@@ -116,10 +109,8 @@
                 margin: 0 auto;
             }
         }
-        
     }
 }
-
 .list-group-section{
     .chat-body{
         background: $salt;
@@ -152,15 +143,12 @@
             }
         }
     }
-
     .msgTypingField{
         .textarea-field{
             width: 90%;
         }
     }
 }
-
-
 .newChatWrapper{
     padding: 0;
     form{
@@ -209,8 +197,6 @@
         }
     }
 }
-
-
 .new-chat-initiated{
     .card{
         border-radius: 0;
@@ -223,9 +209,7 @@
             background-color: $snow;
         }
     }
-   
 }
-
 .file-input{
     height: 110px;
     width: 110px;
@@ -270,7 +254,6 @@
             visibility: visible;
         }
     }
-
     &.select-user-img{
         height: 78px;
         width: 78px;
@@ -281,7 +264,6 @@
         bottom: -103px;
     }
 }
-
 .new-group-chat{
     .card{
         justify-content: space-between;
@@ -352,7 +334,6 @@
                 &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
                     color: $coal;
                     font-size: 1.5rem;
-
                 }
                 &::-moz-placeholder { /* Firefox 19+ */
                 color: $coal;
@@ -383,13 +364,9 @@
                     font-size: 1.4rem;
                 }
             }
-
         }
-       
     }
-    
 }
-
 .remove-selected-user{
     position: absolute;
     top: -2px;
@@ -408,4 +385,3 @@
         line-height: 1.1;
     }
 }
-

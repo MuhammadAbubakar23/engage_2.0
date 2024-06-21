@@ -35,16 +35,9 @@ import { ConsoleCreateSignatureTemplatesHeaderComponent } from './console-create
 import { ConsoleConnectFormHeaderComponent } from './console-connect-from-header/console-connect-form-header/console-connect-form-header.component';
 // import { RightHeaderComponentsComponent } from './right-header-components/right-header-components.component';
 import { CompletedInteractionHeaderComponent } from './completed-interaction-header/completed-interaction-header.component';
-import { ConsoleCreateSkillHeaderComponent } from './console-create-skill-header/console-create-skill-header.component';
 import { ConsoleCreateRuleHeaderComponent } from './console-create-rule-header/console-create-rule-header.component';
-
-
-
-
 @NgModule({
   declarations: [
-  
-  
     ConsoleUsersHeaderComponent,
           ConsoleTeamsHeaderComponent,
           ConsoleRulesHeaderComponent,
@@ -78,9 +71,7 @@ import { ConsoleCreateRuleHeaderComponent } from './console-create-rule-header/c
           ConsoleConnectFormHeaderComponent,
           // RightHeaderComponentsComponent,
           CompletedInteractionHeaderComponent,
-          ConsoleCreateSkillHeaderComponent,
           ConsoleCreateRuleHeaderComponent
-
   ],
   imports: [
     CommonModule,
@@ -89,6 +80,5 @@ import { ConsoleCreateRuleHeaderComponent } from './console-create-rule-header/c
   ],
   exports:[
   ]
-  
 })
 export class HeadersModule { }

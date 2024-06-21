@@ -14,10 +14,8 @@
                 <div class="dropdown">
                   <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1"
                     data-bs-toggle="dropdown" aria-expanded="false">
-              
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                   
                     <li>
                       <a class="dropdown-item" (click)="sortTags($event)"  value="ascending">Ascending</a>
                     </li>
@@ -41,7 +39,6 @@
                 </button>
                 <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
                           (input)="applySearchFilter()">
-
               </a>
               <a (click)="updatevalue('consoleCreateTagsHeader')" [routerLink]="['/console/tag/create/0']" class="ms-2">
                 <button type="button" class="btn btn-success">
@@ -71,7 +68,6 @@
                     <i class="fas fa-long-arrow-alt-down"></i>
                   </a>
                 </th> -->
-              
               </tr>
             </thead>
             <tbody>
@@ -82,7 +78,6 @@
                       {{ tag.name }}
                     </p>
                     </a>
-
              <td>
                   <!-- <div class="d-flex align-items-center darkblue"> -->
                     <!-- <i class="fal fa-ticket coal coal me-2"></i>
@@ -165,7 +160,6 @@
                 </td>
               </tr>
             </tfoot>
-
           </table>
         </div>
       </div>

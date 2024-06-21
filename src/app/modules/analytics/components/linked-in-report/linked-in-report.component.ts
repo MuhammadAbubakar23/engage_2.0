@@ -6,7 +6,6 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { ExcelService } from '../../services/excel.service';
-
 @Component({
   selector: 'app-linked-in-report',
   templateUrl: './linked-in-report.component.html',
@@ -49,7 +48,6 @@ export class LinkedInReportComponent implements OnInit {
   LinkedInReport: any;
   followers: any;
   linkedfollowerTotalcount: any;
-
   constructor(
     private _hS: HeaderService,
     private commonDataService: CommonDataService,
@@ -57,23 +55,18 @@ export class LinkedInReportComponent implements OnInit {
     private datePipe: DatePipe,
     private SpinnerService: NgxSpinnerService
   ) {}
-
   ngOnInit(): void {
-
     const newObj = {
       title: 'LinkedIn Report',
       url: '/analytics/linkedin-report',
     };
     this._hS.setHeader(newObj);
-
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
-
     this.getLinkedInReportData();
     this.makeChartResponsive();
     this.getAllLinkedInfollowrs();
   }
-
   date_pagination(days: number) {
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - days);
@@ -99,10 +92,8 @@ export class LinkedInReportComponent implements OnInit {
       if(this.radioInput30!==undefined){
         this.radioInput30.nativeElement.checked=false
       }
-     
       this.getLinkedInReportData();
       this.getAllLinkedInfollowrs()
-
     } else {
       alert('EndDate is lessthen StartDate');
       this.toDate = '';
@@ -114,9 +105,7 @@ export class LinkedInReportComponent implements OnInit {
       'LinkedIn-Top-Five-Updates'
     );
   }
-
   getLinkedInReportData() {
-  
  if(this.fromDate==''&& this.toDate=='' ){
   const today =new Date()
   this.toDate =this.datePipe.transform(this.currentDate,'YYYY-MM-dd') || '';
@@ -142,7 +131,6 @@ export class LinkedInReportComponent implements OnInit {
     this.ClickThroughRateGraphData = [];
     this.SpinnerService.show();
     this.commonDataService.GetLinkedInReportData(obj).subscribe((res: any) => {
-    
       this.LinkedInReport = res;
       this.SpinnerService.hide();
       this.topFiveUpdates = this.LinkedInReport.updates;
@@ -153,14 +141,12 @@ export class LinkedInReportComponent implements OnInit {
         ) {
           this.allDates.push(this.datePipe.transform(data.from, 'dd MMM'));
         }
-
         this.ImpressionsGraphData.push(data.impressions);
         this.UniqueImpressionsGraphData.push(data.uniqueImpressions);
         this.EngagementGraphData.push(data.engagement);
         this.EngagementRateGraphData.push(data.engagement_Rate);
         this.ClickThroughRateGraphData.push(data.clicks);
       });
-
       this.populateImpressionsGraph();
       this.populateUniqueImpressionsGraph();
       this.populateEngagementGraph();
@@ -168,17 +154,14 @@ export class LinkedInReportComponent implements OnInit {
       this.populateClickThroughRateGraph();
     });
   }
-
   populateImpressionsGraph() {
     type EChartsOption = echarts.EChartsOption;
-
     const dom = document.getElementById('ImpressionsGraph');
     this.impressionGraph = echarts.init(dom, null, {
       renderer: 'canvas',
       useDirtyRect: false,
     });
     var option: EChartsOption;
-
     option = {
       color: ['#5a3692'],
       title: {
@@ -229,19 +212,16 @@ export class LinkedInReportComponent implements OnInit {
         },
       ],
     };
-
     option && this.impressionGraph.setOption(option);
   }
   populateUniqueImpressionsGraph() {
     type EChartsOption = echarts.EChartsOption;
-
     const dom = document.getElementById('UniqueImpressionsGraph');
     this.uniqueImpressionsGraph = echarts.init(dom, null, {
       renderer: 'canvas',
       useDirtyRect: false,
     });
     var option: EChartsOption;
-
     option = {
       color: ['#f51160'],
       title: {
@@ -292,19 +272,16 @@ export class LinkedInReportComponent implements OnInit {
         },
       ],
     };
-
     option && this.uniqueImpressionsGraph.setOption(option);
   }
   populateEngagementGraph() {
     type EChartsOption = echarts.EChartsOption;
-
     const dom = document.getElementById('EngagementGraph');
     this.engagementGraph = echarts.init(dom, null, {
       renderer: 'canvas',
       useDirtyRect: false,
     });
     var option: EChartsOption;
-
     option = {
       color: ['#f51160'],
       title: {
@@ -355,19 +332,16 @@ export class LinkedInReportComponent implements OnInit {
         },
       ],
     };
-
     option && this.engagementGraph.setOption(option);
   }
   populateEngagementRateGraph() {
     type EChartsOption = echarts.EChartsOption;
-
     const dom = document.getElementById('EngagementRateGraph');
     this.engagementRateGraph = echarts.init(dom, null, {
       renderer: 'canvas',
       useDirtyRect: false,
     });
     var option: EChartsOption;
-
     option = {
       color: ['#5a3692'],
       title: {
@@ -418,19 +392,16 @@ export class LinkedInReportComponent implements OnInit {
         },
       ],
     };
-
     option && this.engagementRateGraph.setOption(option);
   }
   populateClickThroughRateGraph() {
     type EChartsOption = echarts.EChartsOption;
-
     const dom = document.getElementById('ClickThroughRateGraph');
     this.clickThroughRateGraph = echarts.init(dom, null, {
       renderer: 'canvas',
       useDirtyRect: false,
     });
     var option: EChartsOption;
-
     option = {
       color: ['#2a75ed'],
       title: {
@@ -481,7 +452,6 @@ export class LinkedInReportComponent implements OnInit {
         },
       ],
     };
-
     option && this.clickThroughRateGraph.setOption(option);
   }
   // getAllLinkedInfollowrs() {
@@ -495,7 +465,6 @@ export class LinkedInReportComponent implements OnInit {
   //     this.toDate = this.toDate;
   //     this.fromDate = this.fromDate;
   //   }
-
   //   let obj = {
   //     pageId: '76213578',
   //     from: this.fromDate,
@@ -519,20 +488,17 @@ export class LinkedInReportComponent implements OnInit {
   //           abc.organicFollowers + abc.paidFollowers
   //         );
   //       });
-
   //       this.followerChart();
   //     });
   // }
   // followerChart() {
   //   type EChartsOption = echarts.EChartsOption;
-
   //   const dom = document.getElementById('followers');
   //   this.followers = echarts.init(dom, null, {
   //     renderer: 'canvas',
   //     useDirtyRect: false,
   //   });
   //   var option: EChartsOption;
-
   //   option = {
   //     color: ['#90EE90'],
   //     title: {
@@ -583,11 +549,9 @@ export class LinkedInReportComponent implements OnInit {
   //       },
   //     ],
   //   };
-
   //   option && this.followers.setOption(option);
   // }
   getAllLinkedInfollowrs(){
-    
     if(this.fromDate==''&& this.toDate=='' ){
       const today =new Date()
       this.toDate =this.datePipe.transform(this.currentDate,'YYYY-MM-dd') || '';
@@ -613,7 +577,6 @@ export class LinkedInReportComponent implements OnInit {
       this.toDate=''
       return;
     }
-    
     let obj ={
       "pageId": "103568",
       "from":this.fromDate,
@@ -625,30 +588,23 @@ export class LinkedInReportComponent implements OnInit {
     this.commonDataService.GetLinkedInReportFollwers(obj).subscribe((res:any)=>{
       this.linkedfollowerTotalcount=res.spanFollowers_TotalCount
       this.linkedFollowerData=res.spanFollowers
-      
       this.linkedFollowerData?.forEach((abc:any)=>{
-          
         if (!this.allDates.includes(this.datePipe.transform(abc.from,'dd MMM'))) {
           this.allDates.push(this.datePipe.transform(abc.from,'dd MMM'));
         }
         this.followersGraphData.push(abc.organicFollowers + abc.paidFollowers)
       })
-   
       this.followerChart()
     })
-   
   }
 followerChart(){
-  
   type EChartsOption = echarts.EChartsOption;
-
   const dom = document.getElementById('followers');
   this.followers = echarts.init(dom, null, {
     renderer: 'canvas',
     useDirtyRect: false,
   });
   var option: EChartsOption;
-
   option = {
     color: ['#90EE90'],
     title: {
@@ -692,7 +648,6 @@ followerChart(){
       },
     ],
   };
-
   option && this.followers.setOption(option);
 }
   makeChartResponsive() {

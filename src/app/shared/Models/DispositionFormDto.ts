@@ -6,9 +6,9 @@ export class DispositionFormDto {
     follow_Up_Date:any = null;
     wings:string='';
     completedData: CompletedDataDto = new CompletedDataDto();
-    groupId:any[]=[];
+    skillSlug:string="";
+    tab:string="";
   }
-
   export class CompletedDataDto {
     user: string = '';
     plateFrom: string = '';

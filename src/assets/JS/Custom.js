@@ -1,18 +1,12 @@
 // function toggleNavPanel(){
-  
 //     var element = document.getElementById("left-sidebar-expand");
 //   element.classList.toggle("toggled");
 // }
-
 // function toggleRightNavPanel(){
-
 //   var element = document.getElementById("tickets-rightbar-dashboard");
 //   element.classList.toggle("toggled");
 // }
-
-
 // var toggleEmojis = function () {
-  
 //   $('.reply_open>span').next().next().toggle();
 // }
 // var isClicked = false;

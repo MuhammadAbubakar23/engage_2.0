@@ -15,9 +15,8 @@ export class FiltersDto {
   flag:String="";
   wings:String="";
   hasBlueTick:boolean=false;
-  groupId:any;
+  skills:string[]=[];
   }
-
 export class FiltersDtolocal {
   fromDate?: any;
   toDate?: any;
@@ -35,5 +34,5 @@ export class FiltersDtolocal {
   include: String = "";
   flag: String = "";
   wings: String = "";
-  groupId:any;
+  skills:string[]=[];
 }

@@ -12,14 +12,12 @@ import { ExcelService } from './services/excel.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { InteractionReportComponent } from './components/interaction-report/interaction-report.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-
 @NgModule({
   declarations: [
     AnalyticsComponent,
     ExecutiveDashboardHeaderComponent,
     LiveMonitoringHeaderComponent,
     // InteractionReportComponent,
-    
   ],
   imports: [
     CommonModule,

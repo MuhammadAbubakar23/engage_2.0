@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-
 @Injectable({
   providedIn: 'root'
 })
 export class SocialLoginService {
-
   constructor(private http: HttpClient) { }
   getFaceBookData(authorizationCode: any) {
     const clientId = environment.facebookclientId;
@@ -23,7 +21,6 @@ export class SocialLoginService {
     //   redirect_uri: redirectUri,
     // });
   }
-
   getInstagramData(authorizationCode: any) {
     const clientId = environment.instagramclientId;
     const clientSecret = environment.instagramclientSecret;
@@ -32,7 +29,6 @@ export class SocialLoginService {
     const apiUrl = 'please put your api url here';
     return this.http.post(apiUrl, { code: authorizationCode });
   }
-
   getGoogleData(authorizationCode: any) {
     const clientId = environment.googleclientId;
     const clientSecret = environment.googleclientSecret;

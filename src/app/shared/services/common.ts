@@ -1,4 +1,3 @@
-
 export async function fetchJSON<T>(url: string, options?: any): Promise<T> {
     return await fetch(url, options)
       .then(checkStatus)
@@ -8,7 +7,6 @@ export async function fetchJSON<T>(url: string, options?: any): Promise<T> {
 export function fetchHTML<T>(url: string, options?: any): Promise<T|string> { // T is String
     return fetch(url, options).then((res) => res.text());
 }
-  
 function checkStatus(response:any) {
     if (response.ok) {
       return response;
@@ -18,4 +16,3 @@ function checkStatus(response:any) {
       return Promise.reject(error);
     }
 }
-

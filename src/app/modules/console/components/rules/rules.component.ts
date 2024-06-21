@@ -134,13 +134,11 @@ export class RulesComponent implements OnInit {
     );
   }
   setSortOption(option: string) {
-
     this.selectedSortOption = option;
     this.refreshtableData();
   }
 
   editTemplate(message: any) {
-
     this.router.navigate(['/console/add-rules', message.id])
   }
   canEditOrDelete(row: any): boolean {
@@ -184,7 +182,6 @@ export class RulesComponent implements OnInit {
   }
   
   disableTemplate(message: any) {
-    console.log('Disabling template:', message);
   }
   cloneTemplate(message: any) {
   }
@@ -207,24 +204,19 @@ export class RulesComponent implements OnInit {
     this.refreshtableData()
   }
   goToPage(pageNumber: number): void {
-
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }
     this.refreshtableData()
   }
-
   getVisiblePageNumbers(): number[] {
     const maxPages = Math.ceil(this.totalCount / this.perPage);
     const visiblePages = 5;
-
     let startPage = Math.max(1, this.currentPage - Math.floor(visiblePages / 2));
     let endPage = Math.min(startPage + visiblePages - 1, maxPages);
-
     if (endPage - startPage + 1 < visiblePages) {
       startPage = Math.max(1, endPage - visiblePages + 1);
     }
-
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
 }

@@ -1,7 +1,6 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
 export const environment = {
   production: true,
   fetchIntegrate: 'true',
@@ -31,23 +30,20 @@ export const environment = {
   // WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WhatsappBaseUrl: 'https://waservice.enteract.live/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
-
   KelisteningBaseUrl: 'https://listen.enteract.live/backend/api/',
   KemediaBaseUrl: 'https://kemedia.360scrm.com/api/',
   KescrmBaseUrl: 'https://kescrm.360scrm.com/',
-
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
-
   // For KE
-  IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
-  CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  ProfileBaseUrl: 'https://profiler.enteract.live/api/',
-  ServiceBaseUrl: '',
-  consoleBaseUrl: 'https://console.enteract.live/api/',
-  LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
-  botBaseUrl:'',
-
+  // IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
+  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
+  // ServiceBaseUrl: '',
+  // consoleBaseUrl: 'https://console.enteract.live/api/',
+  keReportsBaseUrl:'https://kereports.enteract.live/api/',
+  // LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
+  // botBaseUrl:'',
   // For Jazz
   // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
   // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
@@ -57,7 +53,6 @@ export const environment = {
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // LinkedInBaseUrl:'',
-
   // For Total Parco
   // IdentityBaseUrl: 'https://tt_identity.enteract.live/api/',
   // CommonBaseUrl: 'https://ttcommon.enteract.live/api/',
@@ -66,13 +61,11 @@ export const environment = {
   // ServiceBaseUrl: '',
   //  ProfileBaseUrl: '',
   //  botBaseUrl:'',
-
   // old Tppl
   // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api/',
   // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',
   // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
   // consoleBaseUrl: 'https://tpplcons.360scrm.com/api/',
-
   // For Morinaga
   // IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
@@ -82,7 +75,6 @@ export const environment = {
   // ProfileBaseUrl: '',
   // botBaseUrl: '',
   // LinkedInBaseUrl:'',
-
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
@@ -93,7 +85,6 @@ export const environment = {
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
     // LinkedInBaseUrl:'',
-
   // For Jazz Rox
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
   // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
@@ -102,14 +93,13 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  
-  // LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
+    LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
 
   // //for statging / Internal :companyId 650
   // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
-  // CommonBaseUrl: 'https://comrox.enteract.app/api/',
+  // CommonBaseUrl: 'https://85b6-203-135-1-210.ngrok-free.app/api/',
   // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
+  // SignalRCommonBaseUrl: 'https://85b6-203-135-1-210.ngrok-free.app/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://conrox.enteract.app/api/',
   // // // for rule
@@ -122,13 +112,13 @@ export const environment = {
   // autoresponderbaseurl: 'https://d387-203-135-1-210.ngrok-free.app/api/',
   profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
 // testing uiengage company id 657
-// IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-// CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-// ServiceBaseUrl: '',
-// SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-// ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-// consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-// botBaseUrl: 'https://bot-engage.enteract.app/api/',
+IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+ServiceBaseUrl: '',
+SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+botBaseUrl: 'https://bot-engage.enteract.app/api/',
 botsBaseUrl: 'http://3.1.47.150:5000/bots/',
 botConfigBaseUrl: 'https://linked.360scrm.com/api/',
 // botConfigBaseUrl: 'https://newpurpleshop86.conveyor.cloud/api/',
@@ -147,14 +137,11 @@ botMoniteringBaseUrl: 'https://flowbot.enteract.app/',
 flowBot: 'https://flowbot.enteract.app/',
 intentBot: 'https://intentbot.enteract.app/',
 autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
-
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
-
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
   // consoleBaseUrl: 'http://10.111.11.93:45455/api/',
   // consoleBaseUrl: '',
-
   links: {
     identity: {
       login: 'Authentication/Login',
@@ -340,7 +327,6 @@ autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
       TwitterTweetStats: 'Channel/GetTwitterTweetStat',
       LinkedInPostStats: 'Channel/GetLinkedInPostStats',
       Menu: 'Menu/',
-      queryCompleted: 'Social/QueryCompleted',
       profileDetails: 'Customer/GetCustomerById',
       updateProfile: 'Customer/UpdateCustomer',
       createTicket: 'Tickets/CreateTicket',
@@ -369,27 +355,27 @@ autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
       uniqueExportCsv: 'Report/GetWhatsAppUniqueCustomerReportCSV',
       addHandledBot: 'Report/GetWhatsAppBotHandleReport',
       addHandledBotCSV: 'Report/GetWhatsAppBotHandleReportCSV',
-      addinboundoutbound: 'Report/GetInboundOutboundReport',
-      twitterReport: 'Report/GetTwitterReport',
+      addinboundoutbound: 'CommonReport/GetInboundOutboundReport',
+      twitterReport: 'TwitterReport/GetTwitterReport',
       twitterSLAReport: 'Report/GetTwitterSLAReport',
-      twitterProfileWiseReport: 'Report/GetTwitterProfileWiseReport',
+      twitterProfileWiseReport: 'TwitterReport/GetTwitterProfileWiseReport',
       getUserList: 'Users/GetUserList',
       getSentimentData: 'Keyword/GetAllSentiments',
-      addAgentPerformance: 'Report/GetAgentPerformanceReport',
-      shiftReport: 'Report/GetShiftReport',
+      addAgentPerformance: 'AgentReport/GetAgentPerformanceReport',
+      shiftReport: 'CommonReport/GetShiftReport',
       getWhatsAppRawDataReport: 'Report/GetWhatsAppRawDataReport',
       downloadWhatsAppRawDataReport: 'Report/GetWhatsAppCSVData',
       postSocialRawData: 'Report/GetAllChannelRawDataReport',
       downloadSocialRawData: 'Report/GetAllChannelRawDataReportCSV',
-      facebookReport: 'Report/GetFacebookReport',
-      facebookProfile: 'Report/GetFacebookProfileWiseReport',
+      facebookReport: 'FacebookReport/GetFacebookReport',
+      facebookProfile: 'FacebookReport/GetFacebookProfileWiseReport',
       getAllSocialMatrics: 'Report/GetAllSocialMediaMatricsReport',
-      instagramReport: 'Report/GetInstagramReport',
-      instagramProfile: 'Report/GetInstagramProfileWiseReport',
-      getTagReport: 'Report/GetTagsReport',
-      downloadTagReport: 'Report/GetAgentTagsReportCSV',
+      instagramReport: 'Instagramreport/GetInstagramReport',
+      instagramProfile: 'Instagramreport/GetInstagramProfileWiseReport',
+      getTagReport: 'CommonReport/GetTagsReport',
+      downloadTagReport: 'CommonReport/GetAgentTagsReportCSV',
       getLinkedInReport: 'Activity/GetOrganizationSharedInsights',
-      emailShiftReport: 'Report/EmailShiftReport',
+      emailShiftReport: 'CommonReport/EmailShiftReport',
       getFollowUpCount: 'Channel/GetFollowUpCount',
       getLinkedInFollowers: 'Activity/GetOrganizationInsights',
       regionwiseReport: 'Report/GetRegionWiseReport',
@@ -398,7 +384,7 @@ autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
       keMediaReport: 'MediaReport/GetMediaReport',
       PrintFeed: 'Media/GetMediaPrintList',
       CSATReport: 'Report/GetCSATReport',
-      getInteractionReport: 'Report/GetAgentPerformanceDashboard',
+      getInteractionReport: 'AgentReport/GetAgentPerformanceDashboard',
       // whatsapp bot interaction
       whatsappBotInteraction: 'Whatsapp/GetBotInteractionHistory',
     },
@@ -455,7 +441,6 @@ autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
     },
   },
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

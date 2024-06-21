@@ -250,7 +250,6 @@ export class ActionsComponent implements OnInit {
       const db = localStorage.getItem('dbName')
       const connection = localStorage.getItem('connection_name');
       this.reportService.runSqlApi({ "query": this.query, 'db': db, 'connection_name': connection }).subscribe(res => {
-        console.log("sql", res);
         this.shareddataService.updateData(res)
       })
     }
@@ -269,7 +268,6 @@ export class ActionsComponent implements OnInit {
       const db = localStorage.getItem('dbName');
       const table = localStorage.getItem('selectedtable');
       this.reportService.createReportApi({ "query": this.query, 'name': this.reportName, 'tableName': table, 'dbName': db, 'connectionName': connection }).subscribe(res => {
-        console.log(res);
         if (res === "Report Name already exists") {
 
           this.toastermessage = `${res}`;
@@ -311,7 +309,6 @@ export class ActionsComponent implements OnInit {
     this.groupcolumnName = "Select Column";
     this.groupselectedItems = [];
     const q = JSON.stringify(localStorage.getItem('query'));
-    console.log("q====>", q);
     this.query = JSON.stringify(localStorage.getItem('query'));
     this.selectedGraph = "Bar Chart"
     this.shareddataService.updatechartType('Bar Chart')

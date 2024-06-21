@@ -11,6 +11,5 @@ private companyid =new Subject<any>()
   }
   public receivedcompanyid():Observable<any>{
     return this.companyid.asObservable()
-
   }
 }
