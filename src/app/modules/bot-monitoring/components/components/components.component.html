@@ -57,7 +57,8 @@
                                         <ul class="list-group list-group-flush component-list">
                                             <li *ngFor="let item of items | chatBotIntentFilter:searchIntent"
                                                 class="list-group-item d-flex align-items-center justify-content-between rounded mb-2"
-                                                [class.active]="item.active" (click)="selectIntent(item)" style="cursor: pointer;">
+                                                [class.active]="item.active" (click)="selectIntent(item)"
+                                                style="cursor: pointer;">
                                                 <span>{{ item.intent }}</span>
                                                 <div class="count-progress">
 
@@ -136,9 +137,7 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
                             <div class="tab-pane fade" id="response-tab-pane" role="tabpanel"
                                 aria-labelledby="response-tab" tabindex="0">
                                 <div class="row align-items-start pb-5">
@@ -193,7 +192,8 @@
                                                 <div class="mb-3">
                                                     <textarea name="" class="form-control" cols="16" rows="4"
                                                         placeholder="Enter new training pharase......"
-                                                        formControlName="text" [disabled]="isResponseSelected"></textarea>
+                                                        formControlName="text"
+                                                        [disabled]="isResponseSelected"></textarea>
                                                 </div>
                                                 <div class="text-end mb-3">
                                                     <button *ngIf="!isResponseView" type="button"

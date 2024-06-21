@@ -3,7 +3,8 @@
 </ngx-spinner>
 <div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
-        <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+            [fullScreen]="false">
             <p style="color: white"> Loading... </p>
         </ngx-spinner>
         <div class="page-content-wrapper custom-scroll chatbot-main">
@@ -18,7 +19,8 @@
                         </li>
                     </ul>
                     <div class="text-end">
-                        <a class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#create-chatbot" (click)="resetForm()">
+                        <a class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#create-chatbot"
+                            (click)="resetForm()">
                             Create Chatbot
                         </a>
                     </div>
@@ -51,7 +53,8 @@
                                             </span>
                                         </li> -->
                                             <li class="list-inline-item" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" data-bs-title="Delete" (click)="DeleteChat(row.bot_id, $event)"> 
+                                                data-bs-placement="top" data-bs-title="Delete"
+                                                (click)="DeleteChat(row.bot_id, $event)">
                                                 <span class="iconButton small iconHover">
                                                     <i class="fa-light fa-trash radical"></i>
                                                 </span>
@@ -66,11 +69,12 @@
                                 </div> -->
                                     <div class="d-flex align-items-center justify-content-between mt-1">
                                         <a class="btn btn-primary btn-sm px-4" (click)="updatevalue('component')"
-                                        (click)="shareValue(row, $event)"
-                                            >Component</a>
-                                            <a class="btn btn-primary btn-sm px-4" (click)="shareValueStepper(row, $event)" (click)="updatevalue('rule')">Rule</a>
+                                            (click)="shareValue(row, $event)">Component</a>
+                                        <a class="btn btn-primary btn-sm px-4" (click)="shareValueStepper(row, $event)"
+                                            (click)="updatevalue('rule')">Rule</a>
 
-                                        <a class="btn btn-primary btn-sm px-4" (click)="shareValueStory(row, $event)" (click)="updatevalue('story')">Story</a>
+                                        <a class="btn btn-primary btn-sm px-4" (click)="shareValueStory(row, $event)"
+                                            (click)="updatevalue('story')">Story</a>
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +143,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="creat-categoryLabel">View Chatbot</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="resetForm()"></button>
             </div>
             <div class="modal-body">
                 <form [formGroup]="chatbotForm" (ngSubmit)="saveChatbot()">
@@ -154,7 +159,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetForm()">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            (click)="resetForm()">Cancel</button>
                     </div>
                 </form>
             </div>

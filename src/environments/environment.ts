@@ -39,14 +39,14 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  // IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
-  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
-  // ServiceBaseUrl: '',
-  // consoleBaseUrl: 'https://console.enteract.live/api/',
-  // LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
-  // botBaseUrl:'',
+  IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
+  CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  ProfileBaseUrl: 'https://profiler.enteract.live/api/',
+  ServiceBaseUrl: '',
+  consoleBaseUrl: 'https://console.enteract.live/api/',
+  LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
+  botBaseUrl:'',
 
   // For Jazz
   // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
@@ -103,7 +103,7 @@ export const environment = {
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   
-  LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
+  // LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
 
   // //for statging / Internal :companyId 650
   // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
@@ -122,13 +122,13 @@ export const environment = {
   // autoresponderbaseurl: 'https://d387-203-135-1-210.ngrok-free.app/api/',
   profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
 // testing uiengage company id 657
-IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-ServiceBaseUrl: '',
-SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-botBaseUrl: 'https://bot-engage.enteract.app/api/',
+// IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+// CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+// ServiceBaseUrl: '',
+// SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+// ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+// consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+// botBaseUrl: 'https://bot-engage.enteract.app/api/',
 botsBaseUrl: 'http://3.1.47.150:5000/bots/',
 botConfigBaseUrl: 'https://linked.360scrm.com/api/',
 // botConfigBaseUrl: 'https://newpurpleshop86.conveyor.cloud/api/',
