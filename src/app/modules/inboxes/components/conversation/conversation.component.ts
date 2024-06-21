@@ -22,6 +22,7 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { InsertTagInProfileFeedDto } from 'src/app/shared/Models/InsertTagaInProfileFeedDto';
+
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
@@ -63,6 +64,7 @@ export class ConversationComponent implements OnInit {
   toDate: any;
   searchCustomerForm!: FormGroup;
   groupByDateList: any[] = [];
+
   constructor(
     private fetchId: FetchIdService,
     private SpinnerService: NgxSpinnerService,
@@ -104,7 +106,7 @@ export class ConversationComponent implements OnInit {
   currentUrl: string = '';
   FlagForAssignToMe: string = '';
   ngOnInit(): void {
-    this.wings = this.getWing.wings;
+    this.wings = this.getWing.wings || localStorage.getItem('defaultWings');
     const date_fillter = localStorage.getItem('datefillter');
     if (date_fillter) {
       this.filterDtolocal = JSON.parse(date_fillter);
@@ -243,7 +245,7 @@ export class ConversationComponent implements OnInit {
   wings: any;
   isverifiedAccount: boolean = false;
   skillSlugUrl: any;
-  skillSlug = this.getSkillSlug.skillSlug || "";
+  skillSlug = this.getSkillSlug.skillSlug || '';
   getConversationList() {
     this.flag = this.currentUrl.split('/')[2];
     this.skillSlugUrl = this.currentUrl.split('/')[3];
@@ -292,9 +294,11 @@ export class ConversationComponent implements OnInit {
     } else if (this.searchForm.value.dateWithin == '1 week') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 6);
-      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      const fromDate =
+        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
-      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+      this.toDate =
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '2 weeks') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 13);
@@ -637,7 +641,10 @@ export class ConversationComponent implements OnInit {
         existingConversation.unrespondedCount++;
       } else {
         // Check skillSlug conditions and add new conversation to the list
-        if (this.skillSlug.length == 0 || this.skillSlug[0] === newMsg.skillSlug) {
+        if (
+          this.skillSlug.length == 0 ||
+          this.skillSlug[0] === newMsg.skillSlug
+        ) {
           this.ConversationList.unshift(newMsg);
           if (this.ConversationList.length > this.pageSize) {
             this.ConversationList.pop();
@@ -677,7 +684,10 @@ export class ConversationComponent implements OnInit {
   removeAssignedQueryListener(res: any) {
     if (this.currentUrl.split('/')[2] == 'focused') {
       this.groupByDateList.forEach((group) => {
-        const index = group.items.findIndex((x: any) => x.profileId == res.profileId && x.skillSlug == res.skillSlug);
+        const index = group.items.findIndex(
+          (x: any) =>
+            x.profileId == res.profileId && x.skillSlug == res.skillSlug
+        );
         if (index !== -1) {
           group.items.splice(index, 1);
           this.TotalUnresponded = this.TotalUnresponded - 1;
@@ -766,6 +776,7 @@ export class ConversationComponent implements OnInit {
           localStorage.setItem('assignedProfile', profileId);
           this.router.navigateByUrl(this.currentUrl + '/responder/' + platform);
           this.lodeModuleService.updateModule('responder');
+          localStorage.setItem('skillSlug', skillSlug);
           if (this.from < this.TotalUnresponded) {
             this.pageNumber = 1;
             this.pageSize = 20;
@@ -791,6 +802,7 @@ export class ConversationComponent implements OnInit {
       localStorage.setItem('assignedProfile', profileId);
       this.router.navigateByUrl(this.currentUrl + '/responder/' + platform);
       this.lodeModuleService.updateModule('responder');
+      localStorage.setItem('skillSlug', skillSlug);
       this.SpinnerService.hide();
     } else {
       this.SpinnerService.show();
@@ -804,6 +816,7 @@ export class ConversationComponent implements OnInit {
       this.router.navigateByUrl(this.currentUrl + '/responder/' + platform);
       this.SpinnerService.hide();
       this.lodeModuleService.updateModule('responder');
+      localStorage.setItem('skillSlug', skillSlug);
     }
   }
   AlterMsg: any;

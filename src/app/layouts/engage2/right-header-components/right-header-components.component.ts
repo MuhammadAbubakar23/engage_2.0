@@ -7,7 +7,7 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { LoginDto } from 'src/app/shared/Models/LoginDto';
-import { AuthService } from 'src/app/identity/AuthService/auth.service';
+import { AuthService } from 'src/app/identity/Services/AuthService/auth.service';
 
 @Component({
   selector: 'right-header-components',

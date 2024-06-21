@@ -181,6 +181,7 @@ export class CommonDataService {
   getChannels = environment.links.identity.channels;
   consoleChannel= environment.links.identity.consoleChannls
   deleteRoles = environment.links.identity.deleteRoles;
+  getUserRoles = environment.links.identity.getUserRoles;
   // teams
   // getAllTeams= environment.links.console.getAllTeams
   // addTeam = environment.links.console.addTeam
@@ -818,5 +819,8 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
   }
   GetAllWing(){
     return this.http.get(this.IdentityBaseUrl + this.getAllWing);
+  }
+  GetRoles(){
+    return this.http.get(this.IdentityBaseUrl + this.getUserRoles)
   }
 }

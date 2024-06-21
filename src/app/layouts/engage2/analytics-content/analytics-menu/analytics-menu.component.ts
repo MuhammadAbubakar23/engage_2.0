@@ -18,7 +18,7 @@ export class AnalyticsMenuComponent implements OnInit {
   // showOnlyRawDataReport= 'zia.rehman3@ibex.co,waqas.munir@jazz.com.pk,muhammad.asad3@ibex.co,syeda.asghar@ibex.co,rizwan.ali22@ibex.co,hafiz.zeeshan@ibex.co,ahmed.hassan6@ibex.co,zain.aziz11@ibex.co ,ali.haider4@ibex.co';
   showOnlyRawDataReport= 'zia.rehman3@ibex.co,waqas.munir@jazz.com.pk,muhammad.asad3@ibex.co,syeda.asghar@ibex.co,rizwan.ali22@ibex.co,hafiz.zeeshan@ibex.co,ahmed.hassan6@ibex.co,zain.aziz11@ibex.co ,ali.haider4@ibex.co';
 
-  keAgentShowallReportsExpectAgentPrefomanceReport ='kainaat.fatima.gfx@gmail.com,junaidahmed.sohu@gmail.com,imxeeshan@gmail.com,jehananwar0@gmail.com,babbarsher034@gmail.com,hashirahmed646@gmail.com,khan.waleed.m@gmail.com,zamaan.afaq@gmail.com,iamahmerzia@gmail.com,naushadmalikke@gmail.com,ccpmoke@ibex.co';
+  keAgentShowallReportsExceptAgentPrefomanceReport ='kainaat.fatima.gfx@gmail.com,junaidahmed.sohu@gmail.com,imxeeshan@gmail.com,jehananwar0@gmail.com,babbarsher034@gmail.com,hashirahmed646@gmail.com,khan.waleed.m@gmail.com,zamaan.afaq@gmail.com,iamahmerzia@gmail.com,naushadmalikke@gmail.com,ccpmoke@ibex.co';
   // analyticeReport=[
   //     // {name:'Report Designer',link:'/analytics/executive-dashboard'},
   //     {name:'Report Listing',link:'/analytics/reports'},
@@ -188,7 +188,7 @@ export class AnalyticsMenuComponent implements OnInit {
         ];
       }
     } else if (this.channelname == 'KE') {
-      if(this.keAgentShowallReportsExpectAgentPrefomanceReport.includes(this.restrictedAgent)){
+      if(this.keAgentShowallReportsExceptAgentPrefomanceReport.includes(this.restrictedAgent)){
         this.analyticeReport = [
           {
             name: 'Inbound/Outbound Report',

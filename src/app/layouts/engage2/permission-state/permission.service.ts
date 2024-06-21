@@ -1,12 +1,6 @@
-import { HttpClient, HttpEvent } from '@angular/common/http';
+
 import { Injectable } from '@angular/core';
-import {
-  Router, Event, NavigationStart, RoutesRecognized,
-  RouteConfigLoadStart, RouteConfigLoadEnd,
-  NavigationEnd, NavigationCancel, NavigationError, GuardsCheckStart, ChildActivationStart, ActivationStart, GuardsCheckEnd, ResolveStart, ResolveEnd, ChildActivationEnd, ActivationEnd, Scroll
-} from '@angular/router';
-import { catchError, map, Observable, of } from 'rxjs';
-import { EnvService } from 'src/app/shared/services/env/env.service';
+import { map, Observable, of } from 'rxjs';
 import { RequestService } from 'src/app/shared/services/request/request.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { PermissionModel } from './permission.state';

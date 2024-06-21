@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './identity/AuthService/auth.guard';
+import { AuthGuard } from './identity/Services/AuthGuardService/auth.guard';
 import { ModulesResolver } from './shared/resolver/modules.resolver';
 import { TagsResolver } from './shared/resolver/Tags Resolver/tags.resolver';
 

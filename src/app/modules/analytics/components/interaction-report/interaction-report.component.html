@@ -184,7 +184,7 @@
                                                 </span>
                                                 <p class="coal mb-0">Active Agents</p>
                                             </div>
-                                            <h4>{{totalAgentsCount}}</h4>
+                                            <h5>{{totalAgentsCount}}</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -199,7 +199,7 @@
                                                 </span>
                                                 <p class="coal mb-0"> Avg. Response Rate</p>
                                             </div>
-                                            <h4>{{ formatNumber(averageResponseData) |number:'1.2-2' }}% <small
+                                            <h5>{{ formatNumber(averageResponseData) |number:'1.2-2' }}% <small
                                                     *ngIf="preAveragePercentage >= 0; else downArrow"
                                                     class="text-success fs-12">
                                                     <i class="fa-light fa-arrow-up"></i> {{ preAveragePercentage
@@ -213,7 +213,7 @@
                                                         }}<sup>%</sup>
                                                     </small>
                                                 </ng-template>
-                                            </h4>
+                                            </h5>
                                         </div>
                                     </div>
                                 </div>
@@ -228,7 +228,7 @@
                                                 </span>
                                                 <p class="coal mb-0"> Avg. Response Time</p>
                                             </div>
-                                            <h4>{{ finalAverage !== 'NaN:NaN:NaN' ? finalAverage : '00:00:00' }}
+                                            <h5>{{ finalAverage !== 'NaN:NaN:NaN' ? finalAverage : '00:00:00' }}
                                                 <small *ngIf="avgResponseTimeSum >= 0; else downArrow"
                                                     class="text-success fs-12">
                                                     <i class="fa-light fa-arrow-up"></i> {{ avgResponseTimeSum
@@ -242,7 +242,7 @@
                                                         }}<sup>%</sup>
                                                     </small>
                                                 </ng-template>
-                                            </h4>
+                                            </h5>
                                         </div>
                                     </div>
                                 </div>
@@ -257,7 +257,7 @@
                                                 </span>
                                                 <p class="coal mb-0">Avg Min. Cater Time</p>
                                             </div>
-                                            <h4>{{finalAverageMinimum != 'NaN:NaN:NaN' ? finalAverageMinimum
+                                            <h5>{{finalAverageMinimum != 'NaN:NaN:NaN' ? finalAverageMinimum
                                                 :'00:00:00'}}
                                                 <small *ngIf="avgMinCaterTime >= 0; else downArrow"
                                                     class="text-success fs-12">
@@ -272,7 +272,7 @@
                                                         }}<sup>%</sup>
                                                     </small>
                                                 </ng-template>
-                                            </h4>
+                                            </h5>
                                         </div>
                                     </div>
                                 </div>
@@ -287,7 +287,7 @@
                                                 </span>
                                                 <p class="coal mb-0">Avg Max. Cater Time</p>
                                             </div>
-                                            <h4>{{finalAverageMaximum != 'NaN:NaN:NaN' ? finalAverageMaximum
+                                            <h5>{{finalAverageMaximum != 'NaN:NaN:NaN' ? finalAverageMaximum
                                                 :'00:00:00'}}
                                                 <small *ngIf="avgMaxCaterTime >= 0; else downArrow"
                                                     class="text-success fs-12">
@@ -302,7 +302,7 @@
                                                         }}<sup>%</sup>
                                                     </small>
                                                 </ng-template>
-                                            </h4>
+                                            </h5>
                                         </div>
                                     </div>
                                 </div>

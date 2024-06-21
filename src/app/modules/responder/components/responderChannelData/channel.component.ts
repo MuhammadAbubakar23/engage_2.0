@@ -344,6 +344,7 @@ export class ChannelComponent implements OnInit {
   ImageName: any;
   ImageArray: any[] = [];
   totalUnrespondedCmntCountByCustomer: number = 0;
+  totalUnrespondedNewPostCmntCountByCustomer: number = 0;
   postIdForStats: any;
   pageIdForStats: any;
   totalPostReactionsCount: number = 0;
@@ -754,17 +755,177 @@ export class ChannelComponent implements OnInit {
       }
     }
   }
+  // updateCommentsDataListener() {
+  //   if (!this.id) {
+  //     this.id = localStorage.getItem('storeOpenedId') || '{}';
+  //   }
+  //   // const openedContentType = localStorage.getItem('contentType');
+  //   if (this.updatedComments.length > 0) {
+  //     this.updatedComments?.forEach((xyz: any) => {
+  //       xyz.comments.forEach((abc: any) => {
+  //         // if (openedContentType == abc.contentType) {
+  //         if (this.id == xyz.user.userId) {
+  //           this.commentDto = {
+  //             id: abc.id,
+  //             wings: abc.wings,
+  //             postId: xyz.post.postId,
+  //             commentId: abc.commentId,
+  //             message: abc.message,
+  //             contentType: abc.contentType,
+  //             userName: abc.userName || abc.userId,
+  //             queryStatus: abc.queryStatus,
+  //             createdDate: abc.createdDate,
+  //             insertionDate: abc.insertionDate,
+  //             ticketId: abc.ticketId,
+  //             fromUserProfilePic: abc.fromUserProfilePic,
+  //             body: abc.body,
+  //             sentimentValue: abc.sentimentValue,
+  //             language: abc.language,
+  //             isHide: abc.isHide,
+  //             isLikedByAdmin: abc.isLikedByAdmin,
+  //             channelId: abc.channelId,
+  //             conversationId: abc.conversationId,
+  //             attachmentUrl: abc.attachmentUrl,
+  //             attachmentType: abc.attachmentType,
+  //             sendTo: abc.sendTo,
+  //             unrespondedCount: abc.unrespondedCount,
+  //             attachments: abc.attachments,
+  //             replies: abc.replies,
+  //             sentiment: abc.sentiment,
+  //             tags: abc.tags,
+  //             to: abc.to,
+  //             cc: abc.cc,
+  //             bcc: abc.bcc,
+  //             dispositions: abc.dispositions,
+  //             signalRGroupName: abc.signalRGroupName,
+  //           };
+  //           localStorage.setItem('lastQueryId', this.commentDto.id.toString());
+  //           this.Comments?.forEach((item: any) => {
+  //             this.postIdArray.push(item.post.postId);
+  //             this.commentsArray = [];
+  //             // this.newPostComment= [];
+  //             if (this.postIdArray.includes(xyz.post.postId)) {
+  //               item.comments.push(this.commentDto);
+  //               item.comments.forEach((cmnt: any) => {
+  //                 this.commentsArray.push(cmnt);
+  //               });
+  //               let groupedItems = this.commentsArray.reduce(
+  //                 (acc: any, item: any) => {
+  //                   const date = item.createdDate?.split('T')[0];
+  //                   if (!acc[date]) {
+  //                     acc[date] = [];
+  //                   }
+  //                   acc[date].push(item);
+  //                   return acc;
+  //                 },
+  //                 {}
+  //               );
+  //               item['groupedComments'] = Object.keys(groupedItems).map(
+  //                 (createdDate) => {
+  //                   return {
+  //                     createdDate,
+  //                     items: groupedItems[createdDate],
+  //                   };
+  //                 }
+  //               );
+  //             }
+  //             // for new post
+  //             else {
+  //               if (!this.postIdArray.includes(xyz.post.postId)) {
+  //                 this.Newpost.forEach((x: any) => {
+  //                   x.comments.forEach((z: any) => {
+  //                     this.newpostcommentDto = {
+  //                       id: z.id,
+  //                       postId: x.post.postId,
+  //                       commentId: z.commentId,
+  //                       message: z.message,
+  //                       contentType: z.contentType,
+  //                       userName: z.userName || z.userId,
+  //                       queryStatus: z.queryStatus,
+  //                       createdDate: z.createdDate,
+  //                       fromUserProfilePic: z.profilePic,
+  //                       body: z.body,
+  //                       to: z.toId,
+  //                       cc: z.cc,
+  //                       bcc: z.bcc,
+  //                       attachments: z.mediaAttachments,
+  //                       replies: [],
+  //                       sentiment: '',
+  //                       tags: z.tags,
+  //                     };
+  //                   });
+  //                   localStorage.setItem(
+  //                     'lastQueryId',
+  //                     this.newpostcommentDto.id.toString()
+  //                   );
+  //                   if (
+  //                     !this.newPostComment.find(
+  //                       (comment) => comment.post.postId === x.post.postId
+  //                     )
+  //                   ) {
+  //                     this.newPostComment.push(x);
+  //                   }
+  //                   this.newCmntReply = true;
+  //                   this.newPostComment.forEach((item: any) => {
+  //                     this.commentsArray = [];
+  //                     if (item.post.postId == x.post.postId) {
+  //                       if (
+  //                         !item.comments.find(
+  //                           (cmnt: any) => cmnt.id === this.newpostcommentDto.id
+  //                         )
+  //                       ) {
+  //                         item.comments.push(this.newpostcommentDto);
+  //                       }
+  //                       item.comments.forEach((cmnt: any) => {
+  //                         if (!this.commentsArray.includes(cmnt.id)) {
+  //                           this.commentsArray.push(cmnt);
+  //                         }
+  //                       });
+  //                       let groupedItems = this.commentsArray.reduce(
+  //                         (acc: any, item: any) => {
+  //                           const date = item.createdDate?.split('T')[0];
+  //                           if (!acc[date]) {
+  //                             acc[date] = [];
+  //                           }
+  //                           acc[date].push(item);
+  //                           return acc;
+  //                         },
+  //                         {}
+  //                       );
+  //                       item['groupedComments'] = Object.keys(groupedItems).map(
+  //                         (createdDate) => {
+  //                           return {
+  //                             createdDate,
+  //                             items: groupedItems[createdDate],
+  //                           };
+  //                         }
+  //                       );
+  //                     }
+  //                   });
+  //                 });
+  //               }
+  //             }
+  //           });
+  //           this.totalUnrespondedCmntCountByCustomer =
+  //             this.totalUnrespondedCmntCountByCustomer + 1;
+  //         }
+  //         // }
+  //       });
+  //     });
+  //   }
+  //   this.changeDetect.detectChanges();
+  // }
+
   updateCommentsDataListener() {
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
-    // const openedContentType = localStorage.getItem('contentType');
+  
     if (this.updatedComments.length > 0) {
-      this.updatedComments?.forEach((xyz: any) => {
-        xyz.comments.forEach((abc: any) => {
-          // if (openedContentType == abc.contentType) {
-          if (this.id == xyz.user.userId) {
-            this.commentDto = {
+      this.updatedComments.forEach((xyz: any) => {
+        if (this.id == xyz.user.userId) {
+          xyz.comments.forEach((abc: any) => {
+            const commentDto = {
               id: abc.id,
               wings: abc.wings,
               postId: xyz.post.postId,
@@ -798,129 +959,65 @@ export class ChannelComponent implements OnInit {
               dispositions: abc.dispositions,
               signalRGroupName: abc.signalRGroupName,
             };
-            localStorage.setItem('lastQueryId', this.commentDto.id.toString());
-            this.Comments?.forEach((item: any) => {
-              this.postIdArray.push(item.post.postId);
-              this.commentsArray = [];
-              // this.newPostComment= [];
-              if (this.postIdArray.includes(xyz.post.postId)) {
-                item.comments.push(this.commentDto);
-                item.comments.forEach((cmnt: any) => {
-                  this.commentsArray.push(cmnt);
-                });
-                let groupedItems = this.commentsArray.reduce(
-                  (acc: any, item: any) => {
-                    const date = item.createdDate?.split('T')[0];
-                    if (!acc[date]) {
-                      acc[date] = [];
-                    }
-                    acc[date].push(item);
-                    return acc;
-                  },
-                  {}
-                );
-                item['groupedComments'] = Object.keys(groupedItems).map(
-                  (createdDate) => {
-                    return {
-                      createdDate,
-                      items: groupedItems[createdDate],
-                    };
-                  }
-                );
-              }
-              // for new post
-              else {
-                if (!this.postIdArray.includes(xyz.post.postId)) {
-                  this.Newpost.forEach((x: any) => {
-                    x.comments.forEach((z: any) => {
-                      this.newpostcommentDto = {
-                        id: z.id,
-                        postId: x.post.postId,
-                        commentId: z.commentId,
-                        message: z.message,
-                        contentType: z.contentType,
-                        userName: z.userName || z.userId,
-                        queryStatus: z.queryStatus,
-                        createdDate: z.createdDate,
-                        fromUserProfilePic: z.profilePic,
-                        body: z.body,
-                        to: z.toId,
-                        cc: z.cc,
-                        bcc: z.bcc,
-                        attachments: z.mediaAttachments,
-                        replies: [],
-                        sentiment: '',
-                        tags: z.tags,
-                      };
-                    });
-                    localStorage.setItem(
-                      'lastQueryId',
-                      this.newpostcommentDto.id.toString()
-                    );
-                    if (
-                      !this.newPostComment.find(
-                        (comment) => comment.post.postId === x.post.postId
-                      )
-                    ) {
-                      this.newPostComment.push(x);
-                    }
-                    this.newCmntReply = true;
-                    this.newPostComment.forEach((item: any) => {
-                      this.commentsArray = [];
-                      if (item.post.postId == x.post.postId) {
-                        if (
-                          !item.comments.find(
-                            (cmnt: any) => cmnt.id === this.newpostcommentDto.id
-                          )
-                        ) {
-                          item.comments.push(this.newpostcommentDto);
-                        }
-                        item.comments.forEach((cmnt: any) => {
-                          if (!this.commentsArray.includes(cmnt.id)) {
-                            this.commentsArray.push(cmnt);
-                          }
-                        });
-                        let groupedItems = this.commentsArray.reduce(
-                          (acc: any, item: any) => {
-                            const date = item.createdDate?.split('T')[0];
-                            if (!acc[date]) {
-                              acc[date] = [];
-                            }
-                            acc[date].push(item);
-                            return acc;
-                          },
-                          {}
-                        );
-                        item['groupedComments'] = Object.keys(groupedItems).map(
-                          (createdDate) => {
-                            return {
-                              createdDate,
-                              items: groupedItems[createdDate],
-                            };
-                          }
-                        );
-                      }
-                    });
-                  });
-                }
+  
+            localStorage.setItem('lastQueryId', commentDto.id.toString());
+            
+            let foundPost = false;
+  
+            this.Comments.forEach((item: any) => {
+              if (item.post.postId === xyz.post.postId) {
+                foundPost = true;
+                item.comments.push(commentDto);
+                item.groupedComments = this.groupCommentsByDate(item.comments);
+                this.totalUnrespondedCmntCountByCustomer += 1;
               }
             });
-            this.totalUnrespondedCmntCountByCustomer =
-              this.totalUnrespondedCmntCountByCustomer + 1;
-          }
-          // }
-        });
+  
+            if (!foundPost) {
+              this.Newpost.forEach((x: any) => {
+                if (x.post.postId === xyz.post.postId) {
+                  x.comments.push(commentDto);
+                  this.newPostComment.push(x);
+                  this.newCmntReply = true;
+                  x.groupedComments = this.groupCommentsByDate(x.comments);
+                  this.totalUnrespondedNewPostCmntCountByCustomer += 1;
+                }
+              });
+            }
+  
+            
+          });
+        }
       });
     }
+  
     this.changeDetect.detectChanges();
   }
+  
+  groupCommentsByDate(comments: any[]) {
+    const groupedItems = comments.reduce((acc: any, item: any) => {
+      const date = item.createdDate?.split('T')[0];
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(item);
+      return acc;
+    }, {});
+  
+    return Object.keys(groupedItems).map((createdDate) => ({
+      createdDate,
+      items: groupedItems[createdDate],
+    }));
+  }
+
+  
   updateMessagesDataListener() {
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
-    // const openedContentType = localStorage.getItem('contentType');
+    const skillSlug = localStorage.getItem('skillSlug');
     this.updatedMessages.forEach((xyz: any) => {
-      // if (openedContentType == xyz.contentType) {
+      if (skillSlug == xyz.skillSlug) {
       if (this.id == xyz.fromId) {
         this.messageDto = {
           id: xyz.id,
@@ -942,28 +1039,72 @@ export class ChannelComponent implements OnInit {
           customerSocailProfileId: 0,
           profileId: xyz.profileId,
           profilePageId: xyz.profilePageId,
+          wings:xyz.wings,
+          signalRGroupName:xyz.signalRGroupName,
+          skillSlug:xyz.skillSlug,
         };
         localStorage.setItem('lastQueryId', this.messageDto.id.toString());
-        this.messageOrDM.unshift(this.messageDto);
-        this.messagesArray.unshift(this.messageDto);
-        let groupedItems = this.messagesArray.reduce((acc: any, item: any) => {
-          const date = item.createdDate?.split('T')[0];
-          if (!acc[date]) {
-            acc[date] = [];
-          }
-          acc[date].push(item);
-          return acc;
-        }, {});
-        this.groupedMessages = Object.keys(groupedItems).map((createdDate) => {
-          return {
-            createdDate,
-            items: groupedItems[createdDate],
-          };
-        });
-        this.totalUnrespondedMsgCountByCustomer =
-          this.totalUnrespondedMsgCountByCustomer + 1;
+        if(this.messageDto.contentType == 'TTR' ){
+          this.TwitterTweets.unshift(this.messageDto);
+          this.commentsArray.unshift(this.messageDto);
+          let groupedItems = this.commentsArray.reduce((acc: any, item: any) => {
+            const date = item.createdDate?.split('T')[0];
+            if (!acc[date]) {
+              acc[date] = [];
+            }
+            acc[date].push(item);
+            return acc;
+          }, {});
+          this.groupedTweets = Object.keys(groupedItems).map((createdDate) => {
+            return {
+              createdDate,
+              items: groupedItems[createdDate],
+            };
+          });
+          this.totalUnrespondedTweetCountByCustomer =
+            this.totalUnrespondedTweetCountByCustomer + 1;
+        } else if (this.messageDto.contentType == 'TM'){
+          this.TwitterMentions.unshift(this.messageDto);
+          this.mentionsArray.unshift(this.messageDto);
+          let groupedItems = this.mentionsArray.reduce((acc: any, item: any) => {
+            const date = item.createdDate?.split('T')[0];
+            if (!acc[date]) {
+              acc[date] = [];
+            }
+            acc[date].push(item);
+            return acc;
+          }, {});
+          this.groupedMentions = Object.keys(groupedItems).map((createdDate) => {
+            return {
+              createdDate,
+              items: groupedItems[createdDate],
+            };
+          });
+          this.totalUnrespondedMentionCountByCustomer =
+            this.totalUnrespondedMentionCountByCustomer + 1;
+        } else {
+          this.messageOrDM.unshift(this.messageDto);
+          this.messagesArray.unshift(this.messageDto);
+          let groupedItems = this.messagesArray.reduce((acc: any, item: any) => {
+            const date = item.createdDate?.split('T')[0];
+            if (!acc[date]) {
+              acc[date] = [];
+            }
+            acc[date].push(item);
+            return acc;
+          }, {});
+          this.groupedMessages = Object.keys(groupedItems).map((createdDate) => {
+            return {
+              createdDate,
+              items: groupedItems[createdDate],
+            };
+          });
+          this.totalUnrespondedMsgCountByCustomer =
+            this.totalUnrespondedMsgCountByCustomer + 1;
+        }
+        
       }
-      // }
+      }
     });
     this.changeDetect.detectChanges();
   }
@@ -1053,6 +1194,56 @@ export class ChannelComponent implements OnInit {
         }
       }
     });
+
+    this.TwitterMentions?.forEach((tm: any) => {
+      if (tm.id == this.addTags.feedId) {
+        if (this.addTags.type == 'Tag') {
+          if (tm.tags.length == 0) {
+            tm.tags.push(this.addTags);
+          } else if (tm.tags.length > 0) {
+            const tag = tm.tags.find(
+              (x: any) => x.name == this.addTags.tagName
+            );
+            if (tag != null || tag != undefined) {
+              const index = tm.tags.indexOf(tag);
+              if (index !== -1) {
+                tm.tags.splice(index, 1);
+              }
+            } else {
+              tm.tags.push(this.addTags);
+            }
+          }
+        }
+        if (this.addTags.type == 'Sentiment') {
+          tm.sentiment = this.addTags;
+        }
+      }
+    });
+
+    this.TwitterTweets?.forEach((ttr: any) => {
+      if (ttr.id == this.addTags.feedId) {
+        if (this.addTags.type == 'Tag') {
+          if (ttr.tags.length == 0) {
+            ttr.tags.push(this.addTags);
+          } else if (ttr.tags.length > 0) {
+            const tag = ttr.tags.find(
+              (x: any) => x.name == this.addTags.tagName
+            );
+            if (tag != null || tag != undefined) {
+              const index = ttr.tags.indexOf(tag);
+              if (index !== -1) {
+                ttr.tags.splice(index, 1);
+              }
+            } else {
+              ttr.tags.push(this.addTags);
+            }
+          }
+        }
+        if (this.addTags.type == 'Sentiment') {
+          ttr.sentiment = this.addTags;
+        }
+      }
+    });
     this.changeDetect.detectChanges();
   }
   removeTagDataListener() {
@@ -1096,6 +1287,26 @@ export class ChannelComponent implements OnInit {
         }
       }
     });
+
+    this.TwitterMentions?.forEach((tm: any) => {
+      if (tm.id == this.removeTags.feedId) {
+        var tag = tm.tags.find((x: any) => x.name == this.removeTags.tagName);
+        const index = tm.tags.indexOf(tag);
+        if (index !== -1) {
+          tm.tags.splice(index, 1);
+        }
+      }
+    });
+
+    this.TwitterTweets?.forEach((ttr: any) => {
+      if (ttr.id == this.removeTags.feedId) {
+        var tag = ttr.tags.find((x: any) => x.name == this.removeTags.tagName);
+        const index = ttr.tags.indexOf(tag);
+        if (index !== -1) {
+          ttr.tags.splice(index, 1);
+        }
+      }
+    });
     this.changeDetect.detectChanges();
   }
   updateQueryStatusDataListener() {
@@ -1128,6 +1339,22 @@ export class ChannelComponent implements OnInit {
       this.messageOrDM?.forEach((msg: any) => {
         if (msg.id == this.queryStatus.queryId) {
           msg.queryStatus = this.queryStatus.queryStatus;
+        }
+      });
+    }
+
+    if (this.TwitterMentions) {
+      this.TwitterMentions?.forEach((tm: any) => {
+        if (tm.id == this.queryStatus.queryId) {
+          tm.queryStatus = this.queryStatus.queryStatus;
+        }
+      });
+    }
+
+    if (this.TwitterTweets) {
+      this.TwitterTweets?.forEach((ttr: any) => {
+        if (ttr.id == this.queryStatus.queryId) {
+          ttr.queryStatus = this.queryStatus.queryStatus;
         }
       });
     }
@@ -1192,6 +1419,20 @@ export class ChannelComponent implements OnInit {
         if (msg.id == this.newReply.commentId) {
           msg.replies.push(this.newReply);
           msg.queryStatus = this.newReply.queryStatus;
+        }
+      });
+
+      this.TwitterMentions?.forEach((tm: any) => {
+        if (tm.id == this.newReply.commentId) {
+          tm.replies.push(this.newReply);
+          tm.queryStatus = this.newReply.queryStatus;
+        }
+      });
+
+      this.TwitterTweets?.forEach((ttr: any) => {
+        if (ttr.id == this.newReply.commentId) {
+          ttr.replies.push(this.newReply);
+          ttr.queryStatus = this.newReply.queryStatus;
         }
       });
     }
@@ -1579,6 +1820,34 @@ export class ChannelComponent implements OnInit {
         this.userProfileId = this.userInformation.id;
       }
     });
+
+    this.TwitterMentions?.forEach((tm: any) => {
+      if (tm.id == id) {
+        // show mentioned reply
+        this.show = true;
+        this.mentionedCommentOrMessage = tm.msgText;
+        this.mentionedCommentOrMessageId = tm.id;
+        this.platform = this.platform;
+        this.postType = tm.contentType;
+        this.profileId = this.profileInformation.profile_Id;
+        this.profilePageId = this.profileInformation.page_Id;
+        this.userProfileId = this.userInformation.id;
+      }
+    });
+
+    this.TwitterTweets?.forEach((ttr: any) => {
+      if (ttr.id == id) {
+        // show mentioned reply
+        this.show = true;
+        this.mentionedCommentOrMessage = ttr.msgText;
+        this.mentionedCommentOrMessageId = ttr.id;
+        this.platform = this.platform;
+        this.postType = ttr.contentType;
+        this.profileId = this.profileInformation.profile_Id;
+        this.profilePageId = this.profileInformation.page_Id;
+        this.userProfileId = this.userInformation.id;
+      }
+    });
   }
   closeMentionedReply() {
     this.show = false;
@@ -1588,6 +1857,8 @@ export class ChannelComponent implements OnInit {
     this.ImageArray = [];
     this.show = false;
     this.textarea.nativeElement.value = '';
+    const dataTransfer = new DataTransfer();
+    this.fileInput.nativeElement.files = dataTransfer.files;
     this.text = '';
     this.mentionedCommentOrMessageId = 0;
     this.isGifSelected = false;
@@ -1796,6 +2067,60 @@ export class ChannelComponent implements OnInit {
             });
         } else if (msg.tags.length > 0) {
           const value = msg.tags.find((x: any) => x.name == tagName);
+          if (value != null || value != undefined) {
+            this.removeTagFromFeed(comId, tagName, platform);
+          } else {
+            this.commondata
+              .InsertTag(this.insertTagsForFeedDto)
+              .subscribe((res: any) => {
+                this.reloadComponent('ApplyTag');
+                this.activeTag = true;
+                this.checkTag = true;
+              });
+          }
+        }
+      }
+    });
+
+    this.TwitterMentions?.forEach((tm: any) => {
+      if (tm.id == comId) {
+        if (tm.tags.length == 0) {
+          this.commondata
+            .InsertTag(this.insertTagsForFeedDto)
+            .subscribe((res: any) => {
+              this.reloadComponent('ApplyTag');
+              this.activeTag = true;
+              this.checkTag = true;
+            });
+        } else if (tm.tags.length > 0) {
+          const value = tm.tags.find((x: any) => x.name == tagName);
+          if (value != null || value != undefined) {
+            this.removeTagFromFeed(comId, tagName, platform);
+          } else {
+            this.commondata
+              .InsertTag(this.insertTagsForFeedDto)
+              .subscribe((res: any) => {
+                this.reloadComponent('ApplyTag');
+                this.activeTag = true;
+                this.checkTag = true;
+              });
+          }
+        }
+      }
+    });
+
+    this.TwitterTweets?.forEach((ttr: any) => {
+      if (ttr.id == comId) {
+        if (ttr.tags.length == 0) {
+          this.commondata
+            .InsertTag(this.insertTagsForFeedDto)
+            .subscribe((res: any) => {
+              this.reloadComponent('ApplyTag');
+              this.activeTag = true;
+              this.checkTag = true;
+            });
+        } else if (ttr.tags.length > 0) {
+          const value = ttr.tags.find((x: any) => x.name == tagName);
           if (value != null || value != undefined) {
             this.removeTagFromFeed(comId, tagName, platform);
           } else {

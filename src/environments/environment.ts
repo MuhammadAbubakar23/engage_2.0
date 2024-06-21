@@ -34,6 +34,7 @@ export const environment = {
   KemediaBaseUrl: 'https://kemedia.360scrm.com/api/',
   KescrmBaseUrl: 'https://kescrm.360scrm.com/',
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
+
   // For KE
   IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
   CommonBaseUrl: 'https://comservices.enteract.live/api/',
@@ -41,9 +42,10 @@ export const environment = {
   ProfileBaseUrl: 'https://profiler.enteract.live/api/',
   ServiceBaseUrl: '',
   consoleBaseUrl: 'https://console.enteract.live/api/',
-  keReportsBaseUrl:'https://kereports.enteract.live/api/',
+  keReportsBaseUrl: 'https://kereports.enteract.live/api/',
   LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
   botBaseUrl:'',
+
   // For Jazz
   // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
   // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
@@ -53,6 +55,7 @@ export const environment = {
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // LinkedInBaseUrl:'',
+
   // For Total Parco
   // IdentityBaseUrl: 'https://tt_identity.enteract.live/api/',
   // CommonBaseUrl: 'https://ttcommon.enteract.live/api/',
@@ -61,11 +64,7 @@ export const environment = {
   // ServiceBaseUrl: '',
   //  ProfileBaseUrl: '',
   //  botBaseUrl:'',
-  // old Tppl
-  // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api/',
-  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',
-  // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
-  // consoleBaseUrl: 'https://tpplcons.360scrm.com/api/',
+
   // For Morinaga
   // IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
@@ -75,6 +74,7 @@ export const environment = {
   // ProfileBaseUrl: '',
   // botBaseUrl: '',
   // LinkedInBaseUrl:'',
+
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
@@ -84,7 +84,8 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-    // LinkedInBaseUrl:'',
+  // LinkedInBaseUrl:'',
+
   // For Jazz Rox
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
   // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
@@ -94,15 +95,18 @@ export const environment = {
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
+
   //for statging / Internal :companyId 650
   // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
-  // CommonBaseUrl: 'https://85b6-203-135-1-210.ngrok-free.app/api/',
+  // CommonBaseUrl: 'https://comrox.enteract.app/api/',
   // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://85b6-203-135-1-210.ngrok-free.app/',
+  // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://conrox.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // LinkedInBaseUrl: '',
+  // keReportsBaseUrl: '',
+
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
@@ -120,7 +124,7 @@ export const environment = {
       AllTeams: 'Teams/FetchAll', // new to review
       AddTeam: 'Accesses/Teams',
       TeamProperties: 'Accesses/Properties',
-      accessrole: 'Roles/NewPreviews', //"Permissions/role",
+      // accessrole: 'Roles/NewPreviews', //"Permissions/role",
       permissionrole: 'Roles/NewPreviews', //"Permissions/role",
       RolesPermissions: 'Roles/Fetch',
       permissions: 'Roles/Permissions',
@@ -142,6 +146,7 @@ export const environment = {
       deleteRoles: 'Permissions/Delete',
       ////// Later Align in Console/////
       defaultTags: 'Tags/GetTags',
+      getUserRoles: 'Roles/GetUserActor',
     },
     console: {
       AddUser: 'Users/CreateUser',
@@ -227,7 +232,7 @@ export const environment = {
       MarkAsComplete: 'Social/MarkAsCompleted',
       SaveAsCompleted: 'Social/SaveAsCompleted',
       LikedByAdmin: 'Social/LikeByAdmin',
-       QuickReplyList: 'Social/GetQuickReplyList',
+      QuickReplyList: 'Social/GetQuickReplyList',
       AssignQuerry: 'Query/AssignQuery',
       AgentsTeamList: 'Query/GetActiveAgent',
       AssignToAnotherAgent: 'Query/QueryAssignMultiUser',

@@ -38,11 +38,6 @@ export class AppComponent {
     private commonService: CommonDataService,
     private toaster: ToasterService,
     private spinnerService: NgxSpinnerService,
-   private cdr:ChangeDetectorRef,
-   private sendSkills: SkillsService,
-    private sendSkillIdsService: SkillIdsService,
-    private sendRulesGroupIdsService: RulesGroupIdsService,
-    private sendWings : GetWingsService
   ) {}
   remove(index: number) {
     this.toasters = this.toasters.filter((v, i) => i !== index);
