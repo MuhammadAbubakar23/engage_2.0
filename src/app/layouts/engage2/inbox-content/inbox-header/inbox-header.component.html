@@ -5,7 +5,7 @@
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation" *ngFor="let menu of inboxHeader">
           <button class="nav-link" [ngClass]="flag == menu.slug?'active':''"
-            (click)="update('all-inboxes/'+menu.slug+'/all')" type="button">{{menu.name}}
+            (click)="update('all-inboxes/'+menu.slug)" type="button">{{menu.name}}
             <span class="badge bg-white rounded-pill darkblue border" *ngIf="followUpCount>0 && menu.name =='Follow-Up'">{{followUpCount}}</span>
           </button>
         </li>

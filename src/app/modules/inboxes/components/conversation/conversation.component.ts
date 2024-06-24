@@ -22,6 +22,7 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { InsertTagInProfileFeedDto } from 'src/app/shared/Models/InsertTagaInProfileFeedDto';
+import { SearchFilterService } from 'src/app/services/SearchFilter/search-filter.service';
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
@@ -79,7 +80,8 @@ export class ConversationComponent implements OnInit {
     private storage: StorageService,
     private sendSkillId: SkillIdsService,
     private sendSkillSlug: SkillslugService,
-    private getSkillSlug: SkillslugService
+    private getSkillSlug: SkillslugService,
+    public searchFilterService:SearchFilterService
   ) {
     this.criteria = {
       property: 'createdDate',
@@ -232,6 +234,16 @@ export class ConversationComponent implements OnInit {
         }
       }
     }, 1000);
+    this.userName = this.searchFilterService.userNameFilter;
+    this.user = this.searchFilterService.userFilter;
+    this.text = this.searchFilterService.textFilter;
+    this.include = this.searchFilterService.includeFilter;
+    this.notInclude = this.searchFilterService.notIncludeFilter;
+    this.fromDate = this.searchFilterService.fromDateFilter;
+    this.toDate = this.searchFilterService.toDateFilter;
+    this.isAttachment=this.searchFilterService.isAttachmentFilter;
+    this.blueTick = this.searchFilterService.blueTick;
+    if(this.searchFilterService.fromDateFilter != null){ this.searchForm.reset(); }
   }
   wingsList: any[] = [];
   totalPageNumbers: any;
@@ -405,6 +417,15 @@ export class ConversationComponent implements OnInit {
         skills: this.skillSlug,
       };
     }
+    this.searchFilterService.setfromDateFilter(this.fromDate);
+    this.searchFilterService.setToDateFilter(this.toDate);
+    this.searchFilterService.setUserNameFilter(this.userName);
+    this.searchFilterService.setUserFilter(this.user);
+    this.searchFilterService.setTextFilter(this.text);
+    this.searchFilterService.setIncludeFilter(this.include);
+    this.searchFilterService.setNotIncludeFilter(this.notInclude);
+    this.searchFilterService.setisAttachmentFilter(this.searchForm.get('isAttachment')?.value);
+    this.searchFilterService.setBlueTick(this.blueTick);
     this.SpinnerService.show();
     this.changeDetect.detectChanges();
     // localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
@@ -574,6 +595,8 @@ export class ConversationComponent implements OnInit {
         this.datePipe.transform(oneYearFromToDate, 'YYYY-MM-dd') +
         'T00:00:00.000Z';
     }
+    this.searchFilterService.setfromDateFilter(this.fromDate);
+    this.searchFilterService.setToDateFilter(this.toDate);
     this.getConversationList();
   }
   hasAttachment(value: boolean) {
@@ -626,7 +649,7 @@ export class ConversationComponent implements OnInit {
     if (rule) {
       newMsg.skillSlug = rule.skilSlug;
       // Find existing conversation in the list
-      const existingConversation = this.ConversationList.find(
+      const existingConversation = this.ConversationList?.find(
         (obj: any) =>
           obj.user === newMsg.user && obj.skillSlug === newMsg.skillSlug
       );
