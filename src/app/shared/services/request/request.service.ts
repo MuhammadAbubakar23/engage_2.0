@@ -26,6 +26,7 @@ export class RequestService {
     //opt.params =
   }
   private createCompleteRoute = (route: string, envAddress: string, routeparams?: any) => {
+    debugger
     if (routeparams === undefined) {
       routeparams = "";
     }

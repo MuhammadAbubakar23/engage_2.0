@@ -20,9 +20,11 @@ export class AppComponent {
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHandler(event: Event) {
     if (!this.isInternalNavigation()) {
+      debugger
       // Clear local storage here
-      localStorage.clear();
-       localStorage.removeItem('token')
+      // localStorage.clear();
+      //  localStorage.removeItem('token')
+      alert('You are already logged in')
     }
   }
   private isInternalNavigation(): boolean {

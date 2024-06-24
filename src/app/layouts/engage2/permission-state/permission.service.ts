@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { RequestService } from 'src/app/shared/services/request/request.service';
@@ -23,7 +22,7 @@ export class PermissionService {
     if(permissions != null && permissions?.priviledge?.length>=1) 
       return of(permissions);
     else
-      return this.reqs.post<PermissionModel>(type, {"Emerging":"permission", "Inline":true}).pipe(
+      return this.reqs.post<PermissionModel>(type, {"ActorId":51, "Inline":true}).pipe(
         map((response: PermissionModel) => {
           //if(typeof response === "undefined" || response === null) return new PermissionModel();
           //else 
