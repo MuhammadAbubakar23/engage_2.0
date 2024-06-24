@@ -80,7 +80,7 @@ export class RoleMenuComponent implements OnInit {
     // })
   }
 
-  assignedProfile = localStorage.getItem('assignedProfile');
+  assignedProfile = sessionStorage.getItem('assignedProfile');
   opensidebar() {
     this.activeMenu = this._route.url.split('/')[1];
     this.sidebar.sendsidebarvalue(this.activeMenu);
@@ -90,9 +90,9 @@ export class RoleMenuComponent implements OnInit {
     this.activeChannel = menuLink.split('/')[1];
 
     if (
-      localStorage.getItem('assignedProfile') == null ||
-      localStorage.getItem('assignedProfile') == '' ||
-      localStorage.getItem('assignedProfile') == undefined
+      sessionStorage.getItem('assignedProfile') == null ||
+      sessionStorage.getItem('assignedProfile') == '' ||
+      sessionStorage.getItem('assignedProfile') == undefined
     ) {
       this._route.navigateByUrl('/' + menuLink);
     } else {

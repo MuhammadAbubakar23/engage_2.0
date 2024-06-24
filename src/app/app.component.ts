@@ -22,8 +22,8 @@ export class AppComponent {
     if (!this.isInternalNavigation()) {
       debugger
       // Clear local storage here
-      // localStorage.clear();
-      //  localStorage.removeItem('token')
+      // sessionStorage.clear();
+      //  sessionStorage.removeItem('token')
       alert('You are already logged in')
     }
   }
@@ -60,17 +60,17 @@ export class AppComponent {
     }
   }
   A_Block() {
-    if (localStorage.getItem('signalRConnectionId')) {
+    if (sessionStorage.getItem('signalRConnectionId')) {
       if (this.signalRService.hubconnection == undefined) {
         this.spinnerService.show();
         this.commonService.SignOut().subscribe(
           () => {
-            localStorage.clear();
+            sessionStorage.clear();
             this.router.navigateByUrl('/login');
             this.spinnerService.hide();
           },
           (error) => {
-            localStorage.clear();
+            sessionStorage.clear();
             this.router.navigateByUrl('/login');
             this.spinnerService.hide();
           }

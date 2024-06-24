@@ -114,9 +114,9 @@ export class InboxHeaderComponent implements OnInit {
   update(menuLink: any) {
     this.flag = this._route.url.split('/')[2];
     if (
-      localStorage.getItem('assignedProfile') == null ||
-      localStorage.getItem('assignedProfile') == '' ||
-      localStorage.getItem('assignedProfile') == undefined
+      sessionStorage.getItem('assignedProfile') == null ||
+      sessionStorage.getItem('assignedProfile') == '' ||
+      sessionStorage.getItem('assignedProfile') == undefined
     ) {
       this._route.navigateByUrl('/' + menuLink);
     } else {

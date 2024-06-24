@@ -179,7 +179,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
     this.clearInputField();
   }
   toggle(child: string, cmntId: any) {
-    if (localStorage.getItem('child') == child) {
+    if (sessionStorage.getItem('child') == child) {
       this.toggleService.addTogglePanel('');
     } else {
       this.toggleService.addTogglePanel(child);
@@ -201,7 +201,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
           this.show = true;
           // populate comment data
           this.youtubecommentId = comment.id;
-          this.agentId = localStorage.getItem('agentId') || '{}';
+          this.agentId = sessionStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.postType = comment.contentType;
         }
@@ -327,7 +327,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
     // this.insertTagsForFeedDto.feedId = comId;
     // // this.insertTagsForFeedDto.tagId = id;
     // this.insertTagsForFeedDto.feedType = 'YC';
-    // this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
+    // this.insertTagsForFeedDto.userId = Number(sessionStorage.getItem('agentId'));
     this.YoutubeData.forEach((abc: any) => {
       abc.comments.forEach((comment: any) => {
         if (comment.id == comId) {
@@ -375,7 +375,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
     // // this.insertTagsForFeedDto.feedId = comId;
     // // this.insertTagsForFeedDto.tagId = id;
     // this.insertTagsForFeedDto.feedType = 'YC';
-    // this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
+    // this.insertTagsForFeedDto.userId = Number(sessionStorage.getItem('agentId'));
     this.commondata.RemoveTag(this.insertTagsForFeedDto).subscribe(
       (res: any) => {
         this.getYoutubeData();
@@ -393,7 +393,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
       id: comId,
       type: '',
       plateForm: 'Facebook',
-      profileId: Number(localStorage.getItem('profileId')),
+      profileId: Number(sessionStorage.getItem('profileId')),
       wings: this.getWing.wings,
       skillSlug: this.getSkillSlug.skillSlug[0],
       connectionId: this.getConnectionId.connectionId

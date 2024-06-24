@@ -28,8 +28,8 @@ export class SignalRService {
   temporaryListObject: any;
   temporaryCommentObject: any;
   temporaryDMObject: any;
-  token = localStorage.getItem('token');
-  signalRStatus = localStorage.getItem('signalRStatus');
+  token = sessionStorage.getItem('token');
+  signalRStatus = sessionStorage.getItem('signalRStatus');
   companyId: number = 651;
   baseUrl: string = '';
   public hubconnection!: signalR.HubConnection;
@@ -78,7 +78,7 @@ export class SignalRService {
     let team = this.storage.retrive('nocompass', 'O').local;
     const options: IHttpConnectionOptions = {
       accessTokenFactory: () => {
-        return 'Bearer ' + localStorage.getItem('token');
+        return 'Bearer ' + sessionStorage.getItem('token');
       },
       headers: { 'X-Super-Team': JSON.stringify(this.companyId) },
       // headers: { "X-Super-Team": JSON.stringify(team.id) }
@@ -132,7 +132,7 @@ export class SignalRService {
     // let team = this.storage.retrive("nocompass", "O").local;
     // const options: IHttpConnectionOptions = {
     //   accessTokenFactory: () => {
-    //     return 'Bearer ' + localStorage.getItem('token');
+    //     return 'Bearer ' + sessionStorage.getItem('token');
     //   },
     //   headers: { "X-Super-Team": JSON.stringify(this.companyId) }
     //   // headers: { "X-Super-Team": JSON.stringify(team.id) }
@@ -266,12 +266,12 @@ export class SignalRService {
   };
   public getConnectionId = () => {
     let obj={
-      'Bearer': localStorage.getItem('token') ,
+      'Bearer': sessionStorage.getItem('token') ,
       'companyId':this.companyId
     }
     this.hubconnection.invoke('GetConnectionId',obj).then((data) => {
       this.connectionId = data;
-      localStorage.setItem('signalRConnectionId', this.connectionId)
+      sessionStorage.setItem('signalRConnectionId', this.connectionId)
       this.sendConnectionId.sendConnectionId(this.connectionId)
     });
   };

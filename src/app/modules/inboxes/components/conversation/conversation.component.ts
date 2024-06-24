@@ -106,8 +106,8 @@ export class ConversationComponent implements OnInit {
   currentUrl: string = '';
   FlagForAssignToMe: string = '';
   ngOnInit(): void {
-    this.wings = this.getWing.wings || localStorage.getItem('defaultWings');
-    const date_fillter = localStorage.getItem('datefillter');
+    this.wings = this.getWing.wings || sessionStorage.getItem('defaultWings');
+    const date_fillter = sessionStorage.getItem('datefillter');
     if (date_fillter) {
       this.filterDtolocal = JSON.parse(date_fillter);
     }
@@ -411,7 +411,7 @@ export class ConversationComponent implements OnInit {
     }
     this.SpinnerService.show();
     this.changeDetect.detectChanges();
-    // localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
+    // sessionStorage.setItem('datefillter',JSON.stringify(this.filterDto))
     this.commondata.GetConversationList(this.filterDto).subscribe(
       (res: any) => {
         if (Object.keys(res).length === 0) {
@@ -483,7 +483,7 @@ export class ConversationComponent implements OnInit {
       },
       (error) => {
         if (error.message.includes('401')) {
-          localStorage.clear();
+          sessionStorage.clear();
           this.router.navigateByUrl('/login');
           this.SpinnerService.hide();
         } else {
@@ -592,11 +592,11 @@ export class ConversationComponent implements OnInit {
     this.isAttachment = !this.isAttachment;
   }
   updateListDataListener(res: any) {
-    const username = localStorage.getItem('username');
+    const username = sessionStorage.getItem('username');
     if (this.searchUser == '') {
       if (this.currentUrl.split('/')[2] === 'focused') {
         res.forEach((newMsg: any) => {
-          localStorage.setItem('username', newMsg.userName);
+          sessionStorage.setItem('username', newMsg.userName);
           if (newMsg?.profileStatus?.length == 0) {
             if (this.platform === newMsg.platform && !this.isAttachment) {
               this.updateConversationList(newMsg);
@@ -731,8 +731,8 @@ export class ConversationComponent implements OnInit {
     this.to = 0;
     this.from = 0;
     this.searchUser = '';
-    localStorage.removeItem('username');
-    localStorage.removeItem('datefillter');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('datefillter');
     this.getConversationList();
   }
   updatevalue(
@@ -747,14 +747,14 @@ export class ConversationComponent implements OnInit {
     skillId: any,
     skillSlug: string
   ) {
-    localStorage.setItem('previousUrl', this.currentUrl);
+    sessionStorage.setItem('previousUrl', this.currentUrl);
     this.sendSkillSlug.sendSkillSlug([skillSlug]);
     if (
       this.currentUrl.split('/')[2] == 'focused' ||
       this.currentUrl.split('/')[2] == 'follow_up'
     ) {
       this.assignQuerryDto = {
-        userId: Number(localStorage.getItem('agentId')),
+        userId: Number(sessionStorage.getItem('agentId')),
         profileId: profileId,
         agentIds: 'string',
         platform: platform,
@@ -772,11 +772,11 @@ export class ConversationComponent implements OnInit {
           this.getWing.sendWings(wing);
           this.fetchId.setOption(id);
           this.fetchposttype.sendPostType(postType);
-          localStorage.setItem('profileId', profileId);
-          localStorage.setItem('assignedProfile', profileId);
+          sessionStorage.setItem('profileId', profileId);
+          sessionStorage.setItem('assignedProfile', profileId);
           this.router.navigateByUrl(this.currentUrl + '/responder/' + platform);
           this.lodeModuleService.updateModule('responder');
-          localStorage.setItem('skillSlug', skillSlug);
+          sessionStorage.setItem('skillSlug', skillSlug);
           if (this.from < this.TotalUnresponded) {
             this.pageNumber = 1;
             this.pageSize = 20;
@@ -798,11 +798,11 @@ export class ConversationComponent implements OnInit {
       this.getWing.sendWings(wing);
       this.fetchId.setOption(id);
       this.fetchposttype.sendPostType(postType);
-      localStorage.setItem('profileId', profileId);
-      localStorage.setItem('assignedProfile', profileId);
+      sessionStorage.setItem('profileId', profileId);
+      sessionStorage.setItem('assignedProfile', profileId);
       this.router.navigateByUrl(this.currentUrl + '/responder/' + platform);
       this.lodeModuleService.updateModule('responder');
-      localStorage.setItem('skillSlug', skillSlug);
+      sessionStorage.setItem('skillSlug', skillSlug);
       this.SpinnerService.hide();
     } else {
       this.SpinnerService.show();
@@ -812,11 +812,11 @@ export class ConversationComponent implements OnInit {
       this.getWing.sendWings(wing);
       this.fetchId.setOption(id);
       this.fetchposttype.sendPostType(postType);
-      localStorage.setItem('profileId', profileId);
+      sessionStorage.setItem('profileId', profileId);
       this.router.navigateByUrl(this.currentUrl + '/responder/' + platform);
       this.SpinnerService.hide();
       this.lodeModuleService.updateModule('responder');
-      localStorage.setItem('skillSlug', skillSlug);
+      sessionStorage.setItem('skillSlug', skillSlug);
     }
   }
   AlterMsg: any;
@@ -1124,7 +1124,7 @@ export class ConversationComponent implements OnInit {
     this.advanceSearch = !this.advanceSearch;
   }
   CloseAdvanceSearch() {
-    localStorage.removeItem('datefillter');
+    sessionStorage.removeItem('datefillter');
     this.advanceSearch = false;
   }
   ResetSearchForm() {
@@ -1135,7 +1135,7 @@ export class ConversationComponent implements OnInit {
     this.notInclude = '';
     this.include = '';
     this.getConversationList();
-    localStorage.removeItem('datefillter');
+    sessionStorage.removeItem('datefillter');
   }
   anyTimeDropdown = false;
   showDateRange = false;

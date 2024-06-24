@@ -201,12 +201,12 @@ export class CommonDataService {
   activeChannel: any
   constructor(private http: HttpClient) {
     this.activeChannel = window.location.origin
-    localStorage.setItem('activeChannel', this.activeChannel)
+    sessionStorage.setItem('activeChannel', this.activeChannel)
   }
   gethttpOptions() {
     let headers_object = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': "Bearer " + localStorage.getItem('token')
+      'Authorization': "Bearer " + sessionStorage.getItem('token')
     });
     let httpOptions = {
       headers: headers_object

@@ -74,7 +74,7 @@ export class ResponderRightSidebarMenuComponent implements OnInit {
     // Array.from(document.querySelectorAll('[data-bs-toggle]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
 
-    let parent = localStorage.getItem('parent');
+    let parent = sessionStorage.getItem('parent');
     if (parent != 'undefined') {
       this.subscription = this.sharedService.getMessage().subscribe((msg) => {
         this.dynamicPath = msg;
@@ -93,7 +93,7 @@ export class ResponderRightSidebarMenuComponent implements OnInit {
   toggleRightBar(child: string) {
 
     // this.parentFun.emit();
-    if (localStorage.getItem('child') == child) {
+    if (sessionStorage.getItem('child') == child) {
       //  this.toggleRightPanelParent.emit();
       this.toggleService.addTogglePanel('');
     } else {

@@ -28,6 +28,6 @@ export class AuthService {
     return this.http.get(this.IdentityBaseUrl+'User/SendVarificationCode', form)
   }
 gettoken(){  
-  return !!localStorage.getItem("Login");  
+  return !!sessionStorage.getItem("Login");  
   } 
 }

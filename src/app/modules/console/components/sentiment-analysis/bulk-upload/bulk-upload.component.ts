@@ -47,20 +47,20 @@ export class BulkUploadComponent implements OnInit, AfterViewInit {
   }
   ngOnInit(): void {
     this.senService.login().subscribe((token: any) => {
-      localStorage.setItem("token", token.access);
+      sessionStorage.setItem("token", token.access);
     });
     this.subscription = this.toggleService
       .getTogglePanel()
       .subscribe((msg3) => {
         if (msg3) {
           this.rightcontainer?.clear();
-          localStorage.setItem('child', msg3);
+          sessionStorage.setItem('child', msg3);
           this.showPanel = true;
           this.loadComponent('', msg3);
         } else {
           this.showPanel = false;
           this.rightcontainer?.clear();
-          localStorage.setItem('child', '');
+          sessionStorage.setItem('child', '');
         }
       });
   }
@@ -70,13 +70,13 @@ export class BulkUploadComponent implements OnInit, AfterViewInit {
       .subscribe((msg3) => {
         if (msg3) {
           this.rightcontainer?.clear();
-          localStorage.setItem('child', msg3);
+          sessionStorage.setItem('child', msg3);
           this.showPanel = true;
           this.loadComponent('', msg3);
         } else {
           this.showPanel = false;
           this.rightcontainer?.clear();
-          localStorage.setItem('child', '');
+          sessionStorage.setItem('child', '');
         }
       });
   }

@@ -75,7 +75,7 @@ export class DashboardDesignerComponent implements OnInit {
   ngOnInit(): void {
 
     this.reportService.login().subscribe((token: any) => {
-      localStorage.setItem("token", token.access);
+      sessionStorage.setItem("token", token.access);
       this.reportService.reportslistApi().subscribe((res: any) => {
         this.reports = res;
       });

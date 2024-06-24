@@ -103,8 +103,8 @@ export class LoginComponent implements OnInit {
           this.stor.store('token', this.loginResponse.accessToken);
           this.stor.store('main', this.loginResponse);
           this.stor.store('nocompass', this.loginResponse?.roles[0]);
-          localStorage.setItem('agentId',  this.loginResponse.userId);
-          localStorage.setItem('agentName', this.loginResponse.username);
+          sessionStorage.setItem('agentId',  this.loginResponse.userId);
+          sessionStorage.setItem('agentName', this.loginResponse.username);
           
           // if(this.loginResponse?.actors?.length > 1){
           //   this.router.navigateByUrl('loginAs');
@@ -113,14 +113,14 @@ export class LoginComponent implements OnInit {
             try {
               this.commonService.UserLogin().subscribe(() => {
                 this.sendSkillIdsService.sendSkillIds(this.loginResponse?.skills);
-                localStorage.setItem('skills', this.loginResponse?.skills);
+                sessionStorage.setItem('skills', this.loginResponse?.skills);
       
                 this.commonService.GetSkills(this.loginResponse?.skills)
                   .subscribe((skillNames: any) => {
                     this.sendSkills.sendSkills(skillNames);
                     this.stor.store('skills', skillNames);
       
-                    // localStorage.setItem('skillSlug', skillNames[0]?.skilSlug);
+                    // sessionStorage.setItem('skillSlug', skillNames[0]?.skilSlug);
                     this.loginResponse?.roles.forEach((role: any) => {
                       var companyId = role.id;
                       
@@ -130,7 +130,7 @@ export class LoginComponent implements OnInit {
                           this.uniqueWings.push(wingName);
                         }
                         this.sendWings.sendWings(this.uniqueWings.toString());
-                        localStorage.setItem('defaultWings', this.uniqueWings.toString());
+                        sessionStorage.setItem('defaultWings', this.uniqueWings.toString());
 
                       const splitedRules = skill.rules.split(',')
       
@@ -241,14 +241,14 @@ export class LoginComponent implements OnInit {
   console.log(actorId)
     this.commonService.UserLogin().subscribe(() => {
       this.sendSkillIdsService.sendSkillIds(this.loginResponse?.skills);
-      localStorage.setItem('skills', this.loginResponse?.skills);
+      sessionStorage.setItem('skills', this.loginResponse?.skills);
 
       this.commonService.GetSkills(this.loginResponse?.skills)
         .subscribe((skillNames: any) => {
           this.sendSkills.sendSkills(skillNames);
           this.stor.store('skills', skillNames);
 
-          // localStorage.setItem('skillSlug', skillNames[0]?.skilSlug);
+          // sessionStorage.setItem('skillSlug', skillNames[0]?.skilSlug);
           this.loginResponse?.roles.forEach((role: any) => {
             var companyId = role.id;
             
@@ -258,7 +258,7 @@ export class LoginComponent implements OnInit {
                 this.uniqueWings.push(wingName);
               }
               this.sendWings.sendWings(this.uniqueWings.toString());
-              localStorage.setItem('defaultWings', this.uniqueWings.toString());
+              sessionStorage.setItem('defaultWings', this.uniqueWings.toString());
 
             const splitedRules = skill.rules.split(',')
 
@@ -346,8 +346,8 @@ export class LoginComponent implements OnInit {
         this.stor.store('token', res.accessToken);
         this.stor.store('main', res);
         this.stor.store('nocompass', res?.roles[0]);
-        localStorage.setItem('agentId', res.userId);
-        localStorage.setItem('agentName', res.username);
+        sessionStorage.setItem('agentId', res.userId);
+        sessionStorage.setItem('agentName', res.username);
 
         this.commonService.UserLogin().subscribe(() => {
           

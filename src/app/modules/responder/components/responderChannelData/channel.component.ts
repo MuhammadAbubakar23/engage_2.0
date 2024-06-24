@@ -533,7 +533,7 @@ export class ChannelComponent implements OnInit {
       .getUnRespondedCount()
       .subscribe((res) => {
         const assignedProfileId = Number(
-          localStorage.getItem('assignedProfile')
+          sessionStorage.getItem('assignedProfile')
         );
         if (
           (this.flag == 'focused' ||
@@ -693,7 +693,7 @@ export class ChannelComponent implements OnInit {
   }
   getComments(filter: FiltersDto) {
     if (this.id != null || undefined) {
-      localStorage.setItem('storeOpenedId', this.id);
+      sessionStorage.setItem('storeOpenedId', this.id);
       try {
         // this.spinner1running = true;
         // this.SpinnerService.show();
@@ -708,7 +708,7 @@ export class ChannelComponent implements OnInit {
               this.userInfoService.shareUserInformation(res.List[0].user);
               this.TotalCmntQueryCount = res.TotalQueryCount;
               this.pageName = this.Comments[0]?.post.profile.clientAppName;
-              localStorage.setItem(
+              sessionStorage.setItem(
                 'lastQueryId',
                 this.Comments[0].comments[0].id
               );
@@ -757,9 +757,9 @@ export class ChannelComponent implements OnInit {
   }
   // updateCommentsDataListener() {
   //   if (!this.id) {
-  //     this.id = localStorage.getItem('storeOpenedId') || '{}';
+  //     this.id = sessionStorage.getItem('storeOpenedId') || '{}';
   //   }
-  //   // const openedContentType = localStorage.getItem('contentType');
+  //   // const openedContentType = sessionStorage.getItem('contentType');
   //   if (this.updatedComments.length > 0) {
   //     this.updatedComments?.forEach((xyz: any) => {
   //       xyz.comments.forEach((abc: any) => {
@@ -799,7 +799,7 @@ export class ChannelComponent implements OnInit {
   //             dispositions: abc.dispositions,
   //             signalRGroupName: abc.signalRGroupName,
   //           };
-  //           localStorage.setItem('lastQueryId', this.commentDto.id.toString());
+  //           sessionStorage.setItem('lastQueryId', this.commentDto.id.toString());
   //           this.Comments?.forEach((item: any) => {
   //             this.postIdArray.push(item.post.postId);
   //             this.commentsArray = [];
@@ -854,7 +854,7 @@ export class ChannelComponent implements OnInit {
   //                       tags: z.tags,
   //                     };
   //                   });
-  //                   localStorage.setItem(
+  //                   sessionStorage.setItem(
   //                     'lastQueryId',
   //                     this.newpostcommentDto.id.toString()
   //                   );
@@ -918,7 +918,7 @@ export class ChannelComponent implements OnInit {
 
   updateCommentsDataListener() {
     if (!this.id) {
-      this.id = localStorage.getItem('storeOpenedId') || '{}';
+      this.id = sessionStorage.getItem('storeOpenedId') || '{}';
     }
   
     if (this.updatedComments.length > 0) {
@@ -960,7 +960,7 @@ export class ChannelComponent implements OnInit {
               signalRGroupName: abc.signalRGroupName,
             };
   
-            localStorage.setItem('lastQueryId', commentDto.id.toString());
+            sessionStorage.setItem('lastQueryId', commentDto.id.toString());
             
             let foundPost = false;
   
@@ -1013,9 +1013,9 @@ export class ChannelComponent implements OnInit {
   
   updateMessagesDataListener() {
     if (!this.id) {
-      this.id = localStorage.getItem('storeOpenedId') || '{}';
+      this.id = sessionStorage.getItem('storeOpenedId') || '{}';
     }
-    const skillSlug = localStorage.getItem('skillSlug');
+    const skillSlug = sessionStorage.getItem('skillSlug');
     this.updatedMessages.forEach((xyz: any) => {
       if (skillSlug == xyz.skillSlug) {
       if (this.id == xyz.fromId) {
@@ -1043,7 +1043,7 @@ export class ChannelComponent implements OnInit {
           signalRGroupName:xyz.signalRGroupName,
           skillSlug:xyz.skillSlug,
         };
-        localStorage.setItem('lastQueryId', this.messageDto.id.toString());
+        sessionStorage.setItem('lastQueryId', this.messageDto.id.toString());
         if(this.messageDto.contentType == 'TTR' ){
           this.TwitterTweets.unshift(this.messageDto);
           this.commentsArray.unshift(this.messageDto);
@@ -1440,7 +1440,7 @@ export class ChannelComponent implements OnInit {
   }
   async getMessages(filter: FiltersDto) {
     if (this.id != null || undefined) {
-      localStorage.setItem('storeOpenedId', this.id);
+      sessionStorage.setItem('storeOpenedId', this.id);
       // this.spinner1running = true;
       // this.SpinnerService.show();
       try {
@@ -1457,7 +1457,7 @@ export class ChannelComponent implements OnInit {
               this.pageName = res.List?.profile.clientAppName;
               this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
               this.TotalMsgQueryCount = res.TotalQueryCount;
-              localStorage.setItem('lastQueryId', this.messageOrDM[0].id);
+              sessionStorage.setItem('lastQueryId', this.messageOrDM[0].id);
               this.messagesArray = [];
               this.groupedMessages = [];
               this.messageOrDM.forEach((item: any) => {
@@ -1496,7 +1496,7 @@ export class ChannelComponent implements OnInit {
   }
   async getMentions(filter: FiltersDto) {
     if (this.id != null || undefined) {
-      localStorage.setItem('storeOpenedId', this.id);
+      sessionStorage.setItem('storeOpenedId', this.id);
       // this.spinner1running = true;
       // this.SpinnerService.show();
       try {
@@ -1516,7 +1516,7 @@ export class ChannelComponent implements OnInit {
               this.pageName = res.List?.profile.clientAppName;
               this.totalUnrespondedMentionCountByCustomer = res.TotalCount;
               this.TotalMentionQueryCount = res.TotalQueryCount;
-              localStorage.setItem('lastQueryId', this.TwitterMentions[0].id);
+              sessionStorage.setItem('lastQueryId', this.TwitterMentions[0].id);
               this.mentionsArray = [];
               this.groupedMentions = [];
               // if (this.TwitterTweets.length == 0) {
@@ -1560,7 +1560,7 @@ export class ChannelComponent implements OnInit {
   }
   async getTweets(filter: FiltersDto) {
     if (this.id != null || undefined) {
-      localStorage.setItem('storeOpenedId', this.id);
+      sessionStorage.setItem('storeOpenedId', this.id);
       // this.spinner1running = true;
       // this.SpinnerService.show();
       try {
@@ -1578,7 +1578,7 @@ export class ChannelComponent implements OnInit {
               this.TotalTweetQueryCount = res.TotalQueryCount;
               this.commentsArray = [];
               this.groupedTweets = [];
-              localStorage.setItem('lastQueryId', this.TwitterTweets[0].id);
+              sessionStorage.setItem('lastQueryId', this.TwitterTweets[0].id);
               this.TwitterTweets.forEach((item: any) => {
                 this.commentsArray.push(item);
                 let groupedItems = this.commentsArray.reduce(
@@ -1947,7 +1947,7 @@ export class ChannelComponent implements OnInit {
     this.quickReplySearchText = '';
   }
   toggle(child: string, cmntId: any) {
-    if (localStorage.getItem('child') == child) {
+    if (sessionStorage.getItem('child') == child) {
       this.toggleService.addTogglePanel('');
     } else {
       this.toggleService.addTogglePanel(child);
@@ -2179,7 +2179,7 @@ export class ChannelComponent implements OnInit {
       id: comId,
       type: type,
       plateForm: this.platform,
-      profileId: Number(localStorage.getItem('profileId')),
+      profileId: Number(sessionStorage.getItem('profileId')),
       wings: this.getWing.wings,
       skillSlug: this.getSkillSlug.skillSlug[0],
       connectionId: this.getConnectionId.connectionId,
@@ -2482,8 +2482,8 @@ export class ChannelComponent implements OnInit {
   c_satForm() {
     let data = this.stor.retrive('main', 'O').local;
     const email = data.originalUserName;
-    const customerId = localStorage.getItem('storeOpenedId');
-    const channel = localStorage.getItem('parent');
+    const customerId = sessionStorage.getItem('storeOpenedId');
+    const channel = sessionStorage.getItem('parent');
     this.insertAtCaret(
       this.baseUrl +
         '/survey/customer_satisfaction?channel=' +
@@ -2495,7 +2495,7 @@ export class ChannelComponent implements OnInit {
     );
   }
   c_informationForm() {
-    const customerId = localStorage.getItem('storeOpenedId');
+    const customerId = sessionStorage.getItem('storeOpenedId');
     this.insertAtCaret(
       this.baseUrl + '/survey/customer_details?customerId=' + customerId + ' '
     );
@@ -2535,7 +2535,7 @@ export class ChannelComponent implements OnInit {
     if (value == 'DM') {
       this.filterDto.queryType = 'TDM';
     } else if (value == 'Cmnt') {
-      this.filterDto.queryType = localStorage.getItem('contentType') || '';
+      this.filterDto.queryType = sessionStorage.getItem('contentType') || '';
     } else {
       this.filterDto.queryType = value;
     }

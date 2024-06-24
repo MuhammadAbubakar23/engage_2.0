@@ -16,7 +16,7 @@ import { AuthService } from 'src/app/identity/Services/AuthService/auth.service'
 })
 export class RightHeaderComponentsComponent implements OnInit {
   isActive = false;
-  id = localStorage.getItem('agentId');
+  id = sessionStorage.getItem('agentId');
   AgentDetails = this.agentDetailsService.agentDetails;
 
   fullName: string = '';
@@ -56,18 +56,18 @@ export class RightHeaderComponentsComponent implements OnInit {
 
   signOut() {
     if (
-      localStorage.getItem('assignedProfile') == null ||
-      localStorage.getItem('assignedProfile') == '' ||
-      localStorage.getItem('assignedProfile') == undefined
+      sessionStorage.getItem('assignedProfile') == null ||
+      sessionStorage.getItem('assignedProfile') == '' ||
+      sessionStorage.getItem('assignedProfile') == undefined
     ) {
       this.commonService.SignOut().subscribe((res:any)=>{
-        localStorage.clear();
+        sessionStorage.clear();
         this.router.navigateByUrl('/login');
         clearInterval(this.timer);
         this.signalRService.hubconnection.stop();
       },
       (error)=>{
-        localStorage.clear();
+        sessionStorage.clear();
         this.router.navigateByUrl('/login');
         clearInterval(this.timer);
         this.signalRService.hubconnection.stop();
@@ -79,9 +79,9 @@ export class RightHeaderComponentsComponent implements OnInit {
   
   updateBreak() {
     if (
-      localStorage.getItem('assignedProfile') == null ||
-      localStorage.getItem('assignedProfile') == '' ||
-      localStorage.getItem('assignedProfile') == undefined
+      sessionStorage.getItem('assignedProfile') == null ||
+      sessionStorage.getItem('assignedProfile') == '' ||
+      sessionStorage.getItem('assignedProfile') == undefined
     ) {
       
       this.startBreak = !this.startBreak;
