@@ -61,6 +61,7 @@ export class ConversationComponent implements OnInit {
   include: string = '';
   fromDate: any;
   toDate: any;
+  totalPages: any;
   searchCustomerForm!: FormGroup;
   groupByDateList: any[] = [];
   constructor(
@@ -121,8 +122,8 @@ export class ConversationComponent implements OnInit {
             this.SpinnerService.hide();
             this.ConversationList = res;
             this.TotalUnresponded = this.ConversationList.length;
-            this.to = 1;
-            this.from = this.ConversationList.length;
+            this.from = 1;
+            this.to = this.ConversationList.length;
             let groupedItems = this.ConversationList.reduce(
               (acc: any, item: any) => {
                 const date = item.createdDate?.split('T')[0];
@@ -412,9 +413,9 @@ export class ConversationComponent implements OnInit {
       (res: any) => {
         if (Object.keys(res).length === 0) {
           this.groupByDateList = [];
-          this.to = 0;
-          this.TotalUnresponded = 0;
           this.from = 0;
+          this.TotalUnresponded = 0;
+          this.to = 0;
           this.SpinnerService.hide();
         }
         // for followTotalCounts
@@ -454,22 +455,34 @@ export class ConversationComponent implements OnInit {
               };
             }
           );
+          // if (this.pageNumber == 1) {
+          //   this.from = 1;
+          // } else {
+          //   this.from = (this.pageNumber - 1) * this.pageSize + 1;
+          // }
+          // this.totalPages = Math.ceil(this.TotalUnresponded / this.pageSize);
+          // if (this.TotalUnresponded <= this.from + this.pageSize - 1) {
+          //   this.to = this.TotalUnresponded;
+          // } else {
+          //   this.to = this.from + this.pageSize - 1;
+          // }
+
           if (this.TotalUnresponded < this.pageSize) {
-            this.from = this.TotalUnresponded;
+            this.to = this.TotalUnresponded;
           } else if (
             this.TotalUnresponded > this.pageSize &&
-            this.from < this.pageSize
+            this.to < this.pageSize
           ) {
-            this.from = this.pageSize;
+            this.to = this.pageSize;
           }
           if (this.ConversationList.length == 0) {
-            this.to = 0;
+            this.from = 0;
           } else if (
             this.ConversationList.length != 0 &&
-            this.from != 0 &&
+            this.to != 0 &&
             this.pageNumber == 1
           ) {
-            this.to = 1;
+            this.from = 1;
           }
         } else if (Object.keys(res).length == 0) {
           this.SpinnerService.hide();
@@ -589,18 +602,15 @@ export class ConversationComponent implements OnInit {
   }
   updateListDataListener(res: any) {
     const username = localStorage.getItem('username');
-    if (this.searchUser == '') {
+    if (this.searchUser === '') {
       if (this.currentUrl.split('/')[2] === 'focused') {
         res.forEach((newMsg: any) => {
           localStorage.setItem('username', newMsg.userName);
-          if (newMsg?.profileStatus?.length == 0) {
+          if (newMsg?.profileStatus?.length === 0) {
             if (this.platform === newMsg.platform && !this.isAttachment) {
               this.updateConversationList(newMsg);
             } else if (newMsg.isAttachment && this.isAttachment) {
-              if (
-                this.platform === newMsg.platform ||
-                this.platform === 'all'
-              ) {
+              if (this.platform === newMsg.platform || this.platform === 'all') {
                 this.updateConversationList(newMsg);
               }
             } else if (this.platform === 'all' && !this.isAttachment) {
@@ -643,7 +653,7 @@ export class ConversationComponent implements OnInit {
             this.ConversationList.pop();
           }
           this.TotalUnresponded++;
-          this.from++;
+          this.to++;
         }
       }
     } else {
@@ -660,30 +670,37 @@ export class ConversationComponent implements OnInit {
   }
   setFromAndToValues() {
     if (this.TotalUnresponded < this.pageSize) {
-      this.from = this.TotalUnresponded;
-    } else if (
-      this.TotalUnresponded > this.pageSize &&
-      this.from < this.pageSize
-    ) {
-      this.from = this.pageSize;
+      this.to = this.TotalUnresponded;
     }
-    this.to =
-      this.ConversationList.length === 0
-        ? 0
-        : this.from === 0 && this.pageNumber === 1
-        ? 1
-        : 0;
+    //  else if (
+    //   this.TotalUnresponded > this.pageSize &&
+    //   this.to < this.pageSize
+    // )
+    else {
+      this.to = this.pageSize;
+    }
+
+    this.from = this.ConversationList.length === 0 ? 0 : 1;
   }
   removeAssignedQueryListener(res: any) {
+    debugger
     if (this.currentUrl.split('/')[2] == 'focused') {
       this.groupByDateList.forEach((group) => {
         const index = group.items.findIndex((x: any) => x.profileId == res.profileId && x.skillSlug == res.skillSlug);
         if (index !== -1) {
           group.items.splice(index, 1);
           this.TotalUnresponded = this.TotalUnresponded - 1;
-          this.from = this.from - 1;
+          if (this.to > this.TotalUnresponded) {
+            this.to = this.to - 1;
+          }
+          else {
+            this.to = this.pageSize
+            this.addOneMore();
+
+          }
         }
         this.ConversationList.forEach((item: any) => {
+
           const index = this.ConversationList.findIndex(
             (x: any) => x.profileId == res.profileId
           );
@@ -691,9 +708,40 @@ export class ConversationComponent implements OnInit {
             this.ConversationList.splice(index, 1);
           }
         });
+
         this.changeDetect.detectChanges();
       });
     }
+  }
+  addOneMore(){
+    
+
+    this.filterDto = {
+      fromDate: this.fromDate,
+      toDate: this.toDate,
+      user: this.searchForm.value.user,
+      pageId: '',
+      plateForm: this.platform,
+      pageNumber: 1,
+      pageSize: 20,
+      isAttachment: false,
+      queryType: '',
+      text: "",
+      include: "",
+      userName: "",
+      notInclude: "",
+      hasBlueTick: false,
+      flag: this.flag,
+      wings: this.wings,
+      skills: this.skillSlug,
+    };
+
+    this.commondata.GetConversationList(this.filterDto).subscribe((res:any)=>{
+      console.log("conversa========>",res)
+      this.ConversationList.push(res.List[19]);
+      this.changeDetect.detectChanges()
+    })
+  
   }
   Reload() {
     if (this.FlagForAssignToMe == 'assigned_to_me') {
@@ -718,8 +766,8 @@ export class ConversationComponent implements OnInit {
     this.advanceSearch = false;
     this.pageNumber = 1;
     this.pageSize = 20;
-    this.to = 0;
     this.from = 0;
+    this.to = 0;
     this.searchUser = '';
     localStorage.removeItem('username');
     localStorage.removeItem('datefillter');
@@ -766,7 +814,7 @@ export class ConversationComponent implements OnInit {
           localStorage.setItem('assignedProfile', profileId);
           this.router.navigateByUrl(this.currentUrl + '/responder/' + platform);
           this.lodeModuleService.updateModule('responder');
-          if (this.from < this.TotalUnresponded) {
+          if (this.to < this.TotalUnresponded) {
             this.pageNumber = 1;
             this.pageSize = 20;
             this.getConversationList();
@@ -1035,14 +1083,38 @@ export class ConversationComponent implements OnInit {
     });
   }
   remaining: number = 0;
+  // NextPage(pageNumber: any) {
+  //   if (this.TotalUnresponded < this.to) {
+  //     this.to = this.TotalUnresponded;
+  //   }
+  //   this.totalPageNumbers = this.TotalUnresponded / this.pageSize;
+  //   if (this.totalPageNumbers > pageNumber) {
+  //     this.totalPageNumbers = Math.round(this.totalPageNumbers + 1);
+  //   }
+  //   let page = pageNumber + 1;
+  //   if (page <= this.totalPageNumbers) {
+  //     this.pageNumber = page;
+  //     this.Ids = [];
+  //     this.isChecked = false;
+  //     this.isCheckedAll = false;
+  //     this.masterSelected = false;
+  //     this.getConversationList();
+  //     this.remaining = this.TotalUnresponded - this.to;
+  //     if (this.remaining > this.pageSize) {
+  //       this.from = 1 + this.to;
+  //       this.to = this.to + this.pageSize;
+  //     } else {
+  //       this.from = 1 + this.to;
+  //       this.to = this.TotalUnresponded;
+  //     }
+  //   }
+  //   this.pageNumber;
+  // }
   NextPage(pageNumber: any) {
-    if (this.TotalUnresponded < this.from) {
-      this.from = this.TotalUnresponded;
+    if (this.TotalUnresponded < this.to) {
+      this.to = this.TotalUnresponded;
     }
-    this.totalPageNumbers = this.TotalUnresponded / this.pageSize;
-    if (this.totalPageNumbers > pageNumber) {
-      this.totalPageNumbers = Math.round(this.totalPageNumbers + 1);
-    }
+    this.totalPageNumbers = Math.ceil(this.TotalUnresponded / this.pageSize);
     let page = pageNumber + 1;
     if (page <= this.totalPageNumbers) {
       this.pageNumber = page;
@@ -1051,16 +1123,15 @@ export class ConversationComponent implements OnInit {
       this.isCheckedAll = false;
       this.masterSelected = false;
       this.getConversationList();
-      this.remaining = this.TotalUnresponded - this.from;
+      this.remaining = this.TotalUnresponded - this.to;
       if (this.remaining > this.pageSize) {
-        this.to = 1 + this.from;
-        this.from = this.from + this.pageSize;
+        this.from = 1 + this.to;
+        this.to = this.to + this.pageSize;
       } else {
-        this.to = 1 + this.from;
-        this.from = this.TotalUnresponded;
+        this.from = 1 + this.to;
+        this.to = this.TotalUnresponded;
       }
     }
-    this.pageNumber;
   }
   PreviousPage(pageNumber: any) {
     if (pageNumber >= 1) {
@@ -1073,22 +1144,23 @@ export class ConversationComponent implements OnInit {
         this.masterSelected = false;
         this.getConversationList();
         if (this.remaining > this.pageSize) {
-          this.from = this.from - this.pageSize;
+          this.to = this.to - this.pageSize;
         } else {
-          this.from = this.from - this.remaining;
+          this.to = this.to - this.remaining;
         }
-        if (this.to > this.pageSize) {
+        if (this.from > this.pageSize) {
           this.remaining = this.pageSize;
         }
-        if (this.to > this.pageSize) {
-          this.to = this.from - (this.pageSize - 1);
+        if (this.from > this.pageSize) {
+          this.from = this.to - (this.pageSize - 1);
         } else {
-          this.to = 1;
-          this.from = this.pageSize;
+          this.from = 1;
+          this.to = this.pageSize;
         }
       }
     }
   }
+
   closeToaster() {
     this.toastermessage = false;
   }
