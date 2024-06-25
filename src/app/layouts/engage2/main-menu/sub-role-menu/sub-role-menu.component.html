@@ -149,6 +149,12 @@
                         Quick Response
                     </a>
                 </li>
+                <li class="list-group-item list-group-item-action d-flex align-items-center">
+                    <a (click)="updatevalue('auto-responder')" [routerLink]="['/console/templates/auto-responder']" class="d-flex align-items-center">
+                        <i class="fal fa-chevron-right pe-2"></i>
+                        Auto Responder
+                    </a>
+                </li>
             </ul>
             <li class="list-group-item list-group-item-action" routerLinkActive="active">
                 <a (click)="updatevalue('business-hours')" [routerLink]="['/console/business-hours']"
@@ -190,7 +196,13 @@
                     Contacts
                 </a>
             </li>
-            <li class="list-group-item list-group-item-action"> 
+            <li class="list-group-item list-group-item-action">
+                <a (click)="updatevalue('bot-configuration')" [routerLink]="['/console/bot-configuration']" class="d-flex align-items-center">
+                    <i class="fal fa-question-circle pe-2"></i>
+                    Bot Configuration
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
                 <a class="d-flex align-items-center">
                     <i class="fal fa-clipboard pe-2"></i>
                     Case Management
@@ -220,6 +232,7 @@
                     Help
                 </a>
             </li>
+          
         </div>
      
 

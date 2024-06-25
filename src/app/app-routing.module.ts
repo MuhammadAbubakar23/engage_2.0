@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './identity/Services/AuthGuardService/auth.guard';
 import { ModulesResolver } from './shared/resolver/modules.resolver';
 import { TagsResolver } from './shared/resolver/Tags Resolver/tags.resolver';
+// import { MonitoringMenuComponent } from './layouts/engage2/bot-monitoring-content/monitoring-menu/monitoring-menu.component';
 
 const routes: Routes = [
   {
@@ -21,11 +22,25 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   // For Jazz, TPPL, Morinaga
+  {
+    path: 'analytics',
+    redirectTo: 'analytics/whatsapp-report',
+    pathMatch: 'full',
+  },
+  {
+path:'bot-monitoring',
+redirectTo:'bot-monitoring/chat-bot',
+pathMatch:'full'
+  },
+  
+  // For KE
   // {
   //   path: 'analytics',
   //   redirectTo: 'analytics/whatsapp-report',
   //   pathMatch: 'full',
   // },
+  // {path: 'monitoring', component: MonitoringMenuComponent },
+
   
   // For KE
   {

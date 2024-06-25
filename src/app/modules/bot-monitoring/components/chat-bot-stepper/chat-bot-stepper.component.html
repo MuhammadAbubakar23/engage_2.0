@@ -1,0 +1,280 @@
+<div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+        <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+            [fullScreen]="false">
+            <p style="color: white"> Loading... </p>
+        </ngx-spinner>
+        <div class="page-content-wrapper custom-scroll pb-5 mb-5" data-scrollbar="true" tabindex="-1"
+            style="overflow: auto; outline: none;">
+            <form [formGroup]="stepperForm">
+                <div class="scroll-content">
+                    <div class="p-4">
+                        <div class="filter-toolbar mb-3 d-flex align-items-center justify-content-between">
+                            <ul class="list-inline m-0 d-flex align-items-center">
+                                <li class="list-inline-item">
+                                    <h4 class="mb-3">Components</h4>
+                                </li>
+                            </ul>
+                            <div class="text-end">
+                                <button class="btn btn-success px-4 fs-6 me-2" type="button" (click)="SaveRule()">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                        <div class="accordion component-acc" id="comp-accordion">
+                            <div class="accordion-item bg-transparent border-0">
+                                <h2 class="accordion-header">
+                                    <span class="iconButton medium bg-white">
+                                        <i class="fa-light fa-edit"></i>
+                                    </span>
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        Queries
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse"
+                                    data-bs-parent="#comp-accordion">
+                                    <div class="accordion-body">
+                                        <div class="dropdown">
+                                            <button class="btn coal border px-4 fs-5" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{ selectedQuery ? selectedQuery.intent : 'Select queries' }} <i
+                                                    class="fa-light fa-angle-down"></i>
+                                            </button>
+                                            <ul class="dropdown-menu scroll-container">
+                                                <li>
+                                                    <h5 class="dropdown-header text-dark fs-5"> Queries</h5>
+                                                </li>
+                                                <li class="dropdown-listing-header">
+                                                    <form class="custom-searchbar my-2 mx-0">
+                                                        <input class="form-control bg-light border-0 py-2"
+                                                            [(ngModel)]="searchIntent" placeholder="Search"
+                                                            aria-label="Search">
+                                                        <span class="btn searchbar-btn" type="submit">
+                                                            <i class="fal fa-search silver"></i>
+                                                        </span>
+                                                    </form>
+                                                </li>
+                                                <li *ngFor="let item of items | chatBotIntentFilter:searchIntent">
+                                                    <a class="dropdown-item" (click)="selectQuery(item)"
+                                                        [ngClass]="{'selected': selectedQuery === item}">
+                                                        {{ item.intent }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="btn text-center btn-outline-primary w-100"
+                                                        data-bs-toggle="offcanvas" data-bs-target="#training"
+                                                        aria-controls="training">
+                                                        <i class="fa-light fa-plus"></i> Add a new form here
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item bg-transparent border-0">
+                                <h2 class="accordion-header">
+                                    <span class="iconButton medium bg-white">
+                                        <i class="fa-light fa-reply"></i>
+                                    </span>
+
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Response
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse"
+                                    data-bs-parent="#comp-accordion">
+                                    <div class="accordion-body">
+                                        <div class="dropdown ">
+                                            <button class="btn coal border px-4 fs-5" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{ selectedResponse ? selectedResponse.utterance : 'Select response' }}
+                                                <i class="fa-light fa-angle-down"></i>
+                                            </button>
+
+                                            <ul class="dropdown-menu scroll-container">
+                                                <li>
+                                                    <h5 class="dropdown-header text-dark fs-5">
+                                                        <i class="me-2 fa-light fa-reply"></i> Response
+                                                    </h5>
+                                                </li>
+                                                <li class="dropdown-listing-header">
+                                                    <form class="custom-searchbar my-2 mx-0">
+                                                        <input class="form-control bg-light border-0 py-2"
+                                                            placeholder="Search" [(ngModel)]="searchResponse"
+                                                            aria-label="Search">
+                                                        <span class="btn searchbar-btn" type="submit">
+                                                            <i class="fal fa-search silver"></i>
+                                                        </span>
+                                                    </form>
+                                                </li>
+                                                <li *ngFor="let item of responseList | responsefilter:searchResponse">
+                                                    <a class="dropdown-item" (click)="selectResponse(item)"
+                                                        [ngClass]="{'selected': selectedResponse === item}">
+                                                        {{item?.utterance }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="btn text-center btn-outline-primary w-100"
+                                                        data-bs-toggle="offcanvas" data-bs-target="#response"
+                                                        aria-controls="response">
+                                                        <i class="fa-light fa-plus"></i> Add a new form here
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- actions waghera aye gey yahan -->
+                            <div class="accordion-item bg-transparent border-0">
+                                <h2 class="accordion-header">
+                                    <span class="iconButton medium bg-white">
+                                        <i class="fa-light fa-message-captions"></i>
+                                    </span>
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
+                                        Rule
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse"
+                                    data-bs-parent="#comp-accordion">
+                                    <div class="accordion-body">
+                                        <div class="card-body">
+                                            <input type="text" class="form-control" cols="16" rows="4"
+                                                placeholder="Enter Rule" formControlName="rule">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="offcanvas w-40 offcanvas-end " tabindex="-1" id="training" aria-labelledby="trainingLabel"
+                    aria-modal="true" role="dialog">
+                    <div class="offcanvas-header justify-content-between align-items-center bg-light px-4">
+                        <h5 class="mb-0">Training Pharase</h5>
+                        <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
+                            aria-label="Close"><i class="fal fa-times"></i></button>
+                    </div>
+                    <div class="offcanvas-body px-4">
+                        <div class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
+                            <h5 class="ms-3"> Add Intent</h5>
+                        </div>
+                        <div class="card-body">
+                            <input type="text" class="form-control" cols="16" rows="4" placeholder="Enter Intent"
+                                formControlName="intent">
+                            <div *ngIf="stepperForm.get('intent')?.invalid && stepperForm.get('intent')?.touched"
+                                class="text-danger mt-2">Invalid input. Only alphabets, numerics,
+                                and spaces are allowed.</div>
+                        </div>
+                        <div class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
+                            <h5 class="m-0"> Training Phrases</h5>
+                            <button class="btn snowBg btn-sm night" type="button" (click)="generateAugments()">Generate
+                                Training Phrases</button>
+                        </div>
+                        <div class="mb-3">
+                            <div class="mb-3">
+                                <textarea name="" class="form-control" cols="16" rows="4"
+                                    placeholder="Enter new training pharase manually or click on Generate training ....."
+                                    formControlName="newPhrase" (keyup.enter)="addManuallyEnteredPhrase()"></textarea>
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush training-list" data-scrollbar="true" tabindex="-1"
+                            style="overflow: hidden; outline: none;">
+                            <div class="scroll-container">
+                                <ul class="list-group">
+                                    <li *ngFor="let item of phrase"
+                                        class="list-group-item d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <input class="form-check-input me-1" type="checkbox"
+                                                [id]="'checkbox' + item.id" [value]="item.label"
+                                                (change)="togglePhraseSelection(item.label)">
+                                            <label class="form-check-label" [for]="'checkbox' + item.id">{{ item.label
+                                                }}</label>
+                                        </div>
+                                        <div class="action-icons d-flex align-items-center">
+                                            <span class="iconButton small iconHover me-2">
+                                                <i class="fa-light fa-edit"></i>
+                                            </span>
+                                            <span class="iconButton small iconHover">
+                                                <i class="fa-light fa-trash radical"></i>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="offcanvas-footer d-flex p-3 justify-content-end bg-light">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="offcanvas"
+                            aria-label="Close">Cancel</button>
+                        <button type="button" class="btn skyBg" data-bs-dismiss="offcanvas" aria-label="Close"
+                            (click)="saveChatbot()"> Save
+                        </button>
+                    </div>
+                </div>
+                <!-- <div class="form-check form-switch mt-2 mb-4">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                        checked="">
+                    <label class="form-check-label" for="flexSwitchCheckChecked">Use GPT</label>
+                </div> -->
+                <div class="offcanvas w-40 offcanvas-end " tabindex="-1" id="response" aria-labelledby="responseLabel"
+                    aria-modal="true" role="dialog">
+                    <div class="offcanvas-header justify-content-between align-items-center bg-light px-4">
+                        <h5 class="mb-0">Responses</h5>
+                        <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
+                            aria-label="Close"><i class="fal fa-times"></i></button>
+                    </div>
+                    <div class="offcanvas-body px-4">
+                        <div class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
+                            <h5 class="ms-2"> Add Response</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" cols="16" rows="4" placeholder="Enter Response"
+                                    formControlName="response">
+                                <div *ngIf="stepperForm.get('response')?.invalid && stepperForm.get('response')?.touched"
+                                    class="text-danger mt-2">Invalid input. Only alphabets,
+                                    numerics,
+                                    and spaces are allowed.</div>
+                            </div>
+                        </div>
+                        <div class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
+                            <h5 class="m-0"> Responses</h5>
+                        </div>
+                        <div class="mb-3">
+                            <textarea name="" class="form-control" cols="16" rows="4"
+                                placeholder="Enter new training pharase......" formControlName="text"></textarea>
+                        </div>
+                    </div>
+                    <div class="offcanvas-footer d-flex p-3 justify-content-end bg-light">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="offcanvas"
+                            aria-label="Close">Cancel</button>
+                        <button type="button" class="btn skyBg" data-bs-dismiss="offcanvas" aria-label="Close"
+                            (click)="SaveResponse()">Save
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
+
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+            </div>
+        </div>
+    </div>
+</div>

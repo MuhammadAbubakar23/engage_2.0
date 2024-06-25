@@ -1,0 +1,231 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+      <div class="team-user-wrap console-body-wrapper inbox-container" data-scrollbar="true" tabindex="-1"
+          style="overflow: auto; outline: none;">
+          <div class="scroll-content">
+              <div class="row h-auto justify-content-center">
+                  <div class="col-md-11">
+                      <div class="w-100 inbox-container">
+                          <div class="searchBar-wrapper mb-2 p-0"><br>
+                            <div class="row">
+                              <div class="col-lg-1">
+                                <div class="d-flex align-items-lg-center">
+                                    <p class="coal m-0">Sort:</p>
+                                    <div class="dropdown">
+                                        <button class="btn dropdown-toggle coal" type="button"
+                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            <span
+                                                [ngClass]="{'fa-solid fa-arrow-up': selectedSortOption === 'Ascending', 'fa fa-arrow-down': selectedSortOption === 'Descending'}"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    (click)="setSortOption('Ascending')">Ascending</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    (click)="setSortOption('Descending')">Descending</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col-lg-1">
+                                <div class="d-flex align-items-lg-center">
+                                    <p class="coal m-0">Platform:</p>
+                                    <div class="dropdown">
+                                        <button class="btn dropdown-toggle coal" type="button"
+                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            <!-- <span
+                                                [ngClass]="{'fa-solid fa-arrow-up': selectedSortOption === 'Ascending', 'fa fa-arrow-down': selectedSortOption === 'Descending'}"></span> -->
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li *ngFor="let channel of channels">
+                                                <a class="dropdown-item"
+                                                    (click)="setChannel(channel.id)">{{channel.name}}</a>
+                                            </li>
+                                            <!-- <li>
+                                                <a class="dropdown-item"
+                                                    (click)="setSortOption('Ascending')">Instagram</a>
+                                            </li>
+                                            <li>
+                                              <a class="dropdown-item"
+                                                  (click)="setSortOption('Descending')">Linkedin</a>
+                                          </li>
+                                          <li>
+                                            <a class="dropdown-item"
+                                                (click)="setSortOption('Descending')">Telegram</a>
+                                          </li> -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            
+                              </div>
+
+
+                              <div class="col-lg-10 d-flex align-items-center justify-content-end">
+                                <a class="search-btn">
+                                  <button class="iconButton medium">
+                                    <i class="fal fa-search silver"></i>
+                                  </button>
+                                  <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
+                                          (input)="applySearchFilter()"  >
+                    
+                                </a>
+                                <!-- <a
+                                    [routerLink]="['/console/add-bot-configuration']"
+                                    class="ms-2">
+                                    <button type="button" class="btn btn-success">
+                                        <i class="fal fa-plus me-2"></i>
+                                        Create
+                                    </button>
+                                </a> -->
+                                <a (click)="updatevalue('add-bot-configuration')"
+                                  [routerLink]="['/console/add-bot-configuration']"
+                                  class="ms-2">
+                                  <button type="button" class="btn btn-success">
+                                      <i class="fal fa-plus me-2"></i>
+                                      Create
+                                  </button>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+
+
+
+                          <div class="query-container perfect-scrollbar" data-scrollbar="true" tabindex="-1"
+                              style="overflow: hidden; outline: none;">
+                              <div class="scroll-content">
+
+                                  <div class="alert alert-secondary text-center email-info-alert p-2" role="alert">
+                                      All <strong>09</strong> candidates on this page are selected.
+                                      <a class="all-conversation fw-bold sky btn">Select
+                                          all
+                                          09 Candidates</a>
+                                      <a class="clear-selection" style="display: none;">Clear selection</a>
+                                  </div>
+                                  <div class="table-section">
+                                      <table class="table table-sm table-nowrap table-reset" id="table">
+                                          <thead>
+                                              <tr>
+                                                  <!-- <th>
+                                                      <span class="all-check-boxes">
+                                                          <input class="form-check-input me-1" type="checkbox"
+                                                              aria-label="..." data-bs-toggle="tooltip"
+                                                              data-bs-placement="bottom"
+                                                              data-bs-original-title="Check All">
+                                                      </span>
+                                                  </th> -->
+                                                  <th>Bot Name</th>
+                                                  <th>Content Type</th>
+                                                  <th>Status </th>
+                                                  <!-- <th>Action </th> -->
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr *ngFor="let row of botsArray">
+                                                  <!-- <td><input class="form-check-input me-1" type="checkbox"
+                                                          aria-label="..."></td> -->
+                                                  <td>
+                                                      <span class="emailer-name" aria-label="..."
+                                                          data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                          data-bs-original-title="Fatima Ahmed">
+                                                          <a>{{ row.name }}</a>
+                                                      </span>
+                                                  </td>
+                                                  <td>
+                                                    <span class="emailer-name" aria-label="..."
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        data-bs-original-title="Fatima Ahmed">
+                                                        <a>{{ row.contentType }}</a>
+                                                    </span>
+                                                  </td>
+                                                  <td>
+                                                      <div class="form-check form-switch">
+                                                          <input class="form-check-input" type="checkbox"
+                                                              role="switch" id="flexSwitchCheckChecked"
+                                                              [checked]="row.isActive" (change)="statusChangeRequest(row.id, row.isActive, row.pageId, row.contentType)">
+                                                          <label class="form-check-label"
+                                                              for="flexSwitchCheckChecked"></label>
+                                                      </div>
+                                                  </td>
+                                                  <td>
+                                                      <div class="icons-list d-flex justify-content-end dropstart">
+                                                          <button class="btn iconButton small iconHover btn-group"
+                                                              type="button" data-bs-toggle="dropdown"
+                                                              aria-expanded="false">
+                                                              <i class="far fa-ellipsis-v"></i>
+                                                          </button>
+                                                          <ul class="dropdown-menu fade">
+                                                              <li>
+                                                                  <a class="dropdown-item" (click)="viewBot(row.pageId,row.contentType)"><i
+                                                                          class="fal fa-edit me-2"></i> View</a>
+                                                              </li>
+                                                              <li>
+                                                                  <a class="dropdown-item delete-dd" (click)="deleteBot(row)"><i
+                                                                          class="fal fa-trash me-2"></i> Delete</a>
+                                                              </li>
+                                                          </ul>
+                                                      </div>
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                          <tfoot>
+                                            <tr>
+                                              <td>
+                                                <nav aria-label="Page navigation example" class="d-flex align-items-center mt-3 mb-3">
+                                                  <ul class="pagination m-0">
+                                                    <li class="page-item" (click)="previousPage()">
+                                                      <a class="page-link">Previous</a>
+                                                    </li>
+                                                    <li class="page-item" *ngFor="let pageNumber of getVisiblePageNumbers()" [class.active]="pageNumber === currentPage">
+                                                      <a class="page-link" (click)="goToPage(pageNumber)" >{{ pageNumber }}</a>
+                                                    </li>
+                                                    <li class="page-item" (click)="nextPage()">
+                                                      <a class="page-link">Next</a>
+                                                    </li>
+                                                  </ul>
+                                                </nav>
+                                              </td>
+                                              <td></td><td></td>
+                                              <td>
+                                                <div class="tags-per-page d-flex align-items-center justify-content-end mt-3 mb-3 coal">
+                                                  Per page
+                                                  <div class="dropdown simple-dropdown w-auto">
+                                                    <button class="dropdown-toggle chevron-icon down ps-2 pe-4" type="button" id="dropdownMenuButton1"
+                                                      data-bs-toggle="dropdown" aria-expanded="false">
+                                                      {{ perPage }}
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                      <li>
+                                                        <a class="dropdown-item" (click)="setPerPage(5)">5</a>
+                                                      </li>                                                      
+                                                      <li>
+                                                        <a class="dropdown-item" (click)="setPerPage(10)">10</a>
+                                                      </li>
+                                                      <li>
+                                                        <a class="dropdown-item" (click)="setPerPage(20)">20</a>
+                                                      </li>
+                                                    </ul>
+                                                  </div>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                          </tfoot>
+                                      </table>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

@@ -27,13 +27,13 @@
                     <div class="col-lg-12">
                       <div class="team-detail-form-box mb-5">
                         <div class="floating-item mb-4">
-                          <div [ngClass]="{'was-validated':f['firstname']!.valid && f['firstname']!.touched}" class="form-floating mb-2">
+                          <div [ngClass]="{'was-validated':f['firstname']!.valid && f['firstname']!.touched}"
+                            class="form-floating mb-2">
                             <input [ngClass]="{'is-invalid' : (f['firstname']!.errors && (f['firstname']!.touched ||
                                             f['firstname']!.dirty))}" class="form-control" id="firstname"
                               formControlName="firstname" placeholder="Enter First Name">
                             <label for="firstname">First Name</label>
-                            <div class="invalid-feedback"
-                              *ngIf="(f['firstname']!.errors && (f['firstname']!.touched ||
+                            <div class="invalid-feedback" *ngIf="(f['firstname']!.errors && (f['firstname']!.touched ||
                                       f['firstname']!.dirty))">
                               <div
                                 *ngIf="f['firstname']!.errors?.['maxlength'] || f['firstname']!.errors?.['minlength']">
@@ -50,17 +50,15 @@
                           </div>
                         </div>
                         <div class="floating-item mb-4">
-                          <div
-                            [ngClass]="{'was-validated' : f['lastname']!.valid && f['lastname']!.touched}"
+                          <div [ngClass]="{'was-validated' : f['lastname']!.valid && f['lastname']!.touched}"
                             class="form-floating mb-2">
                             <input [ngClass]="{'is-invalid' : (f['lastname']!.errors && (f['lastname']!.touched ||
-                        f['lastname']!.dirty))}" class="form-control" id="lastname"
-                              formControlName="lastname" placeholder="Enter Last Name">
+                        f['lastname']!.dirty))}" class="form-control" id="lastname" formControlName="lastname"
+                              placeholder="Enter Last Name">
                             <label for="lastname">Last Name</label>
                             <div class="invalid-feedback" *ngIf="(f['lastname']!.errors && (f['lastname']!.touched ||
                                                                                     f['lastname']!.dirty))">
-                              <div
-                                *ngIf="f['lastname']!.errors?.['maxlength'] || f['lastname']!.errors?.['minlength']">
+                              <div *ngIf="f['lastname']!.errors?.['maxlength'] || f['lastname']!.errors?.['minlength']">
                                 Last name must be grater than 1 character and less than 25 characters!
                               </div>
                               <div *ngIf="f['lastname']!.errors?.['required']">
@@ -74,8 +72,7 @@
                           </div>
                         </div>
                         <div class="floating-item mb-4">
-                          <div
-                            [ngClass]="{'was-validated' : f['phone']!.valid && f['phone']!.touched}"
+                          <div [ngClass]="{'was-validated' : f['phone']!.valid && f['phone']!.touched}"
                             class="form-floating mb-2 ">
                             <input [ngClass]="{'is-invalid' : (f['phone']!.errors && (f['phone']!.touched ||
                         f['phone']!.dirty))}" class="form-floating mb-2" class="form-control" id="phone"
@@ -83,8 +80,7 @@
                             <label for="phone">Phone</label>
                             <div class="invalid-feedback" *ngIf="(f['phone']!.errors && (f['phone']!.touched ||
                                                                 f['phone']!.dirty))">
-                              <div
-                                *ngIf="f['phone']!.errors?.['maxlength'] || f['phone']!.errors?.['minlength']">
+                              <div *ngIf="f['phone']!.errors?.['maxlength'] || f['phone']!.errors?.['minlength']">
                                 Enter number between 11-14 numbers
                               </div>
                               <div *ngIf="f['phone']!.errors?.['required']">
@@ -98,18 +94,16 @@
                           </div>
                         </div>
                         <div class="floating-item mb-4">
-                          <div
-                            [ngClass]="{'was-validated' : f['email']!.valid && f['email']!.touched}"
+                          <div [ngClass]="{'was-validated' : f['email']!.valid && f['email']!.touched}"
                             class="form-floating mb-2">
                             <input [ngClass]="{'is-invalid' : (f['email']!.errors && (f['email']!.touched ||
-                          f['email']!.dirty))}" type="email" class="form-control" id="email"
-                              formControlName="email" placeholder="enter email">
+                          f['email']!.dirty))}" type="email" class="form-control" id="email" formControlName="email"
+                              placeholder="enter email">
                             <label for="email">Email address</label>
                             <!-- <div class="example-text">
                               e.g. xyz@domain.com
-                            </div> -->
-                            <div class="invalid-feedback"
-                              *ngIf="(f['email']!.errors && (f['email']!.touched ||
+                            </div>
+                            <div class="invalid-feedback" *ngIf="(f['email']!.errors && (f['email']!.touched ||
                                       f['email']!.dirty))">
                               <div *ngIf="f['email']!.errors?.['email']">
                                 Please enter a valid email address
@@ -124,11 +118,15 @@
                           </div>
                         </div>
                         <div class="floating-item mb-4">
-                          <div [ngClass]="{'was-validated':f['password']!.valid && f['password']!.touched}" class="form-floating mb-2">
-                            <input type="password" [ngClass]="{'is-invalid' : (f['password']!.errors && (f['password']!.touched || f['password']!.dirty))}"
-                                      class="form-control" id="password" formControlName="password" placeholder="Enter password">
+                          <div [ngClass]="{'was-validated':f['password']!.valid && f['password']!.touched}"
+                            class="form-floating mb-2">
+                            <input type="password"
+                              [ngClass]="{'is-invalid' : (f['password']!.errors && (f['password']!.touched || f['password']!.dirty))}"
+                              class="form-control" id="password" formControlName="password"
+                              placeholder="Enter password">
                             <label for="password">Password</label>
-                            <div class="invalid-feedback" *ngIf="(f['password']!.errors && (f['password']!.touched || f['password']!.dirty))">
+                            <div class="invalid-feedback"
+                              *ngIf="(f['password']!.errors && (f['password']!.touched || f['password']!.dirty))">
                               <div *ngIf="f['password']!.errors?.['maxlength'] || f['password']!.errors?.['minlength']">
                                 Password must be grater than 8 character and less than 15 characters!
                               </div>
@@ -142,13 +140,14 @@
                           </div>
                         </div>
                         <div class="floating-item mb-4">
-                          <div [ngClass]="{'was-validated' : f['confirmpassword']!.valid && f['confirmpassword']!.touched}" class="form-floating mb-2">
+                          <div
+                            [ngClass]="{'was-validated' : f['confirmpassword']!.valid && f['confirmpassword']!.touched}"
+                            class="form-floating mb-2">
                             <input type="password" [ngClass]="{'is-invalid' : (f['confirmpassword']!.errors && (f['confirmpassword']!.touched ||
                               f['confirmpassword']!.dirty))}" class="form-control" id="confirmpassword"
                               formControlName="confirmpassword" placeholder="Enter Confirm Password">
                             <label for="confirmpassword">Confirm Password</label>
-                            <div class="invalid-feedback"
-                              *ngIf="(f['confirmpassword']!.errors && (f['confirmpassword']!.touched ||
+                            <div class="invalid-feedback" *ngIf="(f['confirmpassword']!.errors && (f['confirmpassword']!.touched ||
                                                                                     f['confirmpassword']!.dirty))">
                               <div
                                 *ngIf="f['confirmpassword']!.errors?.['maxlength'] || f['confirmpassword']!.errors?.['minlength']">
@@ -170,7 +169,7 @@
                             </div>
                           </div>
                         </div>
-                        <!-- <div class="floating-item mb-4">
+                        <div class="floating-item mb-4">
                           <div
                             [ngClass]="{'was-validated' : userForm.get('team')!.valid && userForm.get('team')!.touched}"
                             class="form-floating mb-2">
@@ -440,8 +439,7 @@
                 </label>
               </div>
             </div>
-            <div class="selected-skill-list" data-scrollbar="true" tabindex="-1"
-              style="overflow: auto; outline: none;">
+            <div class="selected-skill-list" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
               <div class="scroll-content">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item checkbox-minus checkbox-tick">
@@ -492,8 +490,8 @@
           <p class="f-icon-txt ms-1 m-0 radical">Delete Manage Skills </p>
         </div>
         <div class="buttons-wrap d-flex">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas"
-            aria-label="Close" (click)="cancelForm()">Cancel</button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas" aria-label="Close"
+            (click)="cancelForm()">Cancel</button>
           <button type="button" class="btn btn-success ms-2 f-nextBtn" data-bs-dismiss="offcanvas" aria-label="Close"
             id="saveSkills ">Save</button>
         </div>

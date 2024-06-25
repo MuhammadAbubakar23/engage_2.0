@@ -15,7 +15,8 @@ export class AppTokenInterceptor implements HttpInterceptor {
         url:  httpRequest.url,
       //  withCredentials: true,
         setHeaders: {
-          "X-APP-KEY": `${this.envUrl.appKey}`
+          "X-APP-KEY": `${this.envUrl.appKey}`,
+          // 'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
         }
       });
     return next.handle(httpRequest);

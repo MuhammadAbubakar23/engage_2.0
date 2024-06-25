@@ -40,6 +40,11 @@ import { ConsoleCreateBusinessHoursHeaderComponent } from 'src/app/modules/conso
 import { ConsoleCreateRuleHeaderComponent } from 'src/app/shared/headers/console-create-rule-header/console-create-rule-header.component';
 import { ConsoleCreateSkillsHeaderComponent } from 'src/app/modules/console/console-headers/console-create-skills-header/console-create-skills-header.component';
 import { ConsoleCreatePreferencesHeaderComponent } from 'src/app/modules/console/console-headers/console-create-preferences-header/console-create-preferences-header.component';
+import { ConsoleAutoResponderHeaderComponent } from 'src/app/modules/console/console-headers/console-auto-responder-header/console-auto-responder-header.component';
+import { CreateConsoleAutoResponderHeaderComponent } from 'src/app/modules/console/console-headers/create-console-auto-responder-header/create-console-auto-responder-header.component';
+import { ConsoleBotConfigurationHeaderComponent } from 'src/app/modules/console/console-headers/console-bot-configuration-header/console-bot-configuration-header.component';
+import { CreateBotConfigurationComponent } from 'src/app/modules/console/components/bot-configuration/create-bot-configuration/create-bot-configuration.component';
+import { ConsoleCreateBotConfigurationHeaderComponent } from 'src/app/modules/console/console-headers/console-create-bot-configuration-header/console-create-bot-configuration-header.component';
 
 @Component({
   selector: 'console-header',
@@ -123,6 +128,14 @@ export class ConsoleHeaderComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(ConsoleCreateBusinessHoursHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
+      case ('bot-configuration'):
+        componentFactory = this.resolver.resolveComponentFactory(ConsoleBotConfigurationHeaderComponent);
+        this.target.createComponent(componentFactory);
+        break;   
+        case ('add-bot-configuration'):
+          componentFactory = this.resolver.resolveComponentFactory(ConsoleCreateBotConfigurationHeaderComponent);
+          this.target.createComponent(componentFactory);
+          break;   
       case ('tags'):
         componentFactory = this.resolver.resolveComponentFactory(ConsoleTagsHeaderComponent);
         this.target.createComponent(componentFactory);
@@ -175,7 +188,15 @@ export class ConsoleHeaderComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(CreateUserHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
-
+        case ('auto-responder'):
+          componentFactory = this.resolver.resolveComponentFactory(ConsoleAutoResponderHeaderComponent);
+          this.target.createComponent(componentFactory);
+          break;
+          case ('create-auto-responder'):
+            componentFactory = this.resolver.resolveComponentFactory(CreateConsoleAutoResponderHeaderComponent);
+            this.target.createComponent(componentFactory);
+            break;
+      
       case ('consoleCreateBulkUserHeader'):
         componentFactory = this.resolver.resolveComponentFactory(ConsoleCreateBulkUserHeaderComponent);
         this.target.createComponent(componentFactory);

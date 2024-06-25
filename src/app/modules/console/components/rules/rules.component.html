@@ -51,6 +51,22 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-8 d-flex align-items-center justify-content-end">
+                                    <div class="me-2">
+                                        <select class="form-select" id="ruleTypeSelect" [(ngModel)]="selectedRuleType"
+                                            (change)="onRuleTypeChange()">
+                                            <option selected disabled value="">Select RuleType </option>
+                                            <option *ngFor="let ruleType of ruleTypes" [value]="ruleType.name">{{
+                                                ruleType.name }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="me-2">
+                                        <select class="form-select" id="channelSelect"
+                                            (change)="onChannelChange($event)">
+                                            <option selected disabled>Select Platform</option>
+                                            <option *ngFor="let channel of channels" [value]="channel.id">{{
+                                                channel.name }}</option>
+                                        </select>
+                                    </div>
                                     <a class="search-btn">
                                         <button class="iconButton medium">
                                             <i class="fal fa-search silver"></i>
@@ -68,107 +84,126 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="table-section">
-                            <table class="table mb-5 align-middle">
-                                <thead>
-                                    <tr>
-                                        <th>Rules</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let row of tableData; let i = index">
-                                        <th>
-                                            <ul class="list-group list-group-flush">
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-start">
-                                                    <div class="ms-2 me-auto fw-normal coal">
-                                                        <div class="fw-bold night">{{ row?.name }}</div>
-                                                        {{ row?.description }}
-                                                        <!-- <span  class="badge rounded-pill bg-secondary">{{ row.rulesJson }}</span> -->
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </th>
-                                        <td>
-                                            <div class="icons-list d-flex justify-content-end dropstart"
-                                                *ngIf="canEditOrDelete(row)">
-                                                <!-- <button class="btn iconButton medium iconHover"
-                                                    (click)="editTemplate(row)">
-                                                    <i class="fal fa-edit"></i>
+                        <div *ngFor="let rule of channelRules">
+                            <!-- <p>{{rule.platform}}</p> -->
+                            <div class="table-section">
+                                <table class="table mb-5 align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>{{rule.platform}}</th>
+                                            <th> Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let r of rule?.rulesWihtCount?.Rules; let i = index">
+                                            <th>
+                                                <ul class="list-group list-group-flush">
+                                                    <li
+                                                        class="list-group-item d-flex justify-content-between align-items-start">
+                                                        <div class="ms-2 me-auto fw-normal coal">
+                                                            <div class="fw-bold night">{{ r?.name }}</div>
+                                                            {{ r?.description }}
+
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </th>
+                                            <td>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                        id="flexSwitchCheckChecked{{r?.id}}" [checked]="r?.status"
+                                                        (change)="toggleStatus(r)">
+                                                    <label class="form-check-label"
+                                                        for="flexSwitchCheckChecked{{r?.id}}"></label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="icons-list d-flex justify-content-end dropstart"
+                                                    *ngIf="canEditOrDelete(rule)">
+                                                    <!-- <button class="btn iconButton medium iconHover"
+                                                (click)="editTemplate(row)">
+                                                <i class="fal fa-edit"></i>
                                                 </button> -->
-                                                <button class="btn iconButton medium iconHover btn-group" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="far fa-ellipsis-v dropdown-toggle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu fade">
-                                                    <li>
-                                                        <!-- <a class="dropdown-item" (click)="editTemplate(row)">Edit</a> -->
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item"
-                                                            (click)="deleteTemplate(row)">Delete</a>
-                                                    </li>
-                                                    <!-- <li>
-                                                        <a class="dropdown-item"
-                                                            (click)="disableTemplate(row)">Disable</a>
-                                                    </li> -->
-                                                    <!-- <li>
-                                                        <a class="dropdown-item" (click)="cloneTemplate(row)">Clone</a>
-                                                    </li> -->
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td>
-                                            <nav aria-label="Page navigation example"
-                                                class="d-flex align-items-center mt-3 mb-3">
-                                                <ul class="pagination m-0">
-                                                    <li class="page-item" (click)="previousPage()">
-                                                        <a class="page-link">Previous</a>
-                                                    </li>
-                                                    <li class="page-item"
-                                                        *ngFor="let pageNumber of getVisiblePageNumbers()"
-                                                        [class.active]="pageNumber === currentPage">
-                                                        <a class="page-link" (click)="goToPage(pageNumber)">{{
-                                                            pageNumber }}</a>
-                                                    </li>
-                                                    <li class="page-item" (click)="nextPage()">
-                                                        <a class="page-link">Next</a>
-                                                    </li>
-                                                </ul>
-                                            </nav>
-                                        </td>
-                                        <td>
-                                            <div
-                                                class="tags-per-page d-flex align-items-center justify-content-end mt-3 mb-3 coal">
-                                                Per page
-                                                <div class="dropdown simple-dropdown w-auto">
-                                                    <button class="dropdown-toggle chevron-icon down ps-2 pe-4"
-                                                        type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        {{ perPage }}
+                                                    <button class="btn iconButton medium iconHover btn-group"
+                                                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="far fa-ellipsis-v dropdown-toggle"></i>
                                                     </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <ul class="dropdown-menu fade">
                                                         <li>
-                                                            <a class="dropdown-item" (click)="setPerPage(10)">10</a>
+                                                            <!-- <a class="dropdown-item" (click)="editTemplate(row)">Edit</a> -->
                                                         </li>
                                                         <li>
-                                                            <a class="dropdown-item" (click)="setPerPage(20)">20</a>
+                                                            <a class="dropdown-item"
+                                                                (click)="deleteTemplate(rule, rule.platform)">Delete</a>
+
                                                         </li>
-                                                        <li>
-                                                            <a class="dropdown-item" (click)="setPerPage(30)">30</a>
-                                                        </li>
+                                                        <!-- <li>
+                                                <a class="dropdown-item" (click)="deleteTemplate(rule, rule.platform)">Delete</a>
+                                            </li> -->
+
+                                                        <!-- <li>
+                                                <a class="dropdown-item"
+                                                (click)="disableTemplate(row)">Disable</a>
+                                            </li> -->
+                                                        <!-- <li>
+                                                <a class="dropdown-item" (click)="cloneTemplate(row)">Clone</a>
+                                            </li> -->
                                                     </ul>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>
+                                                <nav aria-label="Page navigation example"
+                                                    class="d-flex align-items-center mt-3 mb-3">
+                                                    <ul class="pagination m-0">
+                                                        <li class="page-item" (click)="previousPage()">
+                                                            <a class="page-link">Previous</a>
+                                                        </li>
+                                                        <li class="page-item"
+                                                            *ngFor="let pageNumber of getVisiblePageNumbers()"
+                                                            [class.active]="pageNumber === currentPage">
+                                                            <a class="page-link" (click)="goToPage(pageNumber)">{{
+                                                                pageNumber }}</a>
+                                                        </li>
+                                                        <li class="page-item" (click)="nextPage()">
+                                                            <a class="page-link">Next</a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </td>
+
+                                            <td>
+                                                <div
+                                                    class="tags-per-page d-flex align-items-center justify-content-end mt-3 mb-3 coal">
+                                                    Per page
+                                                    <div class="dropdown simple-dropdown w-auto">
+                                                        <button class="dropdown-toggle chevron-icon down ps-2 pe-4"
+                                                            type="button" id="dropdownMenuButton1"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                            {{ perPage }}
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                            <li>
+                                                                <a class="dropdown-item" (click)="setPerPage(10)">10</a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" (click)="setPerPage(20)">20</a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" (click)="setPerPage(30)">30</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <div id="rules-library-tab" class="tab-pane fade" role="tabpanel" aria-labelledby="rules-library">

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { RuleWithCount } from '../../Models/ChannelRule';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -22,6 +24,12 @@ export class CommonDataService {
   KescrmBaseUrl = environment.KescrmBaseUrl;
   WhatsappBaseUrl = environment.WhatsappBaseUrl;
   KeReportsBaseUrl=environment.keReportsBaseUrl
+  faceRoxBaseUrl=environment.faceRoxBaseUrl
+  autoresponderbaseurl = environment.autoresponderbaseurl
+  profileBaseUrl = environment.botConfigBaseUrl
+  channelBaseUrl = environment.consoleBaseUrl
+  botsBaseUrl = environment.botMoniteringBaseUrl
+  botConfigBaseUrl = environment.botConfigBaseUrl
   // KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
@@ -74,6 +82,7 @@ export class CommonDataService {
   signOut = environment.links.common.signOut;
   getCustomers = environment.links.common.getCustomers;
   updateStatus = environment.links.common.updateStatus;
+  updateBotStatus = environment.links.common.updateBotStatus;
   insertTagOnProfile = environment.links.common.insertTagOnProfile;
   removeTagOnProfile = environment.links.common.removeTagOnProfile;
   hideUnhideMessage = environment.links.common.hideUnhideMessage;
@@ -129,9 +138,13 @@ export class CommonDataService {
   getfortesting = environment.links.scrmReports.getfortesting
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
+  botConfigDetails = environment.links.console.botConfigDetails;
+  updateBotConfigDetail = environment.links.console.UpdateStatus
+  ViewBotConfig = environment.links.console.ViewBotConfig
   addTemplate = environment.links.console.addTemplate;
   updateTemplate = environment.links.console.updateTemplate;
   deleteMessages = environment.links.console.deleteMessages;
+  deleteBotConfig = environment.links.console.deleteBotConfig;
   getQuickReply = environment.links.console.getQuickReply;
   addQuickReply = environment.links.console.addQuickReply;
   updateQuickReply = environment.links.console.updateQuickReply;
@@ -155,6 +168,7 @@ export class CommonDataService {
   getSkills = environment.links.console.getSkills;
   getAllSkills = environment.links.console.getAllSkills;
   addSkill = environment.links.console.addSkill;
+  addBotConfig = environment.links.console.addBotConfig;
   deleteSkill = environment.links.console.deleteSkill;
   getskillbyid = environment.links.console.getSkillsbyId;
   updateSkill = environment.links.console.updateSkill;
@@ -177,11 +191,33 @@ export class CommonDataService {
   addRules = environment.links.console.addRules;
   updateRules = environment.links.console.updateRules;
   getEntitiesRule = environment.links.console.getEntitiesRule;
+  getEntitiesRules = environment.links.console.getEntitiesRules
+  addRule= environment.links.console.addRule
+  getFbRule = environment.links.console.getFbRule
+  softDeleteFb = environment.links.console.softDeleteFb
+  getEntitiesProperties = environment.links.console.getEntitiesProperties
   getRuleEntityProperties = environment.links.console.getRuleEntityProperties;
   getChannels = environment.links.identity.channels;
   consoleChannel= environment.links.identity.consoleChannls
   deleteRoles = environment.links.identity.deleteRoles;
   getUserRoles = environment.links.identity.getUserRoles;
+  getautoResponedFB = environment.links.console.getautoResponedFB
+  addFbResponed =environment.links.console.addFbResponed
+  getCompanyPages = environment.links.console.getCompanyPages
+  getProfileDetails = environment.links.console.getProfileDetails
+  getServices = environment.links.console.getServices
+  botsList = environment.links.console.getBotList
+  getActions = environment.links.console.getActions
+  getPlatorm = environment.links.console.getPlatform
+  getConsoleEntities = environment.links.console.getConsoleEntities
+  getConsoleEntityProperties = environment.links.console.getConsoleEntityProperties
+  getRuleType= environment.links.console.getRuleType
+  getRuleTag = environment.links.console.getRuleTag
+  getServicetree = environment.links.console.getServicetree
+  getTemplateStatus= environment.links.console.getTemplateStatus
+  deleteTemplate= environment.links.console.deleteTemplate
+  getRuleStatus= environment.links.console.getRuleStatus
+
   // teams
   // getAllTeams= environment.links.console.getAllTeams
   // addTeam = environment.links.console.addTeam
@@ -299,6 +335,30 @@ export class CommonDataService {
       null
     );
   }
+// auto responder apis  
+getAutoRespondFB(body: any) {
+  return this.http.post(this.autoresponderbaseurl + this.getautoResponedFB , body);
+}
+getChannelsList(){
+  return this.http.get(this.channelBaseUrl + this.getServices);
+}
+getBots(){
+  return this.http.get(this.botsBaseUrl + this.botsList)
+}
+AddFbResponed( body: any) {
+    return this.http.post(this.autoresponderbaseurl + this.addFbResponed , body);
+  }
+  GetCompanyPages(){
+    return this.http.get(this.autoresponderbaseurl + this.getCompanyPages);
+
+  }
+  GetProfileInfo(url:any){
+    return this.http.get( url + this.getProfileDetails)
+  }
+
+  GetActions(){
+    return this.http.get(this.autoresponderbaseurl + this.getActions);
+  }
   GetFbCommentStats(pageId: any, commentId: any) {
     return this.http.post(
       this.CommonBaseUrl +
@@ -405,6 +465,9 @@ export class CommonDataService {
   GetAllMessages(templates: any) {
     return this.http.post(this.consoleBaseUrl + this.getAllMessages, templates);
   }
+  GetBotConfig(url: any, body: any){
+    return this.http.post(url+ this.botConfigDetails, body);
+  }
   Addtemplate(addData: any) {
     return this.http.post(this.consoleBaseUrl + this.addTemplate, addData);
   }
@@ -415,6 +478,14 @@ export class CommonDataService {
   DeleteMessage(deleteId: string): Observable<any> {
     const url = `${this.consoleBaseUrl}${this.deleteMessages}?Id=${deleteId}`;
     return this.http.get(url);
+  }
+  DeleteBotConfig(baseUrl:any, id:any, pageId: any, Type: any): Observable<any> {
+    const url = `${baseUrl}${this.deleteBotConfig}?id=${id}&PageId=${pageId}&Type=${Type}`;
+    return this.http.get(url);
+  }
+  UpdateBotStatus(baseUrl:any, id:any, pageId: any, contentType: any, Status: any){
+    const url = `${baseUrl}${this.updateBotConfigDetail}?id=${id}&PageID=${pageId}&ContentType=${contentType}&status=${Status}`
+    return this.http.post( url,"null")
   }
   GetQuickReply(body: any) {
     return this.http.post(this.consoleBaseUrl + this.getQuickReply, body);
@@ -499,6 +570,13 @@ export class CommonDataService {
   AddSkill(addSkill: any) {
     return this.http.post(this.consoleBaseUrl + this.addSkill, addSkill);
   }
+  AddBotConfig(url:any,body: any){
+    return this.http.post(url + this.addBotConfig, body)
+  }
+  GetBotConfigById(pageId: any, Type: any){
+    const url = `${this.botConfigBaseUrl}${this.ViewBotConfig}?PageID=${pageId}&Type=${Type}`
+    return this.http.get( url )
+  }
   // DeleteSkill(delSkill: string): Observable<any> {
   //   const url = `${this.consoleBaseUrl}${this.deleteSkill}?Id=${delSkill}`;
   //   return this.http.get(url);
@@ -551,12 +629,19 @@ export class CommonDataService {
   GetAllRules(body: any) {
     return this.http.post(this.consoleBaseUrl + this.getAllRules, body);
   }
+  GetAllFbRules(body: any) {
+    return this.http.post<RuleWithCount>(this.autoresponderbaseurl + this.getFbRule, body);
+  }
+  
   GetRuleById(ruleId: string) {
     return this.http.get(`${this.consoleBaseUrl + this.getRuleById}?id=${ruleId} `)
       ;
   }
   AddRules(addrule: any) {
     return this.http.post(this.consoleBaseUrl + this.addRules, addrule);
+  }
+  AddFBRule(addrule: any) {
+    return this.http.post(this.autoresponderbaseurl + this.addRule, addrule);
   }
   UpdateRules(rule: any) {
     const url = `${this.consoleBaseUrl}${this.updateRules}`;
@@ -566,10 +651,22 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteRules}?Id=${delRules}`;
     return this.http.get(url);
   }
+  DeleteFbRules(delRules: any) {
+    const url = `${this.autoresponderbaseurl}${this.softDeleteFb}?Id=${delRules}`;
+    return this.http.get(url);
+  }
   GetEntitiesRule() {
     return this.http.get(this.consoleBaseUrl + this.getEntitiesRule);
   }
-  GetRuleEntityProperties(entity: string) {
+  GetEntitiesRules() {
+    return this.http.get(this.autoresponderbaseurl + this.getEntitiesRules);
+  }
+  GetRuleEntitiesProperties(entity: any) {
+    return this.http.get(
+      `${this.autoresponderbaseurl}${this.getEntitiesProperties}?tableName=${entity}`
+    );
+  }
+  GetRuleEntityProperties(entity: any) {
     return this.http.get(
       `${this.consoleBaseUrl}${this.getRuleEntityProperties}?tableName=${entity}`
     );
@@ -822,5 +919,38 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
   }
   GetRoles(){
     return this.http.get(this.IdentityBaseUrl + this.getUserRoles)
+  }
+  GetPlatorm(){
+    return this.http.get(this.consoleBaseUrl + this.getPlatorm)
+  }
+  GetConsoleEntities(serviceId: any): Observable<any> {
+    const url = `${this.consoleBaseUrl}${this.getConsoleEntities}?serviceId=${serviceId}`;
+    return this.http.post<any>(url, {});
+  }
+  GetConsoleEntityProperties(entityId: any) {
+    const url = `${this.consoleBaseUrl}${this.getConsoleEntityProperties}?entityId=${entityId}`;
+    return this.http.get<any>(url, {});
+  }
+  GetRuleType(){
+    return this.http.get(this.consoleBaseUrl + this.getRuleType)
+  }
+  GetRuleTag(id: any){
+    const url = `${this.consoleBaseUrl}${this.getRuleTag}?id=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  GetServicetree(){
+    return this.http.get(this.consoleBaseUrl + this.getServicetree)
+  }
+  GetTemplateStatus(id: any) {
+    const url = `${this.autoresponderbaseurl}${this.getTemplateStatus}?templateId=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  DeleteTemplate(id: any) {
+    const url = `${this.autoresponderbaseurl}${this.deleteTemplate}?templateId=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  GetRuleStatus(id: any) {
+    const url = `${this.autoresponderbaseurl}${this.getRuleStatus}?Id=${id}`;
+    return this.http.get<any>(url, {});
   }
 }

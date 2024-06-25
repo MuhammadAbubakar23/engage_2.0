@@ -18,6 +18,7 @@ import {
 } from '../../permission-state/permission.selectors';
 import { PermissionState } from '../../permission-state/permission.state';
 import { OpensidebarService } from 'src/app/services/openSidebarService/opensidebar.service';
+import { SearchFilterService } from 'src/app/services/SearchFilter/search-filter.service';
 
 @Component({
   selector: 'role-menu',
@@ -50,7 +51,8 @@ export class RoleMenuComponent implements OnInit {
     private PermissionStore: Store<PermissionState>,
     private _route: Router,
     private storage: StorageService,
-    private sidebar: OpensidebarService
+    private sidebar: OpensidebarService,
+    private SearchFilterService:SearchFilterService
   ) {
     //  this.menu$ = this.MenuStore.select(getEmargingEqual("role_main_left_menu"));
     //  this.menus$ = this.menu$.pipe(share(), startWith(false));
@@ -114,5 +116,8 @@ export class RoleMenuComponent implements OnInit {
         this.toastermessage = false;
       }, 4000);
     }
+  }
+  resetFilters(){
+    this.SearchFilterService.resetAllFilter();
   }
 }

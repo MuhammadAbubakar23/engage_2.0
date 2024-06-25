@@ -1,0 +1,15 @@
+.scroll-container {
+    height: 200px; /* Adjust the height as needed */
+    overflow-y: auto;
+}
+.error-message {
+    margin-top: 5px; /* Adjust as needed */
+}
+
+.error {
+    color: red;
+}
+input[disabled] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}

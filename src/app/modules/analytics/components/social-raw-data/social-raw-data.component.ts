@@ -39,6 +39,7 @@ export class SocialRawDataComponent implements OnInit {
       title: 'Social Raw Data',
       url: '/analytics/social-raw-data',
     };
+
     this._hS.setHeader(newObj);
     const currentDate = new Date();
     const oneDayBeforeCurrentDate = currentDate.setDate(
@@ -50,6 +51,17 @@ export class SocialRawDataComponent implements OnInit {
     );
     this.GetSocialRawData();
   }
+  getEndDate() {
+    if (this.toDate >= this.fromDate) {
+      this.GetSocialRawData();
+    } else {
+      alert('EndDate is lessthen StartDate');
+      this.toDate = '';
+    }
+  }
+  getStartDate() {
+    this.toDate = '';
+  }
   GetSocialRawData() {
     if (this.toDate == '' && this.fromDate == '') {
       // let currentDate = new Date();
@@ -60,8 +72,17 @@ export class SocialRawDataComponent implements OnInit {
       this.toDate = this.maxEndDate;
     } else if (this.fromDate != '' && this.toDate != '') {
       this.fromDate = this.fromDate;
-      this.toDate = this.fromDate;
+      this.toDate = this.toDate;
     }
+    // const startDateObj = new Date(this.fromDate);
+    // const endDateObj = new Date(this.toDate);
+    // const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
+    // const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    // if (diffDays > 30) {
+    //   alert('Select a date range of 30 days or less');
+    //   this.toDate=''
+    //   return;
+    // }
     var obj = {
       fromDate: this.fromDate,
       toDate: this.toDate,

@@ -27,6 +27,9 @@ import { BulkUploadComponent } from './components/sentiment-analysis/bulk-upload
 import { CreateSentimentComponent } from './components/sentiment-analysis/create-sentiment/create-sentiment.component';
 import { SkillsResolver } from './resolvers/users/skills.resolver';
 import { ContactsComponent } from '../inboxes/right-sidebar-components/contacts/contacts.component';
+import { BotConfigurationComponent } from './components/bot-configuration/bot-configuration.component';
+import { CreateBotConfigurationComponent } from './components/bot-configuration/create-bot-configuration/create-bot-configuration.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -119,6 +122,17 @@ const routes: Routes = [
       {
         path: 'add-rules/:id',
         loadComponent: () => import('./components/rules/add-rules/add-rules.component').then(c => c.AddRulesComponent)
+
+      }, {
+        path: 'templates/auto-responder',
+        loadComponent: () => import('./components/templates/auto-responder/auto-responder.component').then(c => c.AutoResponderComponent)
+
+      },
+
+      {
+        path: 'templates/add-auto-responder/:id',
+        loadComponent: () => import('./components/templates/auto-responder/create-auto-responder/create-auto-responder.component').then(c => c.CreateAutoResponderComponent)
+
       },
       {
         path: 'add-rules',
@@ -146,6 +160,21 @@ const routes: Routes = [
       {
         path: 'business-hours',
         loadComponent: () => import('./components/business-hours/business-hours.component').then(c => c.BusinessHoursComponent)
+      },
+      {
+        path: 'bot-configuration',
+        loadComponent: () => import('./components/bot-configuration/bot-configuration.component').then(c => c.BotConfigurationComponent)
+
+      },
+      {
+        path: 'add-bot-configuration',
+        loadComponent: () => import('./components/bot-configuration/create-bot-configuration/create-bot-configuration.component').then(c => c.CreateBotConfigurationComponent)
+
+      },
+      {
+        path: 'bot-configuration/:type/:channelId/:id',
+        loadComponent: () => import('./components/bot-configuration/create-bot-configuration/create-bot-configuration.component').then(c => c.CreateBotConfigurationComponent)
+
       },
       {
         path: 'templates/message',

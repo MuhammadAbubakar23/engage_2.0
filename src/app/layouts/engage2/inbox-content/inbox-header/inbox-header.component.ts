@@ -113,12 +113,13 @@ export class InboxHeaderComponent implements OnInit {
   }
   update(menuLink: any) {
     this.flag = this._route.url.split('/')[2];
+    var routee = this._route.url.split('/')[3];
     if (
       sessionStorage.getItem('assignedProfile') == null ||
       sessionStorage.getItem('assignedProfile') == '' ||
       sessionStorage.getItem('assignedProfile') == undefined
     ) {
-      this._route.navigateByUrl('/' + menuLink);
+      this._route.navigateByUrl('/' + menuLink + '/' + routee);
     } else {
       this.reloadComponent('querryAssigned');
     }

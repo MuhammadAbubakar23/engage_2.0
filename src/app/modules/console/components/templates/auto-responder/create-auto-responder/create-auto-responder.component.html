@@ -1,0 +1,141 @@
+<div class="add-templates console-body-wrapper" data-scrollbar="true" tabindex="-1"
+    style="overflow-y:auto; outline: none;">
+    <div class="scroll-content">
+        <form [formGroup]="messageForm">
+            <div class="wider-container pt-3">
+                <div class="floating-item mb-3">
+                    <div class="floating-wrap form-floating">
+                        <input type="text" class="form-control" id="name" placeholder="Template Name"
+                            formControlName="name"
+                            [class.is-invalid]="messageForm.get('name')?.invalid && (messageForm.get('name')?.dirty || messageForm.get('name')?.touched)"
+                            [class.is-valid]="messageForm.get('name')?.valid && (messageForm.get('name')?.dirty || messageForm.get('name')?.touched)">
+                        <label for="name" class="coal">Template Name</label>
+                        <div class="invalid-feedback" *ngIf="messageForm.get('name')?.errors?.['required']">
+                            Template name is required.</div>
+                        <div class="invalid-feedback" *ngIf="messageForm.get('name')?.errors?.['pattern']">Only
+                            alphabets and spaces are allowed.</div>
+                    </div>
+                </div>
+                <div class="floating-item mb-4">
+                    <div class="floating-wrap form-floating mb-3">
+                        <input class="form-control" id="description" placeholder="description"
+                            formControlName="description"
+                            [class.is-invalid]="messageForm.get('description')?.invalid && (messageForm.get('description')?.dirty || messageForm.get('description')?.touched)"
+                            [class.is-valid]="messageForm.get('description')?.valid && (messageForm.get('description')?.dirty || messageForm.get('description')?.touched)">
+                        <label for="description" class="coal">Description</label>
+                        <div class="invalid-feedback" *ngIf="messageForm.get('description')?.errors?.['required']">
+                            Description
+                            is required.</div>
+                    </div>
+                </div>
+                <div class="form-floating mb-4">
+                    <label for="channelSelect">Works with selects</label>
+                    <select class="form-select" id="channelSelect" aria-label="Floating label select example"
+                        (change)="onChangeChannel($event)">
+                        <option selected disabled>Select Channels</option>
+                        <option *ngFor="let channel of channels" [ngValue]="channel">{{ channel.name }}</option>
+                    </select>
+                </div>
+                <div class="form-floating mb-4">
+                    <label for="pageSelect">Content Type </label>
+                    <select class="form-select" id="pageSelect" aria-label="Floating label select example"
+                        (change)="getEntites($event)" formControlName="contentType">
+                        <option selected disabled value="">Content Type </option>
+                        <option *ngFor="let page of content" [value]="page.prefix">{{ page.prefix }}</option>
+                    </select>
+                </div>
+                <div class="form-floating mb-4">
+                    <label for="entitySelect">Works with selects</label>
+                    <select class="form-select" id="entitySelect" (change)="getTableProperites($event)"
+                        aria-label="Floating label select example" formControlName="entityName">
+                        <option selected disabled value="">Select Entities</option>
+                        <option *ngFor="let entity of entities" [value]="entity">{{ entity }}</option>
+                    </select>
+                </div>
+                <div class="floating-item mb-4">
+                    <div class="floating-wrap form-floating mb-3">
+                        <div class="card" class="form-control" id="floatingSubject" placeholder="Subject"
+                            style="overflow: auto; height: 80px;">
+                            <div *ngFor="let row of newtempletvaiablesArray" (click)="loadTemplateVariables(row)"
+                                class="horizontal-names" formControlName="variables">
+                                {{row.entityName}}
+                            </div>
+                        </div>
+                        <label for="floatingSubject" class="coal">Template Variables</label>
+                    </div>
+                </div>
+                <div class="form-floating mb-4">
+                    <label for="pageSelect">Rules</label>
+                    <!-- <select class="form-select" id="pageSelect" aria-label="Floating label select example"
+                        formControlName="ruleTag">
+                        <option selected disabled>Rules </option>
+                        <option *ngFor="let page of Rules" [value]="page.name">{{ page.name }}</option>
+                    </select> -->
+                    <select class="form-select" id="pageSelect" formControlName="ruleTag">
+                        <option selected disabled value="">Tags</option>
+                        <option *ngFor="let tag of currentTags" [value]="tag.slug">{{ tag.name}}</option>
+                    </select>
+                </div>
+                <!-- <div class="floating-item">
+                    <div class="form-floating mb-4">
+                        <div class="card" class="form-control dropdown-toggle  " id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <div *ngFor="let item of selectedRules" class="horizontal-names">
+                                <span class="badge-rounded-pill"> {{item.name}}</span>
+                            </div>
+                            <div  *ngIf="selectedRules.length === 0">
+                                Select Rules
+                            </div>
+                        </div>
+                        <ul class="dropdown-menu ">
+                            <li *ngFor="let rule of Rules">
+                                <input class="form-check-input" type="checkbox" (change)="toggleRuleSelection(rule)"
+                                    [id]="rule.id" [checked]="rule.isChecked">
+                                <label class="form-check-label" [for]="rule.id">{{ rule.name
+                                    }}</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div> -->
+                <div class="form-check form-switch">
+                    <label class="form-check-label" [for]="switchId">
+                        {{ messageForm.get('status')?.value ? 'Template is active' : 'Template is off' }}
+                    </label>
+                    <input class="form-check-input" type="checkbox" role="switch" [id]="switchId"
+                        formControlName="status">
+                </div>
+                <p class="mt-5">Email Template</p>
+                <div class="text-area-section pb-5">
+                    <ckeditor [(ngModel)]="editorContent" formControlName="template_Message"></ckeditor>
+                    <div class="invalid-feedback"
+                        *ngIf="messageForm.get('template_Message')?.invalid && (messageForm.get('template_Message')?.dirty || messageForm.get('template_Message')?.touched)">
+                        Message is required.</div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="ps-3 pe-3">
+                    <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+                        <div class="row w-100">
+                            <div class="col-md-4">
+                                <div class="f-icon-txt-wrapper d-flex align-items-center">
+                                    <button class="iconButton medium iconHover" id="deleteModalBtn">
+                                        <!-- <i class="fal fa-trash radical"></i> -->
+                                    </button>
+                                    <!-- <p class="f-icon-txt radical ms-1 m-0">Delete Message</p> -->
+                                </div>
+                            </div>
+                            <div class="col-md-8 justify-content-end d-flex">
+                                <div class="buttons-wrap d-flex">
+                                    <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4"
+                                        (click)="cancelForm()">Cancel</button>
+                                    <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                                        data-bs-target="" (click)="saveForm()">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </form>
+    </div>
+</div>
