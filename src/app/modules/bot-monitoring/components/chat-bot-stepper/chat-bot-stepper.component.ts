@@ -29,6 +29,8 @@ export class ChatBotStepperComponent implements OnInit {
   phrase: { id: number, label: string }[] = [];
   BotId: any
   stories:any[]  = [ ];
+  isFormVisible: boolean = false;
+
 
   constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService) {
     this.BotId = localStorage.getItem('bot_id');
@@ -309,4 +311,8 @@ export class ChatBotStepperComponent implements OnInit {
   closeToaster() {
     this.toastermessage = false;
   }
+  toggleFormVisibility() {
+    this.isFormVisible = true;
+  }
+  
 }

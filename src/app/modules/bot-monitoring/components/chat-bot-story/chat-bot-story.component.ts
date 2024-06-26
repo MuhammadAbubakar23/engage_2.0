@@ -31,6 +31,8 @@ export class ChatBotStoryComponent implements OnInit {
   BotId: any
   selectedQueriesArray: any[] = [];
   selectedResponsesArray: any[] = [];
+  stories:any[]  = [ ];
+  isFormVisible: boolean = false;
   constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService) {
     this.BotId = localStorage.getItem('bot_id');
   }
@@ -38,7 +40,8 @@ export class ChatBotStoryComponent implements OnInit {
     this.intializeForm();
     this.loadBotId()
     this.ResponseList()
-    this.addmore()
+    this.addmore();
+    this.getListOfRule();
   }
   addmore() {
     const newFormGroup = this.createRule();
@@ -58,6 +61,18 @@ export class ChatBotStoryComponent implements OnInit {
       story: new FormControl(''),
       storyFlow: new FormControl(''),
       addQueryReponse: new FormArray([])
+    });
+  }
+  getListOfRule(){
+    if (!this.BotId) {
+      console.error('BotId not found in localStorage.');
+      return;
+    }
+    this._botService.GetStoriesChatBot(this.BotId).subscribe((res:any)=>{
+      this.stories=res
+
+    }, (error) => {
+      console.error('Error fetching intent:', error);
     });
   }
   createRule() {
@@ -358,7 +373,9 @@ export class ChatBotStoryComponent implements OnInit {
     }
 
   }
-
+  toggleFormVisibility() {
+    this.isFormVisible = true;
+  }
   closeToaster() {
     this.toastermessage = false;
   }
