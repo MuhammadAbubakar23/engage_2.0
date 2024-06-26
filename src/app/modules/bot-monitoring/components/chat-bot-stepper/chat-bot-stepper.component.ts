@@ -29,16 +29,7 @@ export class ChatBotStepperComponent implements OnInit {
   phrase: { id: number, label: string }[] = [];
   BotId: any
   stories:any[]  = [ ];
-  isFormVisible = false;
 
-  // Methods to show and hide the form
-  showForm() {
-    this.isFormVisible = true;
-  }
-
-  hideForm() {
-    this.isFormVisible = false;
-  }
   constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService) {
     this.BotId = localStorage.getItem('bot_id');
   }
