@@ -233,6 +233,7 @@ export class ChatBotStepperComponent implements OnInit {
         this.spinnerServerice.hide();
 
         this.reloadComponent('Rule Create');
+        this.getListOfRule()
 
         console.log(res);
         this.stepperForm.reset();

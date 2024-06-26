@@ -282,6 +282,7 @@ export class ChatBotStoryComponent implements OnInit {
 
         this.reloadComponent('Story Create')
 
+        this.getListOfRule();
 
         this.spinnerServerice.hide();
 
