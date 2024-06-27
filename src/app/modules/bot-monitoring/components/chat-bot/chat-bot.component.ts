@@ -22,15 +22,18 @@ export class ChatBotComponent implements OnInit {
   chatbots: any[] = []
   chatbotForm: FormGroup;
   BotId: any;
+  toastermessage: boolean = false;
+  AlterMsg: any
+  searchQuery: string = ''
   isDeleteAction: boolean = false;
   constructor(private _botService: BotMonitoringService,
     private chatBotIdS: ChatbotIdService,
     private route: Router, private spinnerServerice: NgxSpinnerService,
     private formBuilder: FormBuilder, private headerService: HeaderService) {
     this.chatbotForm = new FormGroup({
-      name: new FormControl(''),
-      timeout: new FormControl(''),
-      botType: new FormControl('')
+      name: new FormControl('', Validators.required),
+      timeout: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
+      botType: new FormControl('', Validators.required)
     });
   }
   saveBotId(botId: any) {
@@ -39,41 +42,56 @@ export class ChatBotComponent implements OnInit {
   ngOnInit(): void {
     this.getChatBotList();
   }
-
+  filteredChatbots() {
+    if (!this.searchQuery) {
+      return this.chatbots;
+    }
+    return this.chatbots.filter(bot =>
+      bot.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
   getChatBotList() {
     this.spinnerServerice.show();
     this._botService.GetAllChatBot().subscribe((res: any) => {
       this.spinnerServerice.hide();
 
       this.chatbots = res
-      
+
       console.log("Bot=====>", this.chatbots)
     },
-    (error: any) => {
-      this.spinnerServerice.hide();
-      console.error(error);
-    })
-    
+      (error: any) => {
+        this.spinnerServerice.hide();
+        console.error(error);
+      })
+
   }
   updatevalue(string: any) {
-    
+
     this.headerService.updateMessage(string)
   }
   viewChatbotDetails(botId: number): void {
     this.spinnerServerice.show();
-    this._botService.GetBotDetailsById(botId).subscribe((res: any) => {
-      this.spinnerServerice.hide();
-      console.log('Chatbot Details: ', res);
-      this.chatbotForm.get('name')?.setValue(res.name);
-      this.chatbotForm.get('timeout')?.setValue(res.timeout);
-    }, (error: any) => {
-      console.error('Error fetching chatbot details: ', error);
-    });
+    this._botService.GetBotDetailsById(botId).subscribe(
+      (res: any) => {
+        this.spinnerServerice.hide();
+        console.log('Chatbot Details: ', res);
+        this.chatbotForm.get('name')?.setValue(res.name);
+        this.chatbotForm.get('timeout')?.setValue(res.timeout);
+        this.chatbotForm.get('name')?.disable();
+        this.chatbotForm.get('timeout')?.disable();
+      },
+      (error: any) => {
+        console.error('Error fetching chatbot details: ', error);
+        this.spinnerServerice.hide();
+      }
+    );
   }
-  resetForm(){
+  resetForm() {
     this.chatbotForm.reset();
+    this.chatbotForm.get('name')?.enable();
+    this.chatbotForm.get('timeout')?.enable();
   }
-  DeleteChat(botId: any, event:Event) {
+  DeleteChat(botId: any, event: Event) {
     event.stopPropagation();
     event.preventDefault();
     this.isDeleteAction = true;
@@ -125,6 +143,7 @@ export class ChatBotComponent implements OnInit {
       this._botService.Addbot(formData).subscribe((res: any) => {
         this.getChatBotList();
         this.spinnerServerice.hide();
+        this.reloadComponent('created')
 
         const newChatbot = {
           bot_id: res.bot_id,
@@ -142,6 +161,8 @@ export class ChatBotComponent implements OnInit {
       });
     } else {
       console.log('Form is invalid!');
+      this.reloadComponent('form Valid')
+
     }
   }
 
@@ -169,4 +190,27 @@ export class ChatBotComponent implements OnInit {
     this.chatBotIdS.setOption(value.bot_id)
     this.route.navigateByUrl('/bot-monitoring/chatBot-Story')
   }
+  reloadComponent(value: any) {
+
+    if (value == 'form Valid') {
+      this.toastermessage = true
+      this.AlterMsg = "Please fill input fields!"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+    if (value == 'created') {
+      this.toastermessage = true
+      this.AlterMsg = "Chat Bot created Successfully!"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+  }
+  closeToaster() {
+    this.toastermessage = false;
+  }
+
 }

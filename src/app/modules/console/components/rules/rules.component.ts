@@ -61,10 +61,10 @@ export class RulesComponent implements OnInit {
       }
     );
   }
-  selectedRuleType:any
+  selectedRuleType: any
   onRuleTypeChange() {
     this.refreshtableData();
-}
+  }
 
 
   refreshtableData() {
@@ -73,7 +73,7 @@ export class RulesComponent implements OnInit {
       sorting: this.selectedSortOption,
       pageNumber: this.currentPage,
       pageSize: this.perPage,
-      ruleType:this.selectedRuleType
+      ruleType: this.selectedRuleType
     };
     this.spinnerServerice.show();
     this.channelRules = [];
@@ -147,7 +147,7 @@ export class RulesComponent implements OnInit {
   }
 
   deleteTemplate(rule: ChannelRule, platform: string) {
-    
+
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
       const ruleId = platform === 'Exchange-email' ? (rule.rulesWihtCount.Rules[0] ? rule.rulesWihtCount.Rules[0].id : null) : (rule.rulesWihtCount.Rules[0] ? rule.rulesWihtCount.Rules[0].groupId : null);
@@ -156,7 +156,7 @@ export class RulesComponent implements OnInit {
         return;
       }
       const filteredRules = platform === 'Exchange-email' ? rule.rulesWihtCount.Rules.filter((r: any) => r.id !== ruleId) : rule.rulesWihtCount.Rules.filter((r: any) => r.groupId !== ruleId);
-  
+
       if (platform === 'Exchange-email') {
         this.commonService.DeleteFbRules(ruleId).subscribe(
           () => {
@@ -180,7 +180,7 @@ export class RulesComponent implements OnInit {
       }
     }
   }
-  
+
   disableTemplate(message: any) {
   }
   cloneTemplate(message: any) {

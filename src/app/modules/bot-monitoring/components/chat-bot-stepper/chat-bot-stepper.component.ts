@@ -28,13 +28,18 @@ export class ChatBotStepperComponent implements OnInit {
   generatedPhrases: any[] = [];
   phrase: { id: number, label: string }[] = [];
   BotId: any
+  stories:any[]  = [ ];
+  isFormVisible: boolean = false;
+
+
   constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService) {
     this.BotId = localStorage.getItem('bot_id');
   }
   ngOnInit(): void {
     this.intializeForm();
     this.loadBotId()
-    this.ResponseList()
+    this.ResponseList();
+    this.getListOfRule()
   }
   intializeForm() {
     this.stepperForm = new FormGroup({
@@ -45,6 +50,18 @@ export class ChatBotStepperComponent implements OnInit {
       response: new FormControl('', [Validators.pattern('^[a-zA-Z0-9 ]+$')]),
       text: new FormControl(''),
       rule: new FormControl(''),
+    });
+  }
+  getListOfRule(){
+    if (!this.BotId) {
+      console.error('BotId not found in localStorage.');
+      return;
+    }
+    this._botService.GetRuleChatBot(this.BotId).subscribe((res:any)=>{
+      this.stories=res
+
+    }, (error) => {
+      console.error('Error fetching intent:', error);
     });
   }
   formatUtterance(utterance: string): string {
@@ -216,6 +233,7 @@ export class ChatBotStepperComponent implements OnInit {
         this.spinnerServerice.hide();
 
         this.reloadComponent('Rule Create');
+        this.getListOfRule()
 
         console.log(res);
         this.stepperForm.reset();
@@ -294,4 +312,8 @@ export class ChatBotStepperComponent implements OnInit {
   closeToaster() {
     this.toastermessage = false;
   }
+  toggleFormVisibility() {
+    this.isFormVisible = true;
+  }
+  
 }

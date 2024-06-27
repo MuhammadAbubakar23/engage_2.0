@@ -44,7 +44,7 @@ export const environment = {
   consoleBaseUrl: 'https://console.enteract.live/api/',
   keReportsBaseUrl: 'https://kereports.enteract.live/api/',
   LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
-  botBaseUrl:'',
+  // botBaseUrl:'',
 
   // For Jazz
   // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
@@ -124,7 +124,7 @@ export const environment = {
 // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
 // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
 // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-// botBaseUrl: 'https://bot-engage.enteract.app/api/',
+botBaseUrl: 'https://bot-engage.enteract.app/api/',
 botsBaseUrl: 'http://3.1.47.150:5000/bots/',
 botConfigBaseUrl: 'https://linked.360scrm.com/api/',
 // botConfigBaseUrl: 'https://newpurpleshop86.conveyor.cloud/api/',
@@ -301,7 +301,9 @@ autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
       createRule: 'rules/create',
       createStory:'stories/create',
       viewIntent:'intents/get',
-      viewResponse:'responses/get'
+      viewResponse:'responses/get',
+      getRuleChatBot:'rules/get',
+      getStoriesChatBot:'stories/get'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

@@ -52,9 +52,9 @@
                                 </div>
                                 <div class="col-lg-8 d-flex align-items-center justify-content-end">
                                     <div class="me-2">
-                                        <select class="form-select" id="ruleTypeSelect" [(ngModel)]="selectedRuleType"
+                                        <select class="form-select" id="ruleTypeSelect" 
                                             (change)="onRuleTypeChange()">
-                                            <option selected disabled value="">Select RuleType </option>
+                                            <option selected disabled >Select RuleType </option>
                                             <option *ngFor="let ruleType of ruleTypes" [value]="ruleType.name">{{
                                                 ruleType.name }}</option>
                                         </select>
