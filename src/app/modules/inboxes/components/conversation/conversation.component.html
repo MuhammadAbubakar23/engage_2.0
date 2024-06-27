@@ -613,26 +613,25 @@
                     [disabled]="FlagForAssignToMe == 'assigned_to_me'">
                 </td>
                 <td style="width: 40px;">
-                  <i *ngIf="query.platform == 'Facebook'" class="fab fa-facebook navytext" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="" data-bs-original-title="Facebook" aria-label="Facebook"></i>
-                  <i *ngIf="query.platform == 'Instagram'" data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-                    data-bs-original-title="Instagram" aria-label="Instagram" class="fab fa-instagram"></i>
+                  <img *ngIf="query.postType == 'FCP'" src="../../../../../assets/images/FacebookDM.png" style="width: 75% !important;"> 
+                  <img *ngIf="query.postType == 'FC'" src="../../../../../assets/images/FacebookComment.png" style="width: 75% !important;">  
+                  <img *ngIf="query.postType == 'IC'" src="../../../../../assets/images/InstagramComment.png" style="width: 75% !important;">
+                  <img *ngIf="query.postType == 'IM'" src="../../../../../assets/images/InstagramDM.png" style="width: 75% !important;">   
                   <i *ngIf="query.platform == 'Email' || query.platform == 'OfficeEmail'" class="fal fa-envelope cherry"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Email"
                     aria-label="Email"></i>
                   <i *ngIf="query.platform == 'Youtube'" class="fab fa-youtube warning" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" title="" data-bs-original-title="Youtube" aria-label="Youtube"></i>
-                  <i *ngIf="query.platform == 'Twitter'" class="fab fa-twitter sky" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="" data-bs-original-title="Twitter" aria-label="Twitter"></i>
+                  <img *ngIf="query.postType == 'TM'" src="../../../../../assets/images/Twitter Complete.png" style="width: 75% !important;">
+                  <img *ngIf="query.postType == 'TTR'" src="../../../../../assets/images/Twitter Complete.png" style="width: 75% !important;">
+                  <img *ngIf="query.postType == 'TDM'" src="../../../../../assets/images/TwitterDM.png" style="width: 75% !important;">
                   <i *ngIf="query.platform == 'SMS'" class="fal fa-comment-alt-lines berry" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-original-title="SMS" aria-label="SMS"></i>
                   <i *ngIf="query.platform == 'WhatsApp'" class="fab fa-whatsapp emerald" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-original-title="WhatsApp" aria-label="Whatsapp"></i>
                   <i *ngIf="query.platform == 'Webchat'" class="fal fa-messages webchat" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-original-title="Webchat" aria-label="Webchat"></i>
-                  <i *ngIf="query.platform == 'LinkedIn'" class="fa-brands fa-linkedin-in linkedinTxt"
-                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="LinkedIn"
-                    aria-label="LinkedIn"></i>
+                  <img *ngIf="query.postType == 'LIC'" src="../../../../../assets/images/LinkedIn Comment.png" style="width: 75% !important;">
                   <i *ngIf="query.platform == 'PlayStore'" class="fa-brands fa-google-play darkorange"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="PlayStore"
                     aria-label="PlayStore"></i>
