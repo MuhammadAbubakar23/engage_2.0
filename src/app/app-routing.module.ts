@@ -22,11 +22,11 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   // For Jazz, TPPL, Morinaga
-  {
-    path: 'analytics',
-    redirectTo: 'analytics/whatsapp-report',
-    pathMatch: 'full',
-  },
+  // {
+  //   path: 'analytics',
+  //   redirectTo: 'analytics/whatsapp-report',
+  //   pathMatch: 'full',
+  // },
   {
 path:'bot-monitoring',
 redirectTo:'bot-monitoring/chat-bot',

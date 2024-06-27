@@ -9,3 +9,13 @@
 .fa-tick::before {
     content: "\f00c";
 }
+.fb-messenger{
+    background: radial-gradient(circle at 33% 100%, #167AFF, #9F33FF, #FF6070);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .insta-messenger{
+    background: radial-gradient(circle at 33% 100%, #405de6,#5851db,#833ab4,#c13584,#e1306c,#fd1d1d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }

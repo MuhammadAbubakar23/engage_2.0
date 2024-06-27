@@ -183,11 +183,10 @@ export class ConversationComponent implements OnInit {
               const fortyMinutesInMs = 40 * 60 * 1000; // 40 minute in milliseconds
               const time = new Date(item.createdDate);
               const timeDifference = this.TodayDate.getTime() - time.getTime();
-              if (
-                timeDifference < twentyMinutesInMs &&
-                timeDifference < fortyMinutesInMs
+              if (timeDifference > twentyMinutesInMs && timeDifference < fortyMinutesInMs
               ) {
                 this.alertWarning = true;
+                this.alertDanger = false;
                 item['slaFlag'] = 'warning';
               }
               if (timeDifference > fortyMinutesInMs) {
