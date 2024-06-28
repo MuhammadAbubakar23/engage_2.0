@@ -115,7 +115,7 @@ export const environment = {
   // flowBot: 'https://flowbot.enteract.app/',
   // intentBot: 'https://intentBot.enteract.app/',
   // autoresponderbaseurl: 'https://d387-203-135-1-210.ngrok-free.app/api/',
-  profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
+  // profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
 // testing uiengage company id 657
 IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
 CommonBaseUrl: 'https://common-engage.enteract.app/api/',
@@ -301,7 +301,13 @@ autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
       viewIntent:'intents/get',
       viewResponse:'responses/get',
       getRuleChatBot:'rules/get',
-      getStoriesChatBot:'stories/get'
+      getStoriesChatBot:'stories/get',
+      ruleDelete:'rules/delete',
+      storyDelete:'stories/delete',
+      trainBot:'models/train',
+      createBotTrain:'models/create',
+      runChatBot:'models/run',
+      chatBotWdidget:'chat'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

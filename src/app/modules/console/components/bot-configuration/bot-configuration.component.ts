@@ -198,7 +198,7 @@ export class BotConfigurationComponent implements OnInit {
     })
   }
   setChannel(id: any){
-    debugger
+    
     switch(id){
       case(1):
         this.channelId = id;

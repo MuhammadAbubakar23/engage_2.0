@@ -13,31 +13,40 @@
                             <div class="filter-toolbar mb-3 d-flex align-items-center justify-content-between">
                                 <ul class="list-inline m-0 d-flex align-items-center">
                                     <li class="list-inline-item">
-                                        <h4 class="mb-3">Story</h4>
+                                        <h4 class="mb-3">Create a story </h4>
                                     </li>
                                 </ul>
                                 <div class="text-end">
-                                    <button class="btn btn-success px-4 fs-6 me-2" type="button" (click)="CreateStory()">
+                                    <button class="btn btn-success px-4 fs-6 me-2" type="button"
+                                        (click)="CreateStory()">
                                         Save
                                     </button>
                                 </div>
                             </div>
-                            <button class="btn btn-outline-primary ms-2" type="button" (click)="addmore()">
+                            <!-- <button class="btn btn-outline-primary ms-2" type="button" >
                                 <i class="fa-light fa-plus"></i> Add
-                            </button>
+                            </button> -->
                             <div class="accordion component-acc" id="comp-accordion">
                                 <div formArrayName="addQueryResponse">
                                     <ng-container *ngFor="let item of addQueryResponse.controls; let i = index">
                                         <div class="accordion-item bg-transparent border-0" [formGroupName]="i">
                                             <h2 class="accordion-header">
-                                                <span class="iconButton medium bg-white">
-                                                    <i class="fa-light fa-edit"></i>
+                                                <span class="iconButton medium bg-white" *ngIf="i === 0"
+                                                    (click)="addmore()">
+                                                    <i class="fa-light fa-plus"></i>
+                                                </span>
+                                                <span class="iconButton small bg-white radicalTransBg night delicon "
+                                                    *ngIf="i > 0" (click)="removeCard(i)">
+                                                    <i class="fa-light fa-trash"></i>
                                                 </span>
                                                 <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseOne_' + i"
-                                                    aria-expanded="false" [attr.aria-controls]="'collapseOne_' + i">
+                                                    data-bs-toggle="collapse"
+                                                    [attr.data-bs-target]="'#collapseOne_' + i" aria-expanded="false"
+                                                    [attr.aria-controls]="'collapseOne_' + i">
                                                     Queries & Responses
                                                 </button>
+
+
                                             </h2>
                                             <div [id]="'collapseOne_' + i" class="accordion-collapse collapse"
                                                 data-bs-parent="#comp-accordion">
@@ -46,8 +55,8 @@
                                                         <div class="dropdown">
                                                             <button class="btn coal border px-4 fs-5" type="button"
                                                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                                                {{ selectedQueriesArray[i]?.intent || 'Select queries' }} <i
-                                                                    class="fa-light fa-angle-down"></i>
+                                                                {{ selectedQueriesArray[i]?.intent || 'Select queries'
+                                                                }} <i class="fa-light fa-angle-down"></i>
                                                             </button>
                                                             <ul class="dropdown-menu scroll-container">
                                                                 <li>
@@ -58,9 +67,10 @@
                                                                 </li>
                                                                 <li class="dropdown-listing-header">
                                                                     <form class="custom-searchbar my-2 mx-0">
-                                                                        <input class="form-control bg-light border-0 py-2"
-                                                                            [(ngModel)]="searchIntent" placeholder="Search"
-                                                                            aria-label="Search">
+                                                                        <input
+                                                                            class="form-control bg-light border-0 py-2"
+                                                                            [(ngModel)]="searchIntent"
+                                                                            placeholder="Search" aria-label="Search">
                                                                         <span class="btn searchbar-btn" type="submit">
                                                                             <i class="fal fa-search silver"></i>
                                                                         </span>
@@ -68,16 +78,19 @@
                                                                 </li>
                                                                 <li *ngFor="let item of items | chatBotIntentFilter:searchIntent"
                                                                     formControlName="queries">
-                                                                    <a class="dropdown-item" (click)="selectQuery(item, i)"
+                                                                    <a class="dropdown-item"
+                                                                        (click)="selectQuery(item, i)"
                                                                         [ngClass]="{'selected': selectedQueriesArray[i] === item}">
-                                                                        {{item.intent }}
+                                                                        {{formatUtterance(item?.intent) }}
                                                                     </a>
                                                                 </li>
                                                                 <li>
                                                                     <a class="btn text-center btn-outline-primary w-100"
                                                                         data-bs-toggle="offcanvas"
-                                                                        data-bs-target="#training" aria-controls="training">
-                                                                        <i class="fa-light fa-plus"></i> Add a new form here
+                                                                        data-bs-target="#training"
+                                                                        aria-controls="training">
+                                                                        <i class="fa-light fa-plus"></i> Add a new form
+                                                                        here
                                                                     </a>
                                                                 </li>
                                                             </ul>
@@ -85,8 +98,8 @@
                                                         <div class="dropdown mt-3">
                                                             <button class="btn coal border px-4 fs-5" type="button"
                                                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                                                {{ selectedResponsesArray[i]?.utterance || 'Select response'
-                                                                }} <i class="fa-light fa-angle-down"></i>
+                                                                {{selectedResponsesArray[i]?.utterance || 'Select
+                                                                response'}} <i class="fa-light fa-angle-down"></i>
                                                             </button>
                                                             <ul class="dropdown-menu scroll-container">
                                                                 <li>
@@ -96,7 +109,8 @@
                                                                 </li>
                                                                 <li class="dropdown-listing-header">
                                                                     <form class="custom-searchbar my-2 mx-0">
-                                                                        <input class="form-control bg-light border-0 py-2"
+                                                                        <input
+                                                                            class="form-control bg-light border-0 py-2"
                                                                             placeholder="Search"
                                                                             [(ngModel)]="searchResponse"
                                                                             aria-label="Search">
@@ -110,27 +124,30 @@
                                                                     <a class="dropdown-item"
                                                                         (click)="selectResponse(item, i)"
                                                                         [ngClass]="{'selected': selectedResponsesArray[i] === item}">
-                                                                        {{item?.utterance}}
+                                                                        {{formatUtterance(item?.utterance)}}
                                                                     </a>
                                                                 </li>
                                                                 <li>
                                                                     <a class="btn text-center btn-outline-primary w-100"
                                                                         data-bs-toggle="offcanvas"
-                                                                        data-bs-target="#response" aria-controls="response">
-                                                                        <i class="fa-light fa-plus"></i> Add a new form here
+                                                                        data-bs-target="#response"
+                                                                        aria-controls="response">
+                                                                        <i class="fa-light fa-plus"></i> Add a new form
+                                                                        here
                                                                     </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
-    
+
                                                 </div>
                                             </div>
                                             <!-- <button *ngIf="i > 0" (click)="removeCard(i)"
                                                 class="btn btn-danger btn-sm">Remove</button> -->
-                                            <button *ngIf="i > 0" (click)="removeCard(i)"
+                                            <!-- <button *ngIf="i > 0" (click)="removeCard(i)"
                                                 class="iconButton medium radicalTransBg"><i
-                                                    class="fa-light fa-trash"></i></button>
+                                                    class="fa-light fa-trash"></i></button> -->
+
                                         </div>
                                     </ng-container>
                                 </div>
@@ -138,11 +155,11 @@
                                 <div class="accordion-item bg-transparent border-0">
                                     <h2 class="accordion-header">
                                         <span class="iconButton medium bg-white">
-                                            <i class="fa-light fa-message-captions"></i>
+                                            <i class="fa-sharp fa-light fa-feather-pointed"></i>
                                         </span>
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseThree" aria-expanded="false"
-                                            aria-controls="collapseThree">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                            aria-expanded="false" aria-controls="collapseThree">
                                             Story
                                         </button>
                                     </h2>
@@ -157,17 +174,22 @@
                                     </div>
                                 </div>
                             </div>
+                            <div _ngcontent-auf-c210="" class="text-end"><button _ngcontent-auf-c210="" type="button"
+                                    class="btn btn-outline-secondary px-4 fs-6 me-2" (click)="cancelForm()"> Cancel
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="offcanvas w-40 offcanvas-end " tabindex="-1" id="training" aria-labelledby="trainingLabel"
-                        aria-modal="true" role="dialog">
+                    <div class="offcanvas w-40 offcanvas-end " tabindex="-1" id="training"
+                        aria-labelledby="trainingLabel" aria-modal="true" role="dialog">
                         <div class="offcanvas-header justify-content-between align-items-center bg-light px-4">
                             <h5 class="mb-0">Training Pharase</h5>
                             <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
                                 aria-label="Close"><i class="fal fa-times"></i></button>
                         </div>
                         <div class="offcanvas-body px-4">
-                            <div class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
+                            <div
+                                class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
                                 <h5 class="ms-3"> Add Intent</h5>
                             </div>
                             <div class="card-body">
@@ -177,39 +199,58 @@
                                     class="text-danger mt-2">Invalid input. Only alphabets, numerics,
                                     and spaces are allowed.</div>
                             </div>
-                            <div class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
+                            <div
+                                class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
                                 <h5 class="m-0"> Training Phrases</h5>
-                                <button class="btn snowBg btn-sm night" type="button" (click)="generateAugments()">Generate
+                                <button class="btn snowBg btn-sm night" type="button"
+                                    (click)="generateAugments()">Generate
                                     Training Phrases</button>
                             </div>
                             <div class="mb-3">
                                 <div class="mb-3">
                                     <textarea name="" class="form-control" cols="16" rows="4"
-                                        placeholder="Enter new training pharase manually or click on Generate training ....."
-                                        formControlName="newPhrase" (keyup.enter)="addManuallyEnteredPhrase()"></textarea>
+                                        placeholder="Enter new training pharase manually and click on Generate training Phrases ......"
+                                        formControlName="newPhrase"
+                                        (keyup.enter)="addManuallyEnteredPhrase()"></textarea>
                                 </div>
                             </div>
                             <ul class="list-group list-group-flush training-list" data-scrollbar="true" tabindex="-1"
                                 style="overflow: hidden; outline: none;">
                                 <div class="scroll-container">
                                     <ul class="list-group">
+                                        <span>
+                                            <li *ngFor="let item of Enterphrase"
+                                                class="list-group-item d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <input class="form-check-input me-1" type="checkbox"
+                                                        [id]="'checkbox' + item.id" [value]="item.label"
+                                                        (change)="togglePhraseSelection(item.label)">
+
+                                                    <label class="form-check-label" [for]="'checkbox' + item.id">{{
+                                                        item.label
+                                                        }}</label>
+                                                </div>
+
+                                            </li>
+                                        </span>
                                         <li *ngFor="let item of phrase"
                                             class="list-group-item d-flex align-items-center justify-content-between">
                                             <div>
                                                 <input class="form-check-input me-1" type="checkbox"
                                                     [id]="'checkbox' + item.id" [value]="item.label"
                                                     (change)="togglePhraseSelection(item.label)">
-                                                <label class="form-check-label" [for]="'checkbox' + item.id">{{ item.label
+                                                <label class="form-check-label" [for]="'checkbox' + item.id">{{
+                                                    item.label
                                                     }}</label>
                                             </div>
-                                            <div class="action-icons d-flex align-items-center">
+                                            <!-- <div class="action-icons d-flex align-items-center">
                                                 <span class="iconButton small iconHover me-2">
                                                     <i class="fa-light fa-edit"></i>
                                                 </span>
                                                 <span class="iconButton small iconHover">
                                                     <i class="fa-light fa-trash radical"></i>
                                                 </span>
-                                            </div>
+                                            </div> -->
                                         </li>
                                     </ul>
                                 </div>
@@ -217,7 +258,7 @@
                         </div>
                         <div class="offcanvas-footer d-flex p-3 justify-content-end bg-light">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="offcanvas"
-                                aria-label="Close">Cancel</button>
+                                aria-label="Close">Draft</button>
                             <button type="button" class="btn skyBg" data-bs-dismiss="offcanvas" aria-label="Close"
                                 (click)="saveChatbot()"> Save
                             </button>
@@ -228,28 +269,30 @@
                             checked="">
                         <label class="form-check-label" for="flexSwitchCheckChecked">Use GPT</label>
                     </div> -->
-                    <div class="offcanvas w-40 offcanvas-end " tabindex="-1" id="response" aria-labelledby="responseLabel"
-                        aria-modal="true" role="dialog">
+                    <div class="offcanvas w-40 offcanvas-end " tabindex="-1" id="response"
+                        aria-labelledby="responseLabel" aria-modal="true" role="dialog">
                         <div class="offcanvas-header justify-content-between align-items-center bg-light px-4">
                             <h5 class="mb-0">Responses</h5>
                             <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
                                 aria-label="Close"><i class="fal fa-times"></i></button>
                         </div>
                         <div class="offcanvas-body px-4">
-                            <div class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
+                            <div
+                                class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
                                 <h5 class="ms-2"> Add Response</h5>
                             </div>
                             <div class="card-body">
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" cols="16" rows="4" placeholder="Enter Response"
-                                        formControlName="response">
+                                    <input type="text" class="form-control" cols="16" rows="4"
+                                        placeholder="Enter Response" formControlName="response">
                                     <div *ngIf="storyForm.get('response')?.invalid && storyForm.get('response')?.touched"
                                         class="text-danger mt-2">Invalid input. Only alphabets,
                                         numerics,
                                         and spaces are allowed.</div>
                                 </div>
                             </div>
-                            <div class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
+                            <div
+                                class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
                                 <h5 class="m-0"> Responses</h5>
                             </div>
                             <div class="mb-3">
@@ -267,7 +310,14 @@
                     </div>
                 </form>
             </ng-container>
-            
+            <div class="filter-toolbar mb-3 d-flex align-items-center justify-content-between">
+                <ul class="list-inline m-0 d-flex align-items-center">
+                    <li class="list-inline-item">
+                        <h4 class="mx-4">Stories </h4>
+                    </li>
+                </ul>
+
+            </div>
             <div class="middle-content d-flex">
                 <div class="page-content-wrapper custom-scroll chatbot-main">
                     <div class="tab-content" id="myTabContent">
@@ -277,7 +327,7 @@
                                 <div class="row align-items-start">
                                     <div class="col-md-3" *ngFor="let story of stories">
                                         <div class="card zoom-in chatbotcard">
-                                            <div class="card-body" >
+                                            <div class="card-body" style="min-height: 246px;">
                                                 <div class="d-flex align-items-center">
                                                     <span class="iconButton medium skyTransBg night mb-3">
                                                         <i class="fa-light fa-bezier-curve"></i>
@@ -288,25 +338,28 @@
                                                             <span class="iconButton small iconHover">
                                                                 <i class="fa-light fa-edit"></i>
                                                             </span>
-                                                        </li>
+                                                        </li> -->
                                                         <li class="list-inline-item" data-bs-toggle="tooltip"
                                                             data-bs-placement="top" data-bs-title="Delete ">
-                                                            <span class="iconButton small iconHover">
+                                                            <span class="iconButton small iconHover"
+                                                                (click)="DeleteStory(story.story , $event)">
                                                                 <i class="fa-light fa-trash radical"></i>
                                                             </span>
-                                                        </li> -->
+                                                        </li>
                                                     </ul>
                                                 </div>
                                                 <div>
-                                                    <h6 class="m-0 ">Story:{{ story.story }}</h6>
+                                                    <h6 class="m-0 ">{{ story.story }}</h6>
                                                     <!-- <p class="coal">Conversation Start: {{ story.conversation_start ? 'Yes' : 'No' }}</p> -->
                                                 </div>
                                                 <div style="  overflow-y: auto; overflow-x:hidden;max-height: 140px;">
-                                                    <h6 class="m-0">Steps</h6>
+                                                    <h6 class="mt-2">Steps</h6>
                                                     <ul>
                                                         <li *ngFor="let step of story.steps">
-                                                            <span *ngIf="step.intent">Intent: {{ step.intent }}</span>
-                                                            <span *ngIf="step.action">Response: {{ step.action }}</span>
+                                                            <span *ngIf="step.intent">Intent:
+                                                                {{formatUtterance(step.intent) }}</span>
+                                                            <span *ngIf="step.action">Response: {{formatUtterance
+                                                                (step.action) }}</span>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -315,7 +368,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="card zoom-in chatbotcard addchatcard">
+                                        <div class="card zoom-in chatbotcard addchatcard" style="min-height: 246px;">
                                             <div class="card-body" (click)="toggleFormVisibility()">
                                                 <a class="sky d-flex flex-column align-items-center">
                                                     <i class="fa-light fa-plus"></i>

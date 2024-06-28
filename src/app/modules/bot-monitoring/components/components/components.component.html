@@ -11,14 +11,6 @@
                 <div class="p-4">
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <!-- <div class="row">
-                                <div class="col-md-7">
-                                    <h6>STORY</h6>
-                                </div>
-                                <div class="col-md-5">
-                                    <h6>FORM</h6>
-                                </div>
-                            </div> -->
                             <ul class="nav nav-tabs nav-fill linetabs" id="myTab1" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="query-tab" data-bs-toggle="tab"
@@ -59,7 +51,7 @@
                                                 class="list-group-item d-flex align-items-center justify-content-between rounded mb-2"
                                                 [class.active]="item.active" (click)="selectIntent(item)"
                                                 style="cursor: pointer;">
-                                                <span>{{ item.intent }}</span>
+                                                <span>{{formatUtterance (item?.intent) }}</span>
                                                 <div class="count-progress">
 
                                                     <span class="iconHover medium iconButton fadehide"
@@ -98,7 +90,7 @@
                                                 <div class="mb-3">
                                                     <textarea *ngIf="!isViewMode" name="" class="form-control" cols="16"
                                                         rows="4"
-                                                        placeholder="Enter new training pharase manually or click on Generate training ....."
+                                                        placeholder="Enter new training pharase manually and click on Generate training Phrases ......"
                                                         formControlName="newPhrase"
                                                         (keyup.enter)="addManuallyEnteredPhrase()"></textarea>
                                                 </div>
@@ -107,6 +99,23 @@
                                                     style="overflow: hidden; outline: none;">
                                                     <div class="scroll-container">
                                                         <ul class="list-group">
+                                                            <span>
+                                                                <li *ngFor="let item of Enterphrase"
+                                                                    class="list-group-item d-flex align-items-center justify-content-between">
+                                                                    <div>
+                                                                        <input *ngIf="!isViewMode"
+                                                                            class="form-check-input me-1"
+                                                                            type="checkbox" [id]="'checkbox' + item.id"
+                                                                            [value]="item.label"
+                                                                            (change)="togglePhraseSelection(item.label)">
+
+                                                                        <label class="form-check-label"
+                                                                            [for]="'checkbox' + item.id">{{ item.label
+                                                                            }}</label>
+                                                                    </div>
+
+                                                                </li>
+                                                            </span>
                                                             <li *ngFor="let item of phrase"
                                                                 class="list-group-item d-flex align-items-center justify-content-between">
                                                                 <div>
@@ -152,8 +161,8 @@
                                         <ul class="list-group list-group-flush component-list">
                                             <li *ngFor="let item of responseList | responsefilter:searchResponse"
                                                 class="list-group-item d-flex align-items-center justify-content-between rounded mb-2"
-                                                (click)="viewResponse(item)">
-                                                <span>{{ item?.utterance }}</span>
+                                                (click)="viewResponse(item)" style=" cursor: pointer">
+                                                <span>{{formatUtterance (item?.utterance) }}</span>
                                                 <span class="iconHover medium iconButton fadehide"
                                                     (click)="DeleteResponse(item.utterance , $event)">
                                                     <i class="fa-light fa-trash radical"></i>

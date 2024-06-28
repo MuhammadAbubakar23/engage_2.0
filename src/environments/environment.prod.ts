@@ -34,6 +34,7 @@ export const environment = {
   KemediaBaseUrl: 'https://kemedia.360scrm.com/api/',
   KescrmBaseUrl: 'https://kescrm.360scrm.com/',
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
+
   // For KE
   // IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
   // CommonBaseUrl: 'https://comservices.enteract.live/api/',
@@ -42,8 +43,9 @@ export const environment = {
   // ServiceBaseUrl: '',
   // consoleBaseUrl: 'https://console.enteract.live/api/',
   keReportsBaseUrl:'https://kereports.enteract.live/api/',
-  // LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
+  LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
   // botBaseUrl:'',
+
   // For Jazz
   // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
   // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
@@ -53,6 +55,7 @@ export const environment = {
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // LinkedInBaseUrl:'',
+
   // For Total Parco
   // IdentityBaseUrl: 'https://tt_identity.enteract.live/api/',
   // CommonBaseUrl: 'https://ttcommon.enteract.live/api/',
@@ -61,11 +64,8 @@ export const environment = {
   // ServiceBaseUrl: '',
   //  ProfileBaseUrl: '',
   //  botBaseUrl:'',
-  // old Tppl
-  // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api/',
-  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',
-  // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
-  // consoleBaseUrl: 'https://tpplcons.360scrm.com/api/',
+
+
   // For Morinaga
   // IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
@@ -75,6 +75,7 @@ export const environment = {
   // ProfileBaseUrl: '',
   // botBaseUrl: '',
   // LinkedInBaseUrl:'',
+
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
@@ -85,6 +86,8 @@ export const environment = {
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
     // LinkedInBaseUrl:'',
+
+
   // For Jazz Rox
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
   // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
@@ -93,7 +96,7 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-    LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
+    // LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
 
   // //for statging / Internal :companyId 650
   // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
@@ -102,6 +105,8 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://85b6-203-135-1-210.ngrok-free.app/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://conrox.enteract.app/api/',
+
+  
   // // // for rule
   // // company Id 100 for chatBot
   // faceRoxBaseUrl: 'https://facerox.enteract.app/api/',
@@ -110,7 +115,7 @@ export const environment = {
   // flowBot: 'https://flowbot.enteract.app/',
   // intentBot: 'https://intentBot.enteract.app/',
   // autoresponderbaseurl: 'https://d387-203-135-1-210.ngrok-free.app/api/',
-  profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
+  // profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
 // testing uiengage company id 657
 IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
 CommonBaseUrl: 'https://common-engage.enteract.app/api/',
@@ -294,7 +299,11 @@ autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
       createRule: 'rules/create',
       createStory:'stories/create',
       viewIntent:'intents/get',
-      viewResponse:'responses/get'
+      viewResponse:'responses/get',
+      getRuleChatBot:'rules/get',
+      getStoriesChatBot:'stories/get',
+      ruleDelete:'rules/delete',
+      storyDelete:'stories/delete'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

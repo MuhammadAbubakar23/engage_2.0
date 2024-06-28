@@ -21,6 +21,7 @@ export class ChatBotStoryComponent implements OnInit {
   selectedResponse: any = null;
   selectedQuery: any = null;
   items: any[] = [];
+  setName: any
   selectedPhrases: string[] = [];
   toastermessage: boolean = false;
   AlterMsg: any
@@ -31,7 +32,8 @@ export class ChatBotStoryComponent implements OnInit {
   BotId: any
   selectedQueriesArray: any[] = [];
   selectedResponsesArray: any[] = [];
-  stories:any[]  = [ ];
+  stories: any[] = [];
+  Enterphrase: { id: number, label: string }[] = [];
   isFormVisible: boolean = false;
   constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService) {
     this.BotId = localStorage.getItem('bot_id');
@@ -42,6 +44,8 @@ export class ChatBotStoryComponent implements OnInit {
     this.ResponseList()
     this.addmore();
     this.getListOfRule();
+    this.setName = localStorage.getItem("name")
+
   }
   addmore() {
     const newFormGroup = this.createRule();
@@ -49,6 +53,9 @@ export class ChatBotStoryComponent implements OnInit {
     this.selectedQueriesArray.push(null);
     this.selectedResponsesArray.push(null);
     console.log("addQueryResponse===>", this.addQueryResponse);
+  }
+  cancelForm() {
+    this.isFormVisible = false;
   }
   intializeForm() {
     this.storyForm = new FormGroup({
@@ -63,13 +70,13 @@ export class ChatBotStoryComponent implements OnInit {
       addQueryReponse: new FormArray([])
     });
   }
-  getListOfRule(){
+  getListOfRule() {
     if (!this.BotId) {
       console.error('BotId not found in localStorage.');
       return;
     }
-    this._botService.GetStoriesChatBot(this.BotId).subscribe((res:any)=>{
-      this.stories=res
+    this._botService.GetStoriesChatBot(this.BotId).subscribe((res: any) => {
+      this.stories = res
 
     }, (error) => {
       console.error('Error fetching intent:', error);
@@ -83,7 +90,9 @@ export class ChatBotStoryComponent implements OnInit {
   }
   removeCard(index: number) {
     if (index > 0) {
-      this.addQueryResponse.removeAt(index);
+        this.addQueryResponse.removeAt(index);
+        this.selectedQueriesArray.splice(index, 1);
+        this.selectedResponsesArray.splice(index, 1);
     }
   }
   get addQueryResponse(): FormArray {
@@ -113,7 +122,30 @@ export class ChatBotStoryComponent implements OnInit {
       this.selectedPhrases.push(phrase);
     }
   }
-
+  DeleteStory(story: string, event: Event) {
+    event.stopPropagation();
+    const confirmation = confirm('Are you sure you want to delete this story?');
+    if (confirmation) {
+      this.BotId = localStorage.getItem('bot_id');
+      const obj = new FormData();
+      obj.append('story', story);
+      obj.append('bot_id', this.BotId);
+      this._botService.StoryDelete(obj).subscribe(
+        (res: any) => {
+          console.log(res);
+          // Filter out the deleted story from the list
+          this.stories = this.stories.filter(x => x.story !== story);
+          this.reloadComponent(res.messages);
+        },
+        (error) => {
+          console.error('Error deleting story:', error);
+          this.spinnerServerice.hide();
+          console.log("error message====>", error.error.messages);
+          this.reloadComponent(error.error.messages);
+        }
+      );
+    }
+  }
   selectQuery(query: any, index: number) {
 
     this.selectedQueriesArray[index] = query;
@@ -125,10 +157,11 @@ export class ChatBotStoryComponent implements OnInit {
 
   }
   addManuallyEnteredPhrase() {
+    this.phrase=[]
     const newPhraseValue = this.storyForm.value.newPhrase.trim();
     if (newPhraseValue) {
       const newId = this.phrase.length + 1;
-      this.phrase.push({ id: newId, label: newPhraseValue });
+      this.Enterphrase.push({ id: newId, label: newPhraseValue });
       this.storyForm.patchValue({ newPhrase: '' });
     }
   }
@@ -372,6 +405,15 @@ export class ChatBotStoryComponent implements OnInit {
       }, 2000);
 
     }
+    if (value) {
+      this.toastermessage = true
+      this.AlterMsg = value
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+
 
   }
   toggleFormVisibility() {

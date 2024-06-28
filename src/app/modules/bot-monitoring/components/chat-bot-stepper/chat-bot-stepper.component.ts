@@ -27,10 +27,11 @@ export class ChatBotStepperComponent implements OnInit {
   responseList: any[] = []
   generatedPhrases: any[] = [];
   phrase: { id: number, label: string }[] = [];
+  Enterphrase: { id: number, label: string }[] = [];
   BotId: any
-  stories:any[]  = [ ];
+  rules:any[]  = [ ];
   isFormVisible: boolean = false;
-
+  setName:any
 
   constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService) {
     this.BotId = localStorage.getItem('bot_id');
@@ -40,6 +41,8 @@ export class ChatBotStepperComponent implements OnInit {
     this.loadBotId()
     this.ResponseList();
     this.getListOfRule()
+    this.setName=localStorage.getItem("name")
+
   }
   intializeForm() {
     this.stepperForm = new FormGroup({
@@ -58,7 +61,7 @@ export class ChatBotStepperComponent implements OnInit {
       return;
     }
     this._botService.GetRuleChatBot(this.BotId).subscribe((res:any)=>{
-      this.stories=res
+      this.rules=res
 
     }, (error) => {
       console.error('Error fetching intent:', error);
@@ -81,6 +84,35 @@ export class ChatBotStepperComponent implements OnInit {
       // this.newPhrase = '';
     });
   }
+  cancelForm() {
+    this.isFormVisible = false;
+  }
+  DeleteRule(rule: string, event: Event) {
+    event.stopPropagation();
+    const confirmation = confirm('Are you sure you want to delete this Rule?');
+    if (confirmation) {
+        this.BotId = localStorage.getItem('bot_id');
+        const obj = new FormData();
+        obj.append('rule', rule);
+        obj.append('bot_id', this.BotId);
+        this._botService.RuleDelete(obj).subscribe(
+            (res: any) => {
+                console.log(res);
+                // Filter out the deleted rule from the list
+                this.rules = this.rules.filter(x => x.rule !== rule);
+                this.reloadComponent(res.messages);
+            },
+            (error) => {
+                console.error('Error deleting rule:', error);
+                this.spinnerServerice.hide();
+                console.log("error message====>", error.error.messages);
+                this.reloadComponent(error.error.messages);
+            }
+        );
+    }
+}
+
+ 
   togglePhraseSelection(phrase: string) {
     const index = this.selectedPhrases.indexOf(phrase);
     if (index !== -1) {
@@ -98,10 +130,11 @@ export class ChatBotStepperComponent implements OnInit {
     this.selectedResponse = response === this.selectedResponse ? null : response;
   }
   addManuallyEnteredPhrase() {
+    this.phrase=[]
     const newPhraseValue = this.stepperForm.value.newPhrase.trim();
     if (newPhraseValue) {
       const newId = this.phrase.length + 1;
-      this.phrase.push({ id: newId, label: newPhraseValue });
+      this.Enterphrase.push({ id: newId, label: newPhraseValue });
       this.stepperForm.patchValue({ newPhrase: '' });
     }
   }
@@ -302,6 +335,14 @@ export class ChatBotStepperComponent implements OnInit {
     if (value == 'Rule  missing') {
       this.toastermessage = true
       this.AlterMsg = "Rule is missing!"
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
+    if (value) {
+      this.toastermessage = true
+      this.AlterMsg = value
       setTimeout(() => {
         this.toastermessage = false
       }, 2000);

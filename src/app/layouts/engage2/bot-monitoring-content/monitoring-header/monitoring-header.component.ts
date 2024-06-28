@@ -71,6 +71,7 @@ export class MonitoringHeaderComponent implements OnInit {
 
 
   ngOnInit(): void {
+    
     this.subscription = this.headerService.getMessage().subscribe(msg => {
       this.componentName = msg;
       this.target.clear();
@@ -83,13 +84,17 @@ export class MonitoringHeaderComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    
     this.target.clear();
     this.loadComponent(this.componentName);
-
+    this.subscription = this.headerService.getMessage().subscribe(msg => {
+      this.componentName = msg;
+    });
 
   }
 
   loadComponent(leftSideName: string) {
+    
     let componentFactory = null;
     switch (leftSideName) {
       case ('chat'):
@@ -108,18 +113,26 @@ export class MonitoringHeaderComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(ComponentsHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
+        case ('rule-chatBot'):
+        componentFactory = this.resolver.resolveComponentFactory(ChatBotStepperHeaderComponent);
+        this.target.createComponent(componentFactory);
+        break;
+        case ('story-chatBot'):
+        componentFactory = this.resolver.resolveComponentFactory(ChatbotStoryHeaderComponent);
+        this.target.createComponent(componentFactory);
+        break;
       case ('upload'):
         componentFactory = this.resolver.resolveComponentFactory(UploadDownloadHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
-        case ('rule'):
-        componentFactory = this.resolver.resolveComponentFactory(ChatBotStepperHeaderComponent);
-        this.target.createComponent(componentFactory);
-        break;
-        case ('story'):
-        componentFactory = this.resolver.resolveComponentFactory(ChatbotStoryHeaderComponent);
-        this.target.createComponent(componentFactory);
-        break;
+      // case ('rule-chatBot'):
+      //   componentFactory = this.resolver.resolveComponentFactory(ChatBotStepperHeaderComponent);
+      //   this.target.createComponent(componentFactory);
+      //   break;
+      // case ('story-chatBot'):
+      //   componentFactory = this.resolver.resolveComponentFactory(ChatbotStoryHeaderComponent);
+      //   this.target.createComponent(componentFactory);
+      //   break;
       default:
 
         componentFactory = this.resolver.resolveComponentFactory(ChatBotHeaderComponent);

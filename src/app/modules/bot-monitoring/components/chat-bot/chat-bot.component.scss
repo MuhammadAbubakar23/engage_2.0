@@ -2,3 +2,38 @@
     max-height: 80vh; 
     overflow-y: auto;
 }
+.train-bot-button {
+    margin-right: 10px;
+}
+
+.iconHover {
+    cursor: pointer;
+}
+
+.iconButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chatbotcard {
+    margin-bottom: 20px;
+}
+
+.d-flex.align-items-center.justify-content-between {
+    width: 100%;
+}
+
+.card-body {
+    position: relative;
+    padding: 15px;
+}
+
+.btn-text {
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.fa-trash.radical {
+    color: red;
+}

@@ -367,7 +367,7 @@
 }
 .user-comment-widget-container {
   position: fixed;
-  left: 76px;
+  right: 1px;
   bottom: 10px;
   z-index: 999;
   .user-comment-widget {
@@ -475,7 +475,7 @@
         box-shadow: 3px 0px 5px $night10 !important;
         .input-group {
           .form-control {
-            height: 35px !important;
+            // height: 35px !important;
           }
         }
       }

@@ -32,56 +32,44 @@
                 <div class="row align-items-start scrollable-container">
                     <ng-container *ngFor="let row of filteredChatbots()">
                         <div class="col-md-4">
-                            <div class="card zoom-in chatbotcard">
-                                <div class="card-body" (click)="onCardBodyClick(row.bot_id)">
-                                    <div class="d-flex align-items-center">
+                            <div class="card zoom-in chatbotcard" (click)="startNewConversation(row.bot_id)">
+                                <div class="card-body" style="height: 169px;">
+                                    <div class="d-flex align-items-center justify-content-between">
                                         <div class="d-flex align-items-center">
                                             <span class="iconButton medium skyTransBg night me-2"><i
                                                     class="fa-light fa-message-bot"></i></span>
-                                            <h4 class="m-0">{{ row.name }}</h4>
+                                            <h6 class="m-0">{{ formatUtterance(row.name) }}</h6>
                                         </div>
-                                        <ul class="list-inline ms-auto">
-                                            <!-- <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            data-bs-title="Edit ">
-                                            <span class="iconButton small iconHover" data-bs-toggle="modal"
-                                                data-bs-target="#create-chatbot">
-                                                <i class="fa-light fa-edit"></i>
+                                        <div class="d-flex align-items-center">
+
+                                            <span class="mx-2" (click)="trainBot(row.bot_id)">
+                                                <i class="fa-light fa-message-bot"></i>
                                             </span>
-                                        </li> -->
-                                            <!-- <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            data-bs-title="Translate Bot">
-                                            <span class="iconButton small iconHover">
-                                                <i class="fa-light fa-language"></i>
+                                            <span class="mx-2"   (click)="chatBot(row.bot_id)">
+                                                <i class="fa-light fa-comment"></i>
                                             </span>
-                                        </li> -->
-                                            <li class="list-inline-item" data-bs-toggle="tooltip"
+
+
+                                            <span class="mx-2"  class="iconButton small iconHover" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-title="Delete"
                                                 (click)="DeleteChat(row.bot_id, $event)">
-                                                <span class="iconButton small iconHover">
-                                                    <i class="fa-light fa-trash radical"></i>
-                                                </span>
-                                            </li>
-                                        </ul>
+                                                <i class="fa-light fa-trash radical"></i>
+                                            </span>
+                                        </div>
                                     </div>
-                                    <!-- <div class="progress my-4" role="progressbar" aria-label="Example with label"
-                                    [attr.aria-valuenow]="row.progress" aria-valuemin="0" aria-valuemax="100">
-
-                                    <div class="progress-bar" [style.width.%]="row.progress"> {{ row.progress
-                                        }}%</div>
-                                </div> -->
-                                    <div class="d-flex align-items-center justify-content-between mt-1">
-                                        <a class="btn btn-primary btn-sm px-4" (click)="updatevalue('component')"
-                                            (click)="shareValue(row, $event)">Component</a>
-                                        <a class="btn btn-primary btn-sm px-4" (click)="shareValueStepper(row, $event)"
-                                            (click)="updatevalue('rule')">Rule</a>
-
-                                        <a class="btn btn-primary btn-sm px-4" (click)="shareValueStory(row, $event)"
-                                            (click)="updatevalue('story')">Story</a>
+                                    <div class="d-flex align-items-center justify-content-between mt-5">
+                                        <a class="btn btn-outline-primary btn-text"
+                                            (click)="updatevalue('component', row, $event)">Component</a>
+                                        <a class="btn btn-outline-primary btn-text"
+                                            (click)="updatevalue('rule-chatBot', row, $event)">Rule</a>
+                                        <a class="btn btn-outline-primary btn-text"
+                                            (click)="updatevalue('story-chatBot', row, $event)">Story</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </ng-container>
+
 
                     <div class="col-md-4">
                         <div class="card zoom-in chatbotcard addchatcard" data-bs-toggle="modal"
@@ -98,6 +86,7 @@
     </div>
 
 </div>
+
 <!-- your-component.component.html -->
 <div class="modal" id="create-chatbot" tabindex="-1" aria-labelledby="create-chatbotLabel" style="display: none;"
     aria-modal="true" role="dialog">
@@ -126,7 +115,7 @@
                                 Timeout is required and must be a number.
                             </div>
                         </div>
-                        <div class="form-floating mb-2">
+                        <!-- <div class="form-floating mb-2">
                             <select class="form-select" formControlName="botType" aria-label="Select Help">
                                 <option value="Flow Bot">Flow Bot</option>
                                 <option value="Q/A Bot">Q/A Bot</option>
@@ -137,7 +126,7 @@
                                 class="text-danger">
                                 Bot Type is required.
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -180,11 +169,95 @@
             </div>
 
         </div>
-      
+
     </div>
 
-    
+
 </div>
+<!-- widget chat  -->
+<div class="user-comment-widget-container" *ngIf="showChatbot">
+    <div class="user-comment-widget chat-message-component widget-1 show">
+        <div class="comment-widget-header">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="user-status">
+                        <div class="user-name">{{ ChatName }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="chat-control">
+                        <button class="iconButton small iconHover chat-minimize" (click)="closeChatBot()">
+                            <i class="fa-sharp fa-light fa-x"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;" #chatBody>
+            <div class="scroll-content">
+                <div class="tab-content m-4" id="myTabContent">
+                    <div class="tab-pane fade show active" id="fb-comment" role="tabpanel"
+                        aria-labelledby="fb-comment-tab">
+                        <div class="chat-box-wrap">
+                            <div *ngFor="let message of messages" class="message-wrap"
+                                [ngClass]="{'agent-message-wrap right': message.type === 'agent', 'agent-message-wrap left': message.type === 'user'}">
+                                <div class="agent-container">
+                                    <div class="card w-d-inline messageUpper">
+                                        <div class="card-body shadow-sm">
+                                            <div class="d-flex msg-user-info" *ngIf="message.type === 'user'">
+                                                <div class="d-flex align-items-center">
+                                                    <h6 class="card-title emerald m-0">{{ username }}</h6>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex msg-user-info" *ngIf="message.type === 'agent'">
+                                                <div class="d-flex align-items-center">
+                                                    <h6 class="card-title emerald m-0">{{ ChatName }}</h6>
+                                                </div>
+                                            </div>
+                                            <p class="card-text nignt">{{ message.text }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="small" color="#fff" type="ball-fall" [fullScreen]="false"
+            [name]="'google-map-spinner'"></ngx-spinner>
+        <div class="comment-widget-footer">
+            <div class="msgTypingField shadow-lg">
+                <div class="input-group input-group-lg">
+                    <div class="form-floating textarea-field">
+                        <textarea class="form-control auto" rows="1" id="message" style="border-radius: 20px;"
+                            placeholder="Write a message here" [(ngModel)]="newMessageText"
+                            (keydown.enter)="sendMessage()"></textarea>
+
+                    </div>
+                    <!-- <div class="form-floating textarea-field">
+                        <textarea formControlName="text" class="form-control auto" rows="1" id="text"
+                            style="border-radius: 20px;" 
+                            placeholder="Write a message here" #textarea></textarea>
+                    </div> -->
+                    <div class="icons-list align-items-md-center d-flex ps-2">
+                        <button class="iconButton small notification iconHover" (click)="sendMessage()"
+                            data-bs-toggle="tooltip" data-bs-placement="top" type="button" id="sendbtn"
+                            aria-label="Send" data-bs-original-title="Send">
+                            <i class="fal fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">

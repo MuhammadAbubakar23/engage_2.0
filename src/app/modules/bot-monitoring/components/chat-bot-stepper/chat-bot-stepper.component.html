@@ -7,13 +7,13 @@
         <div class="page-content-wrapper custom-scroll pb-5 mb-5" data-scrollbar="true" tabindex="-1"
             style="overflow: auto; outline: none;">
             <ng-container *ngIf="isFormVisible==true">
-                <form [formGroup]="stepperForm" >
+                <form [formGroup]="stepperForm">
                     <div class="scroll-content">
                         <div class="p-4">
                             <div class="filter-toolbar mb-3 d-flex align-items-center justify-content-between">
                                 <ul class="list-inline m-0 d-flex align-items-center">
                                     <li class="list-inline-item">
-                                        <h4 class="mb-3">Rules</h4>
+                                        <h4 class="mb-3">Create a rule</h4>
                                     </li>
                                 </ul>
                                 <div class="text-end">
@@ -26,10 +26,11 @@
                                 <div class="accordion-item bg-transparent border-0">
                                     <h2 class="accordion-header">
                                         <span class="iconButton medium bg-white">
-                                            <i class="fa-light fa-edit"></i>
+                                            <i class="fa-thin fa-clipboard-question"></i>
                                         </span>
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                            aria-expanded="false" aria-controls="collapseOne">
                                             Queries
                                         </button>
                                     </h2>
@@ -59,7 +60,7 @@
                                                     <li *ngFor="let item of items | chatBotIntentFilter:searchIntent">
                                                         <a class="dropdown-item" (click)="selectQuery(item)"
                                                             [ngClass]="{'selected': selectedQuery === item}">
-                                                            {{ item.intent }}
+                                                            {{ formatUtterance( item?.intent) }}
                                                         </a>
                                                     </li>
                                                     <li>
@@ -79,9 +80,10 @@
                                         <span class="iconButton medium bg-white">
                                             <i class="fa-light fa-reply"></i>
                                         </span>
-    
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                            aria-expanded="false" aria-controls="collapseTwo">
                                             Response
                                         </button>
                                     </h2>
@@ -91,10 +93,11 @@
                                             <div class="dropdown ">
                                                 <button class="btn coal border px-4 fs-5" type="button"
                                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                                    {{ selectedResponse ? selectedResponse.utterance : 'Select response' }}
+                                                    {{ selectedResponse ? selectedResponse.utterance : 'Select response'
+                                                    }}
                                                     <i class="fa-light fa-angle-down"></i>
                                                 </button>
-    
+
                                                 <ul class="dropdown-menu scroll-container">
                                                     <li>
                                                         <h5 class="dropdown-header text-dark fs-5">
@@ -111,10 +114,11 @@
                                                             </span>
                                                         </form>
                                                     </li>
-                                                    <li *ngFor="let item of responseList | responsefilter:searchResponse">
+                                                    <li
+                                                        *ngFor="let item of responseList | responsefilter:searchResponse">
                                                         <a class="dropdown-item" (click)="selectResponse(item)"
                                                             [ngClass]="{'selected': selectedResponse === item}">
-                                                            {{item?.utterance }}
+                                                            {{ formatUtterance(item?.utterance) }}
                                                         </a>
                                                     </li>
                                                     <li>
@@ -133,11 +137,12 @@
                                 <div class="accordion-item bg-transparent border-0">
                                     <h2 class="accordion-header">
                                         <span class="iconButton medium bg-white">
-                                            <i class="fa-light fa-message-captions"></i>
+                                            <!-- <i class="fa-light fa-message-captions"></i> -->
+                                            <i class="fa-thin fa-person-chalkboard"></i>
                                         </span>
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseThree" aria-expanded="false"
-                                            aria-controls="collapseThree">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                            aria-expanded="false" aria-controls="collapseThree">
                                             Rule
                                         </button>
                                     </h2>
@@ -154,15 +159,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="offcanvas w-40 offcanvas-end " tabindex="-1" id="training" aria-labelledby="trainingLabel"
-                        aria-modal="true" role="dialog">
+                    <div class="offcanvas w-40 offcanvas-end " tabindex="-1" id="training"
+                        aria-labelledby="trainingLabel" aria-modal="true" role="dialog">
                         <div class="offcanvas-header justify-content-between align-items-center bg-light px-4">
                             <h5 class="mb-0">Training Pharase</h5>
                             <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
                                 aria-label="Close"><i class="fal fa-times"></i></button>
                         </div>
                         <div class="offcanvas-body px-4">
-                            <div class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
+                            <div
+                                class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
                                 <h5 class="ms-3"> Add Intent</h5>
                             </div>
                             <div class="card-body">
@@ -172,48 +178,67 @@
                                     class="text-danger mt-2">Invalid input. Only alphabets, numerics,
                                     and spaces are allowed.</div>
                             </div>
-                            <div class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
+                            <div
+                                class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
                                 <h5 class="m-0"> Training Phrases</h5>
-                                <button class="btn snowBg btn-sm night" type="button" (click)="generateAugments()">Generate
+                                <button class="btn snowBg btn-sm night" type="button"
+                                    (click)="generateAugments()">Generate
                                     Training Phrases</button>
                             </div>
                             <div class="mb-3">
                                 <div class="mb-3">
                                     <textarea name="" class="form-control" cols="16" rows="4"
-                                        placeholder="Enter new training pharase manually or click on Generate training ....."
-                                        formControlName="newPhrase" (keyup.enter)="addManuallyEnteredPhrase()"></textarea>
+                                        placeholder="Enter new training pharase manually and click on Generate training Phrases ......"
+                                        formControlName="newPhrase"
+                                        (keyup.enter)="addManuallyEnteredPhrase()"></textarea>
                                 </div>
                             </div>
                             <ul class="list-group list-group-flush training-list" data-scrollbar="true" tabindex="-1"
                                 style="overflow: hidden; outline: none;">
                                 <div class="scroll-container">
                                     <ul class="list-group">
+                                        <span>
+                                            <li *ngFor="let item of Enterphrase"
+                                                class="list-group-item d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <input class="form-check-input me-1" type="checkbox"
+                                                        [id]="'checkbox' + item.id" [value]="item.label"
+                                                        (change)="togglePhraseSelection(item.label)">
+
+                                                    <label class="form-check-label" [for]="'checkbox' + item.id">{{
+                                                        item.label
+                                                        }}</label>
+                                                </div>
+
+                                            </li>
+                                        </span>
                                         <li *ngFor="let item of phrase"
                                             class="list-group-item d-flex align-items-center justify-content-between">
                                             <div>
                                                 <input class="form-check-input me-1" type="checkbox"
                                                     [id]="'checkbox' + item.id" [value]="item.label"
                                                     (change)="togglePhraseSelection(item.label)">
-                                                <label class="form-check-label" [for]="'checkbox' + item.id">{{ item.label
+                                                <label class="form-check-label" [for]="'checkbox' + item.id">{{
+                                                    item.label
                                                     }}</label>
                                             </div>
-                                            <div class="action-icons d-flex align-items-center">
+                                            <!-- <div class="action-icons d-flex align-items-center">
                                                 <span class="iconButton small iconHover me-2">
                                                     <i class="fa-light fa-edit"></i>
                                                 </span>
                                                 <span class="iconButton small iconHover">
                                                     <i class="fa-light fa-trash radical"></i>
                                                 </span>
-                                            </div>
+                                            </div> -->
                                         </li>
                                     </ul>
                                 </div>
                             </ul>
                         </div>
-    
+
                         <div class="offcanvas-footer d-flex p-3 justify-content-end bg-light">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="offcanvas"
-                                aria-label="Close">Cancel</button>
+                                aria-label="Close">Draft</button>
                             <button type="button" class="btn skyBg" data-bs-dismiss="offcanvas" aria-label="Close"
                                 (click)="saveChatbot()"> Save
                             </button>
@@ -224,28 +249,30 @@
                             checked="">
                         <label class="form-check-label" for="flexSwitchCheckChecked">Use GPT</label>
                     </div> -->
-                    <div class="offcanvas w-40 offcanvas-end " tabindex="-1" id="response" aria-labelledby="responseLabel"
-                        aria-modal="true" role="dialog">
+                    <div class="offcanvas w-40 offcanvas-end " tabindex="-1" id="response"
+                        aria-labelledby="responseLabel" aria-modal="true" role="dialog">
                         <div class="offcanvas-header justify-content-between align-items-center bg-light px-4">
                             <h5 class="mb-0">Responses</h5>
                             <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
                                 aria-label="Close"><i class="fal fa-times"></i></button>
                         </div>
                         <div class="offcanvas-body px-4">
-                            <div class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
+                            <div
+                                class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
                                 <h5 class="ms-2"> Add Response</h5>
                             </div>
                             <div class="card-body">
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" cols="16" rows="4" placeholder="Enter Response"
-                                        formControlName="response">
+                                    <input type="text" class="form-control" cols="16" rows="4"
+                                        placeholder="Enter Response" formControlName="response">
                                     <div *ngIf="stepperForm.get('response')?.invalid && stepperForm.get('response')?.touched"
                                         class="text-danger mt-2">Invalid input. Only alphabets,
                                         numerics,
                                         and spaces are allowed.</div>
                                 </div>
                             </div>
-                            <div class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
+                            <div
+                                class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
                                 <h5 class="m-0"> Responses</h5>
                             </div>
                             <div class="mb-3">
@@ -262,8 +289,20 @@
                         </div>
                     </div>
                 </form>
+                <div _ngcontent-auf-c210="" class="text-end"><button _ngcontent-auf-c210="" type="button"
+                    class="btn btn-outline-secondary px-4 fs-6 me-2" (click)="cancelForm()"> Cancel
+                </button>
+            </div>
             </ng-container>
-    
+
+            <div class="filter-toolbar mb-3 d-flex align-items-center justify-content-between">
+                <ul class="list-inline m-0 d-flex align-items-center">
+                    <li class="list-inline-item">
+                        <h4 class="mx-4">Rules </h4>
+                    </li>
+                </ul>
+
+            </div>
             <div class="middle-content d-flex">
                 <div class="page-content-wrapper custom-scroll chatbot-main">
                     <div class="tab-content" id="myTabContent">
@@ -271,7 +310,7 @@
                             aria-labelledby="stories-tab" tabindex="0">
                             <div class="p-4">
                                 <div class="row align-items-start">
-                                    <div class="col-md-3" *ngFor="let story of stories">
+                                    <div class="col-md-3" *ngFor="let rule of rules">
                                         <div class="card zoom-in chatbotcard">
                                             <div class="card-body">
                                                 <div class="d-flex align-items-center">
@@ -284,25 +323,28 @@
                                                             <span class="iconButton small iconHover">
                                                                 <i class="fa-light fa-edit"></i>
                                                             </span>
-                                                        </li>
+                                                        </li> -->
                                                         <li class="list-inline-item" data-bs-toggle="tooltip"
                                                             data-bs-placement="top" data-bs-title="Delete ">
-                                                            <span class="iconButton small iconHover">
+                                                            <span class="iconButton small iconHover"
+                                                                (click)="DeleteRule(rule.rule , $event)">
                                                                 <i class="fa-light fa-trash radical"></i>
                                                             </span>
-                                                        </li> -->
+                                                        </li>
                                                     </ul>
                                                 </div>
                                                 <div>
-                                                    <h6 class="m-0 ">Rule:{{ story.rule }}</h6>
-                                                    <!-- <p class="coal">Conversation Start: {{ story.conversation_start ? 'Yes' : 'No' }}</p> -->
+                                                    <h6 class="m-0 ">{{ rule.rule }}</h6>
+                                                    <!-- <p class="coal">Conversation Start: {{ rule.conversation_start ? 'Yes' : 'No' }}</p> -->
                                                 </div>
                                                 <div>
-                                                    <h6 class="m-0">Steps</h6>
+                                                    <h6 class="mt-2">Steps</h6>
                                                     <ul>
-                                                        <li *ngFor="let step of story.steps">
-                                                            <span *ngIf="step.intent">Intent: {{ step.intent }}</span>
-                                                            <span *ngIf="step.action">Response: {{ step.action }}</span>
+                                                        <li *ngFor="let step of rule.steps">
+                                                            <span *ngIf="step.intent">Intent: {{
+                                                                formatUtterance(step.intent) }}</span>
+                                                            <span *ngIf="step.action">Response: {{formatUtterance(
+                                                                step.action) }}</span>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -311,10 +353,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="card zoom-in chatbotcard addchatcard">
+                                        <div class="card zoom-in chatbotcard addchatcard" style="height: 196px;">
                                             <div class="card-body" (click)="toggleFormVisibility()">
-                                                <a 
-                                                    class="sky d-flex flex-column align-items-center">
+                                                <a class="sky d-flex flex-column align-items-center">
                                                     <i class="fa-light fa-plus"></i>
                                                 </a>
                                             </div>
