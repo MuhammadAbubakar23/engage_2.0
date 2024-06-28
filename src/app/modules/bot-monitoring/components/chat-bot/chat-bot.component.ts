@@ -51,7 +51,7 @@ export class ChatBotComponent implements OnInit {
     this.chatbotForm = new FormGroup({
       name: new FormControl('', Validators.required),
       timeout: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
-      newMessageText:new FormControl()
+
       // botType: new FormControl('', Validators.required)
     });
     // this.messages.push({ type: 'agent', text: 'Hello! How can I assist you today?' });
