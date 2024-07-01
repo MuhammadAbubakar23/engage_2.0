@@ -230,7 +230,7 @@ export class ComponentsComponent implements OnInit {
     this.IntendForm.get('intent')?.disable();
   }
   addManuallyEnteredPhrase() {
-    debugger
+    
     this.phrase=[]
     const newPhraseValue = this.IntendForm.value.newPhrase.trim();
     if (newPhraseValue) {

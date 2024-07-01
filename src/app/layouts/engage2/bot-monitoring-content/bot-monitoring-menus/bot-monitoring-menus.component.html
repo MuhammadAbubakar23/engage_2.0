@@ -7,13 +7,54 @@
     </div>
     <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
         <div class="scroll-content">
-            <li class="list-group-item list-group-item-action">
+            <!-- <li class="list-group-item list-group-item-action">
                 <a (click)="updatevalue('chat')" [routerLink]="['/bot-monitoring/chat-bot']"
                     class="d-flex align-items-center">
                     <i class="fa-light fa-message-bot pe-2"></i>
-                     BOT Configuration
+                    Chat BOT 
                 </a>
-            </li>
+                <ul
+               
+              >
+                <li
+                  *ngFor="let child of subMenus; let j = index"
+                  class="list-group-item list-group-item-action"
+                  [ngClass]="{ active: activeIndex === j }"
+                >
+                  <a
+                    [routerLinkActive]="'active'"
+                    [routerLink]="child['RouteName']"
+                    class="d-flex align-items-center"
+                    (click)="activeMenu(j)"
+                  >
+                    {{ child["DisplayName"] }}
+                  </a>
+                </li>
+              </ul>
+            </li> -->
+            <li class="list-group-item list-group-item-action" [ngClass]="menu.isChild?'collapsed':''"
+                *ngFor="let menu of subMenus; let i = index">
+                <a class="d-flex  align-items-center" [routerLink]="menu['RouteName']"
+                     type="button" (click)="resetMenu()">
+                   
+                   <i class="fa-light fa-message-bot pe-2"></i> {{ menu["DisplayName"] }}
+                </a>
+
+                <ul *ngIf="menu.Children" class="list-unstyled-inner collapse" [ngClass]="menu.isChild?'show':''">
+                    <!-- <li class="list-group-item list-group-item-action">
+                        <a  class="d-flex align-items-center">
+                          <i class="fal fa-users pe-2"></i>
+                        Users
+                      </a>
+                      </li> -->
+                    <li *ngFor="let child of menu.Children; let j = index"
+                        class="list-group-item list-group-item-action" [ngClass]="{ active: activeIndex === j }">
+                        <a [routerLinkActive]="'active'" [routerLink]="child['RouteName']"
+                            class="d-flex align-items-center" (click)="activeMenu(j)">
+                            {{ child["DisplayName"] }}
+                        </a>
+                    </li>
+                </ul>
             <li class="list-group-item list-group-item-action">
                 <a (click)="updatevalue('bot-monitering')" [routerLink]="['/bot-monitoring/chats']"
                     class="d-flex align-items-center">
@@ -40,7 +81,7 @@
                 <a (click)="updatevalue('upload')" [routerLink]="['/bot-monitoring/upload/download-data']"
                     class="d-flex align-items-center">
                     <i class="fa-light fa-upload pe-2"></i>
-                   File Management
+                    File Management
                 </a>
             </li>
             <!-- <li class="list-group-item list-group-item-action">

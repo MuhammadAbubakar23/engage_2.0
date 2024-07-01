@@ -303,7 +303,11 @@ autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
       getRuleChatBot:'rules/get',
       getStoriesChatBot:'stories/get',
       ruleDelete:'rules/delete',
-      storyDelete:'stories/delete'
+      storyDelete:'stories/delete',
+      trainBot:'models/train',
+      createBotTrain:'models/create',
+      runChatBot:'models/run',
+      chatBotWdidget:'chat'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

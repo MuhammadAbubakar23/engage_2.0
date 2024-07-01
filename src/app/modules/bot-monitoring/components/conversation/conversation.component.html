@@ -14,7 +14,7 @@
                                         <input class="form-control" placeholder="Search.. ">
                                     </div>
                                 </li>
-                                <li class="list-inline-item">
+                                <!-- <li class="list-inline-item">
                                     <input type="checkbox" class="btn-check" id="q&amp;a" autocomplete="off">
                                     <label class="btn toggle-check-btn fw-bold" for="q&amp;a">
                                         Q&amp;A</label>
@@ -28,51 +28,70 @@
                                     <input type="checkbox" class="btn-check" id="multiflow" autocomplete="off">
                                     <label class="btn toggle-check-btn fw-bold" for="multiflow">
                                         Multiflow</label>
-                                </li>
+                                </li> -->
                             </ul>
 
                             <div class="text-end">
-                                <button class="btn btn-success me-2 dropdown-toggle" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Add New
+                                <button class="btn btn-success me-2 " type="button" aria-expanded="false"
+                                    (click)="trainBot(BotId)">
+                                    Train BOT
                                 </button>
+                                <button class="btn btn-success me-2 " type="button" aria-expanded="false" (click)="chatBot(BotId)">
+                                    Chat with BOT
+                                </button>
+                            
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                    <li><a class="dropdown-item" data-bs-toggle="modal"
                                             data-bs-target="#select-template">Add Story</a></li>
-                                    <li><a class="dropdown-item" href="#">Add Form</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="row align-items-start">
-                            <div class="col-md-3">
+                            <div class="col-md-3" *ngFor="let intent of intents">
                                 <div class="card zoom-in chatbotcard">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
                                             <span class="iconButton medium skyTransBg night mb-3">
-                                                <i class="fa-light fa-bezier-curve"></i>
+                                                <i *ngIf="intent.rule" class="fa-light fa-bezier-curve"></i>
+                                                <i *ngIf="intent.story" class="fa-solid fa-book"></i>
                                             </span>
                                             <ul class="list-inline ms-auto">
-                                                <li class="list-inline-item" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" data-bs-title="Edit ">
-                                                    <span class="iconButton small iconHover">
-                                                        <i class="fa-light fa-edit"></i>
-                                                    </span>
-                                                </li>
+                                              
 
                                                 <li class="list-inline-item" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" data-bs-title="Delete ">
-                                                    <span class="iconButton small iconHover">
+                                                    *ngIf="intent.rule" data-bs-placement="top" data-bs-title="Delete ">
+                                                    <span class="iconButton small iconHover"
+                                                        (click)="DeleteRule(intent.rule, $event)">
+                                                        <i class="fa-light fa-trash radical"></i>
+                                                    </span>
+                                                </li>
+                                                <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                    *ngIf="intent.story" data-bs-placement="top"
+                                                    data-bs-title="Delete ">
+                                                    <span class="iconButton small iconHover"
+                                                        (click)="DeleteStory(intent.story, $event)">
                                                         <i class="fa-light fa-trash radical"></i>
                                                     </span>
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div>
-                                            <h6 class="m-0">Greet</h6>
-                                            <p class="coal">Custome</p>
+                                        <div style="overflow: auto;
+                                            max-height: 118px;">
+                                            <h6 class="m-0">{{intent.rule|| intent.story}}</h6>
+                                            <div>
+                                                <h6 class="mt-2">Steps</h6>
+                                                <ul>
+                                                    <li *ngFor="let step of intent.steps">
+                                                        <span *ngIf="step.intent">Intent: {{
+                                                            formatUtterance(step.intent) }}</span>
+                                                        <span *ngIf="step.action">Response: {{formatUtterance(
+                                                            step.action) }}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
 
-                                        <div class="d-flex align-items-center justify-content-between mt-1">
+                                        <!-- <div class="d-flex align-items-center justify-content-between mt-1">
                                             <p class="m-0">Interactions : <span
                                                     class="badge rounded-pill bg-primary">3</span></p>
                                             <div class="form-check form-switch">
@@ -80,49 +99,7 @@
                                                     id="flexSwitchCheckDefault">
                                                 <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                                             </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="card zoom-in chatbotcard">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center">
-                                            <span class="iconButton medium skyTransBg night mb-3">
-                                                <i class="fa-light fa-bezier-curve"></i>
-                                            </span>
-                                            <ul class="list-inline ms-auto">
-                                                <li class="list-inline-item" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" data-bs-title="Edit ">
-                                                    <span class="iconButton small iconHover">
-                                                        <i class="fa-light fa-edit"></i>
-                                                    </span>
-                                                </li>
-
-                                                <li class="list-inline-item" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" data-bs-title="Delete ">
-                                                    <span class="iconButton small iconHover">
-                                                        <i class="fa-light fa-trash radical"></i>
-                                                    </span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div>
-                                            <h6 class="m-0">Greet</h6>
-                                            <p class="coal">Custome</p>
-                                        </div>
-
-                                        <div class="d-flex align-items-center justify-content-between mt-1">
-                                            <p class="m-0">Interactions : <span
-                                                    class="badge rounded-pill bg-primary">3</span></p>
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="flexSwitchCheckDefault2">
-                                                <label class="form-check-label" for="flexSwitchCheckDefault2"></label>
-                                            </div>
-                                        </div>
+                                        </div> -->
 
                                     </div>
 
@@ -134,11 +111,12 @@
                                         <a href="#0" data-bs-toggle="modal" data-bs-target="#select-template"
                                             class="sky d-flex flex-column align-items-center">
                                             <i class="fa-light fa-plus"></i>
-                                            <span>Add New Story</span>
+                                            <span>Add New</span>
                                         </a>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -147,7 +125,7 @@
                         <div class="col-md-3">
                             <div class="card zoom-in chatbotcard addchatcard">
                                 <div class="card-body">
-                                    <a href="#0" class="sky d-flex flex-column align-items-center">
+                                    <a class="sky d-flex flex-column align-items-center">
                                         <i class="fa-light fa-plus"></i>
                                         <span>Add New Form</span>
                                     </a>
@@ -155,6 +133,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -163,54 +142,124 @@
 
 </div>
 
-<div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="creat-categoryLabel">Select Story Template</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal  " id="select-template" tabindex="-1" aria-labelledby="select-templateLabel" aria-modal="true"
+    role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="creat-categoryLabel">Select Story Template</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-5">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="card select-card">
+                            <div class="card-body py-5">
+                                <a class="d-flex flex-column text-center" data-bs-dismiss="modal"
+                                    [routerLink]="'/bot-monitoring/conversation/' + currentConversationName + '/Rule'">
+
+                                    <span class="mx-auto mb-4">
+                                        <img src="../../../../../assets/images/rule.svg" alt="">
+                                    </span>
+                                    <h4 class="mb-0 fw-normal">Rule</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card select-card">
+                            <div class="card-body py-5">
+                                <a class="d-flex flex-column text-center" data-bs-dismiss="modal"
+                                    [routerLink]="'/bot-monitoring/conversation/' + currentConversationName + '/Story'">
+
+                                    <span class="mx-auto mb-4">
+                                        <img src="../../../../../assets/images/multiflow.svg" alt="">
+                                    </span>
+                                    <h4 class="mb-0 fw-normal">Multiflow</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
     </div>
-    <div class="modal-body p-5">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card select-card">
-              <div class="card-body py-5">
-                <a href="#0" class="d-flex flex-column text-center">
-                  <span class="mx-auto mb-4">
-                    <img src="../images/qa.svg" alt="">
-                  </span>
-                  <h4 class="mb-0 fw-normal">Q&amp;A</h4>
-               </a>
-              </div>
-              
+</div>
+<div class="user-comment-widget-container" *ngIf="showChatbot">
+    <div class="user-comment-widget chat-message-component widget-1 show">
+        <div class="comment-widget-header">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="user-status">
+                        <div class="user-name">{{ ChatName }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="chat-control">
+                        <button class="iconButton small iconHover chat-minimize" (click)="closeChatBot()">
+                            <i class="fa-sharp fa-light fa-x"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card select-card">
-              <div class="card-body py-5">
-                <a href="#0" class="d-flex flex-column text-center">
-                    
-                  <span class="mx-auto mb-4">
-                    <img src="../images/rule.svg" alt="">
-                  </span>
-                  <h4 class="mb-0 fw-normal">Rule</h4>
-                 </a>
-              </div>
+        </div>
+        <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;" #chatBody>
+            <div class="scroll-content">
+                <div class="tab-content m-4" id="myTabContent">
+                    <div class="tab-pane fade show active" id="fb-comment" role="tabpanel"
+                        aria-labelledby="fb-comment-tab">
+                        <div class="chat-box-wrap">
+                            <div *ngFor="let message of messages" class="message-wrap"
+                                [ngClass]="{'agent-message-wrap right': message.type === 'agent', 'agent-message-wrap left': message.type === 'user'}">
+                                <div class="agent-container">
+                                    <div class="card w-d-inline messageUpper">
+                                        <div class="card-body shadow-sm">
+                                            <div class="d-flex msg-user-info" *ngIf="message.type === 'user'">
+                                                <div class="d-flex align-items-center">
+                                                    <h6 class="card-title emerald m-0">{{ username }}</h6>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex msg-user-info" *ngIf="message.type === 'agent'">
+                                                <div class="d-flex align-items-center">
+                                                    <h6 class="card-title emerald m-0">{{ ChatName }}</h6>
+                                                </div>
+                                            </div>
+                                            <p class="card-text nignt">{{ message.text }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card select-card">
-              <div class="card-body py-5">
-                <a href="#0" class="d-flex flex-column text-center">
-                     
-                  <span class="mx-auto mb-4">
-                    <img src="../images/multiflow.svg" alt="">
-                  </span>
-                <h4 class="mb-0 fw-normal">Multiflow</h4>
-                </a>
-              </div>
-            </div>
-          </div>
         </div>
 
+        <!-- <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="small" color="#fff" type="ball-fall" [fullScreen]="false"
+            [name]="'google-map-spinner'"></ngx-spinner> -->
+        <div class="comment-widget-footer">
+            <div class="msgTypingField shadow-lg">
+                <div class="input-group input-group-lg">
+                    <div class="form-floating textarea-field">
+                        <textarea class="form-control auto" rows="1" id="message" style="border-radius: 20px;"
+                            placeholder="Write a message here" [(ngModel)]="newMessageText"
+                            (keydown.enter)="sendMessage()"></textarea>
+
+                    </div>
+                    <div class="icons-list align-items-md-center d-flex ps-2">
+                        <button class="iconButton small notification iconHover" (click)="sendMessage()"
+                            data-bs-toggle="tooltip" data-bs-placement="top" type="button" id="sendbtn"
+                            aria-label="Send" data-bs-original-title="Send">
+                            <i class="fal fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
-  
-  </div>
+</div>

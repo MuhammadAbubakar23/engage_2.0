@@ -4,6 +4,7 @@ import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Va
 import { BotMonitoringService } from '../../services/bot-monitoring.service';
 import { SharedModule } from "../../../../shared/shared.module";
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-chat-bot-story',
   templateUrl: './chat-bot-story.component.html',
@@ -35,8 +36,13 @@ export class ChatBotStoryComponent implements OnInit {
   stories: any[] = [];
   Enterphrase: { id: number, label: string }[] = [];
   isFormVisible: boolean = false;
-  constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService) {
+  currentConversationName:string=''
+  constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService,private route:Router, private _activeRoute:ActivatedRoute) {
     this.BotId = localStorage.getItem('bot_id');
+    this._activeRoute.params.
+      subscribe((param) => {
+        this.currentConversationName = param['name'];
+      })
   }
   ngOnInit(): void {
     this.intializeForm();
@@ -55,7 +61,7 @@ export class ChatBotStoryComponent implements OnInit {
     console.log("addQueryResponse===>", this.addQueryResponse);
   }
   cancelForm() {
-    this.isFormVisible = false;
+    this.route.navigate(['/bot-monitoring/conversation',this.currentConversationName])
   }
   intializeForm() {
     this.storyForm = new FormGroup({

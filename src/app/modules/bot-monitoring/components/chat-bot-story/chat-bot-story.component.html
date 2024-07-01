@@ -6,7 +6,7 @@
         </ngx-spinner>
         <div class="page-content-wrapper custom-scroll pb-5 mb-5" data-scrollbar="true" tabindex="-1"
             style="overflow: auto; outline: none;">
-            <ng-container *ngIf="isFormVisible==true">
+            <ng-container >
                 <form [formGroup]="storyForm">
                     <div class="scroll-content">
                         <div class="p-4">
@@ -310,78 +310,8 @@
                     </div>
                 </form>
             </ng-container>
-            <div class="filter-toolbar mb-3 d-flex align-items-center justify-content-between">
-                <ul class="list-inline m-0 d-flex align-items-center">
-                    <li class="list-inline-item">
-                        <h4 class="mx-4">Stories </h4>
-                    </li>
-                </ul>
-
-            </div>
-            <div class="middle-content d-flex">
-                <div class="page-content-wrapper custom-scroll chatbot-main">
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="stories-tab-pane" role="tabpanel"
-                            aria-labelledby="stories-tab" tabindex="0">
-                            <div class="p-4">
-                                <div class="row align-items-start">
-                                    <div class="col-md-3" *ngFor="let story of stories">
-                                        <div class="card zoom-in chatbotcard">
-                                            <div class="card-body" style="min-height: 246px;">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="iconButton medium skyTransBg night mb-3">
-                                                        <i class="fa-light fa-bezier-curve"></i>
-                                                    </span>
-                                                    <ul class="list-inline ms-auto">
-                                                        <!-- <li class="list-inline-item" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Edit ">
-                                                            <span class="iconButton small iconHover">
-                                                                <i class="fa-light fa-edit"></i>
-                                                            </span>
-                                                        </li> -->
-                                                        <li class="list-inline-item" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Delete ">
-                                                            <span class="iconButton small iconHover"
-                                                                (click)="DeleteStory(story.story , $event)">
-                                                                <i class="fa-light fa-trash radical"></i>
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div>
-                                                    <h6 class="m-0 ">{{ story.story }}</h6>
-                                                    <!-- <p class="coal">Conversation Start: {{ story.conversation_start ? 'Yes' : 'No' }}</p> -->
-                                                </div>
-                                                <div style="  overflow-y: auto; overflow-x:hidden;max-height: 140px;">
-                                                    <h6 class="mt-2">Steps</h6>
-                                                    <ul>
-                                                        <li *ngFor="let step of story.steps">
-                                                            <span *ngIf="step.intent">Intent:
-                                                                {{formatUtterance(step.intent) }}</span>
-                                                            <span *ngIf="step.action">Response: {{formatUtterance
-                                                                (step.action) }}</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="card zoom-in chatbotcard addchatcard" style="min-height: 246px;">
-                                            <div class="card-body" (click)="toggleFormVisibility()">
-                                                <a class="sky d-flex flex-column align-items-center">
-                                                    <i class="fa-light fa-plus"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
+       
         </div>
     </div>
 </div>

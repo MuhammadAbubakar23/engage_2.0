@@ -1,21 +1,24 @@
-<div class="dashboard-header-left d-flex align-items-center">
-        
-    <button class="iconButton medium">
-      <i class="fa-light fa-message-dots"></i>
-    </button>
+<div class="col-lg-6">
+  <div class="dashboard-header-left d-flex align-items-center">
     
-    <nav>
-      <ol class="breadcrumb m-0">
-        
+      <button class="iconButton medium">
+        <i class="fa-light fa-message-dots"></i>
+      </button>
+      
+      <nav>
+        <ol class="breadcrumb m-0">
           
-            <li class="breadcrumb-item">
-              <a >ChatBot</a>
-            </li>
-            <li class="breadcrumb-item active">
-              <a > Conversation</a>
-            </li>
-          
-        
-      </ol>
-    </nav>
+            
+              <li class="breadcrumb-item" [routerLink]="['/bot-monitoring/chat-bot']" (click)="updatevalue('chat')" >
+                <a>Chat BOT </a>
+              </li>
+              <li class="breadcrumb-item">
+                <a >Conversation </a>
+              </li>
+              <li class="breadcrumb-item">
+                <a >{{formatUtterance(setName)}}</a>
+              </li>
+        </ol>
+      </nav>
+    </div>
   </div>

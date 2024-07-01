@@ -11,6 +11,7 @@ import { Modal } from 'bootstrap';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { concatMap } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
+import { BotSubMenusActiveService } from '../../services/bot-sub-menus-active.service';
 @Component({
   selector: 'app-chat-bot',
   templateUrl: './chat-bot.component.html',
@@ -47,7 +48,7 @@ export class ChatBotComponent implements OnInit {
   constructor(private _botService: BotMonitoringService,
     private chatBotIdS: ChatbotIdService,
     private route: Router, private spinnerServerice: NgxSpinnerService,private spinnerChat: NgxSpinnerService,
-    private formBuilder: FormBuilder, private headerService: HeaderService) {
+    private formBuilder: FormBuilder, private headerService: HeaderService,private _botSubMenuStatus:BotSubMenusActiveService) {
     this.chatbotForm = new FormGroup({
       name: new FormControl('', Validators.required),
       timeout: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
@@ -77,7 +78,7 @@ export class ChatBotComponent implements OnInit {
   }
 
   sendMessage() {
-    debugger
+    
     if (this.newMessageText.trim() === '') {
       return;
     }
@@ -163,10 +164,11 @@ export class ChatBotComponent implements OnInit {
   formatUtterance(utterance: string): string {
     return utterance.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
   }
-  updatevalue(string: any, value: any, event: Event) {
+  updatevalue(string: any, value: any, event: Event,name:string) {
+
     this.headerService.updateMessage(string)
-    if (string == 'component') {
-      this.shareValue(value, event)
+    if (string == 'conversation') {
+      this.shareValue(value, event,name)
     }
     else if (string == 'rule-chatBot') {
       this.shareValueStepper(value, event)
@@ -297,14 +299,18 @@ export class ChatBotComponent implements OnInit {
       }
     );
   }
+shareConversation(value: any, event: Event){
+  this.route.navigateByUrl('/bot-monitoring/components')
 
-  shareValue(value: any, event: Event) {
+}
+  shareValue(value: any, event: Event ,name:string) {
+    this._botSubMenuStatus.setActiveMenu(true)
     event.stopPropagation();
     event.preventDefault();
     this.isDeleteAction = true;
     localStorage.setItem('bot_id', value.bot_id)
     this.chatBotIdS.setOption(value.bot_id)
-    this.route.navigateByUrl('/bot-monitoring/components')
+    this.route.navigate(['/bot-monitoring/conversation',name])
     localStorage.setItem('name', value.name)
   }
   shareValueStepper(value: any, event: Event) {
