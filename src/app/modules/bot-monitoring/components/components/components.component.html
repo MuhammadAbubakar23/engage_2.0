@@ -80,11 +80,9 @@
                                                 </div>
                                             </div>
                                             <div
-                                                class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
+                                                 *ngIf="!isViewMode"class="card-header p-3 d-flex align-items-center justify-content-between bg-transparent">
                                                 <h5 class="m-0"> Training Phrases</h5>
-                                                <button class="btn snowBg btn-sm night" type="button"
-                                                    (click)="generateAugments()" *ngIf="!isViewMode">Generate Training
-                                                    Phrases</button>
+
                                             </div>
                                             <div class="card-body">
                                                 <div class="mb-3">
@@ -116,6 +114,14 @@
 
                                                                 </li>
                                                             </span>
+                                                            <div
+                                                                class="card-header p-3 d-flex align-items-center justify-content-end bg-transparent">
+                                                                <button class="btn snowBg btn-sm night" type="button"
+                                                                    (click)="generateAugments()"
+                                                                    *ngIf="!isViewMode">Generate Training
+                                                                    Phrases</button>
+                                                            </div>
+
                                                             <li *ngFor="let item of phrase"
                                                                 class="list-group-item d-flex align-items-center justify-content-between">
                                                                 <div>

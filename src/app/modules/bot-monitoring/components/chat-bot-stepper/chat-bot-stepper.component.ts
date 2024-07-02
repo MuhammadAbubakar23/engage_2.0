@@ -268,6 +268,7 @@ export class ChatBotStepperComponent implements OnInit {
       this.spinnerServerice.show();
 
       this._botService.CreateRule(obj).subscribe((res: any) => {
+        this.route.navigate(['/bot-monitoring/conversation',this.currentConversationName])
         this.spinnerServerice.hide();
 
         this.reloadComponent('Rule Create');

@@ -1,20 +1,27 @@
 <div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
-
+        <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+            [fullScreen]="false">
+            <p style="color: white"> Loading... </p>
+        </ngx-spinner>
         <div class="page-content-wrapper custom-scroll chatbot-main">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="stories-tab-pane" role="tabpanel"
                     aria-labelledby="stories-tab" tabindex="0">
                     <div class="p-4">
                         <div class="filter-toolbar mb-3 d-flex align-items-center justify-content-between mt-1">
-                            <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
-                                <li class="list-inline-item">
-                                    <div class="icon-input">
-                                        <i class="fa-light fa-magnifying-glass"></i>
-                                        <input class="form-control" placeholder="Search.. ">
-                                    </div>
-                                </li>
-                                <!-- <li class="list-inline-item">
+                            <form>
+
+                                <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                                    <li class="list-inline-item">
+                                        <div class="icon-input">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                            <input class="form-control" [(ngModel)]="searchQuery"
+                                                placeholder="Search.. ">
+                                        </div>
+                                    </li>
+
+                                    <!-- <li class="list-inline-item">
                                     <input type="checkbox" class="btn-check" id="q&amp;a" autocomplete="off">
                                     <label class="btn toggle-check-btn fw-bold" for="q&amp;a">
                                         Q&amp;A</label>
@@ -29,17 +36,19 @@
                                     <label class="btn toggle-check-btn fw-bold" for="multiflow">
                                         Multiflow</label>
                                 </li> -->
-                            </ul>
+                                </ul>
+                            </form>
 
                             <div class="text-end">
                                 <button class="btn btn-success me-2 " type="button" aria-expanded="false"
                                     (click)="trainBot(BotId)">
                                     Train BOT
                                 </button>
-                                <button class="btn btn-success me-2 " type="button" aria-expanded="false" (click)="chatBot(BotId)">
+                                <button class="btn btn-success me-2 " type="button" aria-expanded="false"
+                                    (click)="chatBot(BotId)">
                                     Chat with BOT
                                 </button>
-                            
+
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" data-bs-toggle="modal"
                                             data-bs-target="#select-template">Add Story</a></li>
@@ -47,16 +56,21 @@
                             </div>
                         </div>
                         <div class="row align-items-start">
-                            <div class="col-md-3" *ngFor="let intent of intents">
+                            <div class="col-md-3" *ngFor="let intent of filteredChatbots()">
                                 <div class="card zoom-in chatbotcard">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
+
                                             <span class="iconButton medium skyTransBg night mb-3">
                                                 <i *ngIf="intent.rule" class="fa-light fa-bezier-curve"></i>
                                                 <i *ngIf="intent.story" class="fa-solid fa-book"></i>
                                             </span>
+                                            <div class="d-flex align-items-center">
+                                                <span class="badge bg-primary mx-2 mb-3">
+                                                    {{ intent.rule ? 'Rule' : 'Story' }}
+                                                </span>
+                                            </div>
                                             <ul class="list-inline ms-auto">
-                                              
 
                                                 <li class="list-inline-item" data-bs-toggle="tooltip"
                                                     *ngIf="intent.rule" data-bs-placement="top" data-bs-title="Delete ">
@@ -75,6 +89,7 @@
                                                 </li>
                                             </ul>
                                         </div>
+
                                         <div style="overflow: auto;
                                             max-height: 118px;">
                                             <h6 class="m-0">{{intent.rule|| intent.story}}</h6>
@@ -155,8 +170,8 @@
 
                     <div class="col-md-6">
                         <div class="card select-card">
-                            <div class="card-body py-5">
-                                <a class="d-flex flex-column text-center" data-bs-dismiss="modal"
+                            <div class="card-body py-5" >
+                                <a class="d-flex flex-column text-center" data-bs-dismiss="modal"  (click)="updatevalue('rule-chatBot')"
                                     [routerLink]="'/bot-monitoring/conversation/' + currentConversationName + '/Rule'">
 
                                     <span class="mx-auto mb-4">
@@ -170,7 +185,7 @@
                     <div class="col-md-6">
                         <div class="card select-card">
                             <div class="card-body py-5">
-                                <a class="d-flex flex-column text-center" data-bs-dismiss="modal"
+                                <a class="d-flex flex-column text-center" data-bs-dismiss="modal" (click)="updatevalue('story-chatBot')"
                                     [routerLink]="'/bot-monitoring/conversation/' + currentConversationName + '/Story'">
 
                                     <span class="mx-auto mb-4">
@@ -259,7 +274,19 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
 
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
 
+            </div>
+        </div>
     </div>
 </div>

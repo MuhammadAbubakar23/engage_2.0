@@ -3,16 +3,17 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BotMonitoringService } from '../../services/bot-monitoring.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { concatMap, forkJoin } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HeaderService } from 'src/app/services/HeaderService/header.service';
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
   styleUrls: ['./conversation.component.scss'],
   standalone: true,
-  imports: [CommonModule, SharedModule, RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, SharedModule, RouterModule, FormsModule, ReactiveFormsModule, NgxSpinnerModule],
 })
 export class ConversationComponent implements OnInit {
   intents: any = [];
@@ -27,7 +28,10 @@ export class ConversationComponent implements OnInit {
   currentConversationName: string = ""
   sender_id: string = '';
   list: string[] = [];
-  constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService, private _activeRoute: ActivatedRoute) { }
+  searchQuery: string = ''
+  toastermessage: boolean = false;
+  AlterMsg: any
+  constructor( private headerService: HeaderService,private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService, private _activeRoute: ActivatedRoute) { }
   @ViewChild('chatBody') private chatBody?: ElementRef;
   ngOnInit(): void {
     this._activeRoute.params.
@@ -42,13 +46,24 @@ export class ConversationComponent implements OnInit {
     }
     this.gen()
   }
+  filteredChatbots() {
+    if (!this.searchQuery) {
+      return this.intents;
+    }
+    return this.intents.filter((bot: any) =>
+      (bot.rule || bot.story).toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
+
 
   fetchData(): void {
+    this.spinnerServerice.show()
     forkJoin({
       rules: this._botService.GetRuleChatBot(this.BotId),
       stories: this._botService.GetStoriesChatBot(this.BotId)
     }).subscribe(
       ({ rules, stories }) => {
+        this.spinnerServerice.hide()
         this.rules = rules;
         this.stories = stories;
         this.intents = this.rules.concat(this.stories);
@@ -56,6 +71,8 @@ export class ConversationComponent implements OnInit {
       },
       error => {
         console.error('Error fetching data:', error);
+        this.spinnerServerice.hide()
+
       }
     );
   }
@@ -67,7 +84,7 @@ export class ConversationComponent implements OnInit {
       concatMap(() => this._botService.BotTrain(formData)),
       concatMap((res: any) => {
         this.spinnerServerice.hide();
-        // this.reloadComponent(res.messages);
+        this.reloadComponent(res.messages);
         console.log(res);
         return this._botService.RunChatBot(formData);
       })
@@ -80,9 +97,12 @@ export class ConversationComponent implements OnInit {
         console.error('Error training bot:', error);
         this.spinnerServerice.hide();
         console.log('Error message:', error.error.messages);
-        // this.reloadComponent(error.error.message);
+        this.reloadComponent(error.error.message);
       }
     );
+  }
+  updatevalue(string: any) {
+    this.headerService.updateMessage(string);
   }
   closeChatBot() {
     this.showChatbot = false;
@@ -145,7 +165,7 @@ export class ConversationComponent implements OnInit {
       (error) => {
         console.error('ChatBot error:', error);
         // this.spinnerChat.hide('google-map-spinner')
-        // this.reloadComponent(error.error.message)
+        this.reloadComponent(error.error.message)
         // Handle error scenario
       }
     );
@@ -167,13 +187,13 @@ export class ConversationComponent implements OnInit {
           console.log(res);
           // Filter out the deleted rule from the list
           this.rules = this.rules.filter(x => x.rule !== rule);
-          // this.reloadComponent(res.messages);
+          this.reloadComponent(res.messages);
         },
         (error) => {
           console.error('Error deleting rule:', error);
           this.spinnerServerice.hide();
           console.log("error message====>", error.error.messages);
-          // this.reloadComponent(error.error.messages);
+          this.reloadComponent(error.error.messages);
         }
       );
     }
@@ -192,15 +212,28 @@ export class ConversationComponent implements OnInit {
           console.log(res);
           // Filter out the deleted story from the list
           this.stories = this.stories.filter(x => x.story !== story);
-          // this.reloadComponent(res.messages);
+          this.reloadComponent(res.messages);
         },
         (error) => {
           console.error('Error deleting story:', error);
           this.spinnerServerice.hide();
           console.log("error message====>", error.error.messages);
-          // this.reloadComponent(error.error.messages);
+          this.reloadComponent(error.error.messages);
         }
       );
     }
+  }
+  reloadComponent(value: any) {
+    if (value) {
+      this.toastermessage = true
+      this.AlterMsg = value
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 4000);
+    }
+  }
+
+  closeToaster() {
+    this.toastermessage = false;
   }
 }

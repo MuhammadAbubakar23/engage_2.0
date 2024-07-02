@@ -318,7 +318,7 @@ export class ChatBotStoryComponent implements OnInit {
       this.spinnerServerice.show();
 
       this._botService.CreateStory(obj).subscribe((res: any) => {
-
+        this.route.navigate(['/bot-monitoring/conversation',this.currentConversationName])
         this.reloadComponent('Story Create')
 
         this.getListOfRule();
