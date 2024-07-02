@@ -174,11 +174,13 @@ export class LoginComponent implements OnInit {
                 this.signalRService.assignQueryResponseListner();
                 this.signalRService.applySentimentListner();
                 this.signalRService.updateMessageStatusDataListener();
+                this.loginDisabled = true
               },
               (error)=>{
                 alert(error.error.message)
               });
             } finally {
+              
               this.spinnerService.hide();
             }
             

@@ -8,28 +8,53 @@ import { RuleWithCount } from '../../Models/ChannelRule';
   providedIn: 'root',
 })
 export class CommonDataService {
+
+  env:any;
+  constructor(private http: HttpClient) {
+    debugger
+    this.baseUrl = window.location.origin;
+    sessionStorage.setItem('baseUrl', this.baseUrl);
+    if (this.baseUrl == 'https://keportal.enteract.live') {
+      this.env = (window as any)._env.ke;
+    } else if (this.baseUrl == 'https://engage.jazz.com.pk') {
+      this.env = (window as any)._env.jazz;
+    } else if (this.baseUrl == 'https://uiengage.enteract.app') {
+      this.env = (window as any)._env;
+    } else if (this.baseUrl == 'https://tpplui.enteract.live') {
+      this.env = (window as any)._env;
+    } else if (this.baseUrl == 'https://waengage.enteract.live') {
+      this.env = (window as any)._env;
+    } else if (this.baseUrl == 'https://bzengage.enteract.live') {
+      this.env = (window as any)._env;
+    } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
+      this.env = (window as any)._env;
+    } else if (this.baseUrl == 'http://localhost:4200' || this.baseUrl == 'https://localhost:4200') {
+      this.env = (window as any)._env.stagging;
+    }
+    
+  }
   // for testing purpose
-  consoleBaseUrl = environment.consoleBaseUrl;
+  // ConsoleBaseUrl = environment.ConsoleBaseUrl;
   resultData: any;
   CCMSURL = environment.CCMSURL;
   JomoAccessToken = environment.JomoAccessToken;
-  CommonBaseUrl = environment.CommonBaseUrl;
-  IdentityBaseUrl = environment.IdentityBaseUrl;
+  // CommonBaseUrl = environment.CommonBaseUrl;
+  // IdentityBaseUrl = environment.IdentityBaseUrl;
   FacebookBaseUrl = environment.FbBaseUrl;
   InstagramBaseUrl = environment.InstaBaseUrl;
-  ServiceBaseUrl = environment.ServiceBaseUrl;
-  ProfileBaseUrl = environment.ProfileBaseUrl;
-  LinkedInBaseUrl = environment.LinkedInBaseUrl;
+  // ServiceBaseUrl = environment.ServiceBaseUrl;
+  // ProfileBaseUrl = environment.ProfileBaseUrl;
+  // LinkedInBaseUrl = environment.LinkedInBaseUrl;
   KemediaBaseUrl = environment.KemediaBaseUrl;
   KescrmBaseUrl = environment.KescrmBaseUrl;
   WhatsappBaseUrl = environment.WhatsappBaseUrl;
-  KeReportsBaseUrl=environment.keReportsBaseUrl
-  faceRoxBaseUrl=environment.faceRoxBaseUrl
-  autoresponderbaseurl = environment.autoresponderbaseurl
-  profileBaseUrl = environment.botConfigBaseUrl
-  channelBaseUrl = environment.consoleBaseUrl
-  botsBaseUrl = environment.botMoniteringBaseUrl
-  botConfigBaseUrl = environment.botConfigBaseUrl
+  // KeReportsBaseUrl = environment.keReportsBaseUrl;
+  faceRoxBaseUrl = environment.faceRoxBaseUrl;
+  autoresponderbaseurl = environment.autoresponderbaseurl;
+  profileBaseUrl = environment.botConfigBaseUrl;
+  // channelBaseUrl = environment.ConsoleBaseUrl;
+  botsBaseUrl = environment.botMoniteringBaseUrl;
+  botConfigBaseUrl = environment.botConfigBaseUrl;
   // KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
@@ -76,7 +101,7 @@ export class CommonDataService {
   markAllAsRead = environment.links.common.markAllAsRead;
   getAgentReport = environment.links.common.getAgentReport;
   getAllocatedProfiles = environment.links.common.getAllocatedProfiles;
-  sessionClose=environment.links.common.sessionClose
+  sessionClose = environment.links.common.sessionClose;
   // createMessageTemplate = environment.links.console.CreateMessageTemplate;
   repliesList = environment.links.common.repliesList;
   signOut = environment.links.common.signOut;
@@ -87,14 +112,14 @@ export class CommonDataService {
   removeTagOnProfile = environment.links.common.removeTagOnProfile;
   hideUnhideMessage = environment.links.common.hideUnhideMessage;
   dispositionTags = environment.links.common.dispositionTags;
-  removeAssignedQuery = environment.links.common.removeAssignedQuery
-  getAllTeams = environment.links.console.getAllTeams
-  addTeam = environment.links.console.addTeam
-  updateTeam = environment.links.console.updateTeam
-  getTeamType = environment.links.console.getTeamType
-  deleteTeams = environment.links.console.deleteTeam
-  teamGetById = environment.links.console.teamGetById
-  deleteMultipleTeams = environment.links.console.deleteMultipleTeams
+  removeAssignedQuery = environment.links.common.removeAssignedQuery;
+  getAllTeams = environment.links.console.getAllTeams;
+  addTeam = environment.links.console.addTeam;
+  updateTeam = environment.links.console.updateTeam;
+  getTeamType = environment.links.console.getTeamType;
+  deleteTeams = environment.links.console.deleteTeam;
+  teamGetById = environment.links.console.teamGetById;
+  deleteMultipleTeams = environment.links.console.deleteMultipleTeams;
   //Reports
   addUniqueCustomer = environment.links.common.addUniqueCustomer;
   uniqueExportCsv = environment.links.common.uniqueExportCsv;
@@ -111,7 +136,8 @@ export class CommonDataService {
   addAgentPerformance = environment.links.common.addAgentPerformance;
   shiftReport = environment.links.common.shiftReport;
   getWhatsAppRawDataReport = environment.links.common.getWhatsAppRawDataReport;
-  downloadWhatsAppRawDataReport = environment.links.common.downloadWhatsAppRawDataReport;
+  downloadWhatsAppRawDataReport =
+    environment.links.common.downloadWhatsAppRawDataReport;
   postSocialRawData = environment.links.common.postSocialRawData;
   downloadSocialRawData = environment.links.common.downloadSocialRawData;
   facebookReport = environment.links.common.facebookReport;
@@ -124,7 +150,7 @@ export class CommonDataService {
   getLinkedInFollowers = environment.links.common.getLinkedInFollowers;
   emailShiftReport = environment.links.common.emailShiftReport;
   getFollowUpCount = environment.links.common.getFollowUpCount;
-  getAllWing= environment.links.console.getAllWing
+  getAllWing = environment.links.console.getAllWing;
   downloadTagReport = environment.links.common.downloadTagReport;
   regionwiseReport = environment.links.common.regionwiseReport;
   wordCloud = environment.links.common.wordCloud;
@@ -132,15 +158,15 @@ export class CommonDataService {
   keMediaReport = environment.links.common.keMediaReport;
   PrintFeed = environment.links.common.PrintFeed;
   CSATReport = environment.links.common.CSATReport;
-  getInteractionReport = environment.links.common.getInteractionReport
+  getInteractionReport = environment.links.common.getInteractionReport;
   // SCRM Reports
   facebookscrmReport = environment.links.scrmReports.facebookscrmReport;
-  getfortesting = environment.links.scrmReports.getfortesting
+  getfortesting = environment.links.scrmReports.getfortesting;
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
   botConfigDetails = environment.links.console.botConfigDetails;
-  updateBotConfigDetail = environment.links.console.UpdateStatus
-  ViewBotConfig = environment.links.console.ViewBotConfig
+  updateBotConfigDetail = environment.links.console.UpdateStatus;
+  ViewBotConfig = environment.links.console.ViewBotConfig;
   addTemplate = environment.links.console.addTemplate;
   updateTemplate = environment.links.console.updateTemplate;
   deleteMessages = environment.links.console.deleteMessages;
@@ -176,8 +202,8 @@ export class CommonDataService {
   addProfile = environment.links.console.addProfile;
   attachFacebookPage = environment.links.console.attachFacebookPage;
   getTags = environment.links.console.getTags;
-  getTagsAll=environment.links.console.getTagsAll
-  getTagsByCompanyId =environment.links.console.getTagsByCompanyId
+  getTagsAll = environment.links.console.getTagsAll;
+  getTagsByCompanyId = environment.links.console.getTagsByCompanyId;
   getTagById = environment.links.console.getTagById;
   addTags = environment.links.console.addTags;
   updateTag = environment.links.console.updateTag;
@@ -191,188 +217,190 @@ export class CommonDataService {
   addRules = environment.links.console.addRules;
   updateRules = environment.links.console.updateRules;
   getEntitiesRule = environment.links.console.getEntitiesRule;
-  getEntitiesRules = environment.links.console.getEntitiesRules
-  addRule= environment.links.console.addRule
-  getFbRule = environment.links.console.getFbRule
-  softDeleteFb = environment.links.console.softDeleteFb
-  getEntitiesProperties = environment.links.console.getEntitiesProperties
+  getEntitiesRules = environment.links.console.getEntitiesRules;
+  addRule = environment.links.console.addRule;
+  getFbRule = environment.links.console.getFbRule;
+  softDeleteFb = environment.links.console.softDeleteFb;
+  getEntitiesProperties = environment.links.console.getEntitiesProperties;
   getRuleEntityProperties = environment.links.console.getRuleEntityProperties;
   getChannels = environment.links.identity.channels;
-  consoleChannel= environment.links.identity.consoleChannls
+  consoleChannel = environment.links.identity.consoleChannls;
   deleteRoles = environment.links.identity.deleteRoles;
   getUserRoles = environment.links.identity.getUserRoles;
-  getautoResponedFB = environment.links.console.getautoResponedFB
-  addFbResponed =environment.links.console.addFbResponed
-  getCompanyPages = environment.links.console.getCompanyPages
-  getProfileDetails = environment.links.console.getProfileDetails
-  getServices = environment.links.console.getServices
-  botsList = environment.links.console.getBotList
-  getActions = environment.links.console.getActions
-  getPlatorm = environment.links.console.getPlatform
-  getConsoleEntities = environment.links.console.getConsoleEntities
-  getConsoleEntityProperties = environment.links.console.getConsoleEntityProperties
-  getRuleType= environment.links.console.getRuleType
-  getRuleTag = environment.links.console.getRuleTag
-  getServicetree = environment.links.console.getServicetree
-  getTemplateStatus= environment.links.console.getTemplateStatus
-  deleteTemplate= environment.links.console.deleteTemplate
-  getRuleStatus= environment.links.console.getRuleStatus
+  getautoResponedFB = environment.links.console.getautoResponedFB;
+  addFbResponed = environment.links.console.addFbResponed;
+  getCompanyPages = environment.links.console.getCompanyPages;
+  getProfileDetails = environment.links.console.getProfileDetails;
+  getServices = environment.links.console.getServices;
+  botsList = environment.links.console.getBotList;
+  getActions = environment.links.console.getActions;
+  getPlatorm = environment.links.console.getPlatform;
+  getConsoleEntities = environment.links.console.getConsoleEntities;
+  getConsoleEntityProperties =
+    environment.links.console.getConsoleEntityProperties;
+  getRuleType = environment.links.console.getRuleType;
+  getRuleTag = environment.links.console.getRuleTag;
+  getServicetree = environment.links.console.getServicetree;
+  getTemplateStatus = environment.links.console.getTemplateStatus;
+  deleteTemplate = environment.links.console.deleteTemplate;
+  getRuleStatus = environment.links.console.getRuleStatus;
 
   // teams
   // getAllTeams= environment.links.console.getAllTeams
   // addTeam = environment.links.console.addTeam
   // updateTeam = environment.links.console.updateTeam
   //service
-  userlogin = environment.links.common.userlogin
+  userlogin = environment.links.common.userlogin;
   addSurvey = environment.links.service.addSurvey;
   addCSAT = environment.links.service.addCSAT;
   KECSAT = environment.links.profile.KECSAT;
-  getProfileInformationByID = environment.links.profile.getProfileInformationByID;
+  getProfileInformationByID =
+    environment.links.profile.getProfileInformationByID;
   searchProfileInformation = environment.links.profile.searchProfileInformation;
   addProfileInformation = environment.links.profile.addProfileInformation;
-  deattachProfileInformation = environment.links.profile.deattachProfileInformation
-  // whatapp bot interaction 
-  whatsappBotInteraction = environment.links.common.whatsappBotInteraction
+  deattachProfileInformation =
+    environment.links.profile.deattachProfileInformation;
+  // whatapp bot interaction
+  whatsappBotInteraction = environment.links.common.whatsappBotInteraction;
   private _wordCloudDataS: any;
-  activeChannel: any
-  constructor(private http: HttpClient) {
-    this.activeChannel = window.location.origin
-    sessionStorage.setItem('activeChannel', this.activeChannel)
-  }
+  baseUrl: any;
+ 
   gethttpOptions() {
     let headers_object = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': "Bearer " + sessionStorage.getItem('token')
+      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
     });
     let httpOptions = {
-      headers: headers_object
+      headers: headers_object,
     };
-    return httpOptions
+    return httpOptions;
   }
- UserLogin(){
-  let httpOptions = this.gethttpOptions();
-  return this.http.get(this.CommonBaseUrl+this.userlogin,httpOptions)
- }
+  UserLogin() {
+    let httpOptions = this.gethttpOptions();
+    return this.http.get(this.env.CommonBaseUrl + this.userlogin, httpOptions);
+  }
   GetTagsList() {
-    return this.http.get(this.CommonBaseUrl + this.tagsList);
+    return this.http.get(this.env.CommonBaseUrl + this.tagsList);
   }
   InsertTag(form: any) {
-    return this.http.post(this.CommonBaseUrl + this.insertTags, form);
+    return this.http.post(this.env.CommonBaseUrl + this.insertTags, form);
   }
   RemoveTag(form: any) {
-    return this.http.post(this.CommonBaseUrl + this.removeTags, form);
+    return this.http.post(this.env.CommonBaseUrl + this.removeTags, form);
   }
   InsertSentiment(form: any) {
-    return this.http.post(this.CommonBaseUrl + this.insertSentiments, form);
+    return this.http.post(this.env.CommonBaseUrl + this.insertSentiments, form);
   }
   MarkAsComplete(data: any) {
-    return this.http.post(this.CommonBaseUrl + this.markAsComplete, data);
+    return this.http.post(this.env.CommonBaseUrl + this.markAsComplete, data);
   }
   QuickReplyList() {
-    return this.http.get(this.CommonBaseUrl + this.quickReplyList);
+    return this.http.get(this.env.CommonBaseUrl + this.quickReplyList);
   }
   QuickReplyListForBazaarOnly() {
-    return this.http.get(this.consoleBaseUrl + this.quickReplyListForBazaar);
+    return this.http.get(this.env.ConsoleBaseUrl + this.quickReplyListForBazaar);
   }
   CommentRespond(form: any) {
-    return this.http.post(this.CommonBaseUrl + this.commentRespond, form);
+    return this.http.post(this.env.CommonBaseUrl + this.commentRespond, form);
   }
   LikedByAdmin(form: any) {
-    return this.http.post(this.CommonBaseUrl + this.likedByAdmin, form);
+    return this.http.post(this.env.CommonBaseUrl + this.likedByAdmin, form);
   }
   AssignQuerry(data: any) {
-    return this.http.post(this.CommonBaseUrl + this.assignQuerry, data);
+    return this.http.post(this.env.CommonBaseUrl + this.assignQuerry, data);
   }
   GetAgentsTeamList() {
-    return this.http.get(this.CommonBaseUrl + this.agentsTeamList);
+    return this.http.get(this.env.CommonBaseUrl + this.agentsTeamList);
   }
   AssignToAnotherAgent(data: any) {
-    return this.http.post(this.CommonBaseUrl + this.assignToAnotherAgent, data);
+    return this.http.post(this.env.CommonBaseUrl + this.assignToAnotherAgent, data);
   }
   GetSlaList(data: any) {
-    return this.http.post(this.CommonBaseUrl + this.slaList, data);
+    return this.http.post(this.env.CommonBaseUrl + this.slaList, data);
   }
   GetSlaDetail(data: any) {
-    return this.http.post(this.CommonBaseUrl + this.slaDetail, data);
+    return this.http.post(this.env.CommonBaseUrl + this.slaDetail, data);
   }
   GetSlaDM(data: any) {
-    return this.http.post(this.CommonBaseUrl + this.slaDM, data);
+    return this.http.post(this.env.CommonBaseUrl + this.slaDM, data);
   }
   GetConversationList(data: any) {
-    return this.http.post(this.CommonBaseUrl + this.mainChannelList, data);
+    return this.http.post(this.env.CommonBaseUrl + this.mainChannelList, data);
   }
   GetRepliesList(data: any) {
-    return this.http.post(this.CommonBaseUrl + this.repliesList, data);
+    return this.http.post(this.env.CommonBaseUrl + this.repliesList, data);
   }
   GetChannelConversationDetail(data: any) {
-    return this.http.post(this.CommonBaseUrl + this.conversationDetail, data);
+    return this.http.post(this.env.CommonBaseUrl + this.conversationDetail, data);
   }
   GetChannelMessageDetail(data: any) {
-    return this.http.post(this.CommonBaseUrl + this.messageDetail, data);
+    return this.http.post(this.env.CommonBaseUrl + this.messageDetail, data);
   }
   ReplyComment(formData: any) {
-    return this.http.post(this.CommonBaseUrl + this.replyComment, formData);
+    return this.http.post(this.env.CommonBaseUrl + this.replyComment, formData);
   }
   GetHumanAgentTag() {
-    return this.http.get(this.CommonBaseUrl + this.humanAgentTags);
+    return this.http.get(this.env.CommonBaseUrl + this.humanAgentTags);
   }
   GetAgentById(agentId: any) {
-    const url = this.CommonBaseUrl + this.agentDetail + '?UserId=' + agentId;
+    const url = this.env.CommonBaseUrl + this.agentDetail + '?UserId=' + agentId;
     return this.http.get(url);
   }
   UpdateBreak(status: any) {
-    const url = this.CommonBaseUrl + this.updateBreak + '?Status=' + status;
+    const url = this.env.CommonBaseUrl + this.updateBreak + '?Status=' + status;
     return this.http.get(url);
   }
   GetFbPostStats(pageId: any, postId: any) {
     return this.http.post(
-      this.CommonBaseUrl +
-      this.fbPostStats +
-      '?PageId=' +
-      pageId +
-      '&postId=' +
-      postId,
+      this.env.CommonBaseUrl +
+        this.fbPostStats +
+        '?PageId=' +
+        pageId +
+        '&postId=' +
+        postId,
       null
     );
   }
-// auto responder apis  
-getAutoRespondFB(body: any) {
-  return this.http.post(this.autoresponderbaseurl + this.getautoResponedFB , body);
-}
-getChannelsList(){
-  return this.http.get(this.channelBaseUrl + this.getServices);
-}
-getBots(){
-  return this.http.get(this.botsBaseUrl + this.botsList)
-}
-AddFbResponed( body: any) {
-    return this.http.post(this.autoresponderbaseurl + this.addFbResponed , body);
+  // auto responder apis
+  getAutoRespondFB(body: any) {
+    return this.http.post(
+      this.autoresponderbaseurl + this.getautoResponedFB,
+      body
+    );
   }
-  GetCompanyPages(){
+  getChannelsList() {
+    return this.http.get(this.env.ConsoleBaseUrl + this.getServices);
+  }
+  getBots() {
+    return this.http.get(this.botsBaseUrl + this.botsList);
+  }
+  AddFbResponed(body: any) {
+    return this.http.post(this.autoresponderbaseurl + this.addFbResponed, body);
+  }
+  GetCompanyPages() {
     return this.http.get(this.autoresponderbaseurl + this.getCompanyPages);
-
   }
-  GetProfileInfo(url:any){
-    return this.http.get( url + this.getProfileDetails)
+  GetProfileInfo(url: any) {
+    return this.http.get(url + this.getProfileDetails);
   }
 
-  GetActions(){
+  GetActions() {
     return this.http.get(this.autoresponderbaseurl + this.getActions);
   }
   GetFbCommentStats(pageId: any, commentId: any) {
     return this.http.post(
-      this.CommonBaseUrl +
-      this.fbCommentStats +
-      '?PageId=' +
-      pageId +
-      '&CommentId=' +
-      commentId,
+      this.env.CommonBaseUrl +
+        this.fbCommentStats +
+        '?PageId=' +
+        pageId +
+        '&CommentId=' +
+        commentId,
       null
     );
   }
   GetInstaPostStats(pageId: any, postId: any) {
     const url =
-      this.CommonBaseUrl +
+      this.env.CommonBaseUrl +
       this.instaStats +
       '?PageId=' +
       pageId +
@@ -382,273 +410,300 @@ AddFbResponed( body: any) {
   }
   GetYoutubePostStats(postId: any) {
     const url =
-      this.CommonBaseUrl + this.youtubePostStats + '?PostId=' + postId;
+      this.env.CommonBaseUrl + this.youtubePostStats + '?PostId=' + postId;
     return this.http.get(url);
   }
   GetTwitterTweetStats(profileId: any, tweetId: any) {
     return this.http.get(
-      this.CommonBaseUrl +
-      this.twitterTweetStats +
-      '?ProfileExternalId=' +
-      profileId +
-      '&TweetId=' +
-      tweetId
+      this.env.CommonBaseUrl +
+        this.twitterTweetStats +
+        '?ProfileExternalId=' +
+        profileId +
+        '&TweetId=' +
+        tweetId
     );
   }
   GetLinkedInPostStats(postId: any) {
     return this.http.get(
-      this.CommonBaseUrl + this.linkedInPostStats + '?PostId=' + postId
+      this.env.CommonBaseUrl + this.linkedInPostStats + '?PostId=' + postId
     );
   }
   GetMenu(type: any, body: any) {
-    return this.http.post(this.IdentityBaseUrl + this.menu + type, body);
+    return this.http.post(this.env.IdentityBaseUrl + this.menu + type, body);
   }
   GetProfileDetails(id: any) {
     return this.http.get(
-      this.CommonBaseUrl + this.profileDetails + '?CustomerId=' + id
+      this.env.CommonBaseUrl + this.profileDetails + '?CustomerId=' + id
     );
   }
   UpdateProfileDetails(form: any) {
-    return this.http.post(this.CommonBaseUrl + this.updateProfile, form);
+    return this.http.post(this.env.CommonBaseUrl + this.updateProfile, form);
   }
   // 1
   GetReasonTypes() {
-    return this.http.get(this.CommonBaseUrl + this.reason_types);
+    return this.http.get(this.env.CommonBaseUrl + this.reason_types);
   }
   GetMainReasons(type: string) {
-    const url = this.CommonBaseUrl + this.reasons + type;
-    return this.http.get(this.CommonBaseUrl + this.reasons + type);
+    const url = this.env.CommonBaseUrl + this.reasons + type;
+    return this.http.get(this.env.CommonBaseUrl + this.reasons + type);
   }
   GetSubReasons(reasonId: number) {
-    return this.http.get(this.CommonBaseUrl + this.subReasons + reasonId);
+    return this.http.get(this.env.CommonBaseUrl + this.subReasons + reasonId);
   }
   GetTicketStatuses() {
-    return this.http.get(this.CommonBaseUrl + this.getTicketStatuses);
+    return this.http.get(this.env.CommonBaseUrl + this.getTicketStatuses);
   }
   GetOrderByCustomerEmailAddressOrPhoneNumber(form: any) {
     return this.http.post(
-      this.CommonBaseUrl + this.getOrderByCustomerEmailAddressOrPhoneNumber,
+      this.env.CommonBaseUrl + this.getOrderByCustomerEmailAddressOrPhoneNumber,
       form
     );
   }
   CreateTicket(form: any) {
-    return this.http.post(this.CommonBaseUrl + this.createTicket, form);
+    return this.http.post(this.env.CommonBaseUrl + this.createTicket, form);
   }
-  GetAllChannelsUnrespondedCount(body:any) {
+  GetAllChannelsUnrespondedCount(body: any) {
     return this.http.post(
-      this.CommonBaseUrl + this.allChannelsUnrespondedCounts, body
+      this.env.CommonBaseUrl + this.allChannelsUnrespondedCounts,
+      body
     );
   }
   SubmitDispositionForm(form: any) {
-    return this.http.post(this.CommonBaseUrl + this.saveAsCompleted, form);
+    return this.http.post(this.env.CommonBaseUrl + this.saveAsCompleted, form);
   }
   GetDispositionHistory(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.dispositionHistory, body);
+    return this.http.post(this.env.CommonBaseUrl + this.dispositionHistory, body);
   }
   MarkAllAsRead(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.markAllAsRead, body);
+    return this.http.post(this.env.CommonBaseUrl + this.markAllAsRead, body);
   }
   GetAgentReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.getAgentReport, body, {
+    return this.http.post(this.env.CommonBaseUrl + this.getAgentReport, body, {
       responseType: 'text',
     });
   }
-  GetAllocatedProfiles(wing:string,skillSlug:string) {
-    return this.http.get(this.CommonBaseUrl + this.getAllocatedProfiles + '?Wings='+wing+'&SkillSlug='+skillSlug);
+  GetAllocatedProfiles(wing: string, skillSlug: string) {
+    return this.http.get(
+      this.env.CommonBaseUrl +
+        this.getAllocatedProfiles +
+        '?Wings=' +
+        wing +
+        '&SkillSlug=' +
+        skillSlug
+    );
   }
   // CreateMessageTemplate(body: any) {
-  //   return this.http.post(this.CommonBaseUrl + this.createMessageTemplate, body);
+  //   return this.http.post(this.env.CommonBaseUrl + this.createMessageTemplate, body);
   // }
   // CreateSlaPolicy(body: any) {
   //   return this.http.post('https://10.111.32.97:45458/api/SLAPolicies/Add', body);
   // }
   GetAllMessages(templates: any) {
-    return this.http.post(this.consoleBaseUrl + this.getAllMessages, templates);
+    return this.http.post(this.env.ConsoleBaseUrl + this.getAllMessages, templates);
   }
-  GetBotConfig(url: any, body: any){
-    return this.http.post(url+ this.botConfigDetails, body);
+  GetBotConfig(url: any, body: any) {
+    return this.http.post(url + this.botConfigDetails, body);
   }
   Addtemplate(addData: any) {
-    return this.http.post(this.consoleBaseUrl + this.addTemplate, addData);
+    return this.http.post(this.env.ConsoleBaseUrl + this.addTemplate, addData);
   }
   UpdateTemplate(templateId: string, template: any) {
-    const url = `${this.consoleBaseUrl}${this.updateTemplate}?Id=${templateId}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.updateTemplate}?Id=${templateId}`;
     return this.http.post(url, template);
   }
   DeleteMessage(deleteId: string): Observable<any> {
-    const url = `${this.consoleBaseUrl}${this.deleteMessages}?Id=${deleteId}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.deleteMessages}?Id=${deleteId}`;
     return this.http.get(url);
   }
-  DeleteBotConfig(baseUrl:any, id:any, pageId: any, Type: any): Observable<any> {
+  DeleteBotConfig(
+    baseUrl: any,
+    id: any,
+    pageId: any,
+    Type: any
+  ): Observable<any> {
     const url = `${baseUrl}${this.deleteBotConfig}?id=${id}&PageId=${pageId}&Type=${Type}`;
     return this.http.get(url);
   }
-  UpdateBotStatus(baseUrl:any, id:any, pageId: any, contentType: any, Status: any){
-    const url = `${baseUrl}${this.updateBotConfigDetail}?id=${id}&PageID=${pageId}&ContentType=${contentType}&status=${Status}`
-    return this.http.post( url,"null")
+  UpdateBotStatus(
+    baseUrl: any,
+    id: any,
+    pageId: any,
+    contentType: any,
+    Status: any
+  ) {
+    const url = `${baseUrl}${this.updateBotConfigDetail}?id=${id}&PageID=${pageId}&ContentType=${contentType}&status=${Status}`;
+    return this.http.post(url, 'null');
   }
   GetQuickReply(body: any) {
-    return this.http.post(this.consoleBaseUrl + this.getQuickReply, body);
+    return this.http.post(this.env.ConsoleBaseUrl + this.getQuickReply, body);
   }
   AddQuickReply(add: any) {
-    return this.http.post(this.consoleBaseUrl + this.addQuickReply, add);
+    return this.http.post(this.env.ConsoleBaseUrl + this.addQuickReply, add);
   }
   UpdateQuickReply(quickId: string, quick: any) {
-    const url = `${this.consoleBaseUrl}${this.updateQuickReply}?Id=${quickId}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.updateQuickReply}?Id=${quickId}`;
     return this.http.post(url, quick);
   }
   DeleteQuickReply(deleteId: string): Observable<any> {
-    const url = `${this.consoleBaseUrl}${this.deleteQuickReply}?Id=${deleteId}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.deleteQuickReply}?Id=${deleteId}`;
     return this.http.get(url);
   }
   GetSlaPolicy(body: any) {
-    return this.http.post(this.consoleBaseUrl + this.getSlaPolicy, body);
+    return this.http.post(this.env.ConsoleBaseUrl + this.getSlaPolicy, body);
   }
   AddSlaPolicy(addSla: any) {
-    return this.http.post(this.consoleBaseUrl + this.addSlaPolicy, addSla);
+    return this.http.post(this.env.ConsoleBaseUrl + this.addSlaPolicy, addSla);
   }
   UpdateSlaPolicy(sla: any) {
-    const url = `${this.consoleBaseUrl}${this.updateSlaPolicy}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.updateSlaPolicy}`;
     return this.http.post(url, sla);
   }
   GetPolicyById(policyid: string) {
-    const url = `${this.consoleBaseUrl}${this.getPolicyById}?Id=${policyid}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.getPolicyById}?Id=${policyid}`;
     return this.http.get(url);
   }
   GetBusinessHoursById(policyid: string) {
-    const url = `${this.consoleBaseUrl}${this.getBusinessHoursById}?Id=${policyid}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.getBusinessHoursById}?Id=${policyid}`;
     return this.http.get(url);
   }
   DeleteSlaPolicy(deleteSla: string): Observable<any> {
-    const url = `${this.consoleBaseUrl}${this.deleteSlaPolicy}?Id=${deleteSla}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.deleteSlaPolicy}?Id=${deleteSla}`;
     return this.http.get(url);
   }
   GetOperationalHours() {
-    return this.http.get(this.consoleBaseUrl + this.getOperationalHours);
+    return this.http.get(this.env.ConsoleBaseUrl + this.getOperationalHours);
   }
   GetBusinessHours(body: any) {
-    return this.http.post(this.consoleBaseUrl + this.getBusinessHours, body);
+    return this.http.post(this.env.ConsoleBaseUrl + this.getBusinessHours, body);
   }
   AddBusinessHours(addHours: any) {
     return this.http.post(
-      this.consoleBaseUrl + this.addBusinessHours,
+      this.env.ConsoleBaseUrl + this.addBusinessHours,
       addHours
     );
   }
   DeleteBusinessHours(delHours: string): Observable<any> {
-    const url = `${this.consoleBaseUrl}${this.deleteBusinessHours}?Id=${delHours}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.deleteBusinessHours}?Id=${delHours}`;
     return this.http.get(url);
   }
   UpdateBusinessHours(bueiness: any) {
-    const url = `${this.consoleBaseUrl}${this.updateBusinessHours}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.updateBusinessHours}`;
     return this.http.post(url, bueiness);
   }
   GetBusinessById(BusinessId: string) {
-    const url = `${this.consoleBaseUrl}${this.getBusinessById}?Id=${BusinessId}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.getBusinessById}?Id=${BusinessId}`;
     return this.http.get(url);
   }
   GetEntractRoute() {
-    return this.http.get(this.consoleBaseUrl + this.getEntractRoute);
+    return this.http.get(this.env.ConsoleBaseUrl + this.getEntractRoute);
   }
   AddEntractRoute(addRoute: any) {
-    return this.http.post(this.consoleBaseUrl + this.addEntractRoute, addRoute);
+    return this.http.post(this.env.ConsoleBaseUrl + this.addEntractRoute, addRoute);
   }
   UpdateEntractRoute(RouteId: any, entract: any) {
-    const url = `${this.consoleBaseUrl}${this.updateEntractRoute}?Id=${RouteId}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.updateEntractRoute}?Id=${RouteId}`;
     return this.http.post(url, entract);
   }
   DeleteEntractRoute(delRoute: string): Observable<any> {
-    const url = `${this.consoleBaseUrl}${this.deleteEntractRoute}?Id=${delRoute}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.deleteEntractRoute}?Id=${delRoute}`;
     return this.http.get(url);
   }
-  GetAllSkills(body:any) {
-     return this.http.post(this.consoleBaseUrl + this.getAllSkills, body);
+  GetAllSkills(body: any) {
+    return this.http.post(this.env.ConsoleBaseUrl + this.getAllSkills, body);
   }
-  GetSkills(body:any){
-    return this.http.post(this.consoleBaseUrl+this.getSkills, body)
+  GetSkills(body: any) {
+    return this.http.post(this.env.ConsoleBaseUrl + this.getSkills, body);
   }
   AddSkill(addSkill: any) {
-    return this.http.post(this.consoleBaseUrl + this.addSkill, addSkill);
+    return this.http.post(this.env.ConsoleBaseUrl + this.addSkill, addSkill);
   }
-  AddBotConfig(url:any,body: any){
-    return this.http.post(url + this.addBotConfig, body)
+  AddBotConfig(url: any, body: any) {
+    return this.http.post(url + this.addBotConfig, body);
   }
-  GetBotConfigById(pageId: any, Type: any){
-    const url = `${this.botConfigBaseUrl}${this.ViewBotConfig}?PageID=${pageId}&Type=${Type}`
-    return this.http.get( url )
+  GetBotConfigById(pageId: any, Type: any) {
+    const url = `${this.botConfigBaseUrl}${this.ViewBotConfig}?PageID=${pageId}&Type=${Type}`;
+    return this.http.get(url);
   }
   // DeleteSkill(delSkill: string): Observable<any> {
-  //   const url = `${this.consoleBaseUrl}${this.deleteSkill}?Id=${delSkill}`;
+  //   const url = `${this.env.ConsoleBaseUrl}${this.deleteSkill}?Id=${delSkill}`;
   //   return this.http.get(url);
   // }
   DeleteSkill(delSkill: any): Observable<any> {
-    return this.http.post(this.consoleBaseUrl + this.deleteSkill, delSkill);
+    return this.http.post(this.env.ConsoleBaseUrl + this.deleteSkill, delSkill);
   }
   GetAllProfile() {
-    return this.http.get(this.consoleBaseUrl + this.getAllProfile);
+    return this.http.get(this.env.ConsoleBaseUrl + this.getAllProfile);
   }
   AddProfile(addProfile: any) {
-    return this.http.post(this.consoleBaseUrl + this.addProfile, addProfile);
+    return this.http.post(this.env.ConsoleBaseUrl + this.addProfile, addProfile);
   }
   AttachFacebookPage(body: any) {
     let httpOptions = this.gethttpOptions();
-    return this.http.post(this.FacebookBaseUrl + this.attachFacebookPage, body, httpOptions);
+    return this.http.post(
+      this.FacebookBaseUrl + this.attachFacebookPage,
+      body,
+      httpOptions
+    );
   }
   SignOut() {
-    return this.http.get(this.CommonBaseUrl + this.signOut);
+    return this.http.get(this.env.CommonBaseUrl + this.signOut);
   }
   GetTags() {
-    return this.http.get(this.consoleBaseUrl + this.getTags);
+    return this.http.get(this.env.ConsoleBaseUrl + this.getTags);
   }
   GetTagsByCompanyId() {
-    return this.http.get(this.consoleBaseUrl + this.getTagsByCompanyId);
+    return this.http.get(this.env.ConsoleBaseUrl + this.getTagsByCompanyId);
   }
   GetTagById(body: any) {
-    const url = `${this.consoleBaseUrl}${this.getTagById}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.getTagById}`;
     return this.http.post(url, body);
   }
   AddTags(addTags: any) {
-    return this.http.post(this.consoleBaseUrl + this.addTags, addTags);
+    return this.http.post(this.env.ConsoleBaseUrl + this.addTags, addTags);
   }
   UpdateTag(tagsId: string, tag: any) {
-    const url = `${this.consoleBaseUrl}${this.updateTag}?Id=${tagsId}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.updateTag}?Id=${tagsId}`;
     return this.http.post(url, tag);
   }
   DeleteTags(delTag: string): Observable<any> {
-    const url = `${this.consoleBaseUrl}${this.deleteTags}?Id=${delTag}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.deleteTags}?Id=${delTag}`;
     return this.http.get(url);
   }
   DeleteRoles(delRolId: any) {
-    const url = `${this.IdentityBaseUrl}${this.deleteRoles}`;
+    const url = `${this.env.IdentityBaseUrl}${this.deleteRoles}`;
     return this.http.post(url, delRolId);
   }
   GetTagsByCompayId() {
-    return this.http.get(this.consoleBaseUrl + this.getTagsByComayId);
+    return this.http.get(this.env.ConsoleBaseUrl + this.getTagsByComayId);
   }
   // rules
   GetAllRules(body: any) {
-    return this.http.post(this.consoleBaseUrl + this.getAllRules, body);
+    return this.http.post(this.env.ConsoleBaseUrl + this.getAllRules, body);
   }
   GetAllFbRules(body: any) {
-    return this.http.post<RuleWithCount>(this.autoresponderbaseurl + this.getFbRule, body);
+    return this.http.post<RuleWithCount>(
+      this.autoresponderbaseurl + this.getFbRule,
+      body
+    );
   }
-  
+
   GetRuleById(ruleId: string) {
-    return this.http.get(`${this.consoleBaseUrl + this.getRuleById}?id=${ruleId} `)
-      ;
+    return this.http.get(
+      `${this.env.ConsoleBaseUrl + this.getRuleById}?id=${ruleId} `
+    );
   }
   AddRules(addrule: any) {
-    return this.http.post(this.consoleBaseUrl + this.addRules, addrule);
+    return this.http.post(this.env.ConsoleBaseUrl + this.addRules, addrule);
   }
   AddFBRule(addrule: any) {
     return this.http.post(this.autoresponderbaseurl + this.addRule, addrule);
   }
   UpdateRules(rule: any) {
-    const url = `${this.consoleBaseUrl}${this.updateRules}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.updateRules}`;
     return this.http.post(url, rule);
   }
   DeleteRules(delRules: any) {
-    const url = `${this.consoleBaseUrl}${this.deleteRules}?Id=${delRules}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.deleteRules}?Id=${delRules}`;
     return this.http.get(url);
   }
   DeleteFbRules(delRules: any) {
@@ -656,7 +711,7 @@ AddFbResponed( body: any) {
     return this.http.get(url);
   }
   GetEntitiesRule() {
-    return this.http.get(this.consoleBaseUrl + this.getEntitiesRule);
+    return this.http.get(this.env.ConsoleBaseUrl + this.getEntitiesRule);
   }
   GetEntitiesRules() {
     return this.http.get(this.autoresponderbaseurl + this.getEntitiesRules);
@@ -668,278 +723,320 @@ AddFbResponed( body: any) {
   }
   GetRuleEntityProperties(entity: any) {
     return this.http.get(
-      `${this.consoleBaseUrl}${this.getRuleEntityProperties}?tableName=${entity}`
+      `${this.env.ConsoleBaseUrl}${this.getRuleEntityProperties}?tableName=${entity}`
     );
   }
   GetCustomers(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.getCustomers, body);
+    return this.http.post(this.env.CommonBaseUrl + this.getCustomers, body);
   }
-  GetChannels() {
-    return this.http.get(this.IdentityBaseUrl + this.getChannels);
-  }
-  GetConsoleChannels(){
-    return this.http.get(this.consoleBaseUrl+this.consoleChannel)
+  // GetChannels() {
+  //   return this.http.get(this.env.IdentityBaseUrl + this.getChannels);
+  // }
+  GetConsoleChannels() {
+    return this.http.get(this.env.ConsoleBaseUrl + this.consoleChannel);
   }
   UpdateStatus(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.updateStatus, body);
+    return this.http.post(this.env.CommonBaseUrl + this.updateStatus, body);
   }
   InsertTagInProfile(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.insertTagOnProfile, body);
+    return this.http.post(this.env.CommonBaseUrl + this.insertTagOnProfile, body);
   }
   RemoveTagInProfile(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.removeTagOnProfile, body);
+    return this.http.post(this.env.CommonBaseUrl + this.removeTagOnProfile, body);
   }
   HideUnhideMessage(body: any) {
-    // const url = this.CommonBaseUrl + this.hideUnhideMessage + '?QueryId=' + queryId + '&Status=' + status;
+    // const url = this.env.CommonBaseUrl + this.hideUnhideMessage + '?QueryId=' + queryId + '&Status=' + status;
     // return this.http.get(url);
-    return this.http.post(this.CommonBaseUrl + this.hideUnhideMessage, body);
+    return this.http.post(this.env.CommonBaseUrl + this.hideUnhideMessage, body);
   }
   // Survey form
   AddSurvey(body: any) {
-    return this.http.post(this.ServiceBaseUrl + this.addSurvey, body);
+    return this.http.post(this.env.ServiceBaseUrl + this.addSurvey, body);
   }
   AddCSATSurvey(body: any) {
-    return this.http.post(this.ServiceBaseUrl + this.addCSAT, body);
+    return this.http.post(this.env.ServiceBaseUrl + this.addCSAT, body);
   }
   GetDispositionTags() {
-    return this.http.get(this.CommonBaseUrl + this.dispositionTags);
+    return this.http.get(this.env.CommonBaseUrl + this.dispositionTags);
   }
   GetRouteToAgentsCsv(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.routeToAgentsCsv, body, {
+    return this.http.post(this.env.CommonBaseUrl + this.routeToAgentsCsv, body, {
       responseType: 'text',
     });
   }
   GetRouteToAgents(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.routeToAgents, body);
+    return this.http.post(this.env.CommonBaseUrl + this.routeToAgents, body);
   }
   AddUniqueCustomer(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.addUniqueCustomer, body);
+    return this.http.post(this.env.CommonBaseUrl + this.addUniqueCustomer, body);
   }
   UniqueExportCsv(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.uniqueExportCsv, body, {
+    return this.http.post(this.env.CommonBaseUrl + this.uniqueExportCsv, body, {
       responseType: 'text',
     });
   }
   AddHandledBot(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.addHandledBot, body);
+    return this.http.post(this.env.CommonBaseUrl + this.addHandledBot, body);
   }
   AddHandledBotCSV(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.addHandledBotCSV, body, {
+    return this.http.post(this.env.CommonBaseUrl + this.addHandledBotCSV, body, {
       responseType: 'text',
     });
   }
   Addinboundoutbound(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.addinboundoutbound, body);
+    return this.http.post(
+      this.env.KeReportsBaseUrl + this.addinboundoutbound,
+      body
+    );
   }
   GetTwitterReport(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.twitterReport, body);
+    return this.http.post(this.env.KeReportsBaseUrl + this.twitterReport, body);
   }
   GetTwitterSLAReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.twitterSLAReport, body);
+    return this.http.post(this.env.CommonBaseUrl + this.twitterSLAReport, body);
   }
   GetTwitterProfileWiseReport(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.twitterProfileWiseReport,
+      this.env.KeReportsBaseUrl + this.twitterProfileWiseReport,
       body
     );
   }
   GetUserList() {
-    return this.http.get(this.IdentityBaseUrl + this.getUserList);
+    return this.http.get(this.env.IdentityBaseUrl + this.getUserList);
   }
   GetSentimentData() {
-    return this.http.get(this.CommonBaseUrl + this.getSentimentData);
+    return this.http.get(this.env.CommonBaseUrl + this.getSentimentData);
   }
   AddAgentPerformance(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.addAgentPerformance, body);
+    return this.http.post(
+      this.env.KeReportsBaseUrl + this.addAgentPerformance,
+      body
+    );
   }
   GetShiftReport(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.shiftReport, body);
+    return this.http.post(this.env.KeReportsBaseUrl + this.shiftReport, body);
   }
   GetWhatsAppReport(body: any) {
     return this.http.post(
-      this.CommonBaseUrl + this.getWhatsAppRawDataReport,
+      this.env.CommonBaseUrl + this.getWhatsAppRawDataReport,
       body
     );
   }
   DownloadWhatsAppReport(body: any) {
     return this.http.post(
-      this.CommonBaseUrl + this.downloadWhatsAppRawDataReport,
+      this.env.CommonBaseUrl + this.downloadWhatsAppRawDataReport,
       body,
       { responseType: 'text' }
     );
   }
   DownloadSocialRawData(body: any) {
     return this.http.post(
-      this.CommonBaseUrl + this.downloadSocialRawData,
+      this.env.CommonBaseUrl + this.downloadSocialRawData,
       body,
       { responseType: 'text' }
     );
   }
   PostSocialRawData(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.postSocialRawData, body);
+    return this.http.post(this.env.CommonBaseUrl + this.postSocialRawData, body);
   }
   // facebookreport
   Getfacebookreport(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.facebookReport, body);
+    return this.http.post(this.env.KeReportsBaseUrl + this.facebookReport, body);
   }
   GetfacebookProfile(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.facebookProfile, body);
+    return this.http.post(this.env.KeReportsBaseUrl + this.facebookProfile, body);
   }
   // Executive Dashboard
   GetAllSocialMatrics(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.getAllSocialMatrics, body);
+    return this.http.post(this.env.CommonBaseUrl + this.getAllSocialMatrics, body);
   }
   PostInstagramReport(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.instagramReport, body);
+    return this.http.post(this.env.KeReportsBaseUrl + this.instagramReport, body);
   }
   GetInstagramProfile(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.instagramProfile, body);
+    return this.http.post(this.env.KeReportsBaseUrl + this.instagramProfile, body);
   }
   GetAllTags(): Observable<any> {
-    return this.http.get(this.consoleBaseUrl + this.getAllTags);
+    return this.http.get(this.env.ConsoleBaseUrl + this.getAllTags);
   }
   GetAllTag(body: any) {
-    return this.http.post(this.consoleBaseUrl + this.getTagsAll, body)
+    return this.http.post(this.env.ConsoleBaseUrl + this.getTagsAll, body);
   }
   GetAllTagsReport(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.getTagReport, body);
+    return this.http.post(this.env.KeReportsBaseUrl + this.getTagReport, body);
   }
   DownloadTagsReport(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.downloadTagReport, body, {
-      responseType: 'text',
-    });
+    return this.http.post(
+      this.env.KeReportsBaseUrl + this.downloadTagReport,
+      body,
+      {
+        responseType: 'text',
+      }
+    );
   }
   RemoveAssignedQuery(body: any) {
-    // const url = `${this.CommonBaseUrl}${this.removeAssignedQuery}?ProfileId=${ProfileId}`;
+    // const url = `${this.env.CommonBaseUrl}${this.removeAssignedQuery}?ProfileId=${ProfileId}`;
     // return this.http.get(url);
-    return this.http.post(this.CommonBaseUrl + this.removeAssignedQuery, body);
+    return this.http.post(this.env.CommonBaseUrl + this.removeAssignedQuery, body);
   }
   getWordCloud(fromDate: string, toDate: string): Observable<any> {
-    return this.http.get(`https://tiktokcrawl.enteract.live/GetWordCloud?fromdate=${fromDate}&todate=${toDate}`)
+    return this.http.get(
+      `https://tiktokcrawl.enteract.live/GetWordCloud?fromdate=${fromDate}&todate=${toDate}`
+    );
   }
-getSessionId(customerNumber:any,ClientNumber:any){
-return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentifier=${customerNumber}&clientIdentifier=${ClientNumber}`)
-}
-  GetLinkedInReportData(body:any){
-    return this.http.post(this.LinkedInBaseUrl + this.getLinkedInReport, body);
+  getSessionId(customerNumber: any, ClientNumber: any) {
+    return this.http.get(
+      `${this.env.ServiceBaseUrl}${this.sessionClose}?customerIdentifier=${customerNumber}&clientIdentifier=${ClientNumber}`
+    );
+  }
+  GetLinkedInReportData(body: any) {
+    return this.http.post(this.env.LinkedInBaseUrl + this.getLinkedInReport, body);
   }
   GetLinkedInReportFollwers(body: any) {
-    return this.http.post(this.LinkedInBaseUrl + this.getLinkedInFollowers, body)
+    return this.http.post(
+      this.env.LinkedInBaseUrl + this.getLinkedInFollowers,
+      body
+    );
   }
   EmailShiftReport(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.emailShiftReport, body);
+    return this.http.post(this.env.KeReportsBaseUrl + this.emailShiftReport, body);
   }
   CSATFormForKE(body: any) {
-    return this.http.post(this.ProfileBaseUrl + this.KECSAT, body);
+    return this.http.post(this.env.ProfileBaseUrl + this.KECSAT, body);
   }
   GetCustomerProfileDetails(body: any) {
-    return this.http.post(this.ProfileBaseUrl + this.getProfileInformationByID, body);
+    return this.http.post(
+      this.env.ProfileBaseUrl + this.getProfileInformationByID,
+      body
+    );
     // return this.http.post("http://10.111.32.52:45455/api/" + this.getProfileInformationByID, body);
   }
   SearchCustomerProfileDetails(body: any) {
-    return this.http.post(this.ProfileBaseUrl + this.searchProfileInformation, body);
+    return this.http.post(
+      this.env.ProfileBaseUrl + this.searchProfileInformation,
+      body
+    );
   }
   AddProfileInformation(body: any) {
-    return this.http.post(this.ProfileBaseUrl + this.addProfileInformation, body);
+    return this.http.post(
+      this.env.ProfileBaseUrl + this.addProfileInformation,
+      body
+    );
   }
   DeattachProfileInformation(body: any) {
-    return this.http.post(this.ProfileBaseUrl + this.deattachProfileInformation, body)
+    return this.http.post(
+      this.env.ProfileBaseUrl + this.deattachProfileInformation,
+      body
+    );
   }
   GetRegionWiseReport(body: any) {
-    return this.http.post(this.ProfileBaseUrl + this.regionwiseReport, body)
+    return this.http.post(this.env.ProfileBaseUrl + this.regionwiseReport, body);
   }
   GetwordCloud(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.wordCloud, body)
+    return this.http.post(this.env.CommonBaseUrl + this.wordCloud, body);
   }
   GetAreaWiseReport(body: any) {
-    return this.http.post(this.ProfileBaseUrl + this.areawiseReport, body)
+    return this.http.post(this.env.ProfileBaseUrl + this.areawiseReport, body);
   }
   GetAllKemediaReport(body: any) {
-    return this.http.post(this.KemediaBaseUrl + this.keMediaReport, body)
+    return this.http.post(this.KemediaBaseUrl + this.keMediaReport, body);
   }
   GetAllPrintFeed(body: any) {
-    return this.http.post(this.KemediaBaseUrl + this.PrintFeed, body)
+    return this.http.post(this.KemediaBaseUrl + this.PrintFeed, body);
   }
   GetKarachiCoordinates() {
-    return this.http.get("../../../../../assets/karachiHeatMaoCoordinates.json")
+    return this.http.get(
+      '../../../../../assets/karachiHeatMaoCoordinates.json'
+    );
   }
   GetFollowUpCount(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.getFollowUpCount, body)
+    return this.http.post(this.env.CommonBaseUrl + this.getFollowUpCount, body);
   }
   GetCSATReport(body: any) {
-    return this.http.post(this.ProfileBaseUrl + this.CSATReport, body)
+    return this.http.post(this.env.ProfileBaseUrl + this.CSATReport, body);
   }
   //  For SCRM Report
   GetScrmFacebookReport(body: any) {
-    return this.http.post(this.KescrmBaseUrl + this.facebookscrmReport, body)
+    return this.http.post(this.KescrmBaseUrl + this.facebookscrmReport, body);
   }
   GetDatafortesting() {
-    return this.http.get(this.KescrmBaseUrl + this.getfortesting)
+    return this.http.get(this.KescrmBaseUrl + this.getfortesting);
   }
   editSkill(data: any) {
-    return this.http.get(`${this.consoleBaseUrl}${this.getskillbyid}?SkillId=${data}`)
+    return this.http.get(
+      `${this.env.ConsoleBaseUrl}${this.getskillbyid}?SkillId=${data}`
+    );
   }
   UpdateSkill(id: any, rule: any) {
-    const url = (`${this.consoleBaseUrl}${this.updateSkill}?SkillId=${id}`)
-    return this.http.post(url, rule)
+    const url = `${this.env.ConsoleBaseUrl}${this.updateSkill}?SkillId=${id}`;
+    return this.http.post(url, rule);
   }
   GetAllTeams(body: any) {
-    return this.http.post(this.IdentityBaseUrl + this.getAllTeams, body)
+    return this.http.post(this.env.IdentityBaseUrl + this.getAllTeams, body);
   }
   // DeleteSignalTeam(delSkill: any): Observable<any> {
-  //   return this.http.post(this.IdentityBaseUrl + this.deleteTeams, delSkill);
+  //   return this.http.post(this.env.IdentityBaseUrl + this.deleteTeams, delSkill);
   // }
   AddTeam(body: any) {
-    return this.http.post(this.IdentityBaseUrl + this.addTeam, body)
+    return this.http.post(this.env.IdentityBaseUrl + this.addTeam, body);
   }
   UpdateTeam(body: any) {
-    return this.http.post(this.IdentityBaseUrl + this.updateTeam, body)
+    return this.http.post(this.env.IdentityBaseUrl + this.updateTeam, body);
   }
-  GetTeamType(){
-    return this.http.get(this.IdentityBaseUrl + this.getTeamType)
+  GetTeamType() {
+    return this.http.get(this.env.IdentityBaseUrl + this.getTeamType);
   }
   DeleteSignalTeam(id: any) {
-    return this.http.get(`${this.IdentityBaseUrl}${this.deleteTeams}?id=${id}`)
+    return this.http.get(`${this.env.IdentityBaseUrl}${this.deleteTeams}?id=${id}`);
   }
-  TeamGetById(id: number){
-    const url = `${this.IdentityBaseUrl}${this.teamGetById}/${id}`;
+  TeamGetById(id: number) {
+    const url = `${this.env.IdentityBaseUrl}${this.teamGetById}/${id}`;
     return this.http.get(url);
   }
   DeleteMultipleTeams(data: any) {
-    return this.http.delete(this.IdentityBaseUrl + this.deleteMultipleTeams, data)
+    return this.http.delete(
+      this.env.IdentityBaseUrl + this.deleteMultipleTeams,
+      data
+    );
   }
   WhatsappBotInteraction(body: any) {
-    return this.http.post(this.WhatsappBaseUrl + this.whatsappBotInteraction, body)
+    return this.http.post(
+      this.WhatsappBaseUrl + this.whatsappBotInteraction,
+      body
+    );
   }
   GetInteractionReport(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.getInteractionReport, body)
+    return this.http.post(
+      this.env.KeReportsBaseUrl + this.getInteractionReport,
+      body
+    );
   }
-  GetAllWing(){
-    return this.http.get(this.IdentityBaseUrl + this.getAllWing);
+  GetAllWing() {
+    return this.http.get(this.env.IdentityBaseUrl + this.getAllWing);
   }
-  GetRoles(){
-    return this.http.get(this.IdentityBaseUrl + this.getUserRoles)
+  GetRoles() {
+    return this.http.get(this.env.IdentityBaseUrl + this.getUserRoles);
   }
-  GetPlatorm(){
-    return this.http.get(this.consoleBaseUrl + this.getPlatorm)
+  GetPlatorm() {
+    return this.http.get(this.env.ConsoleBaseUrl + this.getPlatorm);
   }
   GetConsoleEntities(serviceId: any): Observable<any> {
-    const url = `${this.consoleBaseUrl}${this.getConsoleEntities}?serviceId=${serviceId}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.getConsoleEntities}?serviceId=${serviceId}`;
     return this.http.post<any>(url, {});
   }
   GetConsoleEntityProperties(entityId: any) {
-    const url = `${this.consoleBaseUrl}${this.getConsoleEntityProperties}?entityId=${entityId}`;
+    const url = `${this.env.ConsoleBaseUrl}${this.getConsoleEntityProperties}?entityId=${entityId}`;
     return this.http.get<any>(url, {});
   }
-  GetRuleType(){
-    return this.http.get(this.consoleBaseUrl + this.getRuleType)
+  GetRuleType() {
+    return this.http.get(this.env.ConsoleBaseUrl + this.getRuleType);
   }
-  GetRuleTag(id: any){
-    const url = `${this.consoleBaseUrl}${this.getRuleTag}?id=${id}`;
+  GetRuleTag(id: any) {
+    const url = `${this.env.ConsoleBaseUrl}${this.getRuleTag}?id=${id}`;
     return this.http.get<any>(url, {});
   }
-  GetServicetree(){
-    return this.http.get(this.consoleBaseUrl + this.getServicetree)
+  GetServicetree() {
+    return this.http.get(this.env.ConsoleBaseUrl + this.getServicetree);
   }
   GetTemplateStatus(id: any) {
     const url = `${this.autoresponderbaseurl}${this.getTemplateStatus}?templateId=${id}`;

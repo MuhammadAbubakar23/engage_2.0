@@ -20,6 +20,7 @@ import { ConnectionIdService } from '../connectionId/connection-id.service';
   providedIn: 'root',
 })
 export class SignalRService {
+  private env:any;
   data: any;
   addTags: any;
   removeTags: any;
@@ -35,7 +36,7 @@ export class SignalRService {
   public hubconnection!: signalR.HubConnection;
   public connectionId!: string;
   public broadcastedData!: any[];
-  SignalRCommonBaseUrl = environment.SignalRCommonBaseUrl;
+  // SignalRCommonBaseUrl = environment.SignalRCommonBaseUrl;
   private connectionStateSubject: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
   constructor(
@@ -53,21 +54,32 @@ export class SignalRService {
     private comanyidService: CompanyidService,
     private sendConnectionId : ConnectionIdService
   ) {
+    this.env = (window as any)._env
     this.baseUrl = window.location.origin;
     if (this.baseUrl == 'https://keportal.enteract.live') {
       this.companyId = 651;
+      this.env = (window as any)._env.ke;
     } else if (this.baseUrl == 'https://engage.jazz.com.pk') {
       this.companyId = 650;
+      this.env = (window as any)._env.jazz;
     } else if (this.baseUrl == 'https://uiengage.enteract.app') {
       this.companyId = 657;
+      this.env = (window as any)._env;
     } else if (this.baseUrl == 'https://tpplui.enteract.live') {
       this.companyId = 652;
+      this.env = (window as any)._env;
     } else if (this.baseUrl == 'https://waengage.enteract.live') {
       this.companyId = 653;
+      this.env = (window as any)._env;
     } else if (this.baseUrl == 'https://bzengage.enteract.live') {
       this.companyId = 654;
+      this.env = (window as any)._env;
     } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
       this.companyId = 658;
+      this.env = (window as any)._env;
+    } else if (this.baseUrl == 'http://localhost:4200' || this.baseUrl == 'https://localhost:4200') {
+      this.companyId = 658;
+      this.env = (window as any)._env.stagging;
     }
     this.comanyidService.sendcompanyid(this.companyId);
   }
@@ -84,7 +96,7 @@ export class SignalRService {
       // headers: { "X-Super-Team": JSON.stringify(team.id) }
     };
     this.hubconnection = new signalR.HubConnectionBuilder()
-      .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub')
+      .withUrl(this.env.SignalRCommonBaseUrl + 'ConnectionHub')
       .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
       .build();
@@ -138,7 +150,7 @@ export class SignalRService {
     //   // headers: { "X-Super-Team": JSON.stringify(team.id) }
     // };
     // this.hubconnection = new signalR.HubConnectionBuilder()
-    //   .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
+    //   .withUrl(this.env.SignalRCommonBaseUrl + 'ConnectionHub', options)
     //   .withAutomaticReconnect()
     //   .configureLogging(signalR.LogLevel.Information)
     //   .build();

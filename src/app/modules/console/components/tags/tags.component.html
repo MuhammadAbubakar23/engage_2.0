@@ -73,8 +73,9 @@
             <tbody>
               <tr *ngFor="let tag of tags">
                 <td>
+                  <!-- [style.color]="tag.color" -->
                   <a class="night" >
-                    <p [style.color]="tag.color">
+                    <p >
                       {{ tag.name }}
                     </p>
                     </a>

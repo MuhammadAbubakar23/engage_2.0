@@ -28,20 +28,10 @@ const routes: Routes = [
   //   pathMatch: 'full',
   // },
   {
-path:'bot-monitoring',
-redirectTo:'bot-monitoring/chat-bot',
-pathMatch:'full'
+    path: 'bot-monitoring',
+    redirectTo: 'bot-monitoring/chat-bot',
+    pathMatch: 'full',
   },
-  
-  // For KE
-  // {
-  //   path: 'analytics',
-  //   redirectTo: 'analytics/whatsapp-report',
-  //   pathMatch: 'full',
-  // },
-  // {path: 'monitoring', component: MonitoringMenuComponent },
-
-  
   // For KE
   {
     path: 'analytics',
@@ -52,10 +42,13 @@ pathMatch:'full'
     path: '',
     loadChildren: () =>
       import('./identity/identity.module').then((f) => f.IdentityModule),
-  }, {
+  },
+  {
     path: 'survey',
     loadChildren: () =>
-      import('./survey-forms/survey-forms.module').then((f) => f.SurveyFormsModule),
+      import('./survey-forms/survey-forms.module').then(
+        (f) => f.SurveyFormsModule
+      ),
   },
   {
     path: '',
@@ -64,7 +57,7 @@ pathMatch:'full'
     canActivate: [AuthGuard],
     data: { preload: true },
     resolve: {
-      modeuls: ModulesResolver
+      modeuls: ModulesResolver,
     },
   },
   // { path: 'administration', loadChildren: () => import('./administration/administration.module').then(m => m.AdministrationModule) },
@@ -76,4 +69,4 @@ pathMatch:'full'
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
