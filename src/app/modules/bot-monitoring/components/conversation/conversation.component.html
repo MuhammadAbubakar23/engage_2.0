@@ -1,5 +1,66 @@
 <div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
+        <div class="e-bot-icon" [ngClass]="{ active: isOpen }">
+            <div class="e_chat-icon" (click)="openChat()">
+                <img src="../../../../assets/images/ebot.svg" />
+            </div>
+        </div>
+        <div class="enteract-chatbot" [ngClass]="{ active: isOpen, removebot: !isOpen }">
+            <div class="e-chat-main">
+                <header>
+                    <div class="e_chat-icon">
+                        <img src="../../../../assets/images/ebot.svg" />
+                    </div>
+                    <div>
+                        <h4>BOT</h4>
+                        <p class="coal">Online</p>
+                    </div>
+                    <div class="ebotclose" (click)="closeChat()">
+                        <i class="fa-light fa-xmark"></i>
+                    </div>
+                </header>
+
+                <section class="chatbody" #chatBody>
+
+
+
+                    <ng-container *ngFor="let msg of messages; let i = index">
+                        <div class="messagewrap" [ngClass]="{
+                      'e-right': msg.type === 'user',
+                      'e-left': msg.type === 'bot'
+                    }" [attr.data-first]="msg.type === 'user' ? true : null"
+                            [attr.data-last]="msg.type === 'bot' ? true : null">
+                            <div class="messagebody">
+                                <div class="caption">
+                                    <div class="name">
+                                        <div *ngIf="msg.type === 'bot'" class="e_chat-icon">
+                                            <img src="../../../../assets/images/ebot.svg" />
+                                        </div>
+                                        {{ msg.type === "user" ? "You" : "BOT" }}
+                                    </div>
+                                    <div class="time">
+                                        {{ msg.timestamp | date : "shortTime" }}
+                                    </div>
+                                </div>
+                                <div class="messagebubble">
+                                    {{ msg.message }}
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </section>
+                <footer>
+                    <form>
+                        <input class="form-control" placeholder="Send a message.." [(ngModel)]="newMessageText" />
+                        <button class="iconButton iconHover sendicon" (click)="sendMessage()">
+                            <i class="fa-light fa-paper-plane-top"></i>
+                        </button>
+                    </form>
+                </footer>
+
+            </div>
+
+        </div>
         <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
             [fullScreen]="false">
             <p style="color: white"> Loading... </p>
@@ -44,10 +105,10 @@
                                     (click)="trainBot(BotId)">
                                     Train BOT
                                 </button>
-                                <button class="btn btn-success me-2 " type="button" aria-expanded="false"
+                                <!-- <button class="btn btn-success me-2 " type="button" aria-expanded="false"
                                     (click)="chatBot(BotId)">
                                     Chat with BOT
-                                </button>
+                                </button> -->
 
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" data-bs-toggle="modal"
@@ -205,7 +266,7 @@
         </div>
     </div>
 </div>
-<div class="user-comment-widget-container" *ngIf="showChatbot">
+<!-- <div class="user-comment-widget-container">
     <div class="user-comment-widget chat-message-component widget-1 show">
         <div class="comment-widget-header">
             <div class="row">
@@ -255,8 +316,7 @@
             </div>
         </div>
 
-        <!-- <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="small" color="#fff" type="ball-fall" [fullScreen]="false"
-            [name]="'google-map-spinner'"></ngx-spinner> -->
+
         <div class="comment-widget-footer">
             <div class="msgTypingField shadow-lg">
                 <div class="input-group input-group-lg">
@@ -277,97 +337,8 @@
             </div>
         </div>
     </div>
-</div>
-<!-- <div class="enteract-chatbot active">
-    <div class="e-chat-main">
-        <header>
-            <div class="e_chat-icon">
-                <img src="./../../../../../assets/images/ebot.svg">
-            </div>
-            <div>
-                <h4>enteract.bot</h4>
-                <p class="coal">Online</p>
-            </div>
-            <div class="ebotclose">
-                <i class="fa-light fa-xmark"></i>
-            </div>
-        </header>
-        <section class="chatbody">
-            <div class="messagewrap e-left" data-first="true">
-                <div class="messagebody">
-                    <div class="caption">
-                        <div class="name">
-                            <div class="e_chat-icon">
-                                <img src="./../../../../../assets/images/ebot.svg">
-                            </div> enteract.bot
-                        </div>
-                    </div>
-                    <div class="messagebubble">Hi! I'm enteract.bot 😎 Nice to meet you! 👋</div>
-                </div>
-            </div>
-            <div class="collapse" id="showform">
-             
-                <div class="messagewrap e-left">
-                    <div class="messagebody">
-                        <div class="caption">
-                            <div class="name">
-                                <div class="e_chat-icon">
-                                    <img src="./../../../../../assets/images/ebot.svg">
-                                </div> enteract.bot
-                            </div>
-                            <div class="time">1:16 PM</div>
-                        </div>
-                        <div class="messagebubble">
-                            <div class="typing">
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="messagewrap e-left">
-                    <div class="messagebody">
-                        <div class="caption">
-                            <div class="name">
-                                <div class="e_chat-icon">
-                                    <img src="./../../../../../assets/images/ebot.svg">
-                                </div> enteract.bot
-                            </div>
-                            <div class="time">1:16 PM</div>
-                        </div>
-                        <div class="messagebubble">
-                            <form action="" class="d-flex flex-column">
-                                <div class="mb-3">
-                                    <input class="form-control mb-2" placeholder="Name">
-                                    <button class="btn btn-outline-secondary" type="button"
-                                        id="button-addon2">Submit</button>
-                                </div>
-                                <div class="mb-3">
-                                    <input type="email" class="form-control" placeholder="Email Address">
-                                    <button class="btn btn-outline-secondary" type="button"
-                                        id="button-addon2">Submit</button>
-                                </div>
-
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-        </section>
-        <footer>
-            <form>
-                <input class="form-control" placeholder="Send a message..">
-                <button class="iconButton iconHover sendicon">
-                    <i class="fa-light fa-paper-plane-top"></i>
-                </button>
-            </form>
-        </footer>
-    </div>
 </div> -->
+
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">

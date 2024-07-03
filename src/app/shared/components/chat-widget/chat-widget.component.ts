@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BotMonitoringService } from 'src/app/modules/bot-monitoring/services/bot-monitoring.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./chat-widget.component.scss']
 })
 export class ChatWidgetComponent implements OnInit {
+  @ViewChild('chatBody') private chatBody?: ElementRef;
   messages: any[] = [];
   isOpen = false;
   chatForm: FormGroup = new FormGroup({
@@ -18,7 +19,17 @@ export class ChatWidgetComponent implements OnInit {
   ngOnInit(): void {
 
   }
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
 
+  scrollToBottom(): void {
+    try {
+      if (this.chatBody) {
+        this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight;
+      }
+    } catch (err) { }
+  }
   openChat() {
     this.isOpen = true;
   }
@@ -39,5 +50,6 @@ export class ChatWidgetComponent implements OnInit {
     });
   }
 }
+
 
 
