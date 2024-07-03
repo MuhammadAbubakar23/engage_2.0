@@ -125,7 +125,7 @@
           <div class="scroll-content">
             <div class="wider-container pt-3">
               <div class="d-flex align-items-center justify-content-between mb-3">
-                <h5 class="m-0">Move based on sender</h5>
+                <h5 class="m-0">Create a rule</h5>
                 <div class="form-check form-switch">
                   <label class="form-check-label" [for]="switchId">
                     {{ rulesForm.get('status')?.value ? 'Rule is Active' : 'Rule is InActive' }}
@@ -180,7 +180,7 @@
                 <select name="" class="form-select" formControlName="selectedService" (change)="onServiceSelect()">
                   <option selected disabled value="">Select Platform</option>
                   <!-- Use *ngFor to loop over the services array and display each option -->
-                  <option *ngFor="let ser of services" [value]="ser.id">{{ ser.platformName }}</option>
+                  <option *ngFor="let ser of services" [value]="ser.id">{{ ser.name }}</option>
                 </select>
               </div>
               <hr>

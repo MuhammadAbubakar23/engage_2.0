@@ -32,6 +32,7 @@ export class BotMonitoringService {
   runChatBot = environment.links.bot.runChatBot
   createBotTrain = environment.links.bot.createBotTrain
   chatBotWdidget = environment.links.bot.chatBotWdidget
+  stopChatBot = environment.links.bot.stopChatBot
 
   constructor(private http: HttpClient) { }
   getChats(data: any): Observable<any> {
@@ -104,6 +105,9 @@ export class BotMonitoringService {
   }
   RunChatBot(form: any) {
     return this.http.post(this.botMoniteringBaseUrl + this.runChatBot, form);
+  }
+  StopChatBot(form: any) {
+    return this.http.post(this.botMoniteringBaseUrl + this.stopChatBot, form);
   }
   CreateBotTrain(form: any) {
     return this.http.post(this.botMoniteringBaseUrl + this.createBotTrain, form);

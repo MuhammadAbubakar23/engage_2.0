@@ -52,21 +52,23 @@
                                 </div>
                                 <div class="col-lg-8 d-flex align-items-center justify-content-end">
                                     <div class="me-2">
-                                        <select class="form-select" id="ruleTypeSelect" 
-                                            (change)="onRuleTypeChange()">
-                                            <option selected disabled >Select RuleType </option>
-                                            <option *ngFor="let ruleType of ruleTypes" [value]="ruleType.name">{{
+                                        <select class="form-select" id="ruleTypeSelect" [(ngModel)]="selectedRuleType"
+                                            (change)="onRuleTypeChange($event)">
+                                            <option value="" selected>Select Tag</option>
+                                            <option *ngFor="let ruleType of ruleTypes" [value]="ruleType.slug">{{
                                                 ruleType.name }}</option>
                                         </select>
                                     </div>
+
                                     <div class="me-2">
-                                        <select class="form-select" id="channelSelect"
+                                        <select class="form-select" id="channelSelect" [(ngModel)]="selectedChannelSlug"
                                             (change)="onChannelChange($event)">
-                                            <option selected disabled>Select Platform</option>
-                                            <option *ngFor="let channel of channels" [value]="channel.id">{{
+                                            <option value="" selected>Select Platform</option>
+                                            <option *ngFor="let channel of channels" [value]="channel.slug">{{
                                                 channel.name }}</option>
                                         </select>
                                     </div>
+
                                     <a class="search-btn">
                                         <button class="iconButton medium">
                                             <i class="fal fa-search silver"></i>
@@ -134,7 +136,7 @@
                                                         </li>
                                                         <li>
                                                             <a class="dropdown-item"
-                                                                (click)="deleteTemplate(rule, rule.platform)">Delete</a>
+                                                                (click)="deleteTemplate(r)">Delete</a>
 
                                                         </li>
                                                         <!-- <li>

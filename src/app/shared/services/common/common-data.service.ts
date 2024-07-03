@@ -917,7 +917,7 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
     return this.http.get(this.IdentityBaseUrl + this.getAllWing);
   }
   GetPlatorm(){
-    return this.http.get(this.consoleBaseUrl + this.getPlatorm)
+    return this.http.get(this.autoresponderbaseurl + this.getPlatorm)
   }
   GetConsoleEntities(serviceId: any): Observable<any> {
     const url = `${this.consoleBaseUrl}${this.getConsoleEntities}?serviceId=${serviceId}`;

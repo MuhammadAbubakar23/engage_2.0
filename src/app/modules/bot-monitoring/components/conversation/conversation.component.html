@@ -170,8 +170,9 @@
 
                     <div class="col-md-6">
                         <div class="card select-card">
-                            <div class="card-body py-5" >
-                                <a class="d-flex flex-column text-center" data-bs-dismiss="modal"  (click)="updatevalue('rule-chatBot')"
+                            <div class="card-body py-5">
+                                <a class="d-flex flex-column text-center" data-bs-dismiss="modal"
+                                    (click)="updatevalue('rule-chatBot')"
                                     [routerLink]="'/bot-monitoring/conversation/' + currentConversationName + '/Rule'">
 
                                     <span class="mx-auto mb-4">
@@ -185,7 +186,8 @@
                     <div class="col-md-6">
                         <div class="card select-card">
                             <div class="card-body py-5">
-                                <a class="d-flex flex-column text-center" data-bs-dismiss="modal" (click)="updatevalue('story-chatBot')"
+                                <a class="d-flex flex-column text-center" data-bs-dismiss="modal"
+                                    (click)="updatevalue('story-chatBot')"
                                     [routerLink]="'/bot-monitoring/conversation/' + currentConversationName + '/Story'">
 
                                     <span class="mx-auto mb-4">
@@ -276,6 +278,96 @@
         </div>
     </div>
 </div>
+<!-- <div class="enteract-chatbot active">
+    <div class="e-chat-main">
+        <header>
+            <div class="e_chat-icon">
+                <img src="./../../../../../assets/images/ebot.svg">
+            </div>
+            <div>
+                <h4>enteract.bot</h4>
+                <p class="coal">Online</p>
+            </div>
+            <div class="ebotclose">
+                <i class="fa-light fa-xmark"></i>
+            </div>
+        </header>
+        <section class="chatbody">
+            <div class="messagewrap e-left" data-first="true">
+                <div class="messagebody">
+                    <div class="caption">
+                        <div class="name">
+                            <div class="e_chat-icon">
+                                <img src="./../../../../../assets/images/ebot.svg">
+                            </div> enteract.bot
+                        </div>
+                    </div>
+                    <div class="messagebubble">Hi! I'm enteract.bot 😎 Nice to meet you! 👋</div>
+                </div>
+            </div>
+            <div class="collapse" id="showform">
+             
+                <div class="messagewrap e-left">
+                    <div class="messagebody">
+                        <div class="caption">
+                            <div class="name">
+                                <div class="e_chat-icon">
+                                    <img src="./../../../../../assets/images/ebot.svg">
+                                </div> enteract.bot
+                            </div>
+                            <div class="time">1:16 PM</div>
+                        </div>
+                        <div class="messagebubble">
+                            <div class="typing">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="messagewrap e-left">
+                    <div class="messagebody">
+                        <div class="caption">
+                            <div class="name">
+                                <div class="e_chat-icon">
+                                    <img src="./../../../../../assets/images/ebot.svg">
+                                </div> enteract.bot
+                            </div>
+                            <div class="time">1:16 PM</div>
+                        </div>
+                        <div class="messagebubble">
+                            <form action="" class="d-flex flex-column">
+                                <div class="mb-3">
+                                    <input class="form-control mb-2" placeholder="Name">
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        id="button-addon2">Submit</button>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" placeholder="Email Address">
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        id="button-addon2">Submit</button>
+                                </div>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+        <footer>
+            <form>
+                <input class="form-control" placeholder="Send a message..">
+                <button class="iconButton iconHover sendicon">
+                    <i class="fa-light fa-paper-plane-top"></i>
+                </button>
+            </form>
+        </footer>
+    </div>
+</div> -->
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">
