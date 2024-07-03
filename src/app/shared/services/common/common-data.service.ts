@@ -29,7 +29,7 @@ export class CommonDataService {
     } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
       this.env = (window as any)._env;
     } else if (this.baseUrl == 'http://localhost:4200' || this.baseUrl == 'https://localhost:4200') {
-      this.env = (window as any)._env.stagging;
+      this.env = (window as any)._env.testUrlsRox;
     }
     
   }
