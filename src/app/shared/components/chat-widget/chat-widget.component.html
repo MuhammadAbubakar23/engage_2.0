@@ -1,0 +1,401 @@
+<body class="agent-grid leftactive">
+  <main>
+    <div class="main-wrapper d-flex">
+      <div class="middle-wrapper d-flex w-100 flex-column">
+        <div class="content-box-wrapper d-flex w-100">
+          <div class="middle-content d-flex">
+            <div
+              class="chatbg"
+              style="
+                background: url(../../../../assets/images/chatbg.png) no-repeat
+                  top;
+              "
+            ></div>
+
+            <div class="e-bot-icon" [ngClass]="{ active: isOpen }">
+              <div class="e_chat-icon" (click)="openChat()">
+                <img src="../../../../assets/images/ebot.svg" />
+              </div>
+            </div>
+            <div
+              class="enteract-chatbot"
+              [ngClass]="{ active: isOpen, removebot: !isOpen }"
+            >
+              <div class="e-chat-main">
+                <header>
+                  <div class="e_chat-icon">
+                    <img src="../../../../assets/images/ebot.svg" />
+                  </div>
+                  <div>
+                    <h4>enteract.bot</h4>
+                    <p class="coal">Online</p>
+                  </div>
+                  <div class="ebotclose" (click)="closeChat()">
+                    <i class="fa-light fa-xmark"></i>
+                  </div>
+                </header>
+                <section class="chatbody">
+                  <div class="messagewrap e-left" data-first="true">
+                    <div class="messagebody">
+                      <div class="caption">
+                        <div class="name">
+                          <div class="e_chat-icon">
+                            <img src="../../../../assets/images/ebot.svg" />
+                          </div>
+                          enteract.bot
+                        </div>
+                        <div class="time">1:16 PM</div>
+                      </div>
+                      <div class="messagebubble">
+                        Hi! I'm enteract.bot 😎 Nice to meet you! 👋
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="messagewrap e-left">
+                    <div class="messagebody">
+                      <div class="caption">
+                        <div class="name">
+                          <div class="e_chat-icon">
+                            <img src="../../../../assets/images/ebot.svg" />
+                          </div>
+                          enteract.bot
+                        </div>
+                        <div class="time">1:16 PM</div>
+                      </div>
+                      <div class="messagebubble">How can i help?</div>
+                    </div>
+                  </div> -->
+
+                  <ng-container *ngFor="let msg of messages; let i = index">
+                    <div
+                      class="messagewrap"
+                      [ngClass]="{
+                        'e-right': msg.type === 'user',
+                        'e-left': msg.type === 'bot'
+                      }"
+                      [attr.data-first]="msg.type === 'user' ? true : null"
+                      [attr.data-last]="msg.type === 'bot' ? true : null"
+                    >
+                      <div class="messagebody">
+                        <div class="caption">
+                          <div class="name">
+                            <div *ngIf="msg.type === 'bot'" class="e_chat-icon">
+                              <img src="../../../../assets/images/ebot.svg" />
+                            </div>
+                            {{ msg.type === "user" ? "You" : "enteract.bot" }}
+                          </div>
+                          <div class="time">
+                            {{ msg.timestamp | date : "shortTime" }}
+                          </div>
+                        </div>
+                        <div class="messagebubble">
+                          {{ msg.message }}
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+
+                  <!-- <div class="messagewrap suggestions">
+                    <div class="messagebody">
+                      <ul class="list-inline text-center m-0">
+                        <li class="list-inline-item">
+                          <span>⚡️ Free trial</span>
+                        </li>
+                        <li class="list-inline-item pricing">
+                          <a href="#pricingmsgs">💲 Pricing</a>
+                        </li>
+                        <li class="list-inline-item">
+                          <span>⚙️ Integrations</span>
+                        </li>
+                        <li class="list-inline-item">
+                          <span>💡 About ChatBot</span>
+                        </li>
+                        <li class="list-inline-item">
+                          <span>🚀 Features</span>
+                        </li>
+                        <li class="list-inline-item">
+                          <span>📩 Contact us</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="d-none" id="pricingmsgs">
+                    <div class="messagewrap e-right" data-first="true">
+                      <div class="messagebody">
+                        <div class="caption">
+                          <div class="name">You</div>
+                          <div class="time">1:16 PM</div>
+                        </div>
+                        <div class="messagebubble">💲 Pricing</div>
+                      </div>
+                    </div>
+                    <div class="messagewrap e-left">
+                      <div class="messagebody">
+                        <div class="caption">
+                          <div class="name">
+                            <div class="e_chat-icon">
+                              <img src="../../../../assets/images/ebot.svg" />
+                            </div>
+                            enteract.bot
+                          </div>
+                          <div class="time">1:16 PM</div>
+                        </div>
+                        <div class="messagebubble">
+                          <div class="typing">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="messagewrap e-left">
+                      <div class="messagebody">
+                        <div class="caption">
+                          <div class="name">
+                            <div class="e_chat-icon">
+                              <img src="../../../../assets/images/ebot.svg" />
+                            </div>
+                            enteract.bot
+                          </div>
+                          <div class="time">1:16 PM</div>
+                        </div>
+                        <div class="messagebubble">
+                          🧑‍💻 We offer 4 different plans: Starter, Team,
+                          Business, and Enterprise. You can subscribe to each
+                          plan in a monthly or an annual billing cycle.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="messagewrap e-left">
+                      <div class="messagebody">
+                        <div class="caption">
+                          <div class="name">
+                            <div class="e_chat-icon">
+                              <img src="../../../../assets/images/ebot.svg" />
+                            </div>
+                            enteract.bot
+                          </div>
+                          <div class="time">1:16 PM</div>
+                        </div>
+                        <div class="messagebubble">
+                          P.S. If you subscribe to an annual plan, you'll get a
+                          15% discount! 💡
+                        </div>
+                      </div>
+                    </div>
+                    <div class="messagewrap e-left buttonmsg">
+                      <div class="messagebody">
+                        <div class="caption">
+                          <div class="name">
+                            <div class="e_chat-icon">
+                              <img src="../../../../assets/images/ebot.svg" />
+                            </div>
+                            enteract.bot
+                          </div>
+                          <div class="time">1:16 PM</div>
+                        </div>
+                        <div class="messagebubble flex-column">
+                          Check out which plan fits your needs or contact our
+                          Sales Team. They'll help you find a suitable offer. 👇
+                          <div class="buttons">
+                            <a
+                              class="btn active contactsales"
+                              data-bs-toggle="collapse"
+                              href="#salesmsgs"
+                              role="button"
+                              aria-expanded="false"
+                              aria-controls="collapseExample"
+                              >Contact Sales</a
+                            >
+                            <a href="#0" class="btn gotomenu">Back to menu </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="collapse" id="salesmsgs">
+                    <div class="messagewrap e-right" data-first="true">
+                      <div class="messagebody">
+                        <div class="caption">
+                          <div class="name">You</div>
+                          <div class="time">1:16 PM</div>
+                        </div>
+                        <div class="messagebubble">🧑‍💼 Contact Sales</div>
+                      </div>
+                    </div>
+                    <div class="messagewrap e-left">
+                      <div class="messagebody">
+                        <div class="caption">
+                          <div class="name">
+                            <div class="e_chat-icon">
+                              <img src="../../../../assets/images/ebot.svg" />
+                            </div>
+                            enteract.bot
+                          </div>
+                          <div class="time">1:16 PM</div>
+                        </div>
+                        <div class="messagebubble">
+                          <div class="typing">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="messagewrap e-left">
+                      <div class="messagebody">
+                        <div class="caption">
+                          <div class="name">
+                            <div class="e_chat-icon">
+                              <img src="../../../../assets/images/ebot.svg" />
+                            </div>
+                            enteract.bot
+                          </div>
+                          <div class="time">1:16 PM</div>
+                        </div>
+                        <div class="messagebubble">
+                          Great! 💪 I just need more information to find the
+                          right person for you. 😊
+                        </div>
+                      </div>
+                    </div>
+                    <div class="messagewrap e-left">
+                      <div class="messagebody">
+                        <div class="caption">
+                          <div class="name">
+                            <div class="e_chat-icon">
+                              <img src="../../../../assets/images/ebot.svg" />
+                            </div>
+                            enteract.bot
+                          </div>
+                          <div class="time">1:16 PM</div>
+                        </div>
+                        <div class="messagebubble">
+                          How big is your organisation?
+                        </div>
+                      </div>
+                    </div>
+                    <div class="messagewrap suggestions">
+                      <div class="messagebody">
+                        <ul class="list-inline text-center m-0">
+                          <li class="list-inline-item">
+                            <span>1-99</span>
+                          </li>
+                          <li
+                            class="list-inline-item"
+                            data-bs-toggle="collapse"
+                            href="#showform"
+                            role="button"
+                            aria-expanded="false"
+                            aria-controls="showform"
+                          >
+                            <a href="#">100-499</a>
+                          </li>
+                          <li class="list-inline-item">
+                            <span>500+</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="collapse" id="showform">
+                    <div class="messagewrap e-right" data-first="true">
+                      <div class="messagebody">
+                        <div class="caption">
+                          <div class="name">You</div>
+                          <div class="time">1:16 PM</div>
+                        </div>
+                        <div class="messagebubble">Share your information</div>
+                      </div>
+                    </div>
+                    <div class="messagewrap e-left">
+                      <div class="messagebody">
+                        <div class="caption">
+                          <div class="name">
+                            <div class="e_chat-icon">
+                              <img src="../../../../assets/images/ebot.svg" />
+                            </div>
+                            enteract.bot
+                          </div>
+                          <div class="time">1:16 PM</div>
+                        </div>
+                        <div class="messagebubble">
+                          <div class="typing">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="messagewrap e-left">
+                      <div class="messagebody">
+                        <div class="caption">
+                          <div class="name">
+                            <div class="e_chat-icon">
+                              <img src="../../../../assets/images/ebot.svg" />
+                            </div>
+                            enteract.bot
+                          </div>
+                          <div class="time">1:16 PM</div>
+                        </div>
+                        <div class="messagebubble">
+                          <form action="" class="d-flex flex-column">
+                            <div class="mb-3">
+                              <input
+                                class="form-control mb-2"
+                                placeholder="Name"
+                              />
+                              <button
+                                class="btn btn-outline-secondary"
+                                type="button"
+                                id="button-addon2"
+                              >
+                                Submit
+                              </button>
+                            </div>
+                            <div class="mb-3">
+                              <input
+                                type="email"
+                                class="form-control"
+                                placeholder="Email Address"
+                              />
+                              <button
+                                class="btn btn-outline-secondary"
+                                type="button"
+                                id="button-addon2"
+                              >
+                                Submit
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
+                </section>
+                <footer>
+                  <form [formGroup]="chatForm">
+                    <input
+                      class="form-control"
+                      placeholder="Send a message.."
+                      formControlName="message"
+                    />
+                    <button
+                      class="iconButton iconHover sendicon"
+                      (click)="submitMessage()"
+                    >
+                      <i class="fa-light fa-paper-plane-top"></i>
+                    </button>
+                  </form>
+                </footer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
