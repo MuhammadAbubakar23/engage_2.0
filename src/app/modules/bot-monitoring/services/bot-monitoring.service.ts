@@ -113,6 +113,6 @@ export class BotMonitoringService {
     return this.http.post(this.botMoniteringBaseUrl + this.createBotTrain, form);
   }
   ChatBotWdidget(form: any) {
-    return this.http.post(this.botMoniteringBaseUrl + this.chatBotWdidget, form);
+    return this.http.post("https://entertainerbot.enteract.app/chat", form);
   }
 }

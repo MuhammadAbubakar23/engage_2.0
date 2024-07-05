@@ -11,14 +11,21 @@ import { EnvService } from 'src/app/shared/services/env/env.service';
 export class AppTokenInterceptor implements HttpInterceptor {
   constructor(private envUrl: EnvService) { }
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    debugger
+    if (httpRequest.url === "https://entertainerbot.enteract.app/chat") {
+      return next.handle(httpRequest);
+    }
+    else {
       httpRequest = httpRequest.clone({
-        url:  httpRequest.url,
-      //  withCredentials: true,
+        url: httpRequest.url,
+        //  withCredentials: true,
         setHeaders: {
           "X-APP-KEY": `${this.envUrl.appKey}`,
           // 'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
         }
       });
-    return next.handle(httpRequest);
+      return next.handle(httpRequest);
+    }
+
   }
 }
