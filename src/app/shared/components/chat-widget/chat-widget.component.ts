@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BotMonitoringService } from 'src/app/modules/bot-monitoring/services/bot-monitoring.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class ChatWidgetComponent implements OnInit {
   messages: any[] = [];
   isOpen = false;
+  @ViewChild('chatBody') private chatBody?: ElementRef;
   chatForm: FormGroup = new FormGroup({
     message: new FormControl('', [Validators.required])
   })
@@ -18,13 +19,23 @@ export class ChatWidgetComponent implements OnInit {
   ngOnInit(): void {
 
   }
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
 
+  scrollToBottom(): void {
+    try {
+      if (this.chatBody) {
+        this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight;
+      }
+    } catch (err) { }
+  }
   openChat() {
     this.isOpen = true;
   }
   closeChat() {
     this.isOpen = false;
-    this.messages=[];
+    this.messages = [];
   }
   submitMessage() {
     const senderId = uuidv4();

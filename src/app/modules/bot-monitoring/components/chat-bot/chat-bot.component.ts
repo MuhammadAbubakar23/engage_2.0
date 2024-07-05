@@ -78,7 +78,7 @@ export class ChatBotComponent implements OnInit {
   }
 
   sendMessage() {
-    
+
     if (this.newMessageText.trim() === '') {
       return;
     }

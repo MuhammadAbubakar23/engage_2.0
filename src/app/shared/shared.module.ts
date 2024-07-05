@@ -21,6 +21,7 @@ import { BreaklinePipe } from './CustomPipes/replacelineBreaks/breakline.pipe';
 import { ChatBotIntentFilterPipe } from './CustomPipes/charBotIntentSearchFilter/chat-bot-intent-filter.pipe';
 import { ResponsefilterPipe } from './CustomPipes/charBotIntentSearchFilter/responsefilter.pipe';
 import { GifFilterPipe } from './CustomPipes/gifFilter.pipe';
+import { ChatWidgetComponent } from './components/chat-widget/chat-widget.component';
 @NgModule({
   declarations: [
     SortPipe,
@@ -38,10 +39,12 @@ import { GifFilterPipe } from './CustomPipes/gifFilter.pipe';
     InitialLettersPipe,
     BreaklinePipe,
     ChatBotIntentFilterPipe,
-    ResponsefilterPipe
+    ResponsefilterPipe,
+    ChatWidgetComponent
     // TableResponsiveComponent
   ],
   imports: [
+    
     CommonModule,
     RouterModule,
     ReactiveFormsModule,

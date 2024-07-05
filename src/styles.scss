@@ -79,6 +79,7 @@
 @import "./assets/SCSS/components/mark-as.scss";
 @import "./assets/SCSS/components/contact-merge.scss";
 @import "./assets/SCSS/components/score-card.scss";
+@import "./assets/SCSS/chat-widget.css";
 //Pages CSS
 @import "./assets/SCSS/pages/login.scss";
 @import "./assets/SCSS/pages/team-user.scss";
@@ -157,17 +158,17 @@
 }
 .gif-dropdown {
   width: 650px;
-   right: 0 !important;
-   left: auto !important;
-   .gif-container{
-     display: flex;
-     flex-wrap: wrap;
-     .gif-item {
-       flex: 0 0 23%;
-   }
- }
- .dropdown-listing {
-   overflow: scroll;
-   height: 400px;
- }
+  right: 0 !important;
+  left: auto !important;
+  .gif-container {
+    display: flex;
+    flex-wrap: wrap;
+    .gif-item {
+      flex: 0 0 23%;
+    }
+  }
+  .dropdown-listing {
+    overflow: scroll;
+    height: 400px;
+  }
 }
