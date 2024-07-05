@@ -31,11 +31,12 @@
                                         <div class="me-2">
                                             <select class="form-select" id="channelSelect"
                                                 (change)="onChannelChange($event)">
-                                                <option selected disabled>Select Platform</option>
+                                                <option value="" selected>Select Platform</option>
                                                 <option *ngFor="let channel of channels" [value]="channel.id">{{
                                                     channel.name }}</option>
                                             </select>
                                         </div>
+    
                                         <div>
                                             <a (click)="updatevalue('create-auto-responder')"
                                                 [routerLink]="['/console/templates/add-auto-responder/:0']">

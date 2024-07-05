@@ -33,7 +33,7 @@
                     <select class="form-select" id="channelSelect" aria-label="Floating label select example"
                         (change)="onChangeChannel($event)">
                         <option selected disabled>Select Channels</option>
-                        <option *ngFor="let channel of channels" [ngValue]="channel">{{ channel.name }}</option>
+                        <option *ngFor="let channel of channels" [ngValue]="channel.name">{{ channel.name }}</option>
                     </select>
                 </div>
                 <div class="form-floating mb-4">

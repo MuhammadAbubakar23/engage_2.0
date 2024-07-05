@@ -32,6 +32,7 @@ export class ConversationComponent implements OnInit {
   toastermessage: boolean = false;
   AlterMsg: any
   isOpen = false;
+  setName: any;
 
   constructor(private headerService: HeaderService, private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService, private _activeRoute: ActivatedRoute) { }
   @ViewChild('chatBody') private chatBody?: ElementRef;
@@ -47,6 +48,8 @@ export class ConversationComponent implements OnInit {
       console.error('BotId not found in localStorage.');
     }
     this.gen()
+    this.setName=localStorage.getItem("name")
+
   }
   filteredChatbots() {
     if (!this.searchQuery) {

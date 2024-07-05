@@ -22,8 +22,8 @@ export class CreateAutoResponderComponent implements OnInit {
   name!: string;
   subject!: string;
   editorContent!: string;
-  channels :any[]=[];
-  content :any[]= [];
+  channels: any[] = [];
+  content: any[] = [];
   editorConfig = {};
   entities: any[] = [];
   currentTags: any[] = [];
@@ -33,6 +33,7 @@ export class CreateAutoResponderComponent implements OnInit {
     , private commonService: CommonDataService
     , private router: Router) {
   }
+  selectedChannel: any;
   ngOnInit() {
     this.messageForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
@@ -70,31 +71,31 @@ export class CreateAutoResponderComponent implements OnInit {
     this.messageForm.get('variables')?.setValue(variables);
   }
   onChangeChannel(event: any) {
-    this.entities=[]
-    this.newtempletvaiablesArray=[]
-    const channelName = event.target.value;
-    const selectedChannel = this.channels.find(channel => channel.name === channelName);
+    this.entities = [];
+    this.newtempletvaiablesArray = [];
+    this.selectedChannel = event.target.value;
+    const selectedChannel = this.channels.find(channel => channel.name === this.selectedChannel);
     if (selectedChannel) {
       this.content = selectedChannel.subService;
-      this.entities = []; 
+      this.entities = [];
     }
   }
-  getEntites(event:any){
-    this.entities=[]
-    this.newtempletvaiablesArray=[]
-    const contentType= event.target.value
-    this.content.forEach((table:any)=>{
-    if(contentType==table.prefix){
-      this.entities.push(table.name)
-    }
+  getEntites(event: any) {
+    this.entities = []
+    this.newtempletvaiablesArray = []
+    const contentType = event.target.value
+    this.content.forEach((table: any) => {
+      if (contentType == table.prefix) {
+        this.entities.push(table.name)
+      }
     })
   }
-  getTableProperites(event:any){
-    const tableproperties=event.target.value
-    this.content.forEach((loadproperties:any)=>{
-      if(tableproperties==loadproperties.name){
-        const template=loadproperties.subService
-        template.forEach((x:any)=>{
+  getTableProperites(event: any) {
+    const tableproperties = event.target.value
+    this.content.forEach((loadproperties: any) => {
+      if (tableproperties == loadproperties.name) {
+        const template = loadproperties.subService
+        template.forEach((x: any) => {
           this.newtempletvaiablesArray.push({
             id: x.id,
             entityName: `{${x.name}}`
@@ -104,10 +105,21 @@ export class CreateAutoResponderComponent implements OnInit {
     })
     this.updateFormVariables();
   }
+  channelServiceMapping: any = {
+    'Facebook': this.commonService.AddFbResponed.bind(this.commonService),
+    'Instagram': this.commonService.AddInstaResponed.bind(this.commonService),
+    'Whatsapp': this.commonService.AddWsResponed.bind(this.commonService),
+    'YouTube': this.commonService.AddYtResponed.bind(this.commonService),
+    'Playstore': this.commonService.AddPsResponed.bind(this.commonService),
+    'LinkedIn': this.commonService.AddLinkDinResponed.bind(this.commonService),
+    'G-suite': this.commonService.AddGsuitResponed.bind(this.commonService),
+    'Meta-Whatsapp': this.commonService.AddMetWaResponed.bind(this.commonService),
+    'Exchange-email': this.commonService.AddExchangeEmailtResponed.bind(this.commonService),
+  };
   saveForm() {
     if (this.messageForm.valid) {
       const obj = {
-        id:0,
+        id: 0,
         companyId: 0,
         uniqueId: "",
         name: this.messageForm.value.name,
@@ -119,14 +131,18 @@ export class CreateAutoResponderComponent implements OnInit {
         status: this.messageForm.value.status,
         contentType: this.messageForm.value.contentType
       };
-      this.commonService.AddFbResponed(obj).subscribe(
-        (response: any) => {
-          this.router.navigate(['/console/templates/auto-responder']);
-        },
-        (error: any) => {
-          console.error('Error creating template:', error);
-        }
-      );
+      // 2
+      const serviceMethod = this.channelServiceMapping[this.selectedChannel];
+      if (serviceMethod) {
+        serviceMethod(obj).subscribe(
+          (response: any) => {
+            this.router.navigate(['/console/templates/auto-responder']);
+          },
+          (error: any) => {
+            console.error(`Error creating template for ${this.selectedChannel}:`, error);
+          }
+        );
+      }
     } else {
       console.log('Form is invalid or disabled');
     }

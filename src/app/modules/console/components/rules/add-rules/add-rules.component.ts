@@ -162,7 +162,7 @@ export class AddRulesComponent implements OnInit {
     });
   }
   addRule() {
-    
+
     this.rulesJsonFormArray.push(this.createRule());
   }
   // services: string[] = ['Facebook', 'Instagram', 'Twitter', 'WhatsApp', 'Engage', 'Outlook'];
@@ -170,11 +170,11 @@ export class AddRulesComponent implements OnInit {
   loadServices(): void {
     this._cs.GetPlatorm().subscribe(
       (response: any) => {
-        // this.services = Object.keys(response).map(key => ({
-        //   id: parseInt(key),
-        //   platformName: response[key]
-        // }));
-        this.services = response
+        this.services = Object.keys(response).map(key => ({
+          id: parseInt(key),
+          platformName: response[key]
+        }));
+        // this.services = response
       },
       (error: any) => {
         console.error('Error fetching services:', error);
@@ -390,68 +390,143 @@ export class AddRulesComponent implements OnInit {
   //     });
   //   }
   // }
-   onClick() {
+  onClick() {
     const rulesFormValue = this.rulesForm.value;
     const rulesJson = {
-        condition: "and",
-        rules: [
-            {
-                condition: "and",
-                rules: rulesFormValue.rulesJson || []
-            }
-        ]
+      condition: "and",
+      rules: [
+        {
+          condition: "and",
+          rules: rulesFormValue.rulesJson || []
+        }
+      ]
     };
     const ruleData = {
-        id: 0,
-        name: rulesFormValue.ruleName,
-        description: rulesFormValue.description,
-        companyId: 0,
-        ruleTag: rulesFormValue.ruleTag,
-        status: rulesFormValue.status,
-        rulesJson: JSON.stringify(rulesJson),
-        entityName: '', // Clear entityName field for now
-        ruleType: this.selectedRuleTypeName,
-        configs: (rulesFormValue.rulesJson || []).map((rule: any) => ({
-            propertyName: rule.field,
-            condition: rule.operator,
-            value: rule.value
-        })),
-        platForm: '' ,
-        channel:''
+      id: 0,
+      name: rulesFormValue.ruleName,
+      description: rulesFormValue.description,
+      companyId: 0,
+      ruleTag: rulesFormValue.ruleTag,
+      status: rulesFormValue.status,
+      rulesJson: JSON.stringify(rulesJson),
+      entityName: '', // Clear entityName field for now
+      ruleType: this.selectedRuleTypeName,
+      configs: (rulesFormValue.rulesJson || []).map((rule: any) => ({
+        propertyName: rule.field,
+        condition: rule.operator,
+        value: rule.value
+      })),
+      // platForm: '',
+      // channel: ''
     };
-    const selectedService = this.services.find(service => service.id === parseInt(rulesFormValue.selectedService!));
-    if (selectedService) {
-        ruleData.platForm = selectedService.slug; 
-    }
+    // const selectedService = this.services.find(service => service.id === parseInt(rulesFormValue.selectedService!));
+    // if (selectedService) {
+    //   ruleData.platForm = selectedService.slug;
+    // }
     const selectedEntity = this.entities.find(entity => entity.id === parseInt(rulesFormValue.entityName!));
     if (selectedEntity) {
-        ruleData.entityName = selectedEntity.entityName; 
+      ruleData.entityName = selectedEntity.entityName;
     }
     console.log("Form Data:", ruleData);
     const selectedServiceId = rulesFormValue.selectedService;
-    // switch (selectedServiceId) {
-        // case '8': // Facebook
-            this._cs.AddFBRule(ruleData).subscribe(
-                (res: any) => {
-                    this.router.navigate(['console/rules']);
-                },
-                (error: any) => {
-                    console.error('Error adding rule for Facebook:', error);
-                }
-            );
-            // break;
-        // case '3': // Instagram
-            // Add logic for Instagram API call
-            // break;
-        // case '4': // LinkedIn
-            // Add logic for LinkedIn API call
-            // break;
-        // Add cases for other platforms as needed
-        // default:
-            console.error('Invalid platform selected');
-            // break;
-    // }
-}
+    switch (selectedServiceId) {
+      case '2': // Facebook
+        this._cs.AddFBRule(ruleData).subscribe(
+          (res: any) => {
+            this.router.navigate(['console/rules']);
+          },
+          (error: any) => {
+            console.error('Error adding rule for Facebook:', error);
+          }
+        );
+        break;
+      case '3': // Instagram
+        this._cs.AddInstaRule(ruleData).subscribe(
+          (res: any) => {
+            this.router.navigate(['console/rules']);
+          },
+          (error: any) => {
+            console.error('Error adding rule for Facebook:', error);
+          }
+        );
+        break;
+      case '4': // LinkedIn
+      this._cs.AddLinkdinRule(ruleData).subscribe(
+        (res: any) => {
+          this.router.navigate(['console/rules']);
+        },
+        (error: any) => {
+          console.error('Error adding rule for Facebook:', error);
+        }
+      );
+        break;
+        case '5': // YT
+      this._cs.AddYTRule(ruleData).subscribe(
+        (res: any) => {
+          this.router.navigate(['console/rules']);
+        },
+        (error: any) => {
+          console.error('Error adding rule for Facebook:', error);
+        }
+      );
+        break;
+        case '6': // playstore
+      this._cs.AddPsRule(ruleData).subscribe(
+        (res: any) => {
+          this.router.navigate(['console/rules']);
+        },
+        (error: any) => {
+          console.error('Error adding rule for Facebook:', error);
+        }
+      );
+        break;
+        case '7': // email
+      this._cs.AddEmailRule(ruleData).subscribe(
+        (res: any) => {
+          this.router.navigate(['console/rules']);
+        },
+        (error: any) => {
+          console.error('Error adding rule for Facebook:', error);
+        }
+      );
+        break;
+        case '10': //wa
+      this._cs.AddWaRule(ruleData).subscribe(
+        (res: any) => {
+          this.router.navigate(['console/rules']);
+        },
+        (error: any) => {
+          console.error('Error adding rule for Facebook:', error);
+        }
+      );
+        break;
+        case '9': //meta-wa
+        this._cs.AddMetaWaRule(ruleData).subscribe(
+          (res: any) => {
+            this.router.navigate(['console/rules']);
+          },
+          (error: any) => {
+            console.error('Error adding rule for Facebook:', error);
+          }
+        );
+          break;
+          case '8': //Exchange Email
+          this._cs.AddexchangeEmailRule(ruleData).subscribe(
+            (res: any) => {
+              this.router.navigate(['console/rules']);
+            },
+            (error: any) => {
+              console.error('Error adding rule for Facebook:', error);
+            }
+          );
+            break;
+      // Add cases for other platforms as needed
+      default:
+        console.error('Invalid platform selected');
+        break;
+    }
+
+  }
   cancelbtn() {
     this.router.navigate(['console/rules']);
   }

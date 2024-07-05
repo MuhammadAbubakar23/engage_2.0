@@ -180,7 +180,7 @@
                 <select name="" class="form-select" formControlName="selectedService" (change)="onServiceSelect()">
                   <option selected disabled value="">Select Platform</option>
                   <!-- Use *ngFor to loop over the services array and display each option -->
-                  <option *ngFor="let ser of services" [value]="ser.id">{{ ser.name }}</option>
+                  <option *ngFor="let ser of services" [value]="ser.id">{{ ser.platformName }}</option>
                 </select>
               </div>
               <hr>

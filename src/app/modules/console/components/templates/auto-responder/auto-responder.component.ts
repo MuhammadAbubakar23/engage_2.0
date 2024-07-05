@@ -13,15 +13,28 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   imports: [CommonModule, RouterModule, NgxSpinnerModule, FormsModule]
 })
 export class AutoResponderComponent implements OnInit {
-  templates:any[] = [];
-  channels:any[] = [];
+  templates: any[] = [];
+  channels: any[] = [];
   searchText: string = '';
   perPage: number = 15;
   currentPage: number = 1;
   totalCount: any;
   selectedChannel = '';
   channelRules: any
-  constructor(private headerService: HeaderService, private commonData: CommonDataService, private spinnerServerice: NgxSpinnerService) { }
+  channelServiceMapping: { [key: string]: (data: any) => any } = {
+    '3': (data: any) => this.commonData.getAllAutoRespondInsta(data),
+    '4': (data: any) => this.commonData.getAllAutoRespondLinkedin(data),
+    '5': (data: any) => this.commonData.getAllAutoRespondYt(data),
+    '6': (data: any) => this.commonData.getAllAutoRespondPs(data),
+    '7': (data: any) => this.commonData.getAllAutoRespondGsuit(data),
+    '10': (data: any) => this.commonData.getAllAutoRespondWa(data),
+    '8': (data: any) => this.commonData.getAllAutoRespondExChange(data),
+    '9': (data: any) => this.commonData.getAllAutoRespondMetaWA(data),
+    'default': (data: any) => this.commonData.getAutoRespondFB(data)
+  };
+  constructor(private headerService: HeaderService, private commonData: CommonDataService, private spinnerServerice: NgxSpinnerService) {
+
+  }
   ngOnInit(): void {
     this.refreshtableData()
     this.loadServices()
@@ -39,11 +52,10 @@ export class AutoResponderComponent implements OnInit {
     }
   }
   onChannelChange(event: any) {
-    const selectedChannelId = event.target.value;
-    this.selectedChannel = this.channels.find(channel => channel.id == selectedChannelId)?.name || 'Engage';
+    this.selectedChannel = event.target.value;
     this.refreshtableData();
   }
-  loadAPI(){
+  loadAPI() {
     this.refreshtableData()
   }
   loadServices(): void {
@@ -60,15 +72,125 @@ export class AutoResponderComponent implements OnInit {
     );
   }
   toggleStatus(template: any) {
-    this.commonData.GetTemplateStatus(template.uniqueId).subscribe(
-      (response: any) => {
-        template.status = !template.status;
-      },
-      (error: any) => {
-        console.error('Error toggling status:', error);
-      }
-    );
+    template.status = !template.status;
+    if (this.selectedChannel === '3') {
+      this.commonData.GetInstaTemplateStatus(template.uniqueId, template.status).subscribe(
+        (response: any) => {
+          console.log('Status updated successfully:', response);
+        },
+        (error: any) => {
+          template.status = !template.status;
+          console.error('Error toggling status:', error);
+        }
+      );
+    }
+    else if (this.selectedChannel === '5') {
+      this.commonData.GetYtTemplateStatus(template.uniqueId, template.status).subscribe(
+        (response: any) => {
+          console.log('Status updated successfully:', response);
+        },
+        (error: any) => {
+          template.status = !template.status;
+          console.error('Error toggling status:', error);
+        }
+      );
+    }  else if (this.selectedChannel === '8') {
+      this.commonData.GetExchangeEmailTemplateStatus(template.uniqueId, template.status).subscribe(
+        (response: any) => {
+          console.log('Status updated successfully:', response);
+        },
+        (error: any) => {
+          template.status = !template.status;
+          console.error('Error toggling status:', error);
+        }
+      );
+    } else if (this.selectedChannel === '9') {
+      this.commonData.GetMetaWaTemplateStatus(template.uniqueId, template.status).subscribe(
+        (response: any) => {
+          console.log('Status updated successfully:', response);
+        },
+        (error: any) => {
+          template.status = !template.status;
+          console.error('Error toggling status:', error);
+        }
+      );
+    }else if (this.selectedChannel === '6') {
+      this.commonData.GetPsTemplateStatus(template.uniqueId, template.status).subscribe(
+        (response: any) => {
+          console.log('Status updated successfully:', response);
+        },
+        (error: any) => {
+          template.status = !template.status;
+          console.error('Error toggling status:', error);
+        }
+      );
+    } else if (this.selectedChannel === '7') {
+      this.commonData.GetGSuitTemplateStatus(template.uniqueId, template.status).subscribe(
+        (response: any) => {
+          console.log('Status updated successfully:', response);
+        },
+        (error: any) => {
+          template.status = !template.status;
+          console.error('Error toggling status:', error);
+        }
+      );
+    } else if (this.selectedChannel === '10') {
+      this.commonData.GetWaTemplateStatus(template.uniqueId, template.status).subscribe(
+        (response: any) => {
+          console.log('Status updated successfully:', response);
+        },
+        (error: any) => {
+          template.status = !template.status;
+          console.error('Error toggling status:', error);
+        }
+      );
+    }
+    else if (this.selectedChannel === '4') {
+      this.commonData.GetLinkedinTemplateStatus(template.uniqueId, template.status).subscribe(
+        (response: any) => {
+          console.log('Status updated successfully:', response);
+        },
+        (error: any) => {
+          template.status = !template.status;
+          console.error('Error toggling status:', error);
+        }
+      );
+    }
+    else {
+      this.commonData.GetTemplateStatus(template.uniqueId, template.status).subscribe(
+        (response: any) => {
+          console.log('Status updated successfully:', response);
+        },
+        (error: any) => {
+          template.status = !template.status;
+          console.error('Error toggling status:', error);
+        }
+      );
+    }
   }
+  // toggleStatus(template: any) {
+  //   template.status = !template.status;
+  //   this.commonData.GetTemplateStatus(template.uniqueId, template.status).subscribe(
+  //     (response: any) => {
+  //       console.log('Status updated successfully:', response);
+  //     },
+  //     (error: any) => {
+  //       template.status = !template.status;
+  //       console.error('Error toggling status:', error);
+  //     }
+  //   );
+  // }
+  // toggleStatus(template: any) {
+  //   this.commonData.GetTemplateStatus(template.uniqueId).subscribe(
+  //     (response: any) => {
+  //       template.status = !template.status;
+  //     },
+  //     (error: any) => {
+  //       console.error('Error toggling status:', error);
+  //     }
+  //   );
+  // }
+
   refreshtableData() {
     const data = {
       search: this.searchText,
@@ -76,52 +198,168 @@ export class AutoResponderComponent implements OnInit {
       pageNumber: this.currentPage,
       pageSize: this.perPage
     };
+
     this.spinnerServerice.show();
-    // if (this.selectedChannel === 'Facebook') {
-      this.commonData.getAutoRespondFB(data).subscribe(
-        (response: any) => {
-          this.spinnerServerice.hide();
-          this.templates = response.Rules
-          this.totalCount = response.TotalCount;
-        },
-        (error: any) => {
-          this.spinnerServerice.hide();
-          console.error(error);
-        }
-      );
-    // }
-    // else {
-    //   this.commonData.GetAllRules(data).subscribe(
-    //     (response: any) => {
-    //       this.spinnerServerice.hide();
-    //      this.templates=response
-    //       this.totalCount = response.TotalCount;
-    //     },
-    //     (error: any) => {
-    //       this.spinnerServerice.hide();
-    //       console.error(error);
-    //     }
-    //   );
-    // }
-    // this.commonData.getAutoRespondFB(nativeIdentifier).subscribe((res: any) => {
-    //   console.log("data fb ", res)
-    //   this.templates = res
-    // })
+    this.channelRules = [];
+
+    // Retrieve the service method from the mapping
+    const serviceMethod = this.channelServiceMapping[this.selectedChannel] || this.channelServiceMapping['default'];
+
+    serviceMethod(data).subscribe(
+      (response: any) => {
+        this.spinnerServerice.hide();
+        this.templates = response.Rules;
+        this.totalCount = response.TotalCount;
+      },
+      (error: any) => {
+        this.spinnerServerice.hide();
+        console.error(error);
+      }
+    );
   }
+
+  // refreshtableData() {
+  //   const data = {
+  //     search: this.searchText,
+  //     sorting: this.selectedSortOption,
+  //     pageNumber: this.currentPage,
+  //     pageSize: this.perPage
+  //   };
+  //   this.spinnerServerice.show();
+  //   // if (this.selectedChannel === 'Facebook') {
+  //     this.commonData.getAutoRespondFB(data).subscribe(
+  //       (response: any) => {
+  //         this.spinnerServerice.hide();
+  //         this.templates = response.Rules
+  //         this.totalCount = response.TotalCount;
+  //       },
+  //       (error: any) => {
+  //         this.spinnerServerice.hide();
+  //         console.error(error);
+  //       }
+  //     );
+  //   // }
+  //   // else {
+  //   //   this.commonData.GetAllRules(data).subscribe(
+  //   //     (response: any) => {
+  //   //       this.spinnerServerice.hide();
+  //   //      this.templates=response
+  //   //       this.totalCount = response.TotalCount;
+  //   //     },
+  //   //     (error: any) => {
+  //   //       this.spinnerServerice.hide();
+  //   //       console.error(error);
+  //   //     }
+  //   //   );
+  //   // }
+  //   // this.commonData.getAutoRespondFB(nativeIdentifier).subscribe((res: any) => {
+  //   //   console.log("data fb ", res)
+  //   //   this.templates = res
+  //   // })
+  // }
   selectedSortOption: any;
   deleteTemplate(template: any) {
-    const confirmation = confirm('Are you sure you want to delete this template?');
+    const confirmation = confirm('Are you sure you want to delete this rule?');
     if (confirmation) {
-      this.commonData.DeleteTemplate(template.uniqueId).subscribe(
-        () => {
-          this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
-        },
-        (error: any) => {
-          console.error('Error deleting template:', error);
-        }
-      );
+      if (this.selectedChannel === '3') {
+        this.commonData.DeleteInstaTemplate(template.uniqueId).subscribe(
+          () => {
+            this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+          },
+          (error: any) => {
+            console.error('Error deleting template:', error);
+          }
+        );
+      } else if (this.selectedChannel === '4') {
+        this.commonData.DeleteLinkedinTemplate(template.uniqueId).subscribe(
+          () => {
+            this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+          },
+          (error: any) => {
+            console.error('Error deleting template:', error);
+          }
+        );
+      }else if (this.selectedChannel === '8') {
+        this.commonData.DeleteExchangeTemplate(template.uniqueId).subscribe(
+          () => {
+            this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+          },
+          (error: any) => {
+            console.error('Error deleting template:', error);
+          }
+        );
+      }else if (this.selectedChannel === '9') {
+        this.commonData.DeleteMetaWaTemplate(template.uniqueId).subscribe(
+          () => {
+            this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+          },
+          (error: any) => {
+            console.error('Error deleting template:', error);
+          }
+        );
+      }
+      else if (this.selectedChannel === '5') {
+        this.commonData.DeleteYTTemplate(template.uniqueId).subscribe(
+          () => {
+            this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+          },
+          (error: any) => {
+            console.error('Error deleting template:', error);
+          }
+        );
+      } else if (this.selectedChannel === '6') {
+        this.commonData.DeletePsTemplate(template.uniqueId).subscribe(
+          () => {
+            this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+          },
+          (error: any) => {
+            console.error('Error deleting template:', error);
+          }
+        );
+      } else if (this.selectedChannel === '7') {
+        this.commonData.DeleteGsuitTemplate(template.uniqueId).subscribe(
+          () => {
+            this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+          },
+          (error: any) => {
+            console.error('Error deleting template:', error);
+          }
+        );
+      } else if (this.selectedChannel === '10') {
+        this.commonData.DeleteWaTemplate(template.uniqueId).subscribe(
+          () => {
+            this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+          },
+          (error: any) => {
+            console.error('Error deleting template:', error);
+          }
+        );
+      }
+      else {
+        this.commonData.DeleteTemplate(template.uniqueId).subscribe(
+          () => {
+            this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+          },
+          (error: any) => {
+            console.error('Error deleting template:', error);
+          }
+        );
+      }
     }
   }
+  // deleteTemplate(template: any) {
+  //   const confirmation = confirm('Are you sure you want to delete this template?');
+  //   if (confirmation) {
+  //     this.commonData.DeleteTemplate(template.uniqueId).subscribe(
+  //       () => {
+  //         this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+  //       },
+  //       (error: any) => {
+  //         console.error('Error deleting template:', error);
+  //       }
+  //     );
+  //   }
+  // }
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
