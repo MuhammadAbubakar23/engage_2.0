@@ -742,7 +742,7 @@ export class CommonDataService {
     return this.http.post(this.exchangeEmailBaseUrl + this.addRule, addrule);
   }
   AddEmailRule(addrule: any) {
-    return this.http.post(this.gSuitBaseUrl + this.addEmailRule, addrule);
+    return this.http.post(this.gSuitBaseUrl + this.addRule, addrule);
   }
   AddYTRule(addrule: any) {
     return this.http.post(this.youtubeBaseUrl + this.addRule, addrule);

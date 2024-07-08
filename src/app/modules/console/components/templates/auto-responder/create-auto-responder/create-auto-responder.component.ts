@@ -6,12 +6,13 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { entries } from 'lodash';
 import { number } from 'echarts';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-create-auto-responder',
   templateUrl: './create-auto-responder.component.html',
   styleUrls: ['./create-auto-responder.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, CKEditorModule, FormsModule, ReactiveFormsModule]
+  imports: [CommonModule, RouterModule, CKEditorModule, FormsModule, ReactiveFormsModule,NgxSpinnerModule]
 })
 export class CreateAutoResponderComponent implements OnInit {
   assingClients: any;
@@ -28,10 +29,14 @@ export class CreateAutoResponderComponent implements OnInit {
   entities: any[] = [];
   currentTags: any[] = [];
   templateVariables: string = "";
+  AlterMsg: string = ''
+  errormessage: any;
+  toastermessage: boolean = false
   constructor(
     private formBuilder: FormBuilder
     , private commonService: CommonDataService
-    , private router: Router) {
+    , private router: Router,
+    private spinnerServerice: NgxSpinnerService) {
   }
   selectedChannel: any;
   ngOnInit() {
@@ -131,15 +136,23 @@ export class CreateAutoResponderComponent implements OnInit {
         status: this.messageForm.value.status,
         contentType: this.messageForm.value.contentType
       };
+      this.spinnerServerice.show()
       // 2
       const serviceMethod = this.channelServiceMapping[this.selectedChannel];
       if (serviceMethod) {
         serviceMethod(obj).subscribe(
           (response: any) => {
+            this.spinnerServerice.hide()
             this.router.navigate(['/console/templates/auto-responder']);
+
+            this.reload(response.message)
           },
           (error: any) => {
             console.error(`Error creating template for ${this.selectedChannel}:`, error);
+            this.spinnerServerice.hide()
+            this.reload(error.error.message)
+
+
           }
         );
       }
@@ -149,5 +162,19 @@ export class CreateAutoResponderComponent implements OnInit {
   }
   cancelForm() {
     this.router.navigate(['/console/templates/auto-responder']);
+ 
+  }
+  reload(value: any) {
+   
+    if (value ) {
+      this.AlterMsg = value
+      this.toastermessage = true
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+    }
+  }
+  closeToaster() {
+    this.toastermessage = false;
   }
 }

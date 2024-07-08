@@ -21,6 +21,9 @@ export class AutoResponderComponent implements OnInit {
   totalCount: any;
   selectedChannel = '';
   channelRules: any
+  AlterMsg: string = ''
+  errormessage: any;
+  toastermessage: boolean = false
   channelServiceMapping: { [key: string]: (data: any) => any } = {
     '3': (data: any) => this.commonData.getAllAutoRespondInsta(data),
     '4': (data: any) => this.commonData.getAllAutoRespondLinkedin(data),
@@ -68,6 +71,9 @@ export class AutoResponderComponent implements OnInit {
       },
       (error: any) => {
         console.error('Error fetching services:', error);
+        this.reload(error.error.message)
+
+
       }
     );
   }
@@ -77,10 +83,14 @@ export class AutoResponderComponent implements OnInit {
       this.commonData.GetInstaTemplateStatus(template.uniqueId, template.status).subscribe(
         (response: any) => {
           console.log('Status updated successfully:', response);
+          this.reload(response.message)
+
         },
         (error: any) => {
           template.status = !template.status;
           console.error('Error toggling status:', error);
+          this.reload(error.error.message)
+
         }
       );
     }
@@ -88,60 +98,84 @@ export class AutoResponderComponent implements OnInit {
       this.commonData.GetYtTemplateStatus(template.uniqueId, template.status).subscribe(
         (response: any) => {
           console.log('Status updated successfully:', response);
+          this.reload(response.message)
+
         },
         (error: any) => {
           template.status = !template.status;
           console.error('Error toggling status:', error);
+          this.reload(error.error.message)
+
         }
       );
-    }  else if (this.selectedChannel === '8') {
+    } else if (this.selectedChannel === '8') {
       this.commonData.GetExchangeEmailTemplateStatus(template.uniqueId, template.status).subscribe(
         (response: any) => {
           console.log('Status updated successfully:', response);
+          this.reload(response.message)
+
         },
         (error: any) => {
           template.status = !template.status;
           console.error('Error toggling status:', error);
+          this.reload(error.error.message)
+
         }
       );
     } else if (this.selectedChannel === '9') {
       this.commonData.GetMetaWaTemplateStatus(template.uniqueId, template.status).subscribe(
         (response: any) => {
           console.log('Status updated successfully:', response);
+          this.reload(response.message)
+
         },
         (error: any) => {
           template.status = !template.status;
           console.error('Error toggling status:', error);
+          this.reload(error.error.message)
+
         }
       );
-    }else if (this.selectedChannel === '6') {
+    } else if (this.selectedChannel === '6') {
       this.commonData.GetPsTemplateStatus(template.uniqueId, template.status).subscribe(
         (response: any) => {
           console.log('Status updated successfully:', response);
+          this.reload(response.message)
+
         },
         (error: any) => {
           template.status = !template.status;
           console.error('Error toggling status:', error);
+          this.reload(error.error.message)
+
         }
       );
     } else if (this.selectedChannel === '7') {
       this.commonData.GetGSuitTemplateStatus(template.uniqueId, template.status).subscribe(
         (response: any) => {
           console.log('Status updated successfully:', response);
+          this.reload(response.message)
+
         },
         (error: any) => {
           template.status = !template.status;
           console.error('Error toggling status:', error);
+          this.reload(error.error.message)
+
         }
       );
     } else if (this.selectedChannel === '10') {
       this.commonData.GetWaTemplateStatus(template.uniqueId, template.status).subscribe(
         (response: any) => {
           console.log('Status updated successfully:', response);
+          this.reload(response.message)
+
         },
         (error: any) => {
           template.status = !template.status;
           console.error('Error toggling status:', error);
+          this.reload(error.error.message)
+
         }
       );
     }
@@ -149,10 +183,15 @@ export class AutoResponderComponent implements OnInit {
       this.commonData.GetLinkedinTemplateStatus(template.uniqueId, template.status).subscribe(
         (response: any) => {
           console.log('Status updated successfully:', response);
+          this.reload(response.message)
+
         },
         (error: any) => {
           template.status = !template.status;
           console.error('Error toggling status:', error);
+          this.reload(error.error.message)
+
+
         }
       );
     }
@@ -160,6 +199,8 @@ export class AutoResponderComponent implements OnInit {
       this.commonData.GetTemplateStatus(template.uniqueId, template.status).subscribe(
         (response: any) => {
           console.log('Status updated successfully:', response);
+          this.reload(response.message)
+
         },
         (error: any) => {
           template.status = !template.status;
@@ -208,12 +249,16 @@ export class AutoResponderComponent implements OnInit {
     serviceMethod(data).subscribe(
       (response: any) => {
         this.spinnerServerice.hide();
+        this.reload(response.message)
+
         this.templates = response.Rules;
         this.totalCount = response.TotalCount;
       },
       (error: any) => {
         this.spinnerServerice.hide();
         console.error(error);
+        this.reload(error.error.message)
+
       }
     );
   }
@@ -263,85 +308,120 @@ export class AutoResponderComponent implements OnInit {
     if (confirmation) {
       if (this.selectedChannel === '3') {
         this.commonData.DeleteInstaTemplate(template.uniqueId).subscribe(
-          () => {
+          (res) => {
             this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+            this.reload(res.message)
           },
           (error: any) => {
             console.error('Error deleting template:', error);
+            this.reload(error.error.message)
+
           }
         );
       } else if (this.selectedChannel === '4') {
         this.commonData.DeleteLinkedinTemplate(template.uniqueId).subscribe(
-          () => {
+          (res) => {
             this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+            this.reload(res.message)
+
           },
           (error: any) => {
             console.error('Error deleting template:', error);
+            this.reload(error.error.message)
+
           }
         );
-      }else if (this.selectedChannel === '8') {
+      } else if (this.selectedChannel === '8') {
         this.commonData.DeleteExchangeTemplate(template.uniqueId).subscribe(
-          () => {
+          (res) => {
             this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+            this.reload(res.message)
+
           },
           (error: any) => {
             console.error('Error deleting template:', error);
+            this.reload(error.error.message)
+
           }
         );
-      }else if (this.selectedChannel === '9') {
+      } else if (this.selectedChannel === '9') {
         this.commonData.DeleteMetaWaTemplate(template.uniqueId).subscribe(
-          () => {
+          (res) => {
             this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+            this.reload(res.message)
+
           },
           (error: any) => {
             console.error('Error deleting template:', error);
+            this.reload(error.error.message)
+
           }
         );
       }
       else if (this.selectedChannel === '5') {
         this.commonData.DeleteYTTemplate(template.uniqueId).subscribe(
-          () => {
+          (res) => {
             this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+            this.reload(res.message)
+
           },
           (error: any) => {
             console.error('Error deleting template:', error);
+            this.reload(error.error.message)
+
           }
         );
       } else if (this.selectedChannel === '6') {
         this.commonData.DeletePsTemplate(template.uniqueId).subscribe(
-          () => {
+          (res) => {
             this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+            this.reload(res.message)
+
           },
           (error: any) => {
             console.error('Error deleting template:', error);
+            this.reload(error.error.message)
+
           }
         );
       } else if (this.selectedChannel === '7') {
         this.commonData.DeleteGsuitTemplate(template.uniqueId).subscribe(
-          () => {
+          (res) => {
             this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+            this.reload(res.message)
+
           },
           (error: any) => {
             console.error('Error deleting template:', error);
+            this.reload(error.error.message)
+
           }
         );
       } else if (this.selectedChannel === '10') {
         this.commonData.DeleteWaTemplate(template.uniqueId).subscribe(
-          () => {
+          (res) => {
             this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+            this.reload(res.message)
+
           },
           (error: any) => {
             console.error('Error deleting template:', error);
+            this.reload(error.error.message)
+
           }
         );
       }
       else {
         this.commonData.DeleteTemplate(template.uniqueId).subscribe(
-          () => {
+          (res) => {
             this.templates = this.templates.filter((msg) => msg.uniqueId !== template.uniqueId);
+            this.reload(res.message)
+
           },
           (error: any) => {
             console.error('Error deleting template:', error);
+            this.reload(error.error.message)
+
           }
         );
       }
@@ -388,5 +468,18 @@ export class AutoResponderComponent implements OnInit {
       startPage = Math.max(1, endPage - visiblePages + 1);
     }
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+  }
+  reload(value: any) {
+
+    if (value) {
+      this.AlterMsg = value
+      this.toastermessage = true
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+    }
+  }
+  closeToaster() {
+    this.toastermessage = false;
   }
 }
