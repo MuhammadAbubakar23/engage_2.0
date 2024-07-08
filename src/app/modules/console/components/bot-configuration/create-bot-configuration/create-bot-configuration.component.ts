@@ -78,7 +78,6 @@ export class CreateBotConfigurationComponent implements OnInit {
   patchFormValues(): void {
     this.commonService.GetBotConfigById(this.currentId, this.type).subscribe(
       (res: any) => {
-        debugger
         this.botsForm.get('contentType')?.setValue(res.contentType);
         this.getContentTypes();
         this.botsForm.patchValue({
@@ -125,7 +124,6 @@ export class CreateBotConfigurationComponent implements OnInit {
     });
   }
   getContentTypes(){
-    debugger
     var channel:any;
     if(this.botsForm.value.platform){
       channel = this.contentTypes.find((x:any)=> x.id == this.botsForm.value.platform );
@@ -280,7 +278,6 @@ export class CreateBotConfigurationComponent implements OnInit {
   }
 
   setChannel(){
-    debugger
     var id = this.botsForm.value.platform;
     switch(id){
       case("1"):

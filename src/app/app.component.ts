@@ -20,7 +20,6 @@ export class AppComponent {
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHandler(event: Event) {
     if (!this.isInternalNavigation()) {
-      debugger
       // Clear local storage here
       // sessionStorage.clear();
       //  sessionStorage.removeItem('token')

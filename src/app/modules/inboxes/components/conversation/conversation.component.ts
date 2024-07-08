@@ -711,7 +711,6 @@ export class ConversationComponent implements OnInit {
     this.from = this.ConversationList.length === 0 ? 0 : 1;
   }
   removeAssignedQueryListener(res: any) {
-    debugger
     if (this.currentUrl.split('/')[2] == 'focused') {
       this.groupByDateList.forEach((group) => {
         const index = group.items.findIndex(
