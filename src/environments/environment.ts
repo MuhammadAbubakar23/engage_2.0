@@ -219,6 +219,8 @@ export const environment = {
       addBotConfig: 'ProfilePagesBotConfig/Add',
       deleteSkill: 'Skill/Delete',
       getAllWing: 'Teams/GetAllWing',
+      getPolicyByWing: 'SLAPolicies/GetByWing',
+      getCompanyTeams:'Teams/GetCompanyTeams',
 
       // service Base rules
       getEntitiesRules: 'EntityConfigs/GetEntities',
