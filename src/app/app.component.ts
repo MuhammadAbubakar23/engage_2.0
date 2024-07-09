@@ -20,9 +20,11 @@ export class AppComponent {
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHandler(event: Event) {
     if (!this.isInternalNavigation()) {
+      debugger
       // Clear local storage here
-      localStorage.clear();
-       localStorage.removeItem('token')
+      // sessionStorage.clear();
+      //  sessionStorage.removeItem('token')
+      alert('You are already logged in')
     }
   }
   private isInternalNavigation(): boolean {
@@ -38,11 +40,6 @@ export class AppComponent {
     private commonService: CommonDataService,
     private toaster: ToasterService,
     private spinnerService: NgxSpinnerService,
-   private cdr:ChangeDetectorRef,
-   private sendSkills: SkillsService,
-    private sendSkillIdsService: SkillIdsService,
-    private sendRulesGroupIdsService: RulesGroupIdsService,
-    private sendWings : GetWingsService
   ) {}
   remove(index: number) {
     this.toasters = this.toasters.filter((v, i) => i !== index);
@@ -63,17 +60,17 @@ export class AppComponent {
     }
   }
   A_Block() {
-    if (localStorage.getItem('signalRConnectionId')) {
+    if (sessionStorage.getItem('signalRConnectionId')) {
       if (this.signalRService.hubconnection == undefined) {
         this.spinnerService.show();
         this.commonService.SignOut().subscribe(
           () => {
-            localStorage.clear();
+            sessionStorage.clear();
             this.router.navigateByUrl('/login');
             this.spinnerService.hide();
           },
           (error) => {
-            localStorage.clear();
+            sessionStorage.clear();
             this.router.navigateByUrl('/login');
             this.spinnerService.hide();
           }

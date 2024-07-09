@@ -15,8 +15,8 @@ export class ResponderBotInteractionComponent implements OnInit {
   spinner2running: any;
   messages: any
   WhatsappBotInteraction() {
-    const botClientId = localStorage.getItem('senderId')
-    const customerId = localStorage.getItem('storeOpenedId');
+    const botClientId = sessionStorage.getItem('senderId')
+    const customerId = sessionStorage.getItem('storeOpenedId');
     const obj = {
       clientIdentifier: Number(botClientId),
       customerIdentifier: Number(customerId),

@@ -12,7 +12,7 @@ export class ResponderHistoryComponent implements OnInit {
   searchText:string='';
   dispositionTags:any;
   getDispositionHistoryDto = new GetDispositionHistoryDto;
-  customerProfileId = Number(localStorage.getItem('profileId'))
+  customerProfileId = Number(sessionStorage.getItem('profileId'))
   constructor(private commonService : CommonDataService,
     private getWing: GetWingsService) { }
   ngOnInit(): void {

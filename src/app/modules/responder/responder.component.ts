@@ -44,7 +44,7 @@ export class ResponderComponent implements OnInit {
   public subscription!: Subscription;
   panelToggled: any;
   showPanel=false;
-  assignedProfile = localStorage.getItem('assignedProfile')
+  assignedProfile = sessionStorage.getItem('assignedProfile')
   constructor(
     private resolver: ComponentFactoryResolver,
     private route: ActivatedRoute,
@@ -60,18 +60,18 @@ export class ResponderComponent implements OnInit {
       this.childComponentName = routeParams['ticket'];
       let ffff = this.componentName + this.childComponentName;
       this.rightNavService.updateChildComponent(this.childComponentName);
-      localStorage.setItem('child', this.childComponentName);
+      sessionStorage.setItem('child', this.childComponentName);
       if (this.childComponentName != null) {
-        this.childComponentName = localStorage.getItem('child');
+        this.childComponentName = sessionStorage.getItem('child');
       }
       if(this.componentName != undefined){
-        localStorage.setItem('parent', this.componentName);
+        sessionStorage.setItem('parent', this.componentName);
       }
       this.sharedService.updateMessage(this.componentName);
       this.target?.clear();
       this.rightcontainer?.clear();
       if(this.oldComponent!=undefined){
-        if(localStorage.getItem('parent')!=undefined && localStorage.getItem('parent')!=this.oldComponent){
+        if(sessionStorage.getItem('parent')!=undefined && sessionStorage.getItem('parent')!=this.oldComponent){
           this.loadComponent(this.componentName, '');
           this.oldComponent=this.componentName;
         }
@@ -87,14 +87,14 @@ export class ResponderComponent implements OnInit {
     this.subscription = this.toggleService.getTogglePanel().subscribe(msg3 => {
       if(msg3){
         this.rightcontainer?.clear();
-        localStorage.setItem('child', msg3)
+        sessionStorage.setItem('child', msg3)
         this.showPanel = true
         this.loadComponent('',msg3)
       }
       else {
         this.showPanel = false;
         this.rightcontainer?.clear();
-        localStorage.setItem('child', '')
+        sessionStorage.setItem('child', '')
       }
       // this.subscription = this.toggleService.getDispositionForm().subscribe(value=>{
       //   if(value){
@@ -118,7 +118,7 @@ export class ResponderComponent implements OnInit {
         this.target?.clear();
         this.loadComponent(value,'')
       } 
-      var parent = localStorage.getItem('parent') || '{}'
+      var parent = sessionStorage.getItem('parent') || '{}'
       if(value == 'close-disposition-form'){
         this.target?.clear();
         this.loadComponent(parent,'')
@@ -130,7 +130,7 @@ export class ResponderComponent implements OnInit {
     switch (leftSideName || rightSideName) {
       case 'Facebook':
         this.showPanel = false;
-        localStorage.setItem('child', '')
+        sessionStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(ChannelComponent);
            this.target?.createComponent(componentFactory);
@@ -139,63 +139,63 @@ export class ResponderComponent implements OnInit {
         break;
       case 'Instagram':
         this.showPanel = false;
-        localStorage.setItem('child', '')
+        sessionStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         break;
         case 'PlayStore':
         this.showPanel = false;
-        localStorage.setItem('child', '')
+        sessionStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'Twitter':
         this.showPanel = false;
-        localStorage.setItem('child', '')
+        sessionStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'Email':
         this.showPanel = false;
-        localStorage.setItem('child', '')
+        sessionStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(EmailComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'Youtube':
         this.showPanel = false;
-        localStorage.setItem('child', '')
+        sessionStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'Phone':
         this.showPanel = false;
-        localStorage.setItem('child', '')
+        sessionStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'SMS':
         this.showPanel = false;
-        localStorage.setItem('child', '')
+        sessionStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'Webchat':
         this.showPanel = false;
-        localStorage.setItem('child', '')
+        sessionStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'WhatsApp':
         this.showPanel = false;
-        localStorage.setItem('child', '')
+        sessionStorage.setItem('child', '')
         componentFactory = this.resolver.resolveComponentFactory(
           ChannelComponent
         );
@@ -203,7 +203,7 @@ export class ResponderComponent implements OnInit {
         break;
       case 'LinkedIn':
         this.showPanel = false;
-        localStorage.setItem('child', '')
+        sessionStorage.setItem('child', '')
         componentFactory = this.resolver.resolveComponentFactory(
           ChannelComponent
         );

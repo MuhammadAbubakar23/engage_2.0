@@ -22,6 +22,7 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { InsertTagInProfileFeedDto } from 'src/app/shared/Models/InsertTagaInProfileFeedDto';
+import { SearchFilterService } from 'src/app/services/SearchFilter/search-filter.service';
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
@@ -64,6 +65,7 @@ export class ConversationComponent implements OnInit {
   totalPages: any;
   searchCustomerForm!: FormGroup;
   groupByDateList: any[] = [];
+
   constructor(
     private fetchId: FetchIdService,
     private SpinnerService: NgxSpinnerService,
@@ -80,7 +82,8 @@ export class ConversationComponent implements OnInit {
     private storage: StorageService,
     private sendSkillId: SkillIdsService,
     private sendSkillSlug: SkillslugService,
-    private getSkillSlug: SkillslugService
+    private getSkillSlug: SkillslugService,
+    public searchFilterService:SearchFilterService
   ) {
     this.criteria = {
       property: 'createdDate',
@@ -105,8 +108,8 @@ export class ConversationComponent implements OnInit {
   currentUrl: string = '';
   FlagForAssignToMe: string = '';
   ngOnInit(): void {
-    this.wings = this.getWing.wings;
-    const date_fillter = localStorage.getItem('datefillter');
+    this.wings = this.getWing.wings || sessionStorage.getItem('defaultWings');
+    const date_fillter = sessionStorage.getItem('datefillter');
     if (date_fillter) {
       this.filterDtolocal = JSON.parse(date_fillter);
     }
@@ -181,11 +184,10 @@ export class ConversationComponent implements OnInit {
               const fortyMinutesInMs = 40 * 60 * 1000; // 40 minute in milliseconds
               const time = new Date(item.createdDate);
               const timeDifference = this.TodayDate.getTime() - time.getTime();
-              if (
-                timeDifference < twentyMinutesInMs &&
-                timeDifference < fortyMinutesInMs
+              if (timeDifference > twentyMinutesInMs && timeDifference < fortyMinutesInMs
               ) {
                 this.alertWarning = true;
+                this.alertDanger = false;
                 item['slaFlag'] = 'warning';
               }
               if (timeDifference > fortyMinutesInMs) {
@@ -233,6 +235,16 @@ export class ConversationComponent implements OnInit {
         }
       }
     }, 1000);
+    this.userName = this.searchFilterService.userNameFilter;
+    this.user = this.searchFilterService.userFilter;
+    this.text = this.searchFilterService.textFilter;
+    this.include = this.searchFilterService.includeFilter;
+    this.notInclude = this.searchFilterService.notIncludeFilter;
+    this.fromDate = this.searchFilterService.fromDateFilter;
+    this.toDate = this.searchFilterService.toDateFilter;
+    this.isAttachment=this.searchFilterService.isAttachmentFilter;
+    this.blueTick = this.searchFilterService.blueTick;
+    if(this.searchFilterService.fromDateFilter != null){ this.searchForm.reset(); }
   }
   wingsList: any[] = [];
   totalPageNumbers: any;
@@ -244,7 +256,7 @@ export class ConversationComponent implements OnInit {
   wings: any;
   isverifiedAccount: boolean = false;
   skillSlugUrl: any;
-  skillSlug = this.getSkillSlug.skillSlug || "";
+  skillSlug = this.getSkillSlug.skillSlug || '';
   getConversationList() {
     this.flag = this.currentUrl.split('/')[2];
     this.skillSlugUrl = this.currentUrl.split('/')[3];
@@ -293,9 +305,11 @@ export class ConversationComponent implements OnInit {
     } else if (this.searchForm.value.dateWithin == '1 week') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 6);
-      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      const fromDate =
+        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
-      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+      this.toDate =
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '2 weeks') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 13);
@@ -406,9 +420,18 @@ export class ConversationComponent implements OnInit {
         skills: this.skillSlug,
       };
     }
+    this.searchFilterService.setfromDateFilter(this.fromDate);
+    this.searchFilterService.setToDateFilter(this.toDate);
+    this.searchFilterService.setUserNameFilter(this.userName);
+    this.searchFilterService.setUserFilter(this.user);
+    this.searchFilterService.setTextFilter(this.text);
+    this.searchFilterService.setIncludeFilter(this.include);
+    this.searchFilterService.setNotIncludeFilter(this.notInclude);
+    this.searchFilterService.setisAttachmentFilter(this.searchForm.get('isAttachment')?.value);
+    this.searchFilterService.setBlueTick(this.blueTick);
     this.SpinnerService.show();
     this.changeDetect.detectChanges();
-    // localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
+    // sessionStorage.setItem('datefillter',JSON.stringify(this.filterDto))
     this.commondata.GetConversationList(this.filterDto).subscribe(
       (res: any) => {
         if (Object.keys(res).length === 0) {
@@ -492,7 +515,7 @@ export class ConversationComponent implements OnInit {
       },
       (error) => {
         if (error.message.includes('401')) {
-          localStorage.clear();
+          sessionStorage.clear();
           this.router.navigateByUrl('/login');
           this.SpinnerService.hide();
         } else {
@@ -587,6 +610,8 @@ export class ConversationComponent implements OnInit {
         this.datePipe.transform(oneYearFromToDate, 'YYYY-MM-dd') +
         'T00:00:00.000Z';
     }
+    this.searchFilterService.setfromDateFilter(this.fromDate);
+    this.searchFilterService.setToDateFilter(this.toDate);
     this.getConversationList();
   }
   hasAttachment(value: boolean) {
@@ -601,12 +626,12 @@ export class ConversationComponent implements OnInit {
     this.isAttachment = !this.isAttachment;
   }
   updateListDataListener(res: any) {
-    const username = localStorage.getItem('username');
-    if (this.searchUser === '') {
+    const username = sessionStorage.getItem('username');
+    if (this.searchUser == '') {
       if (this.currentUrl.split('/')[2] === 'focused') {
         res.forEach((newMsg: any) => {
-          localStorage.setItem('username', newMsg.userName);
-          if (newMsg?.profileStatus?.length === 0) {
+          sessionStorage.setItem('username', newMsg.userName);
+          if (newMsg?.profileStatus?.length == 0) {
             if (this.platform === newMsg.platform && !this.isAttachment) {
               this.updateConversationList(newMsg);
             } else if (newMsg.isAttachment && this.isAttachment) {
@@ -636,7 +661,7 @@ export class ConversationComponent implements OnInit {
     if (rule) {
       newMsg.skillSlug = rule.skilSlug;
       // Find existing conversation in the list
-      const existingConversation = this.ConversationList.find(
+      const existingConversation = this.ConversationList?.find(
         (obj: any) =>
           obj.user === newMsg.user && obj.skillSlug === newMsg.skillSlug
       );
@@ -647,7 +672,10 @@ export class ConversationComponent implements OnInit {
         existingConversation.unrespondedCount++;
       } else {
         // Check skillSlug conditions and add new conversation to the list
-        if (this.skillSlug.length == 0 || this.skillSlug[0] === newMsg.skillSlug) {
+        if (
+          this.skillSlug.length == 0 ||
+          this.skillSlug[0] === newMsg.skillSlug
+        ) {
           this.ConversationList.unshift(newMsg);
           if (this.ConversationList.length > this.pageSize) {
             this.ConversationList.pop();
@@ -671,7 +699,7 @@ export class ConversationComponent implements OnInit {
   setFromAndToValues() {
     if (this.TotalUnresponded < this.pageSize) {
       this.to = this.TotalUnresponded;
-    }
+     } 
     //  else if (
     //   this.TotalUnresponded > this.pageSize &&
     //   this.to < this.pageSize
@@ -679,14 +707,17 @@ export class ConversationComponent implements OnInit {
     else {
       this.to = this.pageSize;
     }
-
+  
     this.from = this.ConversationList.length === 0 ? 0 : 1;
   }
   removeAssignedQueryListener(res: any) {
     
     if (this.currentUrl.split('/')[2] == 'focused') {
       this.groupByDateList.forEach((group) => {
-        const index = group.items.findIndex((x: any) => x.profileId == res.profileId && x.skillSlug == res.skillSlug);
+        const index = group.items.findIndex(
+          (x: any) =>
+            x.profileId == res.profileId && x.skillSlug == res.skillSlug
+        );
         if (index !== -1) {
           group.items.splice(index, 1);
           this.TotalUnresponded = this.TotalUnresponded - 1;
@@ -769,8 +800,8 @@ export class ConversationComponent implements OnInit {
     this.from = 0;
     this.to = 0;
     this.searchUser = '';
-    localStorage.removeItem('username');
-    localStorage.removeItem('datefillter');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('datefillter');
     this.getConversationList();
   }
   updatevalue(
@@ -785,14 +816,14 @@ export class ConversationComponent implements OnInit {
     skillId: any,
     skillSlug: string
   ) {
-    localStorage.setItem('previousUrl', this.currentUrl);
+    sessionStorage.setItem('previousUrl', this.currentUrl);
     this.sendSkillSlug.sendSkillSlug([skillSlug]);
     if (
       this.currentUrl.split('/')[2] == 'focused' ||
       this.currentUrl.split('/')[2] == 'follow_up'
     ) {
       this.assignQuerryDto = {
-        userId: Number(localStorage.getItem('agentId')),
+        userId: Number(sessionStorage.getItem('agentId')),
         profileId: profileId,
         agentIds: 'string',
         platform: platform,
@@ -810,10 +841,11 @@ export class ConversationComponent implements OnInit {
           this.getWing.sendWings(wing);
           this.fetchId.setOption(id);
           this.fetchposttype.sendPostType(postType);
-          localStorage.setItem('profileId', profileId);
-          localStorage.setItem('assignedProfile', profileId);
+          sessionStorage.setItem('profileId', profileId);
+          sessionStorage.setItem('assignedProfile', profileId);
           this.router.navigateByUrl(this.currentUrl + '/responder/' + platform);
           this.lodeModuleService.updateModule('responder');
+          sessionStorage.setItem('skillSlug', skillSlug);
           if (this.to < this.TotalUnresponded) {
             this.pageNumber = 1;
             this.pageSize = 20;
@@ -835,10 +867,11 @@ export class ConversationComponent implements OnInit {
       this.getWing.sendWings(wing);
       this.fetchId.setOption(id);
       this.fetchposttype.sendPostType(postType);
-      localStorage.setItem('profileId', profileId);
-      localStorage.setItem('assignedProfile', profileId);
+      sessionStorage.setItem('profileId', profileId);
+      sessionStorage.setItem('assignedProfile', profileId);
       this.router.navigateByUrl(this.currentUrl + '/responder/' + platform);
       this.lodeModuleService.updateModule('responder');
+      sessionStorage.setItem('skillSlug', skillSlug);
       this.SpinnerService.hide();
     } else {
       this.SpinnerService.show();
@@ -848,10 +881,11 @@ export class ConversationComponent implements OnInit {
       this.getWing.sendWings(wing);
       this.fetchId.setOption(id);
       this.fetchposttype.sendPostType(postType);
-      localStorage.setItem('profileId', profileId);
+      sessionStorage.setItem('profileId', profileId);
       this.router.navigateByUrl(this.currentUrl + '/responder/' + platform);
       this.SpinnerService.hide();
       this.lodeModuleService.updateModule('responder');
+      sessionStorage.setItem('skillSlug', skillSlug);
     }
   }
   AlterMsg: any;
@@ -1183,7 +1217,7 @@ export class ConversationComponent implements OnInit {
     this.advanceSearch = !this.advanceSearch;
   }
   CloseAdvanceSearch() {
-    localStorage.removeItem('datefillter');
+    sessionStorage.removeItem('datefillter');
     this.advanceSearch = false;
   }
   ResetSearchForm() {
@@ -1194,7 +1228,7 @@ export class ConversationComponent implements OnInit {
     this.notInclude = '';
     this.include = '';
     this.getConversationList();
-    localStorage.removeItem('datefillter');
+    sessionStorage.removeItem('datefillter');
   }
   anyTimeDropdown = false;
   showDateRange = false;

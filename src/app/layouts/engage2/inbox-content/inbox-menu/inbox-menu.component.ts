@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { SkillsService } from 'src/app/services/Skills/skills.service';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 @Component({
   selector: 'inbox-menu',
   templateUrl: './inbox-menu.component.html',
@@ -42,10 +43,20 @@ export class InboxMenuComponent implements OnInit {
     private router: Router,
     private getSkills: SkillsService,
     private getWing: GetWingsService,
-    private skillSlugService: SkillslugService
+    private skillSlugService: SkillslugService,
+    private storage:StorageService
   ) {}
   ngOnInit(): void {
+  if(this.getSkills.skills){
     this.allSkills = this.getSkills.skills;
+    console.log('serviceSkill', this.allSkills)
+  } else {
+    let skills = this.storage.retrive('skills', 'O').local;
+    this.allSkills = skills
+    console.log('localStorageSkills', this.allSkills)
+  }
+
+    
     this.baseUrl = window.location.origin;
     if (this.baseUrl == 'https://engage.jazz.com.pk') {
       this.client = 'jazz';

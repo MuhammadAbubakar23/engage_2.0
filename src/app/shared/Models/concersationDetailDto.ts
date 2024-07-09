@@ -142,6 +142,9 @@ export class messagesDto {
   replies?: repliesDto = new repliesDto();
   sentiment?: string = '';
   tags?: tagsDto = new tagsDto();
+  wings:string='';
+  signalRGroupName:string='';
+  skillSlug:string='';
 }
 // for new post
 export class newpostcommentDto{

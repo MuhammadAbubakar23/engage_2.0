@@ -21,7 +21,7 @@ export class RightSidebarComponent implements OnInit {
   ngOnInit(): void {
     // Array.from(document.querySelectorAll('[data-bs-toggle]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
-   let parent = localStorage.getItem("parent");
+   let parent = sessionStorage.getItem("parent");
    if(parent != "undefined")
    {
        this.subscription = this.sharedService.getMessage().subscribe(msg => { 
@@ -34,16 +34,16 @@ export class RightSidebarComponent implements OnInit {
   }
   isOpen = false;
   toggle(child:string) {
-  if(localStorage.getItem('child') == child){
+  if(sessionStorage.getItem('child') == child){
     this.toggleService.addTogglePanel('');
   } else{
     this.toggleService.addTogglePanel(child);
   }
 //     let routr = this._route.url.split('/')[1];
-//  let parent = localStorage.getItem("parent");
-//  if (localStorage.getItem('child') == child){
+//  let parent = sessionStorage.getItem("parent");
+//  if (sessionStorage.getItem('child') == child){
 //   this.isOpen = false;
-//   localStorage.setItem('child','')
+//   sessionStorage.setItem('child','')
 //  } else {
 //   this.isOpen = true;
 //  }

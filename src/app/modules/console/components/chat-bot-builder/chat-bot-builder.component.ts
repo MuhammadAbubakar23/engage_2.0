@@ -14,7 +14,7 @@ export class ChatBotBuilderComponent implements OnInit {
 }
 constructor(private botService: BotService){
   this.botService.login().subscribe((token: any) => {
-    localStorage.setItem("token", token.access);
+    sessionStorage.setItem("token", token.access);
   });
 }
 preview(step1:any,step2:any,step3:any):void{

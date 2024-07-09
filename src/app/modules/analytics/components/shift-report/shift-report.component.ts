@@ -397,7 +397,7 @@ value:any
         this.AgentsTeamList = res;
         this.ActiveAgents = [];
         this.AgentsTeamList.forEach((user: any) => {
-          if (user.userId != localStorage.getItem('agentId')) {
+          if (user.userId != sessionStorage.getItem('agentId')) {
             this.ActiveAgents.push(user);
             if(this.ActiveAgents.length>0){
               this.ActiveAgents.forEach((x:any)=>{

@@ -36,12 +36,12 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  // IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
-  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
-  // ServiceBaseUrl: '',
-  // consoleBaseUrl: 'https://console.enteract.live/api/',
+  IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
+  CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  ProfileBaseUrl: 'https://profiler.enteract.live/api/',
+  ServiceBaseUrl: '',
+  consoleBaseUrl: 'https://console.enteract.live/api/',
   keReportsBaseUrl: 'https://kereports.enteract.live/api/',
   LinkedInBaseUrl: 'https://linkdservice.enteract.live/api/',
   // botBaseUrl:'',
@@ -65,7 +65,6 @@ export const environment = {
   //  ProfileBaseUrl: '',
   //  botBaseUrl:'',
 
-
   // For Morinaga
   // IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
@@ -87,7 +86,6 @@ export const environment = {
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // LinkedInBaseUrl:'',
 
-
   // For Jazz Rox
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
   // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
@@ -98,31 +96,34 @@ export const environment = {
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
 
-  // //for statging / Internal :companyId 650
+  //for statging / Internal :companyId 650
   // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
-  // CommonBaseUrl: 'https://85b6-203-135-1-210.ngrok-free.app/api/',
+  // CommonBaseUrl: 'https://comrox.enteract.app/api/',
   // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://85b6-203-135-1-210.ngrok-free.app/',
+  // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://conrox.enteract.app/api/',
-
 
   // // // for rule
   // // company Id 100 for chatBot
   // faceRoxBaseUrl: 'https://facerox.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  // LinkedInBaseUrl: '',
+  // keReportsBaseUrl: '',
+
   // botMoniteringBaseUrl: 'http://3.1.47.150:5000/',
   // flowBot: 'https://flowbot.enteract.app/',
   // intentBot: 'https://intentBot.enteract.app/',
   // autoresponderbaseurl: 'https://d387-203-135-1-210.ngrok-free.app/api/',
-  // profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
+  profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
+
   // testing uiengage company id 657
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  ServiceBaseUrl: '',
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   botBaseUrl: 'https://bot-engage.enteract.app/api/',
   botsBaseUrl: 'http://3.1.47.150:5000/bots/',
   botConfigBaseUrl: 'https://linked.360scrm.com/api/',
@@ -141,7 +142,7 @@ export const environment = {
   botMoniteringBaseUrl: 'https://flowbot.enteract.app/',
   flowBot: 'https://flowbot.enteract.app/',
   intentBot: 'https://intentbot.enteract.app/',
-  autoresponderbaseurl: 'https://10.111.11.57:45455/api/',
+  autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
@@ -159,7 +160,7 @@ export const environment = {
       AllTeams: 'Teams/FetchAll', // new to review
       AddTeam: 'Accesses/Teams',
       TeamProperties: 'Accesses/Properties',
-      accessrole: 'Roles/NewPreviews', //"Permissions/role",
+      // accessrole: 'Roles/NewPreviews', //"Permissions/role",
       permissionrole: 'Roles/NewPreviews', //"Permissions/role",
       RolesPermissions: 'Roles/Fetch',
       permissions: 'Roles/Permissions',
@@ -181,6 +182,7 @@ export const environment = {
       deleteRoles: 'Permissions/Delete',
       ////// Later Align in Console/////
       defaultTags: 'Tags/GetTags',
+      getUserRoles: 'Roles/GetUserActor',
     },
     console: {
       AddUser: 'Users/CreateUser',
@@ -269,10 +271,9 @@ export const environment = {
       getRuleType: 'Tags/GetServiceTags',
       getRuleTag: 'Tags/GetTagsBySupreamId',
       getServicetree: 'ServicesStructure/GetServiceTree',
-      getTemplateStatus: "Configurations/TemplateStatusToggler",
+      getTemplateStatus: 'Configurations/TemplateStatusToggler',
       deleteTemplate: 'Configurations/DeleteTemplate',
-      getRuleStatus: 'RuleConfigs/UpdateRuleStatus'
-
+      getRuleStatus: 'RuleConfigs/UpdateRuleStatus',
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -302,13 +303,6 @@ export const environment = {
       viewResponse: 'responses/get',
       getRuleChatBot: 'rules/get',
       getStoriesChatBot: 'stories/get',
-      ruleDelete: 'rules/delete',
-      storyDelete: 'stories/delete',
-      trainBot: 'models/train',
-      createBotTrain: 'models/create',
-      runChatBot: 'models/run',
-      chatBotWdidget: 'chat',
-      stopChatBot: 'models/stop'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

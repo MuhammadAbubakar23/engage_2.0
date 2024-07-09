@@ -23,7 +23,7 @@ export class BotService {
   gethttpOptions() {
     let headers_object = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': "Bearer " + localStorage.getItem('token')
+      'Authorization': "Bearer " + sessionStorage.getItem('token')
     });
     let httpOptions = {
       headers: headers_object
@@ -32,7 +32,7 @@ export class BotService {
   }
   gethttpOptionsforFile() {
     let headers_object = new HttpHeaders({
-      'Authorization': "Bearer " + localStorage.getItem('token')
+      'Authorization': "Bearer " + sessionStorage.getItem('token')
     });
     let httpOptions = {
       headers: headers_object

@@ -10,6 +10,7 @@ import { LayoutsModule } from "../../../../layouts/layouts.module";
 import { Users } from './users';
 import { ConsoleTableParams } from 'src/app/layouts/engage2/console-table/console-table-params';
 import { Observable } from 'rxjs';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 @Component({
   selector: 'app-users',
   standalone: true,
@@ -43,7 +44,7 @@ export class UsersComponent implements OnInit {
   //             };
   filters!: ConsoleTableParams;
   constructor(private headerService: HeaderService
-    , private _Activatedroute: ActivatedRoute) { }
+    , private _Activatedroute: ActivatedRoute,private _perS:PermissionService) { }
   async ngOnInit() {
     let _self = this;
     // this.filter = async () => await this._Activatedroute.snapshot.data["userJ"]
@@ -55,6 +56,12 @@ export class UsersComponent implements OnInit {
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
     //loadUsers();
+  }
+
+hasPermission(permissionName: string) {
+
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
   }
   // pageddata(event) {
   //   this._fetchData(event, this.pagesize)
