@@ -86,6 +86,7 @@ export class LoginComponent implements OnInit {
   Rules: any[] = [];
   singleOrSplitted:any[]=[];
   login() {
+    debugger
     let obj = {
       // actor: this.loginForms.value.actor,
       userName: this.loginForm.value.userName,
@@ -107,7 +108,7 @@ export class LoginComponent implements OnInit {
             'agentName',
             res.loginResponse.loginResponse.username
           );
-          this.commonService.UserLogin().subscribe(() => {
+          // this.commonService.UserLogin().subscribe(() => {
             this.sendSkillIdsService.sendSkillIds(
               res?.loginResponse?.loginResponse?.skills
             );
@@ -194,7 +195,7 @@ export class LoginComponent implements OnInit {
             this.signalRService.applySentimentListner();
             this.signalRService.updateMessageStatusDataListener();
             // this.signalRService.updatePostList();
-          });
+          // });
 
           
         } else if (res.status == true || res.isTwoFAEnabled == true) {

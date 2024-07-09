@@ -31,6 +31,7 @@ export class CreateAutoResponderComponent implements OnInit {
   templateVariables: string = "";
   AlterMsg: string = ''
   errormessage: any;
+  isEmailChannel: boolean = false; 
   toastermessage: boolean = false
   constructor(
     private formBuilder: FormBuilder
@@ -43,7 +44,7 @@ export class CreateAutoResponderComponent implements OnInit {
     this.messageForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
       description: ['', Validators.required],
-      template_Message: ['',],
+      template_Message: ['',  Validators.required],
       entityName: ['',],
       ruleTag: ['', Validators.required],
       variables: ['',],
@@ -83,6 +84,7 @@ export class CreateAutoResponderComponent implements OnInit {
     if (selectedChannel) {
       this.content = selectedChannel.subService;
       this.entities = [];
+      this.isEmailChannel = this.selectedChannel === 'Exchange-email' || this.selectedChannel === 'G-suite';
     }
   }
   getEntites(event: any) {

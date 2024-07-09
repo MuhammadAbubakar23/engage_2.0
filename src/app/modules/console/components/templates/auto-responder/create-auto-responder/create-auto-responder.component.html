@@ -110,7 +110,12 @@
                 </div>
                 <p class="mt-5">Email Template</p>
                 <div class="text-area-section pb-5">
-                    <ckeditor [(ngModel)]="editorContent" formControlName="template_Message"></ckeditor>
+                    <div *ngIf="isEmailChannel">
+                        <ckeditor [(ngModel)]="editorContent" formControlName="template_Message"></ckeditor>
+                    </div>
+                    <div *ngIf="!isEmailChannel">
+                        <textarea class="form-control"  [(ngModel)]="editorContent" formControlName="template_Message" rows="5"></textarea>
+                    </div>
                     <div class="invalid-feedback"
                         *ngIf="messageForm.get('template_Message')?.invalid && (messageForm.get('template_Message')?.dirty || messageForm.get('template_Message')?.touched)">
                         Message is required.</div>
