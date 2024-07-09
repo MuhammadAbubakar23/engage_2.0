@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ActorsInfoService {
-  actors = [];
-  constructor() {}
-  public sendActors(actors: any) {
-    this.actors = actors;
+  private actorSubject = new BehaviorSubject<any>(null);
+  actor$ = this.actorSubject.asObservable();
+
+  constructor() { }
+
+  public setActor(actor: any) {
+    debugger
+    this.actorSubject.next(actor);
   }
-  public getActors() {
-    return this.actors;
+
+  public getActor() {
+    return this.actorSubject.getValue();
   }
 }

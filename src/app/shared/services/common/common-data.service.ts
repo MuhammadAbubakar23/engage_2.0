@@ -9,7 +9,7 @@ import { RuleWithCount } from '../../Models/ChannelRule';
 })
 export class CommonDataService {
 
-  env:any;
+  env: any;
   constructor(private http: HttpClient) {
     debugger
     this.baseUrl = window.location.origin;
@@ -29,9 +29,9 @@ export class CommonDataService {
     } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
       this.env = (window as any)._env;
     } else if (this.baseUrl == 'http://localhost:4200' || this.baseUrl == 'https://localhost:4200') {
-      this.env = (window as any)._env.testUrlsRox;
+      this.env = (window as any)._env.ke;
     }
-    
+
   }
   // for testing purpose
   // ConsoleBaseUrl = environment.ConsoleBaseUrl;
@@ -251,6 +251,7 @@ export class CommonDataService {
   // updateTeam = environment.links.console.updateTeam
   //service
   userlogin = environment.links.common.userlogin;
+  permissionrole = environment.links.identity.permissionrole
   addSurvey = environment.links.service.addSurvey;
   addCSAT = environment.links.service.addCSAT;
   KECSAT = environment.links.profile.KECSAT;
@@ -264,7 +265,7 @@ export class CommonDataService {
   whatsappBotInteraction = environment.links.common.whatsappBotInteraction;
   private _wordCloudDataS: any;
   baseUrl: any;
- 
+
   gethttpOptions() {
     let headers_object = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -278,6 +279,9 @@ export class CommonDataService {
   UserLogin() {
     let httpOptions = this.gethttpOptions();
     return this.http.get(this.env.CommonBaseUrl + this.userlogin, httpOptions);
+  }
+  getPermissionByRole(form: any) {
+    return this.http.post(this.env.IdentityBaseUrl + this.permissionrole, form);
   }
   GetTagsList() {
     return this.http.get(this.env.CommonBaseUrl + this.tagsList);
@@ -353,11 +357,11 @@ export class CommonDataService {
   GetFbPostStats(pageId: any, postId: any) {
     return this.http.post(
       this.env.CommonBaseUrl +
-        this.fbPostStats +
-        '?PageId=' +
-        pageId +
-        '&postId=' +
-        postId,
+      this.fbPostStats +
+      '?PageId=' +
+      pageId +
+      '&postId=' +
+      postId,
       null
     );
   }
@@ -390,11 +394,11 @@ export class CommonDataService {
   GetFbCommentStats(pageId: any, commentId: any) {
     return this.http.post(
       this.env.CommonBaseUrl +
-        this.fbCommentStats +
-        '?PageId=' +
-        pageId +
-        '&CommentId=' +
-        commentId,
+      this.fbCommentStats +
+      '?PageId=' +
+      pageId +
+      '&CommentId=' +
+      commentId,
       null
     );
   }
@@ -416,11 +420,11 @@ export class CommonDataService {
   GetTwitterTweetStats(profileId: any, tweetId: any) {
     return this.http.get(
       this.env.CommonBaseUrl +
-        this.twitterTweetStats +
-        '?ProfileExternalId=' +
-        profileId +
-        '&TweetId=' +
-        tweetId
+      this.twitterTweetStats +
+      '?ProfileExternalId=' +
+      profileId +
+      '&TweetId=' +
+      tweetId
     );
   }
   GetLinkedInPostStats(postId: any) {
@@ -485,11 +489,11 @@ export class CommonDataService {
   GetAllocatedProfiles(wing: string, skillSlug: string) {
     return this.http.get(
       this.env.CommonBaseUrl +
-        this.getAllocatedProfiles +
-        '?Wings=' +
-        wing +
-        '&SkillSlug=' +
-        skillSlug
+      this.getAllocatedProfiles +
+      '?Wings=' +
+      wing +
+      '&SkillSlug=' +
+      skillSlug
     );
   }
   // CreateMessageTemplate(body: any) {

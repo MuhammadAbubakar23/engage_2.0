@@ -1,8 +1,10 @@
-<ng-container *ngIf="
+<ng-container
+  *ngIf="
     !restrictedAgentsString.includes(restrictedAgent) &&
     !onlyAnalyticsTabVisible.includes(restrictedAgent) &&
     totalParcoAdminUsers.includes(restrictedAgent)
-  ">
+  "
+>
   <!-- <ng-container *ngFor="let menu of menus$ ">
         <a [routerLink]="['/'+menu.link]" routerLinkActive="active" ariaCurrentWhenActive="page"
             class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
@@ -15,8 +17,14 @@
             </div>
         </a>
     </ng-container> -->
-  <a [routerLink]="['/analytics']" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="opensidebar()"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2" (click)="resetFilters()">
+  <a
+    [routerLink]="['/analytics']"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
+    (click)="opensidebar()"
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+    (click)="resetFilters()"
+  >
     <div class="list-group-text d-flex align-items-center">
       <div class="iconButton medium">
         <i class="fa-light fa-chart-line-up ice"></i>
@@ -26,9 +34,13 @@
   </a>
 </ng-container>
 <ng-container *ngIf="!onlyAnalyticsTabVisible.includes(restrictedAgent)">
-  <a [routerLink]="['/all-inboxes/completed/all']" routerLinkActive="active" ariaCurrentWhenActive="page"
+  <a
+    [routerLink]="['/all-inboxes/completed/all']"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
     class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
-    [class.active]="activeChannel == 'completed'">
+    [class.active]="activeChannel == 'completed'"
+  >
     <div class="list-group-text d-flex align-items-center">
       <div class="iconButton medium">
         <i class="fal fa-paper-plane ice"></i>
@@ -36,24 +48,26 @@
       <div class="itemLabel">Completed Interactions</div>
     </div>
   </a>
-<ng-container *ngIf="this.baseurl == 'http://localhost:4200' ||this.baseurl=='https://uiengagerox.enteract.app' ||this.baseurl=='https://uiengage.enteract.app' " >
-<a
-[routerLink]="['/bot-monitoring']"
-routerLinkActive="active"
-ariaCurrentWhenActive="page"
-class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
-(click)="resetFilters()"
->
-<div class="list-group-text d-flex align-items-center">
-  <div class="iconButton medium">
-    <i class="fa-light fa-message-bot ice"></i>
-  </div>
-  <div class="itemLabel">BOT Management</div>
-</div>
-</a>
-</ng-container>
- 
-  <ng-container *ngIf="this.baseurl == 'http://localhost:4200' ||this.baseurl=='https://uiengagerox.enteract.app'||this.baseurl=='https://uiengage.enteract.app' || this.baseurl=='https://keportal.enteract.live'">
+  <ng-container
+    *ngIf="hasPermission('automation')"
+  >
+    <a
+      [routerLink]="['/bot-monitoring']"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+      (click)="resetFilters()"
+    >
+      <div class="list-group-text d-flex align-items-center">
+        <div class="iconButton medium">
+          <i class="fa-light fa-message-bot ice"></i>
+        </div>
+        <div class="itemLabel">BOT Management</div>
+      </div>
+    </a>
+  </ng-container>
+
+  <ng-container *ngIf="hasPermission('console')">
     <a
       [routerLink]="['/console/home']"
       routerLinkActive="active"
@@ -61,7 +75,7 @@ class="list-group-item d-flex justify-content-between align-items-center bg-tran
       class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
       [class.active]="activeChannel == 'console'"
       (click)="resetFilters()"
-      >
+    >
       <div class="list-group-text d-flex align-items-center">
         <div class="iconButton medium">
           <i class="fal fa-cog ice"></i>
@@ -72,8 +86,12 @@ class="list-group-item d-flex justify-content-between align-items-center bg-tran
   </ng-container>
 </ng-container>
 <ng-container *ngIf="onlyAnalyticsTabVisible.includes(restrictedAgent)">
-  <a [routerLink]="['/analytics']" routerLinkActive="active" ariaCurrentWhenActive="page"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
+  <a
+    [routerLink]="['/analytics']"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+  >
     <div class="list-group-text d-flex align-items-center">
       <div class="iconButton medium">
         <i class="fa-light fa-chart-line-up ice"></i>
@@ -83,13 +101,29 @@ class="list-group-item d-flex justify-content-between align-items-center bg-tran
   </a>
 </ng-container>
 
-<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
-  <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
-    aria-live="assertive" aria-atomic="true">
-    <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+<div
+  class="position-fixed toast-bar border-0 shadow-sm rounded navyBg"
+  style="z-index: 60"
+>
+  <div
+    [ngClass]="toastermessage == true ? 'show' : 'hide'"
+    class="toast border-0 p-2 h-100 navyBg fade"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div
+      class="d-flex border-0 justify-content-between align-items-center w-100 h-100"
+    >
       <p class="toast-line-para ice m-0">{{ AlterMsg }}</p>
       <div class="toast-btn d-flex align-items-center">
-        <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast" (click)="closeToaster()">
+        <button
+          type="button"
+          class="btn m-0 ms-2"
+          aria-label="Close"
+          data-bs-dismiss="toast"
+          (click)="closeToaster()"
+        >
           <i class="fal fa-times"></i>
         </button>
       </div>

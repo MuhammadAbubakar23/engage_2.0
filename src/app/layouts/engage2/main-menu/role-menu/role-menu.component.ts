@@ -19,6 +19,7 @@ import {
 import { PermissionState } from '../../permission-state/permission.state';
 import { OpensidebarService } from 'src/app/services/openSidebarService/opensidebar.service';
 import { SearchFilterService } from 'src/app/services/SearchFilter/search-filter.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
   selector: 'role-menu',
@@ -52,7 +53,8 @@ export class RoleMenuComponent implements OnInit {
     private _route: Router,
     private storage: StorageService,
     private sidebar: OpensidebarService,
-    private SearchFilterService:SearchFilterService
+    private SearchFilterService:SearchFilterService,
+    private _perS:PermissionService
   ) {
     //  this.menu$ = this.MenuStore.select(getEmargingEqual("role_main_left_menu"));
     //  this.menus$ = this.menu$.pipe(share(), startWith(false));
@@ -105,6 +107,11 @@ export class RoleMenuComponent implements OnInit {
     this.toastermessage = false;
   }
 
+  hasPermission(permissionName: string) {
+
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
+  }
   AlterMsg: any;
   toastermessage: any;
 

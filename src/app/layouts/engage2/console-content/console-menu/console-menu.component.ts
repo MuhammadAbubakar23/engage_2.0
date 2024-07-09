@@ -8,6 +8,7 @@ import { loadMenusList } from '../../menu-state/menu.actions';
 import { MenuModel } from '../../menu-state/menu.model';
 import { getEmargingEqual, getEmargingNotEqual, getMenusLoading } from '../../menu-state/menu.selectors';
 import { MenuState } from '../../menu-state/menu.state';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
   selector: 'console-menu',
@@ -21,11 +22,12 @@ export class ConsoleMenuComponent implements OnInit {
   menu$ :any;
   loading$: any;
 
-  SuperTeamSelected:number=0; 
+  SuperTeamSelected:number=0;
   SuperTeamOptions:any=[];
   SuperTeamShow:boolean = true;
-  
-  constructor(private store: Store<MenuState>, private treegen: TreeGenService<MenuModel>, private headerService: HeaderService, private storage:StorageService) { 
+
+  constructor(private store: Store<MenuState>, private treegen: TreeGenService<MenuModel>, private headerService: HeaderService,
+    private storage:StorageService,private _perS:PermissionService) {
     // this.menu$ = this.store.select(getEmargingEqual("role_console_left_menu"));
     // this.loading$ = this.store.select(getMenusLoading)
     // this.store.dispatch(loadMenusList())
@@ -36,20 +38,24 @@ export class ConsoleMenuComponent implements OnInit {
       this.menus$ = item;
       this.menus$ = this.treegen.buildTree(item, 400);
     })
-    
+
     let main = this.storage.retrive("main","o").local;
     let selectedRole = this.storage.retrive("nocompass","O").local;
-    this.SuperTeamSelected = selectedRole.id;  
+    this.SuperTeamSelected = selectedRole.id;
     this.SuperTeamOptions = main.roles;
-   
+
 
     if(this.SuperTeamOptions.length >= 2){
       this.SuperTeamShow = false;
     }
   }
-  
+  hasPermission(permissionName: string) {
+
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
+  }
   updatevalue(string:any){
-        
+
     this.headerService.updateMessage(string);
   }
 }
