@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DataExchangeServicesService } from 'src/app/services/dataExchangeServices/data-exchange-services.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 @Component({
   selector: 'app-skills',
   standalone: true,
@@ -37,7 +38,13 @@ export class SkillsComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private commonData: CommonDataService,
     private route: Router,
-    private spinnerServerice: NgxSpinnerService) { }
+    private spinnerServerice: NgxSpinnerService, private _perS:PermissionService) { }
+
+hasPermission(permissionName: string) {
+
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
+  }
   ngOnInit(): void {
     this.getSkillList()
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

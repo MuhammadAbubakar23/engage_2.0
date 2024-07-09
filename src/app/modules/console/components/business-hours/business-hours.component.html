@@ -39,7 +39,7 @@
                             <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
                                (input)="applySearchFilter()">
                         </a>
-                        <a (click)="updatevalue('ConsoleCreateBusinessHoursHeader')"
+                        <a (click)="updatevalue('ConsoleCreateBusinessHoursHeader')" *ngIf="hasPermission('new_business_hours')"
                             [routerLink]="['/console/business-hours/create']" class="ms-2">
                             <button type="button" class="btn btn-success">
                                 <i class="fal fa-plus me-2"></i>
@@ -72,7 +72,7 @@
                                 </ul>
                             </th>
                             <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
+                                <div class="icons-list d-flex justify-content-end dropstart" *ngIf="hasPermission('update_business_hours') || hasPermission('remove_business_hours')">
                                     <button class="btn iconButton medium iconHover" (click)="editTemplate(template)">
                                         <i class="fal fa-edit"></i>
                                     </button>
@@ -82,10 +82,10 @@
                                     </button>
                                     <ul class="dropdown-menu fade">
                                         <li>
-                                            <a class="dropdown-item" (click)="editTemplate(template)">Edit</a>
+                                            <a class="dropdown-item" (click)="editTemplate(template)" *ngIf="hasPermission('update_business_hours')">Edit</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" (click)="deleteTemplate(template)">Delete</a>
+                                            <a class="dropdown-item" (click)="deleteTemplate(template)" *ngIf="hasPermission('remove_business_hours')">Delete</a>
                                         </li>
                                         <!-- <li>
                                             <a class="dropdown-item" (click)="disableTemplate(template)">Disable</a>

@@ -302,6 +302,13 @@ export const environment = {
       viewResponse: 'responses/get',
       getRuleChatBot: 'rules/get',
       getStoriesChatBot: 'stories/get',
+      ruleDelete: 'rules/delete',
+      storyDelete: 'stories/delete',
+      trainBot: 'models/train',
+      createBotTrain: 'models/create',
+      runChatBot: 'models/run',
+      chatBotWdidget: 'chat',
+      stopChatBot: 'models/stop'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

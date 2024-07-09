@@ -40,7 +40,7 @@
                 <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
                           (input)="applySearchFilter()">
               </a>
-              <a (click)="updatevalue('consoleCreateTagsHeader')" [routerLink]="['/console/tag/create/0']" class="ms-2">
+              <a (click)="updatevalue('consoleCreateTagsHeader')" [routerLink]="['/console/tag/create/0']" class="ms-2" *ngIf="hasPermission('new_tag')">
                 <button type="button" class="btn btn-success">
                   <i class="fal fa-plus me-2"></i>
                   Create Tags
@@ -84,7 +84,7 @@
                     <!-- <i class="fal fa-ticket coal coal me-2"></i>
                     {{ tag.tickets }}
                   </div> -->
-                </td> 
+                </td>
                 <td>
                   <!-- <div class="d-flex align-items-center darkblue">
                     <i class="fal fa-id-card coal me-2"></i>
@@ -105,7 +105,7 @@
                         <a class="dropdown-item" (click)="editTag(tag)">Edit</a>
                       </li> -->
                       <li>
-                        <a class="dropdown-item" (click)="deleteTemplate(tag)">Delete</a>
+                        <a class="dropdown-item" (click)="deleteTemplate(tag)" *ngIf="hasPermission('remove_tag')">Delete</a>
                       </li>
                       <!-- <li>
                         <a class="dropdown-item" (click)="disableTag(tag)">Disable</a>

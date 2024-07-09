@@ -1,24 +1,38 @@
-<div class="team-user-wrap console-body-wrapper inbox-container" data-scrollbar="true" tabindex="-1"
-    style="overflow-y: auto; outline: none;">
-    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
-        <p style="color: white"> Loading... </p>
-      </ngx-spinner>
-    <div class="scroll-content">
-        <div class="p-4">
-            <div class="filter-toolbar">
-                <div class="row">
-                    <div class="col-md-8">
-                        <ul class="list-inline m-0 d-flex align-items-center">
-                            <li class="list-inline-item">
-                                <a href="javascript:" class="search-btn">
-                                    <button class="iconButton medium">
-                                        <i class="fal fa-search silver"></i>
-                                    </button>
-                                    <input placeholder="Search" type="text" (input)="getbySearch()"
-                                        [(ngModel)]="search">
-                                </a>
-                            </li>
-                            <!-- <li class="list-inline-item">
+<div
+  class="team-user-wrap console-body-wrapper inbox-container"
+  data-scrollbar="true"
+  tabindex="-1"
+  style="overflow-y: auto; outline: none"
+>
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="square-jelly-box"
+    [fullScreen]="false"
+  >
+    <p style="color: white">Loading...</p>
+  </ngx-spinner>
+  <div class="scroll-content">
+    <div class="p-4">
+      <div class="filter-toolbar">
+        <div class="row">
+          <div class="col-md-8">
+            <ul class="list-inline m-0 d-flex align-items-center">
+              <li class="list-inline-item">
+                <a href="javascript:" class="search-btn">
+                  <button class="iconButton medium">
+                    <i class="fal fa-search silver"></i>
+                  </button>
+                  <input
+                    placeholder="Search"
+                    type="text"
+                    (input)="getbySearch()"
+                    [(ngModel)]="search"
+                  />
+                </a>
+              </li>
+              <!-- <li class="list-inline-item">
                                 <select class="js-example-basic-single form-select" class="form-select"
                                     [(ngModel)]="fillter" (change)="getByDepartment($event)"
                                     data-select2-id="select2-data-1-st3r" tabindex="-1" aria-hidden="true">
@@ -26,89 +40,123 @@
                                     <option *ngFor="let dep of isDepartmentArray ">{{dep}}</option>
                                 </select>
                             </li> -->
-                        </ul>
-                    </div>
-                    <div class="col-md-4 d-flex align-items-center justify-content-end">
-                        <a (click)="updatevalue('consoleCreateSkillHeader')" [routerLink]="['/console/skills/create/0']"
-                            class="ms-2">
-                            <button type="button" class="btn btn-success">
-                                <i class="fal fa-plus me-2"></i>
-                                Create Skill
-                            </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="filter-container border-0">
-                <ul class="list-group list-group-horizontal border-0">
-                    <li class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle"
-                        aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom"
-                        data-bs-original-title="Refresh" aria-describedby="tooltip946912" (click)="refresh()">
-                        <i class="fal fa-redo"></i>
-                    </li>
-                    <li *ngIf="allSelected"
-                        class="list-group-item after-select-fun iconHover iconButton medium rounded-circle"
-                        aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-toggle="modal"
-                        data-bs-target="#delete-device">
-                        <i class="fal fa-trash"></i>
-                    </li>
-                </ul>
-                <div class="pagination-bar">
-                    <div class="dropdown">
-                        <button class="btn iconHover" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            {{startingPoint}}-{{endingPoint}} of {{ TotalCount }}
-                        </button>
-                        <!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            </ul>
+          </div>
+          <div class="col-md-4 d-flex align-items-center justify-content-end">
+            <a
+              (click)="updatevalue('consoleCreateSkillHeader')"
+              [routerLink]="['/console/skills/create/0']"
+              *ngIf="hasPermission('new_skill')"
+              class="ms-2"
+            >
+              <button type="button" class="btn btn-success">
+                <i class="fal fa-plus me-2"></i>
+                Create Skill
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="filter-container border-0">
+        <ul class="list-group list-group-horizontal border-0">
+          <li
+            class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle"
+            aria-label="..."
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            data-bs-original-title="Refresh"
+            aria-describedby="tooltip946912"
+            (click)="refresh()"
+          >
+            <i class="fal fa-redo"></i>
+          </li>
+          <li
+            *ngIf="allSelected"
+            class="list-group-item after-select-fun iconHover iconButton medium rounded-circle"
+            aria-label="..."
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            data-bs-toggle="modal"
+            data-bs-target="#delete-device"
+          >
+            <i class="fal fa-trash"></i>
+          </li>
+        </ul>
+        <div class="pagination-bar">
+          <div class="dropdown">
+            <button
+              class="btn iconHover"
+              type="button"
+              id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{ startingPoint }}-{{ endingPoint }} of {{ TotalCount }}
+            </button>
+            <!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" (click)="sortedValue($event)">Newest</a></li>
                             <li><a class="dropdown-item" (click)="sortedValue($event)"> Oldest</a></li>
                         </ul> -->
-                    </div>
-                    <span class="iconButton medium iconHover" (click)="prevPage(pageNumber)">
-                        <i class="fal fa-chevron-left"></i>
-                    </span>
-                    <span class="iconButton medium iconHover" (click)="nextPage(pageNumber)">
-                        <i class="fal fa-chevron-right"></i>
-                    </span>
+          </div>
+          <span
+            class="iconButton medium iconHover"
+            (click)="prevPage(pageNumber)"
+          >
+            <i class="fal fa-chevron-left"></i>
+          </span>
+          <span
+            class="iconButton medium iconHover"
+            (click)="nextPage(pageNumber)"
+          >
+            <i class="fal fa-chevron-right"></i>
+          </span>
+        </div>
+      </div>
+      <div class="scroll-content">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="allSelected"
+                  (change)="toggleSelectAll()"
+                />
+              </th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Business Hours</th>
+              <th>Sla Policy</th>
+              <th>Tags</th>
+              <th>Rules</th>
+              <th>Wing</th>
+              <th>Created Date</th>
+              <th>...</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let team of skills">
+              <td>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="isSelected(team.id)"
+                  (change)="toggleSelection(team.id)"
+                />
+              </td>
+              <td>{{ team?.name }}</td>
+              <td>
+                <div class="d-flex align-items-center darkblue">
+                  {{ team.descreption }}
                 </div>
-            </div>
-            <div class="scroll-content">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                <input class="form-check-input" type="checkbox" [checked]="allSelected"
-                                    (change)="toggleSelectAll()">
-                            </th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Business Hours</th>
-                            <th>Sla Policy </th>
-                            <th>Tags</th>
-                            <th>Rules</th>
-                            <th>Wing</th>
-                            <th>Created Date</th>
-                            <th>...</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let team of skills">
-                            <td>
-                                <input class="form-check-input" type="checkbox" [checked]="isSelected(team.id)"
-                                    (change)="toggleSelection(team.id)">
-                            </td>
-                            <td>{{ team?.name }}</td>
-                            <td>
-                                <div class="d-flex align-items-center darkblue">
-                                    {{ team.descreption }}
-                                </div>
-                            </td>
-                            <td>{{team?.businessHoursName}}</td>
-                            <td>{{team?.slaPolicyName}}</td>
-                            <td>
-                                <div class="align-items-lg-center d-flex darkblue">
-                                    {{ team?.skillTags[0]?.name }}
-                                    <!-- <div class="d-inline-block dropdown w-auto ps-1">
+              </td>
+              <td>{{ team?.businessHoursName }}</td>
+              <td>{{ team?.slaPolicyName }}</td>
+              <td>
+                <div class="align-items-lg-center d-flex darkblue">
+                  {{ team?.skillTags[0]?.name }}
+                  <!-- <div class="d-inline-block dropdown w-auto ps-1">
                                         <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
                                             id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                                             +{{ team?.skillTags?.length - 1 }}
@@ -120,11 +168,11 @@
                                             </li>
                                         </ul>
                                     </div> -->
-                                </div>
-                            </td>
-                            <td>
-                                {{ team?.rules }}
-                                <!-- <div class="d-inline-block dropdown w-auto ps-1">
+                </div>
+              </td>
+              <td>
+                {{ team?.rules }}
+                <!-- <div class="d-inline-block dropdown w-auto ps-1">
                                     <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
                                         id="dropdownMenu3" data-bs-toggle="dropdown" aria-expanded="false">
                                         +{{ team?.skillRules?.length - 1 }}
@@ -138,64 +186,116 @@
                                         </ng-container>
                                     </ul>
                                 </div> -->
-                            </td>
-                            <td>{{getReadableWingName(team?.wingSlug)}}</td>
-                            <td>{{team?.createdDate|
-                                date:'h:mm a, d MMM
-                                YYYY':'UTC' | date:' d MMM YYYY':'GMT+5'}}</td>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart"
-                                    *ngIf="team.companyId !== 0">
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" (click)="editUser(team.id)"><i
-                                                    class="fal fa-edit me-2"></i> Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item delete-dd" data-bs-toggle="modal"
-                                                data-bs-target="#delete-device">
-                                                <i class="fal fa-trash me-2"></i> Delete</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <div class="modal fade" id="delete-device" tabindex="-1"
-                                aria-labelledby="delete-device-Label" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content" style="
-                                                                margin: 10px;
-                                                            ">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title line-head" id="delete-device-Label">Confirm</h5>
-                                            <button type="button" class="  modal-button btn iconHover pt-0 pb-0"
-                                                data-bs-dismiss="modal" aria-label="Close"><i
-                                                    class="fal fa-times"></i></button>
-                                        </div>
-                                        <div class="modal-body p-5">
-                                            <div class="d-flex align-items-center">
-                                                <div class="icon-circle iconButton me-4 errorbg">
-                                                    <i class="fal fa-trash"></i>
-                                                </div>
-                                                <p class="line-txt darkblue">Are you sure, you want to delete the
-                                                    Record?</p>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-secondary"
-                                                data-bs-dismiss="modal" (click)="refresh()">Cancel</button>
-                                            <button type="button" class="btn skyBg delete_device_toast"
-                                                data-bs-dismiss="modal" (click)=" deleted(team.id)">Yes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+              </td>
+              <td>{{ getReadableWingName(team?.wingSlug) }}</td>
+              <td>
+                {{
+                  team?.createdDate
+                    | date
+                      : "h:mm a, d MMM
+                                YYYY"
+                      : "UTC"
+                    | date : " d MMM YYYY" : "GMT+5"
+                }}
+              </td>
+              <td>
+                <ng-container
+                  *ngIf="
+                    hasPermission('update_skill') ||
+                    hasPermission('remove_skill')
+                  "
+                >
+                  <div
+                    class="icons-list d-flex justify-content-end dropstart"
+                    *ngIf="team.companyId !== 0"
+                  >
+                    <button
+                      class="btn iconButton medium iconHover btn-group"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="far fa-ellipsis-v"></i>
+                    </button>
+                    <ul class="dropdown-menu fade">
+                      <li *ngIf="hasPermission('update_skill')">
+                        <a class="dropdown-item" (click)="editUser(team.id)"
+                          ><i class="fal fa-edit me-2"></i> Edit</a
+                        >
+                      </li>
+                      <li *ngIf="hasPermission('remove_skill')">
+                        <a
+                          class="dropdown-item delete-dd"
+                          data-bs-toggle="modal"
+                          data-bs-target="#delete-device"
+                        >
+                          <i class="fal fa-trash me-2"></i> Delete</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </ng-container>
+              </td>
+              <div
+                class="modal fade"
+                id="delete-device"
+                tabindex="-1"
+                aria-labelledby="delete-device-Label"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content" style="margin: 10px">
+                    <div class="modal-header">
+                      <h5
+                        class="modal-title line-head"
+                        id="delete-device-Label"
+                      >
+                        Confirm
+                      </h5>
+                      <button
+                        type="button"
+                        class="modal-button btn iconHover pt-0 pb-0"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <i class="fal fa-times"></i>
+                      </button>
+                    </div>
+                    <div class="modal-body p-5">
+                      <div class="d-flex align-items-center">
+                        <div class="icon-circle iconButton me-4 errorbg">
+                          <i class="fal fa-trash"></i>
+                        </div>
+                        <p class="line-txt darkblue">
+                          Are you sure, you want to delete the Record?
+                        </p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-bs-dismiss="modal"
+                        (click)="refresh()"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        class="btn skyBg delete_device_toast"
+                        data-bs-dismiss="modal"
+                        (click)="deleted(team.id)"
+                      >
+                        Yes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
 </div>
