@@ -251,7 +251,8 @@ export class CommonDataService {
   // updateTeam = environment.links.console.updateTeam
   //service
   userlogin = environment.links.common.userlogin;
-  permissionrole = environment.links.identity.permissionrole
+  rolesPermissions = environment.links.identity.RolesPermissions
+  reportsPermission = environment.links.identity.ReportsPermission
   addSurvey = environment.links.service.addSurvey;
   addCSAT = environment.links.service.addCSAT;
   KECSAT = environment.links.profile.KECSAT;
@@ -281,7 +282,10 @@ export class CommonDataService {
     return this.http.get(this.env.CommonBaseUrl + this.userlogin, httpOptions);
   }
   getPermissionByRole(form: any) {
-    return this.http.post(this.env.IdentityBaseUrl + this.permissionrole, form);
+    return this.http.post(this.env.IdentityBaseUrl + this.rolesPermissions, form);
+  }
+  getReportsPermissionByRole(form: any) {
+    return this.http.post(this.env.IdentityBaseUrl + this.reportsPermission, form);
   }
   GetTagsList() {
     return this.http.get(this.env.CommonBaseUrl + this.tagsList);
