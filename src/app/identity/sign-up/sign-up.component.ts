@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SignupDto } from 'src/app/shared/Models/SignupDto';
-import { AuthService } from '../AuthService/auth.service';
+import { AuthService } from '../Services/AuthService/auth.service';
 
 @Component({
   selector: 'app-sign-up',

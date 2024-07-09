@@ -19,7 +19,7 @@ export class DblistingComponent implements OnInit {
     const newObj = {title:'DB Settings',url:'/analytics/db-settings'};
     this._hS.setHeader(newObj);
     this._rs.login().subscribe((token: any) => {
-      localStorage.setItem("token", token.access);
+      sessionStorage.setItem("token", token.access);
       this._rs.listDbSetiingApi().subscribe((res) => {
         this.connections = res;
       })

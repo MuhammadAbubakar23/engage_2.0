@@ -31,10 +31,10 @@ export class DispositionFormComponent implements OnInit {
   toastermessage: boolean = false;
   AlterMsg: any;
   responseMsg: any;
-  platform = localStorage.getItem('parent');
-  agentId = Number(localStorage.getItem('agentId'));
-  customerProfileId = Number(localStorage.getItem('profileId'));
-  userId = localStorage.getItem('storeHeaderOpenedId');
+  platform = sessionStorage.getItem('parent');
+  agentId = Number(sessionStorage.getItem('agentId'));
+  customerProfileId = Number(sessionStorage.getItem('profileId'));
+  userId = sessionStorage.getItem('storeHeaderOpenedId');
   companyId = 0;
   previousUrl: any;
   currentTab:string=""
@@ -111,11 +111,11 @@ export class DispositionFormComponent implements OnInit {
         plateFrom: this.platform || '{}',
         userId: this.agentId,
         companyId: this.companyId,
-        LastQueryId: Number(localStorage.getItem('lastQueryId')),
+        LastQueryId: Number(sessionStorage.getItem('lastQueryId')),
       },
     };
-    const customerNumber = localStorage.getItem('storeOpenedId');
-    const ClientNumber = localStorage.getItem('senderId');
+    const customerNumber = sessionStorage.getItem('storeOpenedId');
+    const ClientNumber = sessionStorage.getItem('senderId');
     this.commonService
       .SubmitDispositionForm(this.dispositionFormDto)
       .subscribe((res: any) => {
@@ -131,8 +131,8 @@ export class DispositionFormComponent implements OnInit {
             // this.reloadComponent('error')
           }
         );
-        localStorage.setItem('assignedProfile', '');
-        this.previousUrl = localStorage.getItem('previousUrl');
+        sessionStorage.setItem('assignedProfile', '');
+        this.previousUrl = sessionStorage.getItem('previousUrl');
         this.route.navigateByUrl(this.previousUrl);
         this.lodeModuleService.updateModule('all-inboxes');
       });

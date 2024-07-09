@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 // import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
-import { AuthService } from '../AuthService/auth.service';
+import { AuthService } from '../Services/AuthService/auth.service';
 
 @Component({
   selector: 'app-forgot-password',

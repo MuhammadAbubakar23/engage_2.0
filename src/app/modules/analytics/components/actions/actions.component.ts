@@ -55,9 +55,9 @@ export class ActionsComponent implements OnInit {
   constructor(private reportService: ReportService, private shareddataService: ShareddataService, private route: Router, private dragDropService: DragDropService) { }
 
   ngOnInit(): void {
-    const tableName = localStorage.getItem('selectedtable')
+    const tableName = sessionStorage.getItem('selectedtable')
 
-    const dbName = localStorage.getItem('dbName')
+    const dbName = sessionStorage.getItem('dbName')
 
     if (dbName && tableName) {
 
@@ -68,7 +68,7 @@ export class ActionsComponent implements OnInit {
 
         })
       }
-      const connection = localStorage.getItem('connection_name')
+      const connection = sessionStorage.getItem('connection_name')
       this.reportService.columnsApi({ 'db': dbName, 'tableName': tableName, 'connection_name': connection }).subscribe((res: any) => {
 
         this.columns = res;
@@ -112,9 +112,9 @@ export class ActionsComponent implements OnInit {
   }
 
   limitData(): void {
-    const db = localStorage.getItem('dbName');
-    const selectedtable = localStorage.getItem('selectedtable');
-    const connection = localStorage.getItem('connection_name');
+    const db = sessionStorage.getItem('dbName');
+    const selectedtable = sessionStorage.getItem('selectedtable');
+    const connection = sessionStorage.getItem('connection_name');
     this.reportService.limitDataApi({ 'db': db, 'tableName': selectedtable, 'limit': this.limitValue, 'connection_name': connection }).subscribe((res: any) => {
       this.shareddataService.updateData(res);
     });
@@ -122,9 +122,9 @@ export class ActionsComponent implements OnInit {
 
 
   // sortData(): void {
-  //   const db = localStorage.getItem('dbName')
-  //   const selectedtable = localStorage.getItem('selectedtable')
-  //   const connection = localStorage.getItem('connection_name')
+  //   const db = sessionStorage.getItem('dbName')
+  //   const selectedtable = sessionStorage.getItem('selectedtable')
+  //   const connection = sessionStorage.getItem('connection_name')
   //   this.reportService.sortDataApi({ 'db': db, 'tableName': selectedtable, 'column': this.columnName, 'order': this.order, 'connection_name': connection }).subscribe((res: any) => {
   //     this.shareddataService.updateData(res);
 
@@ -132,10 +132,10 @@ export class ActionsComponent implements OnInit {
   // }
   groupData(): void {
 
-    const db = localStorage.getItem('dbName')
-    const selectedtable = localStorage.getItem('selectedtable')
+    const db = sessionStorage.getItem('dbName')
+    const selectedtable = sessionStorage.getItem('selectedtable')
 
-    const connection = localStorage.getItem('connection_name');
+    const connection = sessionStorage.getItem('connection_name');
     this.reportService.groupDataApi({ 'db': db, 'tableName': selectedtable, 'column': this.groupcolumnName, 'columns': this.groupselectedItems, 'aggr': this.groupName, 'connection_name': connection }).subscribe((res: any) => {
 
       this.shareddataService.updateData(res);
@@ -144,17 +144,17 @@ export class ActionsComponent implements OnInit {
   }
   summarizData(): void {
 
-    const db = localStorage.getItem('dbName')
-    const connection = localStorage.getItem('connection_name');
+    const db = sessionStorage.getItem('dbName')
+    const connection = sessionStorage.getItem('connection_name');
     this.reportService.summarizeDataApi({ 'db': db, 'query': this.query, 'connection_name': connection }).subscribe((res: any) => {
       this.shareddataService.updateData(res);
     });
   }
   visualizeData(): void {
 
-    const db = localStorage.getItem('dbName')
+    const db = sessionStorage.getItem('dbName')
 
-    const connection = localStorage.getItem('connection_name');
+    const connection = sessionStorage.getItem('connection_name');
     this.reportService.visualizeDataApi({ 'db': db, 'query': this.query, 'connection_name': connection }).subscribe((res: any) => {
 
       this.shareddataService.updateVisual(res);
@@ -186,8 +186,8 @@ export class ActionsComponent implements OnInit {
   }
 
   getColumns(): void {
-    const db = localStorage.getItem('dbName');
-    const connection = localStorage.getItem('connection_name');
+    const db = sessionStorage.getItem('dbName');
+    const connection = sessionStorage.getItem('connection_name');
     this.reportService.selectedtablesDataApi({ 'db': db, 'tables': this.selectedTables, 'connection_name': connection }).subscribe((res: any) => {
       this.datajoincolumns = [];
       this.datacolumns = [];
@@ -236,8 +236,8 @@ export class ActionsComponent implements OnInit {
   }
   joinTables(): void {
 
-    const db = localStorage.getItem('dbName')
-    const connection = localStorage.getItem('connection_name')
+    const db = sessionStorage.getItem('dbName')
+    const connection = sessionStorage.getItem('connection_name')
     this.reportService.joinDataApi({ 'db': db, 'datacolumns': this.datacolumns, 'datajoincolumns': this.datajoincolumns, 'jointype': this.selectedJoin, 'connection_name': connection }).subscribe((res: any) => {
 
       this.shareddataService.updateData(res);
@@ -247,8 +247,8 @@ export class ActionsComponent implements OnInit {
   }
   runSql(): void {
     if (this.query !== "Please Type Query") {
-      const db = localStorage.getItem('dbName')
-      const connection = localStorage.getItem('connection_name');
+      const db = sessionStorage.getItem('dbName')
+      const connection = sessionStorage.getItem('connection_name');
       this.reportService.runSqlApi({ "query": this.query, 'db': db, 'connection_name': connection }).subscribe(res => {
         this.shareddataService.updateData(res)
       })
@@ -264,9 +264,9 @@ export class ActionsComponent implements OnInit {
 
   submitReport(): void {
     if (this.reportName !== "" && this.query !== "Please Type Query" && this.query !== "") {
-      const connection = localStorage.getItem('connection_name')
-      const db = localStorage.getItem('dbName');
-      const table = localStorage.getItem('selectedtable');
+      const connection = sessionStorage.getItem('connection_name')
+      const db = sessionStorage.getItem('dbName');
+      const table = sessionStorage.getItem('selectedtable');
       this.reportService.createReportApi({ "query": this.query, 'name': this.reportName, 'tableName': table, 'dbName': db, 'connectionName': connection }).subscribe(res => {
         if (res === "Report Name already exists") {
 
@@ -308,8 +308,8 @@ export class ActionsComponent implements OnInit {
     this.groupName = "Select Group";
     this.groupcolumnName = "Select Column";
     this.groupselectedItems = [];
-    const q = JSON.stringify(localStorage.getItem('query'));
-    this.query = JSON.stringify(localStorage.getItem('query'));
+    const q = JSON.stringify(sessionStorage.getItem('query'));
+    this.query = JSON.stringify(sessionStorage.getItem('query'));
     this.selectedGraph = "Bar Chart"
     this.shareddataService.updatechartType('Bar Chart')
     this.shareddataService.emitRefreshEvent('calling');

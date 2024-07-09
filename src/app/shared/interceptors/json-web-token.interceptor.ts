@@ -10,12 +10,16 @@ import { Router } from '@angular/router';
 import { StorageService } from '../services/storage/storage.service';
 @Injectable()
 export class JsonWebTokenInterceptor implements HttpInterceptor {
-  constructor(private router: Router, private ls: StorageService) {}
+  constructor(private router: Router, private ls: StorageService) { }
   intercept(
     httpRequest: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const allToken = this.ls.retrive('token');
+    if (httpRequest.url === "https://entertainerbot.enteract.app/chat") {
+      return next.handle(httpRequest);
+    }
+    else{
+      const allToken = this.ls.retrive('token');
     let token = allToken.local; // allToken.cookie
     token = token == null ? allToken.session : token;
     token = token == null ? allToken.local : token;
@@ -51,4 +55,5 @@ export class JsonWebTokenInterceptor implements HttpInterceptor {
     // }
     return next.handle(httpRequest);
   }
+    }
 }

@@ -141,7 +141,7 @@ export class ReportDesignerComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.reportservice.login().subscribe((token: any) => {
-      localStorage.setItem('token', token.access);
+      sessionStorage.setItem('token', token.access);
       this.reportservice.listDbSetiingApi().subscribe((res: any) => {
         this.dbsettings = res;
       });
@@ -208,14 +208,14 @@ export class ReportDesignerComponent implements OnInit {
       .subscribe((msg3) => {
         if (msg3) {
           this.rightcontainer?.clear();
-          localStorage.setItem('child', msg3);
+          sessionStorage.setItem('child', msg3);
           this.showPanel = true;
           this.closePanelservices.sendLeftBarToggleValue(false)
           this.loadComponent(msg3);
         } else {
           this.showPanel = false;
           this.rightcontainer?.clear();
-          localStorage.setItem('child', '');
+          sessionStorage.setItem('child', '');
         }
       });
       this.subscription = this.closePanelservices.receiveRightBarToggleValue().subscribe(res=>{
@@ -274,7 +274,7 @@ export class ReportDesignerComponent implements OnInit {
         this.tables = res.tablesList;
         this.sharedataservice.updateTables(this.tables);
         this.dbName = res.db;
-        localStorage.setItem('dbName', this.dbName);
+        sessionStorage.setItem('dbName', this.dbName);
       });
   }
   selectConnection(): void {
@@ -285,7 +285,7 @@ export class ReportDesignerComponent implements OnInit {
     this.tables = [];
     this.dbName = 'All DataBases';
     this.tableName = 'All Tables';
-    localStorage.setItem('connection_name', this.DBC);
+    sessionStorage.setItem('connection_name', this.DBC);
     this.reportservice.getConnectiondatabases(this.DBC).subscribe(
       (res) => {
         // Success case
@@ -333,7 +333,7 @@ export class ReportDesignerComponent implements OnInit {
     this.startPage = 1;
     this.endPage = this.pageSize;
     this.page = 1;
-    localStorage.setItem('selectedtable', this.tableName);
+    sessionStorage.setItem('selectedtable', this.tableName);
     if (
       this.dbName !== 'All DataBases' &&
       this.tableName !== 'All Tables' &&
@@ -368,7 +368,7 @@ export class ReportDesignerComponent implements OnInit {
           this.isTabular = true;
           this.isVisual = false;
           this.sharedataservice.updateQuery(res.query);
-          localStorage.setItem('query', res.query);
+          sessionStorage.setItem('query', res.query);
         });
     }
   }
@@ -391,9 +391,9 @@ export class ReportDesignerComponent implements OnInit {
     });
   }
   sortData(): void {
-    const db = localStorage.getItem('dbName')
-    const selectedtable = localStorage.getItem('selectedtable')
-    const connection = localStorage.getItem('connection_name')
+    const db = sessionStorage.getItem('dbName')
+    const selectedtable = sessionStorage.getItem('selectedtable')
+    const connection = sessionStorage.getItem('connection_name')
     this.reportservice.sortDataApi({ 'db': db, 'tableName': selectedtable, 'column': this.columnName, 'order': this.order, 'connection_name': connection }).subscribe((res: any) => {
       this.sharedataservice.updateData(res);
     });
@@ -468,7 +468,7 @@ export class ReportDesignerComponent implements OnInit {
     this.selectedFilter = 'Select Filter';
   }
   addFilter(): void {
-    const connection = localStorage.getItem('connection_name');
+    const connection = sessionStorage.getItem('connection_name');
     this.reportservice
       .filtersDataApi({
         column: this.selectedFilterColumn,
@@ -485,8 +485,8 @@ export class ReportDesignerComponent implements OnInit {
       });
   }
   visualizeData(): void {
-    const db = localStorage.getItem('dbName');
-    const connection = localStorage.getItem('connection_name');
+    const db = sessionStorage.getItem('dbName');
+    const connection = sessionStorage.getItem('connection_name');
     if (
       db !== null &&
       this.query !== 'Please Type Query' &&

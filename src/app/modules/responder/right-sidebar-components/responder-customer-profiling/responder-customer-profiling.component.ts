@@ -34,8 +34,8 @@ customerInformationForm= new FormGroup({
     return this.customerInformationForm.controls;
   }
   ngOnInit(): void {
-    this.id = localStorage.getItem('storeOpenedId') || '';
-    this.openedChannel = localStorage.getItem('parent') || '';
+    this.id = sessionStorage.getItem('storeOpenedId') || '';
+    this.openedChannel = sessionStorage.getItem('parent') || '';
     this.getCustomerProfileDetails();
   }
   getCustomerProfileDetails() {
@@ -55,8 +55,8 @@ customerInformationForm= new FormGroup({
           this.customerProfileInformation = res;
         });
     } else if (this.searchProfileDetails == '') {
-      this.profileId = localStorage.getItem('storeOpenedId') || '';
-      this.platform = localStorage.getItem('parent') || '';
+      this.profileId = sessionStorage.getItem('storeOpenedId') || '';
+      this.platform = sessionStorage.getItem('parent') || '';
       var obj = {
         profileId: this.profileId,
         search: this.searchProfileDetails,
@@ -81,8 +81,8 @@ customerInformationForm= new FormGroup({
   //     this.profileId = '';
   //     this.platform = '';
   //   } else if(this.searchProfileDetails == ""){
-  //     this.profileId = localStorage.getItem('storeOpenedId') || '';
-  //     this.platform = localStorage.getItem('parent') || '';
+  //     this.profileId = sessionStorage.getItem('storeOpenedId') || '';
+  //     this.platform = sessionStorage.getItem('parent') || '';
   //   }
   //     var obj = {
   //       profileId: this.profileId,
@@ -162,7 +162,7 @@ customerInformationForm= new FormGroup({
     this.toastermessage = false;
   }
   closeProfileComponent(child: string) {
-    if (localStorage.getItem('child') == child) {
+    if (sessionStorage.getItem('child') == child) {
       this.toggleService.addTogglePanel('');
     } else {
       this.toggleService.addTogglePanel(child);

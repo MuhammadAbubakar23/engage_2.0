@@ -108,7 +108,7 @@
                             <td>
                                 <div class="align-items-lg-center d-flex darkblue">
                                     {{ team?.skillTags[0]?.name }}
-                                    <div class="d-inline-block dropdown w-auto ps-1">
+                                    <!-- <div class="d-inline-block dropdown w-auto ps-1">
                                         <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
                                             id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                                             +{{ team?.skillTags?.length - 1 }}
@@ -119,25 +119,25 @@
                                                 <a class="dropdown-item">{{ tag.name }}</a>
                                             </li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </td>
                             <td>
-                                {{ team?.skillRules[0]?.name }}
-                                <div class="d-inline-block dropdown w-auto ps-1">
+                                {{ team?.rules }}
+                                <!-- <div class="d-inline-block dropdown w-auto ps-1">
                                     <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
                                         id="dropdownMenu3" data-bs-toggle="dropdown" aria-expanded="false">
                                         +{{ team?.skillRules?.length - 1 }}
                                     </button>
                                     <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu3"
                                         [ngClass]="{'scrollable': team?.skillRules?.length > 10}">
-                                        <ng-container *ngFor="let rule of team?.skillRules.slice(1)">
+                                        <ng-container *ngFor="let rule of team?.skillRules?.slice(1)">
                                             <li>
                                                 <a class="dropdown-item">{{ rule.name }}</a>
                                             </li>
                                         </ng-container>
                                     </ul>
-                                </div>
+                                </div> -->
                             </td>
                             <td>{{getReadableWingName(team?.wingSlug)}}</td>
                             <td>{{team?.createdDate|

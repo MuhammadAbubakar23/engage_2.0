@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BotMonitoringService } from 'src/app/modules/bot-monitoring/services/bot-monitoring.service';
-import { v4 as uuidv4 } from 'uuid';
 @Component({
   selector: 'app-chat-widget',
   templateUrl: './chat-widget.component.html',
@@ -35,18 +34,18 @@ export class ChatWidgetComponent implements OnInit {
   }
   closeChat() {
     this.isOpen = false;
-    this.messages=[];
+    this.messages = [];
   }
   submitMessage() {
-    const senderId = uuidv4();
-    const body = new FormData();
-    body.append('message', this.chatForm.value['message']);
+    // const senderId = uuidv4();
+    const body = {
+      "message": this.chatForm.value['message']
+    };
+
     this.messages.push({ message: this.chatForm.value['message'], type: 'user', timestamp: new Date() });
     this.chatForm.reset({ message: '' })
-    body.append('sender_id', senderId);
-    body.append('bot_id', "57");
     this._botService.ChatBotWdidget(body).subscribe((res: any) => {
-      this.messages.push({ message: res.messages, type: 'bot', timestamp: new Date() });
+      this.messages.push({ message: res.bot, type: 'bot', timestamp: new Date() });
     });
   }
 }

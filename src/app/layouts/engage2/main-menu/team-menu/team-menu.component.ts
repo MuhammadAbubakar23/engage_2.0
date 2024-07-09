@@ -70,7 +70,7 @@ export class TeamMenuComponent implements OnInit {
 
   }
 
-  assignedProfile = localStorage.getItem('assignedProfile');
+  assignedProfile = sessionStorage.getItem('assignedProfile');
 
   update(menuLink: any) {
     
@@ -79,9 +79,9 @@ export class TeamMenuComponent implements OnInit {
 
 
     if (
-      localStorage.getItem('assignedProfile') == null ||
-      localStorage.getItem('assignedProfile') == '' ||
-      localStorage.getItem('assignedProfile') == undefined
+      sessionStorage.getItem('assignedProfile') == null ||
+      sessionStorage.getItem('assignedProfile') == '' ||
+      sessionStorage.getItem('assignedProfile') == undefined
     ) {
       this._route.navigateByUrl('/' + menuLink);
     } else {

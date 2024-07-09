@@ -32,7 +32,7 @@ import { InsertTagInProfileFeedDto } from 'src/app/shared/Models/InsertTagaInPro
 })
 export class ResponderHeaderComponent implements OnInit {
   userIdsDto = this.fetchId.getIds();
-  agentId = localStorage.getItem('agentId');
+  agentId = sessionStorage.getItem('agentId');
   pageNumber: any = 0;
   pageSize: any = 0;
   UserDetails: any = '';
@@ -107,7 +107,7 @@ export class ResponderHeaderComponent implements OnInit {
   KEBaseUrl: boolean = false;
   wings = this.getWing.wings;
   draftDto = new DraftDto();
-  assignedProfile = localStorage.getItem('assignedProfile');
+  assignedProfile = sessionStorage.getItem('assignedProfile');
   platform: any;
   userId: string = '';
   userName: any;
@@ -133,7 +133,7 @@ export class ResponderHeaderComponent implements OnInit {
   markAsCompleteDto = new MarkAsCompleteDto();
   showAgentsList: boolean = false;
   showMoreOptions: boolean = false;
-  customerProfileId = Number(localStorage.getItem('profileId'));
+  customerProfileId = Number(sessionStorage.getItem('profileId'));
   AlterMsg: any;
   toastermessage = false;
   commentStatusDto = new CommentStatusDto();
@@ -174,13 +174,13 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.userInfoService.userInfo$.subscribe((userInfo) => {
       if (userInfo != null) {
         this.userInfo = userInfo;
-        localStorage.setItem('storeHeaderOpenedId', this.userInfo.userId);
+        sessionStorage.setItem('storeHeaderOpenedId', this.userInfo.userId);
       }
     });
     this.Subscription = this.headerCountService.count$.subscribe((count) => {
       if (count != null) {
         this.unrespondedCount = count;
-        // localStorage.setItem('unrespondedCount', this.userInfo.userId);
+        // sessionStorage.setItem('unrespondedCount', this.userInfo.userId);
       }
     });
     if (this.userInfo == undefined) {
@@ -264,7 +264,7 @@ export class ResponderHeaderComponent implements OnInit {
       .subscribe((res) => {
         if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           if (Object.keys(res).length > 0) {
-            if (this.userInfo.id == localStorage.getItem('assignedProfile')) {
+            if (this.userInfo.id == sessionStorage.getItem('assignedProfile')) {
               this.unrespondedCount = 0;
             }
           }
@@ -335,7 +335,7 @@ export class ResponderHeaderComponent implements OnInit {
   }
   assignQuerry(id: any, platform: any) {
     this.assignQuerryDto = {
-      userId: Number(localStorage.getItem('agentId')),
+      userId: Number(sessionStorage.getItem('agentId')),
       profileId: this.profileId,
       agentIds: 'string',
       platform: platform,
@@ -356,7 +356,7 @@ export class ResponderHeaderComponent implements OnInit {
           );
           this.fetchId.setPlatform(platform);
           this.fetchId.setOption(id);
-          localStorage.setItem('profileId', this.profileId);
+          sessionStorage.setItem('profileId', this.profileId);
         },
         (_error) => {
           this.reloadComponent('queryallocatedtoanotheruser');
@@ -784,7 +784,7 @@ export class ResponderHeaderComponent implements OnInit {
         this.AgentsTeamList = res;
         this.ActiveAgents = [];
         this.AgentsTeamList.forEach((user: any) => {
-          if (user.userId != localStorage.getItem('agentId')) {
+          if (user.userId != sessionStorage.getItem('agentId')) {
             this.ActiveAgents.push(user);
           }
         });
@@ -813,13 +813,13 @@ export class ResponderHeaderComponent implements OnInit {
   }
   onHold() {
     this.location.back();
-    localStorage.setItem('assignedProfile', '');
+    sessionStorage.setItem('assignedProfile', '');
   }
   removeAssignedQuery() {
-    const ProfileId = localStorage.getItem('assignedProfile');
+    const ProfileId = sessionStorage.getItem('assignedProfile');
     if (this.currentUrl.split('/')[2] == 'assigned_to_me') {
       this.location.back();
-      localStorage.setItem('assignedProfile', '');
+      sessionStorage.setItem('assignedProfile', '');
     } else {
       if (ProfileId == null || ProfileId == '') {
         this.location.back();
@@ -831,7 +831,7 @@ export class ResponderHeaderComponent implements OnInit {
         };
         this.commondata.RemoveAssignedQuery(body).subscribe((res: any) => {
           this.location.back();
-          localStorage.setItem('assignedProfile', '');
+          sessionStorage.setItem('assignedProfile', '');
         });
       }
     }
@@ -840,8 +840,8 @@ export class ResponderHeaderComponent implements OnInit {
     this.markAsCompleteDto = {
       user: this.userInfo.userId,
       companyId: 0,
-      plateFrom: localStorage.getItem('parent') || '',
-      userId: Number(localStorage.getItem('agentId')),
+      plateFrom: sessionStorage.getItem('parent') || '',
+      userId: Number(sessionStorage.getItem('agentId')),
       wings: this.getWing.wings,
       skillSlug: this.getSkillSlug.skillSlug[0],
     };
@@ -873,7 +873,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.showMoreOptions = false;
   }
   sendAgentId(id: number) {
-    var platform = localStorage.getItem('parent') || '';
+    var platform = sessionStorage.getItem('parent') || '';
     this.assignQuerryDto = {
       toUserId: id,
       profileId: this.customerProfileId,
@@ -889,7 +889,7 @@ export class ResponderHeaderComponent implements OnInit {
         this.closeTeamList();
         this.route.navigateByUrl('/all-inboxes/focused/all');
         this.loadModuleService.updateModule('all-inboxes');
-        localStorage.setItem('assignedProfile', '');
+        sessionStorage.setItem('assignedProfile', '');
       },
       (error) => {
         if (error.error.message === 'User Information Not added Team') {
@@ -1048,8 +1048,8 @@ export class ResponderHeaderComponent implements OnInit {
     this.commentStatusDto = {
       id: comId,
       type: type,
-      plateForm: localStorage.getItem('parent') || '{}',
-      profileId: Number(localStorage.getItem('profileId')),
+      plateForm: sessionStorage.getItem('parent') || '{}',
+      profileId: Number(sessionStorage.getItem('profileId')),
       wings: this.wings,
       skillSlug: this.getSkillSlug.skillSlug[0],
       connectionId: this.getConnectionId.connectionId,
@@ -1090,7 +1090,7 @@ export class ResponderHeaderComponent implements OnInit {
           }
           this.itemsToBeUpdated = [];
           this.reloadComponent(tagName);
-          localStorage.setItem('assignedProfile', '');
+          sessionStorage.setItem('assignedProfile', '');
           this.lodeModuleService.updateModule('all-inboxes');
         }
       });

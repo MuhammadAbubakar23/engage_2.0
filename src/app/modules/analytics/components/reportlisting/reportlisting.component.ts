@@ -51,7 +51,7 @@ export class ReportlistingComponent implements OnInit {
   constructor(private reportService: ReportService, private _hS: HeaderService, private excelService: ExcelService) { }
   ngOnInit(): void {
     this.reportService.login().subscribe((token: any) => {
-      localStorage.setItem("token", token.access);
+      sessionStorage.setItem("token", token.access);
       this.reportService.reportslistApi().subscribe((res: any) => {
         this.reports = res;
       });

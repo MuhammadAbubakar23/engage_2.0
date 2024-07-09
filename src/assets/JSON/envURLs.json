@@ -1,0 +1,71 @@
+{
+    "InstaBaseUrl": "https://insta.360scrm.com/api/",
+    "FbBaseUrl": "https://firstyellowmouse47.conveyor.cloud/api/",
+    "YoutubeBaseUrl": "https://tube.360scrm.com/api/",
+    "TwitterBaseUrl": "https://tweet.360scrm.com/api/",
+    "EmailBaseUrl": "https://mail.360scrm.com/api/",
+    "SmsBaseUrl": "https://text.360scrm.com/api/",
+    "WhatsappBaseUrl": "https://waservice.enteract.live/api/",
+    "WebChatBaseUrl": "https://chat.360scrm.com/api/",
+    "KelisteningBaseUrl": "https://listen.enteract.live/backend/api/",
+    "KemediaBaseUrl": "https://kemedia.360scrm.com/api/",
+    "KescrmBaseUrl": "https://kescrm.360scrm.com/",
+
+    "ke":{
+        "IdentityBaseUrl": "https://idtservice.enteract.live/api/",
+        "CommonBaseUrl": "https://comservices.enteract.live/api/",
+        "SignalRCommonBaseUrl": "https://comservices.enteract.live/",
+        "ProfileBaseUrl": "https://profiler.enteract.live/api/",
+        "ServiceBaseUrl": "",
+        "ConsoleBaseUrl": "https://console.enteract.live/api/",
+        "KeReportsBaseUrl": "https://kereports.enteract.live/api/",
+        "LinkedInBaseUrl": "https://linkdservice.enteract.live/api/"
+    },
+    "jazz":{
+        "IdentityBaseUrl": "https://identity.jazz.com.pk:8082/api/",
+        "CommonBaseUrl": "https://common.jazz.com.pk:8080/api/",
+        "SignalRCommonBaseUrl": "https://common.jazz.com.pk:8080/",
+        "ProfileBaseUrl": "",
+        "ServiceBaseUrl": "",
+        "ConsoleBaseUrl": "https://console-engage.enteract.app/api/",
+        "KeReportsBaseUrl": "",
+        "LinkedInBaseUrl": ""
+    },
+    "stagging":{
+        "IdentityBaseUrl": "https://idtservice.enteract.live/api/",
+        "CommonBaseUrl": "https://comservices.enteract.live/api/",
+        "SignalRCommonBaseUrl": "https://comservices.enteract.live/",
+        "ProfileBaseUrl": "https://profiler.enteract.live/api/",
+        "ServiceBaseUrl": "",
+        "ConsoleBaseUrl": "https://console.enteract.live/api/",
+        "KeReportsBaseUrl": "https://kereports.enteract.live/api/",
+        "LinkedInBaseUrl": "https://linkdservice.enteract.live/api/"
+    },
+    "testUrls":{
+        "IdentityBaseUrl": "https://identity-engage.enteract.app/api/",
+        "CommonBaseUrl": "https://common-engage.enteract.app/api/",
+        "ServiceBaseUrl": "",
+        "SignalRCommonBaseUrl": "https://common-engage.enteract.app/",
+        "ProfileBaseUrl": "https://profiler.enteract.app/api/",
+        "ConsoleBaseUrl": "https://console-engage.enteract.app/api/"
+    },
+    "testUrlsRox":{
+        "IdentityBaseUrl": "https://idtrox.enteract.app/api/",
+        "CommonBaseUrl": "https://comrox.enteract.app/api/",
+        "ServiceBaseUrl": "",
+        "SignalRCommonBaseUrl": "https://comrox.enteract.app/",
+        "ProfileBaseUrl": "https://profiler.enteract.app/api/",
+        "ConsoleBaseUrl": "https://conrox.enteract.app/api/"
+    },
+
+    "botBaseUrl": "https://bot-engage.enteract.app/api/",
+    "botsBaseUrl": "http://3.1.47.150:5000/bots/",
+    "botConfigBaseUrl": "https://linked.360scrm.com/api/",
+    "faceRoxBaseUrl": "https://smallreddart56.conveyor.cloud/api/",
+    "botMoniteringBaseUrl": "https://flowbot.enteract.app/",
+    "flowBot": "https://flowbot.enteract.app/",
+    "intentBot": "https://intentbot.enteract.app/",
+    "autoresponderbaseurl": "https://officemail.360scrm.com/api/",
+    "CCMSURL": "https://haccms.ibex.co/jomo/api/",
+    "JomoAccessToken": "407ecdb2308d5cc24e9f5d24a779e4a3151357bb"
+}

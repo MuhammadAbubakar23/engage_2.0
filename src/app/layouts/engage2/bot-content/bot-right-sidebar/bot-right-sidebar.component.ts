@@ -18,7 +18,7 @@ export class BotRightSidebarComponent implements OnInit {
   isOpen = false;
 
   toggle(child:string) {
-    if(localStorage.getItem('child') == child){
+    if(sessionStorage.getItem('child') == child){
       this.toggleService.addTogglePanel('');
     } else{
       this.toggleService.addTogglePanel(child);

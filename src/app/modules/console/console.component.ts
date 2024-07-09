@@ -125,7 +125,7 @@ export class ConsoleComponent implements OnInit {
     //     this.componentName = routeParams['channel'];
     //   } 
     //   if(this.componentName != undefined){
-    //     localStorage.setItem('parent', this.componentName);
+    //     sessionStorage.setItem('parent', this.componentName);
     //   }
     //   this.sharedService.updateMessage(this.componentName);
     //   this.target.clear();

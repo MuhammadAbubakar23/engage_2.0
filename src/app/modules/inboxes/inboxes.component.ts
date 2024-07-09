@@ -64,12 +64,12 @@ export class InboxesComponent implements OnInit {
       }
       this.childComponentName = routeParams['ticket'];
       this.rightNavService.updateChildComponent(this.childComponentName);
-      localStorage.setItem('child', this.childComponentName);
+      sessionStorage.setItem('child', this.childComponentName);
       if (this.childComponentName != null) {
-        this.childComponentName = localStorage.getItem('child');
+        this.childComponentName = sessionStorage.getItem('child');
       }
       if (this.componentName != undefined) {
-        localStorage.setItem('parent', this.componentName);
+        sessionStorage.setItem('parent', this.componentName);
       }
       this.sharedService.updateMessage(this.componentName);
       this.target?.clear();
@@ -88,13 +88,13 @@ export class InboxesComponent implements OnInit {
       .subscribe((msg3) => {
         if (msg3) {
           this.rightcontainer?.clear();
-          localStorage.setItem('child', msg3);
+          sessionStorage.setItem('child', msg3);
           this.showPanel = true;
           this.loadComponent('', msg3);
         } else {
           this.showPanel = false;
           this.rightcontainer?.clear();
-          localStorage.setItem('child', '');
+          sessionStorage.setItem('child', '');
         }
       });
   }

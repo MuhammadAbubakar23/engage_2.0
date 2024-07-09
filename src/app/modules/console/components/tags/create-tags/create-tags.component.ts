@@ -5,6 +5,7 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { HeaderService } from 'src/app/services/HeaderService/header.service';
 // import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-create-tags',
@@ -28,7 +29,9 @@ export class CreateTagsComponent implements OnInit {
   parentChildTag: any[] = []
   parentChild: any[] = []
   id: any;
-  constructor(private formBuilder: FormBuilder, private commonService: CommonDataService, private route: ActivatedRoute,
+  constructor(private formBuilder: FormBuilder, 
+    private headerS:HeaderService,
+    private commonService: CommonDataService, private route: ActivatedRoute,
     private router: Router, private dialog: MatDialog) {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
@@ -215,8 +218,10 @@ export class CreateTagsComponent implements OnInit {
       }
     });
   }
-  onDiscardChanges() {
+  onDiscardChanges(value:any) {
+    this.headerS.updateMessage(value)
     this.router.navigate(['console/tags'])
+
   }
   reload(value: any) {
     if (value == 'error') {

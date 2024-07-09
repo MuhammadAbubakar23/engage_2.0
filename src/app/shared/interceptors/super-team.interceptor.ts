@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { StorageService } from '../services/storage/storage.service';
 @Injectable()
 export class SuperTeamInterceptor implements HttpInterceptor {
-  companyId: number = 657;
+  companyId: number = 651;
   baseUrl: string = "";
   constructor(private storage: StorageService) { }
   intercept(request: HttpRequest<unknown>,
@@ -31,6 +31,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
       this.companyId = 658
     }
     let team = this.storage.retrive('nocompass', 'O').local;
+    debugger
     // if (typeof team === 'undefined' || team == null || team == '') {
     // } else if (
     //   typeof team.id === 'undefined' ||
@@ -46,30 +47,41 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     //     },
     //   });
     // }
-    if (typeof team === 'undefined' || team == null || team == '') {
-      request = request.clone({
-        url: request.url,
-        //withCredentials: true,
-        setHeaders: {
-          'X-Super-Team': JSON.stringify(this.companyId),
-        },
-      });
-    } else if (
-      typeof team.id === 'undefined' ||
-      team.id == null ||
-      team.id <= 0
-    ) {
-    } else {
-      request = request.clone({
-        url: request.url,
-        //withCredentials: true,
-        setHeaders: {
-          // 'X-Super-Team': JSON.stringify(team.id),
-          'X-Super-Team': JSON.stringify(this.companyId),
-        },
-      });
+
+    //   if(request.url==="https://entertainerbot.enteract.app/chat"){
+    //     return next.handle(request);
+    //  }
+    if (request.url === "https://entertainerbot.enteract.app/chat") {
+      return next.handle(request);
     }
-    //return next.handle(httpRequest);
-    return next.handle(request);
+    else {
+      if (typeof team === 'undefined' || team == null || team == '') {
+
+        request = request.clone({
+          url: request.url,
+          //withCredentials: true,
+          setHeaders: {
+            'X-Super-Team': JSON.stringify(this.companyId),
+          },
+        });
+      } else if (
+        typeof team.id === 'undefined' ||
+        team.id == null ||
+        team.id <= 0
+      ) {
+      } else {
+        request = request.clone({
+          url: request.url,
+          //withCredentials: true,
+          setHeaders: {
+            // 'X-Super-Team': JSON.stringify(team.id),
+            'X-Super-Team': JSON.stringify(this.companyId),
+          },
+        });
+      }
+      //return next.handle(httpRequest);
+      return next.handle(request);
+    }
   }
+
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './identity/AuthService/auth.guard';
+import { AuthGuard } from './identity/Services/AuthGuardService/auth.guard';
 import { ModulesResolver } from './shared/resolver/modules.resolver';
 import { TagsResolver } from './shared/resolver/Tags Resolver/tags.resolver';
 import { ChatWidgetComponent } from './shared/components/chat-widget/chat-widget.component';
@@ -23,26 +23,16 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   // For Jazz, TPPL, Morinaga
-  {
-    path: 'analytics',
-    redirectTo: 'analytics/whatsapp-report',
-    pathMatch: 'full',
-  },
-  {
-path:'bot-monitoring',
-redirectTo:'bot-monitoring/chat-bot',
-pathMatch:'full'
-  },
-  
-  // For KE
   // {
   //   path: 'analytics',
   //   redirectTo: 'analytics/whatsapp-report',
   //   pathMatch: 'full',
   // },
-  // {path: 'monitoring', component: MonitoringMenuComponent },
-
-  
+  {
+    path: 'bot-monitoring',
+    redirectTo: 'bot-monitoring/chat-bot',
+    pathMatch: 'full',
+  },
   // For KE
   {
     path: 'analytics',
@@ -53,10 +43,13 @@ pathMatch:'full'
     path: '',
     loadChildren: () =>
       import('./identity/identity.module').then((f) => f.IdentityModule),
-  }, {
+  },
+  {
     path: 'survey',
     loadChildren: () =>
-      import('./survey-forms/survey-forms.module').then((f) => f.SurveyFormsModule),
+      import('./survey-forms/survey-forms.module').then(
+        (f) => f.SurveyFormsModule
+      ),
   },
   {
     path: '',
@@ -65,7 +58,7 @@ pathMatch:'full'
     canActivate: [AuthGuard],
     data: { preload: true },
     resolve: {
-      modeuls: ModulesResolver
+      modeuls: ModulesResolver,
     },
   },
   {
@@ -81,4 +74,4 @@ pathMatch:'full'
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

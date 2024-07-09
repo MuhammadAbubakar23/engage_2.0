@@ -30,24 +30,24 @@ export class MenusEffects {
   //     })
   //   );
   // });
-  loadMenus$$: Observable<any> = createEffect(() => {
-    return this.action$.pipe(
-      ofType(loadMenusList),
-      mergeMap((action) => {
-        return this.menuService.getRolesList().pipe(
-          map((menus: MenuModel[]) => loadMenusListSuccess({ menus })),
-          catchError((error: string | null) => of(loadMenusListFail({ error })))
-          //  catchError(error => of(loadMenusList(),fail({ error })))
-          //   return this.actions$.pipe(
-          //     ofType(MemberActions.loadMembers),
-          //     mergeMap(() => this.memberService.getMembers().pipe(
-          //         map(members=> MemberActions.loadMembersSuccess({ members })),
-          //         catchError(error => of(MemberActions.loadMembers()Fail({ error })))
-          //  )));
-        );
-      })
-    );
-  });
+  // loadMenus$$: Observable<any> = createEffect(() => {
+  //   return this.action$.pipe(
+  //     ofType(loadMenusList),
+  //     mergeMap((action) => {
+  //       return this.menuService.getRolesList().pipe(
+  //         map((menus: MenuModel[]) => loadMenusListSuccess({ menus })),
+  //         catchError((error: string | null) => of(loadMenusListFail({ error })))
+  //         //  catchError(error => of(loadMenusList(),fail({ error })))
+  //         //   return this.actions$.pipe(
+  //         //     ofType(MemberActions.loadMembers),
+  //         //     mergeMap(() => this.memberService.getMembers().pipe(
+  //         //         map(members=> MemberActions.loadMembersSuccess({ members })),
+  //         //         catchError(error => of(MemberActions.loadMembers()Fail({ error })))
+  //         //  )));
+  //       );
+  //     })
+  //   );
+  // });
   // updateMenus$: Observable<any> = createEffect(() => {
   //   return this.action$.pipe(
   //     ofType(updateMenusList),

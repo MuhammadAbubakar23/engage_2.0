@@ -48,21 +48,21 @@ export class  CreateSentimentComponent implements OnInit, AfterViewInit {
   }
   ngOnInit(): void {
     this.senService.login().subscribe((token: any) => {
-      localStorage.setItem("token", token.access);
+      sessionStorage.setItem("token", token.access);
     });
     this.subscription = this.toggleService
       .getTogglePanel()
       .subscribe((msg3) => {
         if (msg3) {
           this.rightcontainer?.clear();
-          localStorage.setItem('child', msg3);
+          sessionStorage.setItem('child', msg3);
           this.showPanel = true;
           this.closePanelServices.sendLeftBarToggleValue(false)
           this.loadComponent('', msg3);
         } else {
           this.showPanel = false;
           this.rightcontainer?.clear();
-          localStorage.setItem('child', '');
+          sessionStorage.setItem('child', '');
         }
       });
       this.subscription = this.closePanelServices.receiveRightBarToggleValue().subscribe(res=>{
@@ -75,14 +75,14 @@ export class  CreateSentimentComponent implements OnInit, AfterViewInit {
       .subscribe((msg3) => {
         if (msg3) {
           this.rightcontainer?.clear();
-          localStorage.setItem('child', msg3);
+          sessionStorage.setItem('child', msg3);
           this.showPanel = true;
           this.closePanelServices.sendLeftBarToggleValue(false)
           this.loadComponent('', msg3);
         } else {
           this.showPanel = false;
           this.rightcontainer?.clear();
-          localStorage.setItem('child', '');
+          sessionStorage.setItem('child', '');
         }
       });
   }

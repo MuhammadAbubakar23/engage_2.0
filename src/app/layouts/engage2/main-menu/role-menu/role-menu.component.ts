@@ -18,6 +18,8 @@ import {
 } from '../../permission-state/permission.selectors';
 import { PermissionState } from '../../permission-state/permission.state';
 import { OpensidebarService } from 'src/app/services/openSidebarService/opensidebar.service';
+import { SearchFilterService } from 'src/app/services/SearchFilter/search-filter.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
   selector: 'role-menu',
@@ -43,14 +45,16 @@ export class RoleMenuComponent implements OnInit {
   onlyAnalyticsTabVisible = 'kashif.waheed@ibex.co, jazzlhrwfm@ibex.co, jazzlhrwfm@ibex.co';
 
   // totalParcoAdminUsers = 'omais.khan@bazaartech.com, faizan.saleem@bazaartech.com, zia.rehman3@ibex.co,waqas.munir@jazz.com.pk, muhammad.qasim@bazaartech.com, waqas.mehmood@bazaartech.com, zohaib.shafique@bazaartech.com, hassan.mustafa@bazaartech.com, waqas.younis@bazaartech.com, hassan.aziz@bazaartech.com, aashir.ahmed@bazaartech.com, shehzad.fareed@bazaartech.com, sajeel.ashraf@bazaartech.com, a.basit@bazaartech.com, danish.alvi@bazaartech.com, toqeer.rehman@bazaartech.com, babar.khan@bazaartech.com, fahad.subzwari@bazaartech.com ,ali.haider4@ibex.co,ali.raza202@ibex.co,ahmed.hassan6@ibex.co,  saba.riaz@jazz.com.pk, ambreen.zubair@jazz.com.pk, uzma.hashmat@jazz.com.pk,mishal.javed@abacus-global.com ,jawad.ahmed@ibex.co ,muhammad.asad3@ibex.co, syeda.asghar@ibex.co, rizwan.ali22@ibex.co, hafiz.zeeshan@ibex.co, taimoor.wajid@ibex.co,zain.aziz11@ibex.co,dua.siddique@abacus-global.com, laiba.fayyaz@abacus-global.com,CCPMOKE@ibex.co,sanam.majeed@ke.com.pk,naushadmalikke@gmail.com,iamahmerzia@gmail.com,zamaan.afaq@gmail.com,khan.waleed.m@gmail.com,hashirahmed646@gmail.com,babbarsher034@gmail.com,jehananwar0@gmail.com,imxeeshan@gmail.com,shahrukh.khangul@3posp.pk,waqar.fayyaz@ke.com.pk,imran.rana@ke.com.pk,rabiya.siddiqui@ke.com.pk,junaidahmed.sohu@gmail.com,roushan.yousuf@ibex.co';
-  totalParcoAdminUsers = 'omais.khan@bazaartech.com, faizan.saleem@bazaartech.com, zia.rehman3@ibex.co,waqas.munir@jazz.com.pk, muhammad.qasim@bazaartech.com, waqas.mehmood@bazaartech.com, zohaib.shafique@bazaartech.com, hassan.mustafa@bazaartech.com, waqas.younis@bazaartech.com, hassan.aziz@bazaartech.com, aashir.ahmed@bazaartech.com, shehzad.fareed@bazaartech.com, sajeel.ashraf@bazaartech.com, a.basit@bazaartech.com, danish.alvi@bazaartech.com, toqeer.rehman@bazaartech.com, babar.khan@bazaartech.com, fahad.subzwari@bazaartech.com ,ali.haider4@ibex.co,ali.raza202@ibex.co,ahmed.hassan6@ibex.co,  saba.riaz@jazz.com.pk, ambreen.zubair@jazz.com.pk, uzma.hashmat@jazz.com.pk,mishal.javed@abacus-global.com ,jawad.ahmed@ibex.co ,muhammad.asad3@ibex.co, syeda.asghar@ibex.co, rizwan.ali22@ibex.co, hafiz.zeeshan@ibex.co, taimoor.wajid@ibex.co,zain.aziz11@ibex.co,dua.siddique@abacus-global.com, laiba.fayyaz@abacus-global.com,ccpmoke@ibex.co,sanam.majeed@ke.com.pk,naushadmalikke@gmail.com,iamahmerzia@gmail.com,zamaan.afaq@gmail.com,khan.waleed.m@gmail.com,hashirahmed646@gmail.com,babbarsher034@gmail.com,jehananwar0@gmail.com,imxeeshan@gmail.com,shahrukh.khangul@3posp.pk,waqar.fayyaz@ke.com.pk,imran.rana@ke.com.pk,rabiya.siddiqui@ke.com.pk,junaidahmed.sohu@gmail.com,roushan.yousuf@ibex.co,basil.savio@ke.com.pk,kainaat.fatima.gfx@gmail.com, zamaan.afaq@gmail.com ';
+  totalParcoAdminUsers = 'omais.khan@bazaartech.com, faizan.saleem@bazaartech.com, zia.rehman3@ibex.co,waqas.munir@jazz.com.pk, muhammad.qasim@bazaartech.com, waqas.mehmood@bazaartech.com, zohaib.shafique@bazaartech.com, hassan.mustafa@bazaartech.com, waqas.younis@bazaartech.com, hassan.aziz@bazaartech.com, aashir.ahmed@bazaartech.com, shehzad.fareed@bazaartech.com, sajeel.ashraf@bazaartech.com, a.basit@bazaartech.com, danish.alvi@bazaartech.com, toqeer.rehman@bazaartech.com, babar.khan@bazaartech.com, fahad.subzwari@bazaartech.com ,ali.haider4@ibex.co,ali.raza202@ibex.co,ahmed.hassan6@ibex.co,  saba.riaz@jazz.com.pk, ambreen.zubair@jazz.com.pk, uzma.hashmat@jazz.com.pk,mishal.javed@abacus-global.com ,jawad.ahmed@ibex.co ,muhammad.asad3@ibex.co, syeda.asghar@ibex.co, rizwan.ali22@ibex.co, hafiz.zeeshan@ibex.co, taimoor.wajid@ibex.co,zain.aziz11@ibex.co,dua.siddique@abacus-global.com, laiba.fayyaz@abacus-global.com,ccpmoke@ibex.co,sanam.majeed@ke.com.pk,naushadmalikke@gmail.com,iamahmerzia@gmail.com,zamaan.afaq@gmail.com,khan.waleed.m@gmail.com,hashirahmed646@gmail.com,babbarsher034@gmail.com,jehananwar0@gmail.com,imxeeshan@gmail.com,shahrukh.khangul@3posp.pk,waqar.fayyaz@ke.com.pk,imran.rana@ke.com.pk,rabiya.siddiqui@ke.com.pk,junaidahmed.sohu@gmail.com,roushan.yousuf@ibex.co,basil.savio@ke.com.pk,kainaat.fatima.gfx@gmail.com, zamaan.afaq@gmail.com,syed.imad@ke.com.pk ';
 
   constructor(
     private MenuStore: Store<MenuState>,
     private PermissionStore: Store<PermissionState>,
     private _route: Router,
     private storage: StorageService,
-    private sidebar: OpensidebarService
+    private sidebar: OpensidebarService,
+    private SearchFilterService:SearchFilterService,
+    private _perS:PermissionService
   ) {
     //  this.menu$ = this.MenuStore.select(getEmargingEqual("role_main_left_menu"));
     //  this.menus$ = this.menu$.pipe(share(), startWith(false));
@@ -80,7 +84,7 @@ export class RoleMenuComponent implements OnInit {
     // })
   }
 
-  assignedProfile = localStorage.getItem('assignedProfile');
+  assignedProfile = sessionStorage.getItem('assignedProfile');
   opensidebar() {
     this.activeMenu = this._route.url.split('/')[1];
     this.sidebar.sendsidebarvalue(this.activeMenu);
@@ -90,9 +94,9 @@ export class RoleMenuComponent implements OnInit {
     this.activeChannel = menuLink.split('/')[1];
 
     if (
-      localStorage.getItem('assignedProfile') == null ||
-      localStorage.getItem('assignedProfile') == '' ||
-      localStorage.getItem('assignedProfile') == undefined
+      sessionStorage.getItem('assignedProfile') == null ||
+      sessionStorage.getItem('assignedProfile') == '' ||
+      sessionStorage.getItem('assignedProfile') == undefined
     ) {
       this._route.navigateByUrl('/' + menuLink);
     } else {
@@ -103,6 +107,11 @@ export class RoleMenuComponent implements OnInit {
     this.toastermessage = false;
   }
 
+  hasPermission(permissionName: string) {
+
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
+  }
   AlterMsg: any;
   toastermessage: any;
 
@@ -114,5 +123,8 @@ export class RoleMenuComponent implements OnInit {
         this.toastermessage = false;
       }, 4000);
     }
+  }
+  resetFilters(){
+    this.SearchFilterService.resetAllFilter();
   }
 }
