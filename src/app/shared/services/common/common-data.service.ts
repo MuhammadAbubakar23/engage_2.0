@@ -41,30 +41,7 @@ export class CommonDataService {
   // CommonBaseUrl = environment.CommonBaseUrl;
   // IdentityBaseUrl = environment.IdentityBaseUrl;
   FacebookBaseUrl = environment.FbBaseUrl;
-<<<<<<< HEAD
-  ServiceBaseUrl = environment.ServiceBaseUrl;
-  ProfileBaseUrl = environment.ProfileBaseUrl;
-  LinkedInBaseUrl = environment.LinkedInBaseUrl;
-  KemediaBaseUrl = environment.KemediaBaseUrl;
-  KescrmBaseUrl = environment.KescrmBaseUrl;
-  WhatsappBaseUrl = environment.WhatsappBaseUrl;
-  KeReportsBaseUrl = environment.keReportsBaseUrl
-  faceRoxBaseUrl = environment.faceRoxBaseUrl
-  autoresponderbaseurl = environment.autoresponderbaseurl
-  instagramBaseUrl = environment.instagramBaseUrl
-  linkdinBaseUrl =environment.linkdinBaseUrl
-  youtubeBaseUrl=environment.youtubeBaseUrl
-  playStoreBaseUrl=environment.playStoreBaseUrl
-  gSuitBaseUrl=environment.gSuitBaseUrl
-  whatsappBaseUrl=environment.whatsappBaseUrl
-  exchangeEmailBaseUrl=environment.exchangeEmailBaseUrl
-  metaWhatsapp=environment.metaWhatsapp
-  profileBaseUrl = environment.botConfigBaseUrl
-  channelBaseUrl = environment.consoleBaseUrl
-  botsBaseUrl = environment.botMoniteringBaseUrl
-  botConfigBaseUrl = environment.botConfigBaseUrl
-=======
-  InstagramBaseUrl = environment.InstaBaseUrl;
+  // InstagramBaseUrl = environment.InstaBaseUrl;
   // ServiceBaseUrl = environment.ServiceBaseUrl;
   // ProfileBaseUrl = environment.ProfileBaseUrl;
   // LinkedInBaseUrl = environment.LinkedInBaseUrl;
@@ -74,11 +51,19 @@ export class CommonDataService {
   // KeReportsBaseUrl = environment.keReportsBaseUrl;
   faceRoxBaseUrl = environment.faceRoxBaseUrl;
   autoresponderbaseurl = environment.autoresponderbaseurl;
+  metaWhatsapp = environment.metaWhatsapp;
+  exchangeEmailBaseUrl = environment.exchangeEmailBaseUrl;
+  playStoreBaseUrl = environment.playStoreBaseUrl;
+  gSuitBaseUrl = environment.gSuitBaseUrl;
+  whatsappBaseUrl = environment.whatsappBaseUrl;
+  youtubeBaseUrl = environment.youtubeBaseUrl;
+  linkdinBaseUrl = environment.linkdinBaseUrl;
+  instagramBaseUrl = environment.instagramBaseUrl;
+
   profileBaseUrl = environment.botConfigBaseUrl;
   // channelBaseUrl = environment.ConsoleBaseUrl;
   botsBaseUrl = environment.botMoniteringBaseUrl;
   botConfigBaseUrl = environment.botConfigBaseUrl;
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   // KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
@@ -125,11 +110,7 @@ export class CommonDataService {
   markAllAsRead = environment.links.common.markAllAsRead;
   getAgentReport = environment.links.common.getAgentReport;
   getAllocatedProfiles = environment.links.common.getAllocatedProfiles;
-<<<<<<< HEAD
-  sessionClose = environment.links.common.sessionClose
-=======
   sessionClose = environment.links.common.sessionClose;
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   // createMessageTemplate = environment.links.console.CreateMessageTemplate;
   repliesList = environment.links.common.repliesList;
   signOut = environment.links.common.signOut;
@@ -178,11 +159,7 @@ export class CommonDataService {
   getLinkedInFollowers = environment.links.common.getLinkedInFollowers;
   emailShiftReport = environment.links.common.emailShiftReport;
   getFollowUpCount = environment.links.common.getFollowUpCount;
-<<<<<<< HEAD
-  getAllWing = environment.links.console.getAllWing
-=======
   getAllWing = environment.links.console.getAllWing;
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   downloadTagReport = environment.links.common.downloadTagReport;
   regionwiseReport = environment.links.common.regionwiseReport;
   wordCloud = environment.links.common.wordCloud;
@@ -234,13 +211,8 @@ export class CommonDataService {
   addProfile = environment.links.console.addProfile;
   attachFacebookPage = environment.links.console.attachFacebookPage;
   getTags = environment.links.console.getTags;
-<<<<<<< HEAD
-  getTagsAll = environment.links.console.getTagsAll
-  getTagsByCompanyId = environment.links.console.getTagsByCompanyId
-=======
   getTagsAll = environment.links.console.getTagsAll;
   getTagsByCompanyId = environment.links.console.getTagsByCompanyId;
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   getTagById = environment.links.console.getTagById;
   addTags = environment.links.console.addTags;
   updateTag = environment.links.console.updateTag;
@@ -254,35 +226,6 @@ export class CommonDataService {
   addRules = environment.links.console.addRules;
   updateRules = environment.links.console.updateRules;
   getEntitiesRule = environment.links.console.getEntitiesRule;
-<<<<<<< HEAD
-  getEntitiesRules = environment.links.console.getEntitiesRules
-  addRule = environment.links.console.addRule
-  addEmailRule = environment.links.console.addEmailRule
-  getFbRule = environment.links.console.getFbRule
-  softDeleteFb = environment.links.console.softDeleteFb
-  getEntitiesProperties = environment.links.console.getEntitiesProperties
-  getRuleEntityProperties = environment.links.console.getRuleEntityProperties;
-  getChannels = environment.links.identity.channels;
-  consoleChannel = environment.links.identity.consoleChannls
-  deleteRoles = environment.links.identity.deleteRoles;
-  getautoResponedFB = environment.links.console.getautoResponedFB
-  addFbResponed = environment.links.console.addFbResponed
-  getCompanyPages = environment.links.console.getCompanyPages
-  getProfileDetails = environment.links.console.getProfileDetails
-  getServices = environment.links.console.getServices
-  botsList = environment.links.console.getBotList
-  getActions = environment.links.console.getActions
-  getPlatorm = environment.links.console.getPlatform
-  getConsoleEntities = environment.links.console.getConsoleEntities
-  getConsoleEntityProperties = environment.links.console.getConsoleEntityProperties
-  getRuleType = environment.links.console.getRuleType
-  getRuleTag = environment.links.console.getRuleTag
-  getServicetree = environment.links.console.getServicetree
-  getTemplateStatus = environment.links.console.getTemplateStatus
-  deleteTemplate = environment.links.console.deleteTemplate
-  disableInstaTemplate=environment.links.console.disableInstaTemplate
-  getRuleStatus = environment.links.console.getRuleStatus
-=======
   getEntitiesRules = environment.links.console.getEntitiesRules;
   addRule = environment.links.console.addRule;
   getFbRule = environment.links.console.getFbRule;
@@ -310,7 +253,6 @@ export class CommonDataService {
   getTemplateStatus = environment.links.console.getTemplateStatus;
   deleteTemplate = environment.links.console.deleteTemplate;
   getRuleStatus = environment.links.console.getRuleStatus;
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
 
   // teams
   // getAllTeams= environment.links.console.getAllTeams
@@ -350,13 +292,6 @@ export class CommonDataService {
   getPermissionByRole(form: any) {
     return this.http.post(this.env.IdentityBaseUrl + this.permissionrole, form);
   }
-<<<<<<< HEAD
-  UserLogin() {
-    let httpOptions = this.gethttpOptions();
-    return this.http.get(this.CommonBaseUrl + this.userlogin, httpOptions)
-  }
-=======
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   GetTagsList() {
     return this.http.get(this.env.CommonBaseUrl + this.tagsList);
   }
@@ -439,10 +374,12 @@ export class CommonDataService {
       null
     );
   }
-<<<<<<< HEAD
-  // auto responder apis  
+  // auto responder apis
   getAutoRespondFB(body: any) {
-    return this.http.post(this.autoresponderbaseurl + this.getautoResponedFB, body);
+    return this.http.post(
+      this.autoresponderbaseurl + this.getautoResponedFB,
+      body
+    );
   }
   getAllAutoRespondLinkedin(body: any) {
     return this.http.post(this.linkdinBaseUrl + this.getautoResponedFB, body);
@@ -468,65 +405,48 @@ export class CommonDataService {
   getAllAutoRespondInsta(body: any) {
     return this.http.post(this.instagramBaseUrl + this.getautoResponedFB, body);
   }
-  getChannelsList() {
-    return this.http.get(this.channelBaseUrl + this.getServices);
-  }
-  getBots() {
-    return this.http.get(this.botsBaseUrl + this.botsList)
-=======
-  // auto responder apis
-  getAutoRespondFB(body: any) {
-    return this.http.post(
-      this.autoresponderbaseurl + this.getautoResponedFB,
-      body
-    );
-  }
+
   getChannelsList() {
     return this.http.get(this.env.ConsoleBaseUrl + this.getServices);
   }
   getBots() {
     return this.http.get(this.botsBaseUrl + this.botsList);
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   }
   AddFbResponed(body: any) {
     return this.http.post(this.autoresponderbaseurl + this.addFbResponed, body);
   }
-<<<<<<< HEAD
   AddInstaResponed(body: any) {
     return this.http.post(this.instagramBaseUrl + this.addFbResponed, body);
   }
   AddWsResponed(body: any) {
-    return this.http.post(this.whatsappBaseUrl + this.addFbResponed, body);
-  }
-  AddYtResponed(body: any) {
-    return this.http.post(this.youtubeBaseUrl + this.addFbResponed, body);
-  }
-  AddPsResponed(body: any) {
-    return this.http.post(this.playStoreBaseUrl + this.addFbResponed, body);
-  }
-  AddLinkDinResponed(body: any) {
-    return this.http.post(this.linkdinBaseUrl + this.addFbResponed, body);
-  }
-  AddGsuitResponed(body: any) {
-    return this.http.post(this.gSuitBaseUrl + this.addFbResponed, body);
-  }
-  AddMetWaResponed(body: any) {
-    return this.http.post(this.metaWhatsapp + this.addFbResponed, body);
+    return this.http.post(this.WhatsappBaseUrl + this.addFbResponed, body);
   }
   AddExchangeEmailtResponed(body: any) {
     return this.http.post(this.exchangeEmailBaseUrl + this.addFbResponed, body);
   }
-=======
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
+  AddMetWaResponed(body: any) {
+    return this.http.post(this.metaWhatsapp + this.addFbResponed, body);
+  }
+
+  AddGsuitResponed(body: any) {
+    return this.http.post(this.gSuitBaseUrl + this.addFbResponed, body);
+  }
+  AddLinkDinResponed(body: any) {
+    return this.http.post(this.linkdinBaseUrl + this.addFbResponed, body);
+  }
+  AddPsResponed(body: any) {
+    return this.http.post(this.playStoreBaseUrl + this.addFbResponed, body);
+  }
+  AddYtResponed(body: any) {
+    return this.http.post(this.youtubeBaseUrl + this.addFbResponed, body);
+  }
+ 
+
   GetCompanyPages() {
     return this.http.get(this.autoresponderbaseurl + this.getCompanyPages);
   }
   GetProfileInfo(url: any) {
-<<<<<<< HEAD
-    return this.http.get(url + this.getProfileDetails)
-=======
     return this.http.get(url + this.getProfileDetails);
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   }
 
   GetActions() {
@@ -628,9 +548,6 @@ export class CommonDataService {
     });
   }
   GetAllocatedProfiles(wing: string, skillSlug: string) {
-<<<<<<< HEAD
-    return this.http.get(this.CommonBaseUrl + this.getAllocatedProfiles + '?Wings=' + wing + '&SkillSlug=' + skillSlug);
-=======
     return this.http.get(
       this.env.CommonBaseUrl +
       this.getAllocatedProfiles +
@@ -639,7 +556,6 @@ export class CommonDataService {
       '&SkillSlug=' +
       skillSlug
     );
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   }
   // CreateMessageTemplate(body: any) {
   //   return this.http.post(this.env.CommonBaseUrl + this.createMessageTemplate, body);
@@ -664,15 +580,6 @@ export class CommonDataService {
     const url = `${this.env.ConsoleBaseUrl}${this.deleteMessages}?Id=${deleteId}`;
     return this.http.get(url);
   }
-<<<<<<< HEAD
-  DeleteBotConfig(baseUrl: any, id: any, pageId: any, Type: any): Observable<any> {
-    const url = `${baseUrl}${this.deleteBotConfig}?id=${id}&PageId=${pageId}&Type=${Type}`;
-    return this.http.get(url);
-  }
-  UpdateBotStatus(baseUrl: any, id: any, pageId: any, contentType: any, Status: any) {
-    const url = `${baseUrl}${this.updateBotConfigDetail}?id=${id}&PageID=${pageId}&ContentType=${contentType}&status=${Status}`
-    return this.http.post(url, "null")
-=======
   DeleteBotConfig(
     baseUrl: any,
     id: any,
@@ -691,7 +598,6 @@ export class CommonDataService {
   ) {
     const url = `${baseUrl}${this.updateBotConfigDetail}?id=${id}&PageID=${pageId}&ContentType=${contentType}&status=${Status}`;
     return this.http.post(url, 'null');
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   }
   GetQuickReply(body: any) {
     return this.http.post(this.env.ConsoleBaseUrl + this.getQuickReply, body);
@@ -768,35 +674,20 @@ export class CommonDataService {
     return this.http.get(url);
   }
   GetAllSkills(body: any) {
-<<<<<<< HEAD
-    return this.http.post(this.consoleBaseUrl + this.getAllSkills, body);
-  }
-  GetSkills(body: any) {
-    return this.http.post(this.consoleBaseUrl + this.getSkills, body)
-=======
     return this.http.post(this.env.ConsoleBaseUrl + this.getAllSkills, body);
   }
   GetSkills(body: any) {
     return this.http.post(this.env.ConsoleBaseUrl + this.getSkills, body);
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   }
   AddSkill(addSkill: any) {
     return this.http.post(this.env.ConsoleBaseUrl + this.addSkill, addSkill);
   }
   AddBotConfig(url: any, body: any) {
-<<<<<<< HEAD
-    return this.http.post(url + this.addBotConfig, body)
-  }
-  GetBotConfigById(pageId: any, Type: any) {
-    const url = `${this.botConfigBaseUrl}${this.ViewBotConfig}?PageID=${pageId}&Type=${Type}`
-    return this.http.get(url)
-=======
     return this.http.post(url + this.addBotConfig, body);
   }
   GetBotConfigById(pageId: any, Type: any) {
     const url = `${this.botConfigBaseUrl}${this.ViewBotConfig}?PageID=${pageId}&Type=${Type}`;
     return this.http.get(url);
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   }
   // DeleteSkill(delSkill: string): Observable<any> {
   //   const url = `${this.env.ConsoleBaseUrl}${this.deleteSkill}?Id=${delSkill}`;
@@ -860,7 +751,6 @@ export class CommonDataService {
       body
     );
   }
-<<<<<<< HEAD
   GetInstaAllRules(body: any) {
     return this.http.post<RuleWithCount>(this.instagramBaseUrl + this.getFbRule, body);
   }
@@ -885,8 +775,6 @@ export class CommonDataService {
   GetLinkdinAllRules(body: any) {
     return this.http.post<RuleWithCount>(this.linkdinBaseUrl + this.getFbRule, body);
   }
-=======
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
 
   GetRuleById(ruleId: string) {
     return this.http.get(
@@ -923,6 +811,7 @@ export class CommonDataService {
   AddYTRule(addrule: any) {
     return this.http.post(this.youtubeBaseUrl + this.addRule, addrule);
   }
+
   UpdateRules(rule: any) {
     const url = `${this.env.ConsoleBaseUrl}${this.updateRules}`;
     return this.http.post(url, rule);
@@ -967,7 +856,7 @@ export class CommonDataService {
     const url = `${this.instagramBaseUrl}${this.softDeleteFb}?Id=${delRules}`;
     return this.http.get(url);
   }
-  
+
   GetEntitiesRule() {
     return this.http.get(this.env.ConsoleBaseUrl + this.getEntitiesRule);
   }
@@ -987,19 +876,11 @@ export class CommonDataService {
   GetCustomers(body: any) {
     return this.http.post(this.env.CommonBaseUrl + this.getCustomers, body);
   }
-<<<<<<< HEAD
-  GetChannels() {
-    return this.http.get(this.IdentityBaseUrl + this.getChannels);
-  }
-  GetConsoleChannels() {
-    return this.http.get(this.consoleBaseUrl + this.consoleChannel)
-=======
   // GetChannels() {
   //   return this.http.get(this.env.IdentityBaseUrl + this.getChannels);
   // }
   GetConsoleChannels() {
     return this.http.get(this.env.ConsoleBaseUrl + this.consoleChannel);
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   }
   UpdateStatus(body: any) {
     return this.http.post(this.env.CommonBaseUrl + this.updateStatus, body);
@@ -1151,19 +1032,12 @@ export class CommonDataService {
     );
   }
   getSessionId(customerNumber: any, ClientNumber: any) {
-<<<<<<< HEAD
-    return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentifier=${customerNumber}&clientIdentifier=${ClientNumber}`)
-  }
-  GetLinkedInReportData(body: any) {
-    return this.http.post(this.LinkedInBaseUrl + this.getLinkedInReport, body);
-=======
     return this.http.get(
       `${this.env.ServiceBaseUrl}${this.sessionClose}?customerIdentifier=${customerNumber}&clientIdentifier=${ClientNumber}`
     );
   }
   GetLinkedInReportData(body: any) {
     return this.http.post(this.env.LinkedInBaseUrl + this.getLinkedInReport, body);
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   }
   GetLinkedInReportFollwers(body: any) {
     return this.http.post(
@@ -1257,21 +1131,13 @@ export class CommonDataService {
     return this.http.post(this.env.IdentityBaseUrl + this.updateTeam, body);
   }
   GetTeamType() {
-<<<<<<< HEAD
-    return this.http.get(this.IdentityBaseUrl + this.getTeamType)
-=======
     return this.http.get(this.env.IdentityBaseUrl + this.getTeamType);
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   }
   DeleteSignalTeam(id: any) {
     return this.http.get(`${this.env.IdentityBaseUrl}${this.deleteTeams}?id=${id}`);
   }
   TeamGetById(id: number) {
-<<<<<<< HEAD
-    const url = `${this.IdentityBaseUrl}${this.teamGetById}/${id}`;
-=======
     const url = `${this.env.IdentityBaseUrl}${this.teamGetById}/${id}`;
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
     return this.http.get(url);
   }
   DeleteMultipleTeams(data: any) {
@@ -1293,12 +1159,6 @@ export class CommonDataService {
     );
   }
   GetAllWing() {
-<<<<<<< HEAD
-    return this.http.get(this.IdentityBaseUrl + this.getAllWing);
-  }
-  GetPlatorm() {
-    return this.http.get(this.consoleBaseUrl + this.getPlatorm)
-=======
     return this.http.get(this.env.IdentityBaseUrl + this.getAllWing);
   }
   GetRoles() {
@@ -1306,7 +1166,6 @@ export class CommonDataService {
   }
   GetPlatorm() {
     return this.http.get(this.env.ConsoleBaseUrl + this.getPlatorm);
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   }
   GetConsoleEntities(serviceId: any): Observable<any> {
     const url = `${this.env.ConsoleBaseUrl}${this.getConsoleEntities}?serviceId=${serviceId}`;
@@ -1317,16 +1176,6 @@ export class CommonDataService {
     return this.http.get<any>(url, {});
   }
   GetRuleType() {
-<<<<<<< HEAD
-    return this.http.get(this.consoleBaseUrl + this.getRuleType)
-  }
-  GetRuleTag(id: any) {
-    const url = `${this.consoleBaseUrl}${this.getRuleTag}?id=${id}`;
-    return this.http.get<any>(url, {});
-  }
-  GetServicetree() {
-    return this.http.get(this.consoleBaseUrl + this.getServicetree)
-=======
     return this.http.get(this.env.ConsoleBaseUrl + this.getRuleType);
   }
   GetRuleTag(id: any) {
@@ -1335,7 +1184,6 @@ export class CommonDataService {
   }
   GetServicetree() {
     return this.http.get(this.env.ConsoleBaseUrl + this.getServicetree);
->>>>>>> 110758cf4405d5c7c47d27d31ec919bf36518c1d
   }
   GetTemplateStatus(id: any, status: boolean) {
     const url = `${this.autoresponderbaseurl}${this.getTemplateStatus}?templateId=${id}&status=${status}`;
@@ -1346,7 +1194,7 @@ export class CommonDataService {
     return this.http.get<any>(url, {});
   }
   GetLinkedinTemplateStatus(id: any, status: boolean) {
-    const url = `${this.LinkedInBaseUrl}${this.getTemplateStatus}?templateId=${id}&status=${status}`;
+    const url = `${this.linkdinBaseUrl}${this.getTemplateStatus}?templateId=${id}&status=${status}`;
     return this.http.get<any>(url, {});
   }
   GetWaTemplateStatus(id: any, status: boolean) {
@@ -1373,6 +1221,7 @@ export class CommonDataService {
     const url = `${this.exchangeEmailBaseUrl}${this.getTemplateStatus}?templateId=${id}&status=${status}`;
     return this.http.get<any>(url, {});
   }
+
   DeleteTemplate(id: any) {
     const url = `${this.autoresponderbaseurl}${this.deleteTemplate}?templateId=${id}`;
     return this.http.get<any>(url, {});
@@ -1385,20 +1234,16 @@ export class CommonDataService {
     const url = `${this.linkdinBaseUrl}${this.deleteTemplate}?templateId=${id}`;
     return this.http.get<any>(url, {});
   }
-  DeleteMetaWaTemplate(id: any) {
-    const url = `${this.metaWhatsapp}${this.deleteTemplate}?templateId=${id}`;
-    return this.http.get<any>(url, {});
-  }
   DeleteExchangeTemplate(id: any) {
     const url = `${this.exchangeEmailBaseUrl}${this.deleteTemplate}?templateId=${id}`;
     return this.http.get<any>(url, {});
   }
-  DeleteYTTemplate(id: any) {
-    const url = `${this.youtubeBaseUrl}${this.deleteTemplate}?templateId=${id}`;
+  DeleteMetaWaTemplate(id: any) {
+    const url = `${this.metaWhatsapp}${this.deleteTemplate}?templateId=${id}`;
     return this.http.get<any>(url, {});
   }
-  DeleteWaTemplate(id: any) {
-    const url = `${this.whatsappBaseUrl}${this.deleteTemplate}?templateId=${id}`;
+  DeleteYTTemplate(id: any) {
+    const url = `${this.youtubeBaseUrl}${this.deleteTemplate}?templateId=${id}`;
     return this.http.get<any>(url, {});
   }
   DeletePsTemplate(id: any) {
@@ -1409,10 +1254,16 @@ export class CommonDataService {
     const url = `${this.gSuitBaseUrl}${this.deleteTemplate}?templateId=${id}`;
     return this.http.get<any>(url, {});
   }
+  DeleteWaTemplate(id: any) {
+    const url = `${this.whatsappBaseUrl}${this.deleteTemplate}?templateId=${id}`;
+    return this.http.get<any>(url, {});
+  }
+
   GetRuleStatus(id: any, status: boolean) {
     const url = `${this.autoresponderbaseurl}${this.getRuleStatus}?Id=${id}&status=${status}`;
     return this.http.get<any>(url, {});
   }
+
   GetInstaRuleStatus(id: any, status: boolean) {
     const url = `${this.instagramBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
     return this.http.get<any>(url, {});
@@ -1445,4 +1296,5 @@ export class CommonDataService {
     const url = `${this.exchangeEmailBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
     return this.http.get<any>(url, {});
   }
+
 }

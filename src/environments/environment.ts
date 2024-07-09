@@ -143,6 +143,14 @@ export const environment = {
   flowBot: 'https://flowbot.enteract.app/',
   intentBot: 'https://intentbot.enteract.app/',
   autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
+  instagramBaseUrl:'https://insta.360scrm.com/api/',
+  linkdinBaseUrl:'https://linked.360scrm.com/api/',
+  youtubeBaseUrl:'https://tube.360scrm.com/api/',
+  whatsappBaseUrl:'https://whats.360scrm.com/api/',
+  gSuitBaseUrl:'https://mail.360scrm.com/api/',
+  playStoreBaseUrl:'https://play.360scrm.com/api/',
+  exchangeEmailBaseUrl:'https://officemail.360scrm.com/api/',
+  metaWhatsapp:'https://mbwhats.360scrm.com/api/',
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
@@ -311,11 +319,7 @@ export const environment = {
       runChatBot: 'models/run',
       chatBotWdidget: 'chat',
       stopChatBot: 'models/stop'
-      createStory: 'stories/create',
-      viewIntent: 'intents/get',
-      viewResponse: 'responses/get',
-      getRuleChatBot: 'rules/get',
-      getStoriesChatBot: 'stories/get',
+
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',
