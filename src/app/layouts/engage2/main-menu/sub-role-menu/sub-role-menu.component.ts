@@ -16,6 +16,7 @@ import { MenuModel } from '../../menu-state/menu.model';
 import { getEmarging, getEmargingEqual, getEmargingNotEqual, getMenusLoading } from '../../menu-state/menu.selectors';
 import { MenuState } from '../../menu-state/menu.state';
 import { ChangeDetectorRef } from '@angular/core';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
   selector: 'sub-role-menu',
@@ -42,27 +43,27 @@ export class SubRoleMenuComponent implements OnInit {
   menu$ :any;
   loading$: any;
 
-  SuperTeamSelected:number=0; 
+  SuperTeamSelected:number=0;
   SuperTeamOptions:any=[];
   SuperTeamShow:boolean = true;
-  
+
   myUrl:string = "";
-  constructor(private store: Store<MenuState>, 
-    private treegen: TreeGenService<MenuModel>, 
-    private headerService: HeaderService, 
-    private storage:StorageService, 
+  constructor(private store: Store<MenuState>,
+    private treegen: TreeGenService<MenuModel>,
+    private headerService: HeaderService,
+    private storage:StorageService,
     private cdr:ChangeDetectorRef,
-    private router: Router) {
-    
+    private router: Router,private _perS:PermissionService) {
+
     let _self = this;
-    
+
     router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         // _self.SubMenuPage = this.SubMenuPages.filter(function(element:any) {
         //   return event.url.toString().toLowerCase().includes(element.slug);
         // }); // because return array index;
         // if(event.url.toString().toLowerCase().includes("undefined")){
-         
+
         // }
         // else{
           _self.SubMenuPages.forEach(function(subMenuPage:any) {
@@ -74,22 +75,30 @@ export class SubRoleMenuComponent implements OnInit {
             }
           });
         //}
-        
-    
+
+
       }
     });
   }
+
+hasPermission(permissionName: string) {
+
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
+  }
+
+
   ngOnInit(): void {
-    
+
     this.menus$ = [];
     let _self = this;
-    _self.store.select(getEmarging(_self.SubMenuPage.slug)).subscribe((item:any) => {    
+    _self.store.select(getEmarging(_self.SubMenuPage.slug)).subscribe((item:any) => {
       if(item.length > 0)
-        _self.menus$ = _self.treegen.buildTree(item, _self.SubMenuPage.parentId);      
+        _self.menus$ = _self.treegen.buildTree(item, _self.SubMenuPage.parentId);
     });
 
     // this.router.events.subscribe((event: Event) => {
-    //   if (event instanceof NavigationStart) {        
+    //   if (event instanceof NavigationStart) {
     //     _self.SubMenuPages.forEach(function(subMenuPage:any, index:number) {
     //       if(event.url.toString().toLowerCase().includes(subMenuPage.slug)){
     //         _self.EmargeType$ = subMenuPage.name;
@@ -97,7 +106,7 @@ export class SubRoleMenuComponent implements OnInit {
     //           // this.menus$ = item;
     //           _self.menus$ = _self.treegen.buildTree(item, subMenuPage.parentId);
     //         });
-    //       }        
+    //       }
     //     });
         // let urlValue = event.url.toString().split('/');
 
@@ -118,19 +127,19 @@ export class SubRoleMenuComponent implements OnInit {
     //   this.menus$ = item;
     //   this.menus$ = this.treegen.buildTree(item, 400);
     // })
-    
+
     let main = this.storage.retrive("main","o").local;
     let selectedRole = this.storage.retrive("nocompass","O").local;
-    this.SuperTeamSelected = selectedRole.id;  
+    this.SuperTeamSelected = selectedRole.id;
     this.SuperTeamOptions = main.roles;
-   
+
 
     if(this.SuperTeamOptions.length >= 2){
       this.SuperTeamShow = false;
     }
   }
-  
-  updatevalue(string:any){    
+
+  updatevalue(string:any){
     this.activeChannels=this.router.url.split('/')[2]
     this.cdr.detectChanges()
     this.headerService.updateMessage(string);

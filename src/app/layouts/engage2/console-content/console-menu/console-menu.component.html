@@ -1,10 +1,11 @@
 <div class="leftbar-console-expanded">
-    <div class="sidebar-header pe-3 ps-3 row">
-        <h5 class="fw-bold mt-3 ms-1 col-8">
-            <a (click)="updatevalue('consoleHeader')"
-                [routerLink]="['/console/home']">Console</a>
-        </h5>
-        <!--
+  <div class="sidebar-header pe-3 ps-3 row">
+    <h5 class="fw-bold mt-3 ms-1 col-8">
+      <a (click)="updatevalue('consoleHeader')" [routerLink]="['/console/home']"
+        >Console</a
+      >
+    </h5>
+    <!--
         <div class="create-button mt-3 col-3">
             <button id="connectFormButton"
                 class="iconButton medium notification iconHover custom-fa-col show"
@@ -14,10 +15,14 @@
             </button>
         </div>
         -->
-    </div>
-    <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1"
-        style="overflow-y: auto; outline: none;">
-        <!-- <ng-select [items]="SuperTeamOptions"
+  </div>
+  <ul
+    class="list-group console-list mt-2"
+    data-scrollbar="true"
+    tabindex="-1"
+    style="overflow-y: auto; outline: none"
+  >
+    <!-- <ng-select [items]="SuperTeamOptions"
            bindLabel="name"
            bindValue="id"
            [(ngModel)]="SuperTeamSelected"
@@ -25,50 +30,71 @@
            [clearable]="false"
            >
         </ng-select> -->
-        <!-- <div [hidden]="SuperTeamShow"> -->
-            <li class="list-group-item list-group-item-action" [hidden]="SuperTeamShow">
-                <app-select-option></app-select-option>
-            </li>
-        <!-- </div> -->
+    <!-- <div [hidden]="SuperTeamShow"> -->
+    <li class="list-group-item list-group-item-action" [hidden]="SuperTeamShow">
+      <app-select-option></app-select-option>
+    </li>
+    <!-- </div> -->
 
-        <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);" *ngFor="let menu of menus$">
-            <!-- [class.collapsed]="menu.subMenu?.length >= 1"
+    <div
+      class="scroll-content"
+      style="transform: translate3d(0px, 0px, 0px)"
+      *ngFor="let menu of menus$"
+    >
+      <!-- [class.collapsed]="menu.subMenu?.length >= 1"
             [attr.data-bs-toggle]="(menu.subMenu?.length>=1)?'collapse':''"
             [attr.ata-bs-target]="(menu.subMenu?.length>=1)?'#sidebar1':''"
             [attr.aria-expanded]="(menu.subMenu?.length>=1)?'false':''"
             [attr.aria-controls]="(menu.subMenu?.length>=1)?'sidebar1':''" -->
 
-            <ng-template [ngIf]="menu.subMenu?.length<1" [ngIfElse]="showWithSubMenu">
-                <li class="list-group-item list-group-item-action" >
-                    <a (click)="updatevalue(menu.link)" [routerLink]="['/console/'+menu.link]"
-                        class="d-flex align-items-center">
-                        <i class=" pe-2" [innerHTML]="menu.icon"></i>
-                        {{menu.name}}
-                    </a>
-                </li>
-            </ng-template>
-            <ng-template #showWithSubMenu>
-                <li class="list-group-item list-group-item-action collapsed" type="button"
-                    data-bs-toggle="collapse" aria-expanded="false"
-                    [attr.data-bs-target]="'#'+menu.slug"  [attr.aria-controls]="menu.slug">
-                    <a class="d-flex chevron-icon align-items-center">
-                        <i class="pe-2" [innerHTML]="menu.icon"></i>
-                        {{menu.name}}
-                    </a>
-                </li>
-                <ul class="list-unstyled-inner collapse" [attr.id]="menu.slug">
-                    <li *ngFor="let submenu of menu.subMenu" class="list-group-item list-group-item-action d-flex align-items-center">
-                        <a (click)="updatevalue(submenu.link)" [routerLink]="['/console/'+menu.link+'/'+submenu.link]"
-                            class="d-flex align-items-center">
-                            <i class=" pe-2" [innerHTML]="submenu.icon"></i>
-                            {{submenu.name}}
-                        </a>
-                    </li>
-                </ul>
-            </ng-template>
-        </div>
+      <ng-template
+        [ngIf]="menu.subMenu?.length < 1"
+        [ngIfElse]="showWithSubMenu"
+      >
+        <li class="list-group-item list-group-item-action">
+          <a
+            (click)="updatevalue(menu.link)"
+            [routerLink]="['/console/' + menu.link]"
+            class="d-flex align-items-center"
+          >
+            <i class="pe-2" [innerHTML]="menu.icon"></i>
+            {{ menu.name }}
+          </a>
+        </li>
+      </ng-template>
+      <ng-template #showWithSubMenu>
+        <li
+          class="list-group-item list-group-item-action collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          aria-expanded="false"
+          [attr.data-bs-target]="'#' + menu.slug"
+          [attr.aria-controls]="menu.slug"
+        >
+          <a class="d-flex chevron-icon align-items-center">
+            <i class="pe-2" [innerHTML]="menu.icon"></i>
+            {{ menu.name }}
+          </a>
+        </li>
+        <ul class="list-unstyled-inner collapse" [attr.id]="menu.slug">
+          <li
+            *ngFor="let submenu of menu.subMenu"
+            class="list-group-item list-group-item-action d-flex align-items-center"
+          >
+            <a
+              (click)="updatevalue(submenu.link)"
+              [routerLink]="['/console/' + menu.link + '/' + submenu.link]"
+              class="d-flex align-items-center"
+            >
+              <i class="pe-2" [innerHTML]="submenu.icon"></i>
+              {{ submenu.name }}
+            </a>
+          </li>
+        </ul>
+      </ng-template>
+    </div>
 
-        <!-- <li class="list-group-item list-group-item-action collapsed" type="button"
+    <!-- <li class="list-group-item list-group-item-action collapsed" type="button"
         data-bs-toggle="collapse"
                 data-bs-target="#sidebar1" aria-expanded="false" aria-controls="sidebar1">
                 <a class="d-flex chevron-icon align-items-center">
@@ -96,150 +122,279 @@
                     </a>
                 </li>
             </ul> -->
-    </ul>
-    <!-- Menus From DB -->
+  </ul>
+  <!-- Menus From DB -->
 
-    <!-- Hard Coded Menus -->
+  <!-- Hard Coded Menus -->
 
-    <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
-        <div class="scroll-content">
-            <li class="list-group-item list-group-item-action" *ngIf="hasPermission('channel')">
-                <a (click)="updatevalue('channels')" [routerLink]="['/console/channels']" class="d-flex align-items-center">
-                    <i class="fal fa-share-alt pe-2"></i>
-                    Channels
-                </a>
-            </li>
-            <li class="list-group-item list-group-item-action collapsed" type="button" data-bs-toggle="collapse" *ngIf="hasPermission('users') || hasPermission('teams')"
-                data-bs-target="#sidebar2" aria-expanded="true" aria-controls="sidebar2">
-                <a class="d-flex chevron-icon align-items-center" >
-                    <i class="fal fa-clone pe-2"></i>
-                    Users &amp; Teams
-                </a>
-            </li>
-            <ul class="list-unstyled-inner collapse" id="sidebar2">
-                <li class="list-group-item list-group-item-action" *ngIf="hasPermission('users')">
-                    <a (click)="updatevalue('users')" [routerLink]="['/console/users']" class="d-flex align-items-center">
-                        <i class="fal fa-users pe-2"></i>
-                        Users
-                    </a>
-                </li>
-                <li class="list-group-item list-group-item-action" *ngIf="hasPermission('teams')">
-                    <a (click)="updatevalue('teams')" [routerLink]="['/console/teams']" class="d-flex align-items-center">
-                        <i class="fal fa-users-class pe-2"></i>
-                        Teams
-                    </a>
-                </li>
-            </ul>
-            <li class="list-group-item list-group-item-action" *ngIf="hasPermission('rules')">
-                <a (click)="updatevalue('rules')" [routerLink]="['/console/rules']" class="d-flex align-items-center">
-                    <i class="fal fa-sliders-v pe-2"></i>
-                    Rules
-                </a>
-            </li>
-            <li class="list-group-item list-group-item-action" *ngIf="hasPermission('routes')">
-                <a (click)="updatevalue('routes')" [routerLink]="['/console/routes']" class="d-flex align-items-center">
-                    <i class="fal fa-chart-network pe-2"></i>
-                    EnteractRoute
-                </a>
-            </li>
-            <li class="list-group-item list-group-item-action collapsed" type="button" data-bs-toggle="collapse" *ngIf="hasPermission('templates')"
-                data-bs-target="#sidebar1" aria-expanded="true" aria-controls="sidebar1">
-                <a class="d-flex chevron-icon align-items-center" >
-                    <i class="fal fa-clone pe-2"></i>
-                    Templates
-                </a>
-            </li>
-            <ul class="list-unstyled-inner collapse" id="sidebar1">
-                <li class="list-group-item list-group-item-action d-flex align-items-center">
-                    <a (click)="updatevalue('templates/message')" [routerLink]="['/console/templates/message']" class="d-flex align-items-center">
-                        <i class="fal fa-chevron-right pe-2"></i>
-                        Messages
-                    </a>
-                </li>
-                <li class="list-group-item list-group-item-action d-flex align-items-center">
-                    <a (click)="updatevalue('templates/signatures')" [routerLink]="['/console/templates/signature']" class="d-flex align-items-center">
-                        <i class="fal fa-chevron-right pe-2"></i>
-                        Signatures
-                    </a>
-                </li>
-                <li class="list-group-item list-group-item-action d-flex align-items-center">
-                    <a (click)="updatevalue('templates/quickResponse')" [routerLink]="['/console/templates/quickResponse']" class="d-flex align-items-center">
-                        <i class="fal fa-chevron-right pe-2"></i>
-                        Quick Response
-                    </a>
-                </li>
+  <ul
+    class="list-group console-list mt-2"
+    data-scrollbar="true"
+    tabindex="-1"
+    style="overflow: auto; outline: none"
+  >
+    <div class="scroll-content">
+      <li
+        class="list-group-item list-group-item-action"
+        *ngIf="haschannelPermission"
+      >
+        <a
+          (click)="updatevalue('channels')"
+          [routerLink]="['/console/channels']"
+          class="d-flex align-items-center"
+        >
+          <i class="fal fa-share-alt pe-2"></i>
+          Channels
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action collapsed"
+        type="button"
+        data-bs-toggle="collapse"
+        *ngIf="hasusersPermission || hasteamsPermission"
+        data-bs-target="#sidebar2"
+        aria-expanded="true"
+        aria-controls="sidebar2"
+      >
+        <a class="d-flex chevron-icon align-items-center">
+          <i class="fal fa-clone pe-2"></i>
+          Users &amp; Teams
+        </a>
+      </li>
+      <ul class="list-unstyled-inner collapse" id="sidebar2">
+        <li
+          class="list-group-item list-group-item-action"
+          *ngIf="hasusersPermission"
+        >
+          <a
+            (click)="updatevalue('users')"
+            [routerLink]="['/console/users']"
+            class="d-flex align-items-center"
+          >
+            <i class="fal fa-users pe-2"></i>
+            Users
+          </a>
+        </li>
+        <li
+          class="list-group-item list-group-item-action"
+          *ngIf="hasteamsPermission"
+        >
+          <a
+            (click)="updatevalue('teams')"
+            [routerLink]="['/console/teams']"
+            class="d-flex align-items-center"
+          >
+            <i class="fal fa-users-class pe-2"></i>
+            Teams
+          </a>
+        </li>
+      </ul>
+      <li
+        class="list-group-item list-group-item-action"
+        *ngIf="hasrulesPermission"
+      >
+        <a
+          (click)="updatevalue('rules')"
+          [routerLink]="['/console/rules']"
+          class="d-flex align-items-center"
+        >
+          <i class="fal fa-sliders-v pe-2"></i>
+          Rules
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action"
+        *ngIf="hasroutesPermission"
+      >
+        <a
+          (click)="updatevalue('routes')"
+          [routerLink]="['/console/routes']"
+          class="d-flex align-items-center"
+        >
+          <i class="fal fa-chart-network pe-2"></i>
+          EnteractRoute
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action collapsed"
+        type="button"
+        data-bs-toggle="collapse"
+        *ngIf="hastemplatesPermission"
+        data-bs-target="#sidebar1"
+        aria-expanded="true"
+        aria-controls="sidebar1"
+      >
+        <a class="d-flex chevron-icon align-items-center">
+          <i class="fal fa-clone pe-2"></i>
+          Templates
+        </a>
+      </li>
+      <ul class="list-unstyled-inner collapse" id="sidebar1">
+        <li
+          class="list-group-item list-group-item-action d-flex align-items-center"
+        >
+          <a
+            (click)="updatevalue('templates/message')"
+            [routerLink]="['/console/templates/message']"
+            class="d-flex align-items-center"
+          >
+            <i class="fal fa-chevron-right pe-2"></i>
+            Messages
+          </a>
+        </li>
+        <li
+          class="list-group-item list-group-item-action d-flex align-items-center"
+        >
+          <a
+            (click)="updatevalue('templates/signatures')"
+            [routerLink]="['/console/templates/signature']"
+            class="d-flex align-items-center"
+          >
+            <i class="fal fa-chevron-right pe-2"></i>
+            Signatures
+          </a>
+        </li>
+        <li
+          class="list-group-item list-group-item-action d-flex align-items-center"
+        >
+          <a
+            (click)="updatevalue('templates/quickResponse')"
+            [routerLink]="['/console/templates/quickResponse']"
+            class="d-flex align-items-center"
+          >
+            <i class="fal fa-chevron-right pe-2"></i>
+            Quick Response
+          </a>
+        </li>
+      </ul>
+      <li
+        class="list-group-item list-group-item-action"
+        *ngIf="hasbusiness_hoursPermission"
+      >
+        <a
+          (click)="updatevalue('business-hours')"
+          [routerLink]="['/console/business-hours']"
+          class="d-flex align-items-center"
+        >
+          <i class="fal fa-business-time pe-2"></i>
+          Business hours
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action"
+        *ngIf="hastagsPermission"
+      >
+        <a
+          (click)="updatevalue('tags')"
+          [routerLink]="['/console/tags']"
+          class="d-flex align-items-center"
+        >
+          <i class="fal fa-tags pe-2"></i>
+          Tags
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action"
+        *ngIf="hasroles_n_permissionsPermission"
+      >
+        <a
+          (click)="updatevalue('roles-permissions')"
+          [routerLink]="['/console/roles-permissions']"
+          class="d-flex align-items-center"
+        >
+          <i class="fal fa-shield-check pe-2"></i>
+          Roles &amp; Permissions
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action"
+        *ngIf="hassla_policiesPermission"
+      >
+        <a
+          (click)="updatevalue('sla-policies')"
+          [routerLink]="['/console/sla-policies']"
+          class="d-flex align-items-center"
+        >
+          <i class="fal fa-flag pe-2"></i>
+          SLA Policies
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action"
+        *ngIf="hasskillsPermission"
+      >
+        <a
+          (click)="updatevalue('skill-data')"
+          [routerLink]="['/console/skills']"
+          class="d-flex align-items-center"
+        >
+          <i class="fal fa-fish pe-2"></i>
+          Skills
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action"
+        *ngIf="hascontactsPermission"
+      >
+        <a
+          (click)="updatevalue('contacts')"
+          [routerLink]="['/console/contacts']"
+          class="d-flex align-items-center"
+        >
+          <i class="fal fa-fish pe-2"></i>
+          Contacts
+        </a>
+      </li>
 
-            </ul>
-            <li class="list-group-item list-group-item-action" *ngIf="hasPermission('business_hours')">
-                <a (click)="updatevalue('business-hours')" [routerLink]="['/console/business-hours']" class="d-flex align-items-center">
-                    <i class="fal fa-business-time pe-2"></i>
-                    Business hours
-                </a>
-            </li>
-            <li class="list-group-item list-group-item-action" *ngIf="hasPermission('tags')" >
-                <a (click)="updatevalue('tags')" [routerLink]="['/console/tags']" class="d-flex align-items-center">
-                    <i class="fal fa-tags pe-2"></i>
-                    Tags
-                </a>
-            </li>
-            <li class="list-group-item list-group-item-action" *ngIf="hasPermission('roles_n_permissions')">
-                <a (click)="updatevalue('roles-permissions')" [routerLink]="['/console/roles-permissions']" class="d-flex align-items-center">
-                    <i class="fal fa-shield-check pe-2"></i>
-                    Roles &amp; Permissions
-                </a>
-            </li>
-            <li class="list-group-item list-group-item-action" *ngIf="hasPermission('sla_policies')">
-                <a (click)="updatevalue('sla-policies')" [routerLink]="['/console/sla-policies']" class="d-flex align-items-center">
-                    <i class="fal fa-flag pe-2"></i>
-                    SLA Policies
-                </a>
-            </li>
-            <li class="list-group-item list-group-item-action" *ngIf="hasPermission('skills')">
-                <a (click)="updatevalue('skill-data')" [routerLink]="['/console/skills']" class="d-flex align-items-center">
-                    <i class="fal fa-fish pe-2"></i>
-                    Skills
-                </a>
-            </li>
-            <li class="list-group-item list-group-item-action" *ngIf="hasPermission('contacts')">
-              <a (click)="updatevalue('contacts')" [routerLink]="['/console/contacts']" class="d-flex align-items-center">
-                  <i class="fal fa-fish pe-2"></i>
-                  Contacts
-              </a>
-          </li>
+      -
+      <li
+        class="list-group-item list-group-item-action"
+        *ngIf="hascase_managementPermission"
+      >
+        <a class="d-flex align-items-center">
+          <i class="fal fa-clipboard pe-2"></i>
+          Case Management
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action"
+        *ngIf="hasdocumentsPermission"
+      >
+        <a href="documents.html" class="d-flex align-items-center">
+          <i class="fal fa-folder-tree pe-2"></i>
+          Documents
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action"
+        *ngIf="hasknowledge_basePermission"
+      >
+        <a href="knowledge-base.html" class="d-flex align-items-center">
+          <i class="fal fa-book-open pe-2"></i>
+          Knowledge Base
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action"
+        *ngIf="haspreferencesPermission"
+      >
+        <a href="create-preferences.html" class="d-flex align-items-center">
+          <i class="fal fa-user-cog pe-2"></i>
+          Preferences
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action"
+        *ngIf="hashelpPermission"
+      >
+        <a href="help.html" class="d-flex align-items-center">
+          <i class="fal fa-question-circle pe-2"></i>
+          Help
+        </a>
+      </li>
+    </div>
+  </ul>
 
-        -    <li class="list-group-item list-group-item-action" *ngIf="hasPermission('case_management')">
-                <a  class="d-flex align-items-center">
-                    <i class="fal fa-clipboard pe-2"></i>
-                    Case Management
-                </a>
-            </li>
-            <li class="list-group-item list-group-item-action" *ngIf="hasPermission('documents')">
-                <a href="documents.html" class="d-flex align-items-center">
-                    <i class="fal fa-folder-tree pe-2"></i>
-                    Documents
-                </a>
-            </li>
-            <li class="list-group-item list-group-item-action" *ngIf="hasPermission('knowledge_base')">
-                <a href="knowledge-base.html" class="d-flex align-items-center">
-                    <i class="fal fa-book-open pe-2"></i>
-                    Knowledge Base
-                </a>
-            </li>
-            <li class="list-group-item list-group-item-action" *ngIf="hasPermission('preferences')">
-                <a href="create-preferences.html" class="d-flex align-items-center">
-                    <i class="fal fa-user-cog pe-2"></i>
-                    Preferences
-                </a>
-            </li>
-            <li class="list-group-item list-group-item-action" *ngIf="hasPermission('help')">
-                <a href="help.html" class="d-flex align-items-center">
-                    <i class="fal fa-question-circle pe-2"></i>
-                    Help
-                </a>
-            </li>
-        </div>
-    </ul>
-
-    <!-- Hard Coded Menus -->
+  <!-- Hard Coded Menus -->
 </div>
 <a href="javascript:void;" class="panelToggle"></a>
