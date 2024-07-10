@@ -110,7 +110,7 @@ export class LoginComponent implements OnInit {
             this.router.navigateByUrl('loginAs');
             //this.actorsService.sendActors(this.loginResponse?.actors)
           } else{
-            
+
 
           }
 

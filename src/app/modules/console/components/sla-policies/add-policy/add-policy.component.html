@@ -1,24 +1,51 @@
 <div class="create-business-hour console-body-wrapper" data-scrollbar="true" tabindex="-1"
     style="overflow-y:auto; outline: none;">
+    <!-- <div class="container pt-3 me-3">
+        <div class="form-floating col-md-11">
+            <select class="form-select" aria-label="Floating label select" [(ngModel)]="teamId" (change)="onTeamSelect()">
+                <option value="0" disabled selected>Please Select Team</option>
+                <option *ngFor="let team of teams" [value]="team.id" >{{ team.name }}</option>
+            </select>
+            <label for="timeZone">Teams</label>
+        </div>
+    </div> -->
+
     <div class="scroll-content">
-        <form [formGroup]="messageForm!" (ngSubmit)=" onSubmit()">
-            <div class="wider-container pt-3">
-                <div class="tab-header">
-                    <nav>
-                        <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-                            <button class="nav-link active" id="permission-detail-tab" data-bs-toggle="tab"
-                                data-bs-target="#permission-detail" type="button" role="tab"
-                                aria-controls="permission-detail" aria-selected="false">
-                                <h6>Details</h6>
-                            </button>
-                            <!-- <button class="nav-link" id="permission-rules-tab" data-bs-toggle="tab"
-                                data-bs-target="#permission-rules" type="button" role="tab"
-                                aria-controls="permission-rules" aria-selected="false">
-                                <h6>Rules</h6>
-                            </button> -->
+      
+        <div class="wider-container pt-3" style="margin-bottom: -10px;">
+            <div class="tab-body">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-header">
+                        <nav>
+                            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                                <button class="nav-link active" id="permission-detail-tab" data-bs-toggle="tab"
+                                    data-bs-target="#permission-detail" type="button" role="tab"
+                                    aria-controls="permission-detail" aria-selected="false">
+                                    <h6>Add/Update SLA</h6>
+                                </button>
+                                <!-- <button class="nav-link" id="permission-rules-tab" data-bs-toggle="tab"
+                                    data-bs-target="#permission-rules" type="button" role="tab"
+                                    aria-controls="permission-rules" aria-selected="false">
+                                    <h6>Rules</h6>
+                                </button> -->
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="floating-item">
+                        <div class="form-floating">
+                            <select class="form-select" aria-label="Floating label select" [(ngModel)]="teamId" (change)="onTeamSelect()">
+                                <option value="0" disabled selected>Please Select Team</option>
+                                <option *ngFor="let team of teams" [value]="team.id" >{{ team.name }}</option>
+                            </select>
+                            <label for="timeZone">Teams</label>
                         </div>
-                    </nav>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <form [formGroup]="messageForm!" (ngSubmit)=" onSubmit()">
+            <div class="wider-container pt-1">
                 <div class="tab-body">
                     <div class="tab-content" id="nav-tabContent">
                         <!-- Detail Section -->
@@ -28,6 +55,17 @@
                                 <div id="holiday-detail" class="tab-pane fade active show" role="tabpanel"
                                 aria-labelledby="holiday-detail-tab">
                                 <div class="business-detail-wrap">
+<!-- 
+                                    <div class="floating-item mb-3">
+                                        <div class="form-floating">
+                                            <select class="form-select multi-select" aria-label="Floating label select" [(ngModel)]="teamId" name="teamId" (ngModelChange)="onTeamSelect()">
+                                                <option value="0" disabled selected>Please Select Team</option>
+                                                <option *ngFor="let team of teams" [value]="team.id" >{{ team.name }}</option>
+                                            </select>
+                                            <label for="timeZone">Teams</label>
+                                        </div>
+                                    </div> -->
+
                                     <div class="floating-item mb-3">
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="policyName"
@@ -93,15 +131,15 @@
                                             <div class="col-lg-3">
                                                 <h6 class="charcoal mb-1">Every response time</h6>
                                             </div>
-                                            <div class="col-lg-1">
+                                            <div class="col-lg-3">
                                                 <h6 class="charcoal mb-1">Resolution time</h6>
                                             </div>
                                             <!-- <div class="col-lg-2">
                                                 <h6 class="charcoal mb-1">Operational hours</h6>
                                             </div> -->
-                                            <div class="col-lg-1">
+                                            <!-- <div class="col-lg-1">
                                                 <h6 class="charcoal mb-1">Escalation</h6>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                     <div class="sla-chart-body" formArrayName="slaTargets">
@@ -122,31 +160,71 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3">
-                                                    <input class="form-control form-control-sm border"
+                                                     <input class="form-control form-control-sm border"
+                                                             placeholder="Enter Time"
+                                                             aria-label="Positive integer only"
+                                                             formControlName="firstResponseTime"
+                                                             required>
+                                                      <div class="error-message"
+                                                           *ngIf="SLATargetsControls.controls[i].get('firstResponseTime')!.hasError('required')">
+                                                        This field is required.
+                                                      </div>
+                                                      <div class="error-message"
+                                                           *ngIf="SLATargetsControls.controls[i].get('firstResponseTime')!.hasError('pattern')">
+                                                           Please fill first response time in correct format.
+                                                      </div>
+                                                    <!-- <input class="form-control form-control-sm border"
                                                         placeholder="4d 6h 30m" aria-label="15m "
                                                         formControlName="firstResponseTime" required>
                                                     <div class="error-message"
                                                         *ngIf="SLATargetsControls.controls[i].get('firstResponseTime')!.hasError('required')" >
                                                         Please fill first response time in correct format.
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <div class="col-lg-3">
-                                                    <input class="form-control form-control-sm border" placeholder="Enter
+                                                    <input class="form-control form-control-sm border"
+                                                             placeholder="Enter Time"
+                                                             aria-label="Positive integer only"
+                                                             formControlName="everyResponseTime"
+                                                             required>
+                                                      <div class="error-message"
+                                                           *ngIf="SLATargetsControls.controls[i].get('everyResponseTime')!.hasError('required')">
+                                                        This field is required.
+                                                      </div>
+                                                      <div class="error-message"
+                                                           *ngIf="SLATargetsControls.controls[i].get('everyResponseTime')!.hasError('pattern')">
+                                                           Please fill every response time in correct format.
+                                                      </div>
+                                                    <!-- <input class="form-control form-control-sm border" placeholder="Enter
                                                               time open" aria-label="Enter time open"
                                                         formControlName="everyResponseTime" required>
                                                     <div class="error-message"
                                                         *ngIf="SLATargetsControls.controls[i].get('everyResponseTime')!.hasError('required')">
                                                         Please fill every response time in correct format.
-                                                    </div>
+                                                    </div> -->
                                                 </div>
-                                                <div class="col-lg-1">
-                                                    <input class="form-control form-control-sm border"
+                                                <div class="col-lg-3">
+                                                      <input class="form-control form-control-sm border"
+                                                             placeholder="Enter Time"
+                                                             aria-label="Positive integer only"
+                                                             formControlName="resolutionTime"
+                                                             required>
+                                                      <div class="error-message"
+                                                           *ngIf="SLATargetsControls.controls[i].get('resolutionTime')!.hasError('required')">
+                                                        This field is required.
+                                                      </div>
+                                                      <div class="error-message"
+                                                           *ngIf="SLATargetsControls.controls[i].get('resolutionTime')!.hasError('pattern')">
+                                                           Please fill resolution response time in correct format.
+                                                      </div>
+
+                                                    <!-- <input class="form-control form-control-sm border"
                                                         placeholder="Enter time open" aria-label="Enter time open"
                                                         formControlName="resolutionTime" required>
                                                     <div class="error-message"
                                                         *ngIf="SLATargetsControls.controls[i].get('resolutionTime')!.hasError('required')">
                                                         Please fill resolution time in correct format.
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <!-- <div class="col-lg-2">
                                                     <select class="form-select" id="businessHoursSelect"
@@ -158,14 +236,14 @@
                                                         </option>
                                                     </select>
                                                 </div> -->
-                                                <div class="col-lg-1 ps-4">
+                                                <!-- <div class="col-lg-1 ps-4">
                                                     <div class="form-check form-switch">
                                                         <input class="form-check-input" type="checkbox" id="flexSwitch1"
                                                             data-bs-toggle="collapse" data-bs-target="#slacheck1"
                                                             aria-expanded="true" aria-controls="slacheck1"
                                                             formControlName="isEscalated">
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -194,7 +272,7 @@
                                 <div class="buttons-wrap d-flex">
                                     <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4"
                                         (click)="cancelForm()">Cancel</button>
-                                    <button type="submit" class="btn skyBg ms-2   px-4 btn-medium saveBtn"
+                                    <button type="submit" [disabled]="messageForm.disabled" class="btn skyBg ms-2 px-4 btn-medium saveBtn"
                                         data-bs-target="">Save</button>
                                 </div>
                             </div>

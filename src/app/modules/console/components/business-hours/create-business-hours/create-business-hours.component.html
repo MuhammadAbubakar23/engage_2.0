@@ -90,8 +90,8 @@
                                     <div class="business-hour-list">
                                         <div class="form-check mb-3">
                                             <input class="form-check-input" type="radio" name="exampleRadios"
-                                                id="exampleRadios1" [value]="false" formControlName="roundTheClock"
-                                                (click)="hideWorkingDays()">
+                                                id="exampleRadios1" [value]="true" formControlName="roundTheClock"
+                                                (click)="showhideWorkingDays(false)">
                                             <div class="ms-2 me-auto silver lh-sm">
                                                 <div class="fw-bold darkblue mb-1">24 hrs x 7 days</div>
                                                 Round the clock support
@@ -99,8 +99,8 @@
                                         </div>
                                         <div class="form-check mb-3">
                                             <input class="form-check-input" type="radio" name="exampleRadios"
-                                                id="exampleRadios2" [value]="true" formControlName="customBusinessHours"
-                                                (click)="showWorkingDays()">
+                                                id="exampleRadios2" [value]="false" formControlName="roundTheClock"
+                                                (click)="showhideWorkingDays(true)">
                                             <div class="ms-2 me-auto silver lh-sm">
                                                 <div class="fw-bold darkblue mb-1">Custom business hours</div>
                                                 Setup custom working hours for your team
@@ -155,14 +155,14 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <!-- <div class="col-lg-3">
+                                                <div class="col-lg-3">
                                                     <div class="icon-anchor-wrap blue sky d-flex align-items-center">
                                                         <button class="iconButton medium ms-2">
                                                             <i class="fal fa-copy"></i>
                                                         </button>
-                                                        <a>Copy to all</a>
+                                                        <a (click)="copyToAll(item?.value)">Copy to all</a>
                                                     </div>
-                                                </div> -->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

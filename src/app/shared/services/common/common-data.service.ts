@@ -11,7 +11,6 @@ export class CommonDataService {
 
   env: any;
   constructor(private http: HttpClient) {
-    debugger
     this.baseUrl = window.location.origin;
     sessionStorage.setItem('baseUrl', this.baseUrl);
     if (this.baseUrl == 'https://keportal.enteract.live') {
@@ -210,6 +209,7 @@ export class CommonDataService {
   deleteTags = environment.links.console.deleteTags;
   getTagsByComayId = environment.links.console.getTagsByComayId;
   getAllTags = environment.links.console.defaultTags;
+  getPolicyByWing = environment.links.console.getPolicyByWing;
   // rules
   deleteRules = environment.links.console.deleteRules;
   getAllRules = environment.links.console.getAllRules;
@@ -244,6 +244,7 @@ export class CommonDataService {
   getTemplateStatus = environment.links.console.getTemplateStatus;
   deleteTemplate = environment.links.console.deleteTemplate;
   getRuleStatus = environment.links.console.getRuleStatus;
+  getCompanyTeams = environment.links.console.getCompanyTeams
 
   // teams
   // getAllTeams= environment.links.console.getAllTeams
@@ -1057,5 +1058,12 @@ export class CommonDataService {
   GetRuleStatus(id: any) {
     const url = `${this.autoresponderbaseurl}${this.getRuleStatus}?Id=${id}`;
     return this.http.get<any>(url, {});
+  }
+  GetPolicyByWing(wing: string) {
+    const url = `${this.env.ConsoleBaseUrl}${this.getPolicyByWing}?Id=${wing}`;
+    return this.http.get(url);
+  }
+  GetCompanyTeams() {
+    return this.http.get(this.env.IdentityBaseUrl+ this.getCompanyTeams);
   }
 }
