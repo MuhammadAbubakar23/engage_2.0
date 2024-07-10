@@ -20,6 +20,7 @@ import { PermissionState } from '../../permission-state/permission.state';
 import { OpensidebarService } from 'src/app/services/openSidebarService/opensidebar.service';
 import { SearchFilterService } from 'src/app/services/SearchFilter/search-filter.service';
 import { PermissionService } from 'src/app/shared/services/permission.service';
+import { MenuService } from 'src/app/shared/services/menu.service';
 
 @Component({
   selector: 'role-menu',
@@ -28,18 +29,21 @@ import { PermissionService } from 'src/app/shared/services/permission.service';
 })
 export class RoleMenuComponent implements OnInit {
   // MenuModel = new MenuModel();
+  hasConsolePermission: boolean = false;
+  hasMonitoringPermission: boolean = false;
   permissions$: any;
   permission$: any;
   menus$!: MenuModel[];
+  showAnalytics = false;
   //menu$ :Observable<MenuModel[]>;
   //menu$ :Observable<any>;
   loading$: any;
   activeChannel: string = '';
   activeMenu: string = '';
-  baseurl:any;
+  baseurl: any;
   // restrictedAgentsString = 'Farah.khalid@abacus-global.com, aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, Mishal.Javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, saba.riaz@jazz.com.pk, pringle.charles@jazz.com.pk, uzma.hashmat@jazz.com.pk';
   restrictedAgentsString = 'farah.khalid@abacus-global.com, aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, mishal.javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, pringle.charles@jazz.com.pk, uzma.hashmat@jazz.com.pk';
-    restrictedAgent: string = '';
+  restrictedAgent: string = '';
 
   // onlyAnalyticsTabVisible = 'kashif.waheed@ibex.co, jazzlhrwfm@ibex.co, JazzLHRWFM@ibex.co';
   onlyAnalyticsTabVisible = 'kashif.waheed@ibex.co, jazzlhrwfm@ibex.co, jazzlhrwfm@ibex.co';
@@ -53,8 +57,10 @@ export class RoleMenuComponent implements OnInit {
     private _route: Router,
     private storage: StorageService,
     private sidebar: OpensidebarService,
-    private SearchFilterService:SearchFilterService,
-    private _perS:PermissionService
+    private SearchFilterService: SearchFilterService,
+    private _perS: PermissionService,
+    private commonService: CommonDataService,
+    private _menuS: MenuService
   ) {
     //  this.menu$ = this.MenuStore.select(getEmargingEqual("role_main_left_menu"));
     //  this.menus$ = this.menu$.pipe(share(), startWith(false));
@@ -64,9 +70,23 @@ export class RoleMenuComponent implements OnInit {
     //  this.loading$ = this.PermissionStore.select(getPermissionsLoading);
     //  this.PermissionStore.dispatch(updatePermissionsLetters());
   }
+  getReportMenus() {
+    this.commonService.getReportsMenuByRole({
+      "ActorId": sessionStorage.getItem('activeActorId'),
+      "Inline": false
+    }).subscribe((res: any) => {
+      if (res.length > 0) {
+        this.showAnalytics = true;
+        this._menuS.changeAnalyticsMenu(res);
+      }
+    });
+  }
+
 
   ngOnInit(): void {
-    this.baseurl=window.location.origin
+    this.hasConsolePermission = this.hasPermission('console');
+    this.hasMonitoringPermission = this.hasPermission('automation');
+    this.baseurl = window.location.origin
     this.activeChannel = this._route.url.split('/')[2];
     let data = this.storage.retrive('main', 'O').local;
     this.restrictedAgent = data.originalUserName.toLowerCase();
@@ -77,11 +97,7 @@ export class RoleMenuComponent implements OnInit {
       }
     );
 
-    // this.permissions$  = this.PermissionStore.select(getPermissionBySlug("_upur_"));
-
-    // .subscribe((item) => {
-    //   this.menus$ = item;
-    // })
+    this.getReportMenus();
   }
 
   assignedProfile = sessionStorage.getItem('assignedProfile');
@@ -89,6 +105,8 @@ export class RoleMenuComponent implements OnInit {
     this.activeMenu = this._route.url.split('/')[1];
     this.sidebar.sendsidebarvalue(this.activeMenu);
   }
+
+
 
   update(menuLink: any) {
     this.activeChannel = menuLink.split('/')[1];
@@ -107,11 +125,13 @@ export class RoleMenuComponent implements OnInit {
     this.toastermessage = false;
   }
 
-  hasPermission(permissionName: string) {
 
+
+  hasPermission(permissionName: string) {
     const isAccessible = this._perS.hasPermission(permissionName)
     return isAccessible
   }
+
   AlterMsg: any;
   toastermessage: any;
 
@@ -124,7 +144,7 @@ export class RoleMenuComponent implements OnInit {
       }, 4000);
     }
   }
-  resetFilters(){
+  resetFilters() {
     this.SearchFilterService.resetAllFilter();
   }
 }

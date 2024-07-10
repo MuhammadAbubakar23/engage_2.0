@@ -699,7 +699,7 @@ export class ConversationComponent implements OnInit {
   setFromAndToValues() {
     if (this.TotalUnresponded < this.pageSize) {
       this.to = this.TotalUnresponded;
-     } 
+     }
     //  else if (
     //   this.TotalUnresponded > this.pageSize &&
     //   this.to < this.pageSize
@@ -707,11 +707,10 @@ export class ConversationComponent implements OnInit {
     else {
       this.to = this.pageSize;
     }
-  
+
     this.from = this.ConversationList.length === 0 ? 0 : 1;
   }
   removeAssignedQueryListener(res: any) {
-    
     if (this.currentUrl.split('/')[2] == 'focused') {
       this.groupByDateList.forEach((group) => {
         const index = group.items.findIndex(
@@ -745,7 +744,7 @@ export class ConversationComponent implements OnInit {
     }
   }
   addOneMore(){
-    
+
 
     this.filterDto = {
       fromDate: this.fromDate,
@@ -772,7 +771,7 @@ export class ConversationComponent implements OnInit {
       this.ConversationList.push(res.List[19]);
       this.changeDetect.detectChanges()
     })
-  
+
   }
   Reload() {
     if (this.FlagForAssignToMe == 'assigned_to_me') {

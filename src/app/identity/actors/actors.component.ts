@@ -53,12 +53,15 @@ export class ActorsComponent implements OnInit {
     this.actors = data.actors;
   }
 
+
   getPermissions(actorId: number) {
+    sessionStorage.setItem('activeActorId', JSON.stringify(actorId));
     this.commonService.getPermissionByRole({
       "ActorId": actorId,
-      "Inline": false
+      "Inline": true
     }).subscribe((res: any) => {
-      sessionStorage.setItem('Permissions', JSON.stringify(res.map((item: any) => item.slug)));
+      console.log(res);
+      sessionStorage.setItem('Permissions', JSON.stringify(res.priviledge));
       try {
         this.commonService.UserLogin().subscribe(() => {
           this.sendSkillIdsService.sendSkillIds(this.loginResponse?.skills);

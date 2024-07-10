@@ -71,7 +71,7 @@
               />
             </a>
             <a
-              *ngIf="hasPermission('new_sla_policies')"
+              *ngIf="hasCreatePermission"
               (click)="updatevalue('consoleCreateSlaPolicyHeader')"
               [routerLink]="['/console/sla-policy/create']"
               class="ms-2"
@@ -119,8 +119,8 @@
                 <div
                   class="icons-list d-flex justify-content-end dropstart"
                   *ngIf="
-                    hasPermission('update_sla_policies') ||
-                    hasPermission('remove_sla_policies')
+                    hasupdatePermission ||
+                    hasDeletePermission
                   "
                 >
                   <button
@@ -142,7 +142,7 @@
                       <a
                         class="dropdown-item"
                         (click)="editTemplate(message)"
-                        *ngIf="hasPermission('update_sla_policies')"
+                        *ngIf="hasupdatePermission"
                         >Edit</a
                       >
                     </li>
@@ -150,7 +150,7 @@
                       <a
                         class="dropdown-item"
                         (click)="deleteTemplate(message)"
-                        *ngIf="hasPermission('remove_sla_policies')"
+                        *ngIf="hasDeletePermission"
                         >Delete</a
                       >
                     </li>

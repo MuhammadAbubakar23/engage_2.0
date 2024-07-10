@@ -34,6 +34,9 @@ export class TeamsComponent implements OnInit {
   perPage: number = 15;
   currentPage: number = 1;
   totalCount: any;
+  hasCreatePermission: boolean=false;
+  hasupdatePermission: boolean=false;
+  hasDeletePermission: boolean=false;
   constructor(private headerService: HeaderService,
     private commonService: CommonDataService,
     private route: Router,
@@ -42,6 +45,9 @@ export class TeamsComponent implements OnInit {
     private _perS:PermissionService,
     private toaster: ToasterService) { }
   ngOnInit() {
+    this.hasCreatePermission = this.hasPermission('_nwtm_');
+    this.hasupdatePermission = this.hasPermission('_uptm_');
+    this.hasDeletePermission = this.hasPermission('_rmvtm_');
     this.getTeamList()
   }
   updatevalue(string: any) {
@@ -71,7 +77,7 @@ hasPermission(permissionName: string) {
     this.spinnerService.show()
     this.commonService.GetAllTeams(data).subscribe((res: any) => {
       this.teams = res.Teams;
-      
+
       this.logs = this.teams
       this.totalCount = res.TotalCount
       this.spinnerService.hide()

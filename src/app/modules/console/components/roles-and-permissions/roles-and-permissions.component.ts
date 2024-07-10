@@ -6,6 +6,7 @@ import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CreateRolesComponent } from './create-roles/create-roles.component';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 @Component({
   selector: 'app-roles-and-permissions',
   standalone: true,
@@ -18,6 +19,9 @@ export class RolesAndPermissionsComponent implements OnInit {
   RolesCount: number = 0;
   searchText: string = '';
   selectedSortOption: string = 'All';
+  hasCreatePermission: boolean=false;
+  hasupdatePermission: boolean=false;
+  hasDeletePermission: boolean=false;
   applySearchFilter() {
     const searchTextLower = this.searchText.toLowerCase();
     this.Roles = this._Activatedroute.snapshot.data["roles"].filter((role: { name: any }) => {
@@ -28,8 +32,15 @@ export class RolesAndPermissionsComponent implements OnInit {
   }
   messages: any[] = [];
   //Teams: Array<any> = [];
-  constructor(private headerService: HeaderService, private _Activatedroute: ActivatedRoute, private router: Router, private commonService: CommonDataService) { }
+  hasPermission(permissionName: string) {
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
+  }
+  constructor(private headerService: HeaderService, private _Activatedroute: ActivatedRoute, private router: Router, private commonService: CommonDataService,private _perS:PermissionService) { }
   ngOnInit(): void {
+    this.hasCreatePermission = this.hasPermission('_nwro_');
+  this.hasupdatePermission = this.hasPermission('_upro_');
+  this.hasDeletePermission = this.hasPermission('_rmvro_');
     this.Roles = this._Activatedroute.snapshot.data["roles"];
     this.RolesCount = this.Roles.length;
     this.selectedSortOption = 'All'; // Set the default sort option

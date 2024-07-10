@@ -16,6 +16,25 @@ import { PermissionService } from 'src/app/shared/services/permission.service';
   styleUrls: ['./console-menu.component.scss']
 })
 export class ConsoleMenuComponent implements OnInit {
+
+  haschannelPermission: boolean=false;
+  hasusersPermission: boolean=false;
+  hasteamsPermission: boolean=false;
+  hasroutesPermission: boolean=false;
+  hasrulesPermission: boolean=false;
+  hastemplatesPermission: boolean=false;
+  hasbusiness_hoursPermission: boolean=false;
+  hastagsPermission: boolean=false;
+  hasroles_n_permissionsPermission: boolean=false;
+  hassla_policiesPermission: boolean=false;
+  hasskillsPermission: boolean=false;
+  hascontactsPermission: boolean=false;
+  hascase_managementPermission: boolean=false;
+  hasdocumentsPermission: boolean=false;
+  hasknowledge_basePermission: boolean=false;
+  haspreferencesPermission: boolean=false;
+
+  hashelpPermission: boolean=false;
   anymenus$ :any;
   menus$ :any;
 
@@ -25,15 +44,61 @@ export class ConsoleMenuComponent implements OnInit {
   SuperTeamSelected:number=0;
   SuperTeamOptions:any=[];
   SuperTeamShow:boolean = true;
-
+  menuItems = [
+    { link: '/console/channels', name: 'Channels', permission: 'hasChannelPermission' },
+    {
+      name: 'Users & Teams', permission: 'hasUsersPermission || hasTeamsPermission', subItems: [
+        { link: '/console/users', name: 'Users', permission: 'hasUsersPermission' },
+        { link: '/console/teams', name: 'Teams', permission: 'hasTeamsPermission' }
+      ]
+    },
+    { link: '/console/rules', name: 'Rules', permission: 'hasRulesPermission' },
+    { link: '/console/routes', name: 'EnteractRoute', permission: 'hasRoutesPermission' },
+    {
+      name: 'Templates', permission: 'hasTemplatesPermission', subItems: [
+        { link: '/console/templates/message', name: 'Messages', permission: 'true' },
+        { link: '/console/templates/signature', name: 'Signatures', permission: 'true' },
+        { link: '/console/templates/quickResponse', name: 'Quick Response', permission: 'true' }
+      ]
+    },
+    { link: '/console/business-hours', name: 'Business hours', permission: 'hasBusinessHoursPermission' },
+    { link: '/console/tags', name: 'Tags', permission: 'hasTagsPermission' },
+    { link: '/console/roles-permissions', name: 'Roles & Permissions', permission: 'hasRolesAndPermissionsPermission' },
+    { link: '/console/sla-policies', name: 'SLA Policies', permission: 'hasSlaPoliciesPermission' },
+    { link: '/console/skills', name: 'Skills', permission: 'hasSkillsPermission' },
+    { link: '/console/contacts', name: 'Contacts', permission: 'hasContactsPermission' },
+    { link: 'documents.html', name: 'Documents', permission: 'hasDocumentsPermission' },
+    { link: 'knowledge-base.html', name: 'Knowledge Base', permission: 'hasKnowledgeBasePermission' },
+    { link: 'create-preferences.html', name: 'Preferences', permission: 'hasPreferencesPermission' },
+    { link: 'help.html', name: 'Help', permission: 'hasHelpPermission' }
+  ];
   constructor(private store: Store<MenuState>, private treegen: TreeGenService<MenuModel>, private headerService: HeaderService,
     private storage:StorageService,private _perS:PermissionService) {
     // this.menu$ = this.store.select(getEmargingEqual("role_console_left_menu"));
     // this.loading$ = this.store.select(getMenusLoading)
     // this.store.dispatch(loadMenusList())
   }
-
+  // checkPermissions(){
+  //   this.haschannelPermission = this.hasPermission('channels');
+  //   this.hasusersPermission = this.hasPermission('users');
+  //   this.hasteamsPermission = this.hasPermission('teams');
+  //   this.hasroutesPermission = this.hasPermission('routes');
+  //   this.hasrulesPermission = this.hasPermission('rules');
+  //   this.hastemplatesPermission = this.hasPermission('templates');
+  //   this.hasbusiness_hoursPermission=this.hasPermission('business-hours');
+  //   this.hastagsPermission = this.hasPermission('tags');
+  //   this.hasroles_n_permissionsPermission = this.hasPermission('roles-permissions');
+  //   this.hasskillsPermission = this.hasPermission('skills');
+  //   this.hascontactsPermission = this.hasPermission('contacts');
+  //   this.hascase_managementPermission = this.hasPermission('case-management');
+  //   this.hasdocumentsPermission = this.hasPermission('console-documents');
+  //   this.hasknowledge_basePermission = this.hasPermission('console-knowledgeBase');
+  //   this.haspreferencesPermission = this.hasPermission('preferences');
+  //   this.hashelpPermission = this.hasPermission('console-help');
+  //   this.hassla_policiesPermission=this.hasPermission('sla-policies')
+  // }
   ngOnInit(): void {
+    // this.checkPermissions();
     this.menu$ = this.store.select(getEmargingNotEqual("role_console_left_menu")).subscribe((item) => {
       this.menus$ = item;
       this.menus$ = this.treegen.buildTree(item, 400);
@@ -58,4 +123,5 @@ export class ConsoleMenuComponent implements OnInit {
 
     this.headerService.updateMessage(string);
   }
+
 }

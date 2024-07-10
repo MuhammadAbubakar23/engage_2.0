@@ -34,6 +34,9 @@ export class TagsComponent implements OnInit {
   sortby: any
   searchText: string = '';
   selectedTextColor = ' #FF0000';
+  hasCreatePermission: boolean=false;
+  hasupdatePermission: boolean=false;
+  hasDeletePermission: boolean=false;
   applySearchFilter(): void {
     if (this.searchText.length >= 2) {
       this.getTags()
@@ -51,6 +54,9 @@ hasPermission(permissionName: string) {
     return isAccessible
   }
   ngOnInit(): void {
+    this.hasCreatePermission = this.hasPermission('_nwtg_');
+    this.hasupdatePermission = this.hasPermission('_uptg_');
+    this.hasDeletePermission = this.hasPermission('_rmvtg_');
     this.getTags();
     // this.GetAllTags()
   }

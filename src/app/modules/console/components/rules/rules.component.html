@@ -76,7 +76,7 @@
                                         <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
                                             (ngModelChange)="searchText ? applySearchFilter() : refreshtableData()">
                                     </a>
-                                    <a (click)="updatevalue('ConsoleCreateRuleHeader')" *ngIf="hasPermission('new_role')"
+                                    <a (click)="updatevalue('ConsoleCreateRuleHeader')" *ngIf="hasCreatePermission"
                                         [routerLink]="['/console/add-rules']" class="ms-2">
                                         <button type="button" class="btn btn-success">
                                             <i class="fal fa-plus me-2"></i>
@@ -134,7 +134,7 @@
                                                         <li>
                                                             <!-- <a class="dropdown-item" (click)="editTemplate(row)">Edit</a> -->
                                                         </li>
-                                                        <li *ngIf="hasPermission('remove_rule')">
+                                                        <li *ngIf="hasDeletePermission">
                                                             <a class="dropdown-item"
                                                                 (click)="deleteTemplate(r)">Delete</a>
 

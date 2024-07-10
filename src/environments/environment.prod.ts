@@ -36,14 +36,14 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
-  CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  ProfileBaseUrl: 'https://profiler.enteract.live/api/',
-  ServiceBaseUrl: '',
-  consoleBaseUrl: 'https://console.enteract.live/api/',
-  keReportsBaseUrl: 'https://kereports.enteract.live/api/',
-  LinkedInBaseUrl: 'https://linkdservice.enteract.live/api/',
+  // IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
+  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
+  // ServiceBaseUrl: '',
+  // consoleBaseUrl: 'https://console.enteract.live/api/',
+  // keReportsBaseUrl: 'https://kereports.enteract.live/api/',
+  // LinkedInBaseUrl: 'https://linkdservice.enteract.live/api/',
   // botBaseUrl:'',
 
   // For Jazz
@@ -116,7 +116,6 @@ export const environment = {
   // intentBot: 'https://intentBot.enteract.app/',
   // autoresponderbaseurl: 'https://d387-203-135-1-210.ngrok-free.app/api/',
   profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
-
   // testing uiengage company id 657
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
   // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
@@ -161,8 +160,9 @@ export const environment = {
       AddTeam: 'Accesses/Teams',
       TeamProperties: 'Accesses/Properties',
       // accessrole: 'Roles/NewPreviews', //"Permissions/role",
-      permissionrole: 'Roles/NewPreviews', //"Permissions/role",
-      RolesPermissions: 'Roles/Fetch',
+      RolesPermissions: 'Roles/NewPreviews', //"Permissions/role",
+      ReportsPermission:'Report/GetReportsPreview',
+      //RolesPermissions: 'Roles/Fetch',
       permissions: 'Roles/Permissions',
       RoleProperties: 'Permissions/Properties',
       AddRole: 'Permissions/Roles',
@@ -220,6 +220,8 @@ export const environment = {
       addBotConfig: 'ProfilePagesBotConfig/Add',
       deleteSkill: 'Skill/Delete',
       getAllWing: 'Teams/GetAllWing',
+      getPolicyByWing: 'SLAPolicies/GetByWing',
+      getCompanyTeams:'Teams/GetCompanyTeams',
 
       // service Base rules
       getEntitiesRules: 'EntityConfigs/GetEntities',
@@ -228,7 +230,7 @@ export const environment = {
       getFbRule: 'RuleConfigs/GetAll',
       softDeleteFb: 'RuleConfigs/Delete',
       // getTagsAll: 'Tags/GetAll',
-      getTagsByCompanyId: 'Tags/GetTagsByCompayId',
+      getTagsByCompanyId: 'Tags/GetSupreamTags',
       updateSkill: 'Skill/Update',
       getSkillsbyId: 'Skill/GetById',
       getSkills: 'Skill/GetSkills',
@@ -303,6 +305,13 @@ export const environment = {
       viewResponse: 'responses/get',
       getRuleChatBot: 'rules/get',
       getStoriesChatBot: 'stories/get',
+      ruleDelete: 'rules/delete',
+      storyDelete: 'stories/delete',
+      trainBot: 'models/train',
+      createBotTrain: 'models/create',
+      runChatBot: 'models/run',
+      chatBotWdidget: 'chat',
+      stopChatBot: 'models/stop'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

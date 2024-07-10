@@ -160,8 +160,10 @@ export const environment = {
       AddTeam: 'Accesses/Teams',
       TeamProperties: 'Accesses/Properties',
       // accessrole: 'Roles/NewPreviews', //"Permissions/role",
-      permissionrole: 'Roles/NewPreviews', //"Permissions/role",
-      RolesPermissions: 'Roles/Fetch',
+      RolesPermissions: 'Roles/NewPreviews', //"Permissions/role",
+      ReportsMenus:'Report/GetReportsPreview',
+      ConsoleMenus:'Roles/NewMenuPreviews',
+      //RolesPermissions: 'Roles/Fetch',
       permissions: 'Roles/Permissions',
       RoleProperties: 'Permissions/Properties',
       AddRole: 'Permissions/Roles',
@@ -219,6 +221,8 @@ export const environment = {
       addBotConfig: 'ProfilePagesBotConfig/Add',
       deleteSkill: 'Skill/Delete',
       getAllWing: 'Teams/GetAllWing',
+      getPolicyByWing: 'SLAPolicies/GetByWing',
+      getCompanyTeams:'Teams/GetCompanyTeams',
 
       // service Base rules
       getEntitiesRules: 'EntityConfigs/GetEntities',

@@ -46,7 +46,7 @@
             <a
               (click)="updatevalue('consoleCreateSkillHeader')"
               [routerLink]="['/console/skills/create/0']"
-              *ngIf="hasPermission('new_skill')"
+              *ngIf="hasCreatePermission"
               class="ms-2"
             >
               <button type="button" class="btn btn-success">
@@ -200,10 +200,7 @@
               </td>
               <td>
                 <ng-container
-                  *ngIf="
-                    hasPermission('update_skill') ||
-                    hasPermission('remove_skill')
-                  "
+                  *ngIf="hasupdatePermission || hasDeletePermission"
                 >
                   <div
                     class="icons-list d-flex justify-content-end dropstart"
@@ -218,12 +215,12 @@
                       <i class="far fa-ellipsis-v"></i>
                     </button>
                     <ul class="dropdown-menu fade">
-                      <li *ngIf="hasPermission('update_skill')">
+                      <li *ngIf="hasupdatePermission">
                         <a class="dropdown-item" (click)="editUser(team.id)"
                           ><i class="fal fa-edit me-2"></i> Edit</a
                         >
                       </li>
-                      <li *ngIf="hasPermission('remove_skill')">
+                      <li *ngIf="hasDeletePermission">
                         <a
                           class="dropdown-item delete-dd"
                           data-bs-toggle="modal"

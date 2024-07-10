@@ -32,6 +32,9 @@ export class SkillsComponent implements OnInit {
   isSelectedDepartment: any = '';
   toastermessage: boolean = false
   isDepartmentArray: any[] = [];
+  hasCreatePermission: boolean=false;
+  hasupdatePermission: boolean=false;
+  hasDeletePermission: boolean=false;
   // id: any = ''
   constructor(private headerService: HeaderService,
     private dataExChange: DataExchangeServicesService,
@@ -46,6 +49,9 @@ hasPermission(permissionName: string) {
     return isAccessible
   }
   ngOnInit(): void {
+    this.hasCreatePermission = this.hasPermission('_nwskl_');
+    this.hasupdatePermission = this.hasPermission('_upskl_');
+    this.hasDeletePermission = this.hasPermission('_rmvskl_');
     this.getSkillList()
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));

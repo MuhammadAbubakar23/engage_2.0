@@ -27,17 +27,23 @@ export class RulesComponent implements OnInit {
   ruleTypes: any[] = [];
   selectedChannel = '';
   selectedChannelSlug = '';
+  hasCreatePermission: boolean=false;
+  hasupdatePermission: boolean=false;
+  hasDeletePermission: boolean=false;
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router,
      private spinnerServerice: NgxSpinnerService,private _perS:PermissionService) { }
 
   ngOnInit(): void {
+    this.hasCreatePermission = this.hasPermission('_nwrul_');
+    this.hasupdatePermission = this.hasPermission('_uprul_');
+    this.hasDeletePermission = this.hasPermission('_rmvrul_');
+
     this.refreshtableData();
     this.getAutoResponderTag();
     this.loadServices()
   }
 
 hasPermission(permissionName: string) {
-
     const isAccessible = this._perS.hasPermission(permissionName)
     return isAccessible
   }

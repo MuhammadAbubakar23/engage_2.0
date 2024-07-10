@@ -11,7 +11,6 @@ export class CommonDataService {
 
   env: any;
   constructor(private http: HttpClient) {
-    debugger
     this.baseUrl = window.location.origin;
     sessionStorage.setItem('baseUrl', this.baseUrl);
     if (this.baseUrl == 'https://keportal.enteract.live') {
@@ -210,6 +209,7 @@ export class CommonDataService {
   deleteTags = environment.links.console.deleteTags;
   getTagsByComayId = environment.links.console.getTagsByComayId;
   getAllTags = environment.links.console.defaultTags;
+  getPolicyByWing = environment.links.console.getPolicyByWing;
   // rules
   deleteRules = environment.links.console.deleteRules;
   getAllRules = environment.links.console.getAllRules;
@@ -244,6 +244,7 @@ export class CommonDataService {
   getTemplateStatus = environment.links.console.getTemplateStatus;
   deleteTemplate = environment.links.console.deleteTemplate;
   getRuleStatus = environment.links.console.getRuleStatus;
+  getCompanyTeams = environment.links.console.getCompanyTeams
 
   // teams
   // getAllTeams= environment.links.console.getAllTeams
@@ -251,8 +252,9 @@ export class CommonDataService {
   // updateTeam = environment.links.console.updateTeam
   //service
   userlogin = environment.links.common.userlogin;
-  rolesPermissions = environment.links.identity.RolesPermissions
-  reportsPermission = environment.links.identity.ReportsPermission
+  rolesPermissions = environment.links.identity.RolesPermissions;
+  reportsMenus = environment.links.identity.ReportsMenus;
+  consoleMenus = environment.links.identity.ConsoleMenus;
   addSurvey = environment.links.service.addSurvey;
   addCSAT = environment.links.service.addCSAT;
   KECSAT = environment.links.profile.KECSAT;
@@ -284,8 +286,11 @@ export class CommonDataService {
   getPermissionByRole(form: any) {
     return this.http.post(this.env.IdentityBaseUrl + this.rolesPermissions, form);
   }
-  getReportsPermissionByRole(form: any) {
-    return this.http.post(this.env.IdentityBaseUrl + this.reportsPermission, form);
+  getReportsMenuByRole(form: any) {
+    return this.http.post(this.env.IdentityBaseUrl + this.reportsMenus, form);
+  }
+  getConsoleMenuByRole(actorId: any) {
+    return this.http.get(`${this.env.IdentityBaseUrl}${this.consoleMenus}?ActorId=${actorId}`);
   }
   GetTagsList() {
     return this.http.get(this.env.CommonBaseUrl + this.tagsList);
@@ -1057,5 +1062,12 @@ export class CommonDataService {
   GetRuleStatus(id: any) {
     const url = `${this.autoresponderbaseurl}${this.getRuleStatus}?Id=${id}`;
     return this.http.get<any>(url, {});
+  }
+  GetPolicyByWing(wing: string) {
+    const url = `${this.env.ConsoleBaseUrl}${this.getPolicyByWing}?Id=${wing}`;
+    return this.http.get(url);
+  }
+  GetCompanyTeams() {
+    return this.http.get(this.env.IdentityBaseUrl + this.getCompanyTeams);
   }
 }

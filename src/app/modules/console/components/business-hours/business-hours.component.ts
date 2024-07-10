@@ -22,6 +22,9 @@ export class BusinessHoursComponent implements OnInit {
   perPage: number = 15;
   currentPage: number = 1;
   totalCount: any;
+  hasCreatePermission: boolean=false;
+  hasupdatePermission: boolean=false;
+  hasDeletePermission: boolean=false;
   applySearchFilter() {
     if (this.searchText.trim() !== '') {
       this.refreshMessages()
@@ -64,6 +67,9 @@ hasPermission(permissionName: string) {
     return isAccessible
   }
   ngOnInit(): void {
+    this.hasCreatePermission = this.hasPermission('_nwbzhr_');
+    this.hasupdatePermission = this.hasPermission('_upbzhr_');
+    this.hasDeletePermission = this.hasPermission('_rmvbzhr_');
     this.refreshMessages()
   }
   updatevalue(string: any) {
