@@ -29,11 +29,9 @@ export class ChatBotHistoryComponent implements OnInit {
     this._chatVisibilityS.newChatId$.subscribe((newChat: any) => {
       if (newChat) {
 
-        const isEqual = this.chats.includes(newChat.slug)
-        if (isEqual) {
-          this.chats.splice(newChat.slug, 1);
-        }
 
+        const isEqual = this.chats.includes(newChat.slug)
+        //this.chats.splice(existingChatIndex, 1);
         this.getChatDetails(newChat);
       }
     });

@@ -76,36 +76,40 @@ export class ChatBotHistoryMenuComponent implements OnInit {
   }
   getChatBotHistory() {
      this._botService.chatBotHistory().subscribe((res:any)=>{
+
+         res.slugs.forEach((item:any,index:any)=>{
+          item.name="Bot"+`${index+1}`
+         })
          this.activechatBotHistory=res.slugs;
-         this.activechatBotHistory=[
-          {
-              "createdAt": "2024-07-11T07:31:14.164Z",
-              "id": 11,
-              "lastUpdatedAt": "2024-07-11T07:31:14.164Z",
-              "name": "Chat",
-              "slug": "746f2cb0-d131-4319-b949-435581d2d514",
-              "user_id": null,
-              "workspace_id": 4
-          },
-          {
-              "createdAt": "2024-07-11T07:31:16.402Z",
-              "id": 12,
-              "lastUpdatedAt": "2024-07-11T07:31:16.402Z",
-              "name": "Chat",
-              "slug": "ae26f2f1-5829-4f27-8ae1-99df940dbaf9",
-              "user_id": null,
-              "workspace_id": 4
-          },
-          {
-              "createdAt": "2024-07-11T07:31:17.974Z",
-              "id": 13,
-              "lastUpdatedAt": "2024-07-11T07:31:17.974Z",
-              "name": "Chat",
-              "slug": "c6a3795e-b1a7-4263-9f96-08f6ba7e3c50",
-              "user_id": null,
-              "workspace_id": 4
-          }
-      ]
+      //    this.activechatBotHistory=[
+      //     {
+      //         "createdAt": "2024-07-11T07:31:14.164Z",
+      //         "id": 11,
+      //         "lastUpdatedAt": "2024-07-11T07:31:14.164Z",
+      //         "name": "Chat",
+      //         "slug": "746f2cb0-d131-4319-b949-435581d2d514",
+      //         "user_id": null,
+      //         "workspace_id": 4
+      //     },
+      //     {
+      //         "createdAt": "2024-07-11T07:31:16.402Z",
+      //         "id": 12,
+      //         "lastUpdatedAt": "2024-07-11T07:31:16.402Z",
+      //         "name": "Chat",
+      //         "slug": "ae26f2f1-5829-4f27-8ae1-99df940dbaf9",
+      //         "user_id": null,
+      //         "workspace_id": 4
+      //     },
+      //     {
+      //         "createdAt": "2024-07-11T07:31:17.974Z",
+      //         "id": 13,
+      //         "lastUpdatedAt": "2024-07-11T07:31:17.974Z",
+      //         "name": "Chat",
+      //         "slug": "c6a3795e-b1a7-4263-9f96-08f6ba7e3c50",
+      //         "user_id": null,
+      //         "workspace_id": 4
+      //     }
+      // ]
      },
      (error: any) => {
        alert('Check your Internet connection');

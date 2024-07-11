@@ -17,6 +17,7 @@ export class ChatHistoryComponent implements OnInit {
   isRemoved: boolean = false;
   @Output() minimizeToggle: EventEmitter<void> = new EventEmitter<void>();
   removeScreen() {
+    debugger
     let newChat =
       {"slug": this.chat[0].slug}
 
