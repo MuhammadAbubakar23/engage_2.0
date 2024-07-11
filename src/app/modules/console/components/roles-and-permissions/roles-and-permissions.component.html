@@ -33,7 +33,7 @@
                             </button>
                             <input [(ngModel)]="searchText" placeholder="Search" class="me-1" (keyup)="applySearchFilter()">
                         </a>
-                        <a (click)="updatevalue('consoleCreateRolesHeader')"
+                        <a *ngIf="hasCreatePermission" (click)="updatevalue('consoleCreateRolesHeader')"
                             [routerLink]="['/console/roles-permissions/create/0']" class="ms-2">
                             <button type="button" class="btn btn-success">
                                 <i class="fal fa-plus"></i>
@@ -105,7 +105,7 @@
                                         <i class="far fa-ellipsis-v dropdown-toggle"></i>
                                     </button>
                                     <ul class="dropdown-menu fade">
-                                        <li>
+                                        <li *ngIf="hasDeletePermission">
                                             <a class="dropdown-item" (click)="deleteTemplate(role)">Delete</a>
                                         </li>
                                     </ul>

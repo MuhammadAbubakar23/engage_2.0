@@ -35,6 +35,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     }
 
     let team = this.storage.retrive('nocompass', 'O').local;
+    debugger
     // if (typeof team === 'undefined' || team == null || team == '') {
     // } else if (
     //   typeof team.id === 'undefined' ||
@@ -50,30 +51,41 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     //     },
     //   });
     // }
-    if (typeof team === 'undefined' || team == null || team == '') {
-      request = request.clone({
-        url: request.url,
-        //withCredentials: true,
-        setHeaders: {
-          'X-Super-Team': JSON.stringify(this.companyId),
-        },
-      });
-    } else if (
-      typeof team.id === 'undefined' ||
-      team.id == null ||
-      team.id <= 0
-    ) {
-    } else {
-      request = request.clone({
-        url: request.url,
-        //withCredentials: true,
-        setHeaders: {
-          // 'X-Super-Team': JSON.stringify(team.id),
-          'X-Super-Team': JSON.stringify(this.companyId),
-        },
-      });
+
+    //   if(request.url==="https://entertainerbot.enteract.app/chat"){
+    //     return next.handle(request);
+    //  }
+    if (request.url === "https://entertainerbot.enteract.app/chat") {
+      return next.handle(request);
     }
-    //return next.handle(httpRequest);
-    return next.handle(request);
+    else {
+      if (typeof team === 'undefined' || team == null || team == '') {
+
+        request = request.clone({
+          url: request.url,
+          //withCredentials: true,
+          setHeaders: {
+            'X-Super-Team': JSON.stringify(this.companyId),
+          },
+        });
+      } else if (
+        typeof team.id === 'undefined' ||
+        team.id == null ||
+        team.id <= 0
+      ) {
+      } else {
+        request = request.clone({
+          url: request.url,
+          //withCredentials: true,
+          setHeaders: {
+            // 'X-Super-Team': JSON.stringify(team.id),
+            'X-Super-Team': JSON.stringify(this.companyId),
+          },
+        });
+      }
+      //return next.handle(httpRequest);
+      return next.handle(request);
+    }
   }
+
 }

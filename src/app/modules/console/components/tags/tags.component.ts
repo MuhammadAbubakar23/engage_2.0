@@ -7,6 +7,7 @@ import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { NgxSpinnerModule, } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 interface Tag {
   color: any;
   mainId: any;
@@ -33,6 +34,9 @@ export class TagsComponent implements OnInit {
   sortby: any
   searchText: string = '';
   selectedTextColor = ' #FF0000';
+  hasCreatePermission: boolean=false;
+  hasupdatePermission: boolean=false;
+  hasDeletePermission: boolean=false;
   applySearchFilter(): void {
     if (this.searchText.length >= 2) {
       this.getTags()
@@ -42,8 +46,17 @@ export class TagsComponent implements OnInit {
     }
   }
   constructor(private headerService: HeaderService, private spinnerServerice: NgxSpinnerService,
-    private commonService: CommonDataService, private router: Router) { }
+    private commonService: CommonDataService, private router: Router, private _perS:PermissionService) { }
+
+hasPermission(permissionName: string) {
+
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
+  }
   ngOnInit(): void {
+    this.hasCreatePermission = this.hasPermission('_nwtg_');
+    this.hasupdatePermission = this.hasPermission('_uptg_');
+    this.hasDeletePermission = this.hasPermission('_rmvtg_');
     this.getTags();
     // this.GetAllTags()
   }

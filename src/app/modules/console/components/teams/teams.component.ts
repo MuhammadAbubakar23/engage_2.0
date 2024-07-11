@@ -11,6 +11,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 // import {  } from '';
 // import { DataTablesModule } from "angular-datatables";
 @Component({
@@ -33,13 +34,20 @@ export class TeamsComponent implements OnInit {
   perPage: number = 15;
   currentPage: number = 1;
   totalCount: any;
+  hasCreatePermission: boolean=false;
+  hasupdatePermission: boolean=false;
+  hasDeletePermission: boolean=false;
   constructor(private headerService: HeaderService,
     private commonService: CommonDataService,
     private route: Router,
     private spinnerService: NgxSpinnerService,
     private _Activatedroute: ActivatedRoute,
+    private _perS:PermissionService,
     private toaster: ToasterService) { }
   ngOnInit() {
+    this.hasCreatePermission = this.hasPermission('_nwtm_');
+    this.hasupdatePermission = this.hasPermission('_uptm_');
+    this.hasDeletePermission = this.hasPermission('_rmvtm_');
     this.getTeamList()
   }
   updatevalue(string: any) {
@@ -53,6 +61,12 @@ export class TeamsComponent implements OnInit {
       this.getTeamList();
     }
   }
+
+hasPermission(permissionName: string) {
+
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
+  }
   getTeamList() {
     const data = {
       search: this.searchText,
@@ -63,6 +77,7 @@ export class TeamsComponent implements OnInit {
     this.spinnerService.show()
     this.commonService.GetAllTeams(data).subscribe((res: any) => {
       this.teams = res.Teams;
+
       this.logs = this.teams
       this.totalCount = res.TotalCount
       this.spinnerService.hide()

@@ -24,10 +24,11 @@ export class ComponentsComponent implements OnInit {
   responseList: any[] = []
   generatedPhrases: any[] = [];
   phrase: { id: number, label: string }[] = [];
+  Enterphrase: { id: number, label: string }[] = [];
   BotId: any
   selectedIntent: any = null;
-  isIntentSelected: boolean = false; 
-  isResponseSelected: boolean = false; 
+  isIntentSelected: boolean = false;
+  isResponseSelected: boolean = false;
 
   isViewMode: boolean = false;
   isResponseView: boolean = false;
@@ -39,6 +40,8 @@ export class ComponentsComponent implements OnInit {
     this.loadBotId();
     this.ResponseList()
     // this.loadBotId();
+    this.setName = localStorage.getItem('name')
+
   }
 
   togglePhraseSelection(phrase: string) {
@@ -54,104 +57,121 @@ export class ComponentsComponent implements OnInit {
     event.stopPropagation();
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
-        this.BotId = localStorage.getItem('bot_id');
-        const obj = new FormData();
-        obj.append('intent', intent);
-        obj.append('bot_id', this.BotId);
-        this._botService.IntentDelete(obj).subscribe((res: any) => {
-            this.reloadComponent('intent delete');
-            console.log(res);
-            this.items = this.items.filter(item => item.intent !== intent);
+      this.BotId = localStorage.getItem('bot_id');
+      const obj = new FormData();
+      obj.append('intent', intent);
+      obj.append('bot_id', this.BotId);
+      this._botService.IntentDelete(obj).subscribe((res: any) => {
+        this.reloadComponent('intent delete');
+        console.log(res);
+        this.items = this.items.filter(item => item.intent !== intent);
+      }
+        , (error) => {
+          console.error('Error fetching intent:', error);
+          console.log(error)
+          this.spinnerServerice.hide();
+          console.log("error message====>", error.error.messages)
+          this.reloadComponent(error.error.messages)
         });
+
     }
-}
+  }
 
 
-DeleteResponse(response: string, event: Event) {
-  event.stopPropagation(); 
+  DeleteResponse(response: string, event: Event) {
+    event.stopPropagation();
 
-  const confirmation = confirm('Are you sure you want to delete this template?');
-  if (confirmation) {
+    const confirmation = confirm('Are you sure you want to delete this template?');
+    if (confirmation) {
       console.log("deleted app==>", response)
       this.BotId = localStorage.getItem('bot_id');
       const obj = new FormData();
       obj.append('response', response);
       obj.append('bot_id', this.BotId);
       this._botService.ResponseDelete(obj).subscribe((res: any) => {
-          this.reloadComponent('Response delete');
-          console.log(res);
-          this.responseList = this.responseList.filter(item => item.utterance !== response);
-          // Do not perform any unintended actions here
+        this.reloadComponent('Response delete');
+        console.log(res);
+        this.responseList = this.responseList.filter(item => item.utterance !== response);
+      }, (error) => {
+        console.error('Error fetching intent:', error);
+        console.log(error)
+        this.spinnerServerice.hide();
+        console.log("error message====>", error.error.messages)
+        this.reloadComponent(error.error.messages)
       });
+    }
+    // else {
+    //   this.reloadComponent('cannot delete')
+
+    // }
   }
-}
 
 
   selectIntent(item: any) {
     this.isViewMode = true;
-    this.isIntentSelected = true; 
-    this.IntendForm.get('intent')?.disable(); 
+    this.isIntentSelected = true;
+    this.IntendForm.get('intent')?.disable();
     this._botService.ViewIntent(this.BotId).subscribe((res: any) => {
-        const intentDetails = res.find((intent: any) => intent.intent === item.intent);
-        if (intentDetails) {
-            const examplesArray = intentDetails.examples.split('\n').map((example: string) => example.trim()).filter((example: string) => example);
-            this.IntendForm.patchValue({
-                intent: intentDetails.intent,
-                newPhrase: '' 
-            });
-            this.selectedPhrases = examplesArray;
-            this.phrase = examplesArray.map((example: string, index: number) => ({
-                id: index + 1,
-                label: example
-            }));
-        }
+      const intentDetails = res.find((intent: any) => intent.intent === item.intent);
+      if (intentDetails) {
+        const examplesArray = intentDetails.examples.split('\n').map((example: string) => example.trim()).filter((example: string) => example);
+        this.IntendForm.patchValue({
+          intent: intentDetails.intent,
+          newPhrase: ''
+        });
+        this.selectedPhrases = examplesArray;
+        this.phrase = examplesArray.map((example: string, index: number) => ({
+          id: index + 1,
+          label: example
+        }));
+      }
     }, (error) => {
-        console.error('Error fetching intent details:', error);
+      console.error('Error fetching intent details:', error);
     });
-}
-cancelIntentSelection() {
-  this.isViewMode = false;
-  this.isIntentSelected = false;
-  this.selectedIntent = null;
-  this.IntendForm.patchValue({
-    intent: '',
-    newPhrase: '',
-    examples: ''
-  });
-  this.IntendForm.get('intent')?.enable();
-  this.selectedPhrases = [];
-  this.phrase = [];
-}
+  }
+  cancelIntentSelection() {
+    this.isViewMode = false;
+    this.isIntentSelected = false;
+    this.selectedIntent = null;
+    this.IntendForm.patchValue({
+      intent: '',
+      newPhrase: '',
+      examples: ''
+    });
+    this.IntendForm.get('intent')?.enable();
+    this.selectedPhrases = [];
+    this.phrase = [];
+  }
 
-cancelResponseSelection() {
-  this.isResponseView = false;
-  this.isResponseSelected = false;
+  cancelResponseSelection() {
+    this.isResponseView = false;
+    this.isResponseSelected = false;
 
-  this.IntendForm.patchValue({
-    response: '',
-    text: ''
-  });
-  this.IntendForm.get('response')?.enable();
-  this.IntendForm.get('text')?.enable();
-}
+    this.IntendForm.patchValue({
+      response: '',
+      text: ''
+    });
+    this.IntendForm.get('response')?.enable();
+    this.IntendForm.get('text')?.enable();
+  }
 
-viewResponse(response: any) {
-  this.isResponseSelected = true; 
-  this.isResponseView = true;
-  this.IntendForm.get('response')?.disable();
-  this.IntendForm.get('text')?.disable();
-  this._botService.ViewResponse(this.BotId).subscribe((res: any) => {
-    const selectedResponse = res.find((item: any) => item.utterance === response.utterance);
-    if (selectedResponse) {
-      this.IntendForm.patchValue({
-        response: selectedResponse.utterance,
-        text: selectedResponse.response
-      });
-    }
-  }, (error) => {
-    console.error('Error fetching response details:', error);
-  });
-}
+  viewResponse(response: any) {
+    this.isResponseSelected = true;
+    this.isResponseView = true;
+    this.IntendForm.get('response')?.disable();
+    this.IntendForm.get('text')?.disable();
+    this._botService.ViewResponse(this.BotId).subscribe((res: any) => {
+      const selectedResponse = res.find((item: any) => item.utterance === response.utterance);
+      if (selectedResponse) {
+        this.IntendForm.patchValue({
+          response: selectedResponse.utterance,
+          text: selectedResponse.response
+        });
+      }
+    }, (error) => {
+      console.error('Error fetching response details:', error);
+    });
+  }
 
   ResponseList() {
 
@@ -183,6 +203,9 @@ viewResponse(response: any) {
 
     });
   }
+  setName: any
+  getName() {
+  }
   generateAugments() {
 
     console.log("this.newPhrase", this.IntendForm.value)
@@ -207,10 +230,12 @@ viewResponse(response: any) {
     this.IntendForm.get('intent')?.disable();
   }
   addManuallyEnteredPhrase() {
+    
+    this.phrase=[]
     const newPhraseValue = this.IntendForm.value.newPhrase.trim();
     if (newPhraseValue) {
       const newId = this.phrase.length + 1;
-      this.phrase.push({ id: newId, label: newPhraseValue });
+      this.Enterphrase.push({ id: newId, label: newPhraseValue });
       this.IntendForm.patchValue({ newPhrase: '' });
     }
   }
@@ -249,8 +274,11 @@ viewResponse(response: any) {
           obj.append('examples', phrase);
         });
         console.log('FormData:', obj);
+        this.spinnerServerice.show()
         this._botService.AddIntend(obj).subscribe((res: any) => {
           console.log(res);
+          this.spinnerServerice.hide()
+          this.loadBotId();
           const newIntent = {
             intent: this.IntendForm.value.intent,
             progress: 0,
@@ -288,7 +316,10 @@ viewResponse(response: any) {
       obj.append('bot_id', this.BotId);
       obj.append('text', this.IntendForm.value.text);
       console.log('FormData:', obj);
+      this.spinnerServerice.show()
       this._botService.AddResponse(obj).subscribe((res: any) => {
+        this.spinnerServerice.hide()
+        this.ResponseList()
 
         console.log(res);
         const newResponse = {
@@ -318,54 +349,73 @@ viewResponse(response: any) {
       }, 2000);
 
     }
-    if (value == 'Intent Create') {
-      this.toastermessage = true
-      this.AlterMsg = "Intent Creaed Sucessfully!"
-      setTimeout(() => {
-        this.toastermessage = false
-      }, 2000);
+    else
+      if (value == 'Intent Create') {
+        this.toastermessage = true
+        this.AlterMsg = "Intent Creaed Sucessfully!"
+        setTimeout(() => {
+          this.toastermessage = false
+        }, 2000);
 
-    }
-    if (value == 'Response Create') {
-      this.toastermessage = true
-      this.AlterMsg = "Response Creaed Sucessfully!"
-      setTimeout(() => {
-        this.toastermessage = false
-      }, 2000);
+      }
+      else
+        if (value == 'Response Create') {
+          this.toastermessage = true
+          this.AlterMsg = "Response Creaed Sucessfully!"
+          setTimeout(() => {
+            this.toastermessage = false
+          }, 2000);
 
-    }
-    if (value == 'intent missing') {
-      this.toastermessage = true
-      this.AlterMsg = "intent is missing please add intent first !"
-      setTimeout(() => {
-        this.toastermessage = false
-      }, 2000);
+        }
+        else if (value == 'intent missing') {
+          this.toastermessage = true
+          this.AlterMsg = "intent is missing please add intent first !"
+          setTimeout(() => {
+            this.toastermessage = false
+          }, 2000);
 
-    }
-    if (value == 'Response missing') {
-      this.toastermessage = true
-      this.AlterMsg = "Response is missing please add Response first !"
-      setTimeout(() => {
-        this.toastermessage = false
-      }, 2000);
+        }
+        else if (value == 'Response missing') {
+          this.toastermessage = true
+          this.AlterMsg = "Response is missing please add Response first !"
+          setTimeout(() => {
+            this.toastermessage = false
+          }, 2000);
 
-    }
-    if (value == 'Response delete') {
-      this.toastermessage = true
-      this.AlterMsg = "Response Deleted Successfully !"
-      setTimeout(() => {
-        this.toastermessage = false
-      }, 2000);
+        }
+        else if (value == 'Response delete') {
+          this.toastermessage = true
+          this.AlterMsg = "Response Deleted Successfully !"
+          setTimeout(() => {
+            this.toastermessage = false
+          }, 2000);
 
-    }
-    if (value == 'intent delete') {
-      this.toastermessage = true
-      this.AlterMsg = "Intent Deleted Successfully !"
-      setTimeout(() => {
-        this.toastermessage = false
-      }, 2000);
+        }
+        else if (value == 'intent delete') {
+          this.toastermessage = true
+          this.AlterMsg = "Intent Deleted Successfully !"
+          setTimeout(() => {
+            this.toastermessage = false
+          }, 2000);
 
-    }
+        }
+        else if (value == 'cannot delete') {
+          this.toastermessage = true
+          this.AlterMsg = "An error occurred: intent already exists in a rule!"
+          setTimeout(() => {
+            this.toastermessage = false
+          }, 2000);
+
+        }
+
+        else if (value) {
+          this.toastermessage = true
+          this.AlterMsg = value
+          setTimeout(() => {
+            this.toastermessage = false
+          }, 4000);
+
+        }
   }
 
   closeToaster() {

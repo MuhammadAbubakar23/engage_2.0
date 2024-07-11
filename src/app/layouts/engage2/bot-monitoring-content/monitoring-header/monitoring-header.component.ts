@@ -70,62 +70,63 @@ export class MonitoringHeaderComponent implements OnInit {
 
 
 
-  ngOnInit(): void {
-    this.subscription = this.headerService.getMessage().subscribe(msg => {
-      this.componentName = msg;
+    ngOnInit(): void {
+      this.subscription = this.headerService.getMessage().subscribe(msg => {
+        this.componentName = msg;
+        this.target.clear();
+        this.loadComponent(this.componentName);
+      });
+      this.subscription = this.toggleService.getTogglePanel().subscribe(msg3 => {
+        this.togglePannel = msg3;
+      });
+    
+      const savedComponent = localStorage.getItem('currentComponent');
+      if (savedComponent) {
+        this.componentName = savedComponent;
+      }
+    }
+    
+    ngAfterViewInit() {
       this.target.clear();
       this.loadComponent(this.componentName);
-    });
-    this.subscription = this.toggleService.getTogglePanel().subscribe(msg3 => {
-      this.togglePannel = msg3
-    });
-
-  }
-
-  ngAfterViewInit() {
-    this.target.clear();
-    this.loadComponent(this.componentName);
-
-
-  }
-
+      this.subscription = this.headerService.getMessage().subscribe(msg => {
+        this.componentName = msg;
+      });
+    }
+    
   loadComponent(leftSideName: string) {
     let componentFactory = null;
     switch (leftSideName) {
       case ('chat'):
         componentFactory = this.resolver.resolveComponentFactory(ChatBotHeaderComponent);
-        this.target.createComponent(componentFactory);
         break;
       case ('bot-monitering'):
         componentFactory = this.resolver.resolveComponentFactory(BotMoniteringHeaderComponent);
-        this.target.createComponent(componentFactory);
         break;
       case ('conversation'):
         componentFactory = this.resolver.resolveComponentFactory(ConversationHeaderComponent);
-        this.target.createComponent(componentFactory);
         break;
       case ('component'):
         componentFactory = this.resolver.resolveComponentFactory(ComponentsHeaderComponent);
-        this.target.createComponent(componentFactory);
+        break;
+      case ('rule-chatBot'):
+        componentFactory = this.resolver.resolveComponentFactory(ChatBotStepperHeaderComponent);
+        break;
+      case ('story-chatBot'):
+        componentFactory = this.resolver.resolveComponentFactory(ChatbotStoryHeaderComponent);
         break;
       case ('upload'):
         componentFactory = this.resolver.resolveComponentFactory(UploadDownloadHeaderComponent);
-        this.target.createComponent(componentFactory);
-        break;
-        case ('rule'):
-        componentFactory = this.resolver.resolveComponentFactory(ChatBotStepperHeaderComponent);
-        this.target.createComponent(componentFactory);
-        break;
-        case ('story'):
-        componentFactory = this.resolver.resolveComponentFactory(ChatbotStoryHeaderComponent);
-        this.target.createComponent(componentFactory);
         break;
       default:
-
         componentFactory = this.resolver.resolveComponentFactory(ChatBotHeaderComponent);
-        this.target.createComponent(componentFactory);
         break;
     }
+    if (componentFactory) {
+      this.target.createComponent(componentFactory);
+      localStorage.setItem('currentComponent', leftSideName); 
+    }
   }
+  
 }
 

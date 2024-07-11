@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DataExchangeServicesService } from 'src/app/services/dataExchangeServices/data-exchange-services.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 @Component({
   selector: 'app-skills',
   standalone: true,
@@ -31,14 +32,26 @@ export class SkillsComponent implements OnInit {
   isSelectedDepartment: any = '';
   toastermessage: boolean = false
   isDepartmentArray: any[] = [];
+  hasCreatePermission: boolean=false;
+  hasupdatePermission: boolean=false;
+  hasDeletePermission: boolean=false;
   // id: any = ''
   constructor(private headerService: HeaderService,
     private dataExChange: DataExchangeServicesService,
     private activeRoute: ActivatedRoute,
     private commonData: CommonDataService,
     private route: Router,
-    private spinnerServerice: NgxSpinnerService) { }
+    private spinnerServerice: NgxSpinnerService, private _perS:PermissionService) { }
+
+hasPermission(permissionName: string) {
+
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
+  }
   ngOnInit(): void {
+    this.hasCreatePermission = this.hasPermission('_nwskl_');
+    this.hasupdatePermission = this.hasPermission('_upskl_');
+    this.hasDeletePermission = this.hasPermission('_rmvskl_');
     this.getSkillList()
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));

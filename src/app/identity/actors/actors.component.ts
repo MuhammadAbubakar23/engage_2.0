@@ -62,7 +62,6 @@ export class ActorsComponent implements OnInit {
     }).subscribe((res: any) => {
       console.log(res);
       sessionStorage.setItem('Permissions', JSON.stringify(res.priviledge));
-
       try {
         this.commonService.UserLogin().subscribe(() => {
           this.sendSkillIdsService.sendSkillIds(this.loginResponse?.skills);

@@ -103,7 +103,7 @@ export class AddRulesComponent implements OnInit {
     this.rulesForm.get('ruleType')?.setValue(selectedRuleTypeId);
     const selectedRuleType = this.ruleTypes.find(type => type.mainId === parseInt(selectedRuleTypeId));
     this.selectedRuleTypeName = selectedRuleType ? selectedRuleType.name : '';
-    this._cs.GetRuleTag(selectedRuleTypeId).subscribe(
+    this._cs.GetRuleTag(13).subscribe(
       (response: any) => {
         this.currentTags = response
       },
@@ -170,10 +170,11 @@ export class AddRulesComponent implements OnInit {
   loadServices(): void {
     this._cs.GetPlatorm().subscribe(
       (response: any) => {
-        this.services = Object.keys(response).map(key => ({
-          id: parseInt(key),
-          platformName: response[key]
-        }));
+        // this.services = Object.keys(response).map(key => ({
+        //   id: parseInt(key),
+        //   platformName: response[key]
+        // }));
+        this.services = response
       },
       (error: any) => {
         console.error('Error fetching services:', error);
@@ -414,16 +415,22 @@ export class AddRulesComponent implements OnInit {
             propertyName: rule.field,
             condition: rule.operator,
             value: rule.value
-        }))
+        })),
+        platForm: '' ,
+        channel:''
     };
+    const selectedService = this.services.find(service => service.id === parseInt(rulesFormValue.selectedService!));
+    if (selectedService) {
+        ruleData.platForm = selectedService.slug; 
+    }
     const selectedEntity = this.entities.find(entity => entity.id === parseInt(rulesFormValue.entityName!));
     if (selectedEntity) {
         ruleData.entityName = selectedEntity.entityName; 
     }
     console.log("Form Data:", ruleData);
     const selectedServiceId = rulesFormValue.selectedService;
-    switch (selectedServiceId) {
-        case '8': // Facebook
+    // switch (selectedServiceId) {
+        // case '8': // Facebook
             this._cs.AddFBRule(ruleData).subscribe(
                 (res: any) => {
                     this.router.navigate(['console/rules']);
@@ -432,18 +439,18 @@ export class AddRulesComponent implements OnInit {
                     console.error('Error adding rule for Facebook:', error);
                 }
             );
-            break;
-        case '3': // Instagram
+            // break;
+        // case '3': // Instagram
             // Add logic for Instagram API call
-            break;
-        case '4': // LinkedIn
+            // break;
+        // case '4': // LinkedIn
             // Add logic for LinkedIn API call
-            break;
+            // break;
         // Add cases for other platforms as needed
-        default:
+        // default:
             console.error('Invalid platform selected');
-            break;
-    }
+            // break;
+    // }
 }
   cancelbtn() {
     this.router.navigate(['console/rules']);

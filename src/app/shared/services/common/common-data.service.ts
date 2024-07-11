@@ -230,7 +230,8 @@ export class CommonDataService {
   //service
   userlogin = environment.links.common.userlogin;
   rolesPermissions = environment.links.identity.RolesPermissions;
-  reportsPermission = environment.links.identity.ReportsPermission;
+  reportsMenus = environment.links.identity.ReportsMenus;
+  consoleMenus = environment.links.identity.ConsoleMenus;
   addSurvey = environment.links.service.addSurvey;
   addCSAT = environment.links.service.addCSAT;
   KECSAT = environment.links.profile.KECSAT;
@@ -265,11 +266,11 @@ export class CommonDataService {
       form
     );
   }
-  getReportsPermissionByRole(form: any) {
-    return this.http.post(
-      this.IdentityBaseUrl + this.reportsPermission,
-      form
-    );
+  getReportsMenuByRole(form: any) {
+    return this.http.post(this.IdentityBaseUrl + this.reportsMenus, form);
+  }
+  getConsoleMenuByRole(actorId: any) {
+    return this.http.get(`${this.IdentityBaseUrl}${this.consoleMenus}?ActorId=${actorId}`);
   }
   GetTagsList() {
     return this.http.get(this.CommonBaseUrl + this.tagsList);

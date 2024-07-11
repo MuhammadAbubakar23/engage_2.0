@@ -17,6 +17,7 @@ import { getEmarging, getEmargingEqual, getEmargingNotEqual, getMenusLoading } f
 import { MenuState } from '../../menu-state/menu.state';
 import { ChangeDetectorRef } from '@angular/core';
 import { PermissionService } from 'src/app/shared/services/permission.service';
+import { MenuService } from 'src/app/shared/services/menu.service';
 
 @Component({
   selector: 'sub-role-menu',
@@ -24,36 +25,45 @@ import { PermissionService } from 'src/app/shared/services/permission.service';
   styleUrls: ['./sub-role-menu.component.scss']
 })
 export class SubRoleMenuComponent implements OnInit {
-  SubMenuPages:any = [
-    {name:"Console", slug:"console", parentId:400},
-    {name:"Analytics", slug:"analytics", parentId:470},
-    {name:"MultiTenant", slug:"multitenant", parentId:450}
-  //  {name:"All Inbox", slug:"all-inbox", parentId:470},
+  activeIndex = 0;
+  isActive = false;
+  menuItems: any[] = [];
+  activeMenu(index: any) {
+    this.activeIndex = index;
+    this.isActive = true;
+  }
+  toggleCollapse(menu: any) {
+    menu.expanded = !menu.expanded;
+  }
+  SubMenuPages: any = [
+    { name: "Console", slug: "console", parentId: 400 },
+    { name: "Analytics", slug: "analytics", parentId: 470 },
+    { name: "MultiTenant", slug: "multitenant", parentId: 450 }
   ];
 
-  SubMenuPage:any = {name:"Console", slug:"console", parentId:400};
+  SubMenuPage: any = { name: "Console", slug: "console", parentId: 400 };
 
-  EmargeType$?:string;
-  EmargeParent$?:number=400;//470
-  EmargeShow$?:boolean=true;
-  activeChannels:any
-  anymenus$ :any;
-  menus$ :any;
+  EmargeType$?: string;
+  EmargeParent$?: number = 400;//470
+  EmargeShow$?: boolean = true;
+  activeChannels: any
+  anymenus$: any;
+  menus$: any;
 
-  menu$ :any;
+  menu$: any;
   loading$: any;
 
-  SuperTeamSelected:number=0;
-  SuperTeamOptions:any=[];
-  SuperTeamShow:boolean = true;
+  SuperTeamSelected: number = 0;
+  SuperTeamOptions: any = [];
+  SuperTeamShow: boolean = true;
 
-  myUrl:string = "";
+  myUrl: string = "";
   constructor(private store: Store<MenuState>,
     private treegen: TreeGenService<MenuModel>,
     private headerService: HeaderService,
-    private storage:StorageService,
-    private cdr:ChangeDetectorRef,
-    private router: Router,private _perS:PermissionService) {
+    private storage: StorageService,
+    private cdr: ChangeDetectorRef,
+    private router: Router, private _perS: PermissionService, private commonService: CommonDataService, private _menuS: MenuService) {
 
     let _self = this;
 
@@ -66,14 +76,14 @@ export class SubRoleMenuComponent implements OnInit {
 
         // }
         // else{
-          _self.SubMenuPages.forEach(function(subMenuPage:any) {
-            if(event.url.toString().toLowerCase().includes(subMenuPage.slug)){
-              _self.SubMenuPage = subMenuPage;
-              //  _self.store.select(getEmarging(subMenuPage.slug)).subscribe((item) => {
-              //   _self.menus$ = _self.treegen.buildTree(item, subMenuPage.parentId);
-              // });
-            }
-          });
+        _self.SubMenuPages.forEach(function (subMenuPage: any) {
+          if (event.url.toString().toLowerCase().includes(subMenuPage.slug)) {
+            _self.SubMenuPage = subMenuPage;
+            //  _self.store.select(getEmarging(subMenuPage.slug)).subscribe((item) => {
+            //   _self.menus$ = _self.treegen.buildTree(item, subMenuPage.parentId);
+            // });
+          }
+        });
         //}
 
 
@@ -81,19 +91,26 @@ export class SubRoleMenuComponent implements OnInit {
     });
   }
 
-hasPermission(permissionName: string) {
-
+  hasPermission(permissionName: string) {
     const isAccessible = this._perS.hasPermission(permissionName)
     return isAccessible
   }
 
+  getConsoleMenus() {
+    debugger
+    this.commonService.getConsoleMenuByRole(
+      sessionStorage.getItem('activeActorId'),
+    ).subscribe((res: any) => {
 
+      this.menuItems = res[0].subMenu;
+    });
+  }
   ngOnInit(): void {
-
+    this.getConsoleMenus();
     this.menus$ = [];
     let _self = this;
-    _self.store.select(getEmarging(_self.SubMenuPage.slug)).subscribe((item:any) => {
-      if(item.length > 0)
+    _self.store.select(getEmarging(_self.SubMenuPage.slug)).subscribe((item: any) => {
+      if (item.length > 0)
         _self.menus$ = _self.treegen.buildTree(item, _self.SubMenuPage.parentId);
     });
 
@@ -108,39 +125,39 @@ hasPermission(permissionName: string) {
     //         });
     //       }
     //     });
-        // let urlValue = event.url.toString().split('/');
+    // let urlValue = event.url.toString().split('/');
 
-        // const resultConsole = event.url.toString().toLowerCase().includes("console");
-        // const resultAnalytics = event.url.toString().toLowerCase().includes("analytics");
-        // if(resultConsole){
-        //   this.HeaderEmargeType="Console";
-        //   this.LoadDataEmargeType="console";
-        // }
-        // if(resultAnalytics){
-        //   this.HeaderEmargeType="Analytics";
-        //   this.LoadDataEmargeType="analytics";
-        // }
-        // if(event.url.toString())
-      // }
+    // const resultConsole = event.url.toString().toLowerCase().includes("console");
+    // const resultAnalytics = event.url.toString().toLowerCase().includes("analytics");
+    // if(resultConsole){
+    //   this.HeaderEmargeType="Console";
+    //   this.LoadDataEmargeType="console";
+    // }
+    // if(resultAnalytics){
+    //   this.HeaderEmargeType="Analytics";
+    //   this.LoadDataEmargeType="analytics";
+    // }
+    // if(event.url.toString())
+    // }
     // });
     // this.menu$ = this.store.select(getEmarging(this.LoadDataEmargeType)).subscribe((item) => {
     //   this.menus$ = item;
     //   this.menus$ = this.treegen.buildTree(item, 400);
     // })
 
-    let main = this.storage.retrive("main","o").local;
-    let selectedRole = this.storage.retrive("nocompass","O").local;
+    let main = this.storage.retrive("main", "o").local;
+    let selectedRole = this.storage.retrive("nocompass", "O").local;
     this.SuperTeamSelected = selectedRole.id;
     this.SuperTeamOptions = main.roles;
 
 
-    if(this.SuperTeamOptions.length >= 2){
+    if (this.SuperTeamOptions.length >= 2) {
       this.SuperTeamShow = false;
     }
   }
 
-  updatevalue(string:any){
-    this.activeChannels=this.router.url.split('/')[2]
+  updatevalue(string: any) {
+    this.activeChannels = this.router.url.split('/')[2]
     this.cdr.detectChanges()
     this.headerService.updateMessage(string);
   }

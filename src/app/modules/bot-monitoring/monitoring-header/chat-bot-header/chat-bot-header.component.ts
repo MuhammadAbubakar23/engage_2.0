@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BotSubMenusActiveService } from '../../services/bot-sub-menus-active.service';
 
 @Component({
   selector: 'app-chat-bot-header',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chat-bot-header.component.scss']
 })
 export class ChatBotHeaderComponent implements OnInit {
-
-  constructor() { }
+  resetMenu() {
+    this._botSubMenuStatus.setActiveMenu(false);
+}
+  constructor(private _botSubMenuStatus:BotSubMenusActiveService) { }
 
   ngOnInit(): void {
   }

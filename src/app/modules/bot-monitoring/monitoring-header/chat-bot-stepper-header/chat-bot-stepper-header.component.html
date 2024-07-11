@@ -9,23 +9,18 @@
           <ol class="breadcrumb m-0">
             
               
-                <li class="breadcrumb-item">
-                  <a>ChatBot </a>
+                <li class="breadcrumb-item" [routerLink]="['/bot-monitoring/chat-bot']">
+                  <a>  Chat BOT  </a>
                 </li>
-              
-            
-              
-                <li class="breadcrumb-item">
-                  <a >Conversation </a>
-                </li>
-              
-            
+
               
                 <li class="breadcrumb-item active">
                   <a >Rule </a>
                 </li>
               
-            
+                <li class="breadcrumb-item">
+                  <a >{{formatUtterance(setName)}}</a>
+                </li>
           </ol>
         </nav>
       </div>

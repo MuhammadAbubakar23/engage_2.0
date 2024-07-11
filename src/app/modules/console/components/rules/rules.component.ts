@@ -6,6 +6,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { ChannelRule, RuleWithCount } from 'src/app/shared/Models/ChannelRule';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 @Component({
   selector: 'app-rules',
   standalone: true,
@@ -18,18 +19,33 @@ export class RulesComponent implements OnInit {
   searchText: string = '';
   perPage: number = 15;
   currentPage: number = 1;
-  selectedSortOption: any;
+  selectedSortOption: string = ''; // Default sort option
+  selectedRuleType: string = '';
   totalCount: any;
   channelRules: ChannelRule[] = [];
   channels: any[] = [];
   ruleTypes: any[] = [];
-  selectedChannel = 'Engage';
-  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router, private spinnerServerice: NgxSpinnerService) { }
+  selectedChannel = '';
+  selectedChannelSlug = '';
+  hasCreatePermission: boolean=false;
+  hasupdatePermission: boolean=false;
+  hasDeletePermission: boolean=false;
+  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router,
+     private spinnerServerice: NgxSpinnerService,private _perS:PermissionService) { }
 
   ngOnInit(): void {
+    this.hasCreatePermission = this.hasPermission('_nwrul_');
+    this.hasupdatePermission = this.hasPermission('_uprul_');
+    this.hasDeletePermission = this.hasPermission('_rmvrul_');
+
     this.refreshtableData();
-    this.ruleType();
+    this.getAutoResponderTag();
     this.loadServices()
+  }
+
+hasPermission(permissionName: string) {
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
   }
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
@@ -43,26 +59,28 @@ export class RulesComponent implements OnInit {
       this.refreshtableData()
     }
   }
+
   onChannelChange(event: any) {
-    const selectedChannelId = event.target.value;
-    this.selectedChannel = this.channels.find(channel => channel.id == selectedChannelId)?.name || 'Exchange-email';
+    this.selectedChannelSlug = event.target.value;
+    this.selectedRuleType = '';
+    this.searchText = '';
     this.refreshtableData();
   }
-
-  ruleType() {
-    this.commonService.GetRuleType().subscribe(
+  getAutoResponderTag() {
+    this.commonService.GetRuleTag(13).subscribe(
       (response: any) => {
         this.ruleTypes = response
-
-        // this.ruleTypes = response.map((item: any) => item.name);
       },
       (error: any) => {
-        console.error('Error fetching services:', error);
+        console.error('Error fetching rule tags:', error);
       }
     );
   }
-  selectedRuleType: any
-  onRuleTypeChange() {
+  onRuleTypeChange(event: any) {
+    this.selectedRuleType = event.target.value;
+    this.selectedChannelSlug = '';
+    this.selectedChannel = '';
+    this.searchText = '';
     this.refreshtableData();
   }
 
@@ -73,42 +91,27 @@ export class RulesComponent implements OnInit {
       sorting: this.selectedSortOption,
       pageNumber: this.currentPage,
       pageSize: this.perPage,
-      ruleType: this.selectedRuleType
+      ruleType: this.selectedRuleType,
+      platform: this.selectedChannelSlug
     };
     this.spinnerServerice.show();
     this.channelRules = [];
 
-    if (this.selectedChannel === 'Exchange-email') {
-      this.commonService.GetAllFbRules(data).subscribe(
-        (response: RuleWithCount) => {
-          this.spinnerServerice.hide();
-          this.channelRules.push({
-            platform: "Exchange-email",
-            rulesWihtCount: response
-          });
-          this.totalCount = response.TotalCount;
-        },
-        (error: any) => {
-          this.spinnerServerice.hide();
-          console.error(error);
-        }
-      );
-    } else {
-      this.commonService.GetAllFbRules(data).subscribe(
-        (response: any) => {
-          this.spinnerServerice.hide();
-          this.channelRules.push({
-            platform: "Exchange-email",
-            rulesWihtCount: response
-          });
-          this.totalCount = response.TotalCount;
-        },
-        (error: any) => {
-          this.spinnerServerice.hide();
-          console.error(error);
-        }
-      );
-    }
+    this.commonService.GetAllFbRules(data).subscribe(
+      (response: RuleWithCount) => {
+        this.spinnerServerice.hide();
+        this.channelRules.push({
+          platform: "Rule Name",
+          rulesWihtCount: response
+        });
+        this.totalCount = response.TotalCount;
+      },
+      (error: any) => {
+        this.spinnerServerice.hide();
+        console.error(error);
+      }
+    );
+
   }
   toggleStatus(rule: any) {
     this.commonService.GetRuleStatus(rule.id).subscribe(
@@ -123,10 +126,8 @@ export class RulesComponent implements OnInit {
   loadServices(): void {
     this.commonService.GetPlatorm().subscribe(
       (response: any) => {
-        this.channels = Object.keys(response).map(key => ({
-          id: parseInt(key),
-          name: response[key]
-        }));
+
+        this.channels = response
       },
       (error: any) => {
         console.error('Error fetching services:', error);
@@ -142,49 +143,61 @@ export class RulesComponent implements OnInit {
     this.router.navigate(['/console/add-rules', message.id])
   }
   canEditOrDelete(row: any): boolean {
-    // Add your condition here, for example:
     return row.companyId !== 0;
   }
-
-  deleteTemplate(rule: ChannelRule, platform: string) {
-
-    const confirmation = confirm('Are you sure you want to delete this template?');
+  deleteTemplate(rule: any) {
+    const confirmation = confirm('Are you sure you want to delete this rule?');
     if (confirmation) {
-      const ruleId = platform === 'Exchange-email' ? (rule.rulesWihtCount.Rules[0] ? rule.rulesWihtCount.Rules[0].id : null) : (rule.rulesWihtCount.Rules[0] ? rule.rulesWihtCount.Rules[0].groupId : null);
-      if (!ruleId) {
-        console.error('Rule ID is undefined.');
-        return;
-      }
-      const filteredRules = platform === 'Exchange-email' ? rule.rulesWihtCount.Rules.filter((r: any) => r.id !== ruleId) : rule.rulesWihtCount.Rules.filter((r: any) => r.groupId !== ruleId);
+      this.commonService.DeleteFbRules(rule.id).subscribe(
+        () => {
 
-      if (platform === 'Exchange-email') {
-        this.commonService.DeleteFbRules(ruleId).subscribe(
-          () => {
-            console.log('GetAllFbRules rule deleted:', rule);
-            rule.rulesWihtCount.Rules = filteredRules;
-          },
-          (error: any) => {
-            console.error('Error deleting Facebook rule:', error);
+          const index = this.channelRules.findIndex(item => item.rulesWihtCount.Rules.includes(rule));
+          if (index !== -1) {
+            this.channelRules[index].rulesWihtCount.Rules = this.channelRules[index].rulesWihtCount.Rules.filter((r: any) => r.id !== rule.id);
           }
-        );
-      } else if (platform === 'Common') {
-        this.commonService.DeleteRules(ruleId).subscribe(
-          () => {
-            console.log('Common rule deleted:', rule);
-            rule.rulesWihtCount.Rules = filteredRules;
-          },
-          (error: any) => {
-            console.error('Error deleting Common rule:', error);
-          }
-        );
-      }
+        },
+        (error: any) => {
+          console.error('Error deleting rule:', error);
+        }
+      );
     }
   }
 
-  disableTemplate(message: any) {
-  }
-  cloneTemplate(message: any) {
-  }
+  // deleteTemplate(rule: ChannelRule, platform: string) {
+
+  //   const confirmation = confirm('Are you sure you want to delete this template?');
+  //   if (confirmation) {
+  //     const ruleId = platform === 'Exchange-email' ? (rule.rulesWihtCount.Rules[0] ? rule.rulesWihtCount.Rules[0].id : null) : (rule.rulesWihtCount.Rules[0] ? rule.rulesWihtCount.Rules[0].groupId : null);
+  //     if (!ruleId) {
+  //       console.error('Rule ID is undefined.');
+  //       return;
+  //     }
+  //     const filteredRules = platform === 'Exchange-email' ? rule.rulesWihtCount.Rules.filter((r: any) => r.id !== ruleId) : rule.rulesWihtCount.Rules.filter((r: any) => r.groupId !== ruleId);
+
+  //     if (platform === 'Exchange-email') {
+  //       this.commonService.DeleteFbRules(ruleId).subscribe(
+  //         () => {
+  //           console.log('GetAllFbRules rule deleted:', rule);
+  //           rule.rulesWihtCount.Rules = filteredRules;
+  //         },
+  //         (error: any) => {
+  //           console.error('Error deleting Facebook rule:', error);
+  //         }
+  //       );
+  //     } else if (platform === 'Common') {
+  //       this.commonService.DeleteRules(ruleId).subscribe(
+  //         () => {
+  //           console.log('Common rule deleted:', rule);
+  //           rule.rulesWihtCount.Rules = filteredRules;
+  //         },
+  //         (error: any) => {
+  //           console.error('Error deleting Common rule:', error);
+  //         }
+  //       );
+  //     }
+  //   }
+  // }
+
   setPerPage(perPage: number): void {
     this.perPage = perPage;
     this.currentPage = 1;

@@ -20,8 +20,8 @@ import { SearchFilterService } from 'src/app/services/SearchFilter/search-filter
 })
 export class RoleMenuComponent implements OnInit {
   // MenuModel = new MenuModel();
-  hasConsolePermission: boolean=false;
-  hasMonitoringPermission: boolean=false;
+  hasConsolePermission: boolean = false;
+  hasMonitoringPermission: boolean = false;
   permissions$: any;
   permission$: any;
   menus$!: MenuModel[];
@@ -61,7 +61,7 @@ export class RoleMenuComponent implements OnInit {
     //  this.PermissionStore.dispatch(updatePermissionsLetters());
   }
   getReportMenus() {
-    this.commonService.getReportsPermissionByRole({
+    this.commonService.getReportsMenuByRole({
       "ActorId": sessionStorage.getItem('activeActorId'),
       "Inline": false
     }).subscribe((res: any) => {

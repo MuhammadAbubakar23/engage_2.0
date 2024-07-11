@@ -12,6 +12,7 @@ import { Subscription, interval } from 'rxjs';
 import { BotMonitoringService } from 'src/app/modules/bot-monitoring/services/bot-monitoring.service';
 import { ChatVisibilityService } from 'src/app/modules/bot-monitoring/services/chat-visibility.service';
 import { environment } from 'src/environments/environment';
+import { BotSubMenusActiveService } from 'src/app/modules/bot-monitoring/services/bot-sub-menus-active.service';
 
 
 @Component({
@@ -37,7 +38,41 @@ export class BotMonitoringMenusComponent implements OnInit {
   activeIdSubscription: Subscription | undefined;
   private apiCallInterval1: Subscription | undefined;
   private apiCallInterval2: Subscription | undefined;
-  constructor(private chatVisibilityService: ChatVisibilityService, private _botMonitorS: BotMonitoringService, private store: Store<MenuState>, private treegen: TreeGenService<MenuModel>, private headerService: HeaderService, private storage: StorageService) {
+  activeIndex = 0;
+  resetMenu() {
+    this._botSubMenuStatus.setActiveMenu(false);
+    this.updatevalue('chat')
+  }
+
+  isActive = false;
+
+  subMenus = [
+    {
+      "DisplayName": " Chat BOT ",
+      "RouteName": "/bot-monitoring/chat-bot",
+      "Icon": "",
+      "isChild": false,
+      "Children": [
+
+        {
+          "DisplayName": "Component",
+          "RouteName": "/bot-monitoring/chat-bot/components"
+        },
+
+      ]
+    }
+  ];
+
+
+  constructor(private chatVisibilityService: ChatVisibilityService, private _botMonitorS: BotMonitoringService, private store: Store<MenuState>,
+    private treegen: TreeGenService<MenuModel>, private headerService: HeaderService, private storage: StorageService,
+    private _botSubMenuStatus: BotSubMenusActiveService) {
+
+    this._botSubMenuStatus.activationStatus.subscribe(value => {
+      this.subMenus[0].isChild = value;
+    });
+
+
     this.activeIdSubscription = this.chatVisibilityService.activeId$.subscribe((active) => {
       if (active) {
 
@@ -56,6 +91,11 @@ export class BotMonitoringMenusComponent implements OnInit {
 
       }
     })
+  }
+  activeMenu(index: any) {
+    this.activeIndex = index;
+    this.isActive = true;
+    this.updatevalue('component')
   }
   getActiveConversation() {
 
@@ -122,7 +162,7 @@ export class BotMonitoringMenusComponent implements OnInit {
   }
 
   ngOnInit(): void {
-//  comment kia hey dubara uncomment ker k chala sakty ho 
+    //  comment kia hey dubara uncomment ker k chala sakty ho 
 
     // this.getActiveConversation();
     // this.apiCallInterval1 = interval(20000).subscribe(() => {

@@ -20,12 +20,19 @@ export class BotMonitoringService {
   responseDelete = environment.links.bot.responseDelete
   intentDelete = environment.links.bot.intentDelete
   deleteChatBot = environment.links.bot.deleteChatBot
-  createRule= environment.links.bot.createRule
-  createStory= environment.links.bot.createStory
+  createRule = environment.links.bot.createRule
+  createStory = environment.links.bot.createStory
   viewIntent = environment.links.bot.viewIntent
-  viewResponse=environment.links.bot.viewResponse
-  getRuleChatBot=environment.links.bot.getRuleChatBot
-  getStoriesChatBot=environment.links.bot.getStoriesChatBot
+  viewResponse = environment.links.bot.viewResponse
+  getRuleChatBot = environment.links.bot.getRuleChatBot
+  getStoriesChatBot = environment.links.bot.getStoriesChatBot
+  ruleDelete = environment.links.bot.ruleDelete
+  storyDelete = environment.links.bot.storyDelete
+  trainBot = environment.links.bot.trainBot
+  runChatBot = environment.links.bot.runChatBot
+  createBotTrain = environment.links.bot.createBotTrain
+  chatBotWdidget = environment.links.bot.chatBotWdidget
+  stopChatBot = environment.links.bot.stopChatBot
 
   constructor(private http: HttpClient) { }
   getChats(data: any): Observable<any> {
@@ -85,5 +92,27 @@ export class BotMonitoringService {
   }
   GetStoriesChatBot(botId: any): Observable<any> {
     return this.http.get(`${this.botMoniteringBaseUrl}${this.getStoriesChatBot}?bot_id=${botId}`);
+  }
+  RuleDelete(form: any) {
+    return this.http.post(this.botMoniteringBaseUrl + this.ruleDelete, form);
+
+  }
+  StoryDelete(form: any) {
+    return this.http.post(this.botMoniteringBaseUrl + this.storyDelete, form);
+  }
+  BotTrain(form: any) {
+    return this.http.post(this.botMoniteringBaseUrl + this.trainBot, form);
+  }
+  RunChatBot(form: any) {
+    return this.http.post(this.botMoniteringBaseUrl + this.runChatBot, form);
+  }
+  StopChatBot(form: any) {
+    return this.http.post(this.botMoniteringBaseUrl + this.stopChatBot, form);
+  }
+  CreateBotTrain(form: any) {
+    return this.http.post(this.botMoniteringBaseUrl + this.createBotTrain, form);
+  }
+  ChatBotWdidget(form: any) {
+    return this.http.post("https://entertainerbot.enteract.app/chat", form);
   }
 }

@@ -20,14 +20,18 @@ const routes: Routes = [
         loadComponent: () => import('./components/chat-bot/chat-bot.component').then(c => c.ChatBotComponent)
       },
       {
-        path: 'conversation',
+        path: 'conversation/:name',
         loadComponent: () => import('./components/conversation/conversation.component').then(c => c.ConversationComponent)
       },
+      // {
+      //   path: 'conversation',
+      //   loadComponent: () => import('./components/conversation/conversation.component').then(c => c.ConversationComponent)
+      // },
       {
         path: 'upload/download-data',
         loadComponent: () => import('./components/upload/download-data/download-data.component').then(c => c.DownloadDataComponent)
       },{
-        path: 'components',
+        path: 'chat-bot/components',
         loadComponent: () => import('./components/components/components.component').then(c => c.ComponentsComponent)
       },
       {
@@ -35,11 +39,11 @@ const routes: Routes = [
         loadComponent: () => import('./components/bot-monitering-chat/bot-monitering-chat.component').then(c => c.BotMoniteringChatComponent)
       },
       {
-        path: 'chatBot-Rule',
+        path: 'conversation/:name/Rule',
         loadComponent: () => import('./components/chat-bot-stepper/chat-bot-stepper.component').then(c => c.ChatBotStepperComponent)
       },
       {
-        path: 'chatBot-Story',
+        path: 'conversation/:name/Story',
         loadComponent: () => import('./components/chat-bot-story/chat-bot-story.component').then(c => c.ChatBotStoryComponent)
       },
     ]

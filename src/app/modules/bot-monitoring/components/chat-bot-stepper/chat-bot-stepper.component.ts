@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { BotMonitoringService } from '../../services/bot-monitoring.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-chat-bot-stepper',
   standalone: true,
@@ -27,19 +28,26 @@ export class ChatBotStepperComponent implements OnInit {
   responseList: any[] = []
   generatedPhrases: any[] = [];
   phrase: { id: number, label: string }[] = [];
+  Enterphrase: { id: number, label: string }[] = [];
   BotId: any
-  stories:any[]  = [ ];
+  rules: any[] = [];
   isFormVisible: boolean = false;
-
-
-  constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService) {
+  setName: any
+  currentConversationName:string=''
+  constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService , private route : Router , private _activeRoute : ActivatedRoute) {
     this.BotId = localStorage.getItem('bot_id');
+    this._activeRoute.params.
+      subscribe((param) => {
+        this.currentConversationName = param['name'];
+      })
   }
   ngOnInit(): void {
     this.intializeForm();
     this.loadBotId()
     this.ResponseList();
     this.getListOfRule()
+    this.setName = localStorage.getItem("name")
+
   }
   intializeForm() {
     this.stepperForm = new FormGroup({
@@ -52,13 +60,13 @@ export class ChatBotStepperComponent implements OnInit {
       rule: new FormControl(''),
     });
   }
-  getListOfRule(){
+  getListOfRule() {
     if (!this.BotId) {
       console.error('BotId not found in localStorage.');
       return;
     }
-    this._botService.GetRuleChatBot(this.BotId).subscribe((res:any)=>{
-      this.stories=res
+    this._botService.GetRuleChatBot(this.BotId).subscribe((res: any) => {
+      this.rules = res
 
     }, (error) => {
       console.error('Error fetching intent:', error);
@@ -81,6 +89,35 @@ export class ChatBotStepperComponent implements OnInit {
       // this.newPhrase = '';
     });
   }
+  cancelForm() {
+    this.route.navigate(['/bot-monitoring/conversation',this.currentConversationName])
+  }
+  DeleteRule(rule: string, event: Event) {
+    event.stopPropagation();
+    const confirmation = confirm('Are you sure you want to delete this Rule?');
+    if (confirmation) {
+      this.BotId = localStorage.getItem('bot_id');
+      const obj = new FormData();
+      obj.append('rule', rule);
+      obj.append('bot_id', this.BotId);
+      this._botService.RuleDelete(obj).subscribe(
+        (res: any) => {
+          console.log(res);
+          // Filter out the deleted rule from the list
+          this.rules = this.rules.filter(x => x.rule !== rule);
+          this.reloadComponent(res.messages);
+        },
+        (error) => {
+          console.error('Error deleting rule:', error);
+          this.spinnerServerice.hide();
+          console.log("error message====>", error.error.messages);
+          this.reloadComponent(error.error.messages);
+        }
+      );
+    }
+  }
+
+
   togglePhraseSelection(phrase: string) {
     const index = this.selectedPhrases.indexOf(phrase);
     if (index !== -1) {
@@ -98,10 +135,11 @@ export class ChatBotStepperComponent implements OnInit {
     this.selectedResponse = response === this.selectedResponse ? null : response;
   }
   addManuallyEnteredPhrase() {
+    this.phrase = []
     const newPhraseValue = this.stepperForm.value.newPhrase.trim();
     if (newPhraseValue) {
       const newId = this.phrase.length + 1;
-      this.phrase.push({ id: newId, label: newPhraseValue });
+      this.Enterphrase.push({ id: newId, label: newPhraseValue });
       this.stepperForm.patchValue({ newPhrase: '' });
     }
   }
@@ -210,7 +248,7 @@ export class ChatBotStepperComponent implements OnInit {
       }, (error) => {
         console.error('Error saving intent:', error);
         this.spinnerServerice.hide();
-      this.reloadComponent('Response missing')
+        this.reloadComponent('Response missing')
 
 
       });
@@ -230,6 +268,7 @@ export class ChatBotStepperComponent implements OnInit {
       this.spinnerServerice.show();
 
       this._botService.CreateRule(obj).subscribe((res: any) => {
+        this.route.navigate(['/bot-monitoring/conversation',this.currentConversationName])
         this.spinnerServerice.hide();
 
         this.reloadComponent('Rule Create');
@@ -307,6 +346,14 @@ export class ChatBotStepperComponent implements OnInit {
       }, 2000);
 
     }
+    if (value) {
+      this.toastermessage = true
+      this.AlterMsg = value
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+
+    }
   }
 
   closeToaster() {
@@ -315,5 +362,5 @@ export class ChatBotStepperComponent implements OnInit {
   toggleFormVisibility() {
     this.isFormVisible = true;
   }
-  
+
 }

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './identity/Services/AuthGuardService/auth.guard';
 import { ModulesResolver } from './shared/resolver/modules.resolver';
 import { TagsResolver } from './shared/resolver/Tags Resolver/tags.resolver';
+import { ChatWidgetComponent } from './shared/components/chat-widget/chat-widget.component';
 // import { MonitoringMenuComponent } from './layouts/engage2/bot-monitoring-content/monitoring-menu/monitoring-menu.component';
 
 const routes: Routes = [
@@ -60,6 +61,10 @@ const routes: Routes = [
       modeuls: ModulesResolver,
     },
   },
+  {
+    path:'engage/chat',
+    component:ChatWidgetComponent
+  }
   // { path: 'administration', loadChildren: () => import('./administration/administration.module').then(m => m.AdministrationModule) },
   // { path: '404', component : NotFoundComponent},
   // { path: '**', redirectTo: '/404', pathMatch: 'full'},
