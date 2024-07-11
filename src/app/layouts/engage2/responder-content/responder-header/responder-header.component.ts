@@ -21,9 +21,9 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { Location } from '@angular/common';
+import { ConnectionIdService } from 'src/app/services/connectionId/connection-id.service';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
-import { ConnectionIdService } from 'src/app/services/connectionId/connection-id.service';
 import { InsertTagInProfileFeedDto } from 'src/app/shared/Models/InsertTagaInProfileFeedDto';
 @Component({
   selector: 'responder-header',
@@ -164,7 +164,7 @@ export class ResponderHeaderComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.baseURL = window.location.origin;
-    if (this.baseURL == 'https://keportal.enteract.live') {
+    if (this.baseURL == 'https://keportal.enteract.live' || this.baseURL=='https://engageui.enteract.live') {
       this.KEBaseUrl = true;
     }
     this.flag = this._route.url.split('/')[2];

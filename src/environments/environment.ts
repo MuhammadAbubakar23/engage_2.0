@@ -75,6 +75,27 @@ export const environment = {
   // botBaseUrl: '',
   // LinkedInBaseUrl:'',
 
+  // For PK tach damo company Id 649
+  // IdentityBaseUrl: 'https://enidentitybackend.enteract.live/api/',
+  // CommonBaseUrl: 'https://encommonbackend.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://encommonbackend.enteract.live/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // consoleBaseUrl: 'https://enconsolebackend.enteract.live/api/',
+  // keReportsBaseUrl:'https://enreportsbackend.enteract.live/api/',
+  // LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
+  // BotBaseUrl:'',
+
+  IdentityBaseUrl: '',
+  CommonBaseUrl: '',
+  SignalRCommonBaseUrl: '',
+  ProfileBaseUrl: '',
+  ServiceBaseUrl: '',
+  ConsoleBaseUrl: '',
+  LinkedInBaseUrl: '',
+  BotBaseUrl: '',
+  KeReportsBaseUrl: '',
+
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
@@ -115,7 +136,7 @@ export const environment = {
   // flowBot: 'https://flowbot.enteract.app/',
   // intentBot: 'https://intentBot.enteract.app/',
   // autoresponderbaseurl: 'https://d387-203-135-1-210.ngrok-free.app/api/',
-  profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
+  // profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
   // testing uiengage company id 657
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
   // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
@@ -313,7 +334,7 @@ export const environment = {
       createBotTrain: 'models/create',
       runChatBot: 'models/run',
       chatBotWdidget: 'chat',
-      stopChatBot: 'models/stop'
+      stopChatBot: 'models/stop',
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

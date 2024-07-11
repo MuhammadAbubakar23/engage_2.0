@@ -4,44 +4,19 @@ import { catchError, Observable, of, throwError, map, tap } from 'rxjs';
 // import { EnvService } from '../env/env.service';
 import { MessagingService } from '../messaging/messaging.service';
 import { UserPaginationService } from 'src/app/services/userpaginationServices/user-pagination.service';
+import { EnvService } from '../env/env.service';
 @Injectable({
   providedIn: 'root',
 })
 export class RequestService {
   params: HttpParams = new HttpParams();
   headers: HttpHeaders = new HttpHeaders();
-  baseUrl: string = '';
-  env: any;
   constructor(
     private http: HttpClient,
     private paginationS: UserPaginationService,
-    private messagingService: MessagingService
-  ) {
-    this.baseUrl = window.location.origin;
-    sessionStorage.setItem('baseUrl', this.baseUrl);
-    if ((window as any)._env) {
-      if (this.baseUrl == 'https://keportal.enteract.live') {
-        this.env = (window as any)._env.ke;
-      } else if (this.baseUrl == 'https://engage.jazz.com.pk') {
-        this.env = (window as any)._env.jazz;
-      } else if (this.baseUrl == 'https://uiengage.enteract.app') {
-        this.env = (window as any)._env;
-      } else if (this.baseUrl == 'https://tpplui.enteract.live') {
-        this.env = (window as any)._env;
-      } else if (this.baseUrl == 'https://waengage.enteract.live') {
-        this.env = (window as any)._env;
-      } else if (this.baseUrl == 'https://bzengage.enteract.live') {
-        this.env = (window as any)._env;
-      } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
-        this.env = (window as any)._env;
-      } else if (
-        this.baseUrl == 'http://localhost:4200' ||
-        this.baseUrl == 'https://localhost:4200'
-      ) {
-        this.env = (window as any)._env.stagging;
-      }
-    }
-  }
+    private messagingService: MessagingService,
+    private env : EnvService
+  ) {}
   private requestHeaderOptions(options?: any) {
     let opt = !options ? {} : options;
     let headers = opt.headers ? opt.headers : new HttpHeaders();

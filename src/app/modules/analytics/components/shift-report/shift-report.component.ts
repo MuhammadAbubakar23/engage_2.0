@@ -110,7 +110,7 @@ export class ShiftReportComponent implements OnInit {
   })
   ngOnInit(): void {
     this.KEbaseUrl=window.location.origin
-    if(this.KEbaseUrl=='https://keportal.enteract.live'){
+    if(this.KEbaseUrl=='https://keportal.enteract.live' || this.KEbaseUrl=='https://engageui.enteract.live'){
       this.KEClient=true
     }
     this.currentDate = new Date();
