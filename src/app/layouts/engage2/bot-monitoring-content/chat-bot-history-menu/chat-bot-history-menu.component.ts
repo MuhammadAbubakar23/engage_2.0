@@ -38,6 +38,11 @@ export class ChatBotHistoryMenuComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getChatBotHistory();
+    // this.chatVisibilityService.thirdActive$.subscribe((obj:any)=>{
+    //   debugger
+    //   const element=this.activechatBotHistory.find((item:any)=>item.slug===obj.slug)
+    //   element.obj.isActive;
+    // })
   }
   updatevalue(string: any) {
     if (string === 'bot-monitering') {
@@ -78,7 +83,8 @@ export class ChatBotHistoryMenuComponent implements OnInit {
      this._botService.chatBotHistory().subscribe((res:any)=>{
 
          res.slugs.forEach((item:any,index:any)=>{
-          item.name="Bot"+`${index+1}`
+          item.name="Conversation"+`${index+1}`
+          //item['active']=true;
          })
          this.activechatBotHistory=res.slugs;
       //    this.activechatBotHistory=[
@@ -89,7 +95,8 @@ export class ChatBotHistoryMenuComponent implements OnInit {
       //         "name": "Chat",
       //         "slug": "746f2cb0-d131-4319-b949-435581d2d514",
       //         "user_id": null,
-      //         "workspace_id": 4
+      //         "workspace_id": 4,
+      //         "isActive": false,
       //     },
       //     {
       //         "createdAt": "2024-07-11T07:31:16.402Z",
@@ -98,7 +105,8 @@ export class ChatBotHistoryMenuComponent implements OnInit {
       //         "name": "Chat",
       //         "slug": "ae26f2f1-5829-4f27-8ae1-99df940dbaf9",
       //         "user_id": null,
-      //         "workspace_id": 4
+      //         "workspace_id": 4,
+      //         "isActive": false,
       //     },
       //     {
       //         "createdAt": "2024-07-11T07:31:17.974Z",
@@ -107,7 +115,8 @@ export class ChatBotHistoryMenuComponent implements OnInit {
       //         "name": "Chat",
       //         "slug": "c6a3795e-b1a7-4263-9f96-08f6ba7e3c50",
       //         "user_id": null,
-      //         "workspace_id": 4
+      //         "workspace_id": 4,
+      //         "isActive": false,
       //     }
       // ]
      },
