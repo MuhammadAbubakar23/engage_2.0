@@ -717,7 +717,7 @@ export class ConversationComponent implements OnInit {
   setFromAndToValues() {
     if (this.TotalUnresponded < this.pageSize) {
       this.to = this.TotalUnresponded;
-    }
+     }
     //  else if (
     //   this.TotalUnresponded > this.pageSize &&
     //   this.to < this.pageSize
@@ -729,7 +729,6 @@ export class ConversationComponent implements OnInit {
     this.from = this.ConversationList.length === 0 ? 0 : 1;
   }
   removeAssignedQueryListener(res: any) {
-
     if (this.currentUrl.split('/')[2] == 'focused') {
       this.groupByDateList.forEach((group) => {
         const index = group.items.findIndex(
@@ -762,7 +761,7 @@ export class ConversationComponent implements OnInit {
       });
     }
   }
-  addOneMore() {
+  addOneMore(){
 
 
     this.filterDto = {

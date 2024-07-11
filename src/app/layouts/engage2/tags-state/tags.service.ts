@@ -15,7 +15,6 @@ export class TagsService {
   ) {}
   getList(type: string): Observable<TagsModel[]> {
     let tagss: TagsModel[] = [];
-    
     tagss = this.storage.retrive(type, 'O').local;
     if (tagss != null && tagss.length >= 1) return of(tagss);
     else

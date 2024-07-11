@@ -53,6 +53,7 @@ export class ActorsComponent implements OnInit {
     this.actors = data.actors;
   }
 
+
   getPermissions(actorId: number) {
     sessionStorage.setItem('activeActorId', JSON.stringify(actorId));
     this.commonService.getPermissionByRole({
@@ -61,7 +62,6 @@ export class ActorsComponent implements OnInit {
     }).subscribe((res: any) => {
       console.log(res);
       sessionStorage.setItem('Permissions', JSON.stringify(res.priviledge));
-
       try {
         this.commonService.UserLogin().subscribe(() => {
           this.sendSkillIdsService.sendSkillIds(this.loginResponse?.skills);

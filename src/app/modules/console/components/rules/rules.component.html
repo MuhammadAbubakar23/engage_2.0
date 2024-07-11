@@ -85,7 +85,7 @@
                                         <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
                                             (ngModelChange)="searchText ? applySearchFilter() : refreshtableData()">
                                     </a>
-                                    <a (click)="updatevalue('ConsoleCreateRuleHeader')"
+                                    <a (click)="updatevalue('ConsoleCreateRuleHeader')" *ngIf="hasCreatePermission"
                                         [routerLink]="['/console/add-rules']" class="ms-2">
                                         <button type="button" class="btn btn-success">
                                             <i class="fal fa-plus me-2"></i>
@@ -139,11 +139,11 @@
                                                         type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="far fa-ellipsis-v dropdown-toggle"></i>
                                                     </button>
-                                                    <ul class="dropdown-menu fade">
+                                                    <ul class="dropdown-menu fade" >
                                                         <li>
                                                             <!-- <a class="dropdown-item" (click)="editTemplate(row)">Edit</a> -->
                                                         </li>
-                                                        <li>
+                                                        <li *ngIf="hasDeletePermission">
                                                             <a class="dropdown-item"
                                                                 (click)="deleteTemplate(r)">Delete</a>
 

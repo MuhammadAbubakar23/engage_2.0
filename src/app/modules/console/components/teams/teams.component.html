@@ -44,7 +44,7 @@
                                     </li> -->
                                 </ul>
                             </div>
-                            <div class="col-md-4 d-flex align-items-center justify-content-end">
+                            <div class="col-md-4 d-flex align-items-center justify-content-end" *ngIf="hasCreatePermission">
                                 <a (click)="updatevalue('consoleCreateTeamsHeader')" [routerLink]="['/console/teams/create/0']" class="ms-2">
                                     <button type="button" class="btn btn-success">
                                         <i class="fal fa-plus me-2"></i>
@@ -146,17 +146,17 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="icons-list d-flex justify-content-end dropstart">
+                                        <div class="icons-list d-flex justify-content-end dropstart" *ngIf="hasupdatePermission || hasDeletePermission">
                                             <button class="btn iconButton medium iconHover btn-group" type="button"
                                                 data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="far fa-ellipsis-v"></i>
                                             </button>
                                             <ul class="dropdown-menu fade">
-                                                <li [routerLink]="['/console/teams/create/',row.id]">
+                                                <li [routerLink]="['/console/teams/create/',row.id]" *ngIf="hasupdatePermission">
                                                     <a class="dropdown-item"><i class="fal fa-edit me-2"> </i>
                                                         Edit</a>
                                                 </li>
-                                                <li (click)="deleteTeam(row.id)">
+                                                <li (click)="deleteTeam(row.id)" *ngIf="hasDeletePermission">
                                                     <a class="dropdown-item delete-dd"><i class="fal fa-trash me-2"></i>
                                                         Delete</a>
                                                 </li>

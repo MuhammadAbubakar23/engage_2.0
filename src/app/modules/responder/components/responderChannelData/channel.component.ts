@@ -1708,13 +1708,13 @@ export class ChannelComponent implements OnInit {
       if (msg.id == id) {
         // show mentioned reply
         this.show = true;
-        this.mentionedCommentOrMessage = msg.msgText;
-        this.mentionedCommentOrMessageId = msg.id;
+        this.mentionedCommentOrMessage = msg?.msgText;
+        this.mentionedCommentOrMessageId = msg?.id;
         this.platform = this.platform;
-        this.postType = msg.contentType;
-        this.profileId = this.profileInformation.profile_Id;
-        this.profilePageId = this.profileInformation.page_Id;
-        this.userProfileId = this.userInformation.id;
+        this.postType = msg?.contentType;
+        this.profileId = this.profileInformation?.profile_Id;
+        this.profilePageId = this.profileInformation?.page_Id;
+        this.userProfileId = this.userInformation?.id;
       }
     });
 
@@ -1722,13 +1722,13 @@ export class ChannelComponent implements OnInit {
       if (tm.id == id) {
         // show mentioned reply
         this.show = true;
-        this.mentionedCommentOrMessage = tm.msgText;
-        this.mentionedCommentOrMessageId = tm.id;
+        this.mentionedCommentOrMessage = tm?.msgText;
+        this.mentionedCommentOrMessageId = tm?.id;
         this.platform = this.platform;
-        this.postType = tm.contentType;
-        this.profileId = this.profileInformation.profile_Id;
-        this.profilePageId = this.profileInformation.page_Id;
-        this.userProfileId = this.userInformation.id;
+        this.postType = tm?.contentType;
+        this.profileId = this.profileInformation?.profile_Id;
+        this.profilePageId = this.profileInformation?.page_Id;
+        this.userProfileId = this.userInformation?.id;
       }
     });
 
@@ -1736,13 +1736,13 @@ export class ChannelComponent implements OnInit {
       if (ttr.id == id) {
         // show mentioned reply
         this.show = true;
-        this.mentionedCommentOrMessage = ttr.msgText;
-        this.mentionedCommentOrMessageId = ttr.id;
+        this.mentionedCommentOrMessage = ttr?.msgText;
+        this.mentionedCommentOrMessageId = ttr?.id;
         this.platform = this.platform;
-        this.postType = ttr.contentType;
-        this.profileId = this.profileInformation.profile_Id;
-        this.profilePageId = this.profileInformation.page_Id;
-        this.userProfileId = this.userInformation.id;
+        this.postType = ttr?.contentType;
+        this.profileId = this.profileInformation?.profile_Id;
+        this.profilePageId = this.profileInformation?.page_Id;
+        this.userProfileId = this.userInformation?.id;
       }
     });
   }

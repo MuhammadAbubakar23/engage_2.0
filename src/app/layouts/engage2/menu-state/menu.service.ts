@@ -74,7 +74,6 @@ export class MenuService {
     // });
   }
   // getList(type:string):Observable<MenuModel[]>{
-  //   
   //   let menus : MenuModel[] = [];
   //   menus = this.storage.retrive(type, 'O').local;
   //   if(menus != null && menus.length>=1) 

@@ -125,6 +125,7 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  chatBotBaseUrl: 'https://entertainerbot.enteract.app',
   botsBaseUrl: 'http://3.1.47.150:5000/bots/',
   botConfigBaseUrl: 'https://linked.360scrm.com/api/',
   // botConfigBaseUrl: 'https://newpurpleshop86.conveyor.cloud/api/',
@@ -169,8 +170,10 @@ export const environment = {
       AddTeam: 'Accesses/Teams',
       TeamProperties: 'Accesses/Properties',
       // accessrole: 'Roles/NewPreviews', //"Permissions/role",
-      permissionrole: 'Roles/NewPreviews', //"Permissions/role",
-      RolesPermissions: 'Roles/Fetch',
+      RolesPermissions: 'Roles/NewPreviews', //"Permissions/role",
+      ReportsMenus: 'Report/GetReportsPreview',
+      ConsoleMenus: 'Roles/NewMenuPreviews',
+      //RolesPermissions: 'Roles/Fetch',
       permissions: 'Roles/Permissions',
       RoleProperties: 'Permissions/Properties',
       AddRole: 'Permissions/Roles',
@@ -228,6 +231,8 @@ export const environment = {
       addBotConfig: 'ProfilePagesBotConfig/Add',
       deleteSkill: 'Skill/Delete',
       getAllWing: 'Teams/GetAllWing',
+      getPolicyByWing: 'SLAPolicies/GetByWing',
+      getCompanyTeams: 'Teams/GetCompanyTeams',
 
       // service Base rules
       getEntitiesRules: 'EntityConfigs/GetEntities',
@@ -319,7 +324,6 @@ export const environment = {
       runChatBot: 'models/run',
       chatBotWdidget: 'chat',
       stopChatBot: 'models/stop'
-
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

@@ -3,11 +3,7 @@ import { Router,NavigationStart  } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Toaster } from './layouts/engage2/toaster/toaster';
 import { ToasterService } from './layouts/engage2/toaster/toaster.service';
-import { GetWingsService } from './services/GetWings/get-wings.service';
-import { RulesGroupIdsService } from './services/RulesGroupIds/rules-group-ids.service';
-import { SkillIdsService } from './services/sendSkillIds/skill-ids.service';
 import { SignalRService } from './services/SignalRService/signal-r.service';
-import { SkillsService } from './services/Skills/skills.service';
 import { CommonDataService } from './shared/services/common/common-data.service';
 @Component({
   selector: 'app-root',
@@ -20,7 +16,6 @@ export class AppComponent {
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHandler(event: Event) {
     if (!this.isInternalNavigation()) {
-      
       // Clear local storage here
       // sessionStorage.clear();
       //  sessionStorage.removeItem('token')

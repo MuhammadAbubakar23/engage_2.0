@@ -21,7 +21,6 @@ export function loadEnvUrls(http : HttpClient) {
   return () => http.get('/assets/JSON/envURLs.json')
   .toPromise()
   .then((config:any)=>{
-    
     (window as any)._env = config
   })
 }

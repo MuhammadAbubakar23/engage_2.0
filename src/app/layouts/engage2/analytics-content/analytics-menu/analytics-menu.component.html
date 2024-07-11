@@ -4,13 +4,25 @@
       <a>Analytics</a>
     </h5>
   </div>
-  <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1" style="overflow: hidden; outline: none">
-    <div class="scroll-content" style="overflow: auto; height: calc(100%-200px);">
+  <ul
+    class="list-group console-list mt-2"
+    data-scrollbar="true"
+    tabindex="-1"
+    style="overflow: hidden; outline: none"
+  >
+    <div
+      class="scroll-content"
+      style="overflow: auto; height: calc(100%-200px)"
+    >
       <span *ngFor="let item of analyticeReport">
-        <li class="list-group-item list-group-item-action" routerLinkActive="active" value="Live Monitoring"
-          id="analyticstab2">
+        <li
+          class="list-group-item list-group-item-action"
+          routerLinkActive="active"
+          value="Live Monitoring"
+          id="analyticstab2"
+        >
           <a [routerLink]="[item.link]" class="d-flex">
-            {{item.name}}
+            {{ item.name }}
           </a>
         </li>
       </span>

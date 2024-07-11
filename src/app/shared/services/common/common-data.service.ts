@@ -11,7 +11,6 @@ export class CommonDataService {
 
   env: any;
   constructor(private http: HttpClient) {
-    
     this.baseUrl = window.location.origin;
     sessionStorage.setItem('baseUrl', this.baseUrl);
     if (this.baseUrl == 'https://keportal.enteract.live') {
@@ -219,6 +218,7 @@ export class CommonDataService {
   deleteTags = environment.links.console.deleteTags;
   getTagsByComayId = environment.links.console.getTagsByComayId;
   getAllTags = environment.links.console.defaultTags;
+  getPolicyByWing = environment.links.console.getPolicyByWing;
   // rules
   deleteRules = environment.links.console.deleteRules;
   getAllRules = environment.links.console.getAllRules;
@@ -253,6 +253,7 @@ export class CommonDataService {
   getTemplateStatus = environment.links.console.getTemplateStatus;
   deleteTemplate = environment.links.console.deleteTemplate;
   getRuleStatus = environment.links.console.getRuleStatus;
+  getCompanyTeams = environment.links.console.getCompanyTeams
 
   // teams
   // getAllTeams= environment.links.console.getAllTeams
@@ -260,7 +261,9 @@ export class CommonDataService {
   // updateTeam = environment.links.console.updateTeam
   //service
   userlogin = environment.links.common.userlogin;
-  permissionrole = environment.links.identity.permissionrole
+  rolesPermissions = environment.links.identity.RolesPermissions;
+  reportsMenus = environment.links.identity.ReportsMenus;
+  consoleMenus = environment.links.identity.ConsoleMenus;
   addSurvey = environment.links.service.addSurvey;
   addCSAT = environment.links.service.addCSAT;
   KECSAT = environment.links.profile.KECSAT;
@@ -290,7 +293,13 @@ export class CommonDataService {
     return this.http.get(this.env.CommonBaseUrl + this.userlogin, httpOptions);
   }
   getPermissionByRole(form: any) {
-    return this.http.post(this.env.IdentityBaseUrl + this.permissionrole, form);
+    return this.http.post(this.env.IdentityBaseUrl + this.rolesPermissions, form);
+  }
+  getReportsMenuByRole(form: any) {
+    return this.http.post(this.env.IdentityBaseUrl + this.reportsMenus, form);
+  }
+  getConsoleMenuByRole(actorId: any) {
+    return this.http.get(`${this.env.IdentityBaseUrl}${this.consoleMenus}?ActorId=${actorId}`);
   }
   GetTagsList() {
     return this.http.get(this.env.CommonBaseUrl + this.tagsList);
@@ -1230,71 +1239,11 @@ export class CommonDataService {
     const url = `${this.instagramBaseUrl}${this.deleteTemplate}?templateId=${id}`;
     return this.http.get<any>(url, {});
   }
-  DeleteLinkedinTemplate(id: any) {
-    const url = `${this.linkdinBaseUrl}${this.deleteTemplate}?templateId=${id}`;
-    return this.http.get<any>(url, {});
+  GetPolicyByWing(wing: string) {
+    const url = `${this.env.ConsoleBaseUrl}${this.getPolicyByWing}?Id=${wing}`;
+    return this.http.get(url);
   }
-  DeleteExchangeTemplate(id: any) {
-    const url = `${this.exchangeEmailBaseUrl}${this.deleteTemplate}?templateId=${id}`;
-    return this.http.get<any>(url, {});
+  GetCompanyTeams() {
+    return this.http.get(this.env.IdentityBaseUrl + this.getCompanyTeams);
   }
-  DeleteMetaWaTemplate(id: any) {
-    const url = `${this.metaWhatsapp}${this.deleteTemplate}?templateId=${id}`;
-    return this.http.get<any>(url, {});
-  }
-  DeleteYTTemplate(id: any) {
-    const url = `${this.youtubeBaseUrl}${this.deleteTemplate}?templateId=${id}`;
-    return this.http.get<any>(url, {});
-  }
-  DeletePsTemplate(id: any) {
-    const url = `${this.playStoreBaseUrl}${this.deleteTemplate}?templateId=${id}`;
-    return this.http.get<any>(url, {});
-  }
-  DeleteGsuitTemplate(id: any) {
-    const url = `${this.gSuitBaseUrl}${this.deleteTemplate}?templateId=${id}`;
-    return this.http.get<any>(url, {});
-  }
-  DeleteWaTemplate(id: any) {
-    const url = `${this.whatsappBaseUrl}${this.deleteTemplate}?templateId=${id}`;
-    return this.http.get<any>(url, {});
-  }
-
-  GetRuleStatus(id: any, status: boolean) {
-    const url = `${this.autoresponderbaseurl}${this.getRuleStatus}?Id=${id}&status=${status}`;
-    return this.http.get<any>(url, {});
-  }
-
-  GetInstaRuleStatus(id: any, status: boolean) {
-    const url = `${this.instagramBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
-    return this.http.get<any>(url, {});
-  }
-  GetWaRuleStatus(id: any, status: boolean) {
-    const url = `${this.whatsappBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
-    return this.http.get<any>(url, {});
-  }
-  GetPsRuleStatus(id: any, status: boolean) {
-    const url = `${this.playStoreBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
-    return this.http.get<any>(url, {});
-  }
-  GetGSuitRuleStatus(id: any, status: boolean) {
-    const url = `${this.gSuitBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
-    return this.http.get<any>(url, {});
-  }
-  GetYTRuleStatus(id: any, status: boolean) {
-    const url = `${this.youtubeBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
-    return this.http.get<any>(url, {});
-  }
-  GetLinkdinRuleStatus(id: any, status: boolean) {
-    const url = `${this.linkdinBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
-    return this.http.get<any>(url, {});
-  }
-  GetMetaWARuleStatus(id: any, status: boolean) {
-    const url = `${this.metaWhatsapp}${this.getRuleStatus}?Id=${id}&status=${status}`;
-    return this.http.get<any>(url, {});
-  }
-  GetExchangeEmailRuleStatus(id: any, status: boolean) {
-    const url = `${this.exchangeEmailBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
-    return this.http.get<any>(url, {});
-  }
-
 }

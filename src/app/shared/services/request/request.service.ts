@@ -62,7 +62,6 @@ export class RequestService {
     envAddress: string,
     routeparams?: any
   ) => {
-    ;
     if (routeparams === undefined) {
       routeparams = '';
     }
