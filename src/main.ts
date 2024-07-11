@@ -31,15 +31,15 @@ fetch('/assets/JSON/envURLs.json')
       environment.LinkedInBaseUrl = config.jazz.LinkedInBaseUrl;
       environment.BotBaseUrl = config.jazz.BotBaseUrl;
     } else if (baseUrl == 'https://uiengage.enteract.app') {
-      environment.IdentityBaseUrl = config.jazz.IdentityBaseUrl;
-      environment.CommonBaseUrl = config.jazz.CommonBaseUrl;
-      environment.SignalRCommonBaseUrl = config.jazz.SignalRCommonBaseUrl;
-      environment.ProfileBaseUrl = config.jazz.ProfileBaseUrl;
-      environment.ServiceBaseUrl = config.jazz.ServiceBaseUrl;
-      environment.ConsoleBaseUrl = config.jazz.ConsoleBaseUrl;
-      environment.KeReportsBaseUrl = config.jazz.KeReportsBaseUrl;
-      environment.LinkedInBaseUrl = config.jazz.LinkedInBaseUrl;
-      environment.BotBaseUrl = config.jazz.BotBaseUrl;
+      environment.IdentityBaseUrl = config.stagging.IdentityBaseUrl;
+      environment.CommonBaseUrl = config.stagging.CommonBaseUrl;
+      environment.SignalRCommonBaseUrl = config.stagging.SignalRCommonBaseUrl;
+      environment.ProfileBaseUrl = config.stagging.ProfileBaseUrl;
+      environment.ServiceBaseUrl = config.stagging.ServiceBaseUrl;
+      environment.ConsoleBaseUrl = config.stagging.ConsoleBaseUrl;
+      environment.KeReportsBaseUrl = config.stagging.KeReportsBaseUrl;
+      environment.LinkedInBaseUrl = config.stagging.LinkedInBaseUrl;
+      environment.BotBaseUrl = config.stagging.BotBaseUrl;
     } else if (baseUrl == 'https://tpplui.enteract.live') {
       environment.IdentityBaseUrl = config.tppl.IdentityBaseUrl;
       environment.CommonBaseUrl = config.tppl.CommonBaseUrl;
@@ -71,26 +71,36 @@ fetch('/assets/JSON/envURLs.json')
       environment.LinkedInBaseUrl = config.bazaar.LinkedInBaseUrl;
       environment.BotBaseUrl = config.bazaar.BotBaseUrl;
     } else if (baseUrl == 'https://uiengagerox.enteract.app') {
-      environment.IdentityBaseUrl = config.uirox.IdentityBaseUrl;
-      environment.CommonBaseUrl = config.uirox.CommonBaseUrl;
-      environment.SignalRCommonBaseUrl = config.uirox.SignalRCommonBaseUrl;
-      environment.ProfileBaseUrl = config.uirox.ProfileBaseUrl;
-      environment.ServiceBaseUrl = config.uirox.ServiceBaseUrl;
-      environment.ConsoleBaseUrl = config.uirox.ConsoleBaseUrl;
-      environment.KeReportsBaseUrl = config.uirox.KeReportsBaseUrl;
-      environment.LinkedInBaseUrl = config.uirox.LinkedInBaseUrl;
-      environment.BotBaseUrl = config.uirox.BotBaseUrl;
-    } else if (baseUrl == 'http://localhost:4200' || baseUrl == 'https://localhost:4200') {
-      environment.IdentityBaseUrl = config.localhost.IdentityBaseUrl;
-      environment.CommonBaseUrl = config.localhost.CommonBaseUrl;
-      environment.SignalRCommonBaseUrl = config.localhost.SignalRCommonBaseUrl;
-      environment.ProfileBaseUrl = config.localhost.ProfileBaseUrl;
-      environment.ServiceBaseUrl = config.localhost.ServiceBaseUrl;
-      environment.ConsoleBaseUrl = config.localhost.ConsoleBaseUrl;
-      environment.KeReportsBaseUrl = config.localhost.KeReportsBaseUrl;
-      environment.LinkedInBaseUrl = config.localhost.LinkedInBaseUrl;
-      environment.BotBaseUrl = config.localhost.BotBaseUrl;
+      environment.IdentityBaseUrl = config.testUrlsRox.IdentityBaseUrl;
+      environment.CommonBaseUrl = config.testUrlsRox.CommonBaseUrl;
+      environment.SignalRCommonBaseUrl = config.testUrlsRox.SignalRCommonBaseUrl;
+      environment.ProfileBaseUrl = config.testUrlsRox.ProfileBaseUrl;
+      environment.ServiceBaseUrl = config.testUrlsRox.ServiceBaseUrl;
+      environment.ConsoleBaseUrl = config.testUrlsRox.ConsoleBaseUrl;
+      environment.KeReportsBaseUrl = config.testUrlsRox.KeReportsBaseUrl;
+      environment.LinkedInBaseUrl = config.testUrlsRox.LinkedInBaseUrl;
+      environment.BotBaseUrl = config.testUrlsRox.BotBaseUrl;
     } else if (baseUrl == 'https://engageui.enteract.live') {
+      environment.IdentityBaseUrl = config.demo.IdentityBaseUrl;
+      environment.CommonBaseUrl = config.demo.CommonBaseUrl;
+      environment.SignalRCommonBaseUrl = config.demo.SignalRCommonBaseUrl;
+      environment.ProfileBaseUrl = config.demo.ProfileBaseUrl;
+      environment.ServiceBaseUrl = config.demo.ServiceBaseUrl;
+      environment.ConsoleBaseUrl = config.demo.ConsoleBaseUrl;
+      environment.KeReportsBaseUrl = config.demo.KeReportsBaseUrl;
+      environment.LinkedInBaseUrl = config.demo.LinkedInBaseUrl;
+      environment.BotBaseUrl = config.demo.BotBaseUrl;
+    } else if (baseUrl == 'https://engagerox.jazz.com.pk:8083') {
+      environment.IdentityBaseUrl = config.rox.IdentityBaseUrl;
+      environment.CommonBaseUrl = config.rox.CommonBaseUrl;
+      environment.SignalRCommonBaseUrl = config.rox.SignalRCommonBaseUrl;
+      environment.ProfileBaseUrl = config.rox.ProfileBaseUrl;
+      environment.ServiceBaseUrl = config.rox.ServiceBaseUrl;
+      environment.ConsoleBaseUrl = config.rox.ConsoleBaseUrl;
+      environment.KeReportsBaseUrl = config.rox.KeReportsBaseUrl;
+      environment.LinkedInBaseUrl = config.rox.LinkedInBaseUrl;
+      environment.BotBaseUrl = config.rox.BotBaseUrl;
+    } else if (baseUrl == 'http://localhost:4200' || baseUrl == 'https://localhost:4200') {
       environment.IdentityBaseUrl = config.demo.IdentityBaseUrl;
       environment.CommonBaseUrl = config.demo.CommonBaseUrl;
       environment.SignalRCommonBaseUrl = config.demo.SignalRCommonBaseUrl;

@@ -75,7 +75,7 @@ export const environment = {
   // botBaseUrl: '',
   // LinkedInBaseUrl:'',
 
-  // For PK tach damo company Id 649 
+  // For PK tach damo company Id 649
   // IdentityBaseUrl: 'https://enidentitybackend.enteract.live/api/',
   // CommonBaseUrl: 'https://encommonbackend.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://encommonbackend.enteract.live/',
@@ -87,14 +87,14 @@ export const environment = {
   // BotBaseUrl:'',
 
   IdentityBaseUrl: '',
-    CommonBaseUrl: '',
-    SignalRCommonBaseUrl: '',
-    ProfileBaseUrl: '',
-    ServiceBaseUrl: '',
-    ConsoleBaseUrl: '',
-    LinkedInBaseUrl: '',
-    BotBaseUrl: '',
-    KeReportsBaseUrl:'',
+  CommonBaseUrl: '',
+  SignalRCommonBaseUrl: '',
+  ProfileBaseUrl: '',
+  ServiceBaseUrl: '',
+  ConsoleBaseUrl: '',
+  LinkedInBaseUrl: '',
+  BotBaseUrl: '',
+  KeReportsBaseUrl: '',
 
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
@@ -334,7 +334,7 @@ export const environment = {
       createBotTrain: 'models/create',
       runChatBot: 'models/run',
       chatBotWdidget: 'chat',
-      stopChatBot: 'models/stop'
+      stopChatBot: 'models/stop',
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

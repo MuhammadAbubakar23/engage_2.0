@@ -65,6 +65,7 @@ export class RoleMenuComponent implements OnInit {
       "ActorId": sessionStorage.getItem('activeActorId'),
       "Inline": false
     }).subscribe((res: any) => {
+      debugger
       if (res.length > 0) {
         this.showAnalytics = true;
         this._menuS.changeAnalyticsMenu(res);

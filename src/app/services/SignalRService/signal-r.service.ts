@@ -75,6 +75,8 @@ export class SignalRService {
       this.companyId = 658;
     } else if (this.baseUrl == 'https://engageui.enteract.live') {
       this.companyId = 649;
+    } else if (this.baseUrl == 'https://engagerox.jazz.com.pk:8083') {
+      this.companyId = 657;
     }
 
     this.comanyidService.sendcompanyid(this.companyId);

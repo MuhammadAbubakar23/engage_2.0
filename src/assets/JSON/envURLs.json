@@ -7,7 +7,8 @@
         "ServiceBaseUrl": "",
         "ConsoleBaseUrl": "https://console.enteract.live/api/",
         "KeReportsBaseUrl": "https://kereports.enteract.live/api/",
-        "LinkedInBaseUrl": "https://linkdservice.enteract.live/api/"
+        "LinkedInBaseUrl": "https://linkdservice.enteract.live/api/",
+        "BotBaseUrl": "https://bot-engage.enteract.app/api/"
     },
     "jazz": {
         "IdentityBaseUrl": "https://identity.jazz.com.pk:8082/api/",
@@ -17,17 +18,19 @@
         "ServiceBaseUrl": "",
         "ConsoleBaseUrl": "https://console-engage.enteract.app/api/",
         "KeReportsBaseUrl": "",
-        "LinkedInBaseUrl": ""
+        "LinkedInBaseUrl": "",
+        "BotBaseUrl": "https://bot-engage.enteract.app/api/"
     },
     "stagging": {
-        "IdentityBaseUrl": "https://idtservice.enteract.live/api/",
-        "CommonBaseUrl": "https://comservices.enteract.live/api/",
-        "SignalRCommonBaseUrl": "https://comservices.enteract.live/",
+        "IdentityBaseUrl": "https://identity-engage.enteract.app/api/",
+        "CommonBaseUrl": "https://common-engage.enteract.app/api/",
+        "SignalRCommonBaseUrl": "https://common-engage.enteract.app/",
         "ProfileBaseUrl": "https://profiler.enteract.live/api/",
         "ServiceBaseUrl": "",
-        "ConsoleBaseUrl": "https://console.enteract.live/api/",
-        "KeReportsBaseUrl": "https://kereports.enteract.live/api/",
-        "LinkedInBaseUrl": "https://linkdservice.enteract.live/api/"
+        "ConsoleBaseUrl": "https://console-engage.enteract.app/api/",
+        "KeReportsBaseUrl": "",
+        "LinkedInBaseUrl": "https://linkdservice.enteract.live/api/",
+        "BotBaseUrl": "https://bot-engage.enteract.app/api/"
     },
     "testUrls": {
         "IdentityBaseUrl": "https://identity-engage.enteract.app/api/",
@@ -35,7 +38,10 @@
         "ServiceBaseUrl": "",
         "SignalRCommonBaseUrl": "https://common-engage.enteract.app/",
         "ProfileBaseUrl": "https://profiler.enteract.app/api/",
-        "ConsoleBaseUrl": "https://console-engage.enteract.app/api/"
+        "ConsoleBaseUrl": "https://console-engage.enteract.app/api/",
+        "BotBaseUrl": "https://bot-engage.enteract.app/api/",
+        "KeReportsBaseUrl": "",
+        "LinkedInBaseUrl": "https://linkdservice.enteract.live/api/"
     },
     "testUrlsRox": {
         "IdentityBaseUrl": "https://idtrox.enteract.app/api/",
@@ -43,7 +49,10 @@
         "ServiceBaseUrl": "",
         "SignalRCommonBaseUrl": "https://comrox.enteract.app/",
         "ProfileBaseUrl": "https://profiler.enteract.app/api/",
-        "ConsoleBaseUrl": "https://conrox.enteract.app/api/"
+        "ConsoleBaseUrl": "https://conrox.enteract.app/api/",
+        "BotBaseUrl": "https://bot-engage.enteract.app/api/",
+        "KeReportsBaseUrl": "",
+        "LinkedInBaseUrl": "https://linkdservice.enteract.live/api/"
     },
     "demo": {
         "IdentityBaseUrl": "https://enidentitybackend.enteract.live/api/",
@@ -54,6 +63,17 @@
         "ConsoleBaseUrl": "https://enconsolebackend.enteract.live/api/",
         "keReportsBaseUrl": "https://enreportsbackend.enteract.live/api/",
         "LinkedInBaseUrl": "https://linkdservice.enteract.live/api/",
-        "botBaseUrl": ""
+        "BotBaseUrl": "https://bot-engage.enteract.app/api/"
+    },
+    "rox": {
+        "IdentityBaseUrl": "https://identityrox.jazz.com.pk:8086/api/",
+        "CommonBaseUrl": "https://commonrox.jazz.com.pk:8084/api/",
+        "SignalRCommonBaseUrl": "https://commonrox.jazz.com.pk:8084/",
+        "ProfileBaseUrl": "",
+        "ServiceBaseUrl": "",
+        "ConsoleBaseUrl": "https://consolerox.jazz.com.pk:8085/api/",
+        "keReportsBaseUrl": "",
+        "LinkedInBaseUrl": "",
+        "BotBaseUrl": ""
     }
 }
