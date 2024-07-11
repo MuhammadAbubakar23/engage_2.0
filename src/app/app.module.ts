@@ -15,6 +15,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { LayoutsModule } from './layouts/layouts.module';
+import { ChatWidget2Component } from './shared/components/chat-widget2/chat-widget2.component';
+
 // import { WordCloudComponent } from './word-cloud/word-cloud.component';
 
 export function loadEnvUrls(http : HttpClient) {
@@ -27,12 +29,13 @@ export function loadEnvUrls(http : HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
+
     // WordCloudComponent
   ],
   imports: [
     FormsModule,
     BrowserModule,
-    AppRoutingModule,  
+    AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule,

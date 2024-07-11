@@ -1,0 +1,105 @@
+<body class="agent-grid leftactive">
+  <main>
+    <div class="main-wrapper d-flex">
+      <div class="middle-wrapper d-flex w-100 flex-column">
+        <div class="content-box-wrapper d-flex w-100">
+          <div class="middle-content d-flex">
+            <div
+              class="chatbg"
+              style="
+                background: url(../../../../assets/images/chatbg.png) no-repeat
+                  top;
+              "
+            ></div>
+            <div class="e-bot-icon" [ngClass]="{ active: isOpen }">
+              <div class="e_chat-icon" (click)="openChat()">
+                <img src="../../../../assets/images/ebot.svg" />
+              </div>
+            </div>
+            <div
+              class="enteract-chatbot"
+              [ngClass]="{ active: isOpen, removebot: !isOpen }"
+            >
+              <div class="e-chat-main">
+                <header>
+                  <div class="e_chat-icon">
+                    <img src="../../../../assets/images/ebot.svg" />
+                  </div>
+                  <div>
+                    <h4>enteract.bot</h4>
+                    <p class="coal">Online</p>
+                  </div>
+                  <div class="ebotclose" (click)="closeChat()">
+                    <i class="fa-light fa-xmark"></i>
+                  </div>
+                </header>
+                <section class="chatbody" #chatBody>
+                  <div class="messagewrap e-left" data-first="true">
+                    <div class="messagebody">
+                      <div class="caption">
+                        <div class="name">
+                          <div class="e_chat-icon">
+                            <img src="../../../../assets/images/ebot.svg" />
+                          </div>
+                          enteract.bot
+                        </div>
+                        <div class="time">1:16 PM</div>
+                      </div>
+                      <div class="messagebubble">
+                        Hi! I'm enteract.bot 😎 Nice to meet you! 👋
+                      </div>
+                    </div>
+                  </div>
+
+                  <ng-container *ngFor="let msg of messages; let i = index">
+                    <div
+                      class="messagewrap"
+                      [ngClass]="{
+                        'e-right': msg.type === 'user',
+                        'e-left': msg.type === 'bot'
+                      }"
+                      [attr.data-first]="msg.type === 'user' ? true : null"
+                      [attr.data-last]="msg.type === 'bot' ? true : null"
+                    >
+                      <div class="messagebody">
+                        <div class="caption">
+                          <div class="name">
+                            <div *ngIf="msg.type === 'bot'" class="e_chat-icon">
+                              <img src="../../../../assets/images/ebot.svg" />
+                            </div>
+                            {{ msg.type === "user" ? "You" : "enteract.bot" }}
+                          </div>
+                          <div class="time">
+                            {{ msg.timestamp | date : "shortTime" }}
+                          </div>
+                        </div>
+                        <div class="messagebubble">
+                          {{ msg.message }}
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </section>
+                <footer>
+                  <form [formGroup]="chatForm">
+                    <input
+                      class="form-control"
+                      placeholder="Send a message.."
+                      formControlName="message"
+                    />
+                    <button
+                      class="iconButton iconHover sendicon"
+                      (click)="submitMessage()"
+                    >
+                      <i class="fa-light fa-paper-plane-top"></i>
+                    </button>
+                  </form>
+                </footer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>

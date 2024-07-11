@@ -51,7 +51,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     //   if(request.url==="https://entertainerbot.enteract.app/chat"){
     //     return next.handle(request);
     //  }
-    if (request.url === "https://entertainerbot.enteract.app/chat") {
+    if (request.url.includes('https://entertainerbot.enteract.app')) {
       return next.handle(request);
     }
     else {

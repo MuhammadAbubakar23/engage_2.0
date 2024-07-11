@@ -2,11 +2,11 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BotMonitoringService } from 'src/app/modules/bot-monitoring/services/bot-monitoring.service';
 @Component({
-  selector: 'app-chat-widget',
-  templateUrl: './chat-widget.component.html',
-  styleUrls: ['./chat-widget.component.scss']
+  selector: 'app-chat-widget2',
+  templateUrl: './chat-widget2.component.html',
+  styleUrls: ['./chat-widget2.component.scss']
 })
-export class ChatWidgetComponent implements OnInit {
+export class ChatWidget2Component implements OnInit {
   @ViewChild('chatBody') private chatBody?: ElementRef;
   messages: any[] = [];
   isOpen = false;
@@ -38,23 +38,49 @@ export class ChatWidgetComponent implements OnInit {
     //this.messages = [];
   }
   submitMessage() {
+    if (!this.slug) {
+      this._botService.chatInit().subscribe(
+        (res: any) => {
+          this.slug = res.slug;
+          this.sendMessage();
+        },
+        (error: any) => {
+          alert('Check your Internet connection');
+        }
+      );
+    } else {
+      this.sendMessage();
+    }
+  }
+
+  sendMessage() {
     const body = {
-      "message": this.chatForm.value['message']
+      "message": this.chatForm.value['message'],
+      "slug": this.slug
     };
 
-    this.messages.push({ message: this.chatForm.value['message'], type: 'user', timestamp: new Date() });
+    this.messages.push({
+      message: this.chatForm.value['message'],
+      slug: this.slug,
+      type: 'user',
+      timestamp: new Date()
+    });
+
     this.chatForm.reset({ message: '' });
 
-    this._botService.ChatWdidget(body).subscribe(
+    this._botService.ChatBotWdidget(body).subscribe(
       (res: any) => {
-        this.messages.push({ message: res.bot, type: 'bot', timestamp: new Date() });
+        this.messages.push({
+          message: res.bot,
+          type: 'bot',
+          timestamp: new Date()
+        });
       },
       (error: any) => {
-        alert('Check your Internet connection')
+        alert('Check your Internet connection');
       }
     );
   }
-
 
 
 }
