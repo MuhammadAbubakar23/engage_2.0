@@ -31,7 +31,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
       this.companyId = 658
     }
     let team = this.storage.retrive('nocompass', 'O').local;
-    debugger
+    
     // if (typeof team === 'undefined' || team == null || team == '') {
     // } else if (
     //   typeof team.id === 'undefined' ||

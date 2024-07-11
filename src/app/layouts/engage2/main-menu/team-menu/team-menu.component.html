@@ -29,7 +29,7 @@
 </a>
 <a [routerLink]="['/all-inboxes/sent/all']" routerLinkActive="active" ariaCurrentWhenActive="page"
     class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
-    [class.active]="activeChannel=='sent'">
+    [class.active]="activeChannel=='sent'" *ngIf="hasSentPermission">
     <div class="list-group-text d-flex align-items-center">
         <div class="iconButton medium">
             <i class="fal fa-paper-plane ice"></i>

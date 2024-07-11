@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit {
   singleOrSplitted:any[]=[];
   loginResponse:any;
   login() {
-    debugger
+    
     let obj = {
       // actor: this.loginForms.value.actor,
       userName: this.loginForm.value.userName,
@@ -166,7 +166,7 @@ export class LoginComponent implements OnInit {
   }
 
   // newFunction(){
-  // debugger
+  // 
   // const actorId = this.actorsService.actors
   // console.log(actorId)
   //   this.commonService.UserLogin().subscribe(() => {

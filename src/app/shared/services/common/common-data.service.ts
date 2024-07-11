@@ -11,7 +11,7 @@ export class CommonDataService {
 
   env: any;
   constructor(private http: HttpClient) {
-    debugger
+    
     this.baseUrl = window.location.origin;
     sessionStorage.setItem('baseUrl', this.baseUrl);
     if (this.baseUrl == 'https://keportal.enteract.live') {

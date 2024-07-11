@@ -1,6 +1,6 @@
 <div class="multiple-screens">
   <div id="all-inboxes-wrapper">
-    <div class="sidebar-header border-bottom ps-4 pe-3 pt-3 pb-3">
+    <div class="sidebar-header border-bottom ps-4 pe-3 pt-3 pb-3" *ngIf="hasFocusedPermission"> 
       <h6 class="fw-bold m-0">All Inboxes <span class="badge twltte-bg rounded-pill"
           *ngIf="UnResponded > 0">{{UnResponded}}</span></h6>
     </div>

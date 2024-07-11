@@ -34,6 +34,7 @@ export class BotMonitoringService {
   chatBotWdidget = environment.links.bot.chatBotWdidget
   stopChatBot = environment.links.bot.stopChatBot
 
+
   constructor(private http: HttpClient) { }
   getChats(data: any): Observable<any> {
     return this.http.post(baseUrl + "WhatsAppBot/GetWhatsAppBotlisting", data)
@@ -113,6 +114,6 @@ export class BotMonitoringService {
     return this.http.post(this.botMoniteringBaseUrl + this.createBotTrain, form);
   }
   ChatBotWdidget(form: any) {
-    return this.http.post("https://entertainerbot.enteract.app/chat", form);
+    return this.http.post(this.botMoniteringBaseUrl + this.chatBotWdidget, form);
   }
 }

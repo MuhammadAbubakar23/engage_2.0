@@ -43,7 +43,7 @@ export class ActorsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger
+    
     let data = this.storage.retrive('main', 'O').local;
     this.loginResponse = data;
     this.fullName = data.username;
@@ -54,11 +54,14 @@ export class ActorsComponent implements OnInit {
   }
 
   getPermissions(actorId: number) {
+    sessionStorage.setItem('activeActorId', JSON.stringify(actorId));
     this.commonService.getPermissionByRole({
       "ActorId": actorId,
-      "Inline": false
+      "Inline": true
     }).subscribe((res: any) => {
-      sessionStorage.setItem('Permissions', JSON.stringify(res.map((item: any) => item.slug)));
+      console.log(res);
+      sessionStorage.setItem('Permissions', JSON.stringify(res.priviledge));
+
       try {
         this.commonService.UserLogin().subscribe(() => {
           this.sendSkillIdsService.sendSkillIds(this.loginResponse?.skills);

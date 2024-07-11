@@ -182,12 +182,12 @@ export class ConversationComponent implements OnInit {
         // Handle error scenario
       }
     );
-  }
+}
   formatUtterance(utterance: string): string {
     return utterance.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
   }
   DeleteRule(rule: string, event: Event) {
-    debugger
+    
     event.stopPropagation();
     const confirmation = confirm('Are you sure you want to delete this Rule?');
     if (confirmation) {
@@ -212,7 +212,7 @@ export class ConversationComponent implements OnInit {
     }
   }
   DeleteStory(story: string, event: Event) {
-    debugger
+    
     event.stopPropagation();
     const confirmation = confirm('Are you sure you want to delete this story?');
     if (confirmation) {
