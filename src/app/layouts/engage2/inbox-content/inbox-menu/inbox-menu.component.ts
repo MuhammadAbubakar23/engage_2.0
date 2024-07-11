@@ -5,10 +5,10 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateListService } from 'src/app/services/UpdateListService/update-list.service';
 import { Router } from '@angular/router';
-import { SkillsService } from 'src/app/services/Skills/skills.service';
-import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
-import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { SkillsService } from 'src/app/services/Skills/skills.service';
+import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 @Component({
   selector: 'inbox-menu',
   templateUrl: './inbox-menu.component.html',

@@ -20,7 +20,6 @@ import { ConnectionIdService } from '../connectionId/connection-id.service';
   providedIn: 'root',
 })
 export class SignalRService {
-  private env:any;
   data: any;
   addTags: any;
   removeTags: any;
@@ -36,7 +35,7 @@ export class SignalRService {
   public hubconnection!: signalR.HubConnection;
   public connectionId!: string;
   public broadcastedData!: any[];
-  // SignalRCommonBaseUrl = environment.SignalRCommonBaseUrl;
+  SignalRCommonBaseUrl = environment.SignalRCommonBaseUrl;
   private connectionStateSubject: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
   constructor(
@@ -52,38 +51,30 @@ export class SignalRService {
     private removeAssignedQueryService: RemoveAssignedQuerryService,
     private applySentimentService: ApplySentimentService,
     private comanyidService: CompanyidService,
-    private sendConnectionId : ConnectionIdService
+    private sendConnectionId: ConnectionIdService
   ) {
-    this.env = (window as any)._env
     this.baseUrl = window.location.origin;
     if (this.baseUrl == 'https://keportal.enteract.live') {
       this.companyId = 651;
-      this.env = (window as any)._env.ke;
     } else if (this.baseUrl == 'https://engage.jazz.com.pk') {
       this.companyId = 650;
-      this.env = (window as any)._env.jazz;
     } else if (this.baseUrl == 'https://uiengage.enteract.app') {
       this.companyId = 657;
-      this.env = (window as any)._env;
     } else if (this.baseUrl == 'https://tpplui.enteract.live') {
       this.companyId = 652;
-      this.env = (window as any)._env;
     } else if (this.baseUrl == 'https://waengage.enteract.live') {
       this.companyId = 653;
-      this.env = (window as any)._env;
     } else if (this.baseUrl == 'https://bzengage.enteract.live') {
       this.companyId = 654;
-      this.env = (window as any)._env;
     } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
       this.companyId = 658;
-      this.env = (window as any)._env;
-    } else if (this.baseUrl == 'http://localhost:4200' || this.baseUrl == 'https://localhost:4200') {
+    } else if (
+      this.baseUrl == 'http://localhost:4200' ||
+      this.baseUrl == 'https://localhost:4200'
+    ) {
       this.companyId = 658;
-      this.env = (window as any)._env.stagging;
-    }
-    else if (this.baseUrl == 'https://engageui.enteract.live') {
+    } else if (this.baseUrl == 'https://engageui.enteract.live') {
       this.companyId = 649;
-      this.env = (window as any)._env.demo;
     }
 
     this.comanyidService.sendcompanyid(this.companyId);
@@ -101,7 +92,7 @@ export class SignalRService {
       // headers: { "X-Super-Team": JSON.stringify(team.id) }
     };
     this.hubconnection = new signalR.HubConnectionBuilder()
-      .withUrl(this.env.SignalRCommonBaseUrl + 'ConnectionHub')
+      .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub')
       .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
       .build();
@@ -116,18 +107,18 @@ export class SignalRService {
     // }
     // Handle reconnection
     this.hubconnection.onreconnected(() => {
-      console.log("SignalR reconnected, rejoining group");
-      this.getConnectionId()
+      console.log('SignalR reconnected, rejoining group');
+      this.getConnectionId();
       // this.connectionStateSubject.next(true)
-      this.storeLocally?.forEach((x:any)=>{
+      this.storeLocally?.forEach((x: any) => {
         this.joinGroup(x);
-      })
+      });
     });
   }
   public getConnectionState(): BehaviorSubject<boolean> {
     return this.connectionStateSubject;
   }
-  storeLocally:any[]=[];
+  storeLocally: any[] = [];
   joinGroup(groupName: any) {
     if (this.hubconnection) {
       this.hubconnection
@@ -139,8 +130,8 @@ export class SignalRService {
     } else {
       console.error('SignalR connection not established.');
     }
-    if(!this.storeLocally.includes(groupName)){
-      this.storeLocally.push(groupName)
+    if (!this.storeLocally.includes(groupName)) {
+      this.storeLocally.push(groupName);
     }
   }
   reConnect() {
@@ -216,11 +207,15 @@ export class SignalRService {
               JSON.stringify(this.temporaryCommentObject) !== JSON.stringify(x)
             ) {
               this.temporaryCommentObject = x;
-              this.updateCommentsService.sendComment(data.signalRPostConversations);
+              this.updateCommentsService.sendComment(
+                data.signalRPostConversations
+              );
             }
           } else {
             this.temporaryCommentObject = x;
-            this.updateCommentsService.sendComment(data.signalRPostConversations);
+            this.updateCommentsService.sendComment(
+              data.signalRPostConversations
+            );
           }
         });
       }
@@ -282,14 +277,14 @@ export class SignalRService {
     });
   };
   public getConnectionId = () => {
-    let obj={
-      'Bearer': sessionStorage.getItem('token') ,
-      'companyId':this.companyId
-    }
-    this.hubconnection.invoke('GetConnectionId',obj).then((data) => {
+    let obj = {
+      Bearer: sessionStorage.getItem('token'),
+      companyId: this.companyId,
+    };
+    this.hubconnection.invoke('GetConnectionId', obj).then((data) => {
       this.connectionId = data;
-      sessionStorage.setItem('signalRConnectionId', this.connectionId)
-      this.sendConnectionId.sendConnectionId(this.connectionId)
+      sessionStorage.setItem('signalRConnectionId', this.connectionId);
+      this.sendConnectionId.sendConnectionId(this.connectionId);
     });
   };
 }

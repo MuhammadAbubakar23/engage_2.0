@@ -1,26 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, share, startWith } from 'rxjs';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
-import { loadMenusList } from '../../menu-state/menu.actions';
 import { MenuModel } from '../../menu-state/menu.model';
 import {
   getEmargingEqual,
-  getMenusLoading,
 } from '../../menu-state/menu.selectors';
 import { MenuState } from '../../menu-state/menu.state';
-//import { updatePermissionsLetters } from '../../permission-state/permission.actions';
-import {
-  getPermissionBySlug,
-  getPermissionsLoading,
-} from '../../permission-state/permission.selectors';
-import { PermissionState } from '../../permission-state/permission.state';
 import { OpensidebarService } from 'src/app/services/openSidebarService/opensidebar.service';
-import { SearchFilterService } from 'src/app/services/SearchFilter/search-filter.service';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { MenuService } from 'src/app/shared/services/menu.service';
+import { SearchFilterService } from 'src/app/services/SearchFilter/search-filter.service';
 
 @Component({
   selector: 'role-menu',
@@ -53,7 +44,6 @@ export class RoleMenuComponent implements OnInit {
 
   constructor(
     private MenuStore: Store<MenuState>,
-    private PermissionStore: Store<PermissionState>,
     private _route: Router,
     private storage: StorageService,
     private sidebar: OpensidebarService,
