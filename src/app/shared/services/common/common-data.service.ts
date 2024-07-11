@@ -1239,6 +1239,35 @@ export class CommonDataService {
     const url = `${this.instagramBaseUrl}${this.deleteTemplate}?templateId=${id}`;
     return this.http.get<any>(url, {});
   }
+  DeleteLinkedinTemplate(id: any) {
+    const url = `${this.linkdinBaseUrl}${this.deleteTemplate}?templateId=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  DeleteExchangeTemplate(id: any) {
+    const url = `${this.exchangeEmailBaseUrl}${this.deleteTemplate}?templateId=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  DeleteMetaWaTemplate(id: any) {
+    const url = `${this.metaWhatsapp}${this.deleteTemplate}?templateId=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  DeleteYTTemplate(id: any) {
+    const url = `${this.youtubeBaseUrl}${this.deleteTemplate}?templateId=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  DeletePsTemplate(id: any) {
+    const url = `${this.playStoreBaseUrl}${this.deleteTemplate}?templateId=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  DeleteGsuitTemplate(id: any) {
+    const url = `${this.gSuitBaseUrl}${this.deleteTemplate}?templateId=${id}`;
+    return this.http.get<any>(url, {});
+  }
+  DeleteWaTemplate(id: any) {
+    const url = `${this.whatsappBaseUrl}${this.deleteTemplate}?templateId=${id}`;
+    return this.http.get<any>(url, {});
+  }
+
   GetPolicyByWing(wing: string) {
     const url = `${this.env.ConsoleBaseUrl}${this.getPolicyByWing}?Id=${wing}`;
     return this.http.get(url);
@@ -1246,4 +1275,42 @@ export class CommonDataService {
   GetCompanyTeams() {
     return this.http.get(this.env.IdentityBaseUrl + this.getCompanyTeams);
   }
+  GetRuleStatus(id: any, status: boolean) {
+    const url = `${this.autoresponderbaseurl}${this.getRuleStatus}?Id=${id}&status=${status}`;
+    return this.http.get<any>(url, {});
+  }
+
+  GetInstaRuleStatus(id: any, status: boolean) {
+    const url = `${this.instagramBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
+    return this.http.get<any>(url, {});
+  }
+  GetWaRuleStatus(id: any, status: boolean) {
+    const url = `${this.whatsappBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
+    return this.http.get<any>(url, {});
+  }
+  GetPsRuleStatus(id: any, status: boolean) {
+    const url = `${this.playStoreBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
+    return this.http.get<any>(url, {});
+  }
+  GetGSuitRuleStatus(id: any, status: boolean) {
+    const url = `${this.gSuitBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
+    return this.http.get<any>(url, {});
+  }
+  GetYTRuleStatus(id: any, status: boolean) {
+    const url = `${this.youtubeBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
+    return this.http.get<any>(url, {});
+  }
+  GetLinkdinRuleStatus(id: any, status: boolean) {
+    const url = `${this.linkdinBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
+    return this.http.get<any>(url, {});
+  }
+  GetMetaWARuleStatus(id: any, status: boolean) {
+    const url = `${this.metaWhatsapp}${this.getRuleStatus}?Id=${id}&status=${status}`;
+    return this.http.get<any>(url, {});
+  }
+  GetExchangeEmailRuleStatus(id: any, status: boolean) {
+    const url = `${this.exchangeEmailBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
+    return this.http.get<any>(url, {});
+  }
+
 }
