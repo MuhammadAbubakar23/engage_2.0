@@ -76,6 +76,8 @@ export class CustomerSatisfactionComponent implements OnInit {
   save() {
     if (this.baseUrl == 'https://keportal.enteract.live') {
       this.companyId = 651;
+    } else if (this.baseUrl=='https://engageui.enteract.live') {
+      this.companyId = 649;
     }
     const channel = this.router.url.split(/[=&]/)[1];
     const customerId = this.router.url.split(/[=&]/)[3];

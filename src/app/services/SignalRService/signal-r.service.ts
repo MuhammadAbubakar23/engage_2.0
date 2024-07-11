@@ -31,7 +31,7 @@ export class SignalRService {
   temporaryDMObject: any;
   token = sessionStorage.getItem('token');
   signalRStatus = sessionStorage.getItem('signalRStatus');
-  companyId: number = 651;
+  companyId: number = 649;
   baseUrl: string = '';
   public hubconnection!: signalR.HubConnection;
   public connectionId!: string;
@@ -81,6 +81,11 @@ export class SignalRService {
       this.companyId = 658;
       this.env = (window as any)._env.stagging;
     }
+    else if (this.baseUrl == 'https://engageui.enteract.live') {
+      this.companyId = 649;
+      this.env = (window as any)._env.demo;
+    }
+
     this.comanyidService.sendcompanyid(this.companyId);
   }
   flag: string = '';

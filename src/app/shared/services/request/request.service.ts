@@ -39,7 +39,10 @@ export class RequestService {
         this.baseUrl == 'https://localhost:4200'
       ) {
         this.env = (window as any)._env.stagging;
+      } else if (this.baseUrl == 'https://engageui.enteract.live') {
+        this.env = (window as any)._env.demo;
       }
+  
     }
   }
   private requestHeaderOptions(options?: any) {

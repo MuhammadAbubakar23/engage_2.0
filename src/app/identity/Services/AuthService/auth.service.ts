@@ -27,8 +27,11 @@ export class AuthService {
     } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
       this.env = (window as any)._env;
     } else if (this.baseUrl == 'http://localhost:4200' || this.baseUrl == 'https://localhost:4200') {
-      this.env = (window as any)._env.stagging;
+      this.env = (window as any)._env.demo;
+    } else if (this.baseUrl == 'https://engageui.enteract.live') {
+      this.env = (window as any)._env.demo;
     }
+
   }
   loginAgent() {
     return this.http.get(this.env.CommanBaseUrl+'SignalRConnector/UserLogin')

@@ -62,7 +62,8 @@ export class InboxMenuComponent implements OnInit {
       this.client = 'jazz';
     } else if (this.baseUrl == 'https://keportal.enteract.live') {
       this.client = 'ke';
-    } else if (this.baseUrl == 'https://waengage.enteract.live') {
+    } 
+    else if (this.baseUrl == 'https://waengage.enteract.live') {
       this.client = 'morinaga';
     } else if (this.baseUrl == 'https://tpplui.enteract.live') {
       this.client = 'tppl';
@@ -74,6 +75,9 @@ export class InboxMenuComponent implements OnInit {
       this.client = 'Bazaar';
     } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
       this.client = 'stagging';
+    }
+    else if(this.baseUrl=='https://engageui.enteract.live'){
+      this.client='damo';
     }
     this.activeChannel = this.router.url.split('/')[3];
     this.flag = this.router.url.split('/')[2];
@@ -168,8 +172,10 @@ export class InboxMenuComponent implements OnInit {
   channels: any[] = [];
   platformWiseCount: any[] = [];
   getAllChannelsUnrespondedCounts() {
+    debugger
     var obj = {
-      "wings": this.getWing.wings,
+      // "wings": this.getWing.wings,
+      wings:"pk_tech",
       "skills": this.skillSlugService.skillSlug
     }
     this.commonService

@@ -727,6 +727,36 @@ export class InteractionReportComponent implements OnInit {
         },
       ];
     }
+    if(this.activeChannel=='https://engageui.enteract.live'){
+      this. channelOptions = [
+        // { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+        {
+          id: '1',
+          name: 'Twitter',
+          icon: 'fa-brands fa-twitter sky pe-2',
+          isSelected: false,
+        },
+        {
+          id: '2',
+          name: 'Instagram',
+          icon: 'fa-brands fa-instagram pe-2 berry',
+          isSelected: false,
+        },
+        {
+          id: '3',
+          name: 'LinkedIn',
+          icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2',
+          isSelected: false,
+        },
+        {
+          id: '4',
+          name: 'Facebook',
+          icon: 'fab fa-facebook navytext pe-2 radical',
+          isSelected: false,
+        },
+      ];
+    }
+
     if(this.activeChannel=='https://bzengage.enteract.live'){
             this.channelOptions=[
               {

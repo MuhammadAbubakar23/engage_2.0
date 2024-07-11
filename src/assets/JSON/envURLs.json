@@ -57,6 +57,17 @@
         "ProfileBaseUrl": "https://profiler.enteract.app/api/",
         "ConsoleBaseUrl": "https://conrox.enteract.app/api/"
     },
+    "demo":{
+        "IdentityBaseUrl": "https://enidentitybackend.enteract.live/api/",
+        "CommonBaseUrl": "https://encommonbackend.enteract.live/api/",
+        "SignalRCommonBaseUrl": "https://encommonbackend.enteract.live/",
+        "ProfileBaseUrl": "https://profiler.enteract.app/api/",
+        "ServiceBaseUrl": "",
+        "ConsoleBaseUrl": "https://enconsolebackend.enteract.live/api/",
+        "keReportsBaseUrl":"https://enreportsbackend.enteract.live/api/",
+        "LinkedInBaseUrl":"https://linkdservice.enteract.live/api/",
+        "botBaseUrl":""
+    },
 
     "botBaseUrl": "https://bot-engage.enteract.app/api/",
     "botsBaseUrl": "http://3.1.47.150:5000/bots/",

@@ -36,14 +36,14 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
-  CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  ProfileBaseUrl: 'https://profiler.enteract.live/api/',
-  ServiceBaseUrl: '',
-  consoleBaseUrl: 'https://console.enteract.live/api/',
-  keReportsBaseUrl: 'https://kereports.enteract.live/api/',
-  LinkedInBaseUrl: 'https://linkdservice.enteract.live/api/',
+  // IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
+  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
+  // ServiceBaseUrl: '',
+  // consoleBaseUrl: 'https://console.enteract.live/api/',
+  // keReportsBaseUrl: 'https://kereports.enteract.live/api/',
+  // LinkedInBaseUrl: 'https://linkdservice.enteract.live/api/',
   // botBaseUrl:'',
 
   // For Jazz
@@ -74,6 +74,17 @@ export const environment = {
   // ProfileBaseUrl: '',
   // botBaseUrl: '',
   // LinkedInBaseUrl:'',
+
+  // For PK tach damo company Id 649 
+  IdentityBaseUrl: 'https://enidentitybackend.enteract.live/api/',
+  CommonBaseUrl: 'https://encommonbackend.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://encommonbackend.enteract.live/',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  ServiceBaseUrl: '',
+  consoleBaseUrl: 'https://enconsolebackend.enteract.live/api/',
+  keReportsBaseUrl:'https://enreportsbackend.enteract.live/api/',
+  LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
+  botBaseUrl:'',
 
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
@@ -115,8 +126,7 @@ export const environment = {
   // flowBot: 'https://flowbot.enteract.app/',
   // intentBot: 'https://intentBot.enteract.app/',
   // autoresponderbaseurl: 'https://d387-203-135-1-210.ngrok-free.app/api/',
-  profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
-  
+  // profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
   // testing uiengage company id 657
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
   // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
@@ -124,7 +134,7 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-  botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   botsBaseUrl: 'http://3.1.47.150:5000/bots/',
   botConfigBaseUrl: 'https://linked.360scrm.com/api/',
   // botConfigBaseUrl: 'https://newpurpleshop86.conveyor.cloud/api/',
@@ -161,8 +171,9 @@ export const environment = {
       AddTeam: 'Accesses/Teams',
       TeamProperties: 'Accesses/Properties',
       // accessrole: 'Roles/NewPreviews', //"Permissions/role",
-      permissionrole: 'Roles/NewPreviews', //"Permissions/role",
-      RolesPermissions: 'Roles/Fetch',
+      RolesPermissions: 'Roles/NewPreviews', //"Permissions/role",
+      ReportsPermission:'Report/GetReportsPreview',
+      //RolesPermissions: 'Roles/Fetch',
       permissions: 'Roles/Permissions',
       RoleProperties: 'Permissions/Properties',
       AddRole: 'Permissions/Roles',
@@ -220,6 +231,8 @@ export const environment = {
       addBotConfig: 'ProfilePagesBotConfig/Add',
       deleteSkill: 'Skill/Delete',
       getAllWing: 'Teams/GetAllWing',
+      getPolicyByWing: 'SLAPolicies/GetByWing',
+      getCompanyTeams:'Teams/GetCompanyTeams',
 
       // service Base rules
       getEntitiesRules: 'EntityConfigs/GetEntities',
@@ -228,7 +241,7 @@ export const environment = {
       getFbRule: 'RuleConfigs/GetAll',
       softDeleteFb: 'RuleConfigs/Delete',
       // getTagsAll: 'Tags/GetAll',
-      getTagsByCompanyId: 'Tags/GetTagsByCompayId',
+      getTagsByCompanyId: 'Tags/GetSupreamTags',
       updateSkill: 'Skill/Update',
       getSkillsbyId: 'Skill/GetById',
       getSkills: 'Skill/GetSkills',
