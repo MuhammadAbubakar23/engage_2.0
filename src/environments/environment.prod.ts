@@ -161,7 +161,8 @@ export const environment = {
       TeamProperties: 'Accesses/Properties',
       // accessrole: 'Roles/NewPreviews', //"Permissions/role",
       RolesPermissions: 'Roles/NewPreviews', //"Permissions/role",
-      ReportsPermission:'Report/GetReportsPreview',
+      ReportsMenus: 'Report/GetReportsPreview',
+      ConsoleMenus: 'Roles/NewMenuPreviews',
       //RolesPermissions: 'Roles/Fetch',
       permissions: 'Roles/Permissions',
       RoleProperties: 'Permissions/Properties',
@@ -221,7 +222,7 @@ export const environment = {
       deleteSkill: 'Skill/Delete',
       getAllWing: 'Teams/GetAllWing',
       getPolicyByWing: 'SLAPolicies/GetByWing',
-      getCompanyTeams:'Teams/GetCompanyTeams',
+      getCompanyTeams: 'Teams/GetCompanyTeams',
 
       // service Base rules
       getEntitiesRules: 'EntityConfigs/GetEntities',

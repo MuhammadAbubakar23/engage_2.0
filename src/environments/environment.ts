@@ -124,6 +124,7 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  chatBotBaseUrl: 'https://entertainerbot.enteract.app',
   botsBaseUrl: 'http://3.1.47.150:5000/bots/',
   botConfigBaseUrl: 'https://linked.360scrm.com/api/',
   // botConfigBaseUrl: 'https://newpurpleshop86.conveyor.cloud/api/',
@@ -161,8 +162,8 @@ export const environment = {
       TeamProperties: 'Accesses/Properties',
       // accessrole: 'Roles/NewPreviews', //"Permissions/role",
       RolesPermissions: 'Roles/NewPreviews', //"Permissions/role",
-      ReportsMenus:'Report/GetReportsPreview',
-      ConsoleMenus:'Roles/NewMenuPreviews',
+      ReportsMenus: 'Report/GetReportsPreview',
+      ConsoleMenus: 'Roles/NewMenuPreviews',
       //RolesPermissions: 'Roles/Fetch',
       permissions: 'Roles/Permissions',
       RoleProperties: 'Permissions/Properties',
@@ -222,7 +223,7 @@ export const environment = {
       deleteSkill: 'Skill/Delete',
       getAllWing: 'Teams/GetAllWing',
       getPolicyByWing: 'SLAPolicies/GetByWing',
-      getCompanyTeams:'Teams/GetCompanyTeams',
+      getCompanyTeams: 'Teams/GetCompanyTeams',
 
       // service Base rules
       getEntitiesRules: 'EntityConfigs/GetEntities',

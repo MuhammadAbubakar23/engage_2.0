@@ -34,20 +34,26 @@ export class ChatWidgetComponent implements OnInit {
   }
   closeChat() {
     this.isOpen = false;
-    this.messages = [];
+    //this.messages = [];
   }
   submitMessage() {
-    // const senderId = uuidv4();
     const body = {
       "message": this.chatForm.value['message']
     };
 
     this.messages.push({ message: this.chatForm.value['message'], type: 'user', timestamp: new Date() });
-    this.chatForm.reset({ message: '' })
-    this._botService.ChatBotWdidget(body).subscribe((res: any) => {
-      this.messages.push({ message: res.bot, type: 'bot', timestamp: new Date() });
-    });
+    this.chatForm.reset({ message: '' });
+
+    this._botService.ChatBotWdidget(body).subscribe(
+      (res: any) => {
+        this.messages.push({ message: res.bot, type: 'bot', timestamp: new Date() });
+      },
+      (error: any) => {
+        alert('Check your Internet connection')
+      }
+    );
   }
+
 }
 
 
