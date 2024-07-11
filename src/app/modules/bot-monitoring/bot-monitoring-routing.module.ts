@@ -13,7 +13,7 @@ const routes: Routes = [
     children: [
       {
         path: 'chats',
-        loadComponent: () => import('./components/bot-monitering-chat/bot-monitering-chat.component').then(c => c.BotMoniteringChatComponent)
+        loadComponent: () => import('./components/chat-bot-history/chat-bot-history.component').then(c => c.ChatBotHistoryComponent)
       },
       {
         path: 'chat-bot',

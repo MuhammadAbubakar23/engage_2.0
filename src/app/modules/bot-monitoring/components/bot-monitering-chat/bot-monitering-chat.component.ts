@@ -6,11 +6,11 @@ import { CommonModule } from '@angular/common';
 import { BotChatComponent } from "../bot-chat/bot-chat.component";
 
 @Component({
-    selector: 'app-bot-monitering-chat',
-    templateUrl: './bot-monitering-chat.component.html',
-    styleUrls: ['./bot-monitering-chat.component.scss'],
-    standalone: true,
-    imports: [CommonModule, BotChatComponent]
+  selector: 'app-bot-monitering-chat',
+  templateUrl: './bot-monitering-chat.component.html',
+  styleUrls: ['./bot-monitering-chat.component.scss'],
+  standalone: true,
+  imports: [CommonModule, BotChatComponent]
 })
 export class BotMoniteringChatComponent implements OnInit {
 
@@ -112,6 +112,7 @@ export class BotMoniteringChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.newChatIdSubscription = this._chatVisibilityS.newChatId$.subscribe((newChat: any) => {
+      debugger
       if (newChat) {
         console.log("New chat", newChat['completed'])
         this.getChatDetails(newChat);
@@ -147,7 +148,7 @@ export class BotMoniteringChatComponent implements OnInit {
 
 
   onMinimizeToggle(minimizeItem: any) {
-    
+
     console.log("minimize toggle", minimizeItem, this.chats);
   }
   ngOnDestroy(): void {

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { timeout } from 'rxjs/operators';
 const baseUrl = environment.botBaseUrl;
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,7 @@ export class BotMonitoringService {
   createBotTrain = environment.links.bot.createBotTrain
   chatBotWdidget = environment.links.bot.chatBotWdidget
   stopChatBot = environment.links.bot.stopChatBot
+  chatBotBaseUrl = environment.chatBotBaseUrl
 
   constructor(private http: HttpClient) { }
   getChats(data: any): Observable<any> {
@@ -112,7 +114,19 @@ export class BotMonitoringService {
   CreateBotTrain(form: any) {
     return this.http.post(this.botMoniteringBaseUrl + this.createBotTrain, form);
   }
+  ChatWdidget(form: any) {
+    return this.http.post(this.chatBotBaseUrl + "/chat", form);
+  }
+  chatInit() {
+    return this.http.get(this.chatBotBaseUrl + "/init");
+  }
+  chatBotHistory() {
+    return this.http.get(this.chatBotBaseUrl + "/slugs");
+  }
   ChatBotWdidget(form: any) {
-    return this.http.post("https://entertainerbot.enteract.app/chat", form);
+    return this.http.post(this.chatBotBaseUrl + "/chatbot", form).pipe(timeout(120 * 1000));
+  }
+  ChatHistory(form: any) {
+    return this.http.post(this.chatBotBaseUrl + "/history", form);
   }
 }
