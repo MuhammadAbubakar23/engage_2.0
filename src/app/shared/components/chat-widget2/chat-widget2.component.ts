@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BotMonitoringService } from 'src/app/modules/bot-monitoring/services/bot-monitoring.service';
 @Component({
@@ -8,6 +8,7 @@ import { BotMonitoringService } from 'src/app/modules/bot-monitoring/services/bo
 })
 export class ChatWidget2Component implements OnInit {
   @ViewChild('chatBody') private chatBody?: ElementRef;
+  @Input() hasParent: boolean=false;
   messages: any[] = [];
   isOpen = false;
   slug = "";
@@ -45,7 +46,7 @@ export class ChatWidget2Component implements OnInit {
           this.sendMessage();
         },
         (error: any) => {
-          alert('Check your Internet connection');
+          alert('Service unavailable');
         }
       );
     } else {
@@ -77,7 +78,7 @@ export class ChatWidget2Component implements OnInit {
         });
       },
       (error: any) => {
-        alert('Check your Internet connection');
+        alert('Service unavailable');
       }
     );
   }

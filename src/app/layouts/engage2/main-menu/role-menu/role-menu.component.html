@@ -34,8 +34,8 @@
       <div class="itemLabel">Completed Interactions</div>
     </div>
   </a>
-</ng-container> 
-  <ng-container *ngIf="hasMonitoringPermission">
+</ng-container>
+  <ng-container *ngIf="shoBotManagement">
     <a [routerLink]="['/bot-monitoring']" routerLinkActive="active" ariaCurrentWhenActive="page"
       class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
       (click)="resetFilters()">

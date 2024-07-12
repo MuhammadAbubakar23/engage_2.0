@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BotMonitoringService } from 'src/app/modules/bot-monitoring/services/bot-monitoring.service';
 import { BotSubMenusActiveService } from 'src/app/modules/bot-monitoring/services/bot-sub-menus-active.service';
 import { ChatVisibilityService } from 'src/app/modules/bot-monitoring/services/chat-visibility.service';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
+import { MenuService } from 'src/app/shared/services/menu.service';
 
 @Component({
   selector: 'app-chat-bot-history-menu',
@@ -10,6 +12,7 @@ import { HeaderService } from 'src/app/services/HeaderService/header.service';
   styleUrls: ['./chat-bot-history-menu.component.scss']
 })
 export class ChatBotHistoryMenuComponent implements OnInit {
+  menuItems: any[] = [];
   subMenus = [
     {
       "DisplayName": " Chat BOT ",
@@ -32,22 +35,49 @@ export class ChatBotHistoryMenuComponent implements OnInit {
 
   activechatBotHistory: any = [];
   defaultchatBotHistory: any = [];
+  completedConversation: any[] = [];
   showBotMonitoringContent: boolean = false;
-  constructor(private chatVisibilityService: ChatVisibilityService, private _botSubMenuStatus: BotSubMenusActiveService, private headerService: HeaderService,private _botService: BotMonitoringService){
+  constructor(private chatVisibilityService: ChatVisibilityService, private _botSubMenuStatus: BotSubMenusActiveService,
+    private headerService: HeaderService, private _botService: BotMonitoringService, private _menuS: MenuService,private _route:Router) {
 
   }
+  toggleCollapse(menu: any) {
+    debugger
+    if (menu['link'] === 'generative-bot-history') {
+      this.updatevalue('generative-bot-history');
+    }
+    else if (menu['link'] === 'bot-monitoring-chat'){
+       this.updatevalue('bot-monitoring-chat');
+    }
+
+    menu.expanded = !menu.expanded;
+  }
   ngOnInit(): void {
+    this._menuS.getBotMenu.subscribe((menu: any) => {
+
+      if(menu){
+        this.menuItems = menu[0]?.subMenu;
+      }
+
+    })
     this.getChatBotHistory();
-    // this.chatVisibilityService.thirdActive$.subscribe((obj:any)=>{
-    //   debugger
-    //   const element=this.activechatBotHistory.find((item:any)=>item.slug===obj.slug)
-    //   element.obj.isActive;
-    // })
+    this.chatVisibilityService.thirdActiveHistory$.subscribe((obj: any) => {
+      if (obj) {
+        const index = this.activechatBotHistory.findIndex((item: any) => item.slug === obj.slug)
+        this.activechatBotHistory[index]['active'] = obj.active;
+      }
+
+    })
   }
   updatevalue(string: any) {
-    if (string === 'bot-monitering') {
+    debugger
+    if (string === 'generative-bot-history') {
       this.showBotMonitoringContent = true;
-    } else {
+    }
+    else if(string ==="bot-monitoring-chat"){
+      this._route.navigateByUrl('/bot-monitoring/bot-monitoring-chat');
+    }
+     else {
       this.showBotMonitoringContent = false;
       this.headerService.updateMessage(string);
     }
@@ -69,8 +99,9 @@ export class ChatBotHistoryMenuComponent implements OnInit {
 
   }
   toggleChatVisibility(clickedItem: any) {
+
     clickedItem.active = !clickedItem.active;
-    this.chatVisibilityService.notifyNewChatId(clickedItem);
+    this.chatVisibilityService.notifyNewChatIdHistory(clickedItem);
   }
   resetMenu() {
     this._botSubMenuStatus.setActiveMenu(false);
@@ -80,49 +111,49 @@ export class ChatBotHistoryMenuComponent implements OnInit {
     this.showBotMonitoringContent = false;
   }
   getChatBotHistory() {
-     this._botService.chatBotHistory().subscribe((res:any)=>{
 
-         res.slugs.forEach((item:any,index:any)=>{
-          item.name="Conversation"+`${index+1}`
-          //item['active']=true;
-         })
-         this.activechatBotHistory=res.slugs;
-      //    this.activechatBotHistory=[
-      //     {
-      //         "createdAt": "2024-07-11T07:31:14.164Z",
-      //         "id": 11,
-      //         "lastUpdatedAt": "2024-07-11T07:31:14.164Z",
-      //         "name": "Chat",
-      //         "slug": "746f2cb0-d131-4319-b949-435581d2d514",
-      //         "user_id": null,
-      //         "workspace_id": 4,
-      //         "isActive": false,
-      //     },
-      //     {
-      //         "createdAt": "2024-07-11T07:31:16.402Z",
-      //         "id": 12,
-      //         "lastUpdatedAt": "2024-07-11T07:31:16.402Z",
-      //         "name": "Chat",
-      //         "slug": "ae26f2f1-5829-4f27-8ae1-99df940dbaf9",
-      //         "user_id": null,
-      //         "workspace_id": 4,
-      //         "isActive": false,
-      //     },
-      //     {
-      //         "createdAt": "2024-07-11T07:31:17.974Z",
-      //         "id": 13,
-      //         "lastUpdatedAt": "2024-07-11T07:31:17.974Z",
-      //         "name": "Chat",
-      //         "slug": "c6a3795e-b1a7-4263-9f96-08f6ba7e3c50",
-      //         "user_id": null,
-      //         "workspace_id": 4,
-      //         "isActive": false,
-      //     }
+    this._botService.chatBotHistory().subscribe((res: any) => {
+      res.slugs.forEach((item: any, index: any) => {
+        item.name = "Conversation" + `${index + 1}`
+        item['active'] = true;
+      })
+      this.activechatBotHistory = res.slugs;
+      // this.activechatBotHistory = [
+      //   {
+      //     "createdAt": "2024-07-11T07:31:14.164Z",
+      //     "id": 11,
+      //     "lastUpdatedAt": "2024-07-11T07:31:14.164Z",
+      //     "name": "Chat",
+      //     "slug": "746f2cb0-d131-4319-b949-435581d2d514",
+      //     "user_id": null,
+      //     "workspace_id": 4,
+      //     "active": false,
+      //   },
+      //   {
+      //     "createdAt": "2024-07-11T07:31:16.402Z",
+      //     "id": 12,
+      //     "lastUpdatedAt": "2024-07-11T07:31:16.402Z",
+      //     "name": "Chat",
+      //     "slug": "ae26f2f1-5829-4f27-8ae1-99df940dbaf9",
+      //     "user_id": null,
+      //     "workspace_id": 4,
+      //     "active": false,
+      //   },
+      //   {
+      //     "createdAt": "2024-07-11T07:31:17.974Z",
+      //     "id": 13,
+      //     "lastUpdatedAt": "2024-07-11T07:31:17.974Z",
+      //     "name": "Chat",
+      //     "slug": "c6a3795e-b1a7-4263-9f96-08f6ba7e3c50",
+      //     "user_id": null,
+      //     "workspace_id": 4,
+      //     "active": false,
+      //   }
       // ]
-     },
-     (error: any) => {
-       alert('Check your Internet connection');
-     })
+    },
+      (error: any) => {
+        alert('Service unavailable');
+      })
 
 
     // const data = {

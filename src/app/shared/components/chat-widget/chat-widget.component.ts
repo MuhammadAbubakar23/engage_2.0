@@ -50,7 +50,7 @@ export class ChatWidgetComponent implements OnInit {
         this.messages.push({ message: res.bot, type: 'bot', timestamp: new Date() });
       },
       (error: any) => {
-        alert('Check your Internet connection')
+        alert('Service unavailable')
       }
     );
   }

@@ -5,7 +5,6 @@
   <p class="m-0 coal">Select the conversation to load the messages</p>
 </section>
 <section class="chatitem col" id="chatitem1">
-
   <div class="query-container chat-message-component" data-scrollbar="true">
     <header class="chat-header">
       <div class="d-flex align-items-center">
@@ -20,15 +19,15 @@
         <span
           class="iconButton medium ms-auto"
           id="minbutton"
-          (click)="toggleMinimized()"
+         
         >
-          <i
+          <!-- <i
             class="fa-light"
             [ngClass]="{
               'fa-minus': isMinimized,
               'fa-expand': isMinimized
             }"
-          ></i>
+          ></i> -->
         </span>
         <span (click)="removeScreen()">
           <i class="fa-light fa-times"></i>
@@ -37,7 +36,7 @@
     </header>
     <div class="chatsection">
       <div class="main-chat">
-        <div class="chat-box-wrap" >
+        <div class="chat-box-wrap">
           <ng-container *ngFor="let msg of chat; let i = index">
             <div
               class="message-wrap agent-message-wrap"
@@ -52,7 +51,9 @@
                     <div class="d-flex msg-user-info">
                       <div class="d-flex align-items-center w-100">
                         <h6 class="card-title navy m-0">
-                          {{ msg.role === 'assistant' ? 'enteract.bot' : msg.role }}
+                          {{
+                            msg.role === "assistant" ? "enteract.bot" : msg.role
+                          }}
                         </h6>
                         <small class="silver ms-auto">{{
                           msg.sentAt | date : "shortTime"
@@ -71,47 +72,5 @@
       </div>
     </div>
   </div>
-  <!-- <footer class="chatfooter">
-        <div class="input-group input-group-lg">
-          <div class="form-floating">
-            <textarea
-              class="form-control chat-input"
-              rows="1"
-              placeholder="click on related Query "
-            ></textarea>
-          </div>
-          <div class="icons-list align-items-md-center d-flex ps-2">
-            <button
-              class="iconButton small notification iconHover"
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              id="searchbtn"
-              aria-label="Choose an emoji"
-              data-bs-original-title="Choose an emoji"
-            >
-              <i class="fa-regular fa-smile"></i>
-            </button>
-            <button
-              class="iconButton small notification iconHover"
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              type="button"
-              id="commentSendbtn"
-              aria-label="Send"
-              data-bs-original-title="Send"
-            >
-              <i class="fal fa-paper-plane"></i>
-            </button>
-            <button
-              class="iconButton small notification iconHover channels-attachment-btn"
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              aria-label="Attachment"
-              data-bs-original-title="Attachment"
-            >
-              <i class="fal fa-paperclip"></i>
-            </button>
-          </div>
-        </div>
-      </footer> -->
 </section>
+

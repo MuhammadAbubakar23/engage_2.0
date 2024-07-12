@@ -10,10 +10,7 @@
   <div class="page-content-wrapper custom-scroll chatbot-main" [ngClass]="{ thirdactive: chats.length === 3 }"
     *ngIf="chats.length > 0">
     <div class="chatlisting row align-items-start px-3 pt-3 pb-5">
-      <div *ngFor="let chat of chats" class="chatitem col" [ngClass]="{
-          minimized: false,
-          'mb-5': false
-        }">
+      <div *ngFor="let chat of chats" class="chatitem col">
         <app-chat-history [chat]="chat" (minimizeToggle)="onMinimizeToggle(chat)"></app-chat-history>
         <!-- ye nihcy commeny hy line 20
       (minimizeToggle)="onMinimizeToggle(chat)" -->
@@ -21,3 +18,4 @@
     </div>
   </div>
 </main>
+<app-chat-widget2 [hasParent]="true"></app-chat-widget2>

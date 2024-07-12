@@ -5,12 +5,17 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class MenuService {
+  constructor() { }
   private analyticsMenu = new BehaviorSubject<[]>([]);
   getAnalyticsMenu = this.analyticsMenu.asObservable();
-
-  constructor() { }
-
   changeAnalyticsMenu(data: []) {
     this.analyticsMenu.next(data);
+  }
+
+  private botMenu = new BehaviorSubject<[]>([]);
+  getBotMenu = this.botMenu.asObservable();
+  changeBotMenu(data: []) {
+    debugger
+    this.botMenu.next(data);
   }
 }

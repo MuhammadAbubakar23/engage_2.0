@@ -26,6 +26,7 @@ export class RoleMenuComponent implements OnInit {
   permission$: any;
   menus$!: MenuModel[];
   showAnalytics = false;
+  shoBotManagement = false;
   //menu$ :Observable<MenuModel[]>;
   //menu$ :Observable<any>;
   loading$: any;
@@ -73,6 +74,19 @@ export class RoleMenuComponent implements OnInit {
     });
   }
 
+  getBotMenus() {
+    debugger
+    this.commonService.getConsoleMenuByRole(
+      sessionStorage.getItem('activeActorId'),
+    ).subscribe((res: any) => {
+
+      if (res.length > 0) {
+        this.shoBotManagement = true;
+        this._menuS.changeBotMenu(res);
+      }
+    });
+  }
+
 
   ngOnInit(): void {
     this.hasConsolePermission = this.hasPermission('console');
@@ -89,6 +103,7 @@ export class RoleMenuComponent implements OnInit {
     );
 
     this.getReportMenus();
+    this.getBotMenus();
   }
 
   assignedProfile = sessionStorage.getItem('assignedProfile');
