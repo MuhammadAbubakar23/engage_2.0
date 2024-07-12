@@ -54,7 +54,7 @@ export class ActorsComponent implements OnInit {
   }
 
 
-  getPermissions(actorId: number) {
+  getPermissions(actorId: number ,actorName: string) {
     sessionStorage.setItem('activeActorId', JSON.stringify(actorId));
     this.commonService.getPermissionByRole({
       "ActorId": actorId,
@@ -127,6 +127,11 @@ export class ActorsComponent implements OnInit {
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
           this.loginDisabled = true
+          if (actorName === 'Administrator') {
+            this.router.navigateByUrl('/console/home');
+          } else {
+            this.router.navigateByUrl('all-inboxes/focused/all');
+          }
         },
           (error) => {
             alert(error.error.message)

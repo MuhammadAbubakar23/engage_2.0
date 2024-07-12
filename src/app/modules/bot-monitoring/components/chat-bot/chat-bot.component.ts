@@ -52,7 +52,7 @@ export class ChatBotComponent implements OnInit {
     this.chatbotForm = new FormGroup({
       name: new FormControl('', Validators.required),
       timeout: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
-
+      strictFlow: new FormControl(false)
       // botType: new FormControl('', Validators.required)
     });
     // this.messages.push({ type: 'agent', text: 'Hello! How can I assist you today?' });
@@ -237,6 +237,7 @@ export class ChatBotComponent implements OnInit {
       const formData = new FormData();
       formData.append('name', this.chatbotForm.value.name);
       formData.append('timeout', this.chatbotForm.value.timeout);
+      formData.append('strictFlow', this.chatbotForm.value.strictFlow ? '1' : '0'); 
       // formData.append('botType', this.chatbotForm.value.botType);
 
       // let endpoint = '';

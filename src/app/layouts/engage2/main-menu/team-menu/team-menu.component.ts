@@ -27,7 +27,7 @@ export class TeamMenuComponent implements OnInit {
   activeChannel: string = ''
   menuArray: any[] = [];
   hasSentPermission: boolean=false;
-
+  hasFocusedPermission: boolean=false;
   constructor(private MenuStore: Store<MenuState>,private _perS:PermissionService , private PermissionStore: Store<PermissionState>, private _route: Router,
     private stor: StorageService) {
     // this.menu$ = this.MenuStore.select(getEmargingEqual('team_main_left_menu'));
@@ -39,6 +39,7 @@ export class TeamMenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.hasFocusedPermission = this.hasPermission('focused');
     this.hasSentPermission = this.hasPermission('sent');
     this.activeChannel = this._route.url.split('/')[2]
 
