@@ -42,7 +42,7 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
   // ServiceBaseUrl: '',
   // consoleBaseUrl: 'https://console.enteract.live/api/',
-  // keReportsBaseUrl: 'https://kereports.enteract.live/api/',
+  // ReportsBaseUrl: 'https://kereports.enteract.live/api/',
   // LinkedInBaseUrl: 'https://linkdservice.enteract.live/api/',
   // botBaseUrl:'',
 
@@ -82,7 +82,7 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // ServiceBaseUrl: '',
   // consoleBaseUrl: 'https://enconsolebackend.enteract.live/api/',
-  // keReportsBaseUrl:'https://enreportsbackend.enteract.live/api/',
+  // ReportsBaseUrl:'https://enreportsbackend.enteract.live/api/',
   // LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
   // BotBaseUrl:'',
 
@@ -94,7 +94,7 @@ export const environment = {
   ConsoleBaseUrl: '',
   LinkedInBaseUrl: '',
   BotBaseUrl: '',
-  KeReportsBaseUrl: '',
+  ReportsBaseUrl: '',
 
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
@@ -130,7 +130,7 @@ export const environment = {
   // faceRoxBaseUrl: 'https://facerox.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // LinkedInBaseUrl: '',
-  // keReportsBaseUrl: '',
+  // ReportsBaseUrl: '',
 
   // botMoniteringBaseUrl: 'http://3.1.47.150:5000/',
   // flowBot: 'https://flowbot.enteract.app/',

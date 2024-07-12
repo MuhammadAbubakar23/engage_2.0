@@ -24,7 +24,7 @@ export class CommonDataService {
   KemediaBaseUrl = environment.KemediaBaseUrl;
   KescrmBaseUrl = environment.KescrmBaseUrl;
   WhatsappBaseUrl = environment.WhatsappBaseUrl;
-  KeReportsBaseUrl = environment.KeReportsBaseUrl;
+  ReportsBaseUrl = environment.ReportsBaseUrl;
   faceRoxBaseUrl = environment.faceRoxBaseUrl;
   autoresponderbaseurl = environment.autoresponderbaseurl;
   profileBaseUrl = environment.botConfigBaseUrl;
@@ -267,7 +267,7 @@ export class CommonDataService {
     );
   }
   getReportsMenuByRole(form: any) {
-    return this.http.post(this.IdentityBaseUrl + this.reportsMenus, form);
+    return this.http.post(this.ReportsBaseUrl + this.reportsMenus, form);
   }
   getConsoleMenuByRole(actorId: any) {
     return this.http.get(`${this.IdentityBaseUrl}${this.consoleMenus}?ActorId=${actorId}`);
@@ -822,19 +822,19 @@ export class CommonDataService {
   }
   Addinboundoutbound(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.addinboundoutbound,
+      this.ReportsBaseUrl + this.addinboundoutbound,
       body
     );
   }
   GetTwitterReport(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.twitterReport, body);
+    return this.http.post(this.ReportsBaseUrl + this.twitterReport, body);
   }
   GetTwitterSLAReport(body: any) {
     return this.http.post(this.CommonBaseUrl + this.twitterSLAReport, body);
   }
   GetTwitterProfileWiseReport(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.twitterProfileWiseReport,
+      this.ReportsBaseUrl + this.twitterProfileWiseReport,
       body
     );
   }
@@ -846,12 +846,12 @@ export class CommonDataService {
   }
   AddAgentPerformance(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.addAgentPerformance,
+      this.ReportsBaseUrl + this.addAgentPerformance,
       body
     );
   }
   GetShiftReport(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.shiftReport, body);
+    return this.http.post(this.ReportsBaseUrl + this.shiftReport, body);
   }
   GetWhatsAppReport(body: any) {
     return this.http.post(
@@ -882,13 +882,13 @@ export class CommonDataService {
   // facebookreport
   Getfacebookreport(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.facebookReport,
+      this.ReportsBaseUrl + this.facebookReport,
       body
     );
   }
   GetfacebookProfile(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.facebookProfile,
+      this.ReportsBaseUrl + this.facebookProfile,
       body
     );
   }
@@ -901,13 +901,13 @@ export class CommonDataService {
   }
   PostInstagramReport(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.instagramReport,
+      this.ReportsBaseUrl + this.instagramReport,
       body
     );
   }
   GetInstagramProfile(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.instagramProfile,
+      this.ReportsBaseUrl + this.instagramProfile,
       body
     );
   }
@@ -918,11 +918,11 @@ export class CommonDataService {
     return this.http.post(this.ConsoleBaseUrl + this.getTagsAll, body);
   }
   GetAllTagsReport(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.getTagReport, body);
+    return this.http.post(this.ReportsBaseUrl + this.getTagReport, body);
   }
   DownloadTagsReport(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.downloadTagReport,
+      this.ReportsBaseUrl + this.downloadTagReport,
       body,
       {
         responseType: 'text',
@@ -961,7 +961,7 @@ export class CommonDataService {
   }
   EmailShiftReport(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.emailShiftReport,
+      this.ReportsBaseUrl + this.emailShiftReport,
       body
     );
   }
@@ -1076,7 +1076,7 @@ export class CommonDataService {
   }
   GetInteractionReport(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.getInteractionReport,
+      this.ReportsBaseUrl + this.getInteractionReport,
       body
     );
   }

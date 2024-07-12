@@ -17,7 +17,7 @@ fetch('/assets/JSON/envURLs.json')
       environment.ProfileBaseUrl = config.ke.ProfileBaseUrl;
       environment.ServiceBaseUrl = config.ke.ServiceBaseUrl;
       environment.ConsoleBaseUrl = config.ke.ConsoleBaseUrl;
-      environment.KeReportsBaseUrl = config.ke.KeReportsBaseUrl;
+      environment.ReportsBaseUrl = config.ke.ReportsBaseUrl;
       environment.LinkedInBaseUrl = config.ke.LinkedInBaseUrl;
       environment.BotBaseUrl = config.ke.BotBaseUrl;
     } else if (baseUrl == 'https://engage.jazz.com.pk') {
@@ -27,7 +27,7 @@ fetch('/assets/JSON/envURLs.json')
       environment.ProfileBaseUrl = config.jazz.ProfileBaseUrl;
       environment.ServiceBaseUrl = config.jazz.ServiceBaseUrl;
       environment.ConsoleBaseUrl = config.jazz.ConsoleBaseUrl;
-      environment.KeReportsBaseUrl = config.jazz.KeReportsBaseUrl;
+      environment.ReportsBaseUrl = config.jazz.ReportsBaseUrl;
       environment.LinkedInBaseUrl = config.jazz.LinkedInBaseUrl;
       environment.BotBaseUrl = config.jazz.BotBaseUrl;
     } else if (baseUrl == 'https://uiengage.enteract.app') {
@@ -37,7 +37,7 @@ fetch('/assets/JSON/envURLs.json')
       environment.ProfileBaseUrl = config.stagging.ProfileBaseUrl;
       environment.ServiceBaseUrl = config.stagging.ServiceBaseUrl;
       environment.ConsoleBaseUrl = config.stagging.ConsoleBaseUrl;
-      environment.KeReportsBaseUrl = config.stagging.KeReportsBaseUrl;
+      environment.ReportsBaseUrl = config.stagging.ReportsBaseUrl;
       environment.LinkedInBaseUrl = config.stagging.LinkedInBaseUrl;
       environment.BotBaseUrl = config.stagging.BotBaseUrl;
     } else if (baseUrl == 'https://tpplui.enteract.live') {
@@ -47,7 +47,7 @@ fetch('/assets/JSON/envURLs.json')
       environment.ProfileBaseUrl = config.tppl.ProfileBaseUrl;
       environment.ServiceBaseUrl = config.tppl.ServiceBaseUrl;
       environment.ConsoleBaseUrl = config.tppl.ConsoleBaseUrl;
-      environment.KeReportsBaseUrl = config.tppl.KeReportsBaseUrl;
+      environment.ReportsBaseUrl = config.tppl.ReportsBaseUrl;
       environment.LinkedInBaseUrl = config.tppl.LinkedInBaseUrl;
       environment.BotBaseUrl = config.tppl.BotBaseUrl;
     } else if (baseUrl == 'https://waengage.enteract.live') {
@@ -57,7 +57,7 @@ fetch('/assets/JSON/envURLs.json')
       environment.ProfileBaseUrl = config.morinaga.ProfileBaseUrl;
       environment.ServiceBaseUrl = config.morinaga.ServiceBaseUrl;
       environment.ConsoleBaseUrl = config.morinaga.ConsoleBaseUrl;
-      environment.KeReportsBaseUrl = config.morinaga.KeReportsBaseUrl;
+      environment.ReportsBaseUrl = config.morinaga.ReportsBaseUrl;
       environment.LinkedInBaseUrl = config.morinaga.LinkedInBaseUrl;
       environment.BotBaseUrl = config.morinaga.BotBaseUrl;
     } else if (baseUrl == 'https://bzengage.enteract.live') {
@@ -67,7 +67,7 @@ fetch('/assets/JSON/envURLs.json')
       environment.ProfileBaseUrl = config.bazaar.ProfileBaseUrl;
       environment.ServiceBaseUrl = config.bazaar.ServiceBaseUrl;
       environment.ConsoleBaseUrl = config.bazaar.ConsoleBaseUrl;
-      environment.KeReportsBaseUrl = config.bazaar.KeReportsBaseUrl;
+      environment.ReportsBaseUrl = config.bazaar.ReportsBaseUrl;
       environment.LinkedInBaseUrl = config.bazaar.LinkedInBaseUrl;
       environment.BotBaseUrl = config.bazaar.BotBaseUrl;
     } else if (baseUrl == 'https://uiengagerox.enteract.app') {
@@ -77,7 +77,7 @@ fetch('/assets/JSON/envURLs.json')
       environment.ProfileBaseUrl = config.testUrlsRox.ProfileBaseUrl;
       environment.ServiceBaseUrl = config.testUrlsRox.ServiceBaseUrl;
       environment.ConsoleBaseUrl = config.testUrlsRox.ConsoleBaseUrl;
-      environment.KeReportsBaseUrl = config.testUrlsRox.KeReportsBaseUrl;
+      environment.ReportsBaseUrl = config.testUrlsRox.ReportsBaseUrl;
       environment.LinkedInBaseUrl = config.testUrlsRox.LinkedInBaseUrl;
       environment.BotBaseUrl = config.testUrlsRox.BotBaseUrl;
     } else if (baseUrl == 'https://engageui.enteract.live') {
@@ -87,7 +87,7 @@ fetch('/assets/JSON/envURLs.json')
       environment.ProfileBaseUrl = config.demo.ProfileBaseUrl;
       environment.ServiceBaseUrl = config.demo.ServiceBaseUrl;
       environment.ConsoleBaseUrl = config.demo.ConsoleBaseUrl;
-      environment.KeReportsBaseUrl = config.demo.KeReportsBaseUrl;
+      environment.ReportsBaseUrl = config.demo.ReportsBaseUrl;
       environment.LinkedInBaseUrl = config.demo.LinkedInBaseUrl;
       environment.BotBaseUrl = config.demo.BotBaseUrl;
     } else if (baseUrl == 'https://engagerox.jazz.com.pk:8083') {
@@ -97,7 +97,7 @@ fetch('/assets/JSON/envURLs.json')
       environment.ProfileBaseUrl = config.rox.ProfileBaseUrl;
       environment.ServiceBaseUrl = config.rox.ServiceBaseUrl;
       environment.ConsoleBaseUrl = config.rox.ConsoleBaseUrl;
-      environment.KeReportsBaseUrl = config.rox.KeReportsBaseUrl;
+      environment.ReportsBaseUrl = config.rox.ReportsBaseUrl;
       environment.LinkedInBaseUrl = config.rox.LinkedInBaseUrl;
       environment.BotBaseUrl = config.rox.BotBaseUrl;
     } else if (baseUrl == 'http://localhost:4200' || baseUrl == 'https://localhost:4200') {
@@ -107,7 +107,7 @@ fetch('/assets/JSON/envURLs.json')
       environment.ProfileBaseUrl = config.demo.ProfileBaseUrl;
       environment.ServiceBaseUrl = config.demo.ServiceBaseUrl;
       environment.ConsoleBaseUrl = config.demo.ConsoleBaseUrl;
-      environment.KeReportsBaseUrl = config.demo.KeReportsBaseUrl;
+      environment.ReportsBaseUrl = config.demo.ReportsBaseUrl;
       environment.LinkedInBaseUrl = config.demo.LinkedInBaseUrl;
       environment.BotBaseUrl = config.demo.BotBaseUrl;
     }
