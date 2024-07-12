@@ -480,6 +480,9 @@ export class ChannelComponent implements OnInit {
     } else if (this.baseUrl == 'http://localhost:4200') {
       this.activeClient = 'localhost';
     }
+    else if (this.baseUrl == 'https://engageui.enteract.live') {
+      this.activeClient = 'damo';
+    }
     // this.ImageName=[ {name: 'gif', lastModified: 1713945235285, lastModifiedDate:" Wed Apr 24 2024 12:53:55 GMT+0500 (Pakistan Standard Time)", webkitRelativePath: '', size: 1202167, }];
     this.fetchedPostType = this.fetchPostType.postType;
     const textarea = this.el.nativeElement as HTMLTextAreaElement;

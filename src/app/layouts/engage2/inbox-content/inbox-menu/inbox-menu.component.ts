@@ -5,10 +5,10 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateListService } from 'src/app/services/UpdateListService/update-list.service';
 import { Router } from '@angular/router';
-import { SkillsService } from 'src/app/services/Skills/skills.service';
-import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
-import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { SkillsService } from 'src/app/services/Skills/skills.service';
+import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 @Component({
   selector: 'inbox-menu',
@@ -66,7 +66,8 @@ export class InboxMenuComponent implements OnInit {
       this.client = 'jazz';
     } else if (this.baseUrl == 'https://keportal.enteract.live') {
       this.client = 'ke';
-    } else if (this.baseUrl == 'https://waengage.enteract.live') {
+    } 
+    else if (this.baseUrl == 'https://waengage.enteract.live') {
       this.client = 'morinaga';
     } else if (this.baseUrl == 'https://tpplui.enteract.live') {
       this.client = 'tppl';
@@ -78,6 +79,9 @@ export class InboxMenuComponent implements OnInit {
       this.client = 'Bazaar';
     } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
       this.client = 'stagging';
+    }
+    else if(this.baseUrl=='https://engageui.enteract.live'){
+      this.client='damo';
     }
     this.activeChannel = this.router.url.split('/')[3];
     this.flag = this.router.url.split('/')[2];
@@ -176,8 +180,10 @@ export class InboxMenuComponent implements OnInit {
   channels: any[] = [];
   platformWiseCount: any[] = [];
   getAllChannelsUnrespondedCounts() {
+    debugger
     var obj = {
-      "wings": this.getWing.wings,
+      // "wings": this.getWing.wings,
+      wings:"pk_tech",
       "skills": this.skillSlugService.skillSlug
     }
     this.commonService

@@ -10,6 +10,7 @@ export class ChatWidgetComponent implements OnInit {
   @ViewChild('chatBody') private chatBody?: ElementRef;
   messages: any[] = [];
   isOpen = false;
+  slug = "";
   chatForm: FormGroup = new FormGroup({
     message: new FormControl('', [Validators.required])
   })
@@ -44,15 +45,17 @@ export class ChatWidgetComponent implements OnInit {
     this.messages.push({ message: this.chatForm.value['message'], type: 'user', timestamp: new Date() });
     this.chatForm.reset({ message: '' });
 
-    this._botService.ChatBotWdidget(body).subscribe(
+    this._botService.ChatWdidget(body).subscribe(
       (res: any) => {
         this.messages.push({ message: res.bot, type: 'bot', timestamp: new Date() });
       },
       (error: any) => {
-        alert('Check your Internet connection')
+        alert('Service unavailable')
       }
     );
   }
+
+
 
 }
 

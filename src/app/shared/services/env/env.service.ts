@@ -5,8 +5,8 @@ import { environment } from 'src/environments/environment';
 })
 export class EnvService {
   public store: any = environment.store;
-  // public baseUrl: string = environment.IdentityBaseUrl;
-  // public consoleBaseUrl: string = environment.consoleBaseUrl;
+  public IdentityBaseUrl: string = environment.IdentityBaseUrl;
+  public ConsoleBaseUrl: string = environment.ConsoleBaseUrl;
   // public modules : any = environment.modules;
   public console: any = environment.links.console;
   public paths: any = environment.links.identity;

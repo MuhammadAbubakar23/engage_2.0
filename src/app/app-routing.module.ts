@@ -4,6 +4,7 @@ import { AuthGuard } from './identity/Services/AuthGuardService/auth.guard';
 import { ModulesResolver } from './shared/resolver/modules.resolver';
 import { TagsResolver } from './shared/resolver/Tags Resolver/tags.resolver';
 import { ChatWidgetComponent } from './shared/components/chat-widget/chat-widget.component';
+import { ChatWidget2Component } from './shared/components/chat-widget2/chat-widget2.component';
 // import { MonitoringMenuComponent } from './layouts/engage2/bot-monitoring-content/monitoring-menu/monitoring-menu.component';
 
 const routes: Routes = [
@@ -62,8 +63,12 @@ const routes: Routes = [
     },
   },
   {
-    path:'engage/chat',
-    component:ChatWidgetComponent
+    path: 'engage/chat',
+    component: ChatWidgetComponent
+  },
+  {
+    path: 'engage/chat-v2',
+    component: ChatWidget2Component
   }
   // { path: 'administration', loadChildren: () => import('./administration/administration.module').then(m => m.AdministrationModule) },
   // { path: '404', component : NotFoundComponent},
@@ -74,4 +79,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

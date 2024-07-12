@@ -10,7 +10,7 @@ export class authInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     
     const key = localStorage.getItem('token');
-    if (req.url === "https://entertainerbot.enteract.app/chat") {
+    if (req.url.includes('https://entertainerbot.enteract.app')) {
       return next.handle(req);
     }
    else{

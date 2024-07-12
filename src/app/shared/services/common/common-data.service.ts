@@ -8,46 +8,23 @@ import { RuleWithCount } from '../../Models/ChannelRule';
   providedIn: 'root',
 })
 export class CommonDataService {
-
-  env: any;
-  constructor(private http: HttpClient) {
-    this.baseUrl = window.location.origin;
-    sessionStorage.setItem('baseUrl', this.baseUrl);
-    if (this.baseUrl == 'https://keportal.enteract.live') {
-      this.env = (window as any)._env.ke;
-    } else if (this.baseUrl == 'https://engage.jazz.com.pk') {
-      this.env = (window as any)._env.jazz;
-    } else if (this.baseUrl == 'https://uiengage.enteract.app') {
-      this.env = (window as any)._env;
-    } else if (this.baseUrl == 'https://tpplui.enteract.live') {
-      this.env = (window as any)._env;
-    } else if (this.baseUrl == 'https://waengage.enteract.live') {
-      this.env = (window as any)._env;
-    } else if (this.baseUrl == 'https://bzengage.enteract.live') {
-      this.env = (window as any)._env;
-    } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
-      this.env = (window as any)._env;
-    } else if (this.baseUrl == 'http://localhost:4200' || this.baseUrl == 'https://localhost:4200') {
-      this.env = (window as any)._env.ke;
-    }
-
-  }
+  constructor(private http: HttpClient) {}
   // for testing purpose
-  // ConsoleBaseUrl = environment.ConsoleBaseUrl;
+  ConsoleBaseUrl = environment.ConsoleBaseUrl;
   resultData: any;
   CCMSURL = environment.CCMSURL;
   JomoAccessToken = environment.JomoAccessToken;
-  // CommonBaseUrl = environment.CommonBaseUrl;
-  // IdentityBaseUrl = environment.IdentityBaseUrl;
+  CommonBaseUrl = environment.CommonBaseUrl;
+  IdentityBaseUrl = environment.IdentityBaseUrl;
   FacebookBaseUrl = environment.FbBaseUrl;
-  // InstagramBaseUrl = environment.InstaBaseUrl;
-  // ServiceBaseUrl = environment.ServiceBaseUrl;
-  // ProfileBaseUrl = environment.ProfileBaseUrl;
-  // LinkedInBaseUrl = environment.LinkedInBaseUrl;
+  InstagramBaseUrl = environment.instagramBaseUrl;
+  ServiceBaseUrl = environment.ServiceBaseUrl;
+  ProfileBaseUrl = environment.ProfileBaseUrl;
+  LinkedInBaseUrl = environment.LinkedInBaseUrl;
   KemediaBaseUrl = environment.KemediaBaseUrl;
   KescrmBaseUrl = environment.KescrmBaseUrl;
   WhatsappBaseUrl = environment.WhatsappBaseUrl;
-  // KeReportsBaseUrl = environment.keReportsBaseUrl;
+  KeReportsBaseUrl = environment.KeReportsBaseUrl;
   faceRoxBaseUrl = environment.faceRoxBaseUrl;
   autoresponderbaseurl = environment.autoresponderbaseurl;
   metaWhatsapp = environment.metaWhatsapp;
@@ -253,7 +230,7 @@ export class CommonDataService {
   getTemplateStatus = environment.links.console.getTemplateStatus;
   deleteTemplate = environment.links.console.deleteTemplate;
   getRuleStatus = environment.links.console.getRuleStatus;
-  getCompanyTeams = environment.links.console.getCompanyTeams
+  getCompanyTeams = environment.links.console.getCompanyTeams;
 
   // teams
   // getAllTeams= environment.links.console.getAllTeams
@@ -290,96 +267,108 @@ export class CommonDataService {
   }
   UserLogin() {
     let httpOptions = this.gethttpOptions();
-    return this.http.get(this.env.CommonBaseUrl + this.userlogin, httpOptions);
+    return this.http.get(this.CommonBaseUrl + this.userlogin, httpOptions);
   }
   getPermissionByRole(form: any) {
-    return this.http.post(this.env.IdentityBaseUrl + this.rolesPermissions, form);
+    return this.http.post(
+      this.IdentityBaseUrl + this.rolesPermissions,
+      form
+    );
   }
   getReportsMenuByRole(form: any) {
-    return this.http.post(this.env.IdentityBaseUrl + this.reportsMenus, form);
+    return this.http.post(this.IdentityBaseUrl + this.reportsMenus, form);
   }
   getConsoleMenuByRole(actorId: any) {
-    return this.http.get(`${this.env.IdentityBaseUrl}${this.consoleMenus}?ActorId=${actorId}`);
+    return this.http.get(`${this.IdentityBaseUrl}${this.consoleMenus}?ActorId=${actorId}`);
   }
   GetTagsList() {
-    return this.http.get(this.env.CommonBaseUrl + this.tagsList);
+    return this.http.get(this.CommonBaseUrl + this.tagsList);
   }
   InsertTag(form: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.insertTags, form);
+    return this.http.post(this.CommonBaseUrl + this.insertTags, form);
   }
   RemoveTag(form: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.removeTags, form);
+    return this.http.post(this.CommonBaseUrl + this.removeTags, form);
   }
   InsertSentiment(form: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.insertSentiments, form);
+    return this.http.post(this.CommonBaseUrl + this.insertSentiments, form);
   }
   MarkAsComplete(data: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.markAsComplete, data);
+    return this.http.post(this.CommonBaseUrl + this.markAsComplete, data);
   }
   QuickReplyList() {
-    return this.http.get(this.env.CommonBaseUrl + this.quickReplyList);
+    return this.http.get(this.CommonBaseUrl + this.quickReplyList);
   }
   QuickReplyListForBazaarOnly() {
-    return this.http.get(this.env.ConsoleBaseUrl + this.quickReplyListForBazaar);
+    return this.http.get(
+      this.ConsoleBaseUrl + this.quickReplyListForBazaar
+    );
   }
   CommentRespond(form: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.commentRespond, form);
+    return this.http.post(this.CommonBaseUrl + this.commentRespond, form);
   }
   LikedByAdmin(form: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.likedByAdmin, form);
+    return this.http.post(this.CommonBaseUrl + this.likedByAdmin, form);
   }
   AssignQuerry(data: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.assignQuerry, data);
+    return this.http.post(this.CommonBaseUrl + this.assignQuerry, data);
   }
   GetAgentsTeamList() {
-    return this.http.get(this.env.CommonBaseUrl + this.agentsTeamList);
+    return this.http.get(this.CommonBaseUrl + this.agentsTeamList);
   }
   AssignToAnotherAgent(data: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.assignToAnotherAgent, data);
+    return this.http.post(
+      this.CommonBaseUrl + this.assignToAnotherAgent,
+      data
+    );
   }
   GetSlaList(data: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.slaList, data);
+    return this.http.post(this.CommonBaseUrl + this.slaList, data);
   }
   GetSlaDetail(data: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.slaDetail, data);
+    return this.http.post(this.CommonBaseUrl + this.slaDetail, data);
   }
   GetSlaDM(data: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.slaDM, data);
+    return this.http.post(this.CommonBaseUrl + this.slaDM, data);
   }
   GetConversationList(data: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.mainChannelList, data);
+    return this.http.post(this.CommonBaseUrl + this.mainChannelList, data);
   }
   GetRepliesList(data: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.repliesList, data);
+    return this.http.post(this.CommonBaseUrl + this.repliesList, data);
   }
   GetChannelConversationDetail(data: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.conversationDetail, data);
+    return this.http.post(
+      this.CommonBaseUrl + this.conversationDetail,
+      data
+    );
   }
   GetChannelMessageDetail(data: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.messageDetail, data);
+    return this.http.post(this.CommonBaseUrl + this.messageDetail, data);
   }
   ReplyComment(formData: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.replyComment, formData);
+    return this.http.post(this.CommonBaseUrl + this.replyComment, formData);
   }
   GetHumanAgentTag() {
-    return this.http.get(this.env.CommonBaseUrl + this.humanAgentTags);
+    return this.http.get(this.CommonBaseUrl + this.humanAgentTags);
   }
   GetAgentById(agentId: any) {
-    const url = this.env.CommonBaseUrl + this.agentDetail + '?UserId=' + agentId;
+    const url =
+      this.CommonBaseUrl + this.agentDetail + '?UserId=' + agentId;
     return this.http.get(url);
   }
   UpdateBreak(status: any) {
-    const url = this.env.CommonBaseUrl + this.updateBreak + '?Status=' + status;
+    const url = this.CommonBaseUrl + this.updateBreak + '?Status=' + status;
     return this.http.get(url);
   }
   GetFbPostStats(pageId: any, postId: any) {
     return this.http.post(
-      this.env.CommonBaseUrl +
-      this.fbPostStats +
-      '?PageId=' +
-      pageId +
-      '&postId=' +
-      postId,
+      this.CommonBaseUrl +
+        this.fbPostStats +
+        '?PageId=' +
+        pageId +
+        '&postId=' +
+        postId,
       null
     );
   }
@@ -416,7 +405,7 @@ export class CommonDataService {
   }
 
   getChannelsList() {
-    return this.http.get(this.env.ConsoleBaseUrl + this.getServices);
+    return this.http.get(this.ConsoleBaseUrl + this.getServices);
   }
   getBots() {
     return this.http.get(this.botsBaseUrl + this.botsList);
@@ -463,18 +452,18 @@ export class CommonDataService {
   }
   GetFbCommentStats(pageId: any, commentId: any) {
     return this.http.post(
-      this.env.CommonBaseUrl +
-      this.fbCommentStats +
-      '?PageId=' +
-      pageId +
-      '&CommentId=' +
-      commentId,
+      this.CommonBaseUrl +
+        this.fbCommentStats +
+        '?PageId=' +
+        pageId +
+        '&CommentId=' +
+        commentId,
       null
     );
   }
   GetInstaPostStats(pageId: any, postId: any) {
     const url =
-      this.env.CommonBaseUrl +
+      this.CommonBaseUrl +
       this.instaStats +
       '?PageId=' +
       pageId +
@@ -484,109 +473,115 @@ export class CommonDataService {
   }
   GetYoutubePostStats(postId: any) {
     const url =
-      this.env.CommonBaseUrl + this.youtubePostStats + '?PostId=' + postId;
+      this.CommonBaseUrl + this.youtubePostStats + '?PostId=' + postId;
     return this.http.get(url);
   }
   GetTwitterTweetStats(profileId: any, tweetId: any) {
     return this.http.get(
-      this.env.CommonBaseUrl +
-      this.twitterTweetStats +
-      '?ProfileExternalId=' +
-      profileId +
-      '&TweetId=' +
-      tweetId
+      this.CommonBaseUrl +
+        this.twitterTweetStats +
+        '?ProfileExternalId=' +
+        profileId +
+        '&TweetId=' +
+        tweetId
     );
   }
   GetLinkedInPostStats(postId: any) {
     return this.http.get(
-      this.env.CommonBaseUrl + this.linkedInPostStats + '?PostId=' + postId
+      this.CommonBaseUrl + this.linkedInPostStats + '?PostId=' + postId
     );
   }
   GetMenu(type: any, body: any) {
-    return this.http.post(this.env.IdentityBaseUrl + this.menu + type, body);
+    return this.http.post(this.IdentityBaseUrl + this.menu + type, body);
   }
   GetProfileDetails(id: any) {
     return this.http.get(
-      this.env.CommonBaseUrl + this.profileDetails + '?CustomerId=' + id
+      this.CommonBaseUrl + this.profileDetails + '?CustomerId=' + id
     );
   }
   UpdateProfileDetails(form: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.updateProfile, form);
+    return this.http.post(this.CommonBaseUrl + this.updateProfile, form);
   }
   // 1
   GetReasonTypes() {
-    return this.http.get(this.env.CommonBaseUrl + this.reason_types);
+    return this.http.get(this.CommonBaseUrl + this.reason_types);
   }
   GetMainReasons(type: string) {
-    const url = this.env.CommonBaseUrl + this.reasons + type;
-    return this.http.get(this.env.CommonBaseUrl + this.reasons + type);
+    const url = this.CommonBaseUrl + this.reasons + type;
+    return this.http.get(this.CommonBaseUrl + this.reasons + type);
   }
   GetSubReasons(reasonId: number) {
-    return this.http.get(this.env.CommonBaseUrl + this.subReasons + reasonId);
+    return this.http.get(this.CommonBaseUrl + this.subReasons + reasonId);
   }
   GetTicketStatuses() {
-    return this.http.get(this.env.CommonBaseUrl + this.getTicketStatuses);
+    return this.http.get(this.CommonBaseUrl + this.getTicketStatuses);
   }
   GetOrderByCustomerEmailAddressOrPhoneNumber(form: any) {
     return this.http.post(
-      this.env.CommonBaseUrl + this.getOrderByCustomerEmailAddressOrPhoneNumber,
+      this.CommonBaseUrl + this.getOrderByCustomerEmailAddressOrPhoneNumber,
       form
     );
   }
   CreateTicket(form: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.createTicket, form);
+    return this.http.post(this.CommonBaseUrl + this.createTicket, form);
   }
   GetAllChannelsUnrespondedCount(body: any) {
     return this.http.post(
-      this.env.CommonBaseUrl + this.allChannelsUnrespondedCounts,
+      this.CommonBaseUrl + this.allChannelsUnrespondedCounts,
       body
     );
   }
   SubmitDispositionForm(form: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.saveAsCompleted, form);
+    return this.http.post(this.CommonBaseUrl + this.saveAsCompleted, form);
   }
   GetDispositionHistory(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.dispositionHistory, body);
+    return this.http.post(
+      this.CommonBaseUrl + this.dispositionHistory,
+      body
+    );
   }
   MarkAllAsRead(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.markAllAsRead, body);
+    return this.http.post(this.CommonBaseUrl + this.markAllAsRead, body);
   }
   GetAgentReport(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.getAgentReport, body, {
+    return this.http.post(this.CommonBaseUrl + this.getAgentReport, body, {
       responseType: 'text',
     });
   }
   GetAllocatedProfiles(wing: string, skillSlug: string) {
     return this.http.get(
-      this.env.CommonBaseUrl +
-      this.getAllocatedProfiles +
-      '?Wings=' +
-      wing +
-      '&SkillSlug=' +
-      skillSlug
+      this.CommonBaseUrl +
+        this.getAllocatedProfiles +
+        '?Wings=' +
+        wing +
+        '&SkillSlug=' +
+        skillSlug
     );
   }
   // CreateMessageTemplate(body: any) {
-  //   return this.http.post(this.env.CommonBaseUrl + this.createMessageTemplate, body);
+  //   return this.http.post(this.CommonBaseUrl + this.createMessageTemplate, body);
   // }
   // CreateSlaPolicy(body: any) {
   //   return this.http.post('https://10.111.32.97:45458/api/SLAPolicies/Add', body);
   // }
   GetAllMessages(templates: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.getAllMessages, templates);
+    return this.http.post(
+      this.ConsoleBaseUrl + this.getAllMessages,
+      templates
+    );
   }
   GetBotConfig(url: any, body: any) {
     return this.http.post(url + this.botConfigDetails, body);
   }
   Addtemplate(addData: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.addTemplate, addData);
+    return this.http.post(this.ConsoleBaseUrl + this.addTemplate, addData);
   }
   UpdateTemplate(templateId: string, template: any) {
-    const url = `${this.env.ConsoleBaseUrl}${this.updateTemplate}?Id=${templateId}`;
+    const url = `${this.ConsoleBaseUrl}${this.updateTemplate}?Id=${templateId}`;
     return this.http.post(url, template);
   }
   DeleteMessage(deleteId: string): Observable<any> {
-    const url = `${this.env.ConsoleBaseUrl}${this.deleteMessages}?Id=${deleteId}`;
+    const url = `${this.ConsoleBaseUrl}${this.deleteMessages}?Id=${deleteId}`;
     return this.http.get(url);
   }
   DeleteBotConfig(
@@ -609,87 +604,93 @@ export class CommonDataService {
     return this.http.post(url, 'null');
   }
   GetQuickReply(body: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.getQuickReply, body);
+    return this.http.post(this.ConsoleBaseUrl + this.getQuickReply, body);
   }
   AddQuickReply(add: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.addQuickReply, add);
+    return this.http.post(this.ConsoleBaseUrl + this.addQuickReply, add);
   }
   UpdateQuickReply(quickId: string, quick: any) {
-    const url = `${this.env.ConsoleBaseUrl}${this.updateQuickReply}?Id=${quickId}`;
+    const url = `${this.ConsoleBaseUrl}${this.updateQuickReply}?Id=${quickId}`;
     return this.http.post(url, quick);
   }
   DeleteQuickReply(deleteId: string): Observable<any> {
-    const url = `${this.env.ConsoleBaseUrl}${this.deleteQuickReply}?Id=${deleteId}`;
+    const url = `${this.ConsoleBaseUrl}${this.deleteQuickReply}?Id=${deleteId}`;
     return this.http.get(url);
   }
   GetSlaPolicy(body: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.getSlaPolicy, body);
+    return this.http.post(this.ConsoleBaseUrl + this.getSlaPolicy, body);
   }
   AddSlaPolicy(addSla: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.addSlaPolicy, addSla);
+    return this.http.post(this.ConsoleBaseUrl + this.addSlaPolicy, addSla);
   }
   UpdateSlaPolicy(sla: any) {
-    const url = `${this.env.ConsoleBaseUrl}${this.updateSlaPolicy}`;
+    const url = `${this.ConsoleBaseUrl}${this.updateSlaPolicy}`;
     return this.http.post(url, sla);
   }
   GetPolicyById(policyid: string) {
-    const url = `${this.env.ConsoleBaseUrl}${this.getPolicyById}?Id=${policyid}`;
+    const url = `${this.ConsoleBaseUrl}${this.getPolicyById}?Id=${policyid}`;
     return this.http.get(url);
   }
   GetBusinessHoursById(policyid: string) {
-    const url = `${this.env.ConsoleBaseUrl}${this.getBusinessHoursById}?Id=${policyid}`;
+    const url = `${this.ConsoleBaseUrl}${this.getBusinessHoursById}?Id=${policyid}`;
     return this.http.get(url);
   }
   DeleteSlaPolicy(deleteSla: string): Observable<any> {
-    const url = `${this.env.ConsoleBaseUrl}${this.deleteSlaPolicy}?Id=${deleteSla}`;
+    const url = `${this.ConsoleBaseUrl}${this.deleteSlaPolicy}?Id=${deleteSla}`;
     return this.http.get(url);
   }
   GetOperationalHours() {
-    return this.http.get(this.env.ConsoleBaseUrl + this.getOperationalHours);
+    return this.http.get(this.ConsoleBaseUrl + this.getOperationalHours);
   }
   GetBusinessHours(body: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.getBusinessHours, body);
+    return this.http.post(
+      this.ConsoleBaseUrl + this.getBusinessHours,
+      body
+    );
   }
   AddBusinessHours(addHours: any) {
     return this.http.post(
-      this.env.ConsoleBaseUrl + this.addBusinessHours,
+      this.ConsoleBaseUrl + this.addBusinessHours,
       addHours
     );
   }
   DeleteBusinessHours(delHours: string): Observable<any> {
-    const url = `${this.env.ConsoleBaseUrl}${this.deleteBusinessHours}?Id=${delHours}`;
+    const url = `${this.ConsoleBaseUrl}${this.deleteBusinessHours}?Id=${delHours}`;
     return this.http.get(url);
   }
   UpdateBusinessHours(bueiness: any) {
-    const url = `${this.env.ConsoleBaseUrl}${this.updateBusinessHours}`;
+    const url = `${this.ConsoleBaseUrl}${this.updateBusinessHours}`;
     return this.http.post(url, bueiness);
   }
   GetBusinessById(BusinessId: string) {
-    const url = `${this.env.ConsoleBaseUrl}${this.getBusinessById}?Id=${BusinessId}`;
+    const url = `${this.ConsoleBaseUrl}${this.getBusinessById}?Id=${BusinessId}`;
     return this.http.get(url);
   }
   GetEntractRoute() {
-    return this.http.get(this.env.ConsoleBaseUrl + this.getEntractRoute);
+    return this.http.get(this.ConsoleBaseUrl + this.getEntractRoute);
   }
   AddEntractRoute(addRoute: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.addEntractRoute, addRoute);
+    return this.http.post(
+      this.ConsoleBaseUrl + this.addEntractRoute,
+      addRoute
+    );
   }
   UpdateEntractRoute(RouteId: any, entract: any) {
-    const url = `${this.env.ConsoleBaseUrl}${this.updateEntractRoute}?Id=${RouteId}`;
+    const url = `${this.ConsoleBaseUrl}${this.updateEntractRoute}?Id=${RouteId}`;
     return this.http.post(url, entract);
   }
   DeleteEntractRoute(delRoute: string): Observable<any> {
-    const url = `${this.env.ConsoleBaseUrl}${this.deleteEntractRoute}?Id=${delRoute}`;
+    const url = `${this.ConsoleBaseUrl}${this.deleteEntractRoute}?Id=${delRoute}`;
     return this.http.get(url);
   }
   GetAllSkills(body: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.getAllSkills, body);
+    return this.http.post(this.ConsoleBaseUrl + this.getAllSkills, body);
   }
   GetSkills(body: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.getSkills, body);
+    return this.http.post(this.ConsoleBaseUrl + this.getSkills, body);
   }
   AddSkill(addSkill: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.addSkill, addSkill);
+    return this.http.post(this.ConsoleBaseUrl + this.addSkill, addSkill);
   }
   AddBotConfig(url: any, body: any) {
     return this.http.post(url + this.addBotConfig, body);
@@ -699,17 +700,20 @@ export class CommonDataService {
     return this.http.get(url);
   }
   // DeleteSkill(delSkill: string): Observable<any> {
-  //   const url = `${this.env.ConsoleBaseUrl}${this.deleteSkill}?Id=${delSkill}`;
+  //   const url = `${this.ConsoleBaseUrl}${this.deleteSkill}?Id=${delSkill}`;
   //   return this.http.get(url);
   // }
   DeleteSkill(delSkill: any): Observable<any> {
-    return this.http.post(this.env.ConsoleBaseUrl + this.deleteSkill, delSkill);
+    return this.http.post(this.ConsoleBaseUrl + this.deleteSkill, delSkill);
   }
   GetAllProfile() {
-    return this.http.get(this.env.ConsoleBaseUrl + this.getAllProfile);
+    return this.http.get(this.ConsoleBaseUrl + this.getAllProfile);
   }
   AddProfile(addProfile: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.addProfile, addProfile);
+    return this.http.post(
+      this.ConsoleBaseUrl + this.addProfile,
+      addProfile
+    );
   }
   AttachFacebookPage(body: any) {
     let httpOptions = this.gethttpOptions();
@@ -720,39 +724,39 @@ export class CommonDataService {
     );
   }
   SignOut() {
-    return this.http.get(this.env.CommonBaseUrl + this.signOut);
+    return this.http.get(this.CommonBaseUrl + this.signOut);
   }
   GetTags() {
-    return this.http.get(this.env.ConsoleBaseUrl + this.getTags);
+    return this.http.get(this.ConsoleBaseUrl + this.getTags);
   }
   GetTagsByCompanyId() {
-    return this.http.get(this.env.ConsoleBaseUrl + this.getTagsByCompanyId);
+    return this.http.get(this.ConsoleBaseUrl + this.getTagsByCompanyId);
   }
   GetTagById(body: any) {
-    const url = `${this.env.ConsoleBaseUrl}${this.getTagById}`;
+    const url = `${this.ConsoleBaseUrl}${this.getTagById}`;
     return this.http.post(url, body);
   }
   AddTags(addTags: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.addTags, addTags);
+    return this.http.post(this.ConsoleBaseUrl + this.addTags, addTags);
   }
   UpdateTag(tagsId: string, tag: any) {
-    const url = `${this.env.ConsoleBaseUrl}${this.updateTag}?Id=${tagsId}`;
+    const url = `${this.ConsoleBaseUrl}${this.updateTag}?Id=${tagsId}`;
     return this.http.post(url, tag);
   }
   DeleteTags(delTag: string): Observable<any> {
-    const url = `${this.env.ConsoleBaseUrl}${this.deleteTags}?Id=${delTag}`;
+    const url = `${this.ConsoleBaseUrl}${this.deleteTags}?Id=${delTag}`;
     return this.http.get(url);
   }
   DeleteRoles(delRolId: any) {
-    const url = `${this.env.IdentityBaseUrl}${this.deleteRoles}`;
+    const url = `${this.IdentityBaseUrl}${this.deleteRoles}`;
     return this.http.post(url, delRolId);
   }
   GetTagsByCompayId() {
-    return this.http.get(this.env.ConsoleBaseUrl + this.getTagsByComayId);
+    return this.http.get(this.ConsoleBaseUrl + this.getTagsByComayId);
   }
   // rules
   GetAllRules(body: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.getAllRules, body);
+    return this.http.post(this.ConsoleBaseUrl + this.getAllRules, body);
   }
   GetAllFbRules(body: any) {
     return this.http.post<RuleWithCount>(
@@ -787,11 +791,11 @@ export class CommonDataService {
 
   GetRuleById(ruleId: string) {
     return this.http.get(
-      `${this.env.ConsoleBaseUrl + this.getRuleById}?id=${ruleId} `
+      `${this.ConsoleBaseUrl + this.getRuleById}?id=${ruleId} `
     );
   }
   AddRules(addrule: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.addRules, addrule);
+    return this.http.post(this.ConsoleBaseUrl + this.addRules, addrule);
   }
   AddFBRule(addrule: any) {
     return this.http.post(this.autoresponderbaseurl + this.addRule, addrule);
@@ -822,11 +826,11 @@ export class CommonDataService {
   }
 
   UpdateRules(rule: any) {
-    const url = `${this.env.ConsoleBaseUrl}${this.updateRules}`;
+    const url = `${this.ConsoleBaseUrl}${this.updateRules}`;
     return this.http.post(url, rule);
   }
   DeleteRules(delRules: any) {
-    const url = `${this.env.ConsoleBaseUrl}${this.deleteRules}?Id=${delRules}`;
+    const url = `${this.ConsoleBaseUrl}${this.deleteRules}?Id=${delRules}`;
     return this.http.get(url);
   }
   DeleteFbRules(delRules: any) {
@@ -867,7 +871,7 @@ export class CommonDataService {
   }
 
   GetEntitiesRule() {
-    return this.http.get(this.env.ConsoleBaseUrl + this.getEntitiesRule);
+    return this.http.get(this.ConsoleBaseUrl + this.getEntitiesRule);
   }
   GetEntitiesRules() {
     return this.http.get(this.autoresponderbaseurl + this.getEntitiesRules);
@@ -879,151 +883,189 @@ export class CommonDataService {
   }
   GetRuleEntityProperties(entity: any) {
     return this.http.get(
-      `${this.env.ConsoleBaseUrl}${this.getRuleEntityProperties}?tableName=${entity}`
+      `${this.ConsoleBaseUrl}${this.getRuleEntityProperties}?tableName=${entity}`
     );
   }
   GetCustomers(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.getCustomers, body);
+    return this.http.post(this.CommonBaseUrl + this.getCustomers, body);
   }
   // GetChannels() {
-  //   return this.http.get(this.env.IdentityBaseUrl + this.getChannels);
+  //   return this.http.get(this.IdentityBaseUrl + this.getChannels);
   // }
   GetConsoleChannels() {
-    return this.http.get(this.env.ConsoleBaseUrl + this.consoleChannel);
+    return this.http.get(this.ConsoleBaseUrl + this.consoleChannel);
   }
   UpdateStatus(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.updateStatus, body);
+    return this.http.post(this.CommonBaseUrl + this.updateStatus, body);
   }
   InsertTagInProfile(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.insertTagOnProfile, body);
+    return this.http.post(
+      this.CommonBaseUrl + this.insertTagOnProfile,
+      body
+    );
   }
   RemoveTagInProfile(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.removeTagOnProfile, body);
+    return this.http.post(
+      this.CommonBaseUrl + this.removeTagOnProfile,
+      body
+    );
   }
   HideUnhideMessage(body: any) {
-    // const url = this.env.CommonBaseUrl + this.hideUnhideMessage + '?QueryId=' + queryId + '&Status=' + status;
+    // const url = this.CommonBaseUrl + this.hideUnhideMessage + '?QueryId=' + queryId + '&Status=' + status;
     // return this.http.get(url);
-    return this.http.post(this.env.CommonBaseUrl + this.hideUnhideMessage, body);
+    return this.http.post(
+      this.CommonBaseUrl + this.hideUnhideMessage,
+      body
+    );
   }
   // Survey form
   AddSurvey(body: any) {
-    return this.http.post(this.env.ServiceBaseUrl + this.addSurvey, body);
+    return this.http.post(this.ServiceBaseUrl + this.addSurvey, body);
   }
   AddCSATSurvey(body: any) {
-    return this.http.post(this.env.ServiceBaseUrl + this.addCSAT, body);
+    return this.http.post(this.ServiceBaseUrl + this.addCSAT, body);
   }
   GetDispositionTags() {
-    return this.http.get(this.env.CommonBaseUrl + this.dispositionTags);
+    return this.http.get(this.CommonBaseUrl + this.dispositionTags);
   }
   GetRouteToAgentsCsv(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.routeToAgentsCsv, body, {
-      responseType: 'text',
-    });
+    return this.http.post(
+      this.CommonBaseUrl + this.routeToAgentsCsv,
+      body,
+      {
+        responseType: 'text',
+      }
+    );
   }
   GetRouteToAgents(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.routeToAgents, body);
+    return this.http.post(this.CommonBaseUrl + this.routeToAgents, body);
   }
   AddUniqueCustomer(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.addUniqueCustomer, body);
+    return this.http.post(
+      this.CommonBaseUrl + this.addUniqueCustomer,
+      body
+    );
   }
   UniqueExportCsv(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.uniqueExportCsv, body, {
+    return this.http.post(this.CommonBaseUrl + this.uniqueExportCsv, body, {
       responseType: 'text',
     });
   }
   AddHandledBot(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.addHandledBot, body);
+    return this.http.post(this.CommonBaseUrl + this.addHandledBot, body);
   }
   AddHandledBotCSV(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.addHandledBotCSV, body, {
-      responseType: 'text',
-    });
+    return this.http.post(
+      this.CommonBaseUrl + this.addHandledBotCSV,
+      body,
+      {
+        responseType: 'text',
+      }
+    );
   }
   Addinboundoutbound(body: any) {
     return this.http.post(
-      this.env.KeReportsBaseUrl + this.addinboundoutbound,
+      this.KeReportsBaseUrl + this.addinboundoutbound,
       body
     );
   }
   GetTwitterReport(body: any) {
-    return this.http.post(this.env.KeReportsBaseUrl + this.twitterReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.twitterReport, body);
   }
   GetTwitterSLAReport(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.twitterSLAReport, body);
+    return this.http.post(this.CommonBaseUrl + this.twitterSLAReport, body);
   }
   GetTwitterProfileWiseReport(body: any) {
     return this.http.post(
-      this.env.KeReportsBaseUrl + this.twitterProfileWiseReport,
+      this.KeReportsBaseUrl + this.twitterProfileWiseReport,
       body
     );
   }
   GetUserList() {
-    return this.http.get(this.env.IdentityBaseUrl + this.getUserList);
+    return this.http.get(this.IdentityBaseUrl + this.getUserList);
   }
   GetSentimentData() {
-    return this.http.get(this.env.CommonBaseUrl + this.getSentimentData);
+    return this.http.get(this.CommonBaseUrl + this.getSentimentData);
   }
   AddAgentPerformance(body: any) {
     return this.http.post(
-      this.env.KeReportsBaseUrl + this.addAgentPerformance,
+      this.KeReportsBaseUrl + this.addAgentPerformance,
       body
     );
   }
   GetShiftReport(body: any) {
-    return this.http.post(this.env.KeReportsBaseUrl + this.shiftReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.shiftReport, body);
   }
   GetWhatsAppReport(body: any) {
     return this.http.post(
-      this.env.CommonBaseUrl + this.getWhatsAppRawDataReport,
+      this.CommonBaseUrl + this.getWhatsAppRawDataReport,
       body
     );
   }
   DownloadWhatsAppReport(body: any) {
     return this.http.post(
-      this.env.CommonBaseUrl + this.downloadWhatsAppRawDataReport,
+      this.CommonBaseUrl + this.downloadWhatsAppRawDataReport,
       body,
       { responseType: 'text' }
     );
   }
   DownloadSocialRawData(body: any) {
     return this.http.post(
-      this.env.CommonBaseUrl + this.downloadSocialRawData,
+      this.CommonBaseUrl + this.downloadSocialRawData,
       body,
       { responseType: 'text' }
     );
   }
   PostSocialRawData(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.postSocialRawData, body);
+    return this.http.post(
+      this.CommonBaseUrl + this.postSocialRawData,
+      body
+    );
   }
   // facebookreport
   Getfacebookreport(body: any) {
-    return this.http.post(this.env.KeReportsBaseUrl + this.facebookReport, body);
+    return this.http.post(
+      this.KeReportsBaseUrl + this.facebookReport,
+      body
+    );
   }
   GetfacebookProfile(body: any) {
-    return this.http.post(this.env.KeReportsBaseUrl + this.facebookProfile, body);
+    return this.http.post(
+      this.KeReportsBaseUrl + this.facebookProfile,
+      body
+    );
   }
   // Executive Dashboard
   GetAllSocialMatrics(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.getAllSocialMatrics, body);
+    return this.http.post(
+      this.CommonBaseUrl + this.getAllSocialMatrics,
+      body
+    );
   }
   PostInstagramReport(body: any) {
-    return this.http.post(this.env.KeReportsBaseUrl + this.instagramReport, body);
+    return this.http.post(
+      this.KeReportsBaseUrl + this.instagramReport,
+      body
+    );
   }
   GetInstagramProfile(body: any) {
-    return this.http.post(this.env.KeReportsBaseUrl + this.instagramProfile, body);
+    return this.http.post(
+      this.KeReportsBaseUrl + this.instagramProfile,
+      body
+    );
   }
   GetAllTags(): Observable<any> {
-    return this.http.get(this.env.ConsoleBaseUrl + this.getAllTags);
+    return this.http.get(this.ConsoleBaseUrl + this.getAllTags);
   }
   GetAllTag(body: any) {
-    return this.http.post(this.env.ConsoleBaseUrl + this.getTagsAll, body);
+    return this.http.post(this.ConsoleBaseUrl + this.getTagsAll, body);
   }
   GetAllTagsReport(body: any) {
-    return this.http.post(this.env.KeReportsBaseUrl + this.getTagReport, body);
+    return this.http.post(this.KeReportsBaseUrl + this.getTagReport, body);
   }
   DownloadTagsReport(body: any) {
     return this.http.post(
-      this.env.KeReportsBaseUrl + this.downloadTagReport,
+      this.KeReportsBaseUrl + this.downloadTagReport,
       body,
       {
         responseType: 'text',
@@ -1031,9 +1073,12 @@ export class CommonDataService {
     );
   }
   RemoveAssignedQuery(body: any) {
-    // const url = `${this.env.CommonBaseUrl}${this.removeAssignedQuery}?ProfileId=${ProfileId}`;
+    // const url = `${this.CommonBaseUrl}${this.removeAssignedQuery}?ProfileId=${ProfileId}`;
     // return this.http.get(url);
-    return this.http.post(this.env.CommonBaseUrl + this.removeAssignedQuery, body);
+    return this.http.post(
+      this.CommonBaseUrl + this.removeAssignedQuery,
+      body
+    );
   }
   getWordCloud(fromDate: string, toDate: string): Observable<any> {
     return this.http.get(
@@ -1042,57 +1087,66 @@ export class CommonDataService {
   }
   getSessionId(customerNumber: any, ClientNumber: any) {
     return this.http.get(
-      `${this.env.ServiceBaseUrl}${this.sessionClose}?customerIdentifier=${customerNumber}&clientIdentifier=${ClientNumber}`
+      `${this.ServiceBaseUrl}${this.sessionClose}?customerIdentifier=${customerNumber}&clientIdentifier=${ClientNumber}`
     );
   }
   GetLinkedInReportData(body: any) {
-    return this.http.post(this.env.LinkedInBaseUrl + this.getLinkedInReport, body);
+    return this.http.post(
+      this.LinkedInBaseUrl + this.getLinkedInReport,
+      body
+    );
   }
   GetLinkedInReportFollwers(body: any) {
     return this.http.post(
-      this.env.LinkedInBaseUrl + this.getLinkedInFollowers,
+      this.LinkedInBaseUrl + this.getLinkedInFollowers,
       body
     );
   }
   EmailShiftReport(body: any) {
-    return this.http.post(this.env.KeReportsBaseUrl + this.emailShiftReport, body);
+    return this.http.post(
+      this.KeReportsBaseUrl + this.emailShiftReport,
+      body
+    );
   }
   CSATFormForKE(body: any) {
-    return this.http.post(this.env.ProfileBaseUrl + this.KECSAT, body);
+    return this.http.post(this.ProfileBaseUrl + this.KECSAT, body);
   }
   GetCustomerProfileDetails(body: any) {
     return this.http.post(
-      this.env.ProfileBaseUrl + this.getProfileInformationByID,
+      this.ProfileBaseUrl + this.getProfileInformationByID,
       body
     );
     // return this.http.post("http://10.111.32.52:45455/api/" + this.getProfileInformationByID, body);
   }
   SearchCustomerProfileDetails(body: any) {
     return this.http.post(
-      this.env.ProfileBaseUrl + this.searchProfileInformation,
+      this.ProfileBaseUrl + this.searchProfileInformation,
       body
     );
   }
   AddProfileInformation(body: any) {
     return this.http.post(
-      this.env.ProfileBaseUrl + this.addProfileInformation,
+      this.ProfileBaseUrl + this.addProfileInformation,
       body
     );
   }
   DeattachProfileInformation(body: any) {
     return this.http.post(
-      this.env.ProfileBaseUrl + this.deattachProfileInformation,
+      this.ProfileBaseUrl + this.deattachProfileInformation,
       body
     );
   }
   GetRegionWiseReport(body: any) {
-    return this.http.post(this.env.ProfileBaseUrl + this.regionwiseReport, body);
+    return this.http.post(
+      this.ProfileBaseUrl + this.regionwiseReport,
+      body
+    );
   }
   GetwordCloud(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.wordCloud, body);
+    return this.http.post(this.CommonBaseUrl + this.wordCloud, body);
   }
   GetAreaWiseReport(body: any) {
-    return this.http.post(this.env.ProfileBaseUrl + this.areawiseReport, body);
+    return this.http.post(this.ProfileBaseUrl + this.areawiseReport, body);
   }
   GetAllKemediaReport(body: any) {
     return this.http.post(this.KemediaBaseUrl + this.keMediaReport, body);
@@ -1106,10 +1160,10 @@ export class CommonDataService {
     );
   }
   GetFollowUpCount(body: any) {
-    return this.http.post(this.env.CommonBaseUrl + this.getFollowUpCount, body);
+    return this.http.post(this.CommonBaseUrl + this.getFollowUpCount, body);
   }
   GetCSATReport(body: any) {
-    return this.http.post(this.env.ProfileBaseUrl + this.CSATReport, body);
+    return this.http.post(this.ProfileBaseUrl + this.CSATReport, body);
   }
   //  For SCRM Report
   GetScrmFacebookReport(body: any) {
@@ -1120,38 +1174,40 @@ export class CommonDataService {
   }
   editSkill(data: any) {
     return this.http.get(
-      `${this.env.ConsoleBaseUrl}${this.getskillbyid}?SkillId=${data}`
+      `${this.ConsoleBaseUrl}${this.getskillbyid}?SkillId=${data}`
     );
   }
   UpdateSkill(id: any, rule: any) {
-    const url = `${this.env.ConsoleBaseUrl}${this.updateSkill}?SkillId=${id}`;
+    const url = `${this.ConsoleBaseUrl}${this.updateSkill}?SkillId=${id}`;
     return this.http.post(url, rule);
   }
   GetAllTeams(body: any) {
-    return this.http.post(this.env.IdentityBaseUrl + this.getAllTeams, body);
+    return this.http.post(this.IdentityBaseUrl + this.getAllTeams, body);
   }
   // DeleteSignalTeam(delSkill: any): Observable<any> {
-  //   return this.http.post(this.env.IdentityBaseUrl + this.deleteTeams, delSkill);
+  //   return this.http.post(this.IdentityBaseUrl + this.deleteTeams, delSkill);
   // }
   AddTeam(body: any) {
-    return this.http.post(this.env.IdentityBaseUrl + this.addTeam, body);
+    return this.http.post(this.IdentityBaseUrl + this.addTeam, body);
   }
   UpdateTeam(body: any) {
-    return this.http.post(this.env.IdentityBaseUrl + this.updateTeam, body);
+    return this.http.post(this.IdentityBaseUrl + this.updateTeam, body);
   }
   GetTeamType() {
-    return this.http.get(this.env.IdentityBaseUrl + this.getTeamType);
+    return this.http.get(this.IdentityBaseUrl + this.getTeamType);
   }
   DeleteSignalTeam(id: any) {
-    return this.http.get(`${this.env.IdentityBaseUrl}${this.deleteTeams}?id=${id}`);
+    return this.http.get(
+      `${this.IdentityBaseUrl}${this.deleteTeams}?id=${id}`
+    );
   }
   TeamGetById(id: number) {
-    const url = `${this.env.IdentityBaseUrl}${this.teamGetById}/${id}`;
+    const url = `${this.IdentityBaseUrl}${this.teamGetById}/${id}`;
     return this.http.get(url);
   }
   DeleteMultipleTeams(data: any) {
     return this.http.delete(
-      this.env.IdentityBaseUrl + this.deleteMultipleTeams,
+      this.IdentityBaseUrl + this.deleteMultipleTeams,
       data
     );
   }
@@ -1163,36 +1219,36 @@ export class CommonDataService {
   }
   GetInteractionReport(body: any) {
     return this.http.post(
-      this.env.KeReportsBaseUrl + this.getInteractionReport,
+      this.KeReportsBaseUrl + this.getInteractionReport,
       body
     );
   }
   GetAllWing() {
-    return this.http.get(this.env.IdentityBaseUrl + this.getAllWing);
+    return this.http.get(this.IdentityBaseUrl + this.getAllWing);
   }
   GetRoles() {
-    return this.http.get(this.env.IdentityBaseUrl + this.getUserRoles);
+    return this.http.get(this.IdentityBaseUrl + this.getUserRoles);
   }
   GetPlatorm() {
-    return this.http.get(this.env.ConsoleBaseUrl + this.getPlatorm);
+    return this.http.get(this.ConsoleBaseUrl + this.getPlatorm);
   }
   GetConsoleEntities(serviceId: any): Observable<any> {
-    const url = `${this.env.ConsoleBaseUrl}${this.getConsoleEntities}?serviceId=${serviceId}`;
+    const url = `${this.ConsoleBaseUrl}${this.getConsoleEntities}?serviceId=${serviceId}`;
     return this.http.post<any>(url, {});
   }
   GetConsoleEntityProperties(entityId: any) {
-    const url = `${this.env.ConsoleBaseUrl}${this.getConsoleEntityProperties}?entityId=${entityId}`;
+    const url = `${this.ConsoleBaseUrl}${this.getConsoleEntityProperties}?entityId=${entityId}`;
     return this.http.get<any>(url, {});
   }
   GetRuleType() {
-    return this.http.get(this.env.ConsoleBaseUrl + this.getRuleType);
+    return this.http.get(this.ConsoleBaseUrl + this.getRuleType);
   }
   GetRuleTag(id: any) {
-    const url = `${this.env.ConsoleBaseUrl}${this.getRuleTag}?id=${id}`;
+    const url = `${this.ConsoleBaseUrl}${this.getRuleTag}?id=${id}`;
     return this.http.get<any>(url, {});
   }
   GetServicetree() {
-    return this.http.get(this.env.ConsoleBaseUrl + this.getServicetree);
+    return this.http.get(this.ConsoleBaseUrl + this.getServicetree);
   }
   GetTemplateStatus(id: any, status: boolean) {
     const url = `${this.autoresponderbaseurl}${this.getTemplateStatus}?templateId=${id}&status=${status}`;
@@ -1269,11 +1325,11 @@ export class CommonDataService {
   }
 
   GetPolicyByWing(wing: string) {
-    const url = `${this.env.ConsoleBaseUrl}${this.getPolicyByWing}?Id=${wing}`;
+    const url = `${this.ConsoleBaseUrl}${this.getPolicyByWing}?Id=${wing}`;
     return this.http.get(url);
   }
   GetCompanyTeams() {
-    return this.http.get(this.env.IdentityBaseUrl + this.getCompanyTeams);
+    return this.http.get(this.IdentityBaseUrl + this.getCompanyTeams);
   }
   GetRuleStatus(id: any, status: boolean) {
     const url = `${this.autoresponderbaseurl}${this.getRuleStatus}?Id=${id}&status=${status}`;

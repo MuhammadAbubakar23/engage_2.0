@@ -15,7 +15,7 @@ export class JsonWebTokenInterceptor implements HttpInterceptor {
     httpRequest: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (httpRequest.url === "https://entertainerbot.enteract.app/chat") {
+    if (httpRequest.url.includes('https://entertainerbot.enteract.app')) {
       return next.handle(httpRequest);
     }
     else{

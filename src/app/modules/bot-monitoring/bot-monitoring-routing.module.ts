@@ -3,17 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { BotChatComponent } from './components/bot-chat/bot-chat.component';
 import { BotMonitoringComponent } from './bot-monitoring/bot-monitoring.component';
 import { BotMenuComponent } from 'src/app/layouts/engage2/bot-content/bot-menu/bot-menu.component';
-import { BotMonitoringMenusComponent } from 'src/app/layouts/engage2/bot-monitoring-content/bot-monitoring-menus/bot-monitoring-menus.component';
-// import { MonitoringMenuComponent } from 'src/app/layouts/engage2/bot-monitoring-content/monitoring-menu/monitoring-menu.component';
 
+// import { MonitoringMenuComponent } from 'src/app/layouts/engage2/bot-monitoring-content/monitoring-menu/monitoring-menu.component';
+import { BotMonitoringMenusComponent } from 'src/app/layouts/engage2/bot-monitoring-content/bot-monitoring-menus/bot-monitoring-menus.component';
 const routes: Routes = [
   {
     path: '',
     component: BotMonitoringComponent,
     children: [
       {
-        path: 'chats',
-        loadComponent: () => import('./components/bot-monitering-chat/bot-monitering-chat.component').then(c => c.BotMoniteringChatComponent)
+        path: 'generative-bot-history',
+        loadComponent: () => import('./components/chat-bot-history/chat-bot-history.component').then(c => c.ChatBotHistoryComponent)
       },
       {
         path: 'chat-bot',
@@ -30,12 +30,12 @@ const routes: Routes = [
       {
         path: 'upload/download-data',
         loadComponent: () => import('./components/upload/download-data/download-data.component').then(c => c.DownloadDataComponent)
-      },{
+      }, {
         path: 'chat-bot/components',
         loadComponent: () => import('./components/components/components.component').then(c => c.ComponentsComponent)
       },
       {
-        path: 'bot-monitering-chat',
+        path: 'bot-monitoring-chat',
         loadComponent: () => import('./components/bot-monitering-chat/bot-monitering-chat.component').then(c => c.BotMoniteringChatComponent)
       },
       {

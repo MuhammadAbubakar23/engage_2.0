@@ -6,7 +6,6 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
-import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 @Component({
   selector: 'inbox-header',

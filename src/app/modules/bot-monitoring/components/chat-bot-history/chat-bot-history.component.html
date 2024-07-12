@@ -1,0 +1,21 @@
+<div class="row" *ngIf="chats.length === 0">
+  <div class="col-sm-12">
+    <section class="empty col d-flex flex-column justify-content-center h-100 align-items-center gap-3">
+      <img src="../../../../assets//images/empty.svg" width="300px" alt="" />
+      <p class="m-0 coal">Select the conversation to load the messages</p>
+    </section>
+  </div>
+</div>
+<main class="">
+  <div class="page-content-wrapper custom-scroll chatbot-main" [ngClass]="{ thirdactive: chats.length === 3 }"
+    *ngIf="chats.length > 0">
+    <div class="chatlisting row align-items-start px-3 pt-3 pb-5">
+      <div *ngFor="let chat of chats" class="chatitem col">
+        <app-chat-history [chat]="chat" (minimizeToggle)="onMinimizeToggle(chat)"></app-chat-history>
+        <!-- ye nihcy commeny hy line 20
+      (minimizeToggle)="onMinimizeToggle(chat)" -->
+      </div>
+    </div>
+  </div>
+</main>
+<app-chat-widget2 [hasParent]="true"></app-chat-widget2>
