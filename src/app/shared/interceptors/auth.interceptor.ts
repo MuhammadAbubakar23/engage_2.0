@@ -9,21 +9,21 @@ export class authInterceptor implements HttpInterceptor {
   }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     
-    const key = localStorage.getItem('token');
+    const key = sessionStorage.getItem('token');
     if (req.url.includes('https://entertainerbot.enteract.app')) {
       return next.handle(req);
     }
    else{
     if (key != null) {
       const clonedReq = req.clone({
-        headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
+        headers: req.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem('token'))
       });
       return next.handle(clonedReq).pipe(
         tap(
           succ => { },
           err => {
             if (err.status == 401) {
-              localStorage.removeItem('token');
+              sessionStorage.removeItem('token');
               this.router.navigateByUrl('/login');
             }
             else if (err.status == 403)

@@ -59,7 +59,7 @@ export class ChatBotComponent implements OnInit {
 
   }
   saveBotId(botId: any) {
-    localStorage.setItem('bot_id', botId);
+    sessionStorage.setItem('bot_id', botId);
   }
   ngOnInit(): void {
     this.getChatBotList();
@@ -341,29 +341,29 @@ export class ChatBotComponent implements OnInit {
     event.stopPropagation();
     event.preventDefault();
     this.isDeleteAction = true;
-    localStorage.setItem('bot_id', value.bot_id)
+    sessionStorage.setItem('bot_id', value.bot_id)
     this.chatBotIdS.setOption(value.bot_id)
     this.route.navigate(['/bot-monitoring/conversation', name])
-    localStorage.setItem('name', value.name)
+    sessionStorage.setItem('name', value.name)
   }
   shareValueStepper(value: any, event: Event) {
     event.stopPropagation();
     event.preventDefault();
     this.isDeleteAction = true;
-    localStorage.setItem('bot_id', value.bot_id)
+    sessionStorage.setItem('bot_id', value.bot_id)
     this.chatBotIdS.setOption(value.bot_id)
     this.route.navigateByUrl('/bot-monitoring/chatBot-Rule')
-    localStorage.setItem('name', value.name)
+    sessionStorage.setItem('name', value.name)
 
   }
   shareValueStory(value: any, event: Event) {
     event.stopPropagation();
     event.preventDefault();
     this.isDeleteAction = true;
-    localStorage.setItem('bot_id', value.bot_id)
+    sessionStorage.setItem('bot_id', value.bot_id)
     this.chatBotIdS.setOption(value.bot_id)
     this.route.navigateByUrl('/bot-monitoring/chatBot-Story')
-    localStorage.setItem('name', value.name)
+    sessionStorage.setItem('name', value.name)
 
   }
   reloadComponent(value: any) {
