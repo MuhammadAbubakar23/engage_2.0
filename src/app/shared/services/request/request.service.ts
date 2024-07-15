@@ -38,12 +38,20 @@ export class RequestService {
     routeparams?: any
   ) => {
     if (routeparams === undefined) {
-      routeparams = '';
+      routeparams = "";
+
     }
-    if (route === undefined) {
-      route = '';
+    if(route ===undefined){
+      route ='Skill/GetSkills'
     }
-    return routeparams != '' || routeparams.length > 0? `${envAddress}${route}${routeparams}`: `${envAddress}${route}`;
+    if(route===undefined){
+
+      route='Skill/GetSkills'
+    }
+
+      return (routeparams != "" || routeparams.length > 0) ? `${envAddress}${route}${routeparams}` : `${envAddress}${route}`
+   
+ 
   };
   get<T>(route: string, params?: any, routeparams: string = ''): Observable<T> {
     return this.http

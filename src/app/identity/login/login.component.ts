@@ -237,7 +237,6 @@ export class LoginComponent implements OnInit {
   }
 
   // newFunction(){
-  // debugger
   // const actorId = this.actorsService.actors
   // console.log(actorId)
   //   this.commonService.UserLogin().subscribe(() => {

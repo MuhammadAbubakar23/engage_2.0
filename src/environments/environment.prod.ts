@@ -75,7 +75,7 @@ export const environment = {
   // botBaseUrl: '',
   // LinkedInBaseUrl:'',
 
-  // For PK tach damo company Id 649 
+  // For PK tach damo company Id 649
   // IdentityBaseUrl: 'https://enidentitybackend.enteract.live/api/',
   // CommonBaseUrl: 'https://encommonbackend.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://encommonbackend.enteract.live/',
@@ -84,18 +84,18 @@ export const environment = {
   // consoleBaseUrl: 'https://enconsolebackend.enteract.live/api/',
   // ReportsBaseUrl:'https://enreportsbackend.enteract.live/api/',
   // LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
-  // botBaseUrl:'',
+  // BotBaseUrl:'',
 
   IdentityBaseUrl: '',
-    CommonBaseUrl: '',
-    SignalRCommonBaseUrl: '',
-    ProfileBaseUrl: '',
-    ServiceBaseUrl: '',
-    ConsoleBaseUrl: '',
-    LinkedInBaseUrl: '',
-    BotBaseUrl: '',
-    ReportsBaseUrl:'',
-    
+  CommonBaseUrl: '',
+  SignalRCommonBaseUrl: '',
+  ProfileBaseUrl: '',
+  ServiceBaseUrl: '',
+  ConsoleBaseUrl: '',
+  LinkedInBaseUrl: '',
+  BotBaseUrl: '',
+  ReportsBaseUrl: '',
+
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
@@ -144,7 +144,8 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  chatBotBaseUrl: 'https://entertainerbot.enteract.app',
   botsBaseUrl: 'http://3.1.47.150:5000/bots/',
   botConfigBaseUrl: 'https://linked.360scrm.com/api/',
   // botConfigBaseUrl: 'https://newpurpleshop86.conveyor.cloud/api/',
@@ -243,7 +244,7 @@ export const environment = {
       deleteSkill: 'Skill/Delete',
       getAllWing: 'Teams/GetAllWing',
       getPolicyByWing: 'SLAPolicies/GetByWing',
-      getCompanyTeams:'Teams/GetCompanyTeams',
+      getCompanyTeams: 'Teams/GetCompanyTeams',
 
       // service Base rules
       getEntitiesRules: 'EntityConfigs/GetEntities',
@@ -333,7 +334,7 @@ export const environment = {
       createBotTrain: 'models/create',
       runChatBot: 'models/run',
       chatBotWdidget: 'chat',
-      stopChatBot: 'models/stop'
+      stopChatBot: 'models/stop',
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

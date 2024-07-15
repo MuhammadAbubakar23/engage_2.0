@@ -8,7 +8,7 @@ export class authInterceptor implements HttpInterceptor {
   constructor(private router: Router) {
   }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    debugger
+    
     const key = localStorage.getItem('token');
     if (req.url.includes('https://entertainerbot.enteract.app')) {
       return next.handle(req);

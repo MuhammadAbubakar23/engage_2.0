@@ -43,7 +43,7 @@ export class ActorsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger
+    
     let data = this.storage.retrive('main', 'O').local;
     this.loginResponse = data;
     this.fullName = data.username;

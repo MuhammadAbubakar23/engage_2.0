@@ -59,7 +59,7 @@ export class ChatBotHistoryComponent implements OnInit {
   }
   getHistoryDetails(data: any) {
     this._botS.ChatHistory(data).subscribe((res: any) => {
-      debugger
+      
       console.log(res);
       res.history[0]['slug'] = data.slug;
       this.chats.push(res.history);

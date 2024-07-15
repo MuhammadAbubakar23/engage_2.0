@@ -76,7 +76,7 @@ export class RoleMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.hasConsolePermission = this.hasPermission('console');
-    this.hasMonitoringPermission = this.hasPermission('automation');
+    this.hasMonitoringPermission = this.hasPermission('bot');
     this.baseurl = window.location.origin
     this.activeChannel = this._route.url.split('/')[2];
     let data = this.storage.retrive('main', 'O').local;
@@ -119,6 +119,7 @@ export class RoleMenuComponent implements OnInit {
 
 
   hasPermission(permissionName: string) {
+    debugger
     const isAccessible = this._perS.hasPermission(permissionName)
     return isAccessible
   }

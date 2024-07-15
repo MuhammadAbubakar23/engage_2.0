@@ -30,7 +30,7 @@ export class ChatHistoryComponent implements OnInit {
 
   constructor(private chatVisibilityService: ChatVisibilityService) { }
   ngOnInit(): void {
-    debugger
+    
     console.log("this.chat",this.chat)
   }
 }
