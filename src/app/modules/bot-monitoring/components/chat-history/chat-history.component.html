@@ -1,7 +1,5 @@
-<section
-  class="empty col d-flex flex-column justify-content-center h-100 align-items-center gap-3 d-none"
->
-  <img src="../images/empty.svg" width="300px" alt="" />
+<section class="empty col d-flex flex-column justify-content-center h-100 align-items-center gap-3 d-none">
+  <img src=".../../../../.././../../assets/images/empty.svg" width="300px" alt="" />
   <p class="m-0 coal">Select the conversation to load the messages</p>
 </section>
 <section class="chatitem col" id="chatitem1">
@@ -16,11 +14,7 @@
           </h6>
         </div>
 
-        <span
-          class="iconButton medium ms-auto"
-          id="minbutton"
-         
-        >
+        <span class="iconButton medium ms-auto" id="minbutton">
           <!-- <i
             class="fa-light"
             [ngClass]="{
@@ -37,14 +31,29 @@
     <div class="chatsection">
       <div class="main-chat">
         <div class="chat-box-wrap">
+          <!-- <div class="messagewrap suggestions">
+            <div class="messagebody">
+              <ul class="list-inline text-center m-0">
+                <li class="list-inline-item">
+                  <span>⚡️ Free trial</span>
+                </li>
+                <li class="list-inline-item pricing">
+                  <a href="#pricingmsgs">💲 Pricing</a>
+                </li>
+                <li class="list-inline-item">
+                  <span>⚙️ Integrations</span>
+                </li>
+
+              </ul>
+            </div>
+          </div> -->
           <ng-container *ngFor="let msg of chat; let i = index">
-            <div
-              class="message-wrap agent-message-wrap"
-              [ngClass]="{
+          
+            <div class="message-wrap agent-message-wrap" [ngClass]="{
                 right: msg.role === 'user',
                 left: msg.role === 'assistant'
-              }"
-            >
+              }">
+             
               <div class="d-flex align-items-center agent-container">
                 <div class="card w-d-inline messageUpper">
                   <div class="card-body">
@@ -52,12 +61,12 @@
                       <div class="d-flex align-items-center w-100">
                         <h6 class="card-title navy m-0">
                           {{
-                            msg.role === "assistant" ? "enteract.bot" : msg.role
+                          msg.role === "assistant" ? "enteract.bot" : msg.role
                           }}
                         </h6>
                         <small class="silver ms-auto">{{
                           msg.sentAt | date : "shortTime"
-                        }}</small>
+                          }}</small>
                       </div>
                     </div>
                     <p class="card-text nignt">
@@ -67,10 +76,10 @@
                 </div>
               </div>
             </div>
+           
           </ng-container>
         </div>
       </div>
     </div>
   </div>
 </section>
-

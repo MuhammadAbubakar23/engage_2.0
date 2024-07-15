@@ -18,7 +18,7 @@ export class ChatHistoryComponent implements OnInit {
   isRemoved: boolean = false;
   @Output() minimizeToggle: EventEmitter<void> = new EventEmitter<void>();
   removeScreen() {
-    debugger
+    
     let newChat =
       { "slug": this.chat[0].slug }
     this.chatVisibilityService.notifyNewChatIdHistory(newChat);
@@ -29,7 +29,7 @@ export class ChatHistoryComponent implements OnInit {
 
   constructor(private chatVisibilityService: ChatVisibilityService) { }
   ngOnInit(): void {
-    debugger
+    
     console.log("this.chat", this.chat)
   }
 }

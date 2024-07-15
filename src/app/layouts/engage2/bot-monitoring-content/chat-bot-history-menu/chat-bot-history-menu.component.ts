@@ -42,7 +42,7 @@ export class ChatBotHistoryMenuComponent implements OnInit {
 
   }
   toggleCollapse(menu: any) {
-    debugger
+    
     if (menu['link'] === 'generative-bot-history') {
       this.updatevalue('generative-bot-history');
     }
@@ -70,7 +70,7 @@ export class ChatBotHistoryMenuComponent implements OnInit {
     })
   }
   updatevalue(string: any) {
-    debugger
+    
     if (string === 'generative-bot-history') {
       this.showBotMonitoringContent = true;
     }

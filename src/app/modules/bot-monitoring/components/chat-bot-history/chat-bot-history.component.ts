@@ -27,7 +27,7 @@ export class ChatBotHistoryComponent implements OnInit {
   ngOnInit(): void {
 
     this._chatVisibilityS.newChatIdHistory$.subscribe((newChat: any) => {
-      debugger
+      
       if (newChat) {
         const chatIndex = this.chats.findIndex(chat => chat[0].slug === newChat.slug);
         if (chatIndex !== -1) {
@@ -60,10 +60,10 @@ export class ChatBotHistoryComponent implements OnInit {
     }
   }
   getHistoryDetails(data: any) {
-    debugger
+    
     this._chatVisibilityS.notifythirdActiveHistory({ active: data.active, slug: data.slug });
     this._botS.ChatHistory({ 'slug': data.slug }).subscribe((res: any) => {
-      debugger
+      
       console.log(res);
       if (res[0].history.length > 0) {
         res[0].history[0]['slug'] = data.slug;

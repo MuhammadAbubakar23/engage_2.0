@@ -180,7 +180,7 @@ export class InboxMenuComponent implements OnInit {
   channels: any[] = [];
   platformWiseCount: any[] = [];
   getAllChannelsUnrespondedCounts() {
-    debugger
+    
     var obj = {
       // "wings": this.getWing.wings,
       wings:"pk_tech",
