@@ -12,7 +12,6 @@ import { SignalRService } from 'src/app/services/SignalRService/signal-r.service
 import { SkillsService } from 'src/app/services/Skills/skills.service';
 import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 import { AuthService } from '../Services/AuthService/auth.service';
-
 @Component({
   selector: 'app-actors',
   templateUrl: './actors.component.html',
@@ -157,5 +156,17 @@ export class ActorsComponent implements OnInit {
     //     this.router.navigateByUrl('all-inboxes/focused/all');
     //     break;
     // }
+  }
+  logoutUser(){
+    debugger
+  this.commonService.SignOut().subscribe((res:any)=>{
+    sessionStorage.removeItem('token')
+    sessionStorage.clear()
+    this.router.navigateByUrl('/login')
+  },error=>{
+    sessionStorage.clear();
+    this.router.navigateByUrl('/login');
+  }
+)
   }
 }

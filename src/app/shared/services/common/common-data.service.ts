@@ -669,6 +669,7 @@ export class CommonDataService {
     return this.http.get(this.ConsoleBaseUrl + this.getTags);
   }
   GetTagsByCompanyId() {
+    debugger
     return this.http.get(this.ConsoleBaseUrl + this.getTagsByCompanyId);
   }
   GetTagById(body: any) {

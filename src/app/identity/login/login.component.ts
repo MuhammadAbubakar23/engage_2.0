@@ -78,6 +78,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getAllTags();
+    this.spinnerService.hide()
     this.baseUrl = window.location.origin;
 
   }
@@ -199,7 +200,7 @@ export class LoginComponent implements OnInit {
       },
       (error: any) => {
         this.spinnerService.hide();
-        this.ErrorMessage = error.error.message;
+        this.ErrorMessage = error.error;
         if (this.ErrorMessage?.includes('The account is locked out ')) {
           const LockedtiemEndpatteren = /lockoutEndTime = (.+)$/;
           this.matchTime = this.ErrorMessage.match(LockedtiemEndpatteren);
