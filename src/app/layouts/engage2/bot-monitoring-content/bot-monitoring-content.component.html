@@ -4,9 +4,13 @@
     <!-- <div class="user-comment-widget-container">
           <template #maximizeChat></template>
       </div> -->
-    <nav id="left-sidebar-expand" class="conversation-list botleft thirdactive all-conversation"
-      [ngClass]="toggleLeftBar ? '' : 'toggled'" [ngClass]="{ thirdactive: thirdActive }">
-      <app-bot-monitoring-menus></app-bot-monitoring-menus>
+    <nav
+      id="left-sidebar-expand"
+      class="conversation-list botleft thirdactive all-conversation"
+      [ngClass]="toggleLeftBar ? '' : 'toggled'"
+      [ngClass]="{ thirdactive: thirdActive }"
+    >
+      <app-chat-bot-history-menu></app-chat-bot-history-menu>
 
       <a class="panelToggle" (click)="toggleSubLeftBar()"></a>
     </nav>

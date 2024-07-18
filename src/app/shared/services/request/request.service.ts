@@ -1,151 +1,282 @@
-import { HttpClient, HttpEvent, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, throwError, map, tap } from 'rxjs';
-import { EnvService } from '../env/env.service';
+// import { EnvService } from '../env/env.service';
 import { MessagingService } from '../messaging/messaging.service';
 import { UserPaginationService } from 'src/app/services/userpaginationServices/user-pagination.service';
+import { EnvService } from '../env/env.service';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RequestService {
   params: HttpParams = new HttpParams();
   headers: HttpHeaders = new HttpHeaders();
-  constructor(private http: HttpClient, private env: EnvService,
-    private paginationS:UserPaginationService,
-     private messagingService: MessagingService) { }
+  constructor(
+    private http: HttpClient,
+    private paginationS: UserPaginationService,
+    private messagingService: MessagingService,
+    private env : EnvService
+  ) {}
   private requestHeaderOptions(options?: any) {
-    let opt = (!options) ? {} : options;
-    let headers = (opt.headers) ? opt.headers : new HttpHeaders();
+    let opt = !options ? {} : options;
+    let headers = opt.headers ? opt.headers : new HttpHeaders();
     // headers.append('Content-type', 'application/json');
-    opt.headers = (!options || !options.isFile) ? headers.append('Content-type', 'application/json') : headers;
+    opt.headers =
+      !options || !options.isFile
+        ? headers.append('Content-type', 'application/json')
+        : headers;
     return opt;
   }
   private requestParamOptions(options?: any) {
-    let opt = (!options) ? {} : options;
-    let params = (opt.params) ? opt.params : new HttpParams();
+    let opt = !options ? {} : options;
+    let params = opt.params ? opt.params : new HttpParams();
     //opt.params =
   }
-  private createCompleteRoute = (route: string, envAddress: string, routeparams?: any) => {
+  private createCompleteRoute = (
+    route: string,
+    envAddress: string,
+    routeparams?: any
+  ) => {
     if (routeparams === undefined) {
-      routeparams = "";
+      routeparams = '';
     }
-    if(route ===undefined){
-      route ='Skill/GetSkills'
+    if (route === undefined) {
+      route = 'Skill/GetSkills';
     }
-    if(route===undefined){
-      route='Skill/GetSkills'
+    if (route === undefined) {
+      route = 'Skill/GetSkills';
     }
-      return (routeparams != "" || routeparams.length > 0) ? `${envAddress}${route}${routeparams}` : `${envAddress}${route}`
+    return routeparams != '' || routeparams.length > 0
+      ? `${envAddress}${route}${routeparams}`
+      : `${envAddress}${route}`;
   };
-  get<T>(route: string, params?: any, routeparams: string = ""): Observable<T> {
-    return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, routeparams), { params ,observe: 'response'}).pipe( 
-      map ((res:any)=>{
-        const headers: HttpHeaders = res.headers;
-      const Pagination = JSON.parse(JSON.stringify(headers.get('X-Pagination')));
-      this.paginationS.sendpaginationobj(JSON.parse(Pagination))
-        return res.body
-      })
-    )
-      // .pipe(
-      //   map((res: any) => { return res }),
-      //   tap(res => console.log(route + " Response: ", res)),
-      //   catchError(err => {
-      //     return throwError(() => new Error(err));
-      //   })
-      // );
-  }
-  getFromConsole<T>(route: string, params?: any, routeparams: string = ""): Observable<T> {
-    return this.http.get<T>(this.createCompleteRoute(this.env.console[route], this.env.consoleBaseUrl, routeparams), { params })
+  get<T>(route: string, params?: any, routeparams: string = ''): Observable<T> {
+    return this.http
+      .get<T>(
+        this.createCompleteRoute(
+          this.env.paths[route],
+          this.env.IdentityBaseUrl,
+          routeparams
+        ),
+        { params, observe: 'response' }
+      )
       .pipe(
-        map((res: any) => { return res }),
-        tap(res => console.log(route + " Response: ", res)),
-        catchError(err => {
+        map((res: any) => {
+          const headers: HttpHeaders = res.headers;
+          const Pagination = JSON.parse(
+            JSON.stringify(headers.get('X-Pagination'))
+          );
+          this.paginationS.sendpaginationobj(JSON.parse(Pagination));
+          return res.body;
+        })
+      );
+    // .pipe(
+    //   map((res: any) => { return res }),
+    //   tap(res => console.log(route + " Response: ", res)),
+    //   catchError(err => {
+    //     return throwError(() => new Error(err));
+    //   })
+    // );
+  }
+  getFromConsole<T>(
+    route: string,
+    params?: any,
+    routeparams: string = ''
+  ): Observable<T> {
+    return this.http
+      .get<T>(
+        this.createCompleteRoute(
+          this.env.console[route],
+          this.env.ConsoleBaseUrl,
+          routeparams
+        ),
+        { params }
+      )
+      .pipe(
+        map((res: any) => {
+          return res;
+        }),
+        tap((res) => console.log(route + ' Response: ', res)),
+        catchError((err) => {
           return throwError(() => new Error(err));
         })
       );
   }
   getBy<T>(route: string, params: string): Observable<T> {
-    return this.http.get<T>(this.createCompleteRoute(params, this.createCompleteRoute(this.env.paths[route], this.env.baseUrl)))
+    return this.http
+      .get<T>(
+        this.createCompleteRoute(
+          params,
+          this.createCompleteRoute(
+            this.env.paths[route],
+            this.env.IdentityBaseUrl
+          )
+        )
+      )
       .pipe(
-        map((res: any) => { return res }),
-        tap(res => console.log(route + " Response: ", res)),
-        catchError(err => {
+        map((res: any) => {
+          return res;
+        }),
+        tap((res) => console.log(route + ' Response: ', res)),
+        catchError((err) => {
           return throwError(() => new Error(err));
         })
       );
   }
   post<T>(route: string, params?: any): Observable<T> {
-    return this.http.post<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
+    return this.http
+      .post<T>(
+        this.createCompleteRoute(
+          this.env.paths[route],
+          this.env.IdentityBaseUrl
+        ),
+        params
+      )
       .pipe(
-        map((res: any) => { return res }),
-        tap(res => console.log(route + " Response: ", res)),
-        catchError(err => {
+        map((res: any) => {
+          return res;
+        }),
+        tap((res) => console.log(route + ' Response: ', res)),
+        catchError((err) => {
           return throwError(() => new Error(err));
         })
         // catchError( this.handleError<T>(route))
       );
   }
   put<T>(route: string, params?: any): Observable<T> {
-    return this.http.put<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
+    return this.http
+      .put<T>(
+        this.createCompleteRoute(
+          this.env.paths[route],
+          this.env.IdentityBaseUrl
+        ),
+        params
+      )
       .pipe(
-        map((res: any) => { return res }),
-        tap(res => console.log(route + " Response: ", res)),
+        map((res: any) => {
+          return res;
+        }),
+        tap((res) => console.log(route + ' Response: ', res)),
         catchError(this.handleError<T>(route))
       );
   }
   patch<T>(route: string, params?: any): Observable<T> {
-    return this.http.patch<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
+    return this.http
+      .patch<T>(
+        this.createCompleteRoute(
+          this.env.paths[route],
+          this.env.IdentityBaseUrl
+        ),
+        params
+      )
       .pipe(
-        map((res: any) => { return res }),
-        tap(res => console.log(route + " Response: ", res)),
+        map((res: any) => {
+          return res;
+        }),
+        tap((res) => console.log(route + ' Response: ', res)),
         catchError(this.handleError<T>(route))
       );
   }
   delete<T>(route: string, routeparams: any, params?: any): Observable<T> {
-    return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, "?Id=" + routeparams), params)
+    return this.http
+      .get<T>(
+        this.createCompleteRoute(
+          this.env.paths[route],
+          this.env.IdentityBaseUrl,
+          '?Id=' + routeparams
+        ),
+        params
+      )
       .pipe(
-        map((res: any) => { return res }),
-        tap(res => console.log(route + " Response: ", res)),
+        map((res: any) => {
+          return res;
+        }),
+        tap((res) => console.log(route + ' Response: ', res)),
         catchError(this.handleError<T>(route))
       );
   }
   async getAsync<T>(route: string, params?: any): Promise<Observable<T>> {
-    return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
+    return this.http
+      .get<T>(
+        this.createCompleteRoute(
+          this.env.paths[route],
+          this.env.IdentityBaseUrl
+        ),
+        params
+      )
       .pipe(
-        map((res: any) => { return res }),
-        tap(res => console.log(route + " Response: ", res)),
+        map((res: any) => {
+          return res;
+        }),
+        tap((res) => console.log(route + ' Response: ', res)),
         catchError(this.handleError<T>(route))
       );
   }
   async postAsync<T>(route: string, params?: any): Promise<Observable<T>> {
-    return await this.http.post<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
+    return await this.http
+      .post<T>(
+        this.createCompleteRoute(
+          this.env.paths[route],
+          this.env.IdentityBaseUrl
+        ),
+        params
+      )
       .pipe(
-        map((res: any) => { return res }),
-        tap(res => console.log(route + " Response: ", res)),
+        map((res: any) => {
+          return res;
+        }),
+        tap((res) => console.log(route + ' Response: ', res)),
         catchError(this.handleError<T>(route))
       );
   }
   async putAsync<T>(route: string, params?: any): Promise<Observable<T>> {
-    return this.http.put<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
+    return this.http
+      .put<T>(
+        this.createCompleteRoute(
+          this.env.paths[route],
+          this.env.IdentityBaseUrl
+        ),
+        params
+      )
       .pipe(
-        map((res: any) => { return res }),
-        tap(res => console.log(route + " Response: ", res)),
+        map((res: any) => {
+          return res;
+        }),
+        tap((res) => console.log(route + ' Response: ', res)),
         catchError(this.handleError<T>(route))
       );
   }
   async patchAsync<T>(route: string, params?: any): Promise<Observable<T>> {
-    return this.http.patch<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
+    return this.http
+      .patch<T>(
+        this.createCompleteRoute(
+          this.env.paths[route],
+          this.env.IdentityBaseUrl
+        ),
+        params
+      )
       .pipe(
-        map((res: any) => { return res }),
-        tap(res => console.log(route + " Response: ", res)),
+        map((res: any) => {
+          return res;
+        }),
+        tap((res) => console.log(route + ' Response: ', res)),
         catchError(this.handleError<T>(route))
       );
   }
   async deleteAsync<T>(route: string, params?: any): Promise<Observable<T>> {
-    return this.http.post<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
+    return this.http
+      .post<T>(
+        this.createCompleteRoute(
+          this.env.paths[route],
+          this.env.IdentityBaseUrl
+        ),
+        params
+      )
       .pipe(
-        map((res: any) => { return res }),
-        tap(res => console.log(route + " Response: ", res)),
+        map((res: any) => {
+          return res;
+        }),
+        tap((res) => console.log(route + ' Response: ', res)),
         catchError(this.handleError<T>(route))
       );
   }
@@ -162,7 +293,7 @@ export class RequestService {
       return of(result as T);
     };
   }
-  public log<T>(message: string, serviceName: string = "Service") {
+  public log<T>(message: string, serviceName: string = 'Service') {
     this.messagingService.add(`${serviceName}: ${message}`);
   }
 }

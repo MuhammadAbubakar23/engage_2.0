@@ -6,10 +6,11 @@ import { QueryBuilderClassNames, QueryBuilderConfig, QueryBuilderModule, RuleSet
 import { CommonDataService } from '../../../../../shared/services/common/common-data.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EntityTypeBuilder } from 'src/app/shared/Models/EntityTypeDto';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-add-rules',
   standalone: true,
-  imports: [RouterModule, CommonModule, QueryBuilderModule, FormsModule, ReactiveFormsModule, NgSelectModule],
+  imports: [RouterModule, CommonModule, QueryBuilderModule, FormsModule, ReactiveFormsModule, NgSelectModule, NgxSpinnerModule],
   templateUrl: './add-rules.component.html',
   styleUrls: ['./add-rules.component.scss']
 })
@@ -31,6 +32,9 @@ export class AddRulesComponent implements OnInit {
   public queryCtrl!: FormControl;
   selectedRuleSet!: RuleSet;
   public oDataFilter: string = "hello";
+  AlterMsg: string = ''
+  errormessage: any;
+  toastermessage: boolean = false
   public config: QueryBuilderConfig = {
     fields: {}
   };
@@ -38,7 +42,8 @@ export class AddRulesComponent implements OnInit {
     private router: Router,
     private _cs: CommonDataService,
     private ngZone: NgZone,
-    private _route: ActivatedRoute) {
+    private _route: ActivatedRoute,
+    private spinnerServerice: NgxSpinnerService) {
     this.queryCtrl = this._fb.control(this.query);
     this.queryCtrl.valueChanges.subscribe((ruleSet: any) => {
       this.count = ruleSet.rules.length
@@ -103,7 +108,7 @@ export class AddRulesComponent implements OnInit {
     this.rulesForm.get('ruleType')?.setValue(selectedRuleTypeId);
     const selectedRuleType = this.ruleTypes.find(type => type.mainId === parseInt(selectedRuleTypeId));
     this.selectedRuleTypeName = selectedRuleType ? selectedRuleType.name : '';
-    this._cs.GetRuleTag(selectedRuleTypeId).subscribe(
+    this._cs.GetRuleTag(13).subscribe(
       (response: any) => {
         this.currentTags = response
       },
@@ -162,7 +167,7 @@ export class AddRulesComponent implements OnInit {
     });
   }
   addRule() {
-    
+
     this.rulesJsonFormArray.push(this.createRule());
   }
   // services: string[] = ['Facebook', 'Instagram', 'Twitter', 'WhatsApp', 'Engage', 'Outlook'];
@@ -174,6 +179,7 @@ export class AddRulesComponent implements OnInit {
           id: parseInt(key),
           platformName: response[key]
         }));
+        // this.services = response
       },
       (error: any) => {
         console.error('Error fetching services:', error);
@@ -389,63 +395,204 @@ export class AddRulesComponent implements OnInit {
   //     });
   //   }
   // }
-   onClick() {
+  onClick() {
     const rulesFormValue = this.rulesForm.value;
     const rulesJson = {
-        condition: "and",
-        rules: [
-            {
-                condition: "and",
-                rules: rulesFormValue.rulesJson || []
-            }
-        ]
+      condition: "and",
+      rules: [
+        {
+          condition: "and",
+          rules: rulesFormValue.rulesJson || []
+        }
+      ]
     };
     const ruleData = {
-        id: 0,
-        name: rulesFormValue.ruleName,
-        description: rulesFormValue.description,
-        companyId: 0,
-        ruleTag: rulesFormValue.ruleTag,
-        status: rulesFormValue.status,
-        rulesJson: JSON.stringify(rulesJson),
-        entityName: '', // Clear entityName field for now
-        ruleType: this.selectedRuleTypeName,
-        configs: (rulesFormValue.rulesJson || []).map((rule: any) => ({
-            propertyName: rule.field,
-            condition: rule.operator,
-            value: rule.value
-        }))
+      id: 0,
+      name: rulesFormValue.ruleName,
+      description: rulesFormValue.description,
+      companyId: 0,
+      ruleTag: rulesFormValue.ruleTag,
+      status: rulesFormValue.status,
+      rulesJson: JSON.stringify(rulesJson),
+      entityName: '', // Clear entityName field for now
+      ruleType: this.selectedRuleTypeName,
+      configs: (rulesFormValue.rulesJson || []).map((rule: any) => ({
+        propertyName: rule.field,
+        condition: rule.operator,
+        value: rule.value
+      })),
+      // platForm: '',
+      // channel: ''
     };
+    // const selectedService = this.services.find(service => service.id === parseInt(rulesFormValue.selectedService!));
+    // if (selectedService) {
+    //   ruleData.platForm = selectedService.slug;
+    // }
     const selectedEntity = this.entities.find(entity => entity.id === parseInt(rulesFormValue.entityName!));
     if (selectedEntity) {
-        ruleData.entityName = selectedEntity.entityName; 
+      ruleData.entityName = selectedEntity.entityName;
     }
     console.log("Form Data:", ruleData);
+    this.spinnerServerice.show()
     const selectedServiceId = rulesFormValue.selectedService;
     switch (selectedServiceId) {
-        case '8': // Facebook
-            this._cs.AddFBRule(ruleData).subscribe(
-                (res: any) => {
-                    this.router.navigate(['console/rules']);
-                },
-                (error: any) => {
-                    console.error('Error adding rule for Facebook:', error);
-                }
-            );
-            break;
-        case '3': // Instagram
-            // Add logic for Instagram API call
-            break;
-        case '4': // LinkedIn
-            // Add logic for LinkedIn API call
-            break;
-        // Add cases for other platforms as needed
-        default:
-            console.error('Invalid platform selected');
-            break;
+      case '2': // Facebook
+        this._cs.AddFBRule(ruleData).subscribe(
+          (res: any) => {
+            this.spinnerServerice.hide()
+            this.reload(res.message)
+            this.router.navigate(['console/rules']);
+          },
+          (error: any) => {
+            console.error('Error adding rule for Facebook:', error);
+            this.reload(error.error.message)
+
+          }
+        );
+        break;
+      case '3': // Instagram
+        this._cs.AddInstaRule(ruleData).subscribe(
+          (res: any) => {
+            this.spinnerServerice.hide()
+            this.reload(res.message)
+
+            this.router.navigate(['console/rules']);
+          },
+          (error: any) => {
+            console.error('Error adding rule for Facebook:', error);
+            this.reload(error.error.message)
+
+          }
+        );
+        break;
+      case '4': // LinkedIn
+        this._cs.AddLinkdinRule(ruleData).subscribe(
+          (res: any) => {
+            this.spinnerServerice.hide()
+            this.reload(res.message)
+
+            this.router.navigate(['console/rules']);
+          },
+          (error: any) => {
+            console.error('Error adding rule for Facebook:', error);
+            this.reload(error.error.message)
+
+          }
+        );
+        break;
+      case '5': // YT
+        this._cs.AddYTRule(ruleData).subscribe(
+          (res: any) => {
+            this.spinnerServerice.hide()
+            this.reload(res.message)
+
+            this.router.navigate(['console/rules']);
+          },
+          (error: any) => {
+            console.error('Error adding rule for Facebook:', error);
+            this.reload(error.error.message)
+
+          }
+        );
+        break;
+      case '6': // playstore
+        this._cs.AddPsRule(ruleData).subscribe(
+          (res: any) => {
+            this.spinnerServerice.hide()
+            this.reload(res.message)
+
+            this.router.navigate(['console/rules']);
+          },
+          (error: any) => {
+            console.error('Error adding rule for Facebook:', error);
+            this.reload(error.error.message)
+
+          }
+        );
+        break;
+      case '7': // email
+        this._cs.AddEmailRule(ruleData).subscribe(
+          (res: any) => {
+            this.spinnerServerice.hide()
+            this.reload(res.message)
+
+            this.router.navigate(['console/rules']);
+          },
+          (error: any) => {
+            console.error('Error adding rule for Facebook:', error);
+            this.reload(error.error.message)
+
+          }
+        );
+        break;
+      case '10': //wa
+        this._cs.AddWaRule(ruleData).subscribe(
+          (res: any) => {
+            this.spinnerServerice.hide()
+            this.reload(res.message)
+
+            this.router.navigate(['console/rules']);
+          },
+          (error: any) => {
+            console.error('Error adding rule for Facebook:', error);
+            this.reload(error.error.message)
+
+          }
+        );
+        break;
+      case '9': //meta-wa
+        this._cs.AddMetaWaRule(ruleData).subscribe(
+          (res: any) => {
+            this.spinnerServerice.hide()
+            this.reload(res.message)
+
+            this.router.navigate(['console/rules']);
+          },
+          (error: any) => {
+            console.error('Error adding rule for Facebook:', error);
+            this.reload(error.error.message)
+
+          }
+        );
+        break;
+      case '8': //Exchange Email
+        this._cs.AddexchangeEmailRule(ruleData).subscribe(
+          (res: any) => {
+            this.spinnerServerice.hide()
+            this.reload(res.message)
+
+            this.router.navigate(['console/rules']);
+          },
+          (error: any) => {
+            console.error('Error adding rule for Facebook:', error);
+            this.reload(error.error.message)
+
+          }
+        );
+        break;
+      // Add cases for other platforms as needed
+      default:
+        console.error('Invalid platform selected');
+        this.spinnerServerice.hide()
+
+        break;
     }
-}
+
+  }
   cancelbtn() {
     this.router.navigate(['console/rules']);
+  }
+  reload(value: any) {
+    if (value) {
+      this.toastermessage = true
+      this.AlterMsg = value
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 3000);
+
+    }
+  }
+  closeToaster() {
+    this.toastermessage = false;
   }
 }

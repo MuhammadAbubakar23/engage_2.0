@@ -86,6 +86,10 @@ export class AgentPerformanceReportComponent implements OnInit {
       this.isChannelShow = 'KE'
       this.getChannel()
     }
+    else if (this.activeChannel == 'https://engageui.enteract.live') {
+      this.isChannelShow = 'damo'
+      this.getChannel()
+    }
     else if (this.activeChannel == 'https://tpplui.enteract.live') {
       this.isChannelShow = 'ttpl';
       this.getChannel()
@@ -420,6 +424,14 @@ export class AgentPerformanceReportComponent implements OnInit {
       ];
     }
     if (this.isChannelShow == "KE") {
+      this.channelOptions = [
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+      ];
+    };
+    if (this.isChannelShow == "damo") {
       this.channelOptions = [
         { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
         { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },

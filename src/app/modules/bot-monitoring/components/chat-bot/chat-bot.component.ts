@@ -32,7 +32,7 @@ export class ChatBotComponent implements OnInit {
   newMessageText = ''
   ChatName: string = 'Chat BOT';
   username: string = 'User'
-
+  isActive: boolean = false;
   senderName: any
 
   // messages = [
@@ -47,19 +47,19 @@ export class ChatBotComponent implements OnInit {
   // ];
   constructor(private _botService: BotMonitoringService,
     private chatBotIdS: ChatbotIdService,
-    private route: Router, private spinnerServerice: NgxSpinnerService,private spinnerChat: NgxSpinnerService,
-    private formBuilder: FormBuilder, private headerService: HeaderService,private _botSubMenuStatus:BotSubMenusActiveService) {
+    private route: Router, private spinnerServerice: NgxSpinnerService, private spinnerChat: NgxSpinnerService,
+    private formBuilder: FormBuilder, private headerService: HeaderService, private _botSubMenuStatus: BotSubMenusActiveService) {
     this.chatbotForm = new FormGroup({
       name: new FormControl('', Validators.required),
       timeout: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
-
+      strictFlow: new FormControl(false)
       // botType: new FormControl('', Validators.required)
     });
     // this.messages.push({ type: 'agent', text: 'Hello! How can I assist you today?' });
 
   }
   saveBotId(botId: any) {
-    localStorage.setItem('bot_id', botId);
+    sessionStorage.setItem('bot_id', botId);
   }
   ngOnInit(): void {
     this.getChatBotList();
@@ -106,6 +106,7 @@ export class ChatBotComponent implements OnInit {
     this.spinnerServerice.show();
     this._botService.GetAllChatBot().subscribe((res: any) => {
       this.spinnerServerice.hide();
+      this.reloadComponent(res.message)
 
       this.chatbots = res
 
@@ -114,6 +115,7 @@ export class ChatBotComponent implements OnInit {
       (error: any) => {
         this.spinnerServerice.hide();
         console.error(error);
+        this.reloadComponent(error.error.message)
       })
 
   }
@@ -164,11 +166,11 @@ export class ChatBotComponent implements OnInit {
   formatUtterance(utterance: string): string {
     return utterance.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
   }
-  updatevalue(string: any, value: any, event: Event,name:string) {
+  updatevalue(string: any, value: any, event: Event, name: string) {
 
     this.headerService.updateMessage(string)
     if (string == 'conversation') {
-      this.shareValue(value, event,name)
+      this.shareValue(value, event, name)
     }
     else if (string == 'rule-chatBot') {
       this.shareValueStepper(value, event)
@@ -210,8 +212,10 @@ export class ChatBotComponent implements OnInit {
       this._botService.DeleteChatBot(obj).subscribe((res: any) => {
         console.log(res);
         this.chatbots = this.chatbots.filter((item: any) => item.bot_id !== botId);
+        this.reloadComponent(res.message)
       }, (error: any) => {
         console.error('Error deleting chatbot:', error);
+        this.reloadComponent(error.error.message)
       });
     } else {
       this.isDeleteAction = false;
@@ -233,6 +237,7 @@ export class ChatBotComponent implements OnInit {
       const formData = new FormData();
       formData.append('name', this.chatbotForm.value.name);
       formData.append('timeout', this.chatbotForm.value.timeout);
+      formData.append('strictFlow', this.chatbotForm.value.strictFlow ? '1' : '0'); 
       // formData.append('botType', this.chatbotForm.value.botType);
 
       // let endpoint = '';
@@ -274,6 +279,34 @@ export class ChatBotComponent implements OnInit {
 
     }
   }
+  toggleChatBot(botId: string, isActive: boolean) {
+    const formData = new FormData();
+    formData.append('bot_id', botId);
+  
+    if (isActive) {
+      this._botService.RunChatBot(formData).subscribe(
+        (res: any) => {
+          console.log('ChatBot started:', res);
+        },
+        (error: any) => {
+          console.error('Error starting chatbot:', error);
+          this.reloadComponent(error.error.message)
+        }
+      );
+    } else {
+      this._botService.StopChatBot(formData).subscribe(
+        (res: any) => {
+          console.log('ChatBot stopped:', res);
+        },
+        (error: any) => {
+          console.error('Error stopping chatbot:', error);
+          this.reloadComponent(error.error.message)
+        }
+      );
+    }
+  }
+  
+  
   trainBot(botId: string) {
     const formData = new FormData();
     formData.append('bot_id', botId);
@@ -299,38 +332,38 @@ export class ChatBotComponent implements OnInit {
       }
     );
   }
-shareConversation(value: any, event: Event){
-  this.route.navigateByUrl('/bot-monitoring/components')
+  shareConversation(value: any, event: Event) {
+    this.route.navigateByUrl('/bot-monitoring/components')
 
-}
-  shareValue(value: any, event: Event ,name:string) {
+  }
+  shareValue(value: any, event: Event, name: string) {
     this._botSubMenuStatus.setActiveMenu(true)
     event.stopPropagation();
     event.preventDefault();
     this.isDeleteAction = true;
-    localStorage.setItem('bot_id', value.bot_id)
+    sessionStorage.setItem('bot_id', value.bot_id)
     this.chatBotIdS.setOption(value.bot_id)
-    this.route.navigate(['/bot-monitoring/conversation',name])
-    localStorage.setItem('name', value.name)
+    this.route.navigate(['/bot-monitoring/conversation', name])
+    sessionStorage.setItem('name', value.name)
   }
   shareValueStepper(value: any, event: Event) {
     event.stopPropagation();
     event.preventDefault();
     this.isDeleteAction = true;
-    localStorage.setItem('bot_id', value.bot_id)
+    sessionStorage.setItem('bot_id', value.bot_id)
     this.chatBotIdS.setOption(value.bot_id)
     this.route.navigateByUrl('/bot-monitoring/chatBot-Rule')
-    localStorage.setItem('name', value.name)
+    sessionStorage.setItem('name', value.name)
 
   }
   shareValueStory(value: any, event: Event) {
     event.stopPropagation();
     event.preventDefault();
     this.isDeleteAction = true;
-    localStorage.setItem('bot_id', value.bot_id)
+    sessionStorage.setItem('bot_id', value.bot_id)
     this.chatBotIdS.setOption(value.bot_id)
     this.route.navigateByUrl('/bot-monitoring/chatBot-Story')
-    localStorage.setItem('name', value.name)
+    sessionStorage.setItem('name', value.name)
 
   }
   reloadComponent(value: any) {

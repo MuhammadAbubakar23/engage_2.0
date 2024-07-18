@@ -12,6 +12,9 @@ import { ComponentsHeaderComponent } from './monitoring-header/components-header
 import { UploadDownloadHeaderComponent } from './monitoring-header/upload-download-header/upload-download-header.component';
 import { ChatBotStepperHeaderComponent } from './monitoring-header/chat-bot-stepper-header/chat-bot-stepper-header.component';
 import { ChatbotStoryHeaderComponent } from './monitoring-header/chatbot-story-header/chatbot-story-header.component';
+import { ChatHistoryComponent } from './components/chat-history/chat-history.component';
+import { ChatBotHistoryComponent } from './components/chat-bot-history/chat-bot-history.component';
+import { SharedModule } from "../../shared/shared.module";
 
 
 
@@ -31,7 +34,8 @@ import { ChatbotStoryHeaderComponent } from './monitoring-header/chatbot-story-h
     CommonModule,
     BotMonitoringRoutingModule,
     LayoutsModule,
-    BotChatComponent
-  ],
+    BotChatComponent,
+    SharedModule
+],
 })
 export class BotMonitoringModule { }

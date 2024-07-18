@@ -12,7 +12,6 @@ import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
-import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
@@ -135,7 +134,7 @@ export class ResponderMenuComponent implements OnInit {
         if (Object.keys(res).length > 0) {
           res.forEach((newMsg: any) => {
             this.userSpecificAllocatedProfiles.forEach((profile: any) => {
-              if (profile.profileId == localStorage.getItem('profileId')) {
+              if (profile.profileId == sessionStorage.getItem('profileId')) {
                 profile.unrespondedCount = 0;
               }
             });
@@ -148,14 +147,14 @@ export class ResponderMenuComponent implements OnInit {
   userSpecificAllocatedProfiles: any[] = [];
   getAllocatedProfiles() {
     this.SpinnerService.show();
-    var skillSlug= localStorage.getItem('skillSlug') || ''
+    var skillSlug= sessionStorage.getItem('skillSlug') || ''
     this.commondata.GetAllocatedProfiles(this.wings, skillSlug).subscribe((res: any) => {
       this.SpinnerService.hide();
       this.AllocatedProfiles = res;
 
       // this.AllocatedProfiles.forEach((profile: any) => {
 
-      //   if (profile.userId == localStorage.getItem('agentId')) {
+      //   if (profile.userId == sessionStorage.getItem('agentId')) {
       //     this.userSpecificAllocatedProfiles.push(profile);
       //   }
       // });
@@ -191,16 +190,16 @@ export class ResponderMenuComponent implements OnInit {
     );
   };
 
-  assignedProfile = localStorage.getItem('assignedProfile');
+  assignedProfile = sessionStorage.getItem('assignedProfile');
 
   updatevalue(fromId: any, platform: any, profileId: any) {
     if (
-      localStorage.getItem('assignedProfile') == null ||
-      localStorage.getItem('assignedProfile') == '' ||
-      localStorage.getItem('assignedProfile') == undefined
+      sessionStorage.getItem('assignedProfile') == null ||
+      sessionStorage.getItem('assignedProfile') == '' ||
+      sessionStorage.getItem('assignedProfile') == undefined
     ) {
       this.fetchId.setPlatform(platform);
-      if (localStorage.getItem('parent') == platform) {
+      if (sessionStorage.getItem('parent') == platform) {
         this.fetchId.sendAutoAssignedId(fromId);
         // this.fetchposttype.sendPostTypeAsObservable(postType);
       } else {
@@ -208,10 +207,10 @@ export class ResponderMenuComponent implements OnInit {
         //  this.fetchposttype.sendPostType(postType);
       }
 
-      localStorage.setItem('profileId', profileId);
+      sessionStorage.setItem('profileId', profileId);
 
       this.assignQuerryDto = {
-        userId: Number(localStorage.getItem('agentId')),
+        userId: Number(sessionStorage.getItem('agentId')),
         //  agentId : 2,
         profileId: profileId,
         agentIds: 'string',

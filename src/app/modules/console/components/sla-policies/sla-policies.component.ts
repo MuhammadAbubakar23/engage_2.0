@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 @Component({
   selector: 'app-sla-policies',
   standalone: true,
@@ -19,6 +20,9 @@ export class SlaPoliciesComponent implements OnInit {
   perPage: number = 15;
   currentPage: number = 1;
   totalCount: any;
+  hasCreatePermission: boolean=false;
+  hasupdatePermission: boolean=false;
+  hasDeletePermission: boolean=false;
   applySearchFilter() {
     if (this.searchText.trim() !== '') {
       this.refreshMessages()
@@ -48,11 +52,20 @@ export class SlaPoliciesComponent implements OnInit {
       }
     );
   }
-  constructor(private headerService: HeaderService, 
-    private commonService: CommonDataService, 
-    private router: Router, 
-    private spinnerServerice: NgxSpinnerService) { }
+  constructor(private headerService: HeaderService,
+    private commonService: CommonDataService,
+    private router: Router,
+    private spinnerServerice: NgxSpinnerService,private _perS:PermissionService) { }
+
+hasPermission(permissionName: string) {
+
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
+  }
   ngOnInit(): void {
+    this.hasCreatePermission = this.hasPermission('_nwsla_');
+  this.hasupdatePermission = this.hasPermission('_upsla_');
+  this.hasDeletePermission = this.hasPermission('_rmvsla_');
     this.refreshMessages()
   }
   setSortOption(option: string) {

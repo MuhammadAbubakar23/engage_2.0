@@ -3,11 +3,7 @@ import { Router, NavigationStart } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Toaster } from './layouts/engage2/toaster/toaster';
 import { ToasterService } from './layouts/engage2/toaster/toaster.service';
-import { GetWingsService } from './services/GetWings/get-wings.service';
-import { RulesGroupIdsService } from './services/RulesGroupIds/rules-group-ids.service';
-import { SkillIdsService } from './services/sendSkillIds/skill-ids.service';
 import { SignalRService } from './services/SignalRService/signal-r.service';
-import { SkillsService } from './services/Skills/skills.service';
 import { CommonDataService } from './shared/services/common/common-data.service';
 @Component({
   selector: 'app-root',
@@ -21,8 +17,9 @@ export class AppComponent {
   beforeUnloadHandler(event: Event) {
     if (!this.isInternalNavigation()) {
       // Clear local storage here
-      localStorage.clear();
-      localStorage.removeItem('token')
+      // sessionStorage.clear();
+      //  sessionStorage.removeItem('token')
+      alert('You are already logged in')
     }
   }
   private isInternalNavigation(): boolean {
@@ -38,12 +35,7 @@ export class AppComponent {
     private commonService: CommonDataService,
     private toaster: ToasterService,
     private spinnerService: NgxSpinnerService,
-    private cdr: ChangeDetectorRef,
-    private sendSkills: SkillsService,
-    private sendSkillIdsService: SkillIdsService,
-    private sendRulesGroupIdsService: RulesGroupIdsService,
-    private sendWings: GetWingsService
-  ) { }
+  ) {}
   remove(index: number) {
     this.toasters = this.toasters.filter((v, i) => i !== index);
     //this.toasts.splice(index, 1);
@@ -63,17 +55,17 @@ export class AppComponent {
     }
   }
   A_Block() {
-    if (localStorage.getItem('signalRConnectionId')) {
+    if (sessionStorage.getItem('signalRConnectionId')) {
       if (this.signalRService.hubconnection == undefined) {
         this.spinnerService.show();
         this.commonService.SignOut().subscribe(
           () => {
-            localStorage.clear();
+            sessionStorage.clear();
             this.router.navigateByUrl('/login');
             this.spinnerService.hide();
           },
           (error) => {
-            localStorage.clear();
+            sessionStorage.clear();
             this.router.navigateByUrl('/login');
             this.spinnerService.hide();
           }

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 @Component({
   selector: 'app-enteract-route',
   standalone: true,
@@ -13,6 +14,9 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 })
 export class EnteractRouteComponent implements OnInit {
   messageForm!: FormGroup;
+  hasCreatePermission: boolean=false;
+  hasupdatePermission: boolean=false;
+  hasDeletePermission: boolean=false;
   users: any[] = [
     {
       name: 'Waqas Amjad',
@@ -73,9 +77,16 @@ export class EnteractRouteComponent implements OnInit {
       checked: false
     }
   ];
-  constructor(private formBuilder: FormBuilder, private commonService : CommonDataService) {
+  constructor(private formBuilder: FormBuilder, private commonService : CommonDataService,private _perS:PermissionService) {
+  }
+  hasPermission(permissionName: string) {
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
   }
   ngOnInit(): void {
+    this.hasCreatePermission = this.hasPermission('_nwrut_');
+    this.hasupdatePermission = this.hasPermission('_uprut_');
+    this.hasDeletePermission = this.hasPermission('_rmvrut_');
     this.messageForm = this.formBuilder.group({
       value: [0],
       time: [0],

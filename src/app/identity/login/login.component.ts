@@ -6,7 +6,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AuthService } from 'src/app/identity/AuthService/auth.service';
+import { AuthService } from 'src/app/identity/Services/AuthService/auth.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { LoginDto } from 'src/app/shared/Models/LoginDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
@@ -16,8 +16,8 @@ import { VerificationDto } from 'src/app/shared/Models/verificationDto';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { SkillsService } from 'src/app/services/Skills/skills.service';
 import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
-import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
-// import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { ActorsInfoService } from '../Services/actorsInfoService/actors-info.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -74,18 +74,21 @@ export class LoginComponent implements OnInit {
     private sendWings: GetWingsService,
     private sendSkills: SkillsService,
     private sendSkillIdsService: SkillIdsService,
-    private sendRulesGroupIdsService: RulesGroupIdsService
+    private actorsService : ActorsInfoService
   ) {}
 
   ngOnInit(): void {
     // this.getAllTags();
     this.baseUrl = window.location.origin;
+
   }
   uniqueWings: any[] = [];
   rulesArray: any[]=[];
   Rules: any[] = [];
   singleOrSplitted:any[]=[];
+  loginResponse:any;
   login() {
+    
     let obj = {
       // actor: this.loginForms.value.actor,
       userName: this.loginForm.value.userName,
@@ -95,108 +98,97 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(obj).subscribe(
       (res: any) => {
-        if (res.status == false || res.isTwoFAEnabled == false) {
-          this.stor.store('token', res.loginResponse.loginResponse.accessToken);
-          this.stor.store('main', res.loginResponse.loginResponse);
-          this.stor.store('nocompass',res?.loginResponse?.loginResponse?.roles[0]);
-          localStorage.setItem(
-            'agentId',
-            res.loginResponse.loginResponse.userId
-          );
-          localStorage.setItem(
-            'agentName',
-            res.loginResponse.loginResponse.username
-          );
-          this.commonService.UserLogin().subscribe(() => {
-            this.sendSkillIdsService.sendSkillIds(
-              res?.loginResponse?.loginResponse?.skills
-            );
-            localStorage.setItem(
-              'skills',
-              res?.loginResponse?.loginResponse?.skills
-            );
-  
-            this.commonService
-              .GetSkills(res?.loginResponse?.loginResponse?.skills)
-              .subscribe((skillNames: any) => {
-                this.sendSkills.sendSkills(skillNames);
-                this.stor.store('skills', skillNames);
-  
-                localStorage.setItem('skillSlug', skillNames[0]?.skilSlug);
-                res?.loginResponse?.loginResponse?.roles.forEach((role: any) => {
-                  var companyId = role.id;
-                  
-                  skillNames.forEach((skill: any) => {
+        if (res.isTwoFAEnabled == false) {
+          this.loginResponse = res.loginResponse.loginResponse;
+
+          this.stor.store('token', this.loginResponse.accessToken);
+          this.stor.store('main', this.loginResponse);
+          this.stor.store('nocompass', this.loginResponse?.roles[0]);
+          sessionStorage.setItem('agentId',  this.loginResponse.userId);
+          sessionStorage.setItem('agentName', this.loginResponse.username);
+
+          if(this.loginResponse?.actors?.length > 1){
+            this.router.navigateByUrl('loginAs');
+            //this.actorsService.sendActors(this.loginResponse?.actors)
+          } else{
+try {
+        this.commonService.UserLogin().subscribe(() => {
+          this.sendSkillIdsService.sendSkillIds(this.loginResponse?.skills);
+          sessionStorage.setItem('skills', this.loginResponse?.skills);
+
+          this.commonService.GetSkills(this.loginResponse?.skills)
+            .subscribe((skillNames: any) => {
+              this.sendSkills.sendSkills(skillNames);
+              this.stor.store('skills', skillNames);
+
+              // sessionStorage.setItem('skillSlug', skillNames[0]?.skilSlug);
+              this.loginResponse?.roles.forEach((role: any) => {
+                var companyId = role.id;
+
+                skillNames.forEach((skill: any) => {
+                  var wingName = skill.wing;
+                  if (!this.uniqueWings.includes(wingName)) {
+                    this.uniqueWings.push(wingName);
+                  }
+                  this.sendWings.sendWings(this.uniqueWings.toString());
+                  sessionStorage.setItem('defaultWings', this.uniqueWings.toString());
+
                   const splitedRules = skill.rules.split(',')
-  
+
                   var obj = {
                     "platform": skill.skillName.toLowerCase()?.split(' ')[0],
                     "ruleLength": splitedRules.length
                   }
                   this.singleOrSplitted.push(obj);
                   this.stor.store('checkSegregation', this.singleOrSplitted);
-  
-                  // splitedRules.forEach((singleRule:any) => {
-                  //   if (!this.rulesArray.includes(singleRule)) {
-                  //     this.rulesArray.push(singleRule);
-                  //   }
-                  // });
-                    
-                    this.Rules = skill.rules.split(',');
-                    this.Rules.forEach((x: any) => {
-                      var groupName = x + '_' + skill.wing + '_' + companyId;
-  
-                      this.signalRService
-                        .getConnectionState()
-                        .subscribe((connected) => {
-                          if (connected) {
-                            this.signalRService.joinGroup(groupName);
-                          }
-                        });
-                    });
-  
-                    var wingName = skill.wing;
-                    if (!this.uniqueWings.includes(wingName)) {
-                      this.uniqueWings.push(wingName);
-                    }
-                    this.sendWings.sendWings(this.uniqueWings.toString());
-                  });
-                  // this.sendRulesGroupIdsService.sendRulesGroupIds(
-                  //   this.rulesArray
-                  // );
-                });
-  
-                // localStorage.setItem(
-                //   'defaultRuleIds',
-                //   this.rulesArray.toString()
-                // );
-                localStorage.setItem(
-                  'defaultSkills',
-                  this.uniqueWings.toString()
-                );
-              });
-            this.router.navigateByUrl('all-inboxes/focused/all');
-            this.spinnerService.hide();
-  
-            //signalRRequests
-  
-            this.signalRService.startConnection();
-  
-            this.signalRService.removeTagDataListener();
-            this.signalRService.addTagDataListener();
-            this.signalRService.unRespondedCountDataListener();
-            this.signalRService.updateListAndDetailDataListener();
-            this.signalRService.replyDataListener();
-            this.signalRService.queryStatusDataListener();
-            this.signalRService.bulkQueryStatusDataListener();
-            this.signalRService.checkConnectionStatusListener();
-            this.signalRService.assignQueryResponseListner();
-            this.signalRService.applySentimentListner();
-            this.signalRService.updateMessageStatusDataListener();
-            // this.signalRService.updatePostList();
-          });
 
-          
+                  this.Rules = skill.rules.split(',');
+                  this.Rules.forEach((x: any) => {
+                    var groupName = x + '_' + skill.wing + '_' + companyId;
+
+                    this.signalRService
+                      .getConnectionState()
+                      .subscribe((connected) => {
+                        if (connected) {
+                          this.signalRService.joinGroup(groupName);
+                        }
+                      });
+                  });
+                });
+              });
+            });
+          this.router.navigateByUrl('all-inboxes/focused/all');
+
+
+          //signalRRequests
+
+          this.signalRService.startConnection();
+
+          this.signalRService.removeTagDataListener();
+          this.signalRService.addTagDataListener();
+          this.signalRService.unRespondedCountDataListener();
+          this.signalRService.updateListAndDetailDataListener();
+          this.signalRService.replyDataListener();
+          this.signalRService.queryStatusDataListener();
+          this.signalRService.bulkQueryStatusDataListener();
+          this.signalRService.checkConnectionStatusListener();
+          this.signalRService.assignQueryResponseListner();
+          this.signalRService.applySentimentListner();
+          this.signalRService.updateMessageStatusDataListener();
+          this.loginDisabled = true
+        
+        },
+          (error) => {
+            alert(error.error.message)
+          });
+      } finally {
+
+        this.spinnerService.hide();
+      }
+
+          }
+
+
         } else if (res.status == true || res.isTwoFAEnabled == true) {
           this.Verificationemail = res.userName;
           // res.loginResponse.loginTwoFAResponse.userName;
@@ -245,6 +237,79 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+  // newFunction(){
+  // 
+  // const actorId = this.actorsService.actors
+  // console.log(actorId)
+  //   this.commonService.UserLogin().subscribe(() => {
+  //     this.sendSkillIdsService.sendSkillIds(this.loginResponse?.skills);
+  //     sessionStorage.setItem('skills', this.loginResponse?.skills);
+
+  //     this.commonService.GetSkills(this.loginResponse?.skills)
+  //       .subscribe((skillNames: any) => {
+  //         this.sendSkills.sendSkills(skillNames);
+  //         this.stor.store('skills', skillNames);
+
+  //         // sessionStorage.setItem('skillSlug', skillNames[0]?.skilSlug);
+  //         this.loginResponse?.roles.forEach((role: any) => {
+  //           var companyId = role.id;
+
+  //           skillNames.forEach((skill: any) => {
+  //             var wingName = skill.wing;
+  //             if (!this.uniqueWings.includes(wingName)) {
+  //               this.uniqueWings.push(wingName);
+  //             }
+  //             this.sendWings.sendWings(this.uniqueWings.toString());
+  //             sessionStorage.setItem('defaultWings', this.uniqueWings.toString());
+
+  //           const splitedRules = skill.rules.split(',')
+
+  //           var obj = {
+  //             "platform": skill.skillName.toLowerCase()?.split(' ')[0],
+  //             "ruleLength": splitedRules.length
+  //           }
+  //           this.singleOrSplitted.push(obj);
+  //           this.stor.store('checkSegregation', this.singleOrSplitted);
+
+  //             this.Rules = skill.rules.split(',');
+  //             this.Rules.forEach((x: any) => {
+  //               var groupName = x + '_' + skill.wing + '_' + companyId;
+
+  //               this.signalRService
+  //                 .getConnectionState()
+  //                 .subscribe((connected) => {
+  //                   if (connected) {
+  //                     this.signalRService.joinGroup(groupName);
+  //                   }
+  //                 });
+  //             });
+  //           });
+  //         });
+  //       });
+  //     this.router.navigateByUrl('all-inboxes/focused/all');
+
+
+  //     //signalRRequests
+
+  //     this.signalRService.startConnection();
+
+  //     this.signalRService.removeTagDataListener();
+  //     this.signalRService.addTagDataListener();
+  //     this.signalRService.unRespondedCountDataListener();
+  //     this.signalRService.updateListAndDetailDataListener();
+  //     this.signalRService.replyDataListener();
+  //     this.signalRService.queryStatusDataListener();
+  //     this.signalRService.bulkQueryStatusDataListener();
+  //     this.signalRService.checkConnectionStatusListener();
+  //     this.signalRService.assignQueryResponseListner();
+  //     this.signalRService.applySentimentListner();
+  //     this.signalRService.updateMessageStatusDataListener();
+  //   },
+  //   (error)=>{
+  //     alert(error.error.message)
+  //   });
+  // }
   timer(countdownTime: any) {
     // let minute = 1;
     let seconds: number = countdownTime * 60;
@@ -284,11 +349,11 @@ export class LoginComponent implements OnInit {
         this.stor.store('token', res.accessToken);
         this.stor.store('main', res);
         this.stor.store('nocompass', res?.roles[0]);
-        localStorage.setItem('agentId', res.userId);
-        localStorage.setItem('agentName', res.username);
+        sessionStorage.setItem('agentId', res.userId);
+        sessionStorage.setItem('agentName', res.username);
 
         this.commonService.UserLogin().subscribe(() => {
-          
+
         this.router.navigateByUrl('all-inboxes/focused/all');
         this.spinnerService.hide();
 

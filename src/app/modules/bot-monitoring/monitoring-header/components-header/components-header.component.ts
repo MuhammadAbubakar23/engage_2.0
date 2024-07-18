@@ -14,7 +14,7 @@ export class ComponentsHeaderComponent implements OnInit {
     return utterance.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
   }
   ngOnInit(): void {
-    this.setName=localStorage.getItem("name")
+    this.setName=sessionStorage.getItem("name")
   }
 
 }

@@ -14,28 +14,75 @@ export class CustomerSatisfactionComponent implements OnInit {
   toastermessage: boolean = false;
   feedbackSubmitted = false;
   activeButtonIndex: number | null = null;
-  url: any;
+  baseUrl: any;
+  clientLogo:string='';
+  clientName:string='';
   constructor(
     private commanDateServices: CommonDataService,
     private spinnerService: NgxSpinnerService,
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.url = window.location.origin;
+    this.baseUrl = window.location.origin;
+
+    if (this.baseUrl == 'https://keportal.enteract.live') {
+      this.companyId = 651;
+      this.clientLogo = '../../../../assets/images/k-electric-vector-logo.svg'
+      this.client = 'ke';
+      this.clientName = 'K-Electric';
+    } else if (this.baseUrl == 'https://engage.jazz.com.pk') {
+      this.companyId = 650;
+      this.clientLogo = '../../../../assets/images/ibex-enteract-engage.svg'
+      this.client = 'jazz';
+      this.clientName = 'Jazz';
+    } else if (this.baseUrl == 'https://uiengage.enteract.app') {
+      this.companyId = 657;
+      this.clientLogo = '../../../../assets/images/ibex-enteract-engage.svg'
+      this.client = 'stagging';
+      this.clientName = 'Ibex';
+    } else if (this.baseUrl == 'https://tpplui.enteract.live') {
+      this.companyId = 652;
+      this.clientLogo = '../../../../assets/images/ibex-enteract-engage.svg'
+      this.client = 'tppl';
+      this.clientName = 'Total Parco Pvt. Ltd.';
+    } else if (this.baseUrl == 'https://waengage.enteract.live') {
+      this.companyId = 653;
+      this.clientLogo = '../../../../assets/images/ibex-enteract-engage.svg'
+      this.client = 'morinaga';
+      this.clientName = 'Morinaga';
+    } else if (this.baseUrl == 'https://bzengage.enteract.live') {
+      this.companyId = 654;
+      this.clientLogo = '../../../../assets/images/ibex-enteract-engage.svg'
+      this.client = 'bazaar';
+      this.clientName = 'Bazaar';
+    } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
+      this.companyId = 658;
+      this.clientLogo = '../../../../assets/images/ibex-enteract-engage.svg'
+      this.client = 'stagging';
+      this.clientName = 'Ibex';
+    } else if (this.baseUrl == 'http://localhost:4200'){
+      this.clientLogo = '../../../../assets/images/ibex-enteract-engage.svg'
+      this.client = 'stagging';
+      this.clientName = 'Ibex';
+
+    }
   }
   markScore(value: any) {
     this.value = value;
     this.activeButtonIndex = value;
   }
-  comanyId = 651;
+  companyId = 651;
+  client:string='';
   save() {
-    if (this.url == 'https://keportal.enteract.live') {
-      this.comanyId = 651;
+    if (this.baseUrl == 'https://keportal.enteract.live') {
+      this.companyId = 651;
+    } else if (this.baseUrl=='https://engageui.enteract.live') {
+      this.companyId = 649;
     }
     const channel = this.router.url.split(/[=&]/)[1];
     const customerId = this.router.url.split(/[=&]/)[3];
     const AgentId = 0;
-    const id = this.comanyId;
+    const id = this.companyId;
     const email = this.router.url.split(/[=&]/)[5];
     let data = {
       customerId: customerId,

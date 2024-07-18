@@ -1,15 +1,37 @@
-/* Add this CSS to your component's CSS file or styles section */
 .mat-select {
-    max-height: 200px; /* Set a fixed max height for the dropdown */
-    overflow-y: auto; /* Add a vertical scrollbar when items exceed the height */
-  }
-  .mat-select-trigger {
-    padding: 0; /* Remove any unnecessary padding to save space */
-  }
-  .mat-chip-list {
-    margin: 0; /* Remove margin from the chip list to avoid extra spacing */
-  }
-  .mat-chip {
-    margin: 2px; /* Add a small margin between the chips */
-  }
-  
+  max-height: 200px;
+  /* Set a fixed max height for the dropdown */
+  // overflow-x: auto; /* Add a vertical scrollbar when items exceed the height */
+}
+
+.mat-select-trigger {
+  padding: 35px;
+  /* Remove any unnecessary padding to save space */
+}
+
+.mat-chip-list {
+  margin: 0;
+  /* Remove margin from the chip list to avoid extra spacing */
+}
+
+.mat-chip {
+  margin: 2px;
+  /* Add a small margin between the chips */
+  padding-top: 3px;
+  padding-bottom: 2px;
+}
+
+.mat-standard-chip.mat-chip-with-trailing-icon {
+  padding-top: 3px;
+  padding-bottom: 2px;
+}
+
+#role-panel {
+  margin-top: 100px;
+}
+
+::ng-deep .cdk-overlay-container {
+  margin-top: 47px;
+  min-width: calc(10% + 7px);
+  transform: scaleY(1);
+}

@@ -68,7 +68,7 @@ export class InboxRightSidebarComponent implements OnInit {
     // .forEach(tooltipNode => new Tooltip(tooltipNode))
     // this.getRightMenu();
 
-    let parent = localStorage.getItem("parent");
+    let parent = sessionStorage.getItem("parent");
 
     this.subscription2 = this.rightNavService.getChildComponent().subscribe(msg2 => {
       this.dynamicChildPath = msg2;
@@ -99,7 +99,7 @@ export class InboxRightSidebarComponent implements OnInit {
   toggleRightBar(child:string) {
 
     // this.parentFun.emit();
-    if(localStorage.getItem('child') == child){
+    if(sessionStorage.getItem('child') == child){
       this.toggleRightPanelParent.emit();
       this.toggleService.addTogglePanel('');
     } else{
@@ -109,11 +109,11 @@ export class InboxRightSidebarComponent implements OnInit {
 
 
 //     let routr = this._route.url.split('/')[1];
-//  let parent = localStorage.getItem("parent");
+//  let parent = sessionStorage.getItem("parent");
 
-//  if (localStorage.getItem('child') == child){
+//  if (sessionStorage.getItem('child') == child){
 //   this.isOpen = false;
-//   localStorage.setItem('child','')
+//   sessionStorage.setItem('child','')
 //  } else {
 //   this.isOpen = true;
 //  }

@@ -71,6 +71,7 @@ import { MonitoringHeaderComponent } from './engage2/bot-monitoring-content/moni
 import { BotMonitoringMenusComponent } from './engage2/bot-monitoring-content/bot-monitoring-menus/bot-monitoring-menus.component';
 import { BotChatComponent } from "../modules/bot-monitoring/components/bot-chat/bot-chat.component";
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ChatBotHistoryMenuComponent } from './engage2/bot-monitoring-content/chat-bot-history-menu/chat-bot-history-menu.component';
 @NgModule({
     declarations: [
         InboxContentComponent,
@@ -128,7 +129,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
         BotMonitoringContentComponent,
         MonitoringHeaderComponent,
         // MonitoringMenuComponent,
-        BotMonitoringMenusComponent
+        BotMonitoringMenusComponent,
+        ChatBotHistoryMenuComponent
     ],
     exports: [
         MainContentComponent,

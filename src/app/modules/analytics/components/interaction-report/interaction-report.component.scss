@@ -7,3 +7,8 @@
     top: 0;
     background: white;
 }
+.card-deck {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }

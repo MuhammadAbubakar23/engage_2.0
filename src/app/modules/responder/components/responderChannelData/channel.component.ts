@@ -50,6 +50,8 @@ import {
 import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { ConnectionIdService } from 'src/app/services/connectionId/connection-id.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
+
 @Component({
   selector: 'app-channel',
   templateUrl: './channel.component.html',
@@ -297,7 +299,7 @@ export class ChannelComponent implements OnInit {
   onInput(textarea: HTMLTextAreaElement) {
     this.adjustTextareaHeight(textarea);
   }
-  Newpost: any;
+  Newpost: any[] = [];
   totalComments: number = 0;
   totalMessages: number = 0;
   flag: string = '';
@@ -344,6 +346,7 @@ export class ChannelComponent implements OnInit {
   ImageName: any;
   ImageArray: any[] = [];
   totalUnrespondedCmntCountByCustomer: number = 0;
+  totalUnrespondedNewPostCmntCountByCustomer: number = 0;
   postIdForStats: any;
   pageIdForStats: any;
   totalPostReactionsCount: number = 0;
@@ -394,6 +397,17 @@ export class ChannelComponent implements OnInit {
   teamPermissions: any;
   messagesStatus: any[] = [];
   Sentiments: any[] = [];
+  hasReplyEmojiPermission: boolean=false;
+  hasReplySentPermission: boolean=false;
+  hasReplyAttachmentPermission: boolean=false;
+  hasReplyCsatPermission: boolean=false;
+  hasQueryStatusPermission: boolean=false;
+  hasReplyQuickPermission: boolean=false;
+  hasQuickReplyPermission: boolean=false;
+  hasQuickLikesPermission: boolean=false;
+  hasQuerySentimentsPermission: boolean=false;
+  hasQueryTicketssPermission: boolean=false;
+
   fetchedPostType: string = '';
   public Subscription!: Subscription;
   public criteria!: SortCriteria;
@@ -420,9 +434,29 @@ export class ChannelComponent implements OnInit {
     private fetchPostType: FetchPostTypeService,
     private getWing: GetWingsService,
     private getSkillSlug: SkillslugService,
+    private _perS:PermissionService,
     private getConnectionId: ConnectionIdService
   ) {}
+  hasPermission(permissionName: string) {
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
+  }
   ngOnInit(): void {
+    this.hasReplyEmojiPermission = this.hasPermission('_repemo_');
+    this.hasReplySentPermission = this.hasPermission('_repsnd_');
+    this.hasReplyQuickPermission = this.hasPermission('_repqik_');
+    this.hasQueryStatusPermission = this.hasPermission('_qrysta_');
+    this.hasReplyCsatPermission = this.hasPermission('_repcsat_');
+    this.hasReplyAttachmentPermission = this.hasPermission('_repatc_');
+    this.hasQuickReplyPermission = this.hasPermission('_repqik_');
+    this.hasQuickLikesPermission = this.hasPermission('_qrylik_');
+    this.hasQuerySentimentsPermission = this.hasPermission('_qrysnt_');
+    this.hasQueryTicketssPermission = this.hasPermission('_qrysnt_');
+
+
+
+
+
     this.platform = this.fetchId.platform;
     this.flag = this.router.url.split('/')[2];
     this.getClassOfHeaderBackground(this.platform);
@@ -445,6 +479,9 @@ export class ChannelComponent implements OnInit {
       this.activeClient = 'localhost';
     } else if (this.baseUrl == 'http://localhost:4200') {
       this.activeClient = 'localhost';
+    }
+    else if (this.baseUrl == 'https://engageui.enteract.live') {
+      this.activeClient = 'damo';
     }
     // this.ImageName=[ {name: 'gif', lastModified: 1713945235285, lastModifiedDate:" Wed Apr 24 2024 12:53:55 GMT+0500 (Pakistan Standard Time)", webkitRelativePath: '', size: 1202167, }];
     this.fetchedPostType = this.fetchPostType.postType;
@@ -532,7 +569,7 @@ export class ChannelComponent implements OnInit {
       .getUnRespondedCount()
       .subscribe((res) => {
         const assignedProfileId = Number(
-          localStorage.getItem('assignedProfile')
+          sessionStorage.getItem('assignedProfile')
         );
         if (
           (this.flag == 'focused' ||
@@ -692,7 +729,7 @@ export class ChannelComponent implements OnInit {
   }
   getComments(filter: FiltersDto) {
     if (this.id != null || undefined) {
-      localStorage.setItem('storeOpenedId', this.id);
+      sessionStorage.setItem('storeOpenedId', this.id);
       try {
         // this.spinner1running = true;
         // this.SpinnerService.show();
@@ -707,7 +744,7 @@ export class ChannelComponent implements OnInit {
               this.userInfoService.shareUserInformation(res.List[0].user);
               this.TotalCmntQueryCount = res.TotalQueryCount;
               this.pageName = this.Comments[0]?.post.profile.clientAppName;
-              localStorage.setItem(
+              sessionStorage.setItem(
                 'lastQueryId',
                 this.Comments[0].comments[0].id
               );
@@ -754,17 +791,17 @@ export class ChannelComponent implements OnInit {
       }
     }
   }
+
   updateCommentsDataListener() {
     if (!this.id) {
-      this.id = localStorage.getItem('storeOpenedId') || '{}';
+      this.id = sessionStorage.getItem('storeOpenedId') || '{}';
     }
-    // const openedContentType = localStorage.getItem('contentType');
+
     if (this.updatedComments.length > 0) {
-      this.updatedComments?.forEach((xyz: any) => {
-        xyz.comments.forEach((abc: any) => {
-          // if (openedContentType == abc.contentType) {
-          if (this.id == xyz.user.userId) {
-            this.commentDto = {
+      this.updatedComments.forEach((xyz: any) => {
+        if (this.id == xyz.user.userId) {
+          xyz.comments.forEach((abc: any) => {
+            const commentDto = {
               id: abc.id,
               wings: abc.wings,
               postId: xyz.post.postId,
@@ -798,172 +835,176 @@ export class ChannelComponent implements OnInit {
               dispositions: abc.dispositions,
               signalRGroupName: abc.signalRGroupName,
             };
-            localStorage.setItem('lastQueryId', this.commentDto.id.toString());
-            this.Comments?.forEach((item: any) => {
-              this.postIdArray.push(item.post.postId);
-              this.commentsArray = [];
-              // this.newPostComment= [];
-              if (this.postIdArray.includes(xyz.post.postId)) {
-                item.comments.push(this.commentDto);
-                item.comments.forEach((cmnt: any) => {
-                  this.commentsArray.push(cmnt);
-                });
-                let groupedItems = this.commentsArray.reduce(
-                  (acc: any, item: any) => {
-                    const date = item.createdDate?.split('T')[0];
-                    if (!acc[date]) {
-                      acc[date] = [];
-                    }
-                    acc[date].push(item);
-                    return acc;
-                  },
-                  {}
-                );
-                item['groupedComments'] = Object.keys(groupedItems).map(
-                  (createdDate) => {
-                    return {
-                      createdDate,
-                      items: groupedItems[createdDate],
-                    };
-                  }
-                );
-              }
-              // for new post
-              else {
-                if (!this.postIdArray.includes(xyz.post.postId)) {
-                  this.Newpost.forEach((x: any) => {
-                    x.comments.forEach((z: any) => {
-                      this.newpostcommentDto = {
-                        id: z.id,
-                        postId: x.post.postId,
-                        commentId: z.commentId,
-                        message: z.message,
-                        contentType: z.contentType,
-                        userName: z.userName || z.userId,
-                        queryStatus: z.queryStatus,
-                        createdDate: z.createdDate,
-                        fromUserProfilePic: z.profilePic,
-                        body: z.body,
-                        to: z.toId,
-                        cc: z.cc,
-                        bcc: z.bcc,
-                        attachments: z.mediaAttachments,
-                        replies: [],
-                        sentiment: '',
-                        tags: z.tags,
-                      };
-                    });
-                    localStorage.setItem(
-                      'lastQueryId',
-                      this.newpostcommentDto.id.toString()
-                    );
-                    if (
-                      !this.newPostComment.find(
-                        (comment) => comment.post.postId === x.post.postId
-                      )
-                    ) {
-                      this.newPostComment.push(x);
-                    }
-                    this.newCmntReply = true;
-                    this.newPostComment.forEach((item: any) => {
-                      this.commentsArray = [];
-                      if (item.post.postId == x.post.postId) {
-                        if (
-                          !item.comments.find(
-                            (cmnt: any) => cmnt.id === this.newpostcommentDto.id
-                          )
-                        ) {
-                          item.comments.push(this.newpostcommentDto);
-                        }
-                        item.comments.forEach((cmnt: any) => {
-                          if (!this.commentsArray.includes(cmnt.id)) {
-                            this.commentsArray.push(cmnt);
-                          }
-                        });
-                        let groupedItems = this.commentsArray.reduce(
-                          (acc: any, item: any) => {
-                            const date = item.createdDate?.split('T')[0];
-                            if (!acc[date]) {
-                              acc[date] = [];
-                            }
-                            acc[date].push(item);
-                            return acc;
-                          },
-                          {}
-                        );
-                        item['groupedComments'] = Object.keys(groupedItems).map(
-                          (createdDate) => {
-                            return {
-                              createdDate,
-                              items: groupedItems[createdDate],
-                            };
-                          }
-                        );
-                      }
-                    });
-                  });
-                }
+
+            sessionStorage.setItem('lastQueryId', commentDto.id.toString());
+
+            let foundPost = false;
+
+            this.Comments.forEach((item: any) => {
+              if (item.post.postId === xyz.post.postId) {
+                foundPost = true;
+                item.comments.push(commentDto);
+                item.groupedComments = this.groupCommentsByDate(item.comments);
+                this.totalUnrespondedCmntCountByCustomer += 1;
               }
             });
-            this.totalUnrespondedCmntCountByCustomer =
-              this.totalUnrespondedCmntCountByCustomer + 1;
-          }
-          // }
-        });
+
+            if (!foundPost) {
+              if (this.newPostComment.length > 0) {
+                this.newPostComment?.forEach((x: any) => {
+                  this.Newpost?.forEach((y: any) => {
+                    if (y.post.postId == x.post.postId) {
+                      x.comments.push(commentDto);
+                      x.groupedComments = this.groupCommentsByDate(x.comments);
+                    } else {
+                      this.Newpost.forEach((x: any) => {
+                        this.newPostComment.push(x);
+                        x.groupedComments = this.groupCommentsByDate(x.comments);
+                      });
+                    }
+                  });
+                });
+              } else {
+                this.Newpost.forEach((x: any) => {
+                  this.newPostComment.push(x);
+                  this.newCmntReply = true;
+                  x.groupedComments = this.groupCommentsByDate(x.comments);
+                });
+              }
+              this.totalUnrespondedNewPostCmntCountByCustomer += 1;
+            }
+          });
+        }
       });
     }
+
     this.changeDetect.detectChanges();
   }
+
+  groupCommentsByDate(comments: any[]) {
+    const groupedItems = comments.reduce((acc: any, item: any) => {
+      const date = item.createdDate?.split('T')[0];
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(item);
+      return acc;
+    }, {});
+
+    return Object.keys(groupedItems).map((createdDate) => ({
+      createdDate,
+      items: groupedItems[createdDate],
+    }));
+  }
+
   updateMessagesDataListener() {
     if (!this.id) {
-      this.id = localStorage.getItem('storeOpenedId') || '{}';
+      this.id = sessionStorage.getItem('storeOpenedId') || '{}';
     }
-    // const openedContentType = localStorage.getItem('contentType');
+    const skillSlug = sessionStorage.getItem('skillSlug');
     this.updatedMessages.forEach((xyz: any) => {
-      // if (openedContentType == xyz.contentType) {
-      if (this.id == xyz.fromId) {
-        this.messageDto = {
-          id: xyz.id,
-          contentType: xyz.contentType,
-          queryStatus: xyz.queryStatus,
-          createdDate: xyz.createdDate,
-          attachments: xyz.attachments,
-          replies: [],
-          sentiment: '',
-          tags: [],
-          msgId: xyz.msgId,
-          fromId: xyz.fromId,
-          fromName: xyz.fromName,
-          fromProfilePic: xyz.fromProfilePic,
-          toId: xyz.toId,
-          toName: xyz.toName,
-          msgText: xyz.msgText,
-          agentId: '',
-          customerSocailProfileId: 0,
-          profileId: xyz.profileId,
-          profilePageId: xyz.profilePageId,
-        };
-        localStorage.setItem('lastQueryId', this.messageDto.id.toString());
-        this.messageOrDM.unshift(this.messageDto);
-        this.messagesArray.unshift(this.messageDto);
-        let groupedItems = this.messagesArray.reduce((acc: any, item: any) => {
-          const date = item.createdDate?.split('T')[0];
-          if (!acc[date]) {
-            acc[date] = [];
-          }
-          acc[date].push(item);
-          return acc;
-        }, {});
-        this.groupedMessages = Object.keys(groupedItems).map((createdDate) => {
-          return {
-            createdDate,
-            items: groupedItems[createdDate],
+      if (skillSlug == xyz.skillSlug) {
+        if (this.id == xyz.fromId) {
+          this.messageDto = {
+            id: xyz.id,
+            contentType: xyz.contentType,
+            queryStatus: xyz.queryStatus,
+            createdDate: xyz.createdDate,
+            attachments: xyz.attachments,
+            replies: [],
+            sentiment: '',
+            tags: [],
+            msgId: xyz.msgId,
+            fromId: xyz.fromId,
+            fromName: xyz.fromName,
+            fromProfilePic: xyz.fromProfilePic,
+            toId: xyz.toId,
+            toName: xyz.toName,
+            msgText: xyz.msgText,
+            agentId: '',
+            customerSocailProfileId: 0,
+            profileId: xyz.profileId,
+            profilePageId: xyz.profilePageId,
+            wings: xyz.wings,
+            signalRGroupName: xyz.signalRGroupName,
+            skillSlug: xyz.skillSlug,
           };
-        });
-        this.totalUnrespondedMsgCountByCustomer =
-          this.totalUnrespondedMsgCountByCustomer + 1;
+          sessionStorage.setItem('lastQueryId', this.messageDto.id.toString());
+          if (this.messageDto.contentType == 'TTR') {
+            this.TwitterTweets.unshift(this.messageDto);
+            this.commentsArray.unshift(this.messageDto);
+            let groupedItems = this.commentsArray.reduce(
+              (acc: any, item: any) => {
+                const date = item.createdDate?.split('T')[0];
+                if (!acc[date]) {
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              },
+              {}
+            );
+            this.groupedTweets = Object.keys(groupedItems).map(
+              (createdDate) => {
+                return {
+                  createdDate,
+                  items: groupedItems[createdDate],
+                };
+              }
+            );
+            this.totalUnrespondedTweetCountByCustomer =
+              this.totalUnrespondedTweetCountByCustomer + 1;
+          } else if (this.messageDto.contentType == 'TM') {
+            this.TwitterMentions.unshift(this.messageDto);
+            this.mentionsArray.unshift(this.messageDto);
+            let groupedItems = this.mentionsArray.reduce(
+              (acc: any, item: any) => {
+                const date = item.createdDate?.split('T')[0];
+                if (!acc[date]) {
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              },
+              {}
+            );
+            this.groupedMentions = Object.keys(groupedItems).map(
+              (createdDate) => {
+                return {
+                  createdDate,
+                  items: groupedItems[createdDate],
+                };
+              }
+            );
+            this.totalUnrespondedMentionCountByCustomer =
+              this.totalUnrespondedMentionCountByCustomer + 1;
+          } else {
+            this.messageOrDM.unshift(this.messageDto);
+            this.messagesArray.unshift(this.messageDto);
+            let groupedItems = this.messagesArray.reduce(
+              (acc: any, item: any) => {
+                const date = item.createdDate?.split('T')[0];
+                if (!acc[date]) {
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              },
+              {}
+            );
+            this.groupedMessages = Object.keys(groupedItems).map(
+              (createdDate) => {
+                return {
+                  createdDate,
+                  items: groupedItems[createdDate],
+                };
+              }
+            );
+            this.totalUnrespondedMsgCountByCustomer =
+              this.totalUnrespondedMsgCountByCustomer + 1;
+          }
+        }
       }
-      // }
     });
     this.changeDetect.detectChanges();
   }
@@ -1053,6 +1094,56 @@ export class ChannelComponent implements OnInit {
         }
       }
     });
+
+    this.TwitterMentions?.forEach((tm: any) => {
+      if (tm.id == this.addTags.feedId) {
+        if (this.addTags.type == 'Tag') {
+          if (tm.tags.length == 0) {
+            tm.tags.push(this.addTags);
+          } else if (tm.tags.length > 0) {
+            const tag = tm.tags.find(
+              (x: any) => x.name == this.addTags.tagName
+            );
+            if (tag != null || tag != undefined) {
+              const index = tm.tags.indexOf(tag);
+              if (index !== -1) {
+                tm.tags.splice(index, 1);
+              }
+            } else {
+              tm.tags.push(this.addTags);
+            }
+          }
+        }
+        if (this.addTags.type == 'Sentiment') {
+          tm.sentiment = this.addTags;
+        }
+      }
+    });
+
+    this.TwitterTweets?.forEach((ttr: any) => {
+      if (ttr.id == this.addTags.feedId) {
+        if (this.addTags.type == 'Tag') {
+          if (ttr.tags.length == 0) {
+            ttr.tags.push(this.addTags);
+          } else if (ttr.tags.length > 0) {
+            const tag = ttr.tags.find(
+              (x: any) => x.name == this.addTags.tagName
+            );
+            if (tag != null || tag != undefined) {
+              const index = ttr.tags.indexOf(tag);
+              if (index !== -1) {
+                ttr.tags.splice(index, 1);
+              }
+            } else {
+              ttr.tags.push(this.addTags);
+            }
+          }
+        }
+        if (this.addTags.type == 'Sentiment') {
+          ttr.sentiment = this.addTags;
+        }
+      }
+    });
     this.changeDetect.detectChanges();
   }
   removeTagDataListener() {
@@ -1096,6 +1187,26 @@ export class ChannelComponent implements OnInit {
         }
       }
     });
+
+    this.TwitterMentions?.forEach((tm: any) => {
+      if (tm.id == this.removeTags.feedId) {
+        var tag = tm.tags.find((x: any) => x.name == this.removeTags.tagName);
+        const index = tm.tags.indexOf(tag);
+        if (index !== -1) {
+          tm.tags.splice(index, 1);
+        }
+      }
+    });
+
+    this.TwitterTweets?.forEach((ttr: any) => {
+      if (ttr.id == this.removeTags.feedId) {
+        var tag = ttr.tags.find((x: any) => x.name == this.removeTags.tagName);
+        const index = ttr.tags.indexOf(tag);
+        if (index !== -1) {
+          ttr.tags.splice(index, 1);
+        }
+      }
+    });
     this.changeDetect.detectChanges();
   }
   updateQueryStatusDataListener() {
@@ -1128,6 +1239,22 @@ export class ChannelComponent implements OnInit {
       this.messageOrDM?.forEach((msg: any) => {
         if (msg.id == this.queryStatus.queryId) {
           msg.queryStatus = this.queryStatus.queryStatus;
+        }
+      });
+    }
+
+    if (this.TwitterMentions) {
+      this.TwitterMentions?.forEach((tm: any) => {
+        if (tm.id == this.queryStatus.queryId) {
+          tm.queryStatus = this.queryStatus.queryStatus;
+        }
+      });
+    }
+
+    if (this.TwitterTweets) {
+      this.TwitterTweets?.forEach((ttr: any) => {
+        if (ttr.id == this.queryStatus.queryId) {
+          ttr.queryStatus = this.queryStatus.queryStatus;
         }
       });
     }
@@ -1194,12 +1321,26 @@ export class ChannelComponent implements OnInit {
           msg.queryStatus = this.newReply.queryStatus;
         }
       });
+
+      this.TwitterMentions?.forEach((tm: any) => {
+        if (tm.id == this.newReply.commentId) {
+          tm.replies.push(this.newReply);
+          tm.queryStatus = this.newReply.queryStatus;
+        }
+      });
+
+      this.TwitterTweets?.forEach((ttr: any) => {
+        if (ttr.id == this.newReply.commentId) {
+          ttr.replies.push(this.newReply);
+          ttr.queryStatus = this.newReply.queryStatus;
+        }
+      });
     }
     this.changeDetect.detectChanges();
   }
   async getMessages(filter: FiltersDto) {
     if (this.id != null || undefined) {
-      localStorage.setItem('storeOpenedId', this.id);
+      sessionStorage.setItem('storeOpenedId', this.id);
       // this.spinner1running = true;
       // this.SpinnerService.show();
       try {
@@ -1216,7 +1357,7 @@ export class ChannelComponent implements OnInit {
               this.pageName = res.List?.profile.clientAppName;
               this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
               this.TotalMsgQueryCount = res.TotalQueryCount;
-              localStorage.setItem('lastQueryId', this.messageOrDM[0].id);
+              sessionStorage.setItem('lastQueryId', this.messageOrDM[0].id);
               this.messagesArray = [];
               this.groupedMessages = [];
               this.messageOrDM.forEach((item: any) => {
@@ -1255,7 +1396,7 @@ export class ChannelComponent implements OnInit {
   }
   async getMentions(filter: FiltersDto) {
     if (this.id != null || undefined) {
-      localStorage.setItem('storeOpenedId', this.id);
+      sessionStorage.setItem('storeOpenedId', this.id);
       // this.spinner1running = true;
       // this.SpinnerService.show();
       try {
@@ -1275,7 +1416,7 @@ export class ChannelComponent implements OnInit {
               this.pageName = res.List?.profile.clientAppName;
               this.totalUnrespondedMentionCountByCustomer = res.TotalCount;
               this.TotalMentionQueryCount = res.TotalQueryCount;
-              localStorage.setItem('lastQueryId', this.TwitterMentions[0].id);
+              sessionStorage.setItem('lastQueryId', this.TwitterMentions[0].id);
               this.mentionsArray = [];
               this.groupedMentions = [];
               // if (this.TwitterTweets.length == 0) {
@@ -1319,7 +1460,7 @@ export class ChannelComponent implements OnInit {
   }
   async getTweets(filter: FiltersDto) {
     if (this.id != null || undefined) {
-      localStorage.setItem('storeOpenedId', this.id);
+      sessionStorage.setItem('storeOpenedId', this.id);
       // this.spinner1running = true;
       // this.SpinnerService.show();
       try {
@@ -1337,7 +1478,7 @@ export class ChannelComponent implements OnInit {
               this.TotalTweetQueryCount = res.TotalQueryCount;
               this.commentsArray = [];
               this.groupedTweets = [];
-              localStorage.setItem('lastQueryId', this.TwitterTweets[0].id);
+              sessionStorage.setItem('lastQueryId', this.TwitterTweets[0].id);
               this.TwitterTweets.forEach((item: any) => {
                 this.commentsArray.push(item);
                 let groupedItems = this.commentsArray.reduce(
@@ -1570,13 +1711,41 @@ export class ChannelComponent implements OnInit {
       if (msg.id == id) {
         // show mentioned reply
         this.show = true;
-        this.mentionedCommentOrMessage = msg.msgText;
-        this.mentionedCommentOrMessageId = msg.id;
+        this.mentionedCommentOrMessage = msg?.msgText;
+        this.mentionedCommentOrMessageId = msg?.id;
         this.platform = this.platform;
-        this.postType = msg.contentType;
-        this.profileId = this.profileInformation.profile_Id;
-        this.profilePageId = this.profileInformation.page_Id;
-        this.userProfileId = this.userInformation.id;
+        this.postType = msg?.contentType;
+        this.profileId = this.profileInformation?.profile_Id;
+        this.profilePageId = this.profileInformation?.page_Id;
+        this.userProfileId = this.userInformation?.id;
+      }
+    });
+
+    this.TwitterMentions?.forEach((tm: any) => {
+      if (tm.id == id) {
+        // show mentioned reply
+        this.show = true;
+        this.mentionedCommentOrMessage = tm?.msgText;
+        this.mentionedCommentOrMessageId = tm?.id;
+        this.platform = this.platform;
+        this.postType = tm?.contentType;
+        this.profileId = this.profileInformation?.profile_Id;
+        this.profilePageId = this.profileInformation?.page_Id;
+        this.userProfileId = this.userInformation?.id;
+      }
+    });
+
+    this.TwitterTweets?.forEach((ttr: any) => {
+      if (ttr.id == id) {
+        // show mentioned reply
+        this.show = true;
+        this.mentionedCommentOrMessage = ttr?.msgText;
+        this.mentionedCommentOrMessageId = ttr?.id;
+        this.platform = this.platform;
+        this.postType = ttr?.contentType;
+        this.profileId = this.profileInformation?.profile_Id;
+        this.profilePageId = this.profileInformation?.page_Id;
+        this.userProfileId = this.userInformation?.id;
       }
     });
   }
@@ -1588,6 +1757,8 @@ export class ChannelComponent implements OnInit {
     this.ImageArray = [];
     this.show = false;
     this.textarea.nativeElement.value = '';
+    const dataTransfer = new DataTransfer();
+    this.fileInput.nativeElement.files = dataTransfer.files;
     this.text = '';
     this.mentionedCommentOrMessageId = 0;
     this.isGifSelected = false;
@@ -1676,7 +1847,7 @@ export class ChannelComponent implements OnInit {
     this.quickReplySearchText = '';
   }
   toggle(child: string, cmntId: any) {
-    if (localStorage.getItem('child') == child) {
+    if (sessionStorage.getItem('child') == child) {
       this.toggleService.addTogglePanel('');
     } else {
       this.toggleService.addTogglePanel(child);
@@ -1810,6 +1981,60 @@ export class ChannelComponent implements OnInit {
         }
       }
     });
+
+    this.TwitterMentions?.forEach((tm: any) => {
+      if (tm.id == comId) {
+        if (tm.tags.length == 0) {
+          this.commondata
+            .InsertTag(this.insertTagsForFeedDto)
+            .subscribe((res: any) => {
+              this.reloadComponent('ApplyTag');
+              this.activeTag = true;
+              this.checkTag = true;
+            });
+        } else if (tm.tags.length > 0) {
+          const value = tm.tags.find((x: any) => x.name == tagName);
+          if (value != null || value != undefined) {
+            this.removeTagFromFeed(comId, tagName, platform);
+          } else {
+            this.commondata
+              .InsertTag(this.insertTagsForFeedDto)
+              .subscribe((res: any) => {
+                this.reloadComponent('ApplyTag');
+                this.activeTag = true;
+                this.checkTag = true;
+              });
+          }
+        }
+      }
+    });
+
+    this.TwitterTweets?.forEach((ttr: any) => {
+      if (ttr.id == comId) {
+        if (ttr.tags.length == 0) {
+          this.commondata
+            .InsertTag(this.insertTagsForFeedDto)
+            .subscribe((res: any) => {
+              this.reloadComponent('ApplyTag');
+              this.activeTag = true;
+              this.checkTag = true;
+            });
+        } else if (ttr.tags.length > 0) {
+          const value = ttr.tags.find((x: any) => x.name == tagName);
+          if (value != null || value != undefined) {
+            this.removeTagFromFeed(comId, tagName, platform);
+          } else {
+            this.commondata
+              .InsertTag(this.insertTagsForFeedDto)
+              .subscribe((res: any) => {
+                this.reloadComponent('ApplyTag');
+                this.activeTag = true;
+                this.checkTag = true;
+              });
+          }
+        }
+      }
+    });
   }
   removeTagFromFeed(feedId: number, tagName: any, platform: string) {
     if (
@@ -1854,7 +2079,7 @@ export class ChannelComponent implements OnInit {
       id: comId,
       type: type,
       plateForm: this.platform,
-      profileId: Number(localStorage.getItem('profileId')),
+      profileId: Number(sessionStorage.getItem('profileId')),
       wings: this.getWing.wings,
       skillSlug: this.getSkillSlug.skillSlug[0],
       connectionId: this.getConnectionId.connectionId,
@@ -2157,8 +2382,8 @@ export class ChannelComponent implements OnInit {
   c_satForm() {
     let data = this.stor.retrive('main', 'O').local;
     const email = data.originalUserName;
-    const customerId = localStorage.getItem('storeOpenedId');
-    const channel = localStorage.getItem('parent');
+    const customerId = sessionStorage.getItem('storeOpenedId');
+    const channel = sessionStorage.getItem('parent');
     this.insertAtCaret(
       this.baseUrl +
         '/survey/customer_satisfaction?channel=' +
@@ -2170,7 +2395,7 @@ export class ChannelComponent implements OnInit {
     );
   }
   c_informationForm() {
-    const customerId = localStorage.getItem('storeOpenedId');
+    const customerId = sessionStorage.getItem('storeOpenedId');
     this.insertAtCaret(
       this.baseUrl + '/survey/customer_details?customerId=' + customerId + ' '
     );
@@ -2210,7 +2435,7 @@ export class ChannelComponent implements OnInit {
     if (value == 'DM') {
       this.filterDto.queryType = 'TDM';
     } else if (value == 'Cmnt') {
-      this.filterDto.queryType = localStorage.getItem('contentType') || '';
+      this.filterDto.queryType = sessionStorage.getItem('contentType') || '';
     } else {
       this.filterDto.queryType = value;
     }

@@ -26,7 +26,7 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-sm-center ps-0">
                             <span class="iconButton large" style="margin-right: 5px;" >
-                                <app-avatar-photo [photoUrl]="imagename" [name]="fullName"></app-avatar-photo> 
+                                <app-avatar-photo [photoUrl]="imagename" [name]="fullName"></app-avatar-photo>
                             </span>
                             <div class="ms-2 me-auto coal">
                                 <div class="fw-bold night">{{fullName}}</div>
@@ -121,55 +121,16 @@
                     </ul>
                 </div> -->
                     <div class="col-lg-12 row justify-content-between">
-                        <div class="col-lg-3 col-md-4 col-sm-6 shortcut-box">
-                            <div class="card-body h-100 p-3 shadow d-flex iceBg">
+                        <div class="col-lg col-md col-sm shortcut-box" *ngFor="let actor of actors">
+                            <div class="card-body h-100 p-3 shadow d-flex iceBg" (click)="getPermissions(actor.mainId )" style="cursor: pointer;">
                                 <button class="iconButton medium">
                                     <i class="far fa-inbox"></i>
                                 </button>
                                 <div class="ms-3">
-                                    <h5 class="night mb-0 mt-0 lh-base text fw-bold">Manage inboxes</h5>
+                                    <h5 class="night mb-0 mt-0 lh-base text fw-bold">{{actor.name}}</h5>
                                     <p class="coal lh-base small-text">Add your work email as a personal inbox to manage
                                         in enteract.</p>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 shortcut-box">
-                            <div class="card-body h-100 p-3 shadow d-flex iceBg">
-                                <button class="iconButton medium">
-                                    <i class="far fa-tree-palm"></i>
-                                </button>
-                                <div class="ms-3">
-                                    <h5 class="night mb-0 mt-0 lh-base text fw-bold">Set a vacation responder</h5>
-                                    <p class="coal lh-base small-text">Save auto-replies and set timing so you can
-                                        vacation worry-free</p>
-                               
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 shortcut-box">
-                            <div class="card-body h-100 p-3 shadow d-flex iceBg">
-                                <button class="iconButton medium">
-                                    <i class="far fa-tachometer-fastest"></i>
-                                </button>
-                                <div class="ms-3">
-                                    <h5 class="night mb-0 mt-0 lh-base text fw-bold">Manage message templates</h5>
-                                    <p class="coal lh-base small-text">Save templates to common question and respond
-                                        faster to message.</p>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 shortcut-box">
-                            <div class="card-body h-100 p-3 shadow d-flex iceBg">
-                                <button class="iconButton medium">
-                                    <i class="far fa-leaf"></i>
-                                </button>
-                                <div class="ms-3">
-                                    <h5 class="night mb-0 mt-0 lh-base text fw-bold">Manage signatures</h5>
-                                    <p class="coal lh-base small-text">Create custom signatures for replying from
-                                        different inboxes.</p>
-                                   
+
                                 </div>
                             </div>
                         </div>

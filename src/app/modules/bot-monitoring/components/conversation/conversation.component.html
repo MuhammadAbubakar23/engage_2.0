@@ -1,5 +1,66 @@
 <div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
+        <div class="e-bot-icon" [ngClass]="{ active: isOpen }">
+            <div class="e_chat-icon" (click)="openChat()">
+                <img src="../../../../assets/images/ebot.svg" />
+            </div>
+        </div>
+        <div class="enteract-chatbot" [ngClass]="{ active: isOpen, removebot: !isOpen }">
+            <div class="e-chat-main">
+                <header>
+                    <div class="e_chat-icon">
+                        <img src="../../../../assets/images/ebot.svg" />
+                    </div>
+                    <div>
+                        <h4>BOT</h4>
+                        <p class="coal">Online</p>
+                    </div>
+                    <div class="ebotclose" (click)="closeChat()">
+                        <i class="fa-light fa-xmark"></i>
+                    </div>
+                </header>
+
+                <section class="chatbody" #chatBody>
+
+
+
+                    <ng-container *ngFor="let msg of messages; let i = index">
+                        <div class="messagewrap" [ngClass]="{
+                      'e-right': msg.type === 'user',
+                      'e-left': msg.type === 'bot'
+                    }" [attr.data-first]="msg.type === 'user' ? true : null"
+                            [attr.data-last]="msg.type === 'bot' ? true : null">
+                            <div class="messagebody">
+                                <div class="caption">
+                                    <div class="name">
+                                        <div *ngIf="msg.type === 'bot'" class="e_chat-icon">
+                                            <img src="../../../../assets/images/ebot.svg" />
+                                        </div>
+                                        {{ msg.type === "user" ? "You" : "BOT" }}
+                                    </div>
+                                    <div class="time">
+                                        {{ msg.timestamp | date : "shortTime" }}
+                                    </div>
+                                </div>
+                                <div class="messagebubble">
+                                    {{ msg.message }}
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </section>
+                <footer>
+                    <form>
+                        <input class="form-control" placeholder="Send a message.." [(ngModel)]="newMessageText" />
+                        <button class="iconButton iconHover sendicon" (click)="sendMessage()">
+                            <i class="fa-light fa-paper-plane-top"></i>
+                        </button>
+                    </form>
+                </footer>
+
+            </div>
+
+        </div>
         <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
             [fullScreen]="false">
             <p style="color: white"> Loading... </p>
@@ -9,50 +70,30 @@
                 <div class="tab-pane fade show active" id="stories-tab-pane" role="tabpanel"
                     aria-labelledby="stories-tab" tabindex="0">
                     <div class="p-4">
-                        <div class="filter-toolbar mb-3 d-flex align-items-center justify-content-between mt-1">
-                            <form>
 
-                                <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
-                                    <li class="list-inline-item">
-                                        <div class="icon-input">
-                                            <i class="fa-light fa-magnifying-glass"></i>
-                                            <input class="form-control" [(ngModel)]="searchQuery"
-                                                placeholder="Search.. ">
-                                        </div>
-                                    </li>
+                        <div class="filter-toolbar  d-flex align-items-center justify-content-end ">
+                            <h4 class="me-auto mt-2" >{{formatUtterance(setName)}}</h4>
 
-                                    <!-- <li class="list-inline-item">
-                                    <input type="checkbox" class="btn-check" id="q&amp;a" autocomplete="off">
-                                    <label class="btn toggle-check-btn fw-bold" for="q&amp;a">
-                                        Q&amp;A</label>
-                                </li>
-                                <li class="list-inline-item">
-                                    <input type="checkbox" class="btn-check" id="rule" autocomplete="off">
-                                    <label class="btn toggle-check-btn fw-bold" for="rule">
-                                        Rule</label>
-                                </li>
-                                <li class="list-inline-item">
-                                    <input type="checkbox" class="btn-check" id="multiflow" autocomplete="off">
-                                    <label class="btn toggle-check-btn fw-bold" for="multiflow">
-                                        Multiflow</label>
-                                </li> -->
-                                </ul>
-                            </form>
+                            <div class="col-lg-8 d-flex align-items-center justify-content-end">
 
-                            <div class="text-end">
-                                <button class="btn btn-success me-2 " type="button" aria-expanded="false"
-                                    (click)="trainBot(BotId)">
-                                    Train BOT
-                                </button>
-                                <button class="btn btn-success me-2 " type="button" aria-expanded="false"
-                                    (click)="chatBot(BotId)">
-                                    Chat with BOT
-                                </button>
+                                <div class="list-inline-item">
+                                    <button class="btn btn-success me-2 " type="button" aria-expanded="false"
+                                        (click)="trainBot(BotId)">
+                                        Train BOT
+                                    </button>
+                                </div>
+                                <form>
+                                    <ul class="list-inline   m-0 d-flex align-items-center">
 
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#select-template">Add Story</a></li>
-                                </ul>
+                                        <li class="list-inline-item">
+                                            <div class="icon-input">
+                                                <i class="fa-light fa-magnifying-glass"></i>
+                                                <input class="form-control" [(ngModel)]="searchQuery"
+                                                    placeholder="Search.. ">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </form>
                             </div>
                         </div>
                         <div class="row align-items-start">
@@ -121,9 +162,9 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="card zoom-in chatbotcard addchatcard">
+                                <div class="card zoom-in chatbotcard addchatcard" style="height: 212px;">
                                     <div class="card-body">
-                                        <a href="#0" data-bs-toggle="modal" data-bs-target="#select-template"
+                                        <a data-bs-toggle="modal" data-bs-target="#select-template"
                                             class="sky d-flex flex-column align-items-center">
                                             <i class="fa-light fa-plus"></i>
                                             <span>Add New</span>
@@ -170,8 +211,9 @@
 
                     <div class="col-md-6">
                         <div class="card select-card">
-                            <div class="card-body py-5" >
-                                <a class="d-flex flex-column text-center" data-bs-dismiss="modal"  (click)="updatevalue('rule-chatBot')"
+                            <div class="card-body py-5">
+                                <a class="d-flex flex-column text-center" data-bs-dismiss="modal"
+                                    (click)="updatevalue('rule-chatBot')"
                                     [routerLink]="'/bot-monitoring/conversation/' + currentConversationName + '/Rule'">
 
                                     <span class="mx-auto mb-4">
@@ -185,7 +227,8 @@
                     <div class="col-md-6">
                         <div class="card select-card">
                             <div class="card-body py-5">
-                                <a class="d-flex flex-column text-center" data-bs-dismiss="modal" (click)="updatevalue('story-chatBot')"
+                                <a class="d-flex flex-column text-center" data-bs-dismiss="modal"
+                                    (click)="updatevalue('story-chatBot')"
                                     [routerLink]="'/bot-monitoring/conversation/' + currentConversationName + '/Story'">
 
                                     <span class="mx-auto mb-4">
@@ -203,7 +246,7 @@
         </div>
     </div>
 </div>
-<div class="user-comment-widget-container" *ngIf="showChatbot">
+<!-- <div class="user-comment-widget-container">
     <div class="user-comment-widget chat-message-component widget-1 show">
         <div class="comment-widget-header">
             <div class="row">
@@ -253,8 +296,7 @@
             </div>
         </div>
 
-        <!-- <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="small" color="#fff" type="ball-fall" [fullScreen]="false"
-            [name]="'google-map-spinner'"></ngx-spinner> -->
+
         <div class="comment-widget-footer">
             <div class="msgTypingField shadow-lg">
                 <div class="input-group input-group-lg">
@@ -275,7 +317,8 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
+
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">

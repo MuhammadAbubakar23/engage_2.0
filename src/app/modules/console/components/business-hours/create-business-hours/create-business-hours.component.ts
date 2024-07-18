@@ -13,12 +13,13 @@ export class CreateBusinessHoursComponent implements OnInit {
   workingDay = ""
   showWorkingDaysSection: boolean = false;
   businessId: any
-  hideWorkingDays() {
-    this.showWorkingDaysSection = false;
+  showhideWorkingDays(value:boolean) {
+    ;
+    this.showWorkingDaysSection = value;
   }
-  showWorkingDays() {
-    this.showWorkingDaysSection = true;
-  }
+  // showWorkingDays() {
+  //   this.showWorkingDaysSection = true;
+  // }
   getSelectedDaysCount(): number {
     return this.businessWorkingDays.controls.length;
   }
@@ -64,7 +65,7 @@ export class CreateBusinessHoursComponent implements OnInit {
       templateName: '',
       description: '',
       timeZone: '',
-      roundTheClock: false,
+      roundTheClock: true,
       customBusinessHours: true
     });
   }
@@ -78,6 +79,7 @@ export class CreateBusinessHoursComponent implements OnInit {
           roundTheClock: res.roundTheClock,
           customBusinessHours: res.customBusinessHours,
         });
+        this.showWorkingDaysSection = !res.roundTheClock;
         this.clearBusinessWorkingDays();
         const businessWorkingDays = this.messageForm.get('businessWorkingDays') as FormArray;
         res.businessWorkingDays.forEach((workingDay: any) => {
@@ -186,6 +188,20 @@ export class CreateBusinessHoursComponent implements OnInit {
       // Handle form validation errors
     }
   }
+
+  copyToAll(value:any)
+  {
+    this.workingDaysFormArray.controls.forEach((control, index) => {
+      control.get('shiftStart')?.setValue(value?.shiftStart);
+      control.get('shiftEnd')?.setValue(value?.shiftEnd);
+    });
+
+  }
+
+  get workingDaysFormArray() {
+    return this.messageForm.get('businessWorkingDays') as FormArray;
+  }
+
   cancelForm(): void {
     this.router.navigate(['/console/business-hours']);
   }

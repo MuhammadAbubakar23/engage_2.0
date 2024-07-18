@@ -159,7 +159,7 @@ export class EmailComponent implements OnInit {
   profileId: string = '';
   ngOnInit(): void {
     this.flag = this.router.url.split('/')[2];
-    this.fullName = localStorage.getItem('storeOpenedId') || '{}';
+    this.fullName = sessionStorage.getItem('storeOpenedId') || '{}';
     const menu = this.stor.retrive('Tags', 'O').local;
     menu.forEach((item: any) => {
       if (item.name == 'Tags') {
@@ -218,7 +218,7 @@ export class EmailComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        var assignedProfileId = Number(localStorage.getItem('assignedProfile'));
+        var assignedProfileId = Number(sessionStorage.getItem('assignedProfile'));
         if (
           this.flag == 'focused' ||
           this.flag == 'assigned_to_me' ||
@@ -252,7 +252,7 @@ export class EmailComponent implements OnInit {
   senderEmailAddress: any;
   updateCommentsDataListener() {
     if (!this.id) {
-      this.id = localStorage.getItem('storeOpenedId') || '{}';
+      this.id = sessionStorage.getItem('storeOpenedId') || '{}';
     }
     this.updatedComments.forEach((xyz: any) => {
       if (this.id == xyz.userId) {
@@ -399,7 +399,7 @@ export class EmailComponent implements OnInit {
   getEmails() {
     this.flag = this.router.url.split('/')[2];
     if (this.id != null || undefined) {
-      localStorage.setItem('storeOpenedId', this.id);
+      sessionStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -541,7 +541,7 @@ export class EmailComponent implements OnInit {
           });
         });
     } else if (this.slaId != null || undefined) {
-      localStorage.setItem('storeOpenedId', this.slaId);
+      sessionStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -680,9 +680,9 @@ export class EmailComponent implements OnInit {
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
-        user: localStorage.getItem('storeOpenedId') || '{}',
+        user: sessionStorage.getItem('storeOpenedId') || '{}',
         pageId: '',
-        plateForm: localStorage.getItem('parent') || '{}',
+        plateForm: sessionStorage.getItem('parent') || '{}',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
@@ -921,7 +921,7 @@ export class EmailComponent implements OnInit {
   //   this.insertSentimentForFeedDto.sentiment = sentimenName;
   //   this.insertSentimentForFeedDto.feedType = type;
   //   this.insertSentimentForFeedDto.userId = Number(
-  //     localStorage.getItem('agentId')
+  //     sessionStorage.getItem('agentId')
   //   );
   //   this.commondata
   //     .InsertSentiment(this.insertSentimentForFeedDto)
@@ -984,7 +984,7 @@ export class EmailComponent implements OnInit {
         if (comment.id == id) {
           // populate comment
           this.emailId = comment.id;
-          this.agentId = localStorage.getItem('agentId') || '{}';
+          this.agentId = sessionStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.profileId = xyz.post.profile.profile_Id;
           this.postType = comment.contentType;
@@ -1044,7 +1044,7 @@ export class EmailComponent implements OnInit {
             emailAddress: this.senderEmailAddress,
           });
           this.emailId = comment.id;
-          // this.agentId = localStorage.getItem('agentId') || '{}';
+          // this.agentId = sessionStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.profileId = xyz.post.profile.profile_Id;
           this.postType = comment.contentType;
@@ -1069,7 +1069,7 @@ export class EmailComponent implements OnInit {
             emailAddress: this.senderEmailAddress,
           });
           this.emailId = comment.id;
-          this.agentId = localStorage.getItem('agentId') || '{}';
+          this.agentId = sessionStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.postType = 'ForwardEmail';
           this.profileId = xyz.post.profile.profile_Id;
@@ -1358,8 +1358,8 @@ export class EmailComponent implements OnInit {
     this.commentStatusDto = {
       id: comId,
       type: type,
-      plateForm: localStorage.getItem('parent') || '{}',
-      profileId: Number(localStorage.getItem('profileId')),
+      plateForm: sessionStorage.getItem('parent') || '{}',
+      profileId: Number(sessionStorage.getItem('profileId')),
       wings: this.getWing.wings,
       skillSlug: this.getSkillSlug.skillSlug[0],
       connectionId: this.getConnectionId.connectionId,

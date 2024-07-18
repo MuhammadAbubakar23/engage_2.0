@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { getPermissionBySlug, getPermissionsLoading } from '../../permission-state/permission.selectors';
 import { PermissionState } from '../../permission-state/permission.state';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { PermissionService } from 'src/app/shared/services/permission.service'
 @Component({
   selector: 'team-menu',
   templateUrl: './team-menu.component.html',
@@ -25,7 +26,9 @@ export class TeamMenuComponent implements OnInit {
   mainMenu: any[] = [];
   activeChannel: string = ''
   menuArray: any[] = [];
-  constructor(private MenuStore: Store<MenuState>, private PermissionStore: Store<PermissionState>, private _route: Router,
+  hasSentPermission: boolean=false;
+  hasFocusedPermission: boolean=false;
+  constructor(private MenuStore: Store<MenuState>,private _perS:PermissionService , private PermissionStore: Store<PermissionState>, private _route: Router,
     private stor: StorageService) {
     // this.menu$ = this.MenuStore.select(getEmargingEqual('team_main_left_menu'));
     // this.loading$ = this.MenuStore.select(getMenusLoading);
@@ -36,7 +39,8 @@ export class TeamMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.hasFocusedPermission = this.hasPermission('focused');
+    this.hasSentPermission = this.hasPermission('sent');
     this.activeChannel = this._route.url.split('/')[2]
 
     this.MenuStore
@@ -69,8 +73,12 @@ export class TeamMenuComponent implements OnInit {
     });
 
   }
+  hasPermission(permissionName: string) {
 
-  assignedProfile = localStorage.getItem('assignedProfile');
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
+  }
+  assignedProfile = sessionStorage.getItem('assignedProfile');
 
   update(menuLink: any) {
     
@@ -79,9 +87,9 @@ export class TeamMenuComponent implements OnInit {
 
 
     if (
-      localStorage.getItem('assignedProfile') == null ||
-      localStorage.getItem('assignedProfile') == '' ||
-      localStorage.getItem('assignedProfile') == undefined
+      sessionStorage.getItem('assignedProfile') == null ||
+      sessionStorage.getItem('assignedProfile') == '' ||
+      sessionStorage.getItem('assignedProfile') == undefined
     ) {
       this._route.navigateByUrl('/' + menuLink);
     } else {

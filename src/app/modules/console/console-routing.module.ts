@@ -154,7 +154,7 @@ const routes: Routes = [
         loadComponent: () => import('./components/sla-policies/sla-policies.component').then(c => c.SlaPoliciesComponent)
       },
         {
-        path: 'contact',
+        path: 'contacts',
         loadComponent: () => import('./components/contacts/contacts.component').then(c => c.ConsoleContactsComponent)
       },
       {
@@ -177,15 +177,15 @@ const routes: Routes = [
 
       },
       {
-        path: 'templates/message',
+        path: 'templates/messages',
         component: MessagesComponent
       },
       {
-        path: 'templates/signature',
+        path: 'templates/signatures',
         component: SignaturesComponent
       },
       {
-        path: 'templates/quick-response',
+        path: 'templates/quick-responses',
         component: QuickResponseComponent
       },
       {

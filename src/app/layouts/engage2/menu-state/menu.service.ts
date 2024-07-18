@@ -73,24 +73,24 @@ export class MenuService {
     //   }
     // });
   }
-  getList(type:string):Observable<MenuModel[]>{
-    let menus : MenuModel[] = [];
-    menus = this.storage.retrive(type, 'O').local;
-    if(menus != null && menus.length>=1) 
-      return of(menus);
-    else
-      return this.reqs.get<MenuModel[]>(type, {"Emerging":"menu", "Inline":false}).pipe(
-        map((response: MenuModel[]) => {
-          if(response.length>=1) this.storage.store(type, response);
-          else this.storage.delete(type);
-          return response;  
-        })
-      );
-  }
-  getRolesList(): Observable<MenuModel[]> {
-    return this.getList("accessrole");
-  }
-  getTeamsList(): Observable<MenuModel[]> {
-    return this.getList("accessteam");
-  }
+  // getList(type:string):Observable<MenuModel[]>{
+  //   let menus : MenuModel[] = [];
+  //   menus = this.storage.retrive(type, 'O').local;
+  //   if(menus != null && menus.length>=1) 
+  //     return of(menus);
+  //   else
+  //     return this.reqs.get<MenuModel[]>(type, {"Emerging":"menu", "Inline":false}).pipe(
+  //       map((response: MenuModel[]) => {
+  //         if(response.length>=1) this.storage.store(type, response);
+  //         else this.storage.delete(type);
+  //         return response;  
+  //       })
+  //     );
+  // }
+//   getRolesList(): Observable<MenuModel[]> {
+//     return this.getList("accessrole");
+//   }
+//   getTeamsList(): Observable<MenuModel[]> {
+//     return this.getList("accessteam");
+//   }
 }

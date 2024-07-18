@@ -86,9 +86,9 @@ export class BotConfigurationComponent implements OnInit {
 
 
   setSortOption(option: string) {
-    
+
     this.selectedSortOption = option;
-    this.refreshBots(); 
+    this.refreshBots();
   }
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router,
     private spinnerServerice: NgxSpinnerService, private _route: ActivatedRoute) { }
@@ -142,7 +142,7 @@ export class BotConfigurationComponent implements OnInit {
       },
       error=>{
         this.refreshBots();
-      } 
+      }
     )
     // this.apiService.api(!status).subscribe((res: any)=>{
     //   res.status;
@@ -167,7 +167,7 @@ export class BotConfigurationComponent implements OnInit {
     this.refreshBots()
   }
   goToPage(pageNumber: number): void {
-    
+
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }
@@ -190,7 +190,7 @@ export class BotConfigurationComponent implements OnInit {
   getChannels(){
     this.commonService.getChannelsList().subscribe((res)=>{
       const response = res as { [key: string]: string };
-      
+
       this.channels = Object.keys(response).map(key => ({
         id: Number(key),
         name: response[key]
@@ -198,7 +198,6 @@ export class BotConfigurationComponent implements OnInit {
     })
   }
   setChannel(id: any){
-    
     switch(id){
       case(1):
         this.channelId = id;
@@ -207,36 +206,36 @@ export class BotConfigurationComponent implements OnInit {
       break;
       case(2):
         this.channelId = id;
-        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.baseUrl = 'https://linked.360scrm.com/api/'
         this.refreshBots();
       break;
       case(3):
         this.channelId = id;
-        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.baseUrl = 'https://linked.360scrm.com/api/'
         this.refreshBots();
       break;
       case(4):
         this.channelId = id;
-        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.baseUrl = 'https://linked.360scrm.com/api/'
         this.refreshBots();
       break;
       case(5):
         this.channelId = id;
-        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.baseUrl = 'https://linked.360scrm.com/api/'
         this.refreshBots();
       break;
       case(6):
         this.channelId = id;
-        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.baseUrl = 'https://linked.360scrm.com/api/'
       break;
       case(7):
         this.channelId = id;
-        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.baseUrl = 'https://linked.360scrm.com/api/'
         this.refreshBots();
       break;
       case(8):
         this.channelId = id;
-        this.baseUrl = 'https://linked.360scrm.com/api/' 
+        this.baseUrl = 'https://linked.360scrm.com/api/'
         this.refreshBots();
       break;
       default:

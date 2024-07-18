@@ -196,7 +196,7 @@ export class ResponderTicketsComponent implements OnInit {
     });
   }
   closeTicketComponent(child: string) {
-    if (localStorage.getItem('child') == child) {
+    if (sessionStorage.getItem('child') == child) {
       this.toggleService.addTogglePanel('');
     } else {
       this.toggleService.addTogglePanel(child);

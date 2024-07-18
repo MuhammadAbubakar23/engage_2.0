@@ -6,7 +6,6 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
-import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 @Component({
   selector: 'inbox-header',
@@ -66,8 +65,8 @@ export class InboxHeaderComponent implements OnInit {
       user: '',
       pageId: '',
       plateForm: '',
-      pageNumber: 1,
-      pageSize: 30,
+      pageNumber: 0,
+      pageSize: 0,
       isAttachment: false,
       hasBlueTick: false,
       queryType: '',
@@ -76,8 +75,8 @@ export class InboxHeaderComponent implements OnInit {
       userName: '',
       notInclude: '',
       flag: '',
-      wings: '',
-      skills: [],
+      wings: this.getWing.wings,
+      skills: this.skillSlug,
     };
     this.commonService
       .GetFollowUpCount(this.filterDto)
@@ -113,12 +112,13 @@ export class InboxHeaderComponent implements OnInit {
   }
   update(menuLink: any) {
     this.flag = this._route.url.split('/')[2];
+    var routee = this._route.url.split('/')[3];
     if (
-      localStorage.getItem('assignedProfile') == null ||
-      localStorage.getItem('assignedProfile') == '' ||
-      localStorage.getItem('assignedProfile') == undefined
+      sessionStorage.getItem('assignedProfile') == null ||
+      sessionStorage.getItem('assignedProfile') == '' ||
+      sessionStorage.getItem('assignedProfile') == undefined
     ) {
-      this._route.navigateByUrl('/' + menuLink);
+      this._route.navigateByUrl('/' + menuLink + '/' + routee);
     } else {
       this.reloadComponent('querryAssigned');
     }

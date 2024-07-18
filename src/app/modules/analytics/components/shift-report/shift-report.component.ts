@@ -110,7 +110,7 @@ export class ShiftReportComponent implements OnInit {
   })
   ngOnInit(): void {
     this.KEbaseUrl=window.location.origin
-    if(this.KEbaseUrl=='https://keportal.enteract.live'){
+    if(this.KEbaseUrl=='https://keportal.enteract.live' || this.KEbaseUrl=='https://engageui.enteract.live'){
       this.KEClient=true
     }
     this.currentDate = new Date();
@@ -397,7 +397,7 @@ value:any
         this.AgentsTeamList = res;
         this.ActiveAgents = [];
         this.AgentsTeamList.forEach((user: any) => {
-          if (user.userId != localStorage.getItem('agentId')) {
+          if (user.userId != sessionStorage.getItem('agentId')) {
             this.ActiveAgents.push(user);
             if(this.ActiveAgents.length>0){
               this.ActiveAgents.forEach((x:any)=>{

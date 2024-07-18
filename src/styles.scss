@@ -92,6 +92,7 @@
 @import "./assets/SCSS/pages/analytics.scss";
 @import "./assets/SCSS/pages/chatbot.scss";
 @import "./assets/SCSS/pages/ke.scss";
+@import "./assets/SCSS/chat-widget.css";
 // html, body { height: 100%; }
 // body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 //font-awesome6
@@ -158,17 +159,51 @@
 }
 .gif-dropdown {
   width: 650px;
-  right: 0 !important;
-  left: auto !important;
-  .gif-container {
-    display: flex;
-    flex-wrap: wrap;
-    .gif-item {
-      flex: 0 0 23%;
-    }
-  }
-  .dropdown-listing {
-    overflow: scroll;
-    height: 400px;
-  }
+   right: 0 !important;
+   left: auto !important;
+   .gif-container{
+     display: flex;
+     flex-wrap: wrap;
+     .gif-item {
+       flex: 0 0 23%;
+   }
+ }
+ .dropdown-listing {
+   overflow: scroll;
+   height: 400px;
+ }
+ .webchatbg {
+  background-color: #6e2585!important;
+  color: #fff;
+}
+.instabg{
+  background-image: linear-gradient(45deg,#405de6,#5851db,#833ab4,#c13584,#e1306c,#fd1d1d);
+  color: #fff;
+}
+.fb-messenger{
+  background: radial-gradient(circle at 33% 100%, #167AFF, #9F33FF, #FF6070);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.insta-messenger{
+  background: radial-gradient(circle at 33% 100%, #405de6,#5851db,#833ab4,#c13584,#e1306c,#fd1d1d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.linkedinbg{
+  background-color: #0a66c2!important;
+  color: #fff;
+
+}
+.googleplaybg{
+  background-color: #00a173!important;
+  color: #fff;
+}
+.whiteBg {
+  background-color: #fff!important;
+}
+.active{
+  background-color: rgb(240, 237, 237);
+  color: black;
+}
 }

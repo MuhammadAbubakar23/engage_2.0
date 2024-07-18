@@ -102,7 +102,7 @@ export class SupportChannelsComponent implements OnInit {
   //   }
   // }
   connectGoogle(): void {
-    localStorage.setItem('socialtype', 'google');
+    sessionStorage.setItem('socialtype', 'google');
     const clientId = environment.googleclientId;
     const redirectUri = 'https://localhost:4200/console/channels';
     const loginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&&scope=https://www.googleapis.com/auth/userinfo.profile&response_type=code`;

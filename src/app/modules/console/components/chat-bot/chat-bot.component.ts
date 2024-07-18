@@ -37,7 +37,7 @@ export class ChatBotComponent implements OnInit, AfterViewInit {
     });
 // 
     this.botService.login().subscribe((token: any) => {
-      localStorage.setItem("token", token.access);
+      sessionStorage.setItem("token", token.access);
       this.botService.listofIntents().subscribe((res:any)=>{
         this.intents=res;
         this.intentName=res[0];
@@ -49,14 +49,14 @@ export class ChatBotComponent implements OnInit, AfterViewInit {
       .subscribe((msg3) => {
         if (msg3) {
           this.rightcontainer?.clear();
-          localStorage.setItem('child', msg3);
+          sessionStorage.setItem('child', msg3);
           this.showPanel = true;
           this.closePanelservices.sendLeftBarToggleValue(false)
           this.loadComponent('', msg3);
         } else {
           this.showPanel = false;
           this.rightcontainer?.clear();
-          localStorage.setItem('child', '');
+          sessionStorage.setItem('child', '');
         }
       });
   }
@@ -66,14 +66,14 @@ export class ChatBotComponent implements OnInit, AfterViewInit {
       .subscribe((msg3) => {
         if (msg3) {
           this.rightcontainer?.clear();
-          localStorage.setItem('child', msg3);
+          sessionStorage.setItem('child', msg3);
           this.showPanel = true;
           this.closePanelservices.sendLeftBarToggleValue(false)
           this.loadComponent('', msg3);
         } else {
           this.showPanel = false;
           this.rightcontainer?.clear();
-          localStorage.setItem('child', '');
+          sessionStorage.setItem('child', '');
         }
       });
   }
