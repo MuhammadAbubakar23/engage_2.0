@@ -12,6 +12,7 @@ import { OpensidebarService } from 'src/app/services/openSidebarService/openside
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { MenuService } from 'src/app/shared/services/menu.service';
 import { SearchFilterService } from 'src/app/services/SearchFilter/search-filter.service';
+import { SharedService } from 'src/app/services/SharedService/shared.service';
 
 @Component({
   selector: 'role-menu',
@@ -51,7 +52,8 @@ export class RoleMenuComponent implements OnInit {
     private SearchFilterService: SearchFilterService,
     private _perS: PermissionService,
     private commonService: CommonDataService,
-    private _menuS: MenuService
+    private _menuS: MenuService,
+    private _sharedS:SharedService
   ) {
     //  this.menu$ = this.MenuStore.select(getEmargingEqual("role_main_left_menu"));
     //  this.menus$ = this.menu$.pipe(share(), startWith(false));
@@ -152,5 +154,6 @@ export class RoleMenuComponent implements OnInit {
   }
   resetFilters() {
     this.SearchFilterService.resetAllFilter();
+    this._sharedS.setShowGenerativeMenu('');
   }
 }

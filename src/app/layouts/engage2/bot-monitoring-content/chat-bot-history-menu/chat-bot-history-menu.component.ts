@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { BotMonitoringService } from 'src/app/modules/bot-monitoring/services/bot-monitoring.service';
 import { BotSubMenusActiveService } from 'src/app/modules/bot-monitoring/services/bot-sub-menus-active.service';
 import { ChatVisibilityService } from 'src/app/modules/bot-monitoring/services/chat-visibility.service';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
-import { MenuService } from 'src/app/shared/services/menu.service';
+import { SharedService } from 'src/app/services/SharedService/shared.service';
+
 
 @Component({
   selector: 'app-chat-bot-history-menu',
@@ -38,28 +40,15 @@ export class ChatBotHistoryMenuComponent implements OnInit {
   completedConversation: any[] = [];
   showBotMonitoringContent: boolean = false;
   constructor(private chatVisibilityService: ChatVisibilityService, private _botSubMenuStatus: BotSubMenusActiveService,
-    private headerService: HeaderService, private _botService: BotMonitoringService, private _menuS: MenuService,private _route:Router) {
+    private headerService: HeaderService, private _botService: BotMonitoringService,
+    private _route:Router,private _sharedS:SharedService
+    ,private _spinner:NgxSpinnerService) {
+      console.log("Bot History Menu ")
 
   }
-  toggleCollapse(menu: any) {
-    debugger
-    if (menu['link'] === 'generative-bot-history') {
-      this.updatevalue('generative-bot-history');
-    }
-    else if (menu['link'] === 'bot-monitoring-chat'){
-       this.updatevalue('bot-monitoring-chat');
-    }
 
-    menu.expanded = !menu.expanded;
-  }
   ngOnInit(): void {
-    this._menuS.getBotMenu.subscribe((menu: any) => {
-
-      if(menu){
-        this.menuItems = menu[0]?.subMenu;
-      }
-
-    })
+    this._spinner.show('chat-history-menu');
     this.getChatBotHistory();
     this.chatVisibilityService.thirdActiveHistory$.subscribe((obj: any) => {
       if (obj) {
@@ -99,7 +88,7 @@ export class ChatBotHistoryMenuComponent implements OnInit {
 
   }
   toggleChatVisibility(clickedItem: any) {
-
+    debugger
     clickedItem.active = !clickedItem.active;
     this.chatVisibilityService.notifyNewChatIdHistory(clickedItem);
   }
@@ -108,16 +97,20 @@ export class ChatBotHistoryMenuComponent implements OnInit {
     this.updatevalue('chat')
   }
   goBack() {
-    this.showBotMonitoringContent = false;
+    this._sharedS.setShowGenerativeMenu('');
   }
   getChatBotHistory() {
 
     this._botService.chatBotHistory().subscribe((res: any) => {
       res.slugs.forEach((item: any, index: any) => {
         item.name = "Conversation" + `${index + 1}`
-        item['active'] = true;
+        item['active'] = false;
       })
-      this.activechatBotHistory = res.slugs;
+      if(res.slugs.length>0){
+         this._spinner.hide('chat-history-menu');
+        this.activechatBotHistory = res.slugs;
+      }
+
       // this.activechatBotHistory = [
       //   {
       //     "createdAt": "2024-07-11T07:31:14.164Z",

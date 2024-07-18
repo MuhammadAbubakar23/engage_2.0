@@ -1,0 +1,52 @@
+<div class="leftbar-console-expanded">
+  <div class="sidebar-header pe-3 ps-3 row">
+    <h5 class="fw-bold mt-3 ms-1 col-8">
+      <a>BOT Management</a>
+    </h5>
+  </div>
+  <ul
+    class="list-group console-list mt-2"
+    data-scrollbar="true"
+    tabindex="-1"
+    style="overflow: auto; outline: none"
+  >
+    <div class="scroll-content">
+      <div class="scroll-content">
+        <li
+          class="list-group-item list-group-item-action"
+          [ngClass]="!menu.expanded ? 'collapsed' : ''"
+          *ngFor="let menu of menuItems; let i = index"
+        >
+          <a
+            class="d-flex align-items-center"
+            [routerLink]="menu['link']"
+            [ngClass]="menu.subMenu ? 'chevron-icon' : ''"
+            type="button"
+            (click)="toggleCollapse(menu)"
+          >
+            <i [ngClass]="menu['icon']"></i>
+            <span [innerHTML]="menu['icon']" class="pe-2"></span>
+            {{ menu["name"] }}
+          </a>
+
+          <ul
+            *ngIf="menu.subMenu"
+            class="list-unstyled-inner collapse"
+            [ngClass]="menu.expanded ? 'show' : ''"
+          >
+            <li
+              *ngFor="let child of menu.subMenu"
+              class="list-group-item list-group-item-action"
+            >
+              <a [routerLink]="child['link']" class="d-flex align-items-center">
+                <i [ngClass]="child['icon']"></i>
+                {{ child["name"] }}
+              </a>
+            </li>
+          </ul>
+        </li>
+      </div>
+    </div>
+  </ul>
+</div>
+<a class="panelToggle"></a>

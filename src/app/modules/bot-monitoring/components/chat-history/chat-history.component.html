@@ -11,7 +11,7 @@
         <span class="iconButton medium bg-white fw-bold"></span>
         <div class="ms-3">
           <h6 class="user-status m-0">
-            Customer
+            {{chat[0].name}}
             <!-- <i class="fa fa-circle user-status-icon sun" title="away"></i> -->
           </h6>
         </div>
@@ -19,15 +19,11 @@
         <span
           class="iconButton medium ms-auto"
           id="minbutton"
-         
+          (click)="refreshHistory()"
         >
-          <!-- <i
-            class="fa-light"
-            [ngClass]="{
-              'fa-minus': isMinimized,
-              'fa-expand': isMinimized
-            }"
-          ></i> -->
+          <i
+            class="fa-light fa-refresh"
+                      ></i>
         </span>
         <span (click)="removeScreen()">
           <i class="fa-light fa-times"></i>

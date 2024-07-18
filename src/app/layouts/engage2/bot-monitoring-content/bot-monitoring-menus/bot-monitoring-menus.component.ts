@@ -13,6 +13,7 @@ import { BotMonitoringService } from 'src/app/modules/bot-monitoring/services/bo
 import { ChatVisibilityService } from 'src/app/modules/bot-monitoring/services/chat-visibility.service';
 import { environment } from 'src/environments/environment';
 import { BotSubMenusActiveService } from 'src/app/modules/bot-monitoring/services/bot-sub-menus-active.service';
+import { SharedService } from 'src/app/services/SharedService/shared.service';
 
 
 @Component({
@@ -64,10 +65,9 @@ export class BotMonitoringMenusComponent implements OnInit {
   ];
 
 
-  constructor(private chatVisibilityService: ChatVisibilityService, private _botMonitorS: BotMonitoringService, private store: Store<MenuState>,
-    private treegen: TreeGenService<MenuModel>, private headerService: HeaderService, private storage: StorageService,
-    private _botSubMenuStatus: BotSubMenusActiveService) {
-
+  constructor(private chatVisibilityService: ChatVisibilityService, private _botMonitorS: BotMonitoringService, private headerService: HeaderService,
+    private _botSubMenuStatus: BotSubMenusActiveService,private _sharedS:SharedService) {
+      console.log("Bot Monitor Menu ")
     this._botSubMenuStatus.activationStatus.subscribe(value => {
       this.subMenus[0].isChild = value;
     });
@@ -206,7 +206,7 @@ export class BotMonitoringMenusComponent implements OnInit {
     }
   }
   goBack() {
-    this.showBotMonitoringContent = false;
+    this._sharedS.setShowGenerativeMenu('');
   }
   updatevalue(string: any) {
     if (string === 'bot-monitering') {
