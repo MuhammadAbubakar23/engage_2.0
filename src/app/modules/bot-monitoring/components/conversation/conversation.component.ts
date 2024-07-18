@@ -32,6 +32,7 @@ export class ConversationComponent implements OnInit {
   toastermessage: boolean = false;
   AlterMsg: any
   isOpen = false;
+  setName: any;
 
   constructor(private headerService: HeaderService, private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService, private _activeRoute: ActivatedRoute) { }
   @ViewChild('chatBody') private chatBody?: ElementRef;
@@ -40,13 +41,15 @@ export class ConversationComponent implements OnInit {
       subscribe((param) => {
         this.currentConversationName = param['name'];
       })
-    this.BotId = localStorage.getItem('bot_id');
+    this.BotId = sessionStorage.getItem('bot_id');
     if (this.BotId) {
       this.fetchData();
     } else {
-      console.error('BotId not found in localStorage.');
+      console.error('BotId not found in sessionStorage.');
     }
     this.gen()
+    this.setName=sessionStorage.getItem("name")
+
   }
   filteredChatbots() {
     if (!this.searchQuery) {
@@ -179,16 +182,16 @@ export class ConversationComponent implements OnInit {
         // Handle error scenario
       }
     );
-  }
+}
   formatUtterance(utterance: string): string {
     return utterance.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
   }
   DeleteRule(rule: string, event: Event) {
-    debugger
+    
     event.stopPropagation();
     const confirmation = confirm('Are you sure you want to delete this Rule?');
     if (confirmation) {
-      this.BotId = localStorage.getItem('bot_id');
+      this.BotId = sessionStorage.getItem('bot_id');
       const obj = new FormData();
       obj.append('rule', rule);
       obj.append('bot_id', this.BotId);
@@ -209,11 +212,11 @@ export class ConversationComponent implements OnInit {
     }
   }
   DeleteStory(story: string, event: Event) {
-    debugger
+    
     event.stopPropagation();
     const confirmation = confirm('Are you sure you want to delete this story?');
     if (confirmation) {
-      this.BotId = localStorage.getItem('bot_id');
+      this.BotId = sessionStorage.getItem('bot_id');
       const obj = new FormData();
       obj.append('story', story);
       obj.append('bot_id', this.BotId);

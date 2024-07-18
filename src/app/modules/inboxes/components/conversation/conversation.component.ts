@@ -23,6 +23,7 @@ import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service
 import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { InsertTagInProfileFeedDto } from 'src/app/shared/Models/InsertTagaInProfileFeedDto';
 import { SearchFilterService } from 'src/app/services/SearchFilter/search-filter.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
@@ -65,7 +66,11 @@ export class ConversationComponent implements OnInit {
   totalPages: any;
   searchCustomerForm!: FormGroup;
   groupByDateList: any[] = [];
-
+  hasAdvanceSerachPermission: boolean = false;
+  hasanytimeeSerachPermission: boolean = false;
+  hasAttachementeSerachPermission: boolean = false;
+  hasSearchInboxPermission: boolean = false;
+  hasSearchFromPermission: boolean = false;
   constructor(
     private fetchId: FetchIdService,
     private SpinnerService: NgxSpinnerService,
@@ -83,7 +88,8 @@ export class ConversationComponent implements OnInit {
     private sendSkillId: SkillIdsService,
     private sendSkillSlug: SkillslugService,
     private getSkillSlug: SkillslugService,
-    public searchFilterService:SearchFilterService
+    public searchFilterService: SearchFilterService,
+    private _perS: PermissionService
   ) {
     this.criteria = {
       property: 'createdDate',
@@ -107,7 +113,19 @@ export class ConversationComponent implements OnInit {
   }
   currentUrl: string = '';
   FlagForAssignToMe: string = '';
+  hasPermission(permissionName: string) {
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
+  }
   ngOnInit(): void {
+    this.hasAdvanceSerachPermission = this.hasPermission('_searchadvance_');
+    this.hasanytimeeSerachPermission = this.hasPermission('_searchanytime_');
+    this.hasAttachementeSerachPermission = this.hasPermission('_searchattachment_');
+    this.hasSearchInboxPermission = this.hasPermission('_searchinbox_');
+    this.hasSearchFromPermission = this.hasPermission('_searchinbox_');
+
+
+
     this.wings = this.getWing.wings || sessionStorage.getItem('defaultWings');
     const date_fillter = sessionStorage.getItem('datefillter');
     if (date_fillter) {
@@ -242,9 +260,9 @@ export class ConversationComponent implements OnInit {
     this.notInclude = this.searchFilterService.notIncludeFilter;
     this.fromDate = this.searchFilterService.fromDateFilter;
     this.toDate = this.searchFilterService.toDateFilter;
-    this.isAttachment=this.searchFilterService.isAttachmentFilter;
+    this.isAttachment = this.searchFilterService.isAttachmentFilter;
     this.blueTick = this.searchFilterService.blueTick;
-    if(this.searchFilterService.fromDateFilter != null){ this.searchForm.reset(); }
+    if (this.searchFilterService.fromDateFilter != null) { this.searchForm.reset(); }
   }
   wingsList: any[] = [];
   totalPageNumbers: any;
@@ -766,8 +784,8 @@ export class ConversationComponent implements OnInit {
       skills: this.skillSlug,
     };
 
-    this.commondata.GetConversationList(this.filterDto).subscribe((res:any)=>{
-      console.log("conversa========>",res)
+    this.commondata.GetConversationList(this.filterDto).subscribe((res: any) => {
+      console.log("conversa========>", res)
       this.ConversationList.push(res.List[19]);
       this.changeDetect.detectChanges()
     })

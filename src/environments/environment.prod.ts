@@ -20,7 +20,6 @@ export const environment = {
   store: { types: { local: 'LS' } },
   title: 'abc',
   clientNumber: '923112744502',
-  InstaBaseUrl: 'https://insta.360scrm.com/api/',
   FbBaseUrl: 'https://firstyellowmouse47.conveyor.cloud/api/',
   // FbBaseUrl: 'https://nextsparklypen70.conveyor.cloud/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
@@ -43,6 +42,8 @@ export const environment = {
   // ServiceBaseUrl: '',
   // consoleBaseUrl: 'https://console.enteract.live/api/',
   // ReportsBaseUrl: 'https://kereports.enteract.live/api/',
+  // LinkedInBaseUrl: 'https://linkdservice.enteract.live/api/',
+  // keReportsBaseUrl: 'https://kereports.enteract.live/api/',
   // LinkedInBaseUrl: 'https://linkdservice.enteract.live/api/',
   // botBaseUrl:'',
 
@@ -75,7 +76,7 @@ export const environment = {
   // botBaseUrl: '',
   // LinkedInBaseUrl:'',
 
-  // For PK tach damo company Id 649 
+  // For PK tach damo company Id 649
   // IdentityBaseUrl: 'https://enidentitybackend.enteract.live/api/',
   // CommonBaseUrl: 'https://encommonbackend.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://encommonbackend.enteract.live/',
@@ -84,18 +85,18 @@ export const environment = {
   // consoleBaseUrl: 'https://enconsolebackend.enteract.live/api/',
   // ReportsBaseUrl:'https://enreportsbackend.enteract.live/api/',
   // LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
-  // botBaseUrl:'',
+  // BotBaseUrl:'',
 
   IdentityBaseUrl: '',
-    CommonBaseUrl: '',
-    SignalRCommonBaseUrl: '',
-    ProfileBaseUrl: '',
-    ServiceBaseUrl: '',
-    ConsoleBaseUrl: '',
-    LinkedInBaseUrl: '',
-    BotBaseUrl: '',
-    ReportsBaseUrl:'',
-    
+  CommonBaseUrl: '',
+  SignalRCommonBaseUrl: '',
+  ProfileBaseUrl: '',
+  ServiceBaseUrl: '',
+  ConsoleBaseUrl: '',
+  LinkedInBaseUrl: '',
+  BotBaseUrl: '',
+  ReportsBaseUrl: '',
+
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
@@ -144,7 +145,8 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  chatBotBaseUrl: 'https://entertainerbot.enteract.app',
   botsBaseUrl: 'http://3.1.47.150:5000/bots/',
   botConfigBaseUrl: 'https://linked.360scrm.com/api/',
   // botConfigBaseUrl: 'https://newpurpleshop86.conveyor.cloud/api/',
@@ -162,7 +164,17 @@ export const environment = {
   botMoniteringBaseUrl: 'https://flowbot.enteract.app/',
   flowBot: 'https://flowbot.enteract.app/',
   intentBot: 'https://intentbot.enteract.app/',
-  autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
+
+  autoresponderbaseurl: 'https://enexchangebackend.enteract.live/api/', //'https://officemail.360scrm.com/api/',
+  instagramBaseUrl: 'https://insta.360scrm.com/api/',
+  linkdinBaseUrl: 'https://enlinkedinbackend.enteract.live/api/', //'https://linked.360scrm.com/api/',
+  youtubeBaseUrl: 'https://tube.360scrm.com/api/',
+  whatsappBaseUrl: 'https://whats.360scrm.com/api/',
+  gSuitBaseUrl: 'https://mail.360scrm.com/api/',
+  playStoreBaseUrl: 'https://play.360scrm.com/api/',
+  exchangeEmailBaseUrl: 'https://enexchangebackend.enteract.live/api/', //'https://officemail.360scrm.com/api/',
+  metaWhatsapp: 'https://enwhatsappbackend.enteract.live/api/', //'https://mbwhats.360scrm.com/api/',
+
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
@@ -243,7 +255,7 @@ export const environment = {
       deleteSkill: 'Skill/Delete',
       getAllWing: 'Teams/GetAllWing',
       getPolicyByWing: 'SLAPolicies/GetByWing',
-      getCompanyTeams:'Teams/GetCompanyTeams',
+      getCompanyTeams: 'Teams/GetCompanyTeams',
 
       // service Base rules
       getEntitiesRules: 'EntityConfigs/GetEntities',
@@ -251,6 +263,7 @@ export const environment = {
       addRule: 'RuleConfigs/Add',
       getFbRule: 'RuleConfigs/GetAll',
       softDeleteFb: 'RuleConfigs/Delete',
+      addEmailRule: 'RuleBuilder/Add',
       // getTagsAll: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetSupreamTags',
       updateSkill: 'Skill/Update',
@@ -298,6 +311,14 @@ export const environment = {
       getTemplateStatus: 'Configurations/TemplateStatusToggler',
       deleteTemplate: 'Configurations/DeleteTemplate',
       getRuleStatus: 'RuleConfigs/UpdateRuleStatus',
+      getTagsBySupreamId: 'Tags/GetTagsBySupreamId',
+      addTagTeams: 'TagTeams/Add',
+      updateTagTeams: 'TagTeams/Update',
+      getSkillTeamById: 'TagTeams/GetById',
+      deleteTagTeam: 'TagTeams/Delete',
+      addAccessReports: 'ReportAcess/Add',
+      getActors: 'Roles/GetActors',
+      getReports: 'Report/GetReports',
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -333,7 +354,7 @@ export const environment = {
       createBotTrain: 'models/create',
       runChatBot: 'models/run',
       chatBotWdidget: 'chat',
-      stopChatBot: 'models/stop'
+      stopChatBot: 'models/stop',
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

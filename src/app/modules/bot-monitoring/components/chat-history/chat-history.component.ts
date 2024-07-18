@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ChatVisibilityService } from '../../services/chat-visibility.service';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ChatWidget2Component } from 'src/app/shared/components/chat-widget2/chat-widget2.component';
 
 @Component({
   selector: 'app-chat-history',
@@ -17,21 +18,18 @@ export class ChatHistoryComponent implements OnInit {
   isRemoved: boolean = false;
   @Output() minimizeToggle: EventEmitter<void> = new EventEmitter<void>();
   removeScreen() {
+    debugger
     let newChat =
-      {"slug": this.chat[0].slug}
-
-    this.chatVisibilityService.notifyNewChatId(newChat);
-    //this.chatVisibilityService.removeActiveId({"slug": this.chat[0].slug});
+      { "slug": this.chat[0].slug }
+    this.chatVisibilityService.notifyNewChatIdHistory(newChat);
   }
   toggleMinimized(): void {
     this.isMinimized = !this.isMinimized;
-    //this.minimizeToggle.emit(clickedItem)
   }
 
   constructor(private chatVisibilityService: ChatVisibilityService) { }
   ngOnInit(): void {
-    debugger
-    console.log("this.chat",this.chat)
+    console.log("this.chat", this.chat)
   }
 }
 

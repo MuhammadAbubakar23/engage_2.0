@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { timeout } from 'rxjs/operators';
-const baseUrl = environment.botBaseUrl;
+const baseUrl = environment.BotBaseUrl;
 @Injectable({
   providedIn: 'root'
 })
@@ -35,6 +35,7 @@ export class BotMonitoringService {
   chatBotWdidget = environment.links.bot.chatBotWdidget
   stopChatBot = environment.links.bot.stopChatBot
   chatBotBaseUrl = environment.chatBotBaseUrl
+
 
   constructor(private http: HttpClient) { }
   getChats(data: any): Observable<any> {

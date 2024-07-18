@@ -23,7 +23,7 @@
     </div>
   </a>
 <!-- </ng-container> -->
-<ng-container *ngIf="!onlyAnalyticsTabVisible.includes(restrictedAgent)">
+<!-- <ng-container *ngIf="!onlyAnalyticsTabVisible.includes(restrictedAgent)">
   <a [routerLink]="['/all-inboxes/completed/all']" routerLinkActive="active" ariaCurrentWhenActive="page"
     class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
     [class.active]="activeChannel == 'completed'">
@@ -34,8 +34,8 @@
       <div class="itemLabel">Completed Interactions</div>
     </div>
   </a>
-</ng-container> 
-  <ng-container *ngIf="hasMonitoringPermission">
+</ng-container>  -->
+  <ng-container *ngIf="showBotManagement">
     <a [routerLink]="['/bot-monitoring']" routerLinkActive="active" ariaCurrentWhenActive="page"
       class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
       (click)="resetFilters()">
@@ -48,7 +48,7 @@
     </a>
   </ng-container>
 
-  <ng-container *ngIf="hasConsolePermission">
+  <ng-container *ngIf="showConsole">
     <a [routerLink]="['/console/home']" routerLinkActive="active" ariaCurrentWhenActive="page"
       class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
       [class.active]="activeChannel == 'console'" (click)="resetFilters()">

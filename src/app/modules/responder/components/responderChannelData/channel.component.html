@@ -169,7 +169,7 @@
                                                                 <i class="fas fa-star sun"></i>
                                                             </button>
                                                         </div>
-                                                        <div class="dropdown w-auto">
+                                                        <div class="dropdown w-auto" *ngIf="hasQueryStatusPermission">
                                                             <button class="btn coal p-0 ps-3" type="button"
                                                                 id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                 aria-expanded="false">
@@ -260,7 +260,7 @@
                                                             <div class="message-actionlist d-flex align-items-center">
                                                                 <div class="box"
                                                                     *ngIf="showLikeBtnTo.includes(post?.platform | lowercase)">
-                                                                    <a class="message-actionItem coal likebht p-0 label-reactions"
+                                                                    <a class="message-actionItem coal likebht p-0 label-reactions" *ngIf="hasQuickLikesPermission"
                                                                         (click)="likeByAdmin(cmnt?.id, cmnt?.isLikedByAdmin, post?.platform, post?.post?.profile.page_Id, post?.post?.profile.profile_Id, post?.user?.userId)"
                                                                         [class.active]="cmnt?.isLikedByAdmin == true">
                                                                         <span class="iconButton small btn">
@@ -271,7 +271,7 @@
                                                                     </a>
                                                                 </div>
                                                                 <a class="message-actionItem replyBtn coal"
-                                                                    (click)="SendnewCommentInformation(cmnt?.id)">
+                                                                    (click)="SendnewCommentInformation(cmnt?.id)" *ngIf="hasReplyQuickPermission">
                                                                     <span class="iconButton small btn">
                                                                         <i class="fal fa-reply coal"></i>
                                                                     </span>
@@ -372,7 +372,7 @@
                                                                         </ul>
                                                                     </ul>
                                                                 </div>
-                                                                <div class="dropdown w-auto">
+                                                                <div class="dropdown w-auto"  *ngIf="hasQuerySentimentsPermission">
                                                                     <button class="iconButton medium show"
                                                                         id="sentimentButton" data-bs-toggle="dropdown"
                                                                         aria-expanded="true" style="margin-left:43px">
@@ -424,7 +424,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <ng-container >
+                                            <!-- <ng-container  *ngIf="hasQueryTicketssPermission">
                                             <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', cmnt?.id)"
                                             type="button">
                                             <i class="fal fa-plus-circle sky"></i>
@@ -619,7 +619,7 @@
                                         <div class="d-flex align-items-center agent-container">
                                             <div class="card w-d-inline messageUpper">
                                                 <div class="card-body shadow-sm" style="min-width: 400px;"
-                                                    [ngClass]="cmnt?.queryStatus == 'Unresponded'?'unread-msg':''">
+                                                    [ngClass]="cmnt?.queryStatus == 'Unresponded'?'unread-msg':''" >
                                                     <div class="d-flex msg-user-info">
                                                         <div class="d-flex align-items-center">
                                                             <h6 class="card-title navy m-0">
@@ -635,7 +635,7 @@
                                                                 <i class="fas fa-star sun"></i>
                                                             </button>
                                                         </div>
-                                                        <div class="dropdown w-auto">
+                                                        <div class="dropdown w-auto" *ngIf="hasQueryStatusPermission">
                                                             <button class="btn coal p-0 ps-3" type="button"
                                                                 id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                 aria-expanded="false">
@@ -729,7 +729,7 @@
                                                             <div class="message-actionlist d-flex align-items-center">
                                                                 <div class="box"
                                                                     *ngIf="showLikeBtnTo.includes(post?.platform | lowercase)">
-                                                                    <a class="message-actionItem coal likebht p-0 label-reactions"
+                                                                    <a class="message-actionItem coal likebht p-0 label-reactions"  *ngIf="hasQuickLikesPermission"
                                                                         (click)="likeByAdmin(cmnt?.id, cmnt?.isLikedByAdmin, post?.platform, post?.post?.profile.page_Id, post?.post?.profile.profile_Id, post?.user?.userId)"
                                                                         [class.active]="cmnt?.isLikedByAdmin == true">
                                                                         <span class="iconButton small btn">
@@ -841,7 +841,7 @@
                                                                         </ul>
                                                                     </ul>
                                                                 </div>
-                                                                <div class="dropdown w-auto">
+                                                                <div class="dropdown w-auto"  *ngIf="hasQuerySentimentsPermission">
                                                                     <button class="iconButton medium show"
                                                                         id="sentimentButton" data-bs-toggle="dropdown"
                                                                         aria-expanded="true" style="margin-left:43px">
@@ -1125,7 +1125,7 @@
                                                             <i class="fas fa-star sun"></i>
                                                         </button>
                                                     </div>
-                                                    <div class="dropdown w-auto">
+                                                    <div class="dropdown w-auto" *ngIf="hasQueryStatusPermission">
                                                         <button class="btn coal p-0 ps-3" type="button"
                                                             id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                             aria-expanded="false">
@@ -1305,7 +1305,7 @@
                                                                     </ul>
                                                                 </ul>
                                                             </div>
-                                                            <div class="dropdown w-auto">
+                                                            <div class="dropdown w-auto"  *ngIf="hasQuerySentimentsPermission">
                                                                 <button class="iconButton medium show"
                                                                     id="sentimentButton" data-bs-toggle="dropdown"
                                                                     aria-expanded="true" style="margin-left:43px">
@@ -1569,7 +1569,7 @@
                                                             <i class="fas fa-star sun"></i>
                                                         </button>
                                                     </div>
-                                                    <div class="dropdown w-auto">
+                                                    <div class="dropdown w-auto" *ngIf="hasQueryStatusPermission">
                                                         <button class="btn coal p-0 ps-3" type="button"
                                                             id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                             aria-expanded="false">
@@ -1749,7 +1749,7 @@
                                                                     </ul>
                                                                 </ul>
                                                             </div>
-                                                            <div class="dropdown w-auto">
+                                                            <div class="dropdown w-auto"  *ngIf="hasQuerySentimentsPermission">
                                                                 <button class="iconButton medium show"
                                                                     id="sentimentButton" data-bs-toggle="dropdown"
                                                                     aria-expanded="true" style="margin-left:43px">
@@ -2013,7 +2013,7 @@
                                                             <i class="fas fa-star sun"></i>
                                                         </button>
                                                     </div>
-                                                    <div class="dropdown w-auto">
+                                                    <div class="dropdown w-auto" *ngIf="hasQueryStatusPermission">
                                                         <button class="btn coal p-0 ps-3" type="button"
                                                             id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                             aria-expanded="false">
@@ -2193,7 +2193,7 @@
                                                                     </ul>
                                                                 </ul>
                                                             </div>
-                                                            <div class="dropdown w-auto">
+                                                            <div class="dropdown w-auto"  *ngIf="hasQuerySentimentsPermission">
                                                                 <button class="iconButton medium show"
                                                                     id="sentimentButton" data-bs-toggle="dropdown"
                                                                     aria-expanded="true" style="margin-left:43px">
@@ -2389,7 +2389,7 @@
                 <div class="icons-list align-items-md-center d-flex pe-2">
                     <!-- quick reply button -->
                     <a class="iconButton small notification iconHover" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" *ngIf="hasQuickReplyPermission">
                         <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></a>
                     <!-- human agent tag -->
                     <a *ngIf="fetchedPostType == 'FCP'" class="iconButton small notification iconHover"
@@ -2400,7 +2400,7 @@
                 <div *ngIf="showCustomerSatistactionForm.includes(activeClient)"
                     class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
                     <button class="iconButton small notification iconHover" id="surveyForms" data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside" data-bs-original-title="Survey Forms">
+                        data-bs-auto-close="outside" data-bs-original-title="Survey Forms"*ngIf="hasReplyCsatPermission">
                         <span class="iconButton small btn mx-2">
                             <i class="fa-light fa-square-list"></i>
                         </span>
@@ -2446,7 +2446,7 @@
                     <!-- emoji -->
                     <div class="dropdown w-auto">
                         <button class="iconButton small notification iconHover" id="emojiBox" data-bs-toggle="dropdown"
-                            data-bs-auto-close="outside" data-bs-original-title="Choose an emoji">
+                            data-bs-auto-close="outside" data-bs-original-title="Choose an emoji" *ngIf="hasReplyEmojiPermission">
                             <span class="iconButton small btn mx-2">
                                 <i class="far fa-smile"></i>
                             </span>
@@ -2495,14 +2495,14 @@
                     <!-- attachment button -->
                     <div class="upload-btn-wrapper"
                         *ngIf="showAttachmentButton==true && showAttachmentBtnTo.includes(fetchedPostType)">
-                        <button class="iconButton small notification iconHover channels-attachment-btn">
-                            <i class="fal fa-paperclip"></i></button>
+                        <button class="iconButton small notification iconHover channels-attachment-btn"*ngIf="hasReplyAttachmentPermission">
+                            <i class="fal fa-paperclip" ></i></button>
                         <input type="file" class="form-control uplaoded-box"
                             (change)="onFileChanged()" #fileInput>
                     </div>
                     <!-- send button -->
                     <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
-                        data-bs-placement="top" title="" type="submit" data-bs-original-title="Send">
+                        data-bs-placement="top" title="" type="submit" data-bs-original-title="Send" *ngIf="hasReplySentPermission">
                         <i class="fal fa-paper-plane"></i>
                     </button>
                 </div>

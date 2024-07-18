@@ -20,4 +20,20 @@ export class ChatVisibilityService {
   notifythirdActive(chat: any) {
     this.thirdActiveSubject.next(chat);
   }
+
+  private newChatIdSubjectHistory = new BehaviorSubject<string | null>(null);
+  newChatIdHistory$: Observable<string | null> = this.newChatIdSubjectHistory.asObservable();
+  notifyNewChatIdHistory(chat: any) {
+    this.newChatIdSubjectHistory.next(chat);
+  }
+  private activeIdSubjectHistory = new BehaviorSubject<any>(null);
+  activeIdHistory$: Observable<any> = this.activeIdSubjectHistory.asObservable();
+  removeActiveIdHistory(activeObj:any) {
+    this.activeIdSubjectHistory.next(activeObj);
+  }
+  private thirdActiveSubjectHistory = new BehaviorSubject<string | null>(null);
+  thirdActiveHistory$: Observable<string | null> = this.thirdActiveSubjectHistory.asObservable();
+  notifythirdActiveHistory(chat: any) {
+    this.thirdActiveSubjectHistory.next(chat);
+  }
 }

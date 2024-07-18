@@ -169,7 +169,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="floating-item mb-4">
+                        <!-- <div class="floating-item mb-4">
                           <div
                             [ngClass]="{'was-validated' : userForm.get('team')!.valid && userForm.get('team')!.touched}"
                             class="form-floating mb-2">
@@ -188,102 +188,103 @@
                                 Please select atleast one Team
                               </div>
                             </div>
-                            <!-- <div class="valid-feedback" *ngIf="userForm.get('team')!.valid && userForm.get('team')!.touched">
+                            <div class="valid-feedback"
+                              *ngIf="userForm.get('team')!.valid && userForm.get('team')!.touched">
                               Looks Good!
                             </div>
-                          </div> -->
                           </div>
-                          <div class="floating-item select-pills mb-4 bg-white">
-                            <div class="form-floating"
-                              [ngClass]="{'was-validated' : RolesControl.valid && RolesControl.touched}">
-                              <p style="margin: 3px;">Roles</p>
-                              <mat-select #rolesSelect
-                                [ngClass]="{'is-invalid' : (RolesControl.errors && (RolesControl.touched || RolesControl.dirty))} "
-                                [formControl]="RolesControl" multiple id="role" style="   margin: 2px;">
-                                <mat-select-trigger>
-                                  <mat-chip-list>
-                                    <mat-chip *ngFor="let role of RolesControl.value" [removable]="true"
-                                      (removed)="onCatRemovedRole(role)" style="background-color: #1c93e9;
+                        </div> -->
+                        <div class="floating-item select-pills mb-4 bg-white">
+                          <div class="form-floating"
+                            [ngClass]="{'was-validated' : RolesControl.valid && RolesControl.touched}">
+                            <p style="margin: 3px;">Roles</p>
+                            <mat-select #rolesSelect
+                              [ngClass]="{'is-invalid' : (RolesControl.errors && (RolesControl.touched || RolesControl.dirty))} "
+                              [formControl]="RolesControl" multiple id="role" style="   margin: 2px;">
+                              <mat-select-trigger>
+                                <mat-chip-list>
+                                  <mat-chip *ngFor="let role of RolesControl.value" [removable]="true"
+                                    (removed)="onCatRemovedRole(role)" style="background-color: #1c93e9;
                                     color: #ffffff; border-radius: 2px important;" selected>
-                                      {{ role?.name }}
-                                      <mat-icon class="mb-2" matChipRemove>x</mat-icon>
-                                    </mat-chip>
-                                  </mat-chip-list>
-                                </mat-select-trigger>
-                                &nbsp; &nbsp; &nbsp;
-                                <mat-option *ngFor="let role of Roles" [value]="role">{{ role?.name }}</mat-option>
-                              </mat-select>
-                              <div class="invalid-feedback"
-                                *ngIf="(RolesControl.errors && (RolesControl.touched || RolesControl.dirty))">
-                                <div>Please select atleast one Role</div>
-                              </div>
-                              <div class="valid-feedback" *ngIf=" RolesControl.valid && RolesControl.touched">Looks
-                                Good!</div>
+                                    {{ role?.name }}
+                                    <mat-icon class="mb-2" matChipRemove>x</mat-icon>
+                                  </mat-chip>
+                                </mat-chip-list>
+                              </mat-select-trigger>
+                              &nbsp; &nbsp; &nbsp;
+                              <mat-option *ngFor="let role of Roles" [value]="role">{{ role?.name }}</mat-option>
+                            </mat-select>
+                            <div class="invalid-feedback"
+                              *ngIf="(RolesControl.errors && (RolesControl.touched || RolesControl.dirty))">
+                              <div>Please select atleast one Role</div>
                             </div>
+                            <div class="valid-feedback" *ngIf=" RolesControl.valid && RolesControl.touched">Looks
+                              Good!</div>
                           </div>
-                          <div class="floating-item select-pills mb-4 bg-white" *ngIf="Teams.length > 0">
-                            <div class="form-floating"
-                              [ngClass]="{'was-validated' : TeamsControl.valid && TeamsControl.touched}">
-                              <p style="margin: 3px;">Teams</p>
-                              <mat-select
-                                [ngClass]="{'is-invalid' : (TeamsControl.errors && (TeamsControl.touched || TeamsControl.dirty))}"
-                                [formControl]="TeamsControl" multiple id="role" style="margin: 5px;">
-                                <mat-select-trigger>
-                                  <mat-chip-list>
-                                    <mat-chip *ngFor="let team of TeamsControl.value" [removable]="true"
-                                      (removed)="onCatRemovedTeam(team)"
-                                      style="background-color:#1c93e9; color:#ffffff; border-radius: 2px important;"
-                                      selected>
-                                      {{ team?.name }}
-                                      <mat-icon class="mb-2" matChipRemove>x</mat-icon>
-                                    </mat-chip>
-                                  </mat-chip-list>
-                                </mat-select-trigger>
-                                <mat-option *ngFor="let team of Teams" [value]="team">{{ team?.name }}</mat-option>
-                              </mat-select>
-                              <div class="invalid-feedback"
-                                *ngIf="(TeamsControl.errors && (TeamsControl.touched || TeamsControl.dirty))">
-                                <div>Please select atleast one Team</div>
-                              </div>
-                              <div class="valid-feedback" *ngIf=" TeamsControl.valid && TeamsControl.touched">Looks
-                                Good!</div>
+                        </div>
+                        <div class="floating-item select-pills mb-4 bg-white" *ngIf="Teams.length > 0">
+                          <div class="form-floating"
+                            [ngClass]="{'was-validated' : TeamsControl.valid && TeamsControl.touched}">
+                            <p style="margin: 3px;">Teams</p>
+                            <mat-select
+                              [ngClass]="{'is-invalid' : (TeamsControl.errors && (TeamsControl.touched || TeamsControl.dirty))}"
+                              [formControl]="TeamsControl" multiple id="role" style="margin: 5px;">
+                              <mat-select-trigger>
+                                <mat-chip-list>
+                                  <mat-chip *ngFor="let team of TeamsControl.value" [removable]="true"
+                                    (removed)="onCatRemovedTeam(team)"
+                                    style="background-color:#1c93e9; color:#ffffff; border-radius: 2px important;"
+                                    selected>
+                                    {{ team?.name }}
+                                    <mat-icon class="mb-2" matChipRemove>x</mat-icon>
+                                  </mat-chip>
+                                </mat-chip-list>
+                              </mat-select-trigger>
+                              <mat-option *ngFor="let team of Teams" [value]="team">{{ team?.name }}</mat-option>
+                            </mat-select>
+                            <div class="invalid-feedback"
+                              *ngIf="(TeamsControl.errors && (TeamsControl.touched || TeamsControl.dirty))">
+                              <div>Please select atleast one Team</div>
                             </div>
+                            <div class="valid-feedback" *ngIf=" TeamsControl.valid && TeamsControl.touched">Looks
+                              Good!</div>
                           </div>
-                          <div class="floating-item select-pills mb-4 bg-white" *ngIf="Skills.length > 0">
-                            <div class="form-floating"
-                              [ngClass]="{'was-validated' : SkillsControl.valid && SkillsControl.touched}" style="overflow: auto;
+                        </div>
+                        <div class="floating-item select-pills mb-4 bg-white" *ngIf="Skills.length > 0">
+                          <div class="form-floating"
+                            [ngClass]="{'was-validated' : SkillsControl.valid && SkillsControl.touched}" style="overflow: auto;
     max-height: 100px;">
-                              <p style="margin: 3px;">Skills</p>
-                              <mat-select
-                                [ngClass]="{'is-invalid' : (SkillsControl.errors && (SkillsControl.touched || SkillsControl.dirty))}"
-                                [formControl]="SkillsControl" multiple id="role">
-                                <mat-select-trigger>
-                                  <mat-chip-list>
-                                    <mat-chip *ngFor="let skill of SkillsControl.value" [removable]="true"
-                                      (removed)="onCatRemovedSkill(skill)"
-                                      style="background-color:#2F9DF2; color:#ffffff; border-radius: 2px important; overflow: auto ; max-height: 100px;"
-                                      selected>
-                                      {{ skill?.skillName }}
-                                      <mat-icon class="mb-2" matChipRemove>x</mat-icon>
-                                    </mat-chip>
-                                  </mat-chip-list>
-                                </mat-select-trigger>
-                                <mat-option *ngFor="let skill of Skills" [value]="skill">{{ skill.skillName
-                                  }}</mat-option>
-                              </mat-select>
-                              <div class="invalid-feedback"
-                                *ngIf="(SkillsControl.errors && (SkillsControl.touched || SkillsControl.dirty))">
-                                <div>Please select at least one Skill</div>
-                              </div>
-                              <div class="valid-feedback" *ngIf=" SkillsControl.valid && SkillsControl.touched">Looks
-                                Good!</div>
+                            <p style="margin: 3px;">Skills</p>
+                            <mat-select
+                              [ngClass]="{'is-invalid' : (SkillsControl.errors && (SkillsControl.touched || SkillsControl.dirty))}"
+                              [formControl]="SkillsControl" multiple id="role">
+                              <mat-select-trigger>
+                                <mat-chip-list>
+                                  <mat-chip *ngFor="let skill of SkillsControl.value" [removable]="true"
+                                    (removed)="onCatRemovedSkill(skill)"
+                                    style="background-color:#2F9DF2; color:#ffffff; border-radius: 2px important; overflow: auto ; max-height: 100px;"
+                                    selected>
+                                    {{ skill?.skillName }}
+                                    <mat-icon class="mb-2" matChipRemove>x</mat-icon>
+                                  </mat-chip>
+                                </mat-chip-list>
+                              </mat-select-trigger>
+                              <mat-option *ngFor="let skill of Skills" [value]="skill">{{ skill.skillName
+                                }}</mat-option>
+                            </mat-select>
+                            <div class="invalid-feedback"
+                              *ngIf="(SkillsControl.errors && (SkillsControl.touched || SkillsControl.dirty))">
+                              <div>Please select at least one Skill</div>
                             </div>
+                            <div class="valid-feedback" *ngIf=" SkillsControl.valid && SkillsControl.touched">Looks
+                              Good!</div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <!-- <div id="user-preference" class="tab-pane fade list-group-section" role="tabpanel"
+                </div>
+                <!-- <div id="user-preference" class="tab-pane fade list-group-section" role="tabpanel"
                   aria-labelledby="team-tab">
                   <div class="row mb-5">
                     <div class="col-lg-12">
@@ -313,11 +314,11 @@
                     </div>
                   </div>
                 </div> -->
-                </div>
               </div>
             </div>
           </div>
-          <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+        </div>
+        <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
       <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1560px; transform: translate3d(0px, 0px, 0px);">
       </div>
     </div>
@@ -325,26 +326,25 @@
       <div class="scrollbar-thumb scrollbar-thumb-y" style="height: 145.541px; transform: translate3d(0px, 0px, 0px);">
       </div>
     </div> -->
-        </div>
-        <footer class="footer">
-          <div class="ps-3 pe-3">
-            <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
-              <div class="row w-100">
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-8 justify-content-end d-flex">
-                  <div class="buttons-wrap d-flex">
-                    <button navigationBack class="btn btn-outline-secondary btn-medium me-2 px-4">Cancel </button>
-                    <!-- <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"  data-bs-toggle="modal"
+      </div>
+      <footer class="footer">
+        <div class="ps-3 pe-3">
+          <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+            <div class="row w-100">
+              <div class="col-md-4">
+              </div>
+              <div class="col-md-8 justify-content-end d-flex">
+                <div class="buttons-wrap d-flex">
+                  <button navigationBack class="btn btn-outline-secondary btn-medium me-2 px-4">Cancel </button>
+                  <!-- <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"  data-bs-toggle="modal"
                     data-bs-target=""></button> -->
-                    <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn">{{btnText}}</button>
-                  </div>
+                  <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn">{{btnText}}</button>
                 </div>
               </div>
             </div>
           </div>
-        </footer>
-      </div>
+        </div>
+      </footer>
     </div>
   </form>
 </div>

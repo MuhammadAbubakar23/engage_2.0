@@ -14,9 +14,9 @@
                     </div>
                 </div>
             </div>
-            <h4 class="darkblue heading">Welcome, Syed Salman Khan!</h4>
-            <div class="row console-landing-shortcuts">
-                <div class="col-lg-4 h-100">
+            <!-- <h4 class="darkblue heading">Welcome, Syed Salman Khan!</h4> -->
+            <div class="row console-landing-shortcuts h-100">
+                <!-- <div class="col-lg-4 h-100">
                     <ul class="full_dropdown p-0 text-small user-profile-dropdown shadow h-100"
                         aria-labelledby="dropdownUser1">
                         <li class="user-dropdown-header dropdown-header">
@@ -182,6 +182,22 @@
                             </div>
                         </div>
                     </div>
+                </div> -->
+                 
+                <div class="col-lg-12 h-100 row">
+                    <div class="col-lg-3 shortcut-box mb-3" *ngFor="let channel of channels">
+                        <div class="card-body h-100 p-3 shadow d-flex iceBg">
+                            <button class="iconButton medium" [innerHTML]="channel.icon"></button>
+                            <div class="ms-3 d-flex flex-grow-1">  <h5 class="night mb-0 mt-2 lh-base text fw-bold">{{channel.name}}</h5>
+                              <div class="ms-auto">  <a type="button" class="btn btn-outline-success btn-text" data-bs-toggle="modal"
+                                [attr.data-bs-target]="'#'+channel.slug">
+                                  <i class="fa fa-plug me-2"></i>
+                                  Connect
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
                 </div>
             </div>
             <h4 class="heading darkblue mt-5 mb-3">Get the most out of interact</h4>
@@ -225,6 +241,7 @@
             </div>
         </div>
     </div>
+
     <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
         <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1295px; transform: translate3d(0px, 0px, 0px);">
         </div>
@@ -235,3 +252,866 @@
         </div>
     </div> -->
 </div>
+
+<div class="modal fade" id="facebook" tabindex="-1" aria-labelledby="facebookLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal-properties">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="facebookModalLabel">ATTACH A PROFILE</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="attachFacebookPageForm" (ngSubmit)="attachFacebookPage()">
+            <div class="d-flex align-items-center">
+              <div class="icon-circle iconButton me-4">
+                <i class="fal fa-clipboard-check"></i>
+              </div>
+              <p class="line-txt darkblue">By adding the profile and clicking allow, you permit the application to
+                access and publish content on your Social Network Account, on your behalf.</p>
+            </div>
+            <!-- <div class="row">
+                            <div class="fs-4 fw-bold">User Information</div>
+                            <div class="col-6">
+                              <div class="mb-3">
+                                <label for="name" class="col-form-label">Name:</label>
+                                <input type="text" class="form-control" id="name" formControlName="name">
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="mb-3">
+                                <label for="userName" class="col-form-label">Username:</label>
+                                <input type="text" class="form-control" id="userName" formControlName="userName">
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="mb-3">
+                                <label for="page-id" class="col-form-label">ProfilePic:</label>
+                                <input type="file" name="image" formControlName="userProfilePic" class="form-control uplaoded-box"
+                                  multiple (change)="onFileSelected($event,'profile')">
+                              </div>
+                            </div>
+                          </div>
+                          <hr> -->
+            <div class="fs-4 fw-bold">Page Information</div>
+            <div class="row">
+              <div class="col-12">
+                <!-- <div class="mb-3 mt-3">
+                                <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
+                                  (change)="toggleAdditionalFields($event)" formControlName="isPage">
+                                <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
+                              </div> -->
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="app-id" class="col-form-label">APP ID:</label>
+                      <input type="text" class="form-control" id="api-id" formControlName="appId">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="appSecret" class="col-form-label">APP Secret:</label>
+                      <input type="password" class="form-control" id="api-secret" formControlName="appSecret">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-url" class="col-form-label">PageUrl:</label>
+                      <input type="text" class="form-control" id="page-url" formControlName="pageUrl">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-profile-pic" class="col-form-label">ProfilePic:</label>
+                      <input type="file" formControlName="pageProfilePic" class="form-control uplaoded-box" multiple
+                        (change)="onFileSelected($event,'page')">
+                    </div>
+                  </div>
+                </div>
+            </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">Connect</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="instagram" tabindex="-1" aria-labelledby="instagramLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal-properties">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="emailModalLabel">ATTACH Instagram ACCOUNT</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="attachFacebookPageForm" (ngSubmit)="connectGoogle()">
+            <div class="d-flex align-items-center">
+              <div class="icon-circle iconButton me-4">
+                <i class="fal fa-clipboard-check"></i>
+              </div>
+              <p class="line-txt darkblue">By adding the profile and clicking allow, you permit the application to
+                access and publish content on your Social Network Account, on your behalf.</p>
+            </div>
+            <!-- <div class="row">
+                        <div class="fs-4 fw-bold">User Information</div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" formControlName="name">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="userName" class="col-form-label">Username:</label>
+                            <input type="text" class="form-control" id="userName" formControlName="userName">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="page-id" class="col-form-label">ProfilePic:</label>
+                            <input type="file" name="image" formControlName="userProfilePic" class="form-control uplaoded-box"
+                              multiple (change)="onFileSelected($event,'profile')">
+                          </div>
+                        </div>
+                      </div>
+                      <hr> -->
+            <div class="fs-4 fw-bold">Page Information</div>
+            <div class="row">
+              <div class="col-12">
+                <!-- <div class="mb-3 mt-3">
+                            <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
+                              (change)="toggleAdditionalFields($event)" formControlName="isPage">
+                            <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
+                          </div> -->
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="app-id" class="col-form-label">APP ID:</label>
+                      <input type="text" class="form-control" id="api-id" formControlName="appId">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="appSecret" class="col-form-label">APP Secret:</label>
+                      <input type="password" class="form-control" id="api-secret" formControlName="appSecret">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-url" class="col-form-label">PageUrl:</label>
+                      <input type="text" class="form-control" id="page-url" formControlName="pageUrl">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-profile-pic" class="col-form-label">ProfilePic:</label>
+                      <input type="file" formControlName="pageProfilePic" class="form-control uplaoded-box" multiple
+                        (change)="onFileSelected($event,'page')">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">Connect</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="email" tabindex="-1" aria-labelledby="emailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal-properties">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="emailModalLabel">ATTACH GMAIL ACCOUNT</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="attachFacebookPageForm" (ngSubmit)="connectGoogle()">
+            <div class="d-flex align-items-center">
+              <div class="icon-circle iconButton me-4">
+                <i class="fal fa-clipboard-check"></i>
+              </div>
+              <p class="line-txt darkblue">By adding the profile and clicking allow, you permit the application to
+                access and publish content on your Social Network Account, on your behalf.</p>
+            </div>
+            <!-- <div class="row">
+                        <div class="fs-4 fw-bold">User Information</div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" formControlName="name">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="userName" class="col-form-label">Username:</label>
+                            <input type="text" class="form-control" id="userName" formControlName="userName">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="page-id" class="col-form-label">ProfilePic:</label>
+                            <input type="file" name="image" formControlName="userProfilePic" class="form-control uplaoded-box"
+                              multiple (change)="onFileSelected($event,'profile')">
+                          </div>
+                        </div>
+                      </div>
+                      <hr> -->
+            <div class="fs-4 fw-bold">Page Information</div>
+            <div class="row">
+              <div class="col-12">
+                <!-- <div class="mb-3 mt-3">
+                            <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
+                              (change)="toggleAdditionalFields($event)" formControlName="isPage">
+                            <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
+                          </div> -->
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="app-id" class="col-form-label">APP ID:</label>
+                      <input type="text" class="form-control" id="api-id" formControlName="appId">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="appSecret" class="col-form-label">APP Secret:</label>
+                      <input type="password" class="form-control" id="api-secret" formControlName="appSecret">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-url" class="col-form-label">PageUrl:</label>
+                      <input type="text" class="form-control" id="page-url" formControlName="pageUrl">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-profile-pic" class="col-form-label">ProfilePic:</label>
+                      <input type="file" formControlName="pageProfilePic" class="form-control uplaoded-box" multiple
+                        (change)="onFileSelected($event,'page')">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">Connect</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="twitter" tabindex="-1" aria-labelledby="twitterLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal-properties">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="twitterModalLabel">ATTACH Twitter ACCOUNT</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="attachFacebookPageForm" (ngSubmit)="connectGoogle()">
+            <div class="d-flex align-items-center">
+              <div class="icon-circle iconButton me-4">
+                <i class="fal fa-clipboard-check"></i>
+              </div>
+              <p class="line-txt darkblue">By adding the profile and clicking allow, you permit the application to
+                access and publish content on your Social Network Account, on your behalf.</p>
+            </div>
+            <!-- <div class="row">
+                        <div class="fs-4 fw-bold">User Information</div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" formControlName="name">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="userName" class="col-form-label">Username:</label>
+                            <input type="text" class="form-control" id="userName" formControlName="userName">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="page-id" class="col-form-label">ProfilePic:</label>
+                            <input type="file" name="image" formControlName="userProfilePic" class="form-control uplaoded-box"
+                              multiple (change)="onFileSelected($event,'profile')">
+                          </div>
+                        </div>
+                      </div>
+                      <hr> -->
+            <div class="fs-4 fw-bold">Page Information</div>
+            <div class="row">
+              <div class="col-12">
+                <!-- <div class="mb-3 mt-3">
+                            <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
+                              (change)="toggleAdditionalFields($event)" formControlName="isPage">
+                            <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
+                          </div> -->
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="app-id" class="col-form-label">APP ID:</label>
+                      <input type="text" class="form-control" id="api-id" formControlName="appId">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="appSecret" class="col-form-label">APP Secret:</label>
+                      <input type="password" class="form-control" id="api-secret" formControlName="appSecret">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-url" class="col-form-label">PageUrl:</label>
+                      <input type="text" class="form-control" id="page-url" formControlName="pageUrl">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-profile-pic" class="col-form-label">ProfilePic:</label>
+                      <input type="file" formControlName="pageProfilePic" class="form-control uplaoded-box" multiple
+                        (change)="onFileSelected($event,'page')">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">Connect</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="linkedin" tabindex="-1" aria-labelledby="linkedinLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal-properties">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="linkedinModalLabel">ATTACH LinkedIn ACCOUNT</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="attachFacebookPageForm" (ngSubmit)="connectGoogle()">
+            <div class="d-flex align-items-center">
+              <div class="icon-circle iconButton me-4">
+                <i class="fal fa-clipboard-check"></i>
+              </div>
+              <p class="line-txt darkblue">By adding the profile and clicking allow, you permit the application to
+                access and publish content on your Social Network Account, on your behalf.</p>
+            </div>
+            <!-- <div class="row">
+                        <div class="fs-4 fw-bold">User Information</div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" formControlName="name">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="userName" class="col-form-label">Username:</label>
+                            <input type="text" class="form-control" id="userName" formControlName="userName">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="page-id" class="col-form-label">ProfilePic:</label>
+                            <input type="file" name="image" formControlName="userProfilePic" class="form-control uplaoded-box"
+                              multiple (change)="onFileSelected($event,'profile')">
+                          </div>
+                        </div>
+                      </div>
+                      <hr> -->
+            <div class="fs-4 fw-bold">Page Information</div>
+            <div class="row">
+              <div class="col-12">
+                <!-- <div class="mb-3 mt-3">
+                            <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
+                              (change)="toggleAdditionalFields($event)" formControlName="isPage">
+                            <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
+                          </div> -->
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="app-id" class="col-form-label">APP ID:</label>
+                      <input type="text" class="form-control" id="api-id" formControlName="appId">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="appSecret" class="col-form-label">APP Secret:</label>
+                      <input type="password" class="form-control" id="api-secret" formControlName="appSecret">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-url" class="col-form-label">PageUrl:</label>
+                      <input type="text" class="form-control" id="page-url" formControlName="pageUrl">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-profile-pic" class="col-form-label">ProfilePic:</label>
+                      <input type="file" formControlName="pageProfilePic" class="form-control uplaoded-box" multiple
+                        (change)="onFileSelected($event,'page')">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">Connect</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="youtube" tabindex="-1" aria-labelledby="youtubeLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal-properties">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="youtubeModalLabel">ATTACH Youtube ACCOUNT</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="attachFacebookPageForm" (ngSubmit)="connectGoogle()">
+            <div class="d-flex align-items-center">
+              <div class="icon-circle iconButton me-4">
+                <i class="fal fa-clipboard-check"></i>
+              </div>
+              <p class="line-txt darkblue">By adding the profile and clicking allow, you permit the application to
+                access and publish content on your Social Network Account, on your behalf.</p>
+            </div>
+            <!-- <div class="row">
+                        <div class="fs-4 fw-bold">User Information</div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" formControlName="name">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="userName" class="col-form-label">Username:</label>
+                            <input type="text" class="form-control" id="userName" formControlName="userName">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="page-id" class="col-form-label">ProfilePic:</label>
+                            <input type="file" name="image" formControlName="userProfilePic" class="form-control uplaoded-box"
+                              multiple (change)="onFileSelected($event,'profile')">
+                          </div>
+                        </div>
+                      </div>
+                      <hr> -->
+            <div class="fs-4 fw-bold">Page Information</div>
+            <div class="row">
+              <div class="col-12">
+                <!-- <div class="mb-3 mt-3">
+                            <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
+                              (change)="toggleAdditionalFields($event)" formControlName="isPage">
+                            <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
+                          </div> -->
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="app-id" class="col-form-label">APP ID:</label>
+                      <input type="text" class="form-control" id="api-id" formControlName="appId">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="appSecret" class="col-form-label">APP Secret:</label>
+                      <input type="password" class="form-control" id="api-secret" formControlName="appSecret">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-url" class="col-form-label">PageUrl:</label>
+                      <input type="text" class="form-control" id="page-url" formControlName="pageUrl">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-profile-pic" class="col-form-label">ProfilePic:</label>
+                      <input type="file" formControlName="pageProfilePic" class="form-control uplaoded-box" multiple
+                        (change)="onFileSelected($event,'page')">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">Connect</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="whatsapp" tabindex="-1" aria-labelledby="whatsappLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal-properties">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="whatsappModalLabel">ATTACH Whatsapp ACCOUNT</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="attachFacebookPageForm" (ngSubmit)="connectGoogle()">
+            <div class="d-flex align-items-center">
+              <div class="icon-circle iconButton me-4">
+                <i class="fal fa-clipboard-check"></i>
+              </div>
+              <p class="line-txt darkblue">By adding the profile and clicking allow, you permit the application to
+                access and publish content on your Social Network Account, on your behalf.</p>
+            </div>
+            <!-- <div class="row">
+                        <div class="fs-4 fw-bold">User Information</div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" formControlName="name">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="userName" class="col-form-label">Username:</label>
+                            <input type="text" class="form-control" id="userName" formControlName="userName">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="page-id" class="col-form-label">ProfilePic:</label>
+                            <input type="file" name="image" formControlName="userProfilePic" class="form-control uplaoded-box"
+                              multiple (change)="onFileSelected($event,'profile')">
+                          </div>
+                        </div>
+                      </div>
+                      <hr> -->
+            <div class="fs-4 fw-bold">Page Information</div>
+            <div class="row">
+              <div class="col-12">
+                <!-- <div class="mb-3 mt-3">
+                            <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
+                              (change)="toggleAdditionalFields($event)" formControlName="isPage">
+                            <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
+                          </div> -->
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="app-id" class="col-form-label">APP ID:</label>
+                      <input type="text" class="form-control" id="api-id" formControlName="appId">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="appSecret" class="col-form-label">APP Secret:</label>
+                      <input type="password" class="form-control" id="api-secret" formControlName="appSecret">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-url" class="col-form-label">PageUrl:</label>
+                      <input type="text" class="form-control" id="page-url" formControlName="pageUrl">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-profile-pic" class="col-form-label">ProfilePic:</label>
+                      <input type="file" formControlName="pageProfilePic" class="form-control uplaoded-box" multiple
+                        (change)="onFileSelected($event,'page')">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">Connect</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="sms" tabindex="-1" aria-labelledby="smsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal-properties">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="smsModalLabel">ATTACH SMS ACCOUNT</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="attachFacebookPageForm" (ngSubmit)="connectGoogle()">
+            <div class="d-flex align-items-center">
+              <div class="icon-circle iconButton me-4">
+                <i class="fal fa-clipboard-check"></i>
+              </div>
+              <p class="line-txt darkblue">By adding the profile and clicking allow, you permit the application to
+                access and publish content on your Social Network Account, on your behalf.</p>
+            </div>
+            <!-- <div class="row">
+                        <div class="fs-4 fw-bold">User Information</div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" formControlName="name">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="userName" class="col-form-label">Username:</label>
+                            <input type="text" class="form-control" id="userName" formControlName="userName">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="page-id" class="col-form-label">ProfilePic:</label>
+                            <input type="file" name="image" formControlName="userProfilePic" class="form-control uplaoded-box"
+                              multiple (change)="onFileSelected($event,'profile')">
+                          </div>
+                        </div>
+                      </div>
+                      <hr> -->
+            <div class="fs-4 fw-bold">Page Information</div>
+            <div class="row">
+              <div class="col-12">
+                <!-- <div class="mb-3 mt-3">
+                            <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
+                              (change)="toggleAdditionalFields($event)" formControlName="isPage">
+                            <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
+                          </div> -->
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="app-id" class="col-form-label">APP ID:</label>
+                      <input type="text" class="form-control" id="api-id" formControlName="appId">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="appSecret" class="col-form-label">APP Secret:</label>
+                      <input type="password" class="form-control" id="api-secret" formControlName="appSecret">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-url" class="col-form-label">PageUrl:</label>
+                      <input type="text" class="form-control" id="page-url" formControlName="pageUrl">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-profile-pic" class="col-form-label">ProfilePic:</label>
+                      <input type="file" formControlName="pageProfilePic" class="form-control uplaoded-box" multiple
+                        (change)="onFileSelected($event,'page')">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">Connect</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="webchat" tabindex="-1" aria-labelledby="webchatLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal-properties">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="webchatModalLabel">ATTACH webchat ACCOUNT</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="attachFacebookPageForm" (ngSubmit)="connectGoogle()">
+            <div class="d-flex align-items-center">
+              <div class="icon-circle iconButton me-4">
+                <i class="fal fa-clipboard-check"></i>
+              </div>
+              <p class="line-txt darkblue">By adding the profile and clicking allow, you permit the application to
+                access and publish content on your Social Network Account, on your behalf.</p>
+            </div>
+            <!-- <div class="row">
+                        <div class="fs-4 fw-bold">User Information</div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" formControlName="name">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="userName" class="col-form-label">Username:</label>
+                            <input type="text" class="form-control" id="userName" formControlName="userName">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="page-id" class="col-form-label">ProfilePic:</label>
+                            <input type="file" name="image" formControlName="userProfilePic" class="form-control uplaoded-box"
+                              multiple (change)="onFileSelected($event,'profile')">
+                          </div>
+                        </div>
+                      </div>
+                      <hr> -->
+            <div class="fs-4 fw-bold">Page Information</div>
+            <div class="row">
+              <div class="col-12">
+                <!-- <div class="mb-3 mt-3">
+                            <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
+                              (change)="toggleAdditionalFields($event)" formControlName="isPage">
+                            <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
+                          </div> -->
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="app-id" class="col-form-label">APP ID:</label>
+                      <input type="text" class="form-control" id="api-id" formControlName="appId">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="appSecret" class="col-form-label">APP Secret:</label>
+                      <input type="password" class="form-control" id="api-secret" formControlName="appSecret">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-url" class="col-form-label">PageUrl:</label>
+                      <input type="text" class="form-control" id="page-url" formControlName="pageUrl">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-profile-pic" class="col-form-label">ProfilePic:</label>
+                      <input type="file" formControlName="pageProfilePic" class="form-control uplaoded-box" multiple
+                        (change)="onFileSelected($event,'page')">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">Connect</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="playstore" tabindex="-1" aria-labelledby="playstoreLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal-properties">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="playstoreModalLabel">ATTACH Playstore ACCOUNT</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="attachFacebookPageForm" (ngSubmit)="connectGoogle()">
+            <div class="d-flex align-items-center">
+              <div class="icon-circle iconButton me-4">
+                <i class="fal fa-clipboard-check"></i>
+              </div>
+              <p class="line-txt darkblue">By adding the profile and clicking allow, you permit the application to
+                access and publish content on your Social Network Account, on your behalf.</p>
+            </div>
+            <!-- <div class="row">
+                        <div class="fs-4 fw-bold">User Information</div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" formControlName="name">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="userName" class="col-form-label">Username:</label>
+                            <input type="text" class="form-control" id="userName" formControlName="userName">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="mb-3">
+                            <label for="page-id" class="col-form-label">ProfilePic:</label>
+                            <input type="file" name="image" formControlName="userProfilePic" class="form-control uplaoded-box"
+                              multiple (change)="onFileSelected($event,'profile')">
+                          </div>
+                        </div>
+                      </div>
+                      <hr> -->
+            <div class="fs-4 fw-bold">Page Information</div>
+            <div class="row">
+              <div class="col-12">
+                <!-- <div class="mb-3 mt-3">
+                            <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
+                              (change)="toggleAdditionalFields($event)" formControlName="isPage">
+                            <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
+                          </div> -->
+              </div>
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="app-id" class="col-form-label">APP ID:</label>
+                      <input type="text" class="form-control" id="api-id" formControlName="appId">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="appSecret" class="col-form-label">APP Secret:</label>
+                      <input type="password" class="form-control" id="api-secret" formControlName="appSecret">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-url" class="col-form-label">PageUrl:</label>
+                      <input type="text" class="form-control" id="page-url" formControlName="pageUrl">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="page-profile-pic" class="col-form-label">ProfilePic:</label>
+                      <input type="file" formControlName="pageProfilePic" class="form-control uplaoded-box" multiple
+                        (change)="onFileSelected($event,'page')">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">Connect</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
