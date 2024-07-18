@@ -13,14 +13,13 @@ import { ChatWidget2Component } from 'src/app/shared/components/chat-widget2/cha
 })
 export class ChatHistoryComponent implements OnInit {
 
-  @Input() chat: any = [];
+  @Input() chat: any = { history: [], tags: [] };
   isMinimized: boolean = true;
   isRemoved: boolean = false;
   @Output() minimizeToggle: EventEmitter<void> = new EventEmitter<void>();
+ 
   removeScreen() {
-    
-    let newChat =
-      { "slug": this.chat[0].slug }
+    let newChat = { "slug": this.chat[0].slug };
     this.chatVisibilityService.notifyNewChatIdHistory(newChat);
   }
   toggleMinimized(): void {
@@ -30,7 +29,7 @@ export class ChatHistoryComponent implements OnInit {
   constructor(private chatVisibilityService: ChatVisibilityService) { }
   ngOnInit(): void {
     
-    console.log("this.chat", this.chat)
+    console.log("this.chat", this.chat[1].tags)
   }
 }
 

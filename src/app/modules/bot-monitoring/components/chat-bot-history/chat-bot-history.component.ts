@@ -60,32 +60,44 @@ export class ChatBotHistoryComponent implements OnInit {
     }
   }
   getHistoryDetails(data: any) {
-    
     this._chatVisibilityS.notifythirdActiveHistory({ active: data.active, slug: data.slug });
     this._botS.ChatHistory({ 'slug': data.slug }).subscribe((res: any) => {
-      
       console.log(res);
       if (res[0].history.length > 0) {
         res[0].history[0]['slug'] = data.slug;
-        this.chats.push(res[0].history);
+        this.chats.push(res);
+      } else {
+        alert("History not found");
       }
-      else {
-        alert("History not found")
-      }
-      // console.log(activeChat['completed'])
-      // res[0]['completed'] = activeChat['completed'];
-      // this.chats.push(res);
-      // const latObject = {
-      //   clientIdentifier: res[0].client?.phone,
-      //   customerIdentifier: res[0].customer.phone,
-      //   filter: {
-      //     pageNumber: 0,
-      //     pageSize: 0,
-      //   },
-      // };
-      //this.currentActiveChats.push(latObject);
     });
   }
+  // getHistoryDetails(data: any) {
+    
+  //   this._chatVisibilityS.notifythirdActiveHistory({ active: data.active, slug: data.slug });
+  //   this._botS.ChatHistory({ 'slug': data.slug }).subscribe((res: any) => {
+      
+  //     console.log(res);
+  //     if (res[0].history.length > 0) {
+  //       res[0].history[0]['slug'] = data.slug;
+  //       this.chats.push(res[0].history);
+  //     }
+  //     else {
+  //       alert("History not found")
+  //     }
+  //     // console.log(activeChat['completed'])
+  //     // res[0]['completed'] = activeChat['completed'];
+  //     // this.chats.push(res);
+  //     // const latObject = {
+  //     //   clientIdentifier: res[0].client?.phone,
+  //     //   customerIdentifier: res[0].customer.phone,
+  //     //   filter: {
+  //     //     pageNumber: 0,
+  //     //     pageSize: 0,
+  //     //   },
+  //     // };
+  //     //this.currentActiveChats.push(latObject);
+  //   });
+  // }
   onMinimizeToggle(minimizeItem: any) {
     console.log("minimize toggle", minimizeItem, this.chats);
   }

@@ -28,32 +28,25 @@
         </span>
       </div>
     </header>
+    <!-- <div class="messagewrap suggestions">
+      <div class="messagebody">
+        <ul class="list-inline text-center m-0">
+          <li class="list-inline-item" *ngFor="let tag of chat[1].tags">
+            <span class="tag">{{ tag.tag }}</span>
+          </li>
+        </ul>
+      </div>
+    </div> -->
     <div class="chatsection">
       <div class="main-chat">
         <div class="chat-box-wrap">
-          <!-- <div class="messagewrap suggestions">
-            <div class="messagebody">
-              <ul class="list-inline text-center m-0">
-                <li class="list-inline-item">
-                  <span>⚡️ Free trial</span>
-                </li>
-                <li class="list-inline-item pricing">
-                  <a href="#pricingmsgs">💲 Pricing</a>
-                </li>
-                <li class="list-inline-item">
-                  <span>⚙️ Integrations</span>
-                </li>
+          <ng-container *ngFor="let msg of chat[0].history; let i = index">
+            <!-- <pre  >{{msg | json}}</pre> -->
 
-              </ul>
-            </div>
-          </div> -->
-          <ng-container *ngFor="let msg of chat; let i = index">
-          
             <div class="message-wrap agent-message-wrap" [ngClass]="{
                 right: msg.role === 'user',
                 left: msg.role === 'assistant'
               }">
-             
               <div class="d-flex align-items-center agent-container">
                 <div class="card w-d-inline messageUpper">
                   <div class="card-body">
@@ -72,12 +65,14 @@
                     <p class="card-text nignt">
                       {{ msg.content }}
                     </p>
+
                   </div>
                 </div>
               </div>
             </div>
-           
+
           </ng-container>
+
         </div>
       </div>
     </div>
