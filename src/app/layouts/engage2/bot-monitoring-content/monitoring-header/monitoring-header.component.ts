@@ -80,7 +80,7 @@ export class MonitoringHeaderComponent implements OnInit {
         this.togglePannel = msg3;
       });
     
-      const savedComponent = localStorage.getItem('currentComponent');
+      const savedComponent = sessionStorage.getItem('currentComponent');
       if (savedComponent) {
         this.componentName = savedComponent;
       }
@@ -124,7 +124,7 @@ export class MonitoringHeaderComponent implements OnInit {
     }
     if (componentFactory) {
       this.target.createComponent(componentFactory);
-      localStorage.setItem('currentComponent', leftSideName); 
+      sessionStorage.setItem('currentComponent', leftSideName); 
     }
   }
   

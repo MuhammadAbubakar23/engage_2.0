@@ -9,6 +9,7 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { SkillsService } from 'src/app/services/Skills/skills.service';
 import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 @Component({
   selector: 'inbox-menu',
   templateUrl: './inbox-menu.component.html',
@@ -35,6 +36,7 @@ export class InboxMenuComponent implements OnInit {
   baseUrl: string = '';
   client: string = '';
   allSkills: any[] = [];
+  hasFocusedPermission: boolean=false;
   constructor(
     private filterService: FilterService,
     private commonService: CommonDataService,
@@ -44,9 +46,11 @@ export class InboxMenuComponent implements OnInit {
     private getSkills: SkillsService,
     private getWing: GetWingsService,
     private skillSlugService: SkillslugService,
-    private storage:StorageService
+    private storage:StorageService,
+    private _perS:PermissionService
   ) {}
   ngOnInit(): void {
+    this.hasFocusedPermission = this.hasPermission('console');
   if(this.getSkills.skills){
     this.allSkills = this.getSkills.skills;
     console.log('serviceSkill', this.allSkills)
@@ -168,6 +172,10 @@ export class InboxMenuComponent implements OnInit {
       );
       this.getAllChannelsUnrespondedCounts();
     }
+  }
+  hasPermission(permissionName: string) {
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
   }
   channels: any[] = [];
   platformWiseCount: any[] = [];

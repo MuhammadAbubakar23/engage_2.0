@@ -38,7 +38,7 @@ export class ChatBotStoryComponent implements OnInit {
   isFormVisible: boolean = false;
   currentConversationName:string=''
   constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService,private route:Router, private _activeRoute:ActivatedRoute) {
-    this.BotId = localStorage.getItem('bot_id');
+    this.BotId = sessionStorage.getItem('bot_id');
     this._activeRoute.params.
       subscribe((param) => {
         this.currentConversationName = param['name'];
@@ -50,7 +50,7 @@ export class ChatBotStoryComponent implements OnInit {
     this.ResponseList()
     this.addmore();
     this.getListOfRule();
-    this.setName = localStorage.getItem("name")
+    this.setName = sessionStorage.getItem("name")
 
   }
   addmore() {
@@ -78,7 +78,7 @@ export class ChatBotStoryComponent implements OnInit {
   }
   getListOfRule() {
     if (!this.BotId) {
-      console.error('BotId not found in localStorage.');
+      console.error('BotId not found in sessionStorage.');
       return;
     }
     this._botService.GetStoriesChatBot(this.BotId).subscribe((res: any) => {
@@ -109,7 +109,7 @@ export class ChatBotStoryComponent implements OnInit {
   }
   generateAugments() {
     console.log("this.newPhrase", this.storyForm.value)
-    this.BotId = localStorage.getItem('bot_id')
+    this.BotId = sessionStorage.getItem('bot_id')
     const obj = new FormData();
     obj.append('intent', this.storyForm.value.newPhrase);
     obj.append('bot_id', this.BotId)
@@ -132,7 +132,7 @@ export class ChatBotStoryComponent implements OnInit {
     event.stopPropagation();
     const confirmation = confirm('Are you sure you want to delete this story?');
     if (confirmation) {
-      this.BotId = localStorage.getItem('bot_id');
+      this.BotId = sessionStorage.getItem('bot_id');
       const obj = new FormData();
       obj.append('story', story);
       obj.append('bot_id', this.BotId);
@@ -173,7 +173,7 @@ export class ChatBotStoryComponent implements OnInit {
   }
   loadBotId() {
     if (!this.BotId) {
-      console.error('BotId not found in localStorage.');
+      console.error('BotId not found in sessionStorage.');
       return;
     }
     this.spinnerServerice.show();
@@ -191,7 +191,7 @@ export class ChatBotStoryComponent implements OnInit {
   }
   ResponseList() {
     if (!this.BotId) {
-      console.error('BotId not found in localStorage.');
+      console.error('BotId not found in sessionStorage.');
       return;
     }
     this.spinnerServerice.show();

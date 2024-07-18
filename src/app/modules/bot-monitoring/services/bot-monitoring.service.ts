@@ -36,6 +36,7 @@ export class BotMonitoringService {
   stopChatBot = environment.links.bot.stopChatBot
   chatBotBaseUrl = environment.chatBotBaseUrl
 
+
   constructor(private http: HttpClient) { }
   getChats(data: any): Observable<any> {
     return this.http.post(baseUrl + "WhatsAppBot/GetWhatsAppBotlisting", data)

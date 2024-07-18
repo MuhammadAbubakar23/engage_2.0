@@ -60,12 +60,19 @@ hasPermission(permissionName: string) {
     }
   }
 
+  // onChannelChange(event: any) {
+  //   this.selectedChannelSlug = event.target.value;
+  //   this.selectedRuleType = '';
+  //   this.searchText = '';
+  //   this.refreshtableData();
+  // }
   onChannelChange(event: any) {
-    this.selectedChannelSlug = event.target.value;
-    this.selectedRuleType = '';
-    this.searchText = '';
+    this.selectedChannel = event.target.value;
     this.refreshtableData();
   }
+
+
+
   getAutoResponderTag() {
     this.commonService.GetRuleTag(13).subscribe(
       (response: any) => {
@@ -84,56 +91,321 @@ hasPermission(permissionName: string) {
     this.refreshtableData();
   }
 
-
   refreshtableData() {
     const data = {
       search: this.searchText,
       sorting: this.selectedSortOption,
       pageNumber: this.currentPage,
       pageSize: this.perPage,
-      ruleType: this.selectedRuleType,
-      platform: this.selectedChannelSlug
+      ruleType: this.selectedRuleType
     };
+
     this.spinnerServerice.show();
     this.channelRules = [];
 
-    this.commonService.GetAllFbRules(data).subscribe(
-      (response: RuleWithCount) => {
-        this.spinnerServerice.hide();
-        this.channelRules.push({
-          platform: "Rule Name",
-          rulesWihtCount: response
-        });
-        this.totalCount = response.TotalCount;
-      },
-      (error: any) => {
-        this.spinnerServerice.hide();
-        console.error(error);
-      }
-    );
+    if (this.selectedChannel === '3') {
+      this.commonService.GetInstaAllRules(data).subscribe(
+        (response: any) => {
+          this.spinnerServerice.hide();
+          this.channelRules.push({
+            platform: "Instagram",
+            rulesWihtCount: response
+          });
+          this.totalCount = response.TotalCount;
+        },
+        (error: any) => {
+          this.spinnerServerice.hide();
+          console.error(error);
+        }
+      );
+    } else if ((this.selectedChannel === '4')) {
+      this.commonService.GetLinkdinAllRules(data).subscribe(
+        (response: RuleWithCount) => {
+          this.spinnerServerice.hide();
+          this.channelRules.push({
+            platform: "LinkedIn",
+            rulesWihtCount: response
+          });
+          this.totalCount = response.TotalCount;
+        },
+        (error: any) => {
+          this.spinnerServerice.hide();
+          console.error(error);
+        }
+      );
+    }
+    else if ((this.selectedChannel === '6')) {
+      this.commonService.GetPsAllRules(data).subscribe(
+        (response: RuleWithCount) => {
+          this.spinnerServerice.hide();
+          this.channelRules.push({
+            platform: "Playstore",
+            rulesWihtCount: response
+          });
+          this.totalCount = response.TotalCount;
+        },
+        (error: any) => {
+          this.spinnerServerice.hide();
+          console.error(error);
+        }
+      );
+    } else if ((this.selectedChannel === '5')) {
+      this.commonService.GetYTAllRules(data).subscribe(
+        (response: RuleWithCount) => {
+          this.spinnerServerice.hide();
+          this.channelRules.push({
+            platform: "Youtube",
+            rulesWihtCount: response
+          });
+          this.totalCount = response.TotalCount;
+        },
+        (error: any) => {
+          this.spinnerServerice.hide();
+          console.error(error);
+        }
+      );
+    } else if ((this.selectedChannel === '7')) {
+      this.commonService.GetGsuitRules(data).subscribe(
+        (response: RuleWithCount) => {
+          this.spinnerServerice.hide();
+          this.channelRules.push({
+            platform: "G-Suit",
+            rulesWihtCount: response
+          });
+          this.totalCount = response.TotalCount;
+        },
+        (error: any) => {
+          this.spinnerServerice.hide();
+          console.error(error);
+        }
+      );
+    } else if ((this.selectedChannel === '8')) {
+      this.commonService.GetExchangeEmailRules(data).subscribe(
+        (response: RuleWithCount) => {
+          this.spinnerServerice.hide();
+          this.channelRules.push({
+            platform: "G-Suit",
+            rulesWihtCount: response
+          });
+          this.totalCount = response.TotalCount;
+        },
+        (error: any) => {
+          this.spinnerServerice.hide();
+          console.error(error);
+        }
+      );
+    }else if ((this.selectedChannel === '9')) {
+      this.commonService.GetMetaWaRules(data).subscribe(
+        (response: RuleWithCount) => {
+          this.spinnerServerice.hide();
+          this.channelRules.push({
+            platform: "G-Suit",
+            rulesWihtCount: response
+          });
+          this.totalCount = response.TotalCount;
+        },
+        (error: any) => {
+          this.spinnerServerice.hide();
+          console.error(error);
+        }
+      );
+    }else if ((this.selectedChannel === '10')) {
+      this.commonService.GetWslRules(data).subscribe(
+        (response: RuleWithCount) => {
+          this.spinnerServerice.hide();
+          this.channelRules.push({
+            platform: "Whatsapp",
+            rulesWihtCount: response
+          });
+          this.totalCount = response.TotalCount;
+        },
+        (error: any) => {
+          this.spinnerServerice.hide();
+          console.error(error);
+        }
+      );
+    }
+    else {
+      this.commonService.GetAllFbRules(data).subscribe(
+        (response: RuleWithCount) => {
+          this.spinnerServerice.hide();
+          this.channelRules.push({
+            platform: "Facebook",
+            rulesWihtCount: response
+          });
+          this.totalCount = response.TotalCount;
+        },
+        (error: any) => {
+          this.spinnerServerice.hide();
+          console.error(error);
+        }
+      );
+    }
+  }
 
-  }
+
+  // refreshtableData() {
+  //   const data = {
+  //     search: this.searchText,
+  //     sorting: this.selectedSortOption,
+  //     pageNumber: this.currentPage,
+  //     pageSize: this.perPage,
+  //     ruleType: this.selectedRuleType,
+  //     // platform: this.selectedChannelSlug
+  //   };
+  //   this.spinnerServerice.show();
+  //   this.channelRules = [];
+
+  //   switch (this.selectedRuleType) {
+  //     case 'Facebook': // Facebook
+  //       this.commonService.GetAllFbRules(data).subscribe(
+  //         (response: RuleWithCount) => {
+  //           this.spinnerServerice.hide();
+  //           this.channelRules.push({
+  //             platform: "Facebook",
+  //             rulesWihtCount: response
+  //           });
+  //           this.totalCount = response.TotalCount;
+  //         },
+  //         (error: any) => {
+  //           this.spinnerServerice.hide();
+  //           console.error(error);
+  //         }
+  //       );
+  //       break;
+  //     }
+  //     // this.commonService.GetInstaAllRules(data).subscribe(
+  //     //   (response: RuleWithCount) => {
+  //     //     this.spinnerServerice.hide();
+  //     //     this.channelRules.push({
+  //     //       platform: "Instagram",
+  //     //       rulesWihtCount: response
+  //     //     });
+  //     //     this.totalCount = response.TotalCount;
+  //     //   },
+  //     //   (error: any) => {
+  //     //     this.spinnerServerice.hide();
+  //     //     console.error(error);
+  //     //   }
+  //     // );
+
+  //   }
   toggleStatus(rule: any) {
-    this.commonService.GetRuleStatus(rule.id).subscribe(
-      (response: any) => {
-        rule.status = !rule.status;
-      },
-      (error: any) => {
-        console.error('Error toggling status:', error);
-      }
-    );
+    rule.status = !rule.status;
+
+    if (this.selectedChannel === '3') {
+      this.commonService.GetInstaRuleStatus(rule.id, rule.status).subscribe(
+        (response: any) => {
+          console.log('Instagram status updated successfully:', response);
+        },
+        (error: any) => {
+          rule.status = !rule.status;
+          console.error('Error toggling Instagram status:', error);
+        }
+      );
+    }
+    else if (this.selectedChannel === '5') {
+      this.commonService.GetYTRuleStatus(rule.id, rule.status).subscribe(
+        (response: any) => {
+          console.log('Instagram status updated successfully:', response);
+        },
+        (error: any) => {
+          rule.status = !rule.status;
+          console.error('Error toggling Instagram status:', error);
+        }
+      );
+    } else if (this.selectedChannel === '6') {
+      this.commonService.GetPsRuleStatus(rule.id, rule.status).subscribe(
+        (response: any) => {
+          console.log('Instagram status updated successfully:', response);
+        },
+        (error: any) => {
+          rule.status = !rule.status;
+          console.error('Error toggling Instagram status:', error);
+        }
+      );
+    } else if (this.selectedChannel === '7') {
+      this.commonService.GetGSuitRuleStatus(rule.id, rule.status).subscribe(
+        (response: any) => {
+          console.log('Instagram status updated successfully:', response);
+        },
+        (error: any) => {
+          rule.status = !rule.status;
+          console.error('Error toggling Instagram status:', error);
+        }
+      );
+    } else if (this.selectedChannel === '10') {
+      this.commonService.GetWaRuleStatus(rule.id, rule.status).subscribe(
+        (response: any) => {
+          console.log('Instagram status updated successfully:', response);
+        },
+        (error: any) => {
+          rule.status = !rule.status;
+          console.error('Error toggling Instagram status:', error);
+        }
+      );
+    }
+    else if (this.selectedChannel === '4') {
+      this.commonService.GetLinkdinRuleStatus(rule.id, rule.status).subscribe(
+        (response: any) => {
+          console.log('Instagram status updated successfully:', response);
+        },
+        (error: any) => {
+          rule.status = !rule.status;
+          console.error('Error toggling Instagram status:', error);
+        }
+      );
+    }
+    else if (this.selectedChannel === '8') {
+      this.commonService.GetExchangeEmailRuleStatus(rule.id, rule.status).subscribe(
+        (response: any) => {
+          console.log('Instagram status updated successfully:', response);
+        },
+        (error: any) => {
+          rule.status = !rule.status;
+          console.error('Error toggling Instagram status:', error);
+        }
+      );
+    }
+    else if (this.selectedChannel === '9') {
+      this.commonService.GetMetaWARuleStatus(rule.id, rule.status).subscribe(
+        (response: any) => {
+          console.log('Instagram status updated successfully:', response);
+        },
+        (error: any) => {
+          rule.status = !rule.status;
+          console.error('Error toggling Instagram status:', error);
+        }
+      );
+    }
+    else {
+      this.commonService.GetRuleStatus(rule.id, rule.status).subscribe(
+        (response: any) => {
+          console.log('Status updated successfully:', response);
+        },
+        (error: any) => {
+          rule.status = !rule.status;
+          console.error('Error toggling status:', error);
+        }
+      );
+    }
   }
+
   loadServices(): void {
     this.commonService.GetPlatorm().subscribe(
       (response: any) => {
-
-        this.channels = response
+        this.channels = Object.keys(response).map(key => ({
+          id: parseInt(key),
+          name: response[key],
+          slug: response[key].toLowerCase() // Ensure slug is in lowercase
+        }));
       },
       (error: any) => {
         console.error('Error fetching services:', error);
       }
     );
   }
+
   setSortOption(option: string) {
     this.selectedSortOption = option;
     this.refreshtableData();
@@ -145,58 +417,143 @@ hasPermission(permissionName: string) {
   canEditOrDelete(row: any): boolean {
     return row.companyId !== 0;
   }
+  // deleteTemplate(rule: any) {
+  //   const confirmation = confirm('Are you sure you want to delete this rule?');
+  //   if (confirmation) {
+  //     this.commonService.DeleteFbRules(rule.id).subscribe(
+  //       () => {
+
+  //         const index = this.channelRules.findIndex(item => item.rulesWihtCount.Rules.includes(rule));
+  //         if (index !== -1) {
+  //           this.channelRules[index].rulesWihtCount.Rules = this.channelRules[index].rulesWihtCount.Rules.filter((r: any) => r.id !== rule.id);
+  //         }
+  //       },
+  //       (error: any) => {
+  //         console.error('Error deleting rule:', error);
+  //       }
+  //     );
+  //   }
+
+  // }
+
+
   deleteTemplate(rule: any) {
     const confirmation = confirm('Are you sure you want to delete this rule?');
     if (confirmation) {
-      this.commonService.DeleteFbRules(rule.id).subscribe(
-        () => {
-
-          const index = this.channelRules.findIndex(item => item.rulesWihtCount.Rules.includes(rule));
-          if (index !== -1) {
-            this.channelRules[index].rulesWihtCount.Rules = this.channelRules[index].rulesWihtCount.Rules.filter((r: any) => r.id !== rule.id);
+      if (this.selectedChannel === '3') {
+        this.commonService.DeleteInstaRules(rule.id).subscribe(
+          () => {
+            const index = this.channelRules.findIndex(item => item.rulesWihtCount.Rules.includes(rule));
+            if (index !== -1) {
+              this.channelRules[index].rulesWihtCount.Rules = this.channelRules[index].rulesWihtCount.Rules.filter((r: any) => r.id !== rule.id);
+            }
+          },
+          (error: any) => {
+            console.error('Error deleting Instagram rule:', error);
           }
-        },
-        (error: any) => {
-          console.error('Error deleting rule:', error);
-        }
-      );
+        );
+      } else if (this.selectedChannel === '4') {
+        this.commonService.DeleteLinkdinRules(rule.id).subscribe(
+          () => {
+            const index = this.channelRules.findIndex(item => item.rulesWihtCount.Rules.includes(rule));
+            if (index !== -1) {
+              this.channelRules[index].rulesWihtCount.Rules = this.channelRules[index].rulesWihtCount.Rules.filter((r: any) => r.id !== rule.id);
+            }
+          },
+          (error: any) => {
+            console.error('Error deleting Instagram rule:', error);
+          }
+        );
+      } else if (this.selectedChannel === '5') {
+        this.commonService.DeleteYTRules(rule.id).subscribe(
+          () => {
+            const index = this.channelRules.findIndex(item => item.rulesWihtCount.Rules.includes(rule));
+            if (index !== -1) {
+              this.channelRules[index].rulesWihtCount.Rules = this.channelRules[index].rulesWihtCount.Rules.filter((r: any) => r.id !== rule.id);
+            }
+          },
+          (error: any) => {
+            console.error('Error deleting Instagram rule:', error);
+          }
+        );
+      } else if (this.selectedChannel === '6') {
+        this.commonService.DeletePsRules(rule.id).subscribe(
+          () => {
+            const index = this.channelRules.findIndex(item => item.rulesWihtCount.Rules.includes(rule));
+            if (index !== -1) {
+              this.channelRules[index].rulesWihtCount.Rules = this.channelRules[index].rulesWihtCount.Rules.filter((r: any) => r.id !== rule.id);
+            }
+          },
+          (error: any) => {
+            console.error('Error deleting Instagram rule:', error);
+          }
+        );
+      }else  if (this.selectedChannel === '7') {
+        this.commonService.DeleteGSuitRules(rule.id).subscribe(
+          () => {
+            const index = this.channelRules.findIndex(item => item.rulesWihtCount.Rules.includes(rule));
+            if (index !== -1) {
+              this.channelRules[index].rulesWihtCount.Rules = this.channelRules[index].rulesWihtCount.Rules.filter((r: any) => r.id !== rule.id);
+            }
+          },
+          (error: any) => {
+            console.error('Error deleting Instagram rule:', error);
+          }
+        );
+      } else if (this.selectedChannel === '10') {
+        this.commonService.DeleteWaRules(rule.id).subscribe(
+          () => {
+            const index = this.channelRules.findIndex(item => item.rulesWihtCount.Rules.includes(rule));
+            if (index !== -1) {
+              this.channelRules[index].rulesWihtCount.Rules = this.channelRules[index].rulesWihtCount.Rules.filter((r: any) => r.id !== rule.id);
+            }
+          },
+          (error: any) => {
+            console.error('Error deleting Instagram rule:', error);
+          }
+        );
+      }
+      else if (this.selectedChannel === '8') {
+        this.commonService.DeleteExchangeEmailRules(rule.id).subscribe(
+          () => {
+            const index = this.channelRules.findIndex(item => item.rulesWihtCount.Rules.includes(rule));
+            if (index !== -1) {
+              this.channelRules[index].rulesWihtCount.Rules = this.channelRules[index].rulesWihtCount.Rules.filter((r: any) => r.id !== rule.id);
+            }
+          },
+          (error: any) => {
+            console.error('Error deleting Instagram rule:', error);
+          }
+        );
+      }
+      else if (this.selectedChannel === '9') {
+        this.commonService.DeleteMetaWaRules(rule.id).subscribe(
+          () => {
+            const index = this.channelRules.findIndex(item => item.rulesWihtCount.Rules.includes(rule));
+            if (index !== -1) {
+              this.channelRules[index].rulesWihtCount.Rules = this.channelRules[index].rulesWihtCount.Rules.filter((r: any) => r.id !== rule.id);
+            }
+          },
+          (error: any) => {
+            console.error('Error deleting Instagram rule:', error);
+          }
+        );
+      }
+      else {
+        this.commonService.DeleteFbRules(rule.id).subscribe(
+          () => {
+            const index = this.channelRules.findIndex(item => item.rulesWihtCount.Rules.includes(rule));
+            if (index !== -1) {
+              this.channelRules[index].rulesWihtCount.Rules = this.channelRules[index].rulesWihtCount.Rules.filter((r: any) => r.id !== rule.id);
+            }
+          },
+          (error: any) => {
+            console.error('Error deleting rule:', error);
+          }
+        );
+      }
     }
   }
-
-  // deleteTemplate(rule: ChannelRule, platform: string) {
-
-  //   const confirmation = confirm('Are you sure you want to delete this template?');
-  //   if (confirmation) {
-  //     const ruleId = platform === 'Exchange-email' ? (rule.rulesWihtCount.Rules[0] ? rule.rulesWihtCount.Rules[0].id : null) : (rule.rulesWihtCount.Rules[0] ? rule.rulesWihtCount.Rules[0].groupId : null);
-  //     if (!ruleId) {
-  //       console.error('Rule ID is undefined.');
-  //       return;
-  //     }
-  //     const filteredRules = platform === 'Exchange-email' ? rule.rulesWihtCount.Rules.filter((r: any) => r.id !== ruleId) : rule.rulesWihtCount.Rules.filter((r: any) => r.groupId !== ruleId);
-
-  //     if (platform === 'Exchange-email') {
-  //       this.commonService.DeleteFbRules(ruleId).subscribe(
-  //         () => {
-  //           console.log('GetAllFbRules rule deleted:', rule);
-  //           rule.rulesWihtCount.Rules = filteredRules;
-  //         },
-  //         (error: any) => {
-  //           console.error('Error deleting Facebook rule:', error);
-  //         }
-  //       );
-  //     } else if (platform === 'Common') {
-  //       this.commonService.DeleteRules(ruleId).subscribe(
-  //         () => {
-  //           console.log('Common rule deleted:', rule);
-  //           rule.rulesWihtCount.Rules = filteredRules;
-  //         },
-  //         (error: any) => {
-  //           console.error('Error deleting Common rule:', error);
-  //         }
-  //       );
-  //     }
-  //   }
-  // }
 
   setPerPage(perPage: number): void {
     this.perPage = perPage;

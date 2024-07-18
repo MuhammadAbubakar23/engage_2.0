@@ -25,7 +25,7 @@
         "IdentityBaseUrl": "https://identity-engage.enteract.app/api/",
         "CommonBaseUrl": "https://common-engage.enteract.app/api/",
         "SignalRCommonBaseUrl": "https://common-engage.enteract.app/",
-        "ProfileBaseUrl": "https://profiler.enteract.live/api/",
+        "ProfileBaseUrl": "",
         "ServiceBaseUrl": "",
         "ConsoleBaseUrl": "https://console-engage.enteract.app/api/",
         "ReportsBaseUrl": "",

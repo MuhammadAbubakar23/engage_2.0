@@ -38,6 +38,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     }
 
     let team = this.storage.retrive('nocompass', 'O').local;
+    
     // if (typeof team === 'undefined' || team == null || team == '') {
     // } else if (
     //   typeof team.id === 'undefined' ||

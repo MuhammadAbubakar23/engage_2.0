@@ -4,7 +4,7 @@
   border-radius: 10px 10px 0 0;
 }
 .message-wrap.agent-message-wrap.left .card .card-body > div {
-  max-width: 330px;
+  // max-width: 330px;
 }
 #left-sidebar-expand
   .multiple-screens
@@ -15,6 +15,10 @@
 
 .chatsection {
   height: -webkit-calc(100vh - 100px);
-  height: calc(100vh - 100px);
+  height: calc(100vh - 250px);
   overflow-y: auto;
+}
+.chat-message-component .message-wrap.agent-message-wrap .card
+{
+  min-width: 150px !important;
 }

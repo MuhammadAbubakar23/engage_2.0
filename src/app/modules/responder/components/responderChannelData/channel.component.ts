@@ -50,6 +50,8 @@ import {
 import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { ConnectionIdService } from 'src/app/services/connectionId/connection-id.service';
+import { PermissionService } from 'src/app/shared/services/permission.service';
+
 @Component({
   selector: 'app-channel',
   templateUrl: './channel.component.html',
@@ -395,6 +397,17 @@ export class ChannelComponent implements OnInit {
   teamPermissions: any;
   messagesStatus: any[] = [];
   Sentiments: any[] = [];
+  hasReplyEmojiPermission: boolean=false;
+  hasReplySentPermission: boolean=false;
+  hasReplyAttachmentPermission: boolean=false;
+  hasReplyCsatPermission: boolean=false;
+  hasQueryStatusPermission: boolean=false;
+  hasReplyQuickPermission: boolean=false;
+  hasQuickReplyPermission: boolean=false;
+  hasQuickLikesPermission: boolean=false;
+  hasQuerySentimentsPermission: boolean=false;
+  hasQueryTicketssPermission: boolean=false;
+
   fetchedPostType: string = '';
   public Subscription!: Subscription;
   public criteria!: SortCriteria;
@@ -421,9 +434,29 @@ export class ChannelComponent implements OnInit {
     private fetchPostType: FetchPostTypeService,
     private getWing: GetWingsService,
     private getSkillSlug: SkillslugService,
+    private _perS:PermissionService,
     private getConnectionId: ConnectionIdService
   ) {}
+  hasPermission(permissionName: string) {
+    const isAccessible = this._perS.hasPermission(permissionName)
+    return isAccessible
+  }
   ngOnInit(): void {
+    this.hasReplyEmojiPermission = this.hasPermission('_repemo_');
+    this.hasReplySentPermission = this.hasPermission('_repsnd_');
+    this.hasReplyQuickPermission = this.hasPermission('_repqik_');
+    this.hasQueryStatusPermission = this.hasPermission('_qrysta_');
+    this.hasReplyCsatPermission = this.hasPermission('_repcsat_');
+    this.hasReplyAttachmentPermission = this.hasPermission('_repatc_');
+    this.hasQuickReplyPermission = this.hasPermission('_repqik_');
+    this.hasQuickLikesPermission = this.hasPermission('_qrylik_');
+    this.hasQuerySentimentsPermission = this.hasPermission('_qrysnt_');
+    this.hasQueryTicketssPermission = this.hasPermission('_qrysnt_');
+
+
+
+
+
     this.platform = this.fetchId.platform;
     this.flag = this.router.url.split('/')[2];
     this.getClassOfHeaderBackground(this.platform);
