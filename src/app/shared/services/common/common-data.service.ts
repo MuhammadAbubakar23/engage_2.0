@@ -23,7 +23,7 @@ export class CommonDataService {
   LinkedInBaseUrl = environment.LinkedInBaseUrl;
   KemediaBaseUrl = environment.KemediaBaseUrl;
   KescrmBaseUrl = environment.KescrmBaseUrl;
-  WhatsappBaseUrl = environment.WhatsappBaseUrl;
+  WhatsappBaseUrl = environment.whatsappBaseUrl;
   KeReportsBaseUrl = environment.KeReportsBaseUrl;
   faceRoxBaseUrl = environment.faceRoxBaseUrl;
   autoresponderbaseurl = environment.autoresponderbaseurl;

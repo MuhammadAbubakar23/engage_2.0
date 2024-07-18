@@ -27,7 +27,7 @@ export const environment = {
   EmailBaseUrl: 'https://mail.360scrm.com/api/',
   SmsBaseUrl: 'https://text.360scrm.com/api/',
   // WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
-  WhatsappBaseUrl: 'https://waservice.enteract.live/api/',
+  // WhatsappBaseUrl: 'https://waservice.enteract.live/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   KelisteningBaseUrl: 'https://listen.enteract.live/backend/api/',
   KemediaBaseUrl: 'https://kemedia.360scrm.com/api/',
