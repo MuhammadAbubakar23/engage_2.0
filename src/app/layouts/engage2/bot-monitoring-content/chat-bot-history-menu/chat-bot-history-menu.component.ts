@@ -38,7 +38,7 @@ export class ChatBotHistoryMenuComponent implements OnInit {
   completedConversation: any[] = [];
   showBotMonitoringContent: boolean = false;
   constructor(private chatVisibilityService: ChatVisibilityService, private _botSubMenuStatus: BotSubMenusActiveService,
-    private headerService: HeaderService, private _botService: BotMonitoringService, private _menuS: MenuService,private _route:Router) {
+    private headerService: HeaderService, private _botService: BotMonitoringService, private _menuS: MenuService, private _route: Router) {
 
   }
   toggleCollapse(menu: any) {
@@ -46,8 +46,8 @@ export class ChatBotHistoryMenuComponent implements OnInit {
     if (menu['link'] === 'generative-bot-history') {
       this.updatevalue('generative-bot-history');
     }
-    else if (menu['link'] === 'bot-monitoring-chat'){
-       this.updatevalue('bot-monitoring-chat');
+    else if (menu['link'] === 'bot-monitoring-chat') {
+      this.updatevalue('bot-monitoring-chat');
     }
 
     menu.expanded = !menu.expanded;
@@ -55,7 +55,7 @@ export class ChatBotHistoryMenuComponent implements OnInit {
   ngOnInit(): void {
     this._menuS.getBotMenu.subscribe((menu: any) => {
 
-      if(menu){
+      if (menu) {
         this.menuItems = menu[0]?.subMenu;
       }
 
@@ -74,10 +74,10 @@ export class ChatBotHistoryMenuComponent implements OnInit {
     if (string === 'generative-bot-history') {
       this.showBotMonitoringContent = true;
     }
-    else if(string ==="bot-monitoring-chat"){
+    else if (string === "bot-monitoring-chat") {
       this._route.navigateByUrl('/bot-monitoring/bot-monitoring-chat');
     }
-     else {
+    else {
       this.showBotMonitoringContent = false;
       this.headerService.updateMessage(string);
     }
