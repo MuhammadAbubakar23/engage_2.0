@@ -11,7 +11,7 @@ export class ActorsInfoService {
   constructor() { }
 
   public setActor(actor: any) {
-    debugger
+    
     this.actorSubject.next(actor);
   }
 

@@ -118,6 +118,9 @@
 <!-- Ensure that query is correctly bound -->
 <div class="content-box-wrapper d-flex w-100">
   <div class="middle-content d-flex">
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+      <p style="color: white"> Loading... </p>
+    </ngx-spinner>
     <div class="agent-page-main-content">
       <div class="preferences console-body-wrapper footerheight" data-scrollbar="true" tabindex="-1"
         style="overflow: auto; outline: none;">
@@ -179,8 +182,7 @@
               <div class="mb-2">
                 <select name="" class="form-select" formControlName="selectedService" (change)="onServiceSelect()">
                   <option selected disabled value="">Select Platform</option>
-                  <!-- Use *ngFor to loop over the services array and display each option -->
-                  <option *ngFor="let ser of services" [value]="ser.id">{{ ser.name }}</option>
+                  <option *ngFor="let ser of services" [value]="ser.id">{{ ser.platformName }}</option>
                 </select>
               </div>
               <hr>
@@ -318,5 +320,17 @@
         </div>
       </footer>
     </div>
+  </div>
+</div>
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+  <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+      aria-live="assertive" aria-atomic="true">
+      <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+          <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+          <div class="toast-btn d-flex align-items-center">
+              <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                  (click)="closeToaster()"><i class="fal fa-times"></i></button>
+          </div>
+      </div>
   </div>
 </div>

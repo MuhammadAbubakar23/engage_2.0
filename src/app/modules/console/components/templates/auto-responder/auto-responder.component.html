@@ -31,11 +31,12 @@
                                         <div class="me-2">
                                             <select class="form-select" id="channelSelect"
                                                 (change)="onChannelChange($event)">
-                                                <option selected disabled>Select Platform</option>
+                                                <option value="" selected>Select Platform</option>
                                                 <option *ngFor="let channel of channels" [value]="channel.id">{{
                                                     channel.name }}</option>
                                             </select>
                                         </div>
+    
                                         <div>
                                             <a (click)="updatevalue('create-auto-responder')"
                                                 [routerLink]="['/console/templates/add-auto-responder/:0']">
@@ -122,6 +123,18 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
             </div>
         </div>
     </div>

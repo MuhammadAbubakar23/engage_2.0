@@ -26,7 +26,7 @@
                     <div id="rules-tab" class="tab-pane fade active show" role="tabpanel" aria-labelledby="rules">
                         <div class="searchBar-wrapper mb-2 p-0">
                             <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-2">
                                     <div class="d-flex align-items-lg-center">
                                         <p class="coal m-0">Sort:</p>
                                         <div class="dropdown">
@@ -50,7 +50,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-8 d-flex align-items-center justify-content-end">
+                                <div class="col-lg-10 d-flex align-items-center justify-content-end">
                                     <div class="me-2">
                                         <select class="form-select" id="ruleTypeSelect" [(ngModel)]="selectedRuleType"
                                             (change)="onRuleTypeChange($event)">
@@ -60,14 +60,23 @@
                                         </select>
                                     </div>
 
-                                    <div class="me-2">
+                                    <!-- <div class="me-2">
                                         <select class="form-select" id="channelSelect" [(ngModel)]="selectedChannelSlug"
                                             (change)="onChannelChange($event)">
                                             <option value="" selected>Select Platform</option>
                                             <option *ngFor="let channel of channels" [value]="channel.slug">{{
                                                 channel.name }}</option>
                                         </select>
+                                    </div> -->
+                                    <div class="me-2">
+                                        <select class="form-select" id="channelSelect" [(ngModel)]="selectedChannelSlug"
+                                            (change)="onChannelChange($event)">
+                                            <option value="" selected>Select Platform</option>
+                                            <option *ngFor="let channel of channels" [value]="channel.id">{{
+                                                channel.name }}</option>
+                                        </select>
                                     </div>
+
 
                                     <a class="search-btn">
                                         <button class="iconButton medium">

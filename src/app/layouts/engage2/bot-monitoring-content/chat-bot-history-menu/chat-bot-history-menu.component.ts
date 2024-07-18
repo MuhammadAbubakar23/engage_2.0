@@ -59,7 +59,7 @@ export class ChatBotHistoryMenuComponent implements OnInit {
     })
   }
   updatevalue(string: any) {
-    debugger
+
     if (string === 'generative-bot-history') {
       this.showBotMonitoringContent = true;
     }

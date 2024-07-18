@@ -33,14 +33,14 @@ export class ComponentsComponent implements OnInit {
   isViewMode: boolean = false;
   isResponseView: boolean = false;
   constructor(private _botService: BotMonitoringService, private chatBotIdS: ChatbotIdService, private spinnerServerice: NgxSpinnerService) {
-    this.BotId = localStorage.getItem('bot_id');
+    this.BotId = sessionStorage.getItem('bot_id');
   }
   ngOnInit(): void {
     this.intializeForm();
     this.loadBotId();
     this.ResponseList()
     // this.loadBotId();
-    this.setName = localStorage.getItem('name')
+    this.setName = sessionStorage.getItem('name')
 
   }
 
@@ -57,7 +57,7 @@ export class ComponentsComponent implements OnInit {
     event.stopPropagation();
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
-      this.BotId = localStorage.getItem('bot_id');
+      this.BotId = sessionStorage.getItem('bot_id');
       const obj = new FormData();
       obj.append('intent', intent);
       obj.append('bot_id', this.BotId);
@@ -84,7 +84,7 @@ export class ComponentsComponent implements OnInit {
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
       console.log("deleted app==>", response)
-      this.BotId = localStorage.getItem('bot_id');
+      this.BotId = sessionStorage.getItem('bot_id');
       const obj = new FormData();
       obj.append('response', response);
       obj.append('bot_id', this.BotId);
@@ -176,7 +176,7 @@ export class ComponentsComponent implements OnInit {
   ResponseList() {
 
     if (!this.BotId) {
-      console.error('BotId not found in localStorage.');
+      console.error('BotId not found in sessionStorage.');
       return;
     }
     this.spinnerServerice.show();
@@ -210,7 +210,7 @@ export class ComponentsComponent implements OnInit {
 
     console.log("this.newPhrase", this.IntendForm.value)
 
-    this.BotId = localStorage.getItem('bot_id')
+    this.BotId = sessionStorage.getItem('bot_id')
     const obj = new FormData();
     obj.append('intent', this.IntendForm.value.newPhrase);
     obj.append('bot_id', this.BotId)
@@ -241,7 +241,7 @@ export class ComponentsComponent implements OnInit {
   }
   loadBotId() {
     if (!this.BotId) {
-      console.error('BotId not found in localStorage.');
+      console.error('BotId not found in sessionStorage.');
       return;
     }
     this.spinnerServerice.show();

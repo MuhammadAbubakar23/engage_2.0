@@ -1,7 +1,11 @@
 <section
   class="empty col d-flex flex-column justify-content-center h-100 align-items-center gap-3 d-none"
 >
-  <img src="../images/empty.svg" width="300px" alt="" />
+  <img
+    src=".../../../../.././../../assets/images/empty.svg"
+    width="300px"
+    alt=""
+  />
   <p class="m-0 coal">Select the conversation to load the messages</p>
 </section>
 <section class="chatitem col" id="chatitem1">
@@ -11,7 +15,7 @@
         <span class="iconButton medium bg-white fw-bold"></span>
         <div class="ms-3">
           <h6 class="user-status m-0">
-            {{chat[0].name}}
+            {{ chat[0].name }}
             <!-- <i class="fa fa-circle user-status-icon sun" title="away"></i> -->
           </h6>
         </div>
@@ -21,19 +25,28 @@
           id="minbutton"
           (click)="refreshHistory()"
         >
-          <i
-            class="fa-light fa-refresh"
-                      ></i>
+          <i class="fa-light fa-refresh"></i>
         </span>
         <span (click)="removeScreen()">
           <i class="fa-light fa-times"></i>
         </span>
       </div>
     </header>
+    <!-- <div class="messagewrap suggestions">
+      <div class="messagebody">
+        <ul class="list-inline text-center m-0">
+          <li class="list-inline-item" *ngFor="let tag of chat[1].tags">
+            <span class="tag">{{ tag.tag }}</span>
+          </li>
+        </ul>
+      </div>
+    </div> -->
     <div class="chatsection">
       <div class="main-chat">
         <div class="chat-box-wrap">
           <ng-container *ngFor="let msg of chat; let i = index">
+            <!-- <pre  >{{msg | json}}</pre> -->
+
             <div
               class="message-wrap agent-message-wrap"
               [ngClass]="{
@@ -69,4 +82,3 @@
     </div>
   </div>
 </section>
-

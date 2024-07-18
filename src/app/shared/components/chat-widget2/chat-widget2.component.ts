@@ -10,6 +10,8 @@ export class ChatWidget2Component implements OnInit {
   @ViewChild('chatBody') private chatBody?: ElementRef;
   @Input() hasParent: boolean=false;
   messages: any[] = [];
+  typing = false;
+  currentTimestamp: Date = new Date();
   isOpen = false;
   slug = "";
   chatForm: FormGroup = new FormGroup({
@@ -68,9 +70,11 @@ export class ChatWidget2Component implements OnInit {
     });
 
     this.chatForm.reset({ message: '' });
-
+    this.typing = true;
+    this.currentTimestamp = new Date();
     this._botService.ChatBotWdidget(body).subscribe(
       (res: any) => {
+        this.typing = false;
         this.messages.push({
           message: res.bot,
           type: 'bot',

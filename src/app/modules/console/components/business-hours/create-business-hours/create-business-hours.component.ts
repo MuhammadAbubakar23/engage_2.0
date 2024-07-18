@@ -14,7 +14,7 @@ export class CreateBusinessHoursComponent implements OnInit {
   showWorkingDaysSection: boolean = false;
   businessId: any
   showhideWorkingDays(value:boolean) {
-    debugger;
+    ;
     this.showWorkingDaysSection = value;
   }
   // showWorkingDays() {

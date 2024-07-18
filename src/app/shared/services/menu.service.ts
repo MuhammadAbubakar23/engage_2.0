@@ -15,7 +15,7 @@ export class MenuService {
   private botMenu = new BehaviorSubject<[]>([]);
   getBotMenu = this.botMenu.asObservable();
   changeBotMenu(data: []) {
-    debugger
+    
     this.botMenu.next(data);
   }
 }

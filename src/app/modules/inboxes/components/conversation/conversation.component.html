@@ -3,13 +3,14 @@
     <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
       <p style="color: white"> Loading... </p>
     </ngx-spinner>
-    <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar"
+    <div *ngIf="hasSearchInboxPermission">
+      <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar"
       *ngIf="FlagForAssignToMe != 'assigned_to_me'">
       <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
         <li class="list-inline-item">
           <div class="dropdown">
             <button class="btn dropdown-toggle fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-              (click)="getCustomers()" aria-expanded="false">
+              (click)="getCustomers()" aria-expanded="false" *ngIf="hasSearchFromPermission">
               <i class="fal fa-user"></i> From
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -57,7 +58,7 @@
         <li class="list-inline-item">
           <div class="dropdown">
             <button class="btn dropdown-toggle fw-bold" [ngClass]="anyTimeDropdown?'show':''" type="button"
-              id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" *ngIf="hasanytimeeSerachPermission"> 
               <i class="fal fa-calendar"></i> Any Time
             </button>
             <ul class="dropdown-menu assignFirstDropdownList1" [ngClass]="anyTimeDropdown?'show':''"
@@ -115,7 +116,7 @@
           </div>
         </li>
         <li class="list-inline-item" *ngIf="isAttachment == false">
-          <Button class="btn toggle-check-btn fw-bold" (click)="hasAttachment(true)">
+          <Button class="btn toggle-check-btn fw-bold" (click)="hasAttachment(true)" *ngIf="hasAttachementeSerachPermission">
             <i class="fal fa-paperclip"></i> Has Attachment</Button>
         </li>
         <li class="list-inline-item" *ngIf="isAttachment == true">
@@ -277,7 +278,7 @@
                     </ul>
                   </div>
                 </li> -->
-        <li class="list-inline-item">
+        <li class="list-inline-item" *ngIf="hasAdvanceSerachPermission">
           <a class="advance-search-o fw-bold sky btn" (click)="AdvanceSearch()">Advance Search</a>
         </li>
         <li>
@@ -410,6 +411,8 @@
         </div>
       </form>
     </div>
+    </div>
+   
     <div class="filter-container">
       <ul class="list-group list-group-horizontal border-0">
         <li class="list-group-item border-0 all-check-boxes" >

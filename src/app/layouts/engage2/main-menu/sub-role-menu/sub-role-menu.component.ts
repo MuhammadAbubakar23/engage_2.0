@@ -97,7 +97,7 @@ export class SubRoleMenuComponent implements OnInit {
   }
 
   getConsoleMenus() {
-    debugger
+    
     this.commonService.getConsoleMenuByRole(
       sessionStorage.getItem('activeActorId'),
     ).subscribe((res: any) => {

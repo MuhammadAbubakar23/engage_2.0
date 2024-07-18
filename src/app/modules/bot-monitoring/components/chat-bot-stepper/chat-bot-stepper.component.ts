@@ -35,7 +35,7 @@ export class ChatBotStepperComponent implements OnInit {
   setName: any
   currentConversationName:string=''
   constructor(private _botService: BotMonitoringService, private spinnerServerice: NgxSpinnerService , private route : Router , private _activeRoute : ActivatedRoute) {
-    this.BotId = localStorage.getItem('bot_id');
+    this.BotId = sessionStorage.getItem('bot_id');
     this._activeRoute.params.
       subscribe((param) => {
         this.currentConversationName = param['name'];
@@ -46,7 +46,7 @@ export class ChatBotStepperComponent implements OnInit {
     this.loadBotId()
     this.ResponseList();
     this.getListOfRule()
-    this.setName = localStorage.getItem("name")
+    this.setName = sessionStorage.getItem("name")
 
   }
   intializeForm() {
@@ -62,7 +62,7 @@ export class ChatBotStepperComponent implements OnInit {
   }
   getListOfRule() {
     if (!this.BotId) {
-      console.error('BotId not found in localStorage.');
+      console.error('BotId not found in sessionStorage.');
       return;
     }
     this._botService.GetRuleChatBot(this.BotId).subscribe((res: any) => {
@@ -77,7 +77,7 @@ export class ChatBotStepperComponent implements OnInit {
   }
   generateAugments() {
     console.log("this.newPhrase", this.stepperForm.value)
-    this.BotId = localStorage.getItem('bot_id')
+    this.BotId = sessionStorage.getItem('bot_id')
     const obj = new FormData();
     obj.append('intent', this.stepperForm.value.newPhrase);
     obj.append('bot_id', this.BotId)
@@ -96,7 +96,7 @@ export class ChatBotStepperComponent implements OnInit {
     event.stopPropagation();
     const confirmation = confirm('Are you sure you want to delete this Rule?');
     if (confirmation) {
-      this.BotId = localStorage.getItem('bot_id');
+      this.BotId = sessionStorage.getItem('bot_id');
       const obj = new FormData();
       obj.append('rule', rule);
       obj.append('bot_id', this.BotId);
@@ -145,7 +145,7 @@ export class ChatBotStepperComponent implements OnInit {
   }
   loadBotId() {
     if (!this.BotId) {
-      console.error('BotId not found in localStorage.');
+      console.error('BotId not found in sessionStorage.');
       return;
     }
     this._botService.GetIntents(this.BotId).subscribe((res: any) => {
@@ -157,7 +157,7 @@ export class ChatBotStepperComponent implements OnInit {
   }
   ResponseList() {
     if (!this.BotId) {
-      console.error('BotId not found in localStorage.');
+      console.error('BotId not found in sessionStorage.');
       return;
     }
     this.spinnerServerice.show();

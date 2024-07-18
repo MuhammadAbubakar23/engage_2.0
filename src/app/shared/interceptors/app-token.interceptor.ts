@@ -11,7 +11,7 @@ import { EnvService } from 'src/app/shared/services/env/env.service';
 export class AppTokenInterceptor implements HttpInterceptor {
   constructor(private envUrl: EnvService) { }
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    debugger
+    
     if (httpRequest.url.includes('https://entertainerbot.enteract.app')) {
       return next.handle(httpRequest);
     }

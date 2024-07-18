@@ -112,7 +112,7 @@ export class BotMoniteringChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.newChatIdSubscription = this._chatVisibilityS.newChatId$.subscribe((newChat: any) => {
-      debugger
+      
       if (newChat) {
         console.log("New chat", newChat['completed'])
         this.getChatDetails(newChat);
