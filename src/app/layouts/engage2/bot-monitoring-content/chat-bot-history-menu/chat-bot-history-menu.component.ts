@@ -48,7 +48,7 @@ export class ChatBotHistoryMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._spinner.show('chat-history-menu');
+
     this.getChatBotHistory();
     this.chatVisibilityService.thirdActiveHistory$.subscribe((obj: any) => {
       if (obj) {
@@ -100,7 +100,7 @@ export class ChatBotHistoryMenuComponent implements OnInit {
     this._sharedS.setShowGenerativeMenu('');
   }
   getChatBotHistory() {
-
+    this._spinner.show('chat-history-menu');
     this._botService.chatBotHistory().subscribe((res: any) => {
       res.slugs.forEach((item: any, index: any) => {
         item.name = "Conversation" + `${index + 1}`
