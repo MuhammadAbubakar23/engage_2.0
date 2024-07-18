@@ -72,22 +72,19 @@ export class LoginComponent implements OnInit {
     private datePipe: DatePipe,
     private sendWings: GetWingsService,
     private sendSkills: SkillsService,
-    private sendSkillIdsService: SkillIdsService,
-
+    private sendSkillIdsService: SkillIdsService
   ) {}
 
   ngOnInit(): void {
     // this.getAllTags();
     this.baseUrl = window.location.origin;
-
   }
   uniqueWings: any[] = [];
-  rulesArray: any[]=[];
+  rulesArray: any[] = [];
   Rules: any[] = [];
-  singleOrSplitted:any[]=[];
-  loginResponse:any;
+  singleOrSplitted: any[] = [];
+  loginResponse: any;
   login() {
-    
     let obj = {
       // actor: this.loginForms.value.actor,
       userName: this.loginForm.value.userName,
@@ -103,91 +100,99 @@ export class LoginComponent implements OnInit {
           this.stor.store('token', this.loginResponse.accessToken);
           this.stor.store('main', this.loginResponse);
           this.stor.store('nocompass', this.loginResponse?.roles[0]);
-          sessionStorage.setItem('agentId',  this.loginResponse.userId);
+          sessionStorage.setItem('agentId', this.loginResponse.userId);
           sessionStorage.setItem('agentName', this.loginResponse.username);
 
-          if(this.loginResponse?.actors?.length > 1){
+          if (this.loginResponse?.actors?.length > 1) {
             this.router.navigateByUrl('loginAs');
             //this.actorsService.sendActors(this.loginResponse?.actors)
-          } else{
-try {
-        this.commonService.UserLogin().subscribe(() => {
-          this.sendSkillIdsService.sendSkillIds(this.loginResponse?.skills);
-          sessionStorage.setItem('skills', this.loginResponse?.skills);
+          } else {
+            try {
+              this.commonService.UserLogin().subscribe(
+                () => {
+                  this.sendSkillIdsService.sendSkillIds(
+                    this.loginResponse?.skills
+                  );
+                  sessionStorage.setItem('skills', this.loginResponse?.skills);
 
-          this.commonService.GetSkills(this.loginResponse?.skills)
-            .subscribe((skillNames: any) => {
-              this.sendSkills.sendSkills(skillNames);
-              this.stor.store('skills', skillNames);
+                  this.commonService
+                    .GetSkills(this.loginResponse?.skills)
+                    .subscribe((skillNames: any) => {
+                      this.sendSkills.sendSkills(skillNames);
+                      this.stor.store('skills', skillNames);
 
-              // sessionStorage.setItem('skillSlug', skillNames[0]?.skilSlug);
-              this.loginResponse?.roles.forEach((role: any) => {
-                var companyId = role.id;
+                      // sessionStorage.setItem('skillSlug', skillNames[0]?.skilSlug);
+                      this.loginResponse?.roles.forEach((role: any) => {
+                        var companyId = role.id;
 
-                skillNames.forEach((skill: any) => {
-                  var wingName = skill.wing;
-                  if (!this.uniqueWings.includes(wingName)) {
-                    this.uniqueWings.push(wingName);
-                  }
-                  this.sendWings.sendWings(this.uniqueWings.toString());
-                  sessionStorage.setItem('defaultWings', this.uniqueWings.toString());
+                        skillNames.forEach((skill: any) => {
+                          var wingName = skill.wing;
+                          if (!this.uniqueWings.includes(wingName)) {
+                            this.uniqueWings.push(wingName);
+                          }
+                          this.sendWings.sendWings(this.uniqueWings.toString());
+                          sessionStorage.setItem(
+                            'defaultWings',
+                            this.uniqueWings.toString()
+                          );
 
-                  const splitedRules = skill.rules.split(',')
+                          const splitedRules = skill.rules.split(',');
 
-                  var obj = {
-                    "platform": skill.skillName.toLowerCase()?.split(' ')[0],
-                    "ruleLength": splitedRules.length
-                  }
-                  this.singleOrSplitted.push(obj);
-                  this.stor.store('checkSegregation', this.singleOrSplitted);
+                          var obj = {
+                            platform: skill.skillName
+                              .toLowerCase()
+                              ?.split(' ')[0],
+                            ruleLength: splitedRules.length,
+                          };
+                          this.singleOrSplitted.push(obj);
+                          this.stor.store(
+                            'checkSegregation',
+                            this.singleOrSplitted
+                          );
 
-                  this.Rules = skill.rules.split(',');
-                  this.Rules.forEach((x: any) => {
-                    var groupName = x + '_' + skill.wing + '_' + companyId;
+                          this.Rules = skill.rules.split(',');
+                          this.Rules.forEach((x: any) => {
+                            var groupName =
+                              x + '_' + skill.wing + '_' + companyId;
 
-                    this.signalRService
-                      .getConnectionState()
-                      .subscribe((connected) => {
-                        if (connected) {
-                          this.signalRService.joinGroup(groupName);
-                        }
+                            this.signalRService
+                              .getConnectionState()
+                              .subscribe((connected) => {
+                                if (connected) {
+                                  this.signalRService.joinGroup(groupName);
+                                }
+                              });
+                          });
+                        });
                       });
-                  });
-                });
-              });
-            });
-          this.router.navigateByUrl('all-inboxes/focused/all');
+                    });
+                  this.router.navigateByUrl('all-inboxes/focused/all');
 
+                  //signalRRequests
 
-          //signalRRequests
+                  this.signalRService.startConnection();
 
-          this.signalRService.startConnection();
-
-          this.signalRService.removeTagDataListener();
-          this.signalRService.addTagDataListener();
-          this.signalRService.unRespondedCountDataListener();
-          this.signalRService.updateListAndDetailDataListener();
-          this.signalRService.replyDataListener();
-          this.signalRService.queryStatusDataListener();
-          this.signalRService.bulkQueryStatusDataListener();
-          this.signalRService.checkConnectionStatusListener();
-          this.signalRService.assignQueryResponseListner();
-          this.signalRService.applySentimentListner();
-          this.signalRService.updateMessageStatusDataListener();
-          this.loginDisabled = true
-        
-        },
-          (error) => {
-            alert(error.error.message)
-          });
-      } finally {
-
-        this.spinnerService.hide();
-      }
-
+                  this.signalRService.removeTagDataListener();
+                  this.signalRService.addTagDataListener();
+                  this.signalRService.unRespondedCountDataListener();
+                  this.signalRService.updateListAndDetailDataListener();
+                  this.signalRService.replyDataListener();
+                  this.signalRService.queryStatusDataListener();
+                  this.signalRService.bulkQueryStatusDataListener();
+                  this.signalRService.checkConnectionStatusListener();
+                  this.signalRService.assignQueryResponseListner();
+                  this.signalRService.applySentimentListner();
+                  this.signalRService.updateMessageStatusDataListener();
+                  this.loginDisabled = true;
+                },
+                (error) => {
+                  alert(error.error.message);
+                }
+              );
+            } finally {
+              this.spinnerService.hide();
+            }
           }
-
-
         } else if (res.status == true || res.isTwoFAEnabled == true) {
           this.Verificationemail = res.userName;
           // res.loginResponse.loginTwoFAResponse.userName;
@@ -287,7 +292,6 @@ try {
   //       });
   //     this.router.navigateByUrl('all-inboxes/focused/all');
 
-
   //     //signalRRequests
 
   //     this.signalRService.startConnection();
@@ -351,29 +355,27 @@ try {
         sessionStorage.setItem('agentName', res.username);
 
         this.commonService.UserLogin().subscribe(() => {
+          this.router.navigateByUrl('all-inboxes/focused/all');
+          this.spinnerService.hide();
 
-        this.router.navigateByUrl('all-inboxes/focused/all');
-        this.spinnerService.hide();
+          //signalRRequests
 
-        //signalRRequests
+          this.signalRService.startConnection();
 
-        this.signalRService.startConnection();
-
-        this.signalRService.removeTagDataListener();
-        this.signalRService.addTagDataListener();
-        this.signalRService.unRespondedCountDataListener();
-        this.signalRService.updateListAndDetailDataListener();
-        this.signalRService.replyDataListener();
-        this.signalRService.queryStatusDataListener();
-        this.signalRService.bulkQueryStatusDataListener();
-        this.signalRService.checkConnectionStatusListener();
-        this.signalRService.assignQueryResponseListner();
-        this.signalRService.applySentimentListner();
-        this.signalRService.updateMessageStatusDataListener();
-        // for new post
-        // this.signalRService.updatePostList;
+          this.signalRService.removeTagDataListener();
+          this.signalRService.addTagDataListener();
+          this.signalRService.unRespondedCountDataListener();
+          this.signalRService.updateListAndDetailDataListener();
+          this.signalRService.replyDataListener();
+          this.signalRService.queryStatusDataListener();
+          this.signalRService.bulkQueryStatusDataListener();
+          this.signalRService.checkConnectionStatusListener();
+          this.signalRService.assignQueryResponseListner();
+          this.signalRService.applySentimentListner();
+          this.signalRService.updateMessageStatusDataListener();
+          // for new post
+          // this.signalRService.updatePostList;
         });
-
       },
       (error: any) => {
         this.spinnerService.hide();

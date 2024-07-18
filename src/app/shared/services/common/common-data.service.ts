@@ -252,6 +252,18 @@ export class CommonDataService {
     environment.links.profile.deattachProfileInformation;
   // whatapp bot interaction
   whatsappBotInteraction = environment.links.common.whatsappBotInteraction;
+
+
+  getTagsBySupreamId = environment.links.console.getTagsBySupreamId
+  addTagTeams = environment.links.console.addTagTeams;
+  updateTagTeams = environment.links.console.updateTagTeams;
+  getSkillTeamById = environment.links.console.getSkillTeamById;
+  deleteTagTeam = environment.links.console.deleteTagTeam;
+  //For Access Report
+addAccessReports = environment.links.console.addAccessReports;
+getActors = environment.links.console.getActors;
+getReports = environment.links.console.getReports;
+
   private _wordCloudDataS: any;
   baseUrl: any;
 
@@ -1368,5 +1380,46 @@ export class CommonDataService {
     const url = `${this.exchangeEmailBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
     return this.http.get<any>(url, {});
   }
+  AddTagTeams(tagteam: any) {
+    return this.http.post(
+      this.ConsoleBaseUrl + this.addTagTeams,
+      tagteam
+    );
+  }
+  UpdateTagTeams(tagteam: any) {
+    return this.http.post(
+      this.ConsoleBaseUrl + this.updateTagTeams,
+      tagteam
+    );
+  }
+  DeleteTagTeam(id: any): Observable<any> {
+    const url = `${this.ConsoleBaseUrl}${this.deleteTagTeam}?Id=${id}`;
+    return this.http.get(url);
+  }
 
+  GetSkillTeamById(skillTeamId: string) {
+    const url = `${this.ConsoleBaseUrl}${this.getSkillTeamById}?Id=${skillTeamId}`;
+    return this.http.get(url);
+  }
+  GetTagBySupreamId(id: number) {
+    return this.http.get(`${this.ConsoleBaseUrl + this.getTagsBySupreamId}?id=${id} `)
+      ;
+  }
+
+
+
+AddAccessReports(reports: any) {
+  return this.http.post(
+    this.ReportsBaseUrl + this.addAccessReports,
+    reports
+  );
+}
+
+GetActors() {
+  return this.http.get(`${this.IdentityBaseUrl + this.getActors}?roles=${57}&roles=${58}`);
+}
+
+GetReports(teamSlug:any) {
+  return this.http.post(this.ReportsBaseUrl + this.getReports, teamSlug)
+}
 }

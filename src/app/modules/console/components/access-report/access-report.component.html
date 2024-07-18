@@ -1,0 +1,136 @@
+<div class="message-wrap d-flex-1 console-body-wrapper" data-scrollbar="true" tabindex="-1"
+    style="overflow-y:auto; outline: none;">
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+      <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+    <div class="scroll-content">
+
+   <div class="agent-page-main-content">
+    <div class="create-user console-body-wrapper" data-scrollbar="true">
+      <div class="row justify-content-center align-items-start h-auto pt-3">
+          <div class="col-md-11">
+              <div class="row">
+                  <div class="col-md-12">
+                      <p class="coal">Administrators have access to all candidates, jobs, and settings, and can fully manage the company's account and members. Only users with this role can delete other administrators, have high-level data access permission enabled, and be granted access to all data with a level-protected status.</p>
+                  </div>
+                  <div class="col-md-12">
+                      <div class="filter-toolbar border-0 mb-4">
+                          <div class="row">
+                              <div class="col-lg-6 d-flex align-items-center">
+                              <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                                  <li class="list-inline-item me-4">
+                                      <h5 class="fw-bold mb-0">Team Assigned</h5>
+                                  </li>
+                                  <!-- <li class="list-inline-item d-flex">
+                                      <span class="btn iconButton iconHover small cherryBg me-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Tahir Ahmad" aria-describedby="tooltip277278">
+                                         TA
+                                      </span>
+                                      <span class="btn iconButton iconHover small cherryBg" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Taimoor Kasi" aria-describedby="tooltip277278">
+                                         TK
+                                      </span>
+                                      <span class="iconButton small add-circle" data-bs-toggle="modal" data-bs-target="#addteammember" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title=" Add New">
+                                          <i class="fa-light fa-plus"></i>
+                                      </span>
+                                  </li> -->
+                              </ul>
+                             
+                                <div class="pt-3 pb-1 m-0 d-flex align-items-center">
+                                    <select class="form-select" aria-label="Floating label select" [(ngModel)]="teamId" (change)="onTeamSelect()" [disabled]="showTabs">
+                                        <option value="0" disabled selected>Please Select Team</option>
+                                        <option *ngFor="let team of teamsList" [value]="team.id" >{{ team.name }}</option>
+                                    </select>
+                                    
+                                </div>
+                            
+                              </div>
+                          </div>
+                      </div>
+                      <!-- <div class="feature-tab-header mb-4 d-none">
+                          <div class="row">
+                              <div class="col-lg-8 d-flex align-items-center">
+                                  <div class="icons-list">
+                                      <button type="button" class="btn ms-2 btn-primary">Reassign existing members</button>
+                                      <button type="button" class="btn ms-2 btn-primary">Invite new team members</button>
+                                      <span class="coal ms-3">Saved 13 days ago</span>
+                                  </div>
+                              </div>
+                              <div class="col-lg-4 d-flex align-items-center justify-content-end">
+                                  <button class="btn coal" data-bs-toggle="modal" data-bs-target="#defult-notification"><i class="fa-light fa-bell me-2"></i>  Manage default notification</button>
+                              </div>
+                          </div>
+                      </div> -->
+                  </div>
+              </div>
+              <div>
+                <header class="tab-header">
+                  <nav>
+                    <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                      <button 
+                        *ngFor="let tab of tabs; let i = index" 
+                        class="nav-link" 
+                        [class.active]="selectedTab === tab"
+                        [attr.id]="tab.id + '-tab'" 
+                        (click)="selectTab(tab)"
+                        type="button" 
+                        role="tab" 
+                        [attr.aria-controls]="tab.id + '-content'"
+                        [attr.aria-selected]="selectedTab === tab"
+                      >
+                        <h6>{{tab.name}}</h6>
+                      </button>
+                    </div>
+                  </nav>
+                </header>
+                <div class="tab-body" *ngIf="showTabs">
+                  <div class="tab-content" id="nav-tabContent">
+                    <div 
+                      *ngFor="let tab of tabs" 
+                      [attr.id]="tab.id + '-content'" 
+                      class="tab-pane fade" 
+                      [class.active]="selectedTab === tab" 
+                      [class.show]="selectedTab === tab" 
+                      role="tabpanel" 
+                      [attr.aria-labelledby]="tab.id + '-tab'">
+
+                      <ul class="list-group list-group-flush mt-2">
+                        <li class="list-group-item" *ngFor="let report of tab.reports ">
+                          <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="flexCheckDefault" [(ngModel)]="report.isActive" (change)="onSubmit(report)">
+                            <div class="ms-2 me-auto silver lh-sm">
+                              <div class="fw-bold darkblue mb-1">{{report.name}}</div>
+                              {{report.desc}}
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <footer class="footer">
+                <div class="ps-3 pe-3">
+                  <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+                    <div class="row w-100">
+                      <div class="col-md-4"></div>
+                      <div class="col-md-8 justify-content-end d-flex">
+                        <div class="buttons-wrap d-flex">
+                          <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"></button>
+                          <button type="button" (click)="onSubmit()" class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                            data-bs-toggle="modal" data-bs-target="">
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </footer> -->
+
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+</div> 
+</div> 
