@@ -23,6 +23,7 @@ import { ResponsefilterPipe } from './CustomPipes/charBotIntentSearchFilter/resp
 import { GifFilterPipe } from './CustomPipes/gifFilter.pipe';
 import { ChatWidgetComponent } from './components/chat-widget/chat-widget.component';
 import { ChatWidget2Component } from './components/chat-widget2/chat-widget2.component';
+import { SafeUrlPipe } from './CustomPipes/safeurl.pipe';
 @NgModule({
   declarations: [
     ChatWidgetComponent,
@@ -42,7 +43,8 @@ import { ChatWidget2Component } from './components/chat-widget2/chat-widget2.com
     BreaklinePipe,
     ChatBotIntentFilterPipe,
     ResponsefilterPipe,
-    ChatWidget2Component
+    ChatWidget2Component,
+    SafeUrlPipe
     // TableResponsiveComponent
   ],
   imports: [
@@ -69,7 +71,7 @@ import { ChatWidget2Component } from './components/chat-widget2/chat-widget2.com
     InitialLettersPipe,
     BreaklinePipe,
     ChatWidget2Component,
-    
+    SafeUrlPipe
   ]
 })
 export class SharedModule { }

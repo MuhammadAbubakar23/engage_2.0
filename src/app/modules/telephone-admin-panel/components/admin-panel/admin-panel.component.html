@@ -1,0 +1,11 @@
+<div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+        <div class="d-grid w-100">
+            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                [fullScreen]="false">
+                <p style="color: white"> Loading... </p>
+            </ngx-spinner>
+            <iframe style="height: 600px;width: 100%;" [src]="url | safeUrl"></iframe>
+        </div>
+    </div>
+</div>

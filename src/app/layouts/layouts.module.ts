@@ -73,6 +73,9 @@ import { BotChatComponent } from "../modules/bot-monitoring/components/bot-chat/
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ChatBotHistoryMenuComponent } from './engage2/bot-monitoring-content/chat-bot-history-menu/chat-bot-history-menu.component';
 import { BotMainMenuComponent } from './engage2/bot-monitoring-content/bot-main-menu/bot-main-menu.component';
+import { AdminPanelHeaderComponent } from './engage2/admin-panel-content/admin-panel-header/admin-panel-header.component';
+import { AdminPanelContentComponent } from './engage2/admin-panel-content/admin-panel-content/admin-panel-content.component';
+import { AdminPanelMenuComponent } from './engage2/admin-panel-content/admin-panel-menu/admin-panel-menu.component';
 @NgModule({
     declarations: [
         InboxContentComponent,
@@ -132,7 +135,12 @@ import { BotMainMenuComponent } from './engage2/bot-monitoring-content/bot-main-
         // MonitoringMenuComponent,
         BotMonitoringMenusComponent,
         ChatBotHistoryMenuComponent,
-        BotMainMenuComponent
+        BotMainMenuComponent,
+        AdminContentComponent,
+        AdminMenuComponent,
+        AdminPanelHeaderComponent,
+        AdminPanelContentComponent,
+        AdminPanelMenuComponent
     ],
     exports: [
         MainContentComponent,
@@ -155,7 +163,8 @@ import { BotMainMenuComponent } from './engage2/bot-monitoring-content/bot-main-
         ToasterComponent,
         AvatarContentComponent,
         MonitoringHeaderComponent,
-        BotMonitoringContentComponent
+        BotMonitoringContentComponent,
+        AdminPanelContentComponent
     ],
     imports: [
         CommonModule,
