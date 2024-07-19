@@ -118,14 +118,16 @@ hasPermission(permissionName: string) {
     this.router.navigate(['/console/tag/create/', tag.mainId])
   }
   deleteTemplate(message: any,isDelete:any) {
+    const confirmation = confirm(isDelete == true ? 'Are you sure you want to delete this template?' : 'Are you sure you want to change the status?');
+
+    if (confirmation) {
     this.delobj.id = message.mainId;
     this.delobj.isActive = !message.isActive;
     this.delobj.isBlock = isDelete;
-    this.spinnerServerice.show();
     this.commonService.DeleteTags(this.delobj).subscribe((res: any) => {
-      this.spinnerServerice.hide();
       this.getTags()
     })
+    }
   }
 
   disableTag(tag: Tag): void {
