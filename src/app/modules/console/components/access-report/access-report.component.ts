@@ -101,10 +101,8 @@ export class AccessReportComponent implements OnInit {
   }
 
   getCompanyTeams(){
-    this.spinnerServerice.show();
     this.commonService.GetCompanyTeams().subscribe({
      next: (res: any) => {
-      this.spinnerServerice.hide();
        this.initialTeams = res;
        this.initialTeams = this.initialTeams.filter(a=>a.typeId > 10);
        if(this.initialTeams.length > 0)
@@ -121,7 +119,6 @@ export class AccessReportComponent implements OnInit {
 
      },
      error: (err: HttpErrorResponse) => {
-      this.spinnerServerice.hide();
       console.error(err);
      }
    });

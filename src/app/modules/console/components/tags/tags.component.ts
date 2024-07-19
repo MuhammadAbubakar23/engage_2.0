@@ -15,6 +15,8 @@ interface Tag {
   name: string;
   tickets: number;
   contacts: number;
+  isActive:boolean,
+  isBlock:boolean,
 }
 @Component({
   selector: 'app-tags',
@@ -37,6 +39,8 @@ export class TagsComponent implements OnInit {
   hasCreatePermission: boolean=false;
   hasupdatePermission: boolean=false;
   hasDeletePermission: boolean=false;
+  delobj = {"id": 0,"isActive": true,"isBlock": true};
+
   applySearchFilter(): void {
     if (this.searchText.length >= 2) {
       this.getTags()
@@ -113,11 +117,17 @@ hasPermission(permissionName: string) {
     // })
     this.router.navigate(['/console/tag/create/', tag.mainId])
   }
-  deleteTemplate(message: any) {
-    this.commonService.DeleteTags(message.mainId).subscribe((res: any) => {
+  deleteTemplate(message: any,isDelete:any) {
+    this.delobj.id = message.mainId;
+    this.delobj.isActive = !message.isActive;
+    this.delobj.isBlock = isDelete;
+    this.spinnerServerice.show();
+    this.commonService.DeleteTags(this.delobj).subscribe((res: any) => {
+      this.spinnerServerice.hide();
       this.getTags()
     })
   }
+
   disableTag(tag: Tag): void {
   }
   cloneTag(tag: Tag): void {
