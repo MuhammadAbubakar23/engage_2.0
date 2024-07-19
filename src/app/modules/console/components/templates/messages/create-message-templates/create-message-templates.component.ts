@@ -58,7 +58,7 @@ export class CreateMessageTemplatesComponent implements OnInit {
         this.commonService.UpdateTemplate(updatedTemplate.id, updatedTemplate).subscribe(
           (response: any) => {
             // Handle the successful response after updating the template
-            this.router.navigate(['/console/templates/message']);
+            this.router.navigate(['/console/templates/messages']);
           },
           (error: any) => {
             // Handle the error if the update fails
@@ -69,7 +69,7 @@ export class CreateMessageTemplatesComponent implements OnInit {
         this.commonService.Addtemplate(this.messageForm.value).subscribe(
           (response: any) => {
             // Handle the successful response after creating a new template
-            this.router.navigate(['/console/templates/message']);
+            this.router.navigate(['/console/templates/messages']);
           },
           (error: any) => {
             // Handle the error if the template creation fails
@@ -83,6 +83,6 @@ export class CreateMessageTemplatesComponent implements OnInit {
   }
   cancelForm(): void {
     // Redirect to the main page without resetting the form
-    this.router.navigate(['/console/templates/message']);
+    this.router.navigate(['/console/templates/messages']);
   }
 }

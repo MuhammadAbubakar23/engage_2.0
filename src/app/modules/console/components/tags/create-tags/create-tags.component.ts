@@ -6,6 +6,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
+import { ToasterService } from 'src/app/layouts/engage2/toaster/toaster.service';
 // import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-create-tags',
@@ -18,6 +19,7 @@ export class CreateTagsComponent implements OnInit {
   form!: FormGroup;
   showTags = false;
   name!: string;
+  desc!: string;
   AlterMsg: string = ''
   toastermessage: boolean = false
   selectedTextColor: string = '';
@@ -29,6 +31,8 @@ export class CreateTagsComponent implements OnInit {
   parentChildTag: any[] = []
   parentChild: any[] = []
   id: any;
+  companywing: any;
+
   constructor(private formBuilder: FormBuilder, 
     private headerS:HeaderService,
     private commonService: CommonDataService, private route: ActivatedRoute,
@@ -42,10 +46,13 @@ export class CreateTagsComponent implements OnInit {
       icon: [''],
       indexNo: [0],
       level: [0],
-      type: [0]
+      type: [3],
+      companywing:['']
     });
   }
   ngOnInit() {
+    debugger
+    this.companywing = sessionStorage.getItem('defaultWings');
     this.id = this.route.snapshot.paramMap.get('id')
     // 
     this.editTagbyId()
@@ -54,23 +61,31 @@ export class CreateTagsComponent implements OnInit {
     const template = history.state.tag;
     if (template) {
       this.name = template.name;
+      this.desc = template.desc;
       this.form.patchValue({
         name: this.name,
+        desc: this.desc,
       });
       this.addTag();
     } else {
       this.name = '';
+      this.desc = '';
     }
   }
   addTag() {
     this.commonService.GetTagsByCompayId().subscribe(
       (response: any) => {
+        debugger
         this.parentTags = response;
         this.parentTags.forEach((x: any) => {
-          x.subTags.forEach((xyz: any) => {
+          x.subTags?.forEach((xyz: any) => {
             this.childTags.push(xyz)
           })
         })
+        if(this.parentTags.length == 0)
+        {
+          this.reload('info');
+        }
       },
       (error: any) => {
         alert(error.error)
@@ -169,21 +184,23 @@ export class CreateTagsComponent implements OnInit {
       "id": 0,
       "companyId": 0,
       "name": this.form.value.name,
-      "desc": "string",
+      "desc": this.form.value.desc,
       "parentId": this.form.value.parentId,
       "baseId": this.form.value.baseId,
       "firewallId": 0,
       "icon": this.form.value.icon,
       "indexNo": 0,
       "level": 0,
-      "type": 0,
-      "color": this.selectedTextColor
+      "type": this.form.value.type,
+      "color": this.selectedTextColor,
+      "companywing":this.companywing
     }
     const template = history.state.tag;
     if (template) {
       const updatedTemplate = {
         ...template,
       };
+      debugger
       this.commonService.UpdateTag(updatedTemplate.id, updatedTemplate).subscribe(
         (response: any) => {
           this.router.navigate(['console/tags']);
@@ -193,6 +210,7 @@ export class CreateTagsComponent implements OnInit {
         }
       );
     } else {
+      debugger
       this.commonService.AddTags(obj).subscribe((res: any) => {
         this.reload('addtag')
         this.router.navigate(['console/tags']);
@@ -238,7 +256,16 @@ export class CreateTagsComponent implements OnInit {
         this.toastermessage = false
       }, 2000);
     }
+    if (value == 'info') {
+      this.AlterMsg = 'No Parent Tags Added Yet'
+      this.toastermessage = true
+      setTimeout(() => {
+        this.toastermessage = false
+      }, 2000);
+    }
   }
+
+
   closeToaster() {
     this.toastermessage = false;
   }

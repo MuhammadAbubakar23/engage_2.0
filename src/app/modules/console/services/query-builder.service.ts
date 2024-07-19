@@ -12,7 +12,7 @@ export class QueryBuilderService {
   updateRules = environment.links.console.updateRules
   getEntitiesRule = environment.links.console.getEntitiesRule
   getRuleEntityProperties = environment.links.console.getRuleEntityProperties
-  consoleBaseUrl = environment.consoleBaseUrl;
+  consoleBaseUrl = environment.ConsoleBaseUrl;
   constructor(private http:HttpClient) { }
   GetAllRules() {
     return this.http.get(this.consoleBaseUrl + this.getAllRules)

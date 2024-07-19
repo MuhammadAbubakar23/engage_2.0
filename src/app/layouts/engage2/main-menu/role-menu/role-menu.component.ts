@@ -70,7 +70,7 @@ export class RoleMenuComponent implements OnInit {
         Inline: false,
       })
       .subscribe((res: any) => {
-        debugger;
+        
         if (res.length > 0) {
           this.showAnalytics = true;
           this._menuS.changeAnalyticsMenu(res);
@@ -83,7 +83,6 @@ export class RoleMenuComponent implements OnInit {
       .getConsoleMenuByRole(sessionStorage.getItem('activeActorId'))
       .subscribe((res: any) => {
         if (res.length > 0) {
-          debugger
           if (res[0].slug == 'console') {
             this.showConsole = true;
           } else if (res[0].slug == 'bot') {
@@ -108,7 +107,7 @@ export class RoleMenuComponent implements OnInit {
     );
 
     this.getReportMenus();
-    debugger;
+    
     this.getBotMenus();
   }
 
@@ -136,7 +135,7 @@ export class RoleMenuComponent implements OnInit {
   }
 
   hasPermission(permissionName: string) {
-    debugger;
+    
     const isAccessible = this._perS.hasPermission(permissionName);
     return isAccessible;
   }

@@ -147,10 +147,22 @@
                       <li>
                         <a
                           class="dropdown-item"
-                          (click)="deleteTemplate(tag)"
+                          (click)="deleteTemplate(tag, true)"
                           *ngIf="hasDeletePermission"
                           >Delete</a
                         >
+                      </li>
+                      <li>
+                        <a 
+                          class="dropdown-item"
+                          (click)="deleteTemplate(tag, false)"
+                          *ngIf="tag.isActive"
+                          >Disable</a>
+                        <a 
+                        class="dropdown-item"
+                        (click)="deleteTemplate(tag, false)"
+                        *ngIf="!tag.isActive"
+                        >Enable</a>
                       </li>
                       <!-- <li>
                         <a class="dropdown-item" (click)="disableTag(tag)">Disable</a>

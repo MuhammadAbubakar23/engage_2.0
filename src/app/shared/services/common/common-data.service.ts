@@ -656,26 +656,26 @@ getReports = environment.links.console.getReports;
   }
   GetBusinessHours(body: any) {
     return this.http.post(
-      this.ConsoleBaseUrl + this.getBusinessHours,
+      this.IdentityBaseUrl + this.getBusinessHours,
       body
     );
   }
   AddBusinessHours(addHours: any) {
     return this.http.post(
-      this.ConsoleBaseUrl + this.addBusinessHours,
+      this.IdentityBaseUrl + this.addBusinessHours,
       addHours
     );
   }
   DeleteBusinessHours(delHours: string): Observable<any> {
-    const url = `${this.ConsoleBaseUrl}${this.deleteBusinessHours}?Id=${delHours}`;
+    const url = `${this.IdentityBaseUrl}${this.deleteBusinessHours}?Id=${delHours}`;
     return this.http.get(url);
   }
   UpdateBusinessHours(bueiness: any) {
-    const url = `${this.ConsoleBaseUrl}${this.updateBusinessHours}`;
+    const url = `${this.IdentityBaseUrl}${this.updateBusinessHours}`;
     return this.http.post(url, bueiness);
   }
   GetBusinessById(BusinessId: string) {
-    const url = `${this.ConsoleBaseUrl}${this.getBusinessById}?Id=${BusinessId}`;
+    const url = `${this.IdentityBaseUrl}${this.getBusinessById}?Id=${BusinessId}`;
     return this.http.get(url);
   }
   GetEntractRoute() {
@@ -756,9 +756,9 @@ getReports = environment.links.console.getReports;
     const url = `${this.ConsoleBaseUrl}${this.updateTag}?Id=${tagsId}`;
     return this.http.post(url, tag);
   }
-  DeleteTags(delTag: string): Observable<any> {
-    const url = `${this.ConsoleBaseUrl}${this.deleteTags}?Id=${delTag}`;
-    return this.http.get(url);
+  DeleteTags(delTag: any): Observable<any> {
+    const url = `${this.ConsoleBaseUrl}${this.deleteTags}`;
+    return this.http.post(url, delTag);
   }
   DeleteRoles(delRolId: any) {
     const url = `${this.IdentityBaseUrl}${this.deleteRoles}`;
