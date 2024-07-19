@@ -25,7 +25,7 @@ export class ModulesResolver implements Resolve<boolean> {
    // this.MenuStore.dispatch(updateMenusList());
     // this.TagsStore.dispatch(loadTagsList());
     // this.TagsStore.dispatch(updateTagsList());
-    this.PermissionStore.dispatch(loadPermissionsLetters());
+    // this.PermissionStore.dispatch(loadPermissionsLetters());
     //this.PermissionStore.dispatch(updatePermissionsLetters());
     return of(true);
   }
