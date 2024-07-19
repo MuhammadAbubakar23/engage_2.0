@@ -22,3 +22,47 @@
 {
   min-width: 150px !important;
 }
+.messagewrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.messagebody {
+  text-align: center;
+}
+
+.list-inline {
+  list-style-type: none;
+  padding: 0;
+}
+
+.list-inline-item {
+  display: inline-block;
+  margin: 2px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border: 1px solid #9900cc;
+  border-radius: 20px;
+  background-color: #ffffff;
+  font-size: 10px;
+  font-weight: bold;
+  color: #9900cc;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tag:hover {
+  background-color: #9900cc;
+  color: #ffffff;
+}
+
+.tag i {
+  margin-right: 8px;
+}

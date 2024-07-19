@@ -68,7 +68,8 @@ import { ChatWidget2Component } from './components/chat-widget2/chat-widget2.com
     PairsPipe,
     InitialLettersPipe,
     BreaklinePipe,
-    ChatWidget2Component
+    ChatWidget2Component,
+    
   ]
 })
 export class SharedModule { }

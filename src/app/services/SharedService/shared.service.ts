@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -73,5 +73,11 @@ export class SharedService {
   }
   public getEmailCount(): Observable<number>{
     return this.emailcount.asObservable();
+  }
+  private showGenerativeMenuSubject = new BehaviorSubject<any>('');
+  showGenerativeMenu$ = this.showGenerativeMenuSubject.asObservable();
+
+  setShowGenerativeMenu(value: any) {
+    this.showGenerativeMenuSubject.next(value);
   }
 }

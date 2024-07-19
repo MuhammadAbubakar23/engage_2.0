@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, HostListener,  } from '@angular/core';
-import { Router,NavigationStart  } from '@angular/router';
+import { ChangeDetectorRef, Component, HostListener, } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Toaster } from './layouts/engage2/toaster/toaster';
 import { ToasterService } from './layouts/engage2/toaster/toaster.service';
@@ -11,8 +11,8 @@ import { CommonDataService } from './shared/services/common/common-data.service'
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  rulesGroupIds: any[]=[];
-  uniqueWings: any[]=[];
+  rulesGroupIds: any[] = [];
+  uniqueWings: any[] = [];
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHandler(event: Event) {
     if (!this.isInternalNavigation()) {
@@ -28,7 +28,7 @@ export class AppComponent {
   toasters: Toaster[] = [];
   title = 'Enteract.Engage2.0';
   activeChannel: any;
-  routeString:string='/login'
+  routeString: string = '/login'
   constructor(
     private signalRService: SignalRService,
     private router: Router,
