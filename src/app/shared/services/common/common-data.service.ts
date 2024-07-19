@@ -8,7 +8,7 @@ import { RuleWithCount } from '../../Models/ChannelRule';
   providedIn: 'root',
 })
 export class CommonDataService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   // for testing purpose
   ConsoleBaseUrl = environment.ConsoleBaseUrl;
   resultData: any;
@@ -196,6 +196,7 @@ export class CommonDataService {
   getTagsByComayId = environment.links.console.getTagsByComayId;
   getAllTags = environment.links.console.defaultTags;
   getPolicyByWing = environment.links.console.getPolicyByWing;
+  ReportsBaseUrl = environment.ReportsBaseUrl;
   // rules
   deleteRules = environment.links.console.deleteRules;
   getAllRules = environment.links.console.getAllRules;
@@ -231,6 +232,14 @@ export class CommonDataService {
   deleteTemplate = environment.links.console.deleteTemplate;
   getRuleStatus = environment.links.console.getRuleStatus;
   getCompanyTeams = environment.links.console.getCompanyTeams;
+  emailReport = environment.links.console.emailReport;
+  // emailReport: 'Report/GetEmailReport',
+  wallboardReport = environment.links.console.wallboardReport
+  perviousWallboardReport = environment.links.console.perviousWallboardReport;
+  wallboardCSATReport = environment.links.console.wallboardReport;
+  getMonthToDateServiceLevel = environment.links.console.GetMonthToDateServiceLevel;
+  getPreviousInteractionDashboard = environment.links.console.getPreviousInteractionDashboard;
+
 
   // teams
   // getAllTeams= environment.links.console.getAllTeams
@@ -252,6 +261,18 @@ export class CommonDataService {
     environment.links.profile.deattachProfileInformation;
   // whatapp bot interaction
   whatsappBotInteraction = environment.links.common.whatsappBotInteraction;
+
+
+  getTagsBySupreamId = environment.links.console.getTagsBySupreamId
+  addTagTeams = environment.links.console.addTagTeams;
+  updateTagTeams = environment.links.console.updateTagTeams;
+  getSkillTeamById = environment.links.console.getSkillTeamById;
+  deleteTagTeam = environment.links.console.deleteTagTeam;
+  //For Access Report
+  addAccessReports = environment.links.console.addAccessReports;
+  getActors = environment.links.console.getActors;
+  getReports = environment.links.console.getReports;
+
   private _wordCloudDataS: any;
   baseUrl: any;
 
@@ -276,7 +297,7 @@ export class CommonDataService {
     );
   }
   getReportsMenuByRole(form: any) {
-    return this.http.post(this.IdentityBaseUrl + this.reportsMenus, form);
+    return this.http.post(this.ReportsBaseUrl + this.reportsMenus, form);
   }
   getConsoleMenuByRole(actorId: any) {
     return this.http.get(`${this.IdentityBaseUrl}${this.consoleMenus}?ActorId=${actorId}`);
@@ -364,11 +385,11 @@ export class CommonDataService {
   GetFbPostStats(pageId: any, postId: any) {
     return this.http.post(
       this.CommonBaseUrl +
-        this.fbPostStats +
-        '?PageId=' +
-        pageId +
-        '&postId=' +
-        postId,
+      this.fbPostStats +
+      '?PageId=' +
+      pageId +
+      '&postId=' +
+      postId,
       null
     );
   }
@@ -438,7 +459,7 @@ export class CommonDataService {
   AddYtResponed(body: any) {
     return this.http.post(this.youtubeBaseUrl + this.addFbResponed, body);
   }
- 
+
 
   GetCompanyPages() {
     return this.http.get(this.autoresponderbaseurl + this.getCompanyPages);
@@ -453,11 +474,11 @@ export class CommonDataService {
   GetFbCommentStats(pageId: any, commentId: any) {
     return this.http.post(
       this.CommonBaseUrl +
-        this.fbCommentStats +
-        '?PageId=' +
-        pageId +
-        '&CommentId=' +
-        commentId,
+      this.fbCommentStats +
+      '?PageId=' +
+      pageId +
+      '&CommentId=' +
+      commentId,
       null
     );
   }
@@ -479,11 +500,11 @@ export class CommonDataService {
   GetTwitterTweetStats(profileId: any, tweetId: any) {
     return this.http.get(
       this.CommonBaseUrl +
-        this.twitterTweetStats +
-        '?ProfileExternalId=' +
-        profileId +
-        '&TweetId=' +
-        tweetId
+      this.twitterTweetStats +
+      '?ProfileExternalId=' +
+      profileId +
+      '&TweetId=' +
+      tweetId
     );
   }
   GetLinkedInPostStats(postId: any) {
@@ -551,11 +572,11 @@ export class CommonDataService {
   GetAllocatedProfiles(wing: string, skillSlug: string) {
     return this.http.get(
       this.CommonBaseUrl +
-        this.getAllocatedProfiles +
-        '?Wings=' +
-        wing +
-        '&SkillSlug=' +
-        skillSlug
+      this.getAllocatedProfiles +
+      '?Wings=' +
+      wing +
+      '&SkillSlug=' +
+      skillSlug
     );
   }
   // CreateMessageTemplate(body: any) {
@@ -730,6 +751,7 @@ export class CommonDataService {
     return this.http.get(this.ConsoleBaseUrl + this.getTags);
   }
   GetTagsByCompanyId() {
+    debugger
     return this.http.get(this.ConsoleBaseUrl + this.getTagsByCompanyId);
   }
   GetTagById(body: any) {
@@ -965,19 +987,19 @@ export class CommonDataService {
   }
   Addinboundoutbound(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.addinboundoutbound,
+      this.ReportsBaseUrl + this.addinboundoutbound,
       body
     );
   }
   GetTwitterReport(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.twitterReport, body);
+    return this.http.post(this.ReportsBaseUrl + this.twitterReport, body);
   }
   GetTwitterSLAReport(body: any) {
     return this.http.post(this.CommonBaseUrl + this.twitterSLAReport, body);
   }
   GetTwitterProfileWiseReport(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.twitterProfileWiseReport,
+      this.ReportsBaseUrl + this.twitterProfileWiseReport,
       body
     );
   }
@@ -989,12 +1011,12 @@ export class CommonDataService {
   }
   AddAgentPerformance(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.addAgentPerformance,
+      this.ReportsBaseUrl + this.addAgentPerformance,
       body
     );
   }
   GetShiftReport(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.shiftReport, body);
+    return this.http.post(this.ReportsBaseUrl + this.shiftReport, body);
   }
   GetWhatsAppReport(body: any) {
     return this.http.post(
@@ -1025,13 +1047,13 @@ export class CommonDataService {
   // facebookreport
   Getfacebookreport(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.facebookReport,
+      this.ReportsBaseUrl + this.facebookReport,
       body
     );
   }
   GetfacebookProfile(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.facebookProfile,
+      this.ReportsBaseUrl + this.facebookProfile,
       body
     );
   }
@@ -1044,13 +1066,13 @@ export class CommonDataService {
   }
   PostInstagramReport(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.instagramReport,
+      this.ReportsBaseUrl + this.instagramReport,
       body
     );
   }
   GetInstagramProfile(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.instagramProfile,
+      this.ReportsBaseUrl + this.instagramProfile,
       body
     );
   }
@@ -1061,11 +1083,11 @@ export class CommonDataService {
     return this.http.post(this.ConsoleBaseUrl + this.getTagsAll, body);
   }
   GetAllTagsReport(body: any) {
-    return this.http.post(this.KeReportsBaseUrl + this.getTagReport, body);
+    return this.http.post(this.ReportsBaseUrl + this.getTagReport, body);
   }
   DownloadTagsReport(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.downloadTagReport,
+      this.ReportsBaseUrl + this.downloadTagReport,
       body,
       {
         responseType: 'text',
@@ -1104,7 +1126,7 @@ export class CommonDataService {
   }
   EmailShiftReport(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.emailShiftReport,
+      this.ReportsBaseUrl + this.emailShiftReport,
       body
     );
   }
@@ -1219,7 +1241,7 @@ export class CommonDataService {
   }
   GetInteractionReport(body: any) {
     return this.http.post(
-      this.KeReportsBaseUrl + this.getInteractionReport,
+      this.ReportsBaseUrl + this.getInteractionReport,
       body
     );
   }
@@ -1367,6 +1389,69 @@ export class CommonDataService {
   GetExchangeEmailRuleStatus(id: any, status: boolean) {
     const url = `${this.exchangeEmailBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
     return this.http.get<any>(url, {});
+  }
+  AddTagTeams(tagteam: any) {
+    return this.http.post(
+      this.ConsoleBaseUrl + this.addTagTeams,
+      tagteam
+    );
+  }
+  UpdateTagTeams(tagteam: any) {
+    return this.http.post(
+      this.ConsoleBaseUrl + this.updateTagTeams,
+      tagteam
+    );
+  }
+  DeleteTagTeam(id: any): Observable<any> {
+    const url = `${this.ConsoleBaseUrl}${this.deleteTagTeam}?Id=${id}`;
+    return this.http.get(url);
+  }
+
+  GetSkillTeamById(skillTeamId: string) {
+    const url = `${this.ConsoleBaseUrl}${this.getSkillTeamById}?Id=${skillTeamId}`;
+    return this.http.get(url);
+  }
+  GetTagBySupreamId(id: number) {
+    return this.http.get(`${this.ConsoleBaseUrl + this.getTagsBySupreamId}?id=${id} `)
+      ;
+  }
+
+
+
+  AddAccessReports(reports: any) {
+    return this.http.post(
+      this.ReportsBaseUrl + this.addAccessReports,
+      reports
+    );
+  }
+
+  GetActors() {
+    return this.http.get(`${this.IdentityBaseUrl + this.getActors}?roles=${57}&roles=${58}`);
+  }
+
+  GetReports(teamSlug: any) {
+    return this.http.post(this.ReportsBaseUrl + this.getReports, teamSlug)
+  }
+  GetemailReport(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.emailReport, body)
+  }
+  GetwallboradReport() {
+    return this.http.get(this.CommonBaseUrl + this.wallboardReport)
+  }
+  GetPerviousWallboardReport() {
+    return this.http.get(this.CommonBaseUrl + this.perviousWallboardReport)
+  }
+  GetWallboardCsatReport() {
+    return this.http.get(this.ProfileBaseUrl + this.wallboardCSATReport)
+  }
+  GetMonthToDateServiceLevel() {
+    return this.http.get(this.CommonBaseUrl + this.getMonthToDateServiceLevel)
+  }
+  GetPreviousInteractionDashboard(body: any) {
+    return this.http.post(
+      this.CommonBaseUrl + this.getPreviousInteractionDashboard,
+      body
+    );
   }
 
 }

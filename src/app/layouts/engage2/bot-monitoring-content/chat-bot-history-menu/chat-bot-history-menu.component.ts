@@ -63,10 +63,10 @@ export class ChatBotHistoryMenuComponent implements OnInit {
     if (string === 'generative-bot-history') {
       this.showBotMonitoringContent = true;
     }
-    else if(string ==="bot-monitoring-chat"){
+    else if (string === "bot-monitoring-chat") {
       this._route.navigateByUrl('/bot-monitoring/bot-monitoring-chat');
     }
-     else {
+    else {
       this.showBotMonitoringContent = false;
       this.headerService.updateMessage(string);
     }

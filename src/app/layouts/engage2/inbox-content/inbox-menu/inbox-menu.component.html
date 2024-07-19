@@ -19,7 +19,7 @@
         </a>
         <a class="all-inboxes-menu list-group-item list-group-item-action" *ngFor="let channel of allSkills"
           (click)="updateWing(channel.skilSlug)"  [class.active]="activeChannel == channel.skilSlug" [routerLink]="['/all-inboxes/'+flag+'/'+channel.skilSlug]">
-          <div [ngClass]="channel.color" [innerHTML]="channel.icon">
+          <div [ngClass]="channel.color" [innerHTML]="channel.icon ">
           </div>
           <div class="ms-2 me-auto">
             <div class="black-text">{{channel.skillName}}</div>

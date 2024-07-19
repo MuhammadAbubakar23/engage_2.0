@@ -79,7 +79,6 @@ export class AnalyticsMenuComponent implements OnInit {
   getmenu(menus: any) {
     // this.analyticeReport=menus;
     // if (this.channelname == 'local') {
-    //   
 
     // }
     //  else if (this.channelname == 'stagging') {

@@ -8,6 +8,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import html2canvas from 'html2canvas';
+
 @Component({
   standalone: true,
   selector: 'app-shift-report',
@@ -61,6 +62,12 @@ export class ShiftReportComponent implements OnInit {
   _legend: any[] = [];
   shiftName:any='Morning'
   selectedName:any=''
+  shiftreportData:{
+ name:string,
+ type:string,
+ data:any[]
+  }[]=[]
+  
   shiftType: any[] = [
     { name: 'Morning', id: 0 },
     { id: 1, name: 'Evening' },
@@ -68,6 +75,19 @@ export class ShiftReportComponent implements OnInit {
     { id: 3, name: 'Iftar' },
     { id: 4, name: 'Sehr' },
   ];
+  platformIconMapping: any = {
+    Facebook: 'fa-brands fa-facebook fs-4 navy fa-beat-fade' ,
+    Twitter: 'fa-brands fa-twitter fs-4 sky fa-beat-fade',
+    Instagram: 'fa-brands fa-instagram fs-4 berry fa-beat-fade',
+    LinkedIn: 'fa-brands fa-linkedin fs-4 linkedinTxt fa-beat-fade',
+    Email: 'fa-light fa-envelope  fs-4 berry fa-beat-fade',
+    Youtube: 'fa-brands fa-youtube fs-4 radical fa-beat-fade',
+    SMS: 'fa-message-sms fs-4 cherry fa-beat-fade ',
+    WebChat: 'fa-light fa-messages fs-4 webchatcolor fa-beat-fade',
+    WhatsApp: 'fab fa-whatsapp fs-4 mint fa-beat-fade',
+    PlayStore: 'fa-brands fa-google-play fs-4 googleplaycolor fa-beat-fade',
+    OfficeEmail: 'fa-light fa-envelope  fs-4 navy  fa-beat-fade',
+  };
   channelIcon: any[] = [
     { fbicone: 'fa-brands fa-facebook-f', class: 'iconButton medium navyBg' },
     {
@@ -109,10 +129,12 @@ export class ShiftReportComponent implements OnInit {
     actor:new FormControl('')
   })
   ngOnInit(): void {
+
     this.KEbaseUrl=window.location.origin
-    if(this.KEbaseUrl=='https://keportal.enteract.live' || this.KEbaseUrl=='https://engageui.enteract.live'){
+    if(this.KEbaseUrl=='https://keportal.enteract.live'){
       this.KEClient=true
     }
+
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
     const obj = { title: 'Shift Report', url: 'analytics/shift-report' };
@@ -123,6 +145,7 @@ export class ShiftReportComponent implements OnInit {
     this.makeChartResponsive();
     this.getTableStyle()
     if(this.selectedName==''){
+      
       this.selectedName="Morning"
     }
   }
@@ -134,6 +157,7 @@ export class ShiftReportComponent implements OnInit {
         if (item.name == 'Tags') {
           item.subTags.forEach((parentags: any) => {
             parentags?.subTags?.forEach((singleTagObj: any) => {
+              
               if (!this.keywordslist.includes(singleTagObj)) {
                 this.keywordslist.push(singleTagObj);
               }
@@ -143,10 +167,13 @@ export class ShiftReportComponent implements OnInit {
       });
     });
   }
+
   getShfitReport() {
+  
     if (this.startDate == '' && this.endDate == '') {
       const today = this.currentDate;
       this.endDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
+
       let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 5);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.endDate != '') {
@@ -162,12 +189,14 @@ export class ShiftReportComponent implements OnInit {
       this.endDate=''
       return;
     }
+   
     let obj = {
       fromDate: this.startDate,
       toDate: this.endDate,
       shiftId: this.shiftime,
       tags: this.changedateintostring,
     };
+
     if (this.startDate && this.endDate) {
       const startDateObj = new Date(this.startDate);
       const endDateObj = new Date(this.endDate);
@@ -188,83 +217,77 @@ export class ShiftReportComponent implements OnInit {
     this.channelCountsArray=[]
     this.str=''
     this._legend = [];
+    this.shiftChannelData=[]
+    this.newAlldates = []
+
+    this.shiftreportData=[]
     this.SpinnerService.show();
     this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
       this.SpinnerService.hide();
+
+      
       this.shiftReportData = res;
       this.shiftChannelData = res.channelData;
       this.dateWiseTotalCounts = res.dateWiseTotal;
       this.totalinboundCounts = res.totalIboundCount;
+
       if (this.totalinboundCounts == 0) {
         this.allTotalCountInsta = new Array(this.daysDifference).fill(0);
         this.allTotalCountLink = new Array(this.daysDifference).fill(0);
         this.allTotalCountsfb = new Array(this.daysDifference).fill(0);
         this.allTotalCountTw = new Array(this.daysDifference).fill(0);
       }
+
       this.shiftChannelData.forEach((data: any) => {
-        this._legend.push(data.platform);
-      this.channelCountsArray.push
+        this.newAlldates = []
         data.dateWise.forEach((item: any) => {
           if (!this.allDates.includes(this.datePipe.transform(item.date,'dd/MMM'))) {
             this.allDates.push(this.datePipe.transform(item.date,'dd/MMM'));
           }
-          if (data.platform == 'Facebook') {
-            data.dateWise.forEach((singleItem: any) => {
-              // if (!this.allDates.includes(item.date.split('T')[0])) {
-              //   this.allDates.push(item.date.split('T')[0]);
-              // }
-              this.allTotalCountsfb.push(singleItem.totalCount);
-            });
-          }
-          if (data.platform == 'WhatsApp') {
-            data.dateWise.forEach((item: any) => {
-              this.allTotalCountWhatsapp.push(item.totalCount);
-            });
-          }
-          if (data.platform == 'Twitter') {
-            data.dateWise.forEach((item: any) => {
-              this.allTotalCountTw.push(item.totalCount);
-            });
-          }
-          if (data.platform == 'Instagram') {
-            data.dateWise.forEach((item: any) => {
-              this.allTotalCountInsta.push(item.totalCount);
-            });
-          }
-          if (data.platform == 'LinkedIn') {
-            data.dateWise.forEach((item: any) => {
-              this.allTotalCountLink.push(item.totalCount);
-            });
-          }
-          if (data.platform == 'PlayStore') {
-            data.dateWise.forEach((item: any) => {
-              this.allTotalCountPlayStore.push(item.totalCount);
-            });
-          }
-          if (data.platform == 'Youtube') {
-            data.dateWise.forEach((item: any) => {
-              this.allTotalCountYoutube.push(item.totalCount);
-            });
-          }
+        this._legend.push(data.platform);
+        //  this.newAlldates = []
+        
+       
+      // this.channelCountsArray.push
+     
+         
+       
+            
+            let sentimentCounts: { [key: string]: number } = {};
+            sentimentCounts =item.totalCount
+            this.newAlldates.push(sentimentCounts)
+        
+
+
+
+
+    
         });
+        const plateFormName=data.platform
+        this.shiftreportData.push({
+          name: plateFormName,
+          type: 'line',
+          data: this.newAlldates,
+        
+        })
       });
-      this.ChartData.push({
-        name: this._legend,
-        type: 'line',
-        data: this.allTotalCountTw,
-      });
+    
       this.TagsStats = res.tagData.shiftReportTag;
       this.TagsStats.forEach((x:any)=>{
         this.str= x.name.toLowerCase().split(/[-_.\s]/).map((w:any) => `${w.charAt(0).toUpperCase()}${w.substr(1)}`).join(' ');
         this.SlugTagsArray.push({name:this.str,totalCount:x.totalCount})
+        console.log("SlugTagArray===>",this.SlugTagsArray)
       })
+     
       this.tagsStatsTotalCounts = res.tagData.totalTagsCount;
       if(this.allDates.length==0){
         this.isShowGrpah=true
       }
+  
       this.getCharts();
     });
   }
+
   selectedunselectedtag(tag: any) {
     if (this.slectedtagId.includes(tag.slug)) {
       this.slectedtagId.splice(this.slectedtagId.indexOf(tag.slug), 1);
@@ -272,8 +295,13 @@ export class ShiftReportComponent implements OnInit {
       this.slectedtagId.push(tag.slug);
     }
     this.changedateintostring = this.slectedtagId.toString();
+    console.log(
+      'this.changeDateIntoStringfor tags===>',
+      this.changedateintostring
+    );
     this.getShfitReport();
   }
+
   searchtags(event: any) {
     this.tags = event.target.value;
     this.getAlltags();
@@ -286,9 +314,11 @@ value:any
   this.shiftime=x.id
   this.getShfitReport();
  })
+    
   }
   agentCount: number = 0;
   getTableStyle() {
+    
     const threshold = 10;
     const maxHeight = threshold * 50 + 40;
     const style = {
@@ -296,11 +326,13 @@ value:any
     };
     return style;
   }
+  
   getCharts() {
     if(this.isShowGrpah==false){
     var chartDom = document.getElementById('shiftReport');
     this.shiftReportChart = echarts.init(chartDom);
     var option;
+
     option = {
       // title: {
       //   text: 'Stacked Line'
@@ -308,17 +340,17 @@ value:any
       tooltip: {
         trigger: 'axis',
       },
-      _legend: {
+      legend: {
         data:this._legend,
          icon:'circle',
          bottom:0
       },
-      get legend() {
-        return this._legend;
-      },
-      set legend(value) {
-        this._legend = value;
-      },
+      // get legend() {
+      //   return this._legend;
+      // },
+      // set legend(value) {
+      //   this._legend = value;
+      // },
       grid: {
         left: '10%',
         right: '4%',
@@ -348,47 +380,51 @@ value:any
           lineHeight: 80,
         },
       },
-        series: [
-          {
-            name: 'Facebook',
-            type: 'line',
-            data: this.allTotalCountsfb,
-          },
-          {
-            name: 'Instagram',
-            type: 'line',
-            data: this.allTotalCountInsta,
-          },
-          {
-            name: 'Twitter',
-            type: 'line',
-            data: this.allTotalCountTw,
-          },
-          {
-            name: 'PlayStore',
-            type: 'line',
-            data: this.allTotalCountPlayStore,
-          },
-          {
-            name: 'LinkedIn',
-            type: 'line',
-            data: this.allTotalCountLink,
-          },
-          {
-            name: 'WhatsApp',
-            type: 'line',
-            data: this.allTotalCountWhatsapp,
-          },
-          {
-            name: 'Youtube',
-            type: 'line',
-            data: this.allTotalCountYoutube,
-          },
-        ],
+      
+        series: this.shiftreportData
+          // {
+          //   name: 'Facebook',
+          //   type: 'line',
+          //   data: this.allTotalCountsfb,
+          // },
+  
+          // {
+          //   name: 'Instagram',
+          //   type: 'line',
+          //   data: this.allTotalCountInsta,
+          // },
+          // {
+          //   name: 'Twitter',
+          //   type: 'line',
+          //   data: this.allTotalCountTw,
+          // },
+          // {
+          //   name: 'PlayStore',
+          //   type: 'line',
+          //   data: this.allTotalCountPlayStore,
+          // },
+          // {
+          //   name: 'LinkedIn',
+          //   type: 'line',
+          //   data: this.allTotalCountLink,
+          // },
+          // {
+          //   name: 'WhatsApp',
+          //   type: 'line',
+          //   data: this.allTotalCountWhatsapp,
+          // },
+          // {
+          //   name: 'Youtube',
+          //   type: 'line',
+          //   data: this.allTotalCountYoutube,
+          // },
+        
       };
-      option && this.shiftReportChart.setOption(option);
+    
+      option && this.shiftReportChart.setOption(option,true);
     }
   }
+
   ActiveAgents: any[] = [];
   AgentsTeamList: any[] = [];
   getAgentsTeamList() {
@@ -398,27 +434,33 @@ value:any
         this.ActiveAgents = [];
         this.AgentsTeamList.forEach((user: any) => {
           if (user.userId != sessionStorage.getItem('agentId')) {
+            
             this.ActiveAgents.push(user);
             if(this.ActiveAgents.length>0){
               this.ActiveAgents.forEach((x:any)=>{
+                console.log("Active Agent ===>",x.name)
                 // const agentlength=3
                 // for(let i =x.name ;i<=agentlength; i++){
                 //   const showagentname= [i]+'<br>'
                 // }
               })
             }
+            
           }
         });
       }
     });
   }
   // for show 0 in totalCount if totalCount are not in date
+
   findTotalCount(channel: any, date: string): number {
+
     const dateWiseItem = channel.dateWise.find(
       (item: any) => this.datePipe.transform(item.date,'dd/MMM') === date
     );
     return dateWiseItem ? dateWiseItem.totalCount : 0;
   }
+
   getStartDate() {
     this.endDate = '';
   }
@@ -433,19 +475,24 @@ value:any
   closeToaster() {
     this.toastermessage = false;
   }
+
   sendEmailReport() {
     // Select the element that you want to capture
     const captureElement = document.getElementById('shiftReport')!;
+
     // Call the html2canvas function and pass the element as an argument
     html2canvas(captureElement).then((canvas) => {
       // Get the image data as a base64-encoded string
       const imageData = canvas.toDataURL('image/png');
+
       // Do something with the image data, such as saving it as a file or sending it to a server
       // For example, you can create an anchor element and trigger a download action
+
       // const link = document.createElement('a');
       // link.setAttribute('download', 'screenshot.png');
       // link.setAttribute('href', imageData);
       // link.click();
+
       var obj = {
         fromDate: this.startDate,
         toDate: this.endDate,
@@ -455,9 +502,11 @@ value:any
         picture: imageData
       }
       this.commandataService.EmailShiftReport(obj).subscribe((res:any)=>{
+        console.log('res',res)
       })
     });
   }
+
   makeChartResponsive() {
     window.addEventListener('resize', () => {
       if (this.shiftReportChart) {

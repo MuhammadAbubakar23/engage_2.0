@@ -12,7 +12,6 @@ import { SignalRService } from 'src/app/services/SignalRService/signal-r.service
 import { SkillsService } from 'src/app/services/Skills/skills.service';
 import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 import { AuthService } from '../Services/AuthService/auth.service';
-
 @Component({
   selector: 'app-actors',
   templateUrl: './actors.component.html',
@@ -43,7 +42,7 @@ export class ActorsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+
     let data = this.storage.retrive('main', 'O').local;
     this.loginResponse = data;
     this.fullName = data.username;
@@ -69,6 +68,7 @@ export class ActorsComponent implements OnInit {
 
           this.commonService.GetSkills(this.loginResponse?.skills)
             .subscribe((skillNames: any) => {
+              debugger
               this.sendSkills.sendSkills(skillNames);
               this.stor.store('skills', skillNames);
 
@@ -127,7 +127,7 @@ export class ActorsComponent implements OnInit {
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
           this.loginDisabled = true
-        
+
         },
           (error) => {
             alert(error.error.message)
@@ -158,5 +158,17 @@ export class ActorsComponent implements OnInit {
     //     this.router.navigateByUrl('all-inboxes/focused/all');
     //     break;
     // }
+  }
+  logoutUser(){
+    debugger
+  this.commonService.SignOut().subscribe((res:any)=>{
+    sessionStorage.removeItem('token')
+    sessionStorage.clear()
+    this.router.navigateByUrl('/login')
+  },error=>{
+    sessionStorage.clear();
+    this.router.navigateByUrl('/login');
+  }
+)
   }
 }

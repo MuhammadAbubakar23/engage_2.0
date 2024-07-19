@@ -1,0 +1,158 @@
+<div class="create-team console-body-wrapper inbox-container footerheight" data-scrollbar="true" tabindex="-1"
+  style="overflow-y: auto; outline: none">
+  <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px)">
+    <div class="p-4">
+      <header class="tab-header">
+        <nav>
+          <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="user-tab" data-bs-toggle="tab" data-bs-target="#team-detail"
+              type="button" role="tab" aria-controls="team-detail" aria-selected="true">
+              <h6>Add Queue</h6>
+            </button>
+          </div>
+        </nav>
+      </header>
+      <div class="tab-body">
+        <div class="tab-content" id="nav-tabContent">
+          <div id="team-detail" class="tab-pane fade active show" role="tabpanel" aria-labelledby="user-tab">
+            <div class="wider-container">
+              <div class="team-detail-form-box mb-5">
+                <form class="team-detail-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                    <div class="floating-item mb-4">
+                        <div [ngClass]="{
+                          'was-validated':
+                            userForm.get('tagId')!.valid &&
+                            userForm.get('tagId')!.touched
+                        }" class="floating-wrap form-floating mb-2">
+                          <select [ngClass]="{
+                            'is-invalid':
+                              userForm.get('tagId')!.errors &&
+                              (userForm.get('tagId')!.touched ||
+                                userForm.get('tagId')!.dirty)
+                          }" formControlName="tagId" class="form-select" id="floatingSelect"
+                            aria-label="Floating label select">
+                            <option selected disabled>Channels</option>
+                            <option *ngFor="let channel of channelsList" [value]="channel.mainId">
+                              {{ channel.name }}
+                            </option>
+                          </select>
+                          <label for="floatingSelect">Channels</label>
+                          <div class="invalid-feedback" *ngIf="
+                            userForm.get('tagId')!.errors &&
+                            (userForm.get('tagId')!.touched ||
+                              userForm.get('tagId')!.dirty)
+                          ">
+                            <div *ngIf="userForm.get('tagId')!.errors?.['required']">
+                              Please select Channel
+                            </div>
+                          </div>
+                          <div class="valid-tagId" *ngIf="
+                            userForm.get('tagId')!.valid &&
+                            userForm.get('tagId')!.touched
+                          ">
+                            Looks Good!
+                          </div>
+                        </div>
+                      </div>
+                      <div class="floating-item mb-4">
+                        <div [ngClass]="{
+                          'was-validated':
+                            userForm.get('teamSlug')!.valid &&
+                            userForm.get('teamSlug')!.touched
+                        }" class="floating-wrap form-floating mb-2">
+                          <select [ngClass]="{
+                            'is-invalid':
+                              userForm.get('teamSlug')!.errors &&
+                              (userForm.get('teamSlug')!.touched ||
+                                userForm.get('teamSlug')!.dirty)
+                          }" formControlName="teamSlug" class="form-select" id="floatingSelect"
+                            aria-label="Floating label select">
+                            <option selected disabled>Teams</option>
+                            <option *ngFor="let team of teamsList" [value]="team.slug">
+                              {{ team.name }}
+                            </option>
+                          </select>
+                          <label for="floatingSelect">Teams</label>
+                          <div class="invalid-feedback" *ngIf="
+                            userForm.get('teamSlug')!.errors &&
+                            (userForm.get('teamSlug')!.touched ||
+                              userForm.get('teamSlug')!.dirty)
+                          ">
+                            <div *ngIf="userForm.get('teamSlug')!.errors?.['required']">
+                              Please select Team
+                            </div>
+                          </div>
+                          <div class="valid-feedback" *ngIf="
+                            userForm.get('teamSlug')!.valid &&
+                            userForm.get('teamSlug')!.touched
+                          ">
+                            Looks Good!
+                          </div>
+                        </div>
+                      </div>
+                      <div class="floating-item mb-4">
+                        <div [ngClass]="{
+                          'was-validated':
+                            userForm.get('groupSlug')!.valid &&
+                            userForm.get('groupSlug')!.touched
+                        }" class="floating-wrap form-floating mb-2">
+                          <select [ngClass]="{
+                            'is-invalid':
+                              userForm.get('groupSlug')!.errors &&
+                              (userForm.get('groupSlug')!.touched ||
+                                userForm.get('groupSlug')!.dirty)
+                          }" formControlName="groupSlug" class="form-select" id="floatingSelect"
+                            aria-label="Floating label select">
+                            <option selected disabled>Groups</option>
+                            <option *ngFor="let group of groupsList" [value]="group.slug">
+                              {{ group.name }}
+                            </option>
+                          </select>
+                          <label for="floatingSelect">Groups</label>
+                          <div class="invalid-feedback" *ngIf="
+                            userForm.get('groupSlug')!.errors &&
+                            (userForm.get('groupSlug')!.touched ||
+                              userForm.get('groupSlug')!.dirty)
+                          ">
+                            <div *ngIf="userForm.get('groupSlug')!.errors?.['required']">
+                              Please select Group
+                            </div>
+                          </div>
+                          <div class="valid-feedback" *ngIf="
+                            userForm.get('groupSlug')!.valid &&
+                            userForm.get('groupSlug')!.touched
+                          ">
+                            Looks Good!
+                          </div>
+                        </div>
+                      </div>
+          </form>
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="ps-3 pe-3">
+          <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+            <div class="row w-100">
+              <div class="col-md-4"></div>
+              <div class="col-md-8 justify-content-end d-flex">
+                <div class="buttons-wrap d-flex">
+                  <a type="button" class="btn btn-outline-secondary btn-medium me-2 px-4" (click)="routerLink()"
+                    data-bs-toggle="modal" data-bs-target="">Cancel
+                  </a>
+                  <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"></button>
+                  <button type="button" (click)="onSubmit()" class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                    data-bs-toggle="modal" data-bs-target="">
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>

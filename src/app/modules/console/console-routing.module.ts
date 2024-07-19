@@ -269,6 +269,20 @@ const routes: Routes = [
         loadComponent: () => import('./components/tags/create-tags/create-tags.component').then(c => c.CreateTagsComponent),
         canMatch: [ConsoleRoutingGuard]
       },
+      {
+        path: 'queues',
+        loadComponent: () => import('./components/queues/queues.component').then(c => c.QueuesComponent),
+        canMatch: [ConsoleRoutingGuard]
+      }, {
+        path: 'queues/create/:id',
+        loadComponent: () => import('./components/queues/create-queues/create-queues.component').then(c => c.CreateQueuesComponent),
+        canMatch: [ConsoleRoutingGuard],
+      },
+      {
+        path: 'access-report',
+        loadComponent: () => import('./components/access-report/access-report.component').then(c => c.AccessReportComponent),
+        canMatch: [ConsoleRoutingGuard]
+      },
     ]
     // },
     // {

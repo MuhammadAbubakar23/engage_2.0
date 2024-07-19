@@ -15,7 +15,7 @@ export class RequestService {
     private http: HttpClient,
     private paginationS: UserPaginationService,
     private messagingService: MessagingService,
-    private env : EnvService
+    private env: EnvService
   ) {}
   private requestHeaderOptions(options?: any) {
     let opt = !options ? {} : options;
@@ -38,17 +38,20 @@ export class RequestService {
     routeparams?: any
   ) => {
     if (routeparams === undefined) {
-      routeparams = '';
+      routeparams = "";
+
     }
-    if (route === undefined) {
-      route = 'Skill/GetSkills';
+    if(route ===undefined){
+      route ='Skill/GetSkills'
     }
-    if (route === undefined) {
-      route = 'Skill/GetSkills';
+    if(route===undefined){
+
+      route='Skill/GetSkills'
     }
-    return routeparams != '' || routeparams.length > 0
-      ? `${envAddress}${route}${routeparams}`
-      : `${envAddress}${route}`;
+
+      return (routeparams != "" || routeparams.length > 0) ? `${envAddress}${route}${routeparams}` : `${envAddress}${route}`
+   
+ 
   };
   get<T>(route: string, params?: any, routeparams: string = ''): Observable<T> {
     return this.http
