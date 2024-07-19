@@ -196,7 +196,7 @@ export class CommonDataService {
   getTagsByComayId = environment.links.console.getTagsByComayId;
   getAllTags = environment.links.console.defaultTags;
   getPolicyByWing = environment.links.console.getPolicyByWing;
-  ReportsBaseUrl = environment.ReportsBaseUrl;
+  // ReportsBaseUrl = environment.ReportsBaseUrl;
   // rules
   deleteRules = environment.links.console.deleteRules;
   getAllRules = environment.links.console.getAllRules;
