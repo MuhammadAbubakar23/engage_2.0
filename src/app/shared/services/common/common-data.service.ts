@@ -8,7 +8,7 @@ import { RuleWithCount } from '../../Models/ChannelRule';
   providedIn: 'root',
 })
 export class CommonDataService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   // for testing purpose
   ConsoleBaseUrl = environment.ConsoleBaseUrl;
   resultData: any;
@@ -196,6 +196,7 @@ export class CommonDataService {
   getTagsByComayId = environment.links.console.getTagsByComayId;
   getAllTags = environment.links.console.defaultTags;
   getPolicyByWing = environment.links.console.getPolicyByWing;
+  ReportsBaseUrl = environment.ReportsBaseUrl;
   // rules
   deleteRules = environment.links.console.deleteRules;
   getAllRules = environment.links.console.getAllRules;
@@ -231,6 +232,14 @@ export class CommonDataService {
   deleteTemplate = environment.links.console.deleteTemplate;
   getRuleStatus = environment.links.console.getRuleStatus;
   getCompanyTeams = environment.links.console.getCompanyTeams;
+  emailReport = environment.links.console.emailReport;
+  // emailReport: 'Report/GetEmailReport',
+  wallboardReport = environment.links.console.wallboardReport
+  perviousWallboardReport = environment.links.console.perviousWallboardReport;
+  wallboardCSATReport = environment.links.console.wallboardReport;
+  getMonthToDateServiceLevel = environment.links.console.GetMonthToDateServiceLevel;
+  getPreviousInteractionDashboard = environment.links.console.getPreviousInteractionDashboard;
+
 
   // teams
   // getAllTeams= environment.links.console.getAllTeams
@@ -260,9 +269,9 @@ export class CommonDataService {
   getSkillTeamById = environment.links.console.getSkillTeamById;
   deleteTagTeam = environment.links.console.deleteTagTeam;
   //For Access Report
-addAccessReports = environment.links.console.addAccessReports;
-getActors = environment.links.console.getActors;
-getReports = environment.links.console.getReports;
+  addAccessReports = environment.links.console.addAccessReports;
+  getActors = environment.links.console.getActors;
+  getReports = environment.links.console.getReports;
 
   private _wordCloudDataS: any;
   baseUrl: any;
@@ -376,11 +385,11 @@ getReports = environment.links.console.getReports;
   GetFbPostStats(pageId: any, postId: any) {
     return this.http.post(
       this.CommonBaseUrl +
-        this.fbPostStats +
-        '?PageId=' +
-        pageId +
-        '&postId=' +
-        postId,
+      this.fbPostStats +
+      '?PageId=' +
+      pageId +
+      '&postId=' +
+      postId,
       null
     );
   }
@@ -450,7 +459,7 @@ getReports = environment.links.console.getReports;
   AddYtResponed(body: any) {
     return this.http.post(this.youtubeBaseUrl + this.addFbResponed, body);
   }
- 
+
 
   GetCompanyPages() {
     return this.http.get(this.autoresponderbaseurl + this.getCompanyPages);
@@ -465,11 +474,11 @@ getReports = environment.links.console.getReports;
   GetFbCommentStats(pageId: any, commentId: any) {
     return this.http.post(
       this.CommonBaseUrl +
-        this.fbCommentStats +
-        '?PageId=' +
-        pageId +
-        '&CommentId=' +
-        commentId,
+      this.fbCommentStats +
+      '?PageId=' +
+      pageId +
+      '&CommentId=' +
+      commentId,
       null
     );
   }
@@ -491,11 +500,11 @@ getReports = environment.links.console.getReports;
   GetTwitterTweetStats(profileId: any, tweetId: any) {
     return this.http.get(
       this.CommonBaseUrl +
-        this.twitterTweetStats +
-        '?ProfileExternalId=' +
-        profileId +
-        '&TweetId=' +
-        tweetId
+      this.twitterTweetStats +
+      '?ProfileExternalId=' +
+      profileId +
+      '&TweetId=' +
+      tweetId
     );
   }
   GetLinkedInPostStats(postId: any) {
@@ -563,11 +572,11 @@ getReports = environment.links.console.getReports;
   GetAllocatedProfiles(wing: string, skillSlug: string) {
     return this.http.get(
       this.CommonBaseUrl +
-        this.getAllocatedProfiles +
-        '?Wings=' +
-        wing +
-        '&SkillSlug=' +
-        skillSlug
+      this.getAllocatedProfiles +
+      '?Wings=' +
+      wing +
+      '&SkillSlug=' +
+      skillSlug
     );
   }
   // CreateMessageTemplate(body: any) {
@@ -1409,18 +1418,40 @@ getReports = environment.links.console.getReports;
 
 
 
-AddAccessReports(reports: any) {
-  return this.http.post(
-    this.ReportsBaseUrl + this.addAccessReports,
-    reports
-  );
-}
+  AddAccessReports(reports: any) {
+    return this.http.post(
+      this.ReportsBaseUrl + this.addAccessReports,
+      reports
+    );
+  }
 
-GetActors() {
-  return this.http.get(`${this.IdentityBaseUrl + this.getActors}?roles=${57}&roles=${58}`);
-}
+  GetActors() {
+    return this.http.get(`${this.IdentityBaseUrl + this.getActors}?roles=${57}&roles=${58}`);
+  }
 
-GetReports(teamSlug:any) {
-  return this.http.post(this.ReportsBaseUrl + this.getReports, teamSlug)
-}
+  GetReports(teamSlug: any) {
+    return this.http.post(this.ReportsBaseUrl + this.getReports, teamSlug)
+  }
+  GetemailReport(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.emailReport, body)
+  }
+  GetwallboradReport() {
+    return this.http.get(this.CommonBaseUrl + this.wallboardReport)
+  }
+  GetPerviousWallboardReport() {
+    return this.http.get(this.CommonBaseUrl + this.perviousWallboardReport)
+  }
+  GetWallboardCsatReport() {
+    return this.http.get(this.ProfileBaseUrl + this.wallboardCSATReport)
+  }
+  GetMonthToDateServiceLevel() {
+    return this.http.get(this.CommonBaseUrl + this.getMonthToDateServiceLevel)
+  }
+  GetPreviousInteractionDashboard(body: any) {
+    return this.http.post(
+      this.CommonBaseUrl + this.getPreviousInteractionDashboard,
+      body
+    );
+  }
+
 }

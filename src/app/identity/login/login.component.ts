@@ -115,10 +115,11 @@ export class LoginComponent implements OnInit {
                     this.loginResponse?.skills
                   );
                   sessionStorage.setItem('skills', this.loginResponse?.skills);
-
+                  debugger
                   this.commonService
                     .GetSkills(this.loginResponse?.skills)
                     .subscribe((skillNames: any) => {
+
                       this.sendSkills.sendSkills(skillNames);
                       this.stor.store('skills', skillNames);
 

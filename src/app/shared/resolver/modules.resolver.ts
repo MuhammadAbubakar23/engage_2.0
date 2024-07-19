@@ -18,11 +18,11 @@ import { TagsState } from 'src/app/layouts/engage2/tags-state/tags.state';
 export class ModulesResolver implements Resolve<boolean> {
   constructor(private MenuStore: Store<MenuState>,
     private TagsStore: Store<TagsState>,
-    private PermissionStore: Store<PermissionState>){
-    }
+    private PermissionStore: Store<PermissionState>) {
+  }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     this.MenuStore.dispatch(loadMenusList());
-   // this.MenuStore.dispatch(updateMenusList());
+    // this.MenuStore.dispatch(updateMenusList());
     // this.TagsStore.dispatch(loadTagsList());
     // this.TagsStore.dispatch(updateTagsList());
     // this.PermissionStore.dispatch(loadPermissionsLetters());

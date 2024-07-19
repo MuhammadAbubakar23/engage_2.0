@@ -1,0 +1,608 @@
+<div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+        <div class="w-100 analytics">
+            <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none;overflow-x: hidden;">
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                    [fullScreen]="false">
+                    <p style="color: white"> Loading... </p>
+                </ngx-spinner>
+                <div class="scroll-content">
+                    <div class="filter-toolbar mb-1 border-0 d-flex align-items-center justify-content-between">
+                        <!-- <h6 class="text-uppercase mb-1"> Wallboard</h6>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle fw-bold" type="button" id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fal fa-calendar"></i> Any Time
+                                    </button>
+                                    <ul class="dropdown-menu assignFirstDropdownList1"
+                                        aria-labelledby="dropdownMenuButton1">
+                                        <li class="dropdown-item">
+                                            <a href="#0"> Any Time</a>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a href="#0">Older then a yesterday</a>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a href="#0">Older then a month</a>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a href="#0"> Older then a 6 months</a>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a href="#0">Older then a year</a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="dropdown-item" id="customrange1">
+                                            <a >Custom Range</a>
+                                        </li>
+                                    </ul>
+                                    <div class="dropdown-menu end-0 assignSecondDropdownList1"
+                                        aria-labelledby="customrange1">
+                                        <form class="px-3 py-3">
+                                            <div class="d-flex mb-3">
+                                                <div class="form-floating">
+                                                    <input type="date" class="form-control border-end-0 rounded-0"
+                                                        id="start-date" placeholder="Start Date">
+                                                    <label for="start-date">Start Date </label>
+                                                </div>
+                                                <div class="form-floating">
+                                                    <input type="date" class="form-control rounded-0" id="end-date"
+                                                        placeholder="End Date">
+                                                    <label for="end-date">End Date</label>
+                                                </div>
+                                            </div>
+                                            <div class="text-end">
+                                                <button type="submit" class="btn skyBg btn-small">Apply</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul> -->
+                    </div>
+                    <h4 class=" text-end coal" style="font-size: 12px;">Wallboard will refresh after {{displayTime}}
+                    </h4>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="mb-4 text-uppercase">OVERALL PERFORMANCE </h6>
+                            <div class="row align-items-start mb-4">
+                                <div class="col">
+                                    <div class="card dashboard-card-inner bg-light mb-3">
+                                        <div class="card-body">
+                                            <p class="cherry">Total Interactions</p>
+                                            <h2 class="m-0 fw-bold">{{formatNumber(totalInteractioncount)}}</h2>
+                                            <small>
+                                                <span *ngIf="totalInteractionPersentageCount>0">
+                                                    <i class="fa-light fa-arrow-up mint"></i>
+                                                </span>
+                                                <span *ngIf="totalInteractionPersentageCount<0">
+                                                    <i class="fa-light fa-arrow-down rose"></i>
+                                                </span>
+                                                &nbsp;
+                                                <span
+                                                    class="mint">{{transformtValue(totalInteractionPersentageCount)}}%</span>  &nbsp;than yesterday</small>
+                                        </div>
+                                    </div>
+                                </div>
+                          <div class="col">
+                            <div class="card dashboard-card-inner mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <p class="radical">IN PROGRESS</p>
+                                            <h3 class="m-0 fw-bold">{{inprogresscount}}</h3>
+                                            <small  style="white-space: nowrap;">
+                                                <span *ngIf="InprogressPersentageCount >0">
+                                                    <i class="fa-light fa-arrow-up mint"></i>
+                                                </span>
+                                                <span *ngIf="InprogressPersentageCount <=0">
+                                                    <i class="fa-light fa-arrow-down rose"></i>
+                                                </span>
+                                                &nbsp;
+                                                <span class="mint">{{transformtValue(InprogressPersentageCount)}}%</span>&nbsp;than yesterday
+                                            </small>
+                                        </div>
+                                        <div id="inprogressgrahp" style="height: 100px; width: 100px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                <div class="col">
+                                    <div class="card dashboard-card-inner mb-3">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <p class="berry"> FOLLOW UP</p>
+                                                    <h3 class="m-0 fw-bold">{{followupcount}} </h3>
+                                                    <small  style="white-space: nowrap;">
+                                                        <span *ngIf="perviousFollowupPersentageCount >0">
+                                                            <i class="fa-light fa-arrow-up mint"></i>
+                                                        </span>
+                                                        <span *ngIf="perviousFollowupPersentageCount <=0">
+                                                            <i class="fa-light fa-arrow-down  rose"></i>
+                                                        </span>
+                                                        &nbsp;
+                                                        <span
+                                                            class="mint">{{transformtValue(perviousFollowupPersentageCount)}}%</span>&nbsp;than yesterday</small>
+                                                </div>
+                                                <div id="followup" style="height: 100px;width: 100px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card dashboard-card-inner mb-3">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <p class="mint">COMPLETED</p>
+                                                    <h3 class="m-0 fw-bold">{{compeletedCount}}</h3>
+                                                    <small  style="white-space: nowrap;">
+                                                        <span *ngIf="compeletedPersentageCount >0">
+                                                            <i class="fa-light fa-arrow-up mint"></i>
+                                                        </span>
+                                                        <span *ngIf="compeletedPersentageCount <=0">
+                                                            <i class="fa-light fa-arrow-down  rose"></i>
+                                                        </span>
+                                                        &nbsp;
+                                                        <span
+                                                            class="mint">{{transformtValue(compeletedPersentageCount)}}%</span> &nbsp;than  yesterday</small>
+                                                </div>
+                                                <div id="totalinteraction" style="height: 100px;width: 100px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <!-- <div class="card dashboard-card-inner mb-3">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <p class="mango"> ASSIGN TO ME</p>
+                                                    <h3 class="m-0 fw-bold">{{assignTomecount}}</h3>
+                                                    <small>
+                                                        <span *ngIf="perviousAssingTomePersentageCount > 0">
+                                                            <i class="fa-light fa-arrow-up mint"></i>
+                                                        </span>
+                                                        <span *ngIf="perviousAssingTomePersentageCount <0">
+                                                            <i class="fa-light fa-arrow-down  rose"></i>
+                                                        </span>
+                                                        <span
+                                                            class="mint">{{transformtValue(InprogressPersentageCount)}}%</span>
+                                                        &nbsp;than 
+                                                        yesterday</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="card dashboard-card-inner enteract-gradient ice border-start">
+                                        <div class="card-body py-4">
+                                          <div class="d-flex align-items-center justify-content-end">
+                                            <div class="text-end">
+                                              <p class="ice"> ASSIGNED</p>
+                                              <h3 class="m-0 fw-bold ice">{{assignTomecount}} </h3>
+                                              <small>
+                                                <span *ngIf="perviousAssingTomePersentageCount > 0">
+                                                    <i class="fa-light fa-arrow-up mint"></i>
+                                                </span>
+                                                <span *ngIf="perviousAssingTomePersentageCount <0">
+                                                    <i class="fa-light fa-arrow-down  rose"></i>
+                                                </span>
+                                                &nbsp;
+                                                <span
+                                                    class="mint">{{transformtValue(perviousAssingTomePersentageCount)}}%</span>
+                                                &nbsp;than 
+                                                yesterday</small>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                            <!-- start of section2 -->
+                            <div class="row align-items-center">
+                                <div class="col-md-3">
+                                    <div class="card bg-light mb-3">
+                                        <div class="card-body">
+                                            <p class="sky mb-1">Service Level</p>
+                                            <h2>{{serviceLevel?.percentage}}<small>%</small> 
+                                                &nbsp;
+                                                <small>
+                                                    <span *ngIf="serviceLevel?.target >= serviceLevel?.percentage">
+                                                        <i class="fa-light fa-arrow-down rose"></i>
+                                                    </span>
+                                                    <i class="fa-light fa-arrow-up mint"></i>
+                                                </small> </h2>
+                                            <ul class="list-group list-group-flush mt-3">
+                                                <li
+                                                    class="px-0 list-group-item d-flex align-items-center justify-content-between">
+                                                    <h6>Target</h6>
+                                                    <span *ngIf="serviceLevel?.target==null ">
+                                                        <small>0 %</small>
+                                                    </span>
+                                                    <span *ngIf="serviceLevel?.target !=null">
+                                                        <small>{{serviceLevel?.target}} %</small>
+                                                    </span>
+                                                </li>
+                                                <li
+                                                    class="px-0 list-group-item d-flex align-items-center justify-content-between">
+                                                    <h6> Month-to-Date</h6>
+                                                    <span *ngIf="monthtoDay?.monthToDate==null">
+                                                        <small>0 %</small>
+                                                    </span>
+                                                    <span *ngIf="monthtoDay?.monthToDate !=null">
+                                                        <small>{{monthtoDay?.monthToDate.toFixed(2)}} %</small>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card bg-light mb-3">
+                                        <div class="card-body">
+                                            <p class="mango mb-1"> Logged In Users</p>
+                                            <h2>{{loggedInUsers?.totalUsersCount}}</h2>
+                                            <ul class="list-group list-group-flush mt-3">
+                                                <li
+                                                    class="px-0 list-group-item d-flex align-items-center justify-content-between">
+                                                    <h6>Break</h6>
+                                                    <small>{{loggedInUsers?.onBreakCount}}</small>
+                                                </li>
+                                                <li
+                                                    class="px-0 list-group-item d-flex align-items-center justify-content-between">
+                                                    <h6> Engaged</h6>
+                                                    <small> {{loggedInUsers?.engagedCount}}</small>
+                                                </li>
+                                                <li
+                                                    class="px-0 list-group-item d-flex align-items-center justify-content-between">
+                                                    <h6> Idle</h6>
+                                                    <small> {{loggedInUsers?.idleCount}}</small>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="row align-items-start g-0">
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="card dashboard-card-inner">
+                                                <div
+                                                    class="card-body d-flex align-items-center justify-content-center flex-column">
+                                                    <div id="avgResRate" style="height: 261px;width: 348px;"></div>
+                                <p class="text-center" style="margin-top: -86px;">Average <br>
+                                    Resolution Time</p>
+                                <h3 class="mb-3">{{averageResponseRate}}</h3>
+                                <img src="../../../../../assets/images/path1.svg" alt="">
+                                <small>
+                                    <span *ngIf="perviousAverageResolutinTimePersentage >0 ">
+                                        <i class="fa-light fa-arrow-up mint"></i>
+                                    </span>
+                                    <span *ngIf="perviousAverageResolutinTimePersentage <0">
+                                        <i class="fa-light fa-arrow-down rose"></i>
+                                    </span>
+                                    &nbsp;
+                                    <span>{{transformtValue(perviousAverageResolutinTimePersentage)}}%</span></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="card dashboard-card-inner">
+                                                <div
+                                                    class="card-body d-flex align-items-center justify-content-center flex-column">
+                                                    <div id="avgResTime" style="height: 261px;width: 348px;"></div>
+                                                    <p class="text-center" style="margin-top: -86px;">Average <br>
+                                                        Response Time</p>
+                                                    <h3 class="mb-3">{{averageResponseTime}}</h3>
+                                                    <img src="../../../../../assets/images/path2.svg" alt="">
+                                                    <small>
+                                                        <span *ngIf=" perviousAverageResponseTimePersentage >0">
+                                                            <i class="fa-light fa-arrow-up mint"></i>
+                                                        </span>
+                                                        <span *ngIf=" perviousAverageResponseTimePersentage < 0">
+                                                            <i class="fa-light fa-arrow-down rose"></i>
+                                                        </span>
+                                                        &nbsp;
+                                                        <span>{{transformtValue(perviousAverageResponseTimePersentage)}}%</span></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="card dashboard-card-inner">
+                                                <div
+                                                    class="card-body d-flex align-items-center justify-content-center flex-column">
+                                                    <div id="minCaterTime" style="height: 261px;width: 348px;"></div>
+                                                    <p class="text-center" style="margin-top: -86px;">Minimum <br>
+                                                        Cater Time</p>
+                                                    <h3 class="mb-3">{{minimumCaterTime}}</h3>
+                                                    <img src="../../../../../assets/images/path3.svg" alt="">
+                                                    <small>
+                                                        <span *ngIf="perviousMinimumCaterTimePersentage > 0">
+                                                            <i class="fa-light fa-arrow-up mint"></i>
+                                                        </span>
+                                                        <span *ngIf="perviousMinimumCaterTimePersentage < 0">
+                                                            <i class="fa-light fa-arrow-down rose"></i>
+                                                        </span>
+                                                        &nbsp;
+                                                        <span>{{transformtValue(perviousMinimumCaterTimePersentage)}}%</span></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="card dashboard-card-inner">
+                                                <div
+                                                    class="card-body d-flex align-items-center justify-content-center flex-column">
+                                                    <div id="maxCaterTime" style="height: 261px;width: 348px;"></div>
+                                                    <p class="text-center" style="margin-top: -86px;"> Maximum <br>
+                                                        Cater Time</p>
+                                                    <h3 class="mb-3">{{maximumCaterTime}}</h3>
+                                                    <img src="../../../../../assets/images/path4.svg" alt="">
+                                                    <small>
+                                                        <span *ngIf="perviousMaximumCaterTimePersentage > 0">
+                                                            <i class="fa-light fa-arrow-down mint"></i>
+                                                        </span>
+                                                        <span *ngIf="perviousMaximumCaterTimePersentage < 0">
+                                                            <i class="fa-light fa-arrow-down rose"></i>
+                                                        </span>
+                                                        &nbsp;
+                                                        <span>{{transformtValue(perviousMaximumCaterTimePersentage)}}%</span></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="mb-4 text-uppercase">WORKLOAD </h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="text-center">
+                                        <div id="workloadchart" style="height: 400px;width: 600px;"></div>
+                                        <!-- <h5 class="mt-3">TOTAL INTERACTIONS</h5> -->
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row align-items-start">
+                                        <div class="col-4 border-end">
+                                            <div class="card dashboard-card-inner mb-3">
+                                                <div class="card-body">
+                                                    <p class="radical">{{this.CompeletedqueryStatus?.queryStatus}}</p>
+                                                    <h3 class="m-0 fw-bold">
+                                                        {{this.CompeletedqueryStatus?.totalWorkLoad}}</h3>
+                                                    <small>
+                                                        <span *ngIf="perviousCompeletedPersentageCount > 0">
+                                                            <i class="fa-light fa-arrow-up mint"></i>
+                                                        </span>
+                                                        <span *ngIf="perviousCompeletedPersentageCount < 0">
+                                                            <i class="fa-light fa-arrow-down rose"></i>
+                                                        </span>
+                                                        &nbsp;
+                                                        <span
+                                                            class="mint">{{transformtValue(perviousCompeletedPersentageCount)}}%</span>
+                                                        &nbsp; than 
+                                                        yesterday</small>
+                                                </div>
+                                            </div>
+                                            <ul class="list-0 progress-list">
+                                                <li class="row align-items-center gap-3 mb-3"
+                                                    *ngFor="let item of platFormWiseInteractionsCompeleted">
+                                                    <span class="col-2 p-0">{{item?.interactionCount}}</span>
+                                                    <span class="col-2">
+                                                        <i [class]="platformIconMapping[item.platForm]"></i>
+                                                    </span>
+                                                    <div class="col">
+                                                        <div class="progress" role="progressbar"
+                                                            aria-label="Basic example" aria-valuenow=""
+                                                            aria-valuemin="0" [attr.aria-valuenow]="1000">
+                                                            <div class="progress-bar facebookBg"
+                                                                [style.width.%]="item?.interactionCount">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-4 border-end">
+                                            <div class="card dashboard-card-inner mb-3">
+                                                <div class="card-body">
+                                                    <p class="mango">{{this.followupQueryStatus?.queryStatus}}</p>
+                                                    <h3 class="m-0 fw-bold">{{this.followupQueryStatus?.totalWorkLoad}}
+                                                    </h3>
+                                                    <small>
+                                                        <span *ngIf="perviousFollowupWorkloadCount >0">
+                                                            <i class="fa-light fa-arrow-up mint"></i>
+                                                        </span>
+                                                        <span *ngIf="perviousFollowupWorkloadCount < 0">
+                                                            <i class="fa-light fa-arrow-down rose"></i>
+                                                        </span>
+                                                        <ng-container>
+                                                        </ng-container>
+                                                        &nbsp;
+                                                        <span
+                                                            class="mint">{{transformtValue(perviousFollowupWorkloadCount)}}%</span>
+                                                        &nbsp; than 
+                                                        yesterday</small>
+                                                </div>
+                                            </div>
+                                            <ul class="list-0 progress-list">
+                                                <li class="row align-items-center gap-3 mb-3"
+                                                    *ngFor="let data of platFormWiseInteractionsFollowup">
+                                                    <span class="col-2 text-end p-0">{{data?.interactionCount}}</span>
+                                                    <span class="col-2">
+                                                        <i [class]="platformIconMapping[data?.platForm]"></i>
+                                                    </span>
+                                                    <div class="col">
+                                                        <div class="progress" role="progressbar"
+                                                            aria-label="Basic example" aria-valuenow=""
+                                                            aria-valuemin="0" [attr.aria-valuenow]="1000">
+                                                            <div class="progress-bar facebookBg"
+                                                                [style.width.%]="data?.interactionCount">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="text-uppercase mb-4">Peak Hours Analysis</h6>
+                            <div class="row justify-content-center align-items-start">
+                                <div class="col-3 px-5">
+                                    <div class="progresslist">
+                                        <span *ngFor="let progress of peakHoursProgressbar">
+                                            <div class="progress mt-3">
+                                                <span>
+                                                    <div class="progress-bar"
+                                                        [style.width.%]="(progress.value/1000)*100"
+                                                        role="progressbar" aria-label="Basic example"
+                                                        [attr.aria-valuenow]="progress.value " aria-valuemin="0"
+                                                        aria-valuemax="10000">{{formatNumber(progress?.value)}}</div>
+                                                </span>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-7">
+                                    <div id="heatMap" class="mb-4" style="height:400px ;width: 799px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-start mb-3">
+                        <!-- <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between mb-5">
+                                        <div>
+                                            <h6 class="mb-4 text-uppercase">CUSTOMER SATISFACTION</h6>
+                                            <h3>{{persentageCsat}} <small>%</small></h3>
+                                            <p>Performance Score</p>
+                                        </div>
+                                        <ul class="list-group w-50">
+                                            <li
+                                                class="px-4 list-group-item d-flex justify-content-between align-items-center">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fa-light mint fa-face-smile fs-5"></i>
+                                                    <div class="ms-3">
+                                                        <h6 class="mb-0">Top Score</h6>
+                                                        <p class="mb-0">{{csatResponse?.topPerformer?.agentEmail}}</p>
+                                                    </div>
+                                                </div>
+                                                <span>{{csatResponse?.topPerformer?.count
+                                                    }}</span>
+                                            </li>
+                                            <li
+                                                class="px-4 list-group-item d-flex justify-content-between align-items-center">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fa-light radical fa-face-frown fs-5"></i>
+                                                    <div class="ms-3">
+                                                        <h6 class="mb-0">Lowest Score</h6>
+                                                        <p class="mb-0">{{csatResponse?.leastPerformer?.agentEmail}}</p>
+                                                    </div>
+                                                </div>
+                                                <span>{{csatResponse?.leastPerformer?.count}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="progress-stacked mb-5">
+                                        <div class="progress" role="progressbar" aria-label="Segment one"
+                                                     [attr.aria-valuenow]="persentageForExcellent" 
+                                          aria-valuemin="0" aria-valuemax="100"  [style.width.%]="persentageForExcellent">
+                                          <div class="progress-bar skyBg"></div>
+                                        </div>
+                                        <div class="progress" role="progressbar" aria-label="Segment two"
+                                          [attr.aria-valuenow]=" persentageForveryGood" aria-valuemin="0" aria-valuemax="100"    [style.width.%]="persentageForveryGood">
+                                          <div class="progress-bar cherryBg"></div>
+                                        </div>
+                                        <div class="progress" role="progressbar" aria-label="Segment three"
+                                        [attr.aria-valuenow]=" persentageForGood"aria-valuemin="0" aria-valuemax="100"   [style.width.%]="persentageForGood">
+                                          <div class="progress-bar berryBg"></div>
+                                        </div> 
+                                        <div class="progress" role="progressbar" aria-label="Segment three" 
+                                        [attr.aria-valuenow]=" persentageForpoor" aria-valuemin="0" aria-valuemax="100"  [style.width.%]="persentageForpoor">
+                                          <div class="progress-bar radicalBg"></div>
+                                        </div>
+                                        <div class="progress" role="progressbar" aria-label="Segment three"
+                                        [attr.aria-valuenow]=" persentageForVeryPoor" aria-valuemin="0" aria-valuemax="100"  [style.width.%]="persentageForVeryPoor">
+                                          <div class="progress-bar mangoBg"></div>
+                                        </div>
+                                      </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex align-items-center justify-content-between"
+                                            *ngFor="let item of castJson">
+                                            <span>
+                                                <i class="{{item?.icone}}"></i> {{item?.name}}
+                                            </span>
+                                            <strong>{{item?.count}}</strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="text-uppercase mb-4">TOP PERFORMERS</h6>
+                                    <div class="table-section p-3" style="overflow: auto;">
+                                        <table class="table table-lg">
+                                            <thead>
+                                                <tr>
+                                                    <th>Agent</th>
+                                                    <th>First
+                                                        Response
+                                                        Time (FRT)</th>
+                                                    <th>Average
+                                                        Resolution
+                                                        Time (ART)</th>
+                                                    <th>
+                                                        SLA (%)
+                                                    </th>
+                                                    <th>Total
+                                                        Handle
+                                                        Time (THT)</th>
+                                                    <th>Average
+                                                        Handle
+                                                        Time (AHT)</th>
+                                                    <th>Completed
+                                                         </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let agent of agentPerformanceResponse">
+                                                    <td>
+                                                        {{agent?.name}}
+                                                    </td>
+                                                    <td><strong>{{agent?.firstResponseTime}}</strong></td>
+                                                    <td><strong>{{agent?.averageResolutionTime}}</strong></td>
+                                                    <td><strong>{{agent?.serviceLevelAgrements}}</strong></td>
+                                                    <td><strong>{{agent?.totalHandleTime}}</strong></td>
+                                                    <td><strong>{{agent?.averageHandleTime}}</strong></td>
+                                                    <td><strong>{{agent?.completedCount}}</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

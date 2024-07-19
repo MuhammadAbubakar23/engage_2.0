@@ -42,7 +42,7 @@ export class ActorsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+
     let data = this.storage.retrive('main', 'O').local;
     this.loginResponse = data;
     this.fullName = data.username;
@@ -68,6 +68,7 @@ export class ActorsComponent implements OnInit {
 
           this.commonService.GetSkills(this.loginResponse?.skills)
             .subscribe((skillNames: any) => {
+              debugger
               this.sendSkills.sendSkills(skillNames);
               this.stor.store('skills', skillNames);
 
@@ -126,7 +127,7 @@ export class ActorsComponent implements OnInit {
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
           this.loginDisabled = true
-        
+
         },
           (error) => {
             alert(error.error.message)
