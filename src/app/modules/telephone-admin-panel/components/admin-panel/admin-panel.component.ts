@@ -12,8 +12,9 @@ import { DataExchangeServicesService } from 'src/app/services/dataExchangeServic
 })
 export class AdminPanelComponent implements OnInit {
   url: any
-  baseUrl = "https://lhr-ivr1.enteract.live/console_sandbox/public/"
-  token = "engage_login/U3lXZjNuUjV2WS9iUUc5MGp3UTNUY0daYjc3aS9GUHBTNXJmdUJXaFZNYVMrSlcxZlJlT1hkT1hDeVUwZ2s4Mzo6OiNTELiykDHz6hNvDKDg_g=="
+  baseUrl = "https://lhr-ivr1.enteract.live/console_sandbox/public/";
+  endPoint="engage_login/"
+  token = sessionStorage.getItem("adminPenalToken")
   constructor(
     private dataExchangeService: DataExchangeServicesService,
     private spinner: NgxSpinnerService
@@ -23,7 +24,7 @@ export class AdminPanelComponent implements OnInit {
     this.changeEndpoint()
   }
   getAllDataAdminPenal() {
-    this.url = this.baseUrl + this.token
+    this.url = this.baseUrl+ this.endPoint+ this.token
   }
   changeEndpoint() {
     this.dataExchangeService.receivedAdminPenalEndPoint().subscribe((res: any) => {

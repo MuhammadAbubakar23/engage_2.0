@@ -95,6 +95,7 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(obj).subscribe(
       (res: any) => {
+        debugger
         if (res.isTwoFAEnabled == false) {
           this.loginResponse = res.loginResponse.loginResponse;
 

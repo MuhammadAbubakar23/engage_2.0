@@ -105,6 +105,7 @@ export class CommonDataService {
   deleteTeams = environment.links.console.deleteTeam;
   teamGetById = environment.links.console.teamGetById;
   deleteMultipleTeams = environment.links.console.deleteMultipleTeams;
+  getVoiceToken=environment.links.identity.getVoiceToken
   //Reports
   addUniqueCustomer = environment.links.common.addUniqueCustomer;
   uniqueExportCsv = environment.links.common.uniqueExportCsv;
@@ -240,7 +241,9 @@ export class CommonDataService {
   getMonthToDateServiceLevel = environment.links.console.GetMonthToDateServiceLevel;
   getPreviousInteractionDashboard = environment.links.console.getPreviousInteractionDashboard;
 
-
+  adminPanelBaseUrl='https://lhr-ivr1.enteract.live/console_sandbox/public/'
+endPoint='engage_menus/'
+AdminPanelToken=sessionStorage.getItem('adminPenalToken')
   // teams
   // getAllTeams= environment.links.console.getAllTeams
   // addTeam = environment.links.console.addTeam
@@ -1203,6 +1206,9 @@ export class CommonDataService {
     const url = `${this.ConsoleBaseUrl}${this.updateSkill}?SkillId=${id}`;
     return this.http.post(url, rule);
   }
+  GetVoiceToken(slug:any){
+    return this.http.get(`${this.IdentityBaseUrl}${this.getVoiceToken}?actorSlug=${slug} `,{ responseType: 'text' })
+  }
   GetAllTeams(body: any) {
     return this.http.post(this.IdentityBaseUrl + this.getAllTeams, body);
   }
@@ -1433,25 +1439,30 @@ export class CommonDataService {
     return this.http.post(this.ReportsBaseUrl + this.getReports, teamSlug)
   }
   GetemailReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.emailReport, body)
+    return this.http.post(this.ReportsBaseUrl + this.emailReport, body)
   }
   GetwallboradReport() {
-    return this.http.get(this.CommonBaseUrl + this.wallboardReport)
+    return this.http.get(this.ReportsBaseUrl + this.wallboardReport)
   }
   GetPerviousWallboardReport() {
-    return this.http.get(this.CommonBaseUrl + this.perviousWallboardReport)
+    return this.http.get(this.ReportsBaseUrl + this.perviousWallboardReport)
   }
   GetWallboardCsatReport() {
     return this.http.get(this.ProfileBaseUrl + this.wallboardCSATReport)
   }
   GetMonthToDateServiceLevel() {
-    return this.http.get(this.CommonBaseUrl + this.getMonthToDateServiceLevel)
+    return this.http.get(this.ReportsBaseUrl + this.getMonthToDateServiceLevel)
   }
   GetPreviousInteractionDashboard(body: any) {
     return this.http.post(
-      this.CommonBaseUrl + this.getPreviousInteractionDashboard,
+      this.ReportsBaseUrl + this.getPreviousInteractionDashboard,
       body
     );
+  }
+
+  getAdminPenalMenus(){
+    
+    return this.http.get(this.adminPanelBaseUrl+this.endPoint + this.AdminPanelToken)
   }
 
 }
