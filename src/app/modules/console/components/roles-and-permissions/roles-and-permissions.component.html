@@ -33,13 +33,13 @@
                             </button>
                             <input [(ngModel)]="searchText" placeholder="Search" class="me-1" (keyup)="applySearchFilter()">
                         </a>
-                        <a *ngIf="hasCreatePermission" (click)="updatevalue('consoleCreateRolesHeader')"
+                        <!-- <a *ngIf="hasCreatePermission" (click)="updatevalue('consoleCreateRolesHeader')"
                             [routerLink]="['/console/roles-permissions/create/0']" class="ms-2">
                             <button type="button" class="btn btn-success">
                                 <i class="fal fa-plus"></i>
                                 Create Roles
                             </button>
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </div>
