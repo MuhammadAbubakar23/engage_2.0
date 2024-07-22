@@ -217,6 +217,7 @@ export const environment = {
       ////// Later Align in Console/////
       defaultTags: 'Tags/GetTags',
       getUserRoles: 'Roles/GetUserActor',
+      getVoiceToken:'Authentication/GetVoiceToken'
     },
     console: {
       AddUser: 'Users/CreateUser',
@@ -319,12 +320,12 @@ export const environment = {
       addAccessReports: 'ReportAcess/Add',
       getActors: 'Roles/GetActors',
       getReports: 'Report/GetReports',
-      emailReport: 'Report/GetEmailReport',
-      wallboardReport: 'Report/GetWallboard',
-      perviousWallboardReport: 'Report/GetPreviousWallboard',
-      wallboardCSATReport: 'Report/GetCurrentDayCSATReport',
-      GetMonthToDateServiceLevel: 'Report/GetMonthToDateServiceLevel',
-      getPreviousInteractionDashboard: 'Report/GetPreviousInteractionDashboard',
+      emailReport: 'CommonReport/GetEmailReport',
+      wallboardReport: 'CommonReport/GetWallboard',
+      perviousWallboardReport: 'CommonReport/GetPreviousWallboard',
+      wallboardCSATReport: 'CommonReport/GetCurrentDayCSATReport',
+      GetMonthToDateServiceLevel: 'CommonReport/GetMonthToDateServiceLevel',
+      getPreviousInteractionDashboard: 'CommonReport/GetPreviousInteractionDashboard',
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',

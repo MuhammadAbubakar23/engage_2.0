@@ -1,47 +1,51 @@
 <div class="leftbar-console-expanded">
   <div class="sidebar-header pe-3 ps-3">
     <h5 class="fw-bold mt-3 ms-1">
-      <a>Admin Penal</a>
+      <a>Admin Panel</a>
     </h5>
   </div>
   <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1" style="overflow: hidden; outline: none">
-
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+    [fullScreen]="false">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
     <div class="scroll-content" style="overflow: auto; height: calc(100%-200px);">
-      <span *ngFor="let parent of adminPenalMenus">
-        <li class="list-group-item list-group-item-action collapsed" type="button" 
-            data-bs-toggle="collapse"
-            [attr.data-bs-target]="'#sidebar' + parent.id" 
-            aria-expanded="true" 
-            [attr.aria-controls]="'sidebar' + parent.id" >
-            <a (click)="sendEndPoint(parent.url)" >
-              <span *ngIf="parent.children.length>0">
-                <a class="d-flex chevron-icon align-items-center"></a>
-              </span>
-              <span *ngIf="parent.icon==null">
-                <i class="fal fa-link pe-2"></i>
-              </span>
-    
-              <i [class]="'fal fa-'+parent.icon +' '+'pe-2'"></i>
-              {{parent.display_name}}
-            </a>
-           
-       
-        </li>
-        <span *ngFor="let child of parent.children">
-          <ul class="list-unstyled-inner collapse" [attr.id]="'sidebar' + parent.id">
-            <li class="list-group-item list-group-item-action">
-              <a class="d-flex align-items-center" (click)="sendEndPoint(child.url)">
-                <span *ngIf="child.icon==null">
+
+        <span *ngFor="let parent of adminPenalMenus?.menu">
+          <li class="list-group-item list-group-item-action collapsed" type="button" 
+              data-bs-toggle="collapse"
+              [attr.data-bs-target]="'#sidebar' + parent?.id" 
+              aria-expanded="true" 
+              [attr.aria-controls]="'sidebar' + parent?.id" >
+              <a (click)="sendEndPoint(parent?.url)" >
+                <span *ngIf="parent?.children?.length>0">
+                  <a class="d-flex chevron-icon align-items-center"></a>
+                </span>
+                <span *ngIf="parent?.icon==null">
                   <i class="fal fa-link pe-2"></i>
                 </span>
-                <i [class]="'fal fa-'+child.icon +' '+'pe-2'"></i>
-                {{child.display_name}}
+      
+                <i [class]="'fal fa-'+parent?.icon +' '+'pe-2'"></i>
+                {{parent?.display_name}}
               </a>
-            </li>
-          </ul>
+             
+         
+          </li>
+          <span *ngFor="let child of parent?.children">
+            <ul class="list-unstyled-inner collapse" [attr.id]="'sidebar' + parent?.id">
+              <li class="list-group-item list-group-item-action">
+                <a class="d-flex align-items-center" (click)="sendEndPoint(child?.url)">
+                  <span *ngIf="child.icon==null">
+                    <i class="fal fa-link pe-2"></i>
+                  </span>
+                  <i [class]="'fal fa-'+child.icon +' '+'pe-2'"></i>
+                  {{child?.display_name}}
+                </a>
+              </li>
+            </ul>
+          </span>
         </span>
-      </span>
-    </div>
+      </div>
   </ul>
 </div>
 <a class="panelToggle"></a>

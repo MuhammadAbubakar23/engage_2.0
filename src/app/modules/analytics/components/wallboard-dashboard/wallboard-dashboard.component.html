@@ -467,7 +467,7 @@
                                             <div class="progress mt-3">
                                                 <span>
                                                     <div class="progress-bar"
-                                                        [style.width.%]="(progress.value/1000)*100"
+                                                        [style.width.%]="progress.value"
                                                         role="progressbar" aria-label="Basic example"
                                                         [attr.aria-valuenow]="progress.value " aria-valuemin="0"
                                                         aria-valuemax="10000">{{formatNumber(progress?.value)}}</div>
