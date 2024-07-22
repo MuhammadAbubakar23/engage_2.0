@@ -7,7 +7,7 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 @Component({
   selector: 'app-create-quick-response-templates',
   templateUrl: './create-quick-response-templates.component.html',
-  styleUrls: ['./create-quick-response-templates.component.scss']
+  styleUrls: ['./create-quick-response-templates.component.scss'],
 })
 export class CreateQuickResponseTemplatesComponent implements OnInit {
   messageForm!: FormGroup;
@@ -33,11 +33,11 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
       text: ['', Validators.required],
       parentText: ''
     });
-    const template = history.state.template; 
+    const template = history.state.template;
     if (template) {
       this.editorContent = template.text;
       this.messageForm.patchValue({
-        text: this.editorContent
+        text: this.editorContent,
       });
     } else {
       this.editorContent = '';

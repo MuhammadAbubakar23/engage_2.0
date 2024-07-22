@@ -12,7 +12,6 @@ import { SignalRService } from 'src/app/services/SignalRService/signal-r.service
 import { SkillsService } from 'src/app/services/Skills/skills.service';
 import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 import { AuthService } from '../Services/AuthService/auth.service';
-
 @Component({
   selector: 'app-actors',
   templateUrl: './actors.component.html',
@@ -29,6 +28,7 @@ export class ActorsComponent implements OnInit {
   Rules: any[] = [];
   singleOrSplitted: any[] = [];
   loginDisabled: boolean = false;
+  downloading:boolean=false
   constructor(
     private storage: StorageService,
     private stor: StorageService,
@@ -43,7 +43,7 @@ export class ActorsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+
     let data = this.storage.retrive('main', 'O').local;
     this.loginResponse = data;
     this.fullName = data.username;
@@ -54,21 +54,29 @@ export class ActorsComponent implements OnInit {
   }
 
 
-  getPermissions(actorId: number ) {
+  getPermissions(actorId: number, slug: string) {
+    debugger
+    this.downloading=true
     sessionStorage.setItem('activeActorId', JSON.stringify(actorId));
-    this.commonService.getPermissionByRole({
-      "ActorId": actorId,
-      "Inline": true
-    }).subscribe((res: any) => {
-      console.log(res);
-      sessionStorage.setItem('Permissions', JSON.stringify(res.priviledge));
+    this.commonService.GetVoiceToken(slug).subscribe((tokenRes: any) => {
+      console.log("Admin Penal token==>", tokenRes)
+      sessionStorage.setItem('adminPenalToken', tokenRes)
+    })
+    if (actorId == 60 || actorId == 61) {
       try {
+        sessionStorage.setItem('Permissions', "{}");
+        this.commonService.GetVoiceToken(slug).subscribe((tokenRes: any) => {
+          console.log("Token===>", tokenRes)
+          sessionStorage.setItem('adminToken', tokenRes);
+          // this.router.navigateByUrl('telephone/admin')
+        })
         this.commonService.UserLogin().subscribe(() => {
           this.sendSkillIdsService.sendSkillIds(this.loginResponse?.skills);
           sessionStorage.setItem('skills', this.loginResponse?.skills);
 
           this.commonService.GetSkills(this.loginResponse?.skills)
             .subscribe((skillNames: any) => {
+              debugger
               this.sendSkills.sendSkills(skillNames);
               this.stor.store('skills', skillNames);
 
@@ -108,7 +116,7 @@ export class ActorsComponent implements OnInit {
                 });
               });
             });
-          this.router.navigateByUrl('all-inboxes/focused/all');
+          this.router.navigateByUrl('telephone/admin');
 
 
           //signalRRequests
@@ -127,7 +135,7 @@ export class ActorsComponent implements OnInit {
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
           this.loginDisabled = true
-        
+
         },
           (error) => {
             alert(error.error.message)
@@ -137,9 +145,95 @@ export class ActorsComponent implements OnInit {
         this.spinnerService.hide();
       }
 
-      //this.actorService.setActor(true);
-      //this.router.navigateByUrl('/all-inboxes/focused/all');
-    })
+    } else {
+      this.commonService.getPermissionByRole({
+        "ActorId": actorId,
+        "Inline": true
+      }).subscribe((res: any) => {
+        debugger
+        console.log(res);
+        sessionStorage.setItem('Permissions', JSON.stringify(res.priviledge));
+        try {
+          this.commonService.UserLogin().subscribe(() => {
+            this.sendSkillIdsService.sendSkillIds(this.loginResponse?.skills);
+            sessionStorage.setItem('skills', this.loginResponse?.skills);
+  
+            this.commonService.GetSkills(this.loginResponse?.skills)
+              .subscribe((skillNames: any) => {
+                debugger
+                this.sendSkills.sendSkills(skillNames);
+                this.stor.store('skills', skillNames);
+  
+                // sessionStorage.setItem('skillSlug', skillNames[0]?.skilSlug);
+                this.loginResponse?.roles.forEach((role: any) => {
+                  var companyId = role.id;
+  
+                  skillNames.forEach((skill: any) => {
+                    var wingName = skill.wing;
+                    if (!this.uniqueWings.includes(wingName)) {
+                      this.uniqueWings.push(wingName);
+                    }
+                    this.sendWings.sendWings(this.uniqueWings.toString());
+                    sessionStorage.setItem('defaultWings', this.uniqueWings.toString());
+  
+                    const splitedRules = skill.rules.split(',')
+  
+                    var obj = {
+                      "platform": skill.skillName.toLowerCase()?.split(' ')[0],
+                      "ruleLength": splitedRules.length
+                    }
+                    this.singleOrSplitted.push(obj);
+                    this.stor.store('checkSegregation', this.singleOrSplitted);
+  
+                    this.Rules = skill.rules.split(',');
+                    this.Rules.forEach((x: any) => {
+                      var groupName = x + '_' + skill.wing + '_' + companyId;
+  
+                      this.signalRService
+                        .getConnectionState()
+                        .subscribe((connected) => {
+                          if (connected) {
+                            this.signalRService.joinGroup(groupName);
+                          }
+                        });
+                    });
+                  });
+                });
+              });
+            this.router.navigateByUrl('all-inboxes/focused/all');
+  
+  
+            //signalRRequests
+  
+            this.signalRService.startConnection();
+  
+            this.signalRService.removeTagDataListener();
+            this.signalRService.addTagDataListener();
+            this.signalRService.unRespondedCountDataListener();
+            this.signalRService.updateListAndDetailDataListener();
+            this.signalRService.replyDataListener();
+            this.signalRService.queryStatusDataListener();
+            this.signalRService.bulkQueryStatusDataListener();
+            this.signalRService.checkConnectionStatusListener();
+            this.signalRService.assignQueryResponseListner();
+            this.signalRService.applySentimentListner();
+            this.signalRService.updateMessageStatusDataListener();
+            this.loginDisabled = true
+  
+          },
+            (error) => {
+              alert(error.error.message)
+            });
+        } finally {
+  
+          this.spinnerService.hide();
+        }
+  
+        //this.actorService.setActor(true);
+        // this.router.navigateByUrl('/all-inboxes/focused/all');
+      })
+    }
+    this.downloading=false
 
     // switch (actor) {
     //   case 'administrator':
@@ -158,5 +252,26 @@ export class ActorsComponent implements OnInit {
     //     this.router.navigateByUrl('all-inboxes/focused/all');
     //     break;
     // }
+  }
+  GetAdminPenalToken(slug: any) {
+    this.commonService.GetVoiceToken(slug).subscribe((tokenRes: any) => {
+      console.log("Token===>", tokenRes)
+      sessionStorage.setItem('adminTokenn', tokenRes);
+      this.router.navigateByUrl('telephone/admin')
+    })
+
+  }
+
+  logoutUser() {
+    debugger
+    this.commonService.SignOut().subscribe((res: any) => {
+      sessionStorage.removeItem('token')
+      sessionStorage.clear()
+      this.router.navigateByUrl('/login')
+    }, error => {
+      sessionStorage.clear();
+      this.router.navigateByUrl('/login');
+    }
+    )
   }
 }

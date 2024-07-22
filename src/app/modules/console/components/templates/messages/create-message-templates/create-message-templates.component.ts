@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-create-message-templates',
   templateUrl: './create-message-templates.component.html',
-  styleUrls: ['./create-message-templates.component.scss']
+  styleUrls: ['./create-message-templates.component.scss'],
 })
 export class CreateMessageTemplatesComponent implements OnInit {
   messageForm!: FormGroup;
@@ -15,13 +16,21 @@ export class CreateMessageTemplatesComponent implements OnInit {
   editorConfig = {
     // Add any desired configuration options here
   };
-  constructor(private formBuilder: FormBuilder, private commonService: CommonDataService, private router: Router) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private commonService: CommonDataService,
+    private router: Router,
+    private headerService: HeaderService
+  ) {}
   ngOnInit(): void {
     this.messageForm = this.formBuilder.group({
-      templateName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+      templateName: [
+        '',
+        [Validators.required, Validators.pattern('^[a-zA-Z ]+$')],
+      ],
       subject: ['', Validators.required],
       message: ['', Validators.required],
-      templateType:['']
+      templateType: [''],
     });
     const template = history.state.template; // Get the template value from the state
     if (template) {
@@ -33,7 +42,7 @@ export class CreateMessageTemplatesComponent implements OnInit {
       this.messageForm.patchValue({
         templateName: this.templateName,
         subject: this.subject,
-        message: this.editorContent
+        message: this.editorContent,
       });
     } else {
       // Set initial values when no template is selected
@@ -45,7 +54,7 @@ export class CreateMessageTemplatesComponent implements OnInit {
   saveForm() {
     if (this.messageForm.valid) {
       this.messageForm.patchValue({
-        templateType: "Message"
+        templateType: 'Message',
       });
       const template = history.state.template; // Get the template value from the state
       if (template) {
@@ -53,18 +62,20 @@ export class CreateMessageTemplatesComponent implements OnInit {
           ...template,
           templateName: this.messageForm.value.templateName,
           subject: this.messageForm.value.subject,
-          message: this.messageForm.value.message
+          message: this.messageForm.value.message,
         };
-        this.commonService.UpdateTemplate(updatedTemplate.id, updatedTemplate).subscribe(
-          (response: any) => {
-            // Handle the successful response after updating the template
-            this.router.navigate(['/console/templates/messages']);
-          },
-          (error: any) => {
-            // Handle the error if the update fails
-            console.error('Error updating template:', error);
-          }
-        );
+        this.commonService
+          .UpdateTemplate(updatedTemplate.id, updatedTemplate)
+          .subscribe(
+            (response: any) => {
+              // Handle the successful response after updating the template
+              this.router.navigate(['/console/templates/messages']);
+            },
+            (error: any) => {
+              // Handle the error if the update fails
+              console.error('Error updating template:', error);
+            }
+          );
       } else {
         this.commonService.Addtemplate(this.messageForm.value).subscribe(
           (response: any) => {
@@ -84,5 +95,6 @@ export class CreateMessageTemplatesComponent implements OnInit {
   cancelForm(): void {
     // Redirect to the main page without resetting the form
     this.router.navigate(['/console/templates/messages']);
+    this.headerService.updateMessage('templates/messages');
   }
 }

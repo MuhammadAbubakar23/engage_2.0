@@ -77,6 +77,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getAllTags();
+    this.spinnerService.hide()
     this.baseUrl = window.location.origin;
   }
   uniqueWings: any[] = [];
@@ -94,6 +95,7 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(obj).subscribe(
       (res: any) => {
+        debugger
         if (res.isTwoFAEnabled == false) {
           this.loginResponse = res.loginResponse.loginResponse;
 
@@ -114,10 +116,11 @@ export class LoginComponent implements OnInit {
                     this.loginResponse?.skills
                   );
                   sessionStorage.setItem('skills', this.loginResponse?.skills);
-
+                  debugger
                   this.commonService
                     .GetSkills(this.loginResponse?.skills)
                     .subscribe((skillNames: any) => {
+
                       this.sendSkills.sendSkills(skillNames);
                       this.stor.store('skills', skillNames);
 
@@ -205,7 +208,7 @@ export class LoginComponent implements OnInit {
       },
       (error: any) => {
         this.spinnerService.hide();
-        this.ErrorMessage = error.error.message;
+        this.ErrorMessage = error.error;
         if (this.ErrorMessage?.includes('The account is locked out ')) {
           const LockedtiemEndpatteren = /lockoutEndTime = (.+)$/;
           this.matchTime = this.ErrorMessage.match(LockedtiemEndpatteren);

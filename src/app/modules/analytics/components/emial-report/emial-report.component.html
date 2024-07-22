@@ -1,0 +1,279 @@
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+    <div class="d-grid w-100">
+      <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <p style="color: white"> Loading... </p>
+      </ngx-spinner>
+      <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+        <div id="dashboardContent">
+          <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+            <div class="report-toolbar mb-4">
+              <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                <li class="list-inline-item">
+                  <div class="iconholder">
+                    <input name=""  [(ngModel)]="fromDate"
+                    (click)="resetendDate()"
+                     class="form-control " placeholder="Date"
+                      [max]="maxEndDate" type="date">
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="iconholder">
+                    <input name=""  [(ngModel)]="toDate" (change)="getEmailReportData()"
+                      [max]="maxEndDate" class="form-control " placeholder="Date" type="date">
+                  </div>
+                </li>
+                &nbsp;
+                <li class="list-inline-item">
+                  <div class="dropdown w-auto">
+                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                      data-bs-auto-close="outside">
+                      Agents
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="posttype">
+                      <li class="dropdown-listing-header">
+                        <form class="custom-searchbar my-2 mx-0">
+                          <input class="form-control bg-light border-0 py-2" [(ngModel)]="searchText"
+                            placeholder="Search" aria-label="Search">
+                          <span class="btn searchbar-btn" type="submit">
+                            <i class="fal fa-search silver"></i>
+                          </span>
+                        </form>
+                      </li>
+                      <div class="dd-scroll" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+                        <div class="scroll-content">
+                          <li *ngFor="let user of UserList | filter:searchText ">
+                            <a class="dropdown-item d-flex align-items-center">
+                              <div class="form-check">
+                                <input class="form-check-input" (click)="selectorUnselectAgents(user.id)"
+                                  type="checkbox" id="farooqs">
+                                <label class="form-check-label" for="farooqs">
+                                  {{user.name}}
+                                </label>
+                              </div>
+                            </a>
+                          </li>
+                        </div>
+                      </div>
+                    </ul>
+                  </div>
+                </li>
+                <li class="list-inline-item ms-auto" (click)="downloadPdf()">
+                  <button class="btn btn-outline-primary">
+                    <i class="fa-light fa-file-pdf">
+                    </i> Export as PDF </button>
+                </li>
+              </ul>
+            </div>
+            <div class="row align-items-start h-auto mb-4">
+              <div class="col-lg-4 col-md-6">
+                <div class="card dashboard-card">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                      <div>
+                        <span class="iconButton medium mintBg mb-4">
+                          <i class="fa-light fa-check-circle"></i>
+                        </span>
+                        <p class="coal mb-0"> Active Agents</p>
+                      </div>
+                      <h2>{{AgentsTeamList.length}}</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6">
+                <div class="card dashboard-card">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                      <div>
+                        <span class="iconButton medium radicalBg mb-4">
+                          <i class="fa-light fa-clock"></i>
+                        </span>
+                        <p class="coal mb-0"> Service Level Agreements (SLA)</p>
+                      </div>
+                      <h2>{{slaCount}}</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6">
+                <div class="card dashboard-card">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                      <div>
+                        <span class="iconButton medium cherryBg mb-4">
+                          <i class="fa-light fa-user-clock"></i>
+                        </span>
+                        <p class="coal mb-0"> Avg Resolution Time</p>
+                      </div>
+                      <h2>{{emailreportData?.averageResolutionTime}}</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3 align-items-start">
+              <div class="col-md-8">
+                <div class="card p-3 mb-3">
+                  <div class="card-body">
+                    <div class="row g-2">
+                      <div class="col-4">
+                        <span class="iconButton large bg-dark ice">
+                          <i class="fa-light fa-comment-lines fs-5"></i>
+                        </span>
+                        <h5 class="my-3">Total Interactions</h5>
+                        <h1 class="fw-bolder">{{totalInteractionCount}}</h1>
+                        <span>
+                        </span>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="row g-2">
+                          <div class="col-4">
+                            <div class="card card-hover positivecard">
+                              <div class="card-body">
+                                <span class="badge rounded-pill badge-md" style="font-size:0.7rem;"><i
+                                    class="fa-light fa-face-smile"></i>
+                                  Positive</span>
+                                <h3 class="mt-2 fw-bolder ice">{{positiveCount}}</h3>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="card card-hover negativecard">
+                              <div class="card-body">
+                                <span class="badge rounded-pill badge-md " style="font-size:0.7rem;"><i
+                                    class="fa-light fa-face-frown"></i>
+                                  Negative</span>
+                                <h3 class="mt-2 fw-bolder ice">{{negativeCount}}</h3>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="card card-hover neutralcard">
+                              <div class="card-body">
+                                <span class="badge rounded-pill badge-md" style="font-size:0.7rem;"><i
+                                    class="fa-light fa-face-meh"></i>
+                                  Neutral</span>
+                                <h3 class="mt-2 fw-bolder ice">{{neutralCount}}</h3>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="mt-3">
+                          <div class="d-flex align-items-center mb-2">
+                            <span class="iconButton medium cherryTransBg night"><i
+                                class="fa-light fa-envelope"></i></span>
+                            <h6 class="ms-2 mb-0">Email</h6>
+                          </div>
+                          <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                              <p class="mb-0"><small><i class="fa-solid fa-circle silver"></i></small> In Progress</p>
+                              <span>{{inprogressCount}}</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                              <p class="mb-0"><small><i class="fa-solid fa-circle sky"></i></small> Assign to me</p>
+                              <span>{{assingTomeCount}}</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                              <p class="mb-0"><small><i class="fa-solid fa-circle pearl"></i> </small> Follow up</p>
+                              <span>{{followUpCount}}</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                              <p class="mb-0"><small><i class="fa-solid fa-circle mint"></i></small> Completed
+                              </p>
+                              <span>{{completedCount}}</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card p-3 mb-3">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                      <span class="iconButton large berryBg ice">
+                        <i class="fa-light fa-users fs-5"></i>
+                      </span>
+                      <h5 class="ms-3">On Duty Agents</h5>
+                      <h1 class="fw-bolder ms-auto">{{AgentsTeamList.length}}</h1>
+                    </div>
+                    <ul class="list-group list-group-flush tagscroll" data-scrollbar="true" tabindex="-1"
+                      style="overflow: auto; outline: none;">
+                      <li class="list-group-item d-flex align-items-center mb-2" *ngFor="let item of AgentsTeamList">
+                        <avatar-content [name]="item?.name" [subname]="''" [imagename]="''"></avatar-content>
+                        <!-- <span class="ms-3">{{item?.name}}</span> -->
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="html2pdf__page-break"></div>
+            <div class="card iceBg p-4 rounded mb-5">
+              <h5 class="section-heading mb-4 p-0">Interaction By Date</h5>
+              <div class="graphcontainer align-items-end ">
+                <div id="emailGraph" style="height: 400px;width: 900px;"></div>
+              </div>
+            </div>
+            <div class="html2pdf__page-break"></div>
+
+            <div class="card iceBg p-4 rounded mb-4">
+              <div class="d-flex justify-content-between">
+                <div></div> <!-- This empty div helps to position the button to the right -->
+                <button class="btn btn-small btn-outline-primary ml-auto" (click)="export()">
+                  <i class="fa-light fa-file-csv"></i> Export as CSv
+                </button>
+              </div>
+              <div class="table-section tagscroll" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+                <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th width="18%">Agent Name</th>
+                        <th width="10%">Total Emails</th>
+                        <th>First Response Time (FRT)</th>
+                        <th>Average Resolution Time (ART)</th>
+                        <th>Service Level Agreements (SLA)</th>
+                        <th>Total Handle Time (THT)</th>
+                        <th>Average Handle Time (AHT)</th>
+                        <th>Total Login time</th>
+                        <th>Total break time</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of agentPerformancedata">
+                        <td>{{item?.agentName}}</td>
+                        <td>{{item?.completedCount}}</td>
+                        <td>{{item?.firstResponseTime}}</td>
+                        <td>{{item?.averageResolutionTime}}</td>
+                        <td>{{item?.serviceLevelAgrements}}</td>
+                        <td>{{item?.totalHandleTime}}</td>
+                        <td>{{item?.averageHandleTime}}</td>
+                        <td>
+                          <span *ngIf="item?.activeTime != null">{{item?.activeTime}}</span>
+                          <span *ngIf="item?.activeTime == null">0</span>
+                        </td>
+                        <td>
+                          <span *ngIf="item?.breakTime != null">{{item?.breakTime}}</span>
+                          <span *ngIf="item?.breakTime == null">0</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

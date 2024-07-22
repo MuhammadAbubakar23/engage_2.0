@@ -42,6 +42,10 @@ const routes: Routes = [
     loadChildren: () => import('./analytics/analytics.module').then(f => f.AnalyticsModule),
     data: { preload: true }
   },
+  {
+    path:'telephone',
+    loadChildren : () => import('./telephone-admin-panel/telephone-admin-panel.module').then(f=>f.TelephoneAdminPanelModule)
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -118,7 +118,23 @@ const routes: Routes = [
     {
       path:'interaction-report',
       loadComponent:()=>import('./components/interaction-report/interaction-report.component').then(c=>c.InteractionReportComponent)
-    }
+    },
+    {
+      path:'wallborad',
+      loadComponent:()=>import('./components/wallboard-dashboard/wallboard-dashboard.component').then(c=>c.WallboardDashboardComponent),
+    },
+    {
+      path:'agent-scorecard',
+      loadComponent:()=>import('./components/agent-scorecard-dashboard/agent-scorecard-dashboard.component').then(c=>c.AgentScorecardDashboardComponent)
+    },
+    {
+      path:'email-report',
+      loadComponent:()=>import('./components/emial-report/emial-report.component').then(c=>c.EmialReportComponent)
+    },
+  {
+      path:'live-interaction-report',
+      loadComponent:()=>import('./components/live-interaction-report/live-interaction-report.component').then(c=>c.LiveInteractionReportComponent)
+    },
   ]
   }
 ];

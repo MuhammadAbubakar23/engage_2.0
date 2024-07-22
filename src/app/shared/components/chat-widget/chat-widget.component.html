@@ -78,6 +78,26 @@
                         </div>
                       </div>
                     </div>
+                     <div *ngIf="typing" class="messagewrap e-left">
+                    <div class="messagebody">
+                      <div class="caption">
+                        <div class="name">
+                          <div class="e_chat-icon">
+                            <img src="../../../../assets/images/ebot.svg" />
+                          </div>
+                          enteract.bot
+                        </div>
+                        <div class="time">{{ currentTimestamp | date : "shortTime" }}</div>
+                      </div>
+                      <div class="messagebubble">
+                        <div class="typing">
+                          <div class="dot"></div>
+                          <div class="dot"></div>
+                          <div class="dot"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   </ng-container>
                 </section>
                 <footer>

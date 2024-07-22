@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { TeamsService } from '../../../services/teams.service';
 import { HttpErrorResponse, HttpEvent } from '@angular/common/http';
+import { HeaderService } from 'src/app/services/HeaderService/header.service';
 @Component({
   selector: 'app-add-policy',
   templateUrl: './add-policy.component.html',
@@ -23,8 +24,7 @@ export class AddPolicyComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private commonService: CommonDataService,
-    private route: ActivatedRoute,
-    private teamService: TeamsService,
+    private headerService: HeaderService,
     private _route: ActivatedRoute
   ){
     this.messageForm = this.formBuilder.group({
@@ -227,5 +227,6 @@ export class AddPolicyComponent implements OnInit {
 
   cancelForm() {
     this.router.navigate(['/console/sla-policies']);
+    this.headerService.updateMessage('sla-policies')
   }
 }

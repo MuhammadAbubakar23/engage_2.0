@@ -7,6 +7,7 @@ import { CommonDataService } from '../../../../../shared/services/common/common-
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EntityTypeBuilder } from 'src/app/shared/Models/EntityTypeDto';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { HeaderService } from 'src/app/services/HeaderService/header.service';
 @Component({
   selector: 'app-add-rules',
   standalone: true,
@@ -41,9 +42,8 @@ export class AddRulesComponent implements OnInit {
   constructor(private _fb: FormBuilder,
     private router: Router,
     private _cs: CommonDataService,
-    private ngZone: NgZone,
-    private _route: ActivatedRoute,
-    private spinnerServerice: NgxSpinnerService) {
+    private spinnerServerice: NgxSpinnerService,
+    private headerService: HeaderService) {
     this.queryCtrl = this._fb.control(this.query);
     this.queryCtrl.valueChanges.subscribe((ruleSet: any) => {
       this.count = ruleSet.rules.length
@@ -581,6 +581,7 @@ export class AddRulesComponent implements OnInit {
   }
   cancelbtn() {
     this.router.navigate(['console/rules']);
+    this.headerService.updateMessage('rules');
   }
   reload(value: any) {
     if (value) {

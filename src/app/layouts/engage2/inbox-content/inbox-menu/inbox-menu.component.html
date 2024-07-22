@@ -1,6 +1,7 @@
-<div class="multiple-screens" *ngIf="hasFocusedPermission">
+<!-- <div class="multiple-screens" *ngIf="hasFocusedPermission"> -->
+<div class="multiple-screens">
   <div id="all-inboxes-wrapper">
-    <div class="sidebar-header border-bottom ps-4 pe-3 pt-3 pb-3" > 
+    <div class="sidebar-header border-bottom ps-4 pe-3 pt-3 pb-3">
       <h6 class="fw-bold m-0">All Inboxes <span class="badge twltte-bg rounded-pill"
           *ngIf="UnResponded > 0">{{UnResponded}}</span></h6>
     </div>
@@ -18,8 +19,9 @@
           <span class="badge twltte-bg rounded-pill" *ngIf="UnResponded > 0">{{UnResponded}}</span>
         </a>
         <a class="all-inboxes-menu list-group-item list-group-item-action" *ngFor="let channel of allSkills"
-          (click)="updateWing(channel.skilSlug)"  [class.active]="activeChannel == channel.skilSlug" [routerLink]="['/all-inboxes/'+flag+'/'+channel.skilSlug]">
-          <div [ngClass]="channel.color" [innerHTML]="channel.icon">
+          (click)="updateWing(channel.skilSlug)" [class.active]="activeChannel == channel.skilSlug"
+          [routerLink]="['/all-inboxes/'+flag+'/'+channel.skilSlug]">
+          <div [ngClass]="channel.color" [innerHTML]="channel.icon ">
           </div>
           <div class="ms-2 me-auto">
             <div class="black-text">{{channel.skillName}}</div>
