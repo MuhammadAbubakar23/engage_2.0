@@ -25,7 +25,7 @@ export class BotMonitoringContentComponent implements OnInit {
     })
   }
   loadComponent(val: string) {
-    debugger
+    
     if (this.dynamicComponent) {
       this.dynamicComponent.clear();
       if (val === 'generative') {

@@ -51,7 +51,7 @@ export class CreateTagsComponent implements OnInit {
     });
   }
   ngOnInit() {
-    debugger
+    
     this.companywing = sessionStorage.getItem('defaultWings');
     this.id = this.route.snapshot.paramMap.get('id')
     // 
@@ -75,7 +75,7 @@ export class CreateTagsComponent implements OnInit {
   addTag() {
     this.commonService.GetTagsByCompayId().subscribe(
       (response: any) => {
-        debugger
+        
         this.parentTags = response;
         this.parentTags.forEach((x: any) => {
           x.subTags?.forEach((xyz: any) => {
@@ -200,7 +200,7 @@ export class CreateTagsComponent implements OnInit {
       const updatedTemplate = {
         ...template,
       };
-      debugger
+      
       this.commonService.UpdateTag(updatedTemplate.id, updatedTemplate).subscribe(
         (response: any) => {
           this.router.navigate(['console/tags']);
@@ -210,7 +210,7 @@ export class CreateTagsComponent implements OnInit {
         }
       );
     } else {
-      debugger
+      
       this.commonService.AddTags(obj).subscribe((res: any) => {
         this.reload('addtag')
         this.router.navigate(['console/tags']);

@@ -55,7 +55,7 @@ export class ActorsComponent implements OnInit {
 
 
   getPermissions(actorId: number, slug: string) {
-    debugger
+    
     this.downloading=true
     sessionStorage.setItem('activeActorId', JSON.stringify(actorId));
     this.commonService.GetVoiceToken(slug).subscribe((tokenRes: any) => {
@@ -76,7 +76,7 @@ export class ActorsComponent implements OnInit {
 
           this.commonService.GetSkills(this.loginResponse?.skills)
             .subscribe((skillNames: any) => {
-              debugger
+              
               this.sendSkills.sendSkills(skillNames);
               this.stor.store('skills', skillNames);
 
@@ -150,7 +150,7 @@ export class ActorsComponent implements OnInit {
         "ActorId": actorId,
         "Inline": true
       }).subscribe((res: any) => {
-        debugger
+        
         console.log(res);
         sessionStorage.setItem('Permissions', JSON.stringify(res.priviledge));
         try {
@@ -160,7 +160,7 @@ export class ActorsComponent implements OnInit {
   
             this.commonService.GetSkills(this.loginResponse?.skills)
               .subscribe((skillNames: any) => {
-                debugger
+                
                 this.sendSkills.sendSkills(skillNames);
                 this.stor.store('skills', skillNames);
   
@@ -263,7 +263,7 @@ export class ActorsComponent implements OnInit {
   }
 
   logoutUser() {
-    debugger
+    
     this.commonService.SignOut().subscribe((res: any) => {
       sessionStorage.removeItem('token')
       sessionStorage.clear()

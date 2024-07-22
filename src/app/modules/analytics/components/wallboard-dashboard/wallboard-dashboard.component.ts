@@ -193,7 +193,7 @@ export class WallboardDashboardComponent implements OnInit {
           )
         })
         this.platFormWiseInteractionsCompeleted = this.workLoadResponse[0].platFormWiseInteractions
-        debugger
+        
         this.platFormWiseInteractionsFollowup = this.workLoadResponse[1].platFormWiseInteractions
         this.CompeletedqueryStatus = this.workLoadResponse[0]
         this.followupQueryStatus = this.workLoadResponse[1]
@@ -886,7 +886,7 @@ export class WallboardDashboardComponent implements OnInit {
   }
   heatmapGraph:any
   peakHoursGraph() {
-    debugger
+    
     var chartDom = document.getElementById('heatMap');
      this.heatmapGraph = echarts.init(chartDom);
     var option;
@@ -1136,7 +1136,7 @@ const currentDayName = currentDayIndex.toLocaleDateString('en-US', { weekday: 'l
        this.platFormWiseInteractionsFollowup?.forEach((z:any)=>{
         this.currentplatformwiseFollowupcount =z?.interactionCount
        })
-       debugger
+       
         this.perviousCompeletedPersentageCount = Number((((this.currentPlatformwiseCompletedCount - perviousCompletedCount) / perviousCompletedCount) * 100).toFixed(2));
         this.perviousFollowupWorkloadCount = Number((((this.currentplatformwiseFollowupcount - perviousFollowupwordload )/ perviousFollowupwordload) * 100).toFixed(2))
         this.convertedperviousResolutonTimeToMinutes(perviousAverageResolutionTime)
@@ -1178,7 +1178,7 @@ const currentDayName = currentDayIndex.toLocaleDateString('en-US', { weekday: 'l
     return this.perviousconvertedMaximumCaterTime
   }
   transformtValue(value: any) {
-    debugger
+    
     if (isNaN(value)) {
       return "∞";
     }
@@ -1237,11 +1237,11 @@ const currentDayName = currentDayIndex.toLocaleDateString('en-US', { weekday: 'l
           matchingEntry.count = x.count;
         }
       });
-      debugger
+      
       this.CsatCount =Number (this.castJson[0].count)
      this.persentageCsat = (this.CsatCount/this.castJson.length)*100
      this.persentageForExcellent =  (this.CsatCount/this.castJson.length)*100
-     debugger
+     
       this.persentageForveryGood =(Number( this.castJson[1].count)/this.castJson.length)*100
       this.persentageForGood =((Number( this.castJson[2].count)/this.castJson.length))*100
       this.persentageForpoor =((Number( this.castJson[3].count)/this.castJson.length))*100
@@ -1249,7 +1249,7 @@ const currentDayName = currentDayIndex.toLocaleDateString('en-US', { weekday: 'l
     });
   }
   getMothToDateSla(){
-    debugger
+    
     this.commanDataService.GetMonthToDateServiceLevel().subscribe((res:any)=>{
       this.monthtoDay=res
     })

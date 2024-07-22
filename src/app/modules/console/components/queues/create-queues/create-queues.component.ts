@@ -122,7 +122,7 @@ export class CreateQueuesComponent implements OnInit {
   }
   onSubmit(): void {
     if (this.userForm.valid) {
-      debugger
+      
       const template = history.state.template;
       if (this.skillTeamId > 0) {
         const updatedTemplate = {

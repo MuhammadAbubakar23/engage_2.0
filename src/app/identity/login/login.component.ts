@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(obj).subscribe(
       (res: any) => {
-        debugger
+        
         if (res.isTwoFAEnabled == false) {
           this.loginResponse = res.loginResponse.loginResponse;
 
@@ -116,7 +116,7 @@ export class LoginComponent implements OnInit {
                     this.loginResponse?.skills
                   );
                   sessionStorage.setItem('skills', this.loginResponse?.skills);
-                  debugger
+                  
                   this.commonService
                     .GetSkills(this.loginResponse?.skills)
                     .subscribe((skillNames: any) => {

@@ -39,7 +39,7 @@ export class BotMainMenuComponent implements OnInit {
     })
   }
   toggleCollapse(menu: any) {
-    debugger
+    
     if (menu['link'] === 'generative-bot-history') {
       //this.updatevalue('generative-bot-history');
       this._sharedS.setShowGenerativeMenu('generative');

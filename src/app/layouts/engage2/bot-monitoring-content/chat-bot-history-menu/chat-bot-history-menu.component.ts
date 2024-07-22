@@ -88,7 +88,7 @@ export class ChatBotHistoryMenuComponent implements OnInit {
 
   }
   toggleChatVisibility(clickedItem: any) {
-    debugger
+    
     clickedItem.active = !clickedItem.active;
     this.chatVisibilityService.notifyNewChatIdHistory(clickedItem);
   }
