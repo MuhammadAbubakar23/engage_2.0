@@ -89,6 +89,7 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
 
   cancelForm(): void {
     this.router.navigate(['/console/templates/quick-responses']);
+    this.headerService.updateMessage('templates/quick-responses');
   }
 
 
