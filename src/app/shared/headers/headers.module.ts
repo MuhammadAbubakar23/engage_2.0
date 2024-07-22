@@ -35,7 +35,7 @@ import { ConsoleCreateSignatureTemplatesHeaderComponent } from './console-create
 import { ConsoleConnectFormHeaderComponent } from './console-connect-from-header/console-connect-form-header/console-connect-form-header.component';
 // import { RightHeaderComponentsComponent } from './right-header-components/right-header-components.component';
 import { CompletedInteractionHeaderComponent } from './completed-interaction-header/completed-interaction-header.component';
-import { ConsoleCreateRuleHeaderComponent } from './console-create-rule-header/console-create-rule-header.component';
+import { ConsoleCreateRuleHeaderComponent } from '../../modules/console/console-headers/console-create-rule-header/console-create-rule-header.component';
 @NgModule({
   declarations: [
     ConsoleUsersHeaderComponent,

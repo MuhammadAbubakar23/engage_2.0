@@ -37,7 +37,7 @@ import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { InboxHeaderComponent } from '../../inbox-content/inbox-header/inbox-header.component';
 import { ConsoleQuickResponseHeaderComponent } from 'src/app/modules/console/console-headers/console-quick-response-header/console-quick-response-header.component';
 import { ConsoleCreateBusinessHoursHeaderComponent } from 'src/app/modules/console/console-headers/console-create-business-hours-header/console-create-business-hours-header.component';
-import { ConsoleCreateRuleHeaderComponent } from 'src/app/shared/headers/console-create-rule-header/console-create-rule-header.component';
+import { ConsoleCreateRuleHeaderComponent } from 'src/app/modules/console/console-headers/console-create-rule-header/console-create-rule-header.component';
 import { ConsoleCreateSkillsHeaderComponent } from 'src/app/modules/console/console-headers/console-create-skills-header/console-create-skills-header.component';
 import { ConsoleCreatePreferencesHeaderComponent } from 'src/app/modules/console/console-headers/console-create-preferences-header/console-create-preferences-header.component';
 import { BotChatComponent } from 'src/app/modules/bot-monitoring/components/bot-chat/bot-chat.component';
