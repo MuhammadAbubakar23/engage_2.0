@@ -640,17 +640,21 @@
                     aria-label="PlayStore"></i>
                 </td>
                 <td style="width: 300px;">
-                  <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
-                    <a
-                      (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId, query.skillSlug)">
-                      <span>{{query?.userName?.split('<')[0] || query.user}} 
+                  <div class="d-flex align-items-center">
+                    <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
+                      <a
+                        (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId, query.skillSlug)">
+                        <span>{{query?.userName?.split('<')[0] || query.user}} 
+                          &nbsp;
+                          <i *ngIf="query.isVerified == true" class="fa-solid fa-badge-check text-primary"></i>
+                        </span>
                         &nbsp;
-                        <i *ngIf="query.isVerified == true" class="fa-solid fa-badge-check text-primary"></i>
-                      </span>
-                      &nbsp;
-                          <span class="badge bg-danger rounded-pill"
-                            *ngIf="query.unrespondedCount > 0">{{query.unrespondedCount}}</span></a>
-                  </span>
+                           </a>
+                    </span>
+                    <span class="badge bg-danger rounded-pill ms-auto"
+                    *ngIf="query.unrespondedCount > 0">{{query.unrespondedCount}}</span>
+                  </div>
+                 
                 </td>
                 <td>
                   <div class="maintext"

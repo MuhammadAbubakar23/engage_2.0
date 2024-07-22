@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-create-business-hours',
@@ -30,7 +31,8 @@ export class CreateBusinessHoursComponent implements OnInit {
     private formBuilder: FormBuilder,
     private commonService: CommonDataService,
     private router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private headerService : HeaderService
   ) { }
   ngOnInit(): void {
     this.initializeForm();
@@ -205,5 +207,6 @@ export class CreateBusinessHoursComponent implements OnInit {
 
   cancelForm(): void {
     this.router.navigate(['/console/business-hours']);
+    this.headerService.updateMessage('business-hours')
   }
 }

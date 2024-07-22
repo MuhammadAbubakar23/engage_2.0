@@ -656,6 +656,33 @@ export class ChannelComponent implements OnInit {
           },
         ],
       },
+      {
+        platform: 'WhatsApp',
+        featureSet: [
+          {
+            queryType: 'comment',
+            contentType: 'WC',
+          },
+        ],
+      },
+      {
+        platform: 'PlayStore',
+        featureSet: [
+          {
+            queryType: 'dm',
+            contentType: 'PSR',
+          },
+        ],
+      },
+      {
+        platform: 'SMS',
+        featureSet: [
+          {
+            queryType: 'dm',
+            contentType: 'SMS',
+          },
+        ],
+      },
     ];
     const channelWithFeature = channelFeatures.find(
       (x) => x.platform === this.platform
@@ -743,7 +770,7 @@ export class ChannelComponent implements OnInit {
               this.userInformation = res.List[0].user;
               this.userInfoService.shareUserInformation(res.List[0].user);
               this.TotalCmntQueryCount = res.TotalQueryCount;
-              this.pageName = this.Comments[0]?.post.profile.clientAppName;
+              this.pageName = this.Comments[0]?.post?.profile?.clientAppName || this.Comments[0]?.comments[0]?.sendTo;
               sessionStorage.setItem(
                 'lastQueryId',
                 this.Comments[0].comments[0].id

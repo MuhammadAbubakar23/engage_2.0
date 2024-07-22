@@ -11,6 +11,8 @@ export class ChatWidgetComponent implements OnInit {
   messages: any[] = [];
   isOpen = false;
   slug = "";
+  typing = false;
+  currentTimestamp: Date = new Date();
   chatForm: FormGroup = new FormGroup({
     message: new FormControl('', [Validators.required])
   })
@@ -44,9 +46,11 @@ export class ChatWidgetComponent implements OnInit {
 
     this.messages.push({ message: this.chatForm.value['message'], type: 'user', timestamp: new Date() });
     this.chatForm.reset({ message: '' });
-
+    this.typing = true;
+    this.currentTimestamp = new Date();
     this._botService.ChatWdidget(body).subscribe(
       (res: any) => {
+        this.typing = false;
         this.messages.push({ message: res.bot, type: 'bot', timestamp: new Date() });
       },
       (error: any) => {

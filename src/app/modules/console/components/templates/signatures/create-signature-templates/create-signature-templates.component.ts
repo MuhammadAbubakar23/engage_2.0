@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-create-signature-templates',
   templateUrl: './create-signature-templates.component.html',
-  styleUrls: ['./create-signature-templates.component.scss']
+  styleUrls: ['./create-signature-templates.component.scss'],
 })
 export class CreateSignatureTemplatesComponent implements OnInit {
   messageForm!: FormGroup;
@@ -15,13 +16,21 @@ export class CreateSignatureTemplatesComponent implements OnInit {
   editorConfig = {
     // Add any desired configuration options here
   };
-  constructor(private formBuilder: FormBuilder , private commonService :CommonDataService , private router: Router) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private commonService: CommonDataService,
+    private router: Router,
+    private headerService: HeaderService
+  ) {}
   ngOnInit(): void {
     this.messageForm = this.formBuilder.group({
-      templateName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+      templateName: [
+        '',
+        [Validators.required, Validators.pattern('^[a-zA-Z ]+$')],
+      ],
       subject: ['', Validators.required],
       message: ['', Validators.required],
-      templateType:['']
+      templateType: [''],
     });
     const template = history.state.template; // Get the template value from the state
     if (template) {
@@ -33,7 +42,7 @@ export class CreateSignatureTemplatesComponent implements OnInit {
       this.messageForm.patchValue({
         templateName: this.templateName,
         subject: this.subject,
-        message: this.editorContent
+        message: this.editorContent,
       });
     } else {
       // Set initial values when no template is selected
@@ -45,7 +54,7 @@ export class CreateSignatureTemplatesComponent implements OnInit {
   saveForm() {
     if (this.messageForm.valid) {
       this.messageForm.patchValue({
-        templateType: "Signature"
+        templateType: 'Signature',
       });
       const template = history.state.template; // Get the template value from the state
       if (template) {
@@ -53,18 +62,20 @@ export class CreateSignatureTemplatesComponent implements OnInit {
           ...template,
           templateName: this.messageForm.value.templateName,
           subject: this.messageForm.value.subject,
-          message: this.messageForm.value.message
+          message: this.messageForm.value.message,
         };
-        this.commonService.UpdateTemplate(updatedTemplate.id, updatedTemplate).subscribe(
-          (response: any) => {
-            // Handle the successful response after updating the template
-            this.router.navigate(['/console/templates/signatures']);
-          },
-          (error: any) => {
-            // Handle the error if the update fails
-            console.error('Error updating template:', error);
-          }
-        );
+        this.commonService
+          .UpdateTemplate(updatedTemplate.id, updatedTemplate)
+          .subscribe(
+            (response: any) => {
+              // Handle the successful response after updating the template
+              this.router.navigate(['/console/templates/signatures']);
+            },
+            (error: any) => {
+              // Handle the error if the update fails
+              console.error('Error updating template:', error);
+            }
+          );
       } else {
         this.commonService.Addtemplate(this.messageForm.value).subscribe(
           (response: any) => {
@@ -81,7 +92,8 @@ export class CreateSignatureTemplatesComponent implements OnInit {
       // Handle form validation errors
     }
   }
-      cancelForm(): void {
-         this.router.navigate(['/console/templates/signatures']);
-      }
-    }
+  cancelForm(): void {
+    this.router.navigate(['/console/templates/signatures']);
+    this.headerService.updateMessage('templates/signatures');
+  }
+}
