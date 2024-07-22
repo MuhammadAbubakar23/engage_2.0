@@ -16,10 +16,11 @@ import { RolesAndPermissionsService } from '../../roles-and-permissions/roles-an
 import { UsersService } from '../users.service';
 import { NavigationBackDirective } from 'src/app/shared/services/navigation/navigation-back.directive';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PreventCopyPasteDirective } from 'src/app/shared/directives/PreventCopyPaste/prevent-copy-paste.directive';
 @Component({
   selector: 'create-user',
   standalone: true,
-  imports: [SharedModule, CommonModule, ReactiveFormsModule, MatChipsModule, MatIconModule, MatSelectModule],
+  imports: [SharedModule, CommonModule, ReactiveFormsModule, MatChipsModule, MatIconModule, MatSelectModule,PreventCopyPasteDirective],
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.scss'],
   providers: [NavigationBackDirective]
@@ -154,6 +155,14 @@ export class CreateUserComponent implements OnInit {
       });
       this.SkillsControl.setValue(skillForm);
     }
+
+    this.userForm.get('confirmpassword')?.valueChanges.subscribe(() => {
+      this.checkPasswords();
+    });
+
+    this.userForm.get('password')?.valueChanges.subscribe(() => {
+      this.checkPasswords();
+    });
   }
   // async getRoles():Promise<void>{
   //   await this.roles.getMyRoles().subscribe({
@@ -257,6 +266,7 @@ export class CreateUserComponent implements OnInit {
   ManageSkillsSwitch() {
     this.isActive = !this.isActive;
   }
+
   cancelForm() {
     this.router.navigate(['/console/users']);
   }
@@ -286,6 +296,27 @@ export class CreateUserComponent implements OnInit {
   closeToaster(){
     this.toastermessage=false
   }
+
+
+  checkPasswords() {
+    const password = this.userForm.get('password')?.value;
+    const confirmPassword = this.userForm.get('confirmpassword')?.value;
+
+    if (password !== confirmPassword) {
+      this.userForm.get('confirmpassword')?.setErrors({ mismatch: true });
+    } else {
+      this.userForm.get('confirmpassword')?.setErrors(null);
+    }
+  }
+
+  get password() {
+    return this.userForm.get('password');
+  }
+
+  get confirmPassword() {
+    return this.userForm.get('confirmpassword');
+  }
+
   // SupportChannelsControl = new UntypedFormControl(null, Validators.required);
   // SupportChannels: string[] = ['Corporate Teams','Sales Teams', 'Add channels'];
   // LanguagesControl = new UntypedFormControl(null, Validators.required);

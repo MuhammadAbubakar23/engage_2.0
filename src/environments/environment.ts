@@ -231,6 +231,7 @@ export const environment = {
       deleteMessages: 'Template/Delete',
       deleteBotConfig: 'ProfilePagesBotConfig/Delete',
       getQuickReply: 'QuickReply/GetAll',
+      getActiveQuickReply: 'QuickReply/GetAllActiveQuickReplies',
       addQuickReply: 'QuickReply/Add',
       updateQuickReply: 'QuickReply/Update',
       deleteQuickReply: 'QuickReply/Delete',

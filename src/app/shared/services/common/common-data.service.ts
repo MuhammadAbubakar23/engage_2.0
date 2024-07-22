@@ -158,6 +158,7 @@ export class CommonDataService {
   deleteMessages = environment.links.console.deleteMessages;
   deleteBotConfig = environment.links.console.deleteBotConfig;
   getQuickReply = environment.links.console.getQuickReply;
+  getActiveQuickReply = environment.links.console.getActiveQuickReply;
   addQuickReply = environment.links.console.addQuickReply;
   updateQuickReply = environment.links.console.updateQuickReply;
   deleteQuickReply = environment.links.console.deleteQuickReply;
@@ -630,6 +631,9 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
   GetQuickReply(body: any) {
     return this.http.post(this.ConsoleBaseUrl + this.getQuickReply, body);
   }
+  GetActiveQuickReply(body: any) {
+    return this.http.post(this.ConsoleBaseUrl + this.getActiveQuickReply, body);
+  }
   AddQuickReply(add: any) {
     return this.http.post(this.ConsoleBaseUrl + this.addQuickReply, add);
   }
@@ -637,9 +641,11 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
     const url = `${this.ConsoleBaseUrl}${this.updateQuickReply}?Id=${quickId}`;
     return this.http.post(url, quick);
   }
-  DeleteQuickReply(deleteId: string): Observable<any> {
-    const url = `${this.ConsoleBaseUrl}${this.deleteQuickReply}?Id=${deleteId}`;
-    return this.http.get(url);
+  DeleteQuickReply(delResponse: any): Observable<any> {
+    const url = `${this.ConsoleBaseUrl}${this.deleteQuickReply}`;
+    return this.http.post(url, delResponse);
+    // const url = `${this.ConsoleBaseUrl}${this.deleteQuickReply}?Id=${deleteId}`;
+    // return this.http.get(url);
   }
   GetSlaPolicy(body: any) {
     return this.http.post(this.ConsoleBaseUrl + this.getSlaPolicy, body);

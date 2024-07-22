@@ -123,7 +123,7 @@
                             <input type="password"
                               [ngClass]="{'is-invalid' : (f['password']!.errors && (f['password']!.touched || f['password']!.dirty))}"
                               class="form-control" id="password" formControlName="password"
-                              placeholder="Enter password">
+                              placeholder="Enter password" appPreventCopyPaste>
                             <label for="password">Password</label>
                             <div class="invalid-feedback"
                               *ngIf="(f['password']!.errors && (f['password']!.touched || f['password']!.dirty))">
@@ -145,10 +145,9 @@
                             class="form-floating mb-2">
                             <input type="password" [ngClass]="{'is-invalid' : (f['confirmpassword']!.errors && (f['confirmpassword']!.touched ||
                               f['confirmpassword']!.dirty))}" class="form-control" id="confirmpassword"
-                              formControlName="confirmpassword" placeholder="Enter Confirm Password">
+                              formControlName="confirmpassword" placeholder="Enter Confirm Password" appPreventCopyPaste>
                             <label for="confirmpassword">Confirm Password</label>
-                            <div class="invalid-feedback" *ngIf="(f['confirmpassword']!.errors && (f['confirmpassword']!.touched ||
-                                                                                    f['confirmpassword']!.dirty))">
+                            <div class="invalid-feedback" *ngIf="(f['confirmpassword']!.errors && (f['confirmpassword']!.touched || f['confirmpassword']!.dirty))">
                               <div
                                 *ngIf="f['confirmpassword']!.errors?.['maxlength'] || f['confirmpassword']!.errors?.['minlength']">
                                 Confirm Password must be grater than 8 character and less than 15 characters!
@@ -164,9 +163,9 @@
                               *ngIf="f['confirmpassword']!.valid && f['confirmpassword']!.touched">
                               Looks Good!
                             </div> -->
-                            <div *ngIf="f['confirmpassword']!.errors?.['mismatch']">
+                            <!-- <div *ngIf="f['confirmpassword']!.errors?.['mismatch']">
                               Passwords don't match.
-                            </div>
+                            </div> -->
                           </div>
                         </div>
                         <!-- <div class="floating-item mb-4">
@@ -335,7 +334,7 @@
               </div>
               <div class="col-md-8 justify-content-end d-flex">
                 <div class="buttons-wrap d-flex">
-                  <button navigationBack class="btn btn-outline-secondary btn-medium me-2 px-4">Cancel </button>
+                  <button (click)="cancelForm()" class="btn btn-outline-secondary btn-medium me-2 px-4">Cancel </button>
                   <!-- <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"  data-bs-toggle="modal"
                     data-bs-target=""></button> -->
                   <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn">{{btnText}}</button>

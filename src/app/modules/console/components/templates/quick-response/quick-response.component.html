@@ -70,20 +70,32 @@
                             </th>
                             <td>
                                 <div class="icons-list d-flex justify-content-end dropstart">
-                                    <button class="btn iconButton medium iconHover" (click)="editTemplate(template)">
+                                    <!-- <button class="btn iconButton medium iconHover" (click)="editTemplate(template)">
                                         <i class="fal fa-edit"></i>
-                                    </button>
+                                    </button> -->
                                     <button class="btn iconButton medium iconHover btn-group" type="button"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="far fa-ellipsis-v dropdown-toggle"></i>
                                     </button>
                                     <ul class="dropdown-menu fade">
-                                        <li>
+                                        <!-- <li>
                                             <a class="dropdown-item" (click)="editTemplate(template)">Edit</a>
+                                        </li> -->
+                                        <li>
+                                            <a class="dropdown-item" (click)="deleteTemplate(template,true)">Delete</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" (click)="deleteTemplate(template)">Delete</a>
-                                        </li>
+                                            <a 
+                                              class="dropdown-item"
+                                              (click)="deleteTemplate(template, false)"
+                                              *ngIf="template.isActive"
+                                              >Disable</a>
+                                            <a 
+                                            class="dropdown-item"
+                                            (click)="deleteTemplate(template, false)"
+                                            *ngIf="!template.isActive"
+                                            >Enable</a>
+                                          </li>
                                         <!-- <li>
                                             <a class="dropdown-item" (click)="disableTemplate(template)">Disable</a>
                                         </li>

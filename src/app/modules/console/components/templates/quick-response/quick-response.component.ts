@@ -111,15 +111,23 @@ export class QuickResponseComponent implements OnInit {
     }
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
-  deleteTemplate(template: any) {
+
+  delobj = {"id": 0,"isActive": true,"isBlock": true};
+  deleteTemplate(template: any,isDelete:any) {
+    debugger
     // Confirm deletion with user if needed
-    const confirmation = confirm('Are you sure you want to delete this template?');
+    const confirmation = confirm(isDelete == true ? 'Are you sure you want to delete this template?' : 'Are you sure you want to change the status?');
+
     if (confirmation) {
-      this.commonService.DeleteQuickReply(template.id).subscribe(
+      this.delobj.id = template.id;
+      this.delobj.isActive = !template.isActive;
+      this.delobj.isBlock = isDelete;
+      this.commonService.DeleteQuickReply(this.delobj).subscribe(
         () => {
+          this.refreshMessages();
           // Success callback
           // Remove the deleted template from the messages array
-          this.messages = this.messages.filter((msg: { id: any; }) => msg.id !== template.id);
+          //this.messages = this.messages.filter((msg: { id: any; }) => msg.id !== template.id);
         },
         (error: any) => {
           // Error callback
@@ -127,6 +135,18 @@ export class QuickResponseComponent implements OnInit {
       );
     }
   }
+  // deleteTemplate(message: any,isDelete:any) {
+  //   this.delobj.id = message.mainId;
+  //   this.delobj.isActive = !message.isActive;
+  //   this.delobj.isBlock = isDelete;
+  //   this.spinnerServerice.show();
+  //   this.commonService.DeleteTags(this.delobj).subscribe((res: any) => {
+  //     this.spinnerServerice.hide();
+  //     this.getTags()
+  //   })
+  // }
+
+
   disableTemplate(template: any) {
     // Logic for disabling the template
     template.disabled = true;
