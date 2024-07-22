@@ -51,6 +51,10 @@ import { ConsoleBotConfigurationHeaderComponent } from 'src/app/modules/console/
 import { CreateBotConfigurationComponent } from 'src/app/modules/console/components/bot-configuration/create-bot-configuration/create-bot-configuration.component';
 import { ConsoleCreateBotConfigurationHeaderComponent } from 'src/app/modules/console/console-headers/console-create-bot-configuration-header/console-create-bot-configuration-header.component';
 import { ConsoleCreateRuleHeaderComponent } from 'src/app/modules/console/console-headers/console-create-rule-header/console-create-rule-header.component';
+import { ConsoleCreateQuickResponseHeaderComponent } from 'src/app/modules/console/console-headers/console-create-quick-response-header/console-create-quick-response-header.component';
+import { ConsoleQueuesHeaderComponent } from 'src/app/modules/console/console-headers/console-queues-header/console-queues-header.component';
+import { ConsoleAccessReportHeaderComponent } from 'src/app/modules/console/console-headers/console-access-report-header/console-access-report-header.component';
+import { ConsoleCreateQueuesHeaderComponent } from 'src/app/modules/console/console-headers/console-create-queues-header/console-create-queues-header.component';
 
 @Component({
   selector: 'console-header',
@@ -76,7 +80,6 @@ export class ConsoleHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscription = this.headerService.getMessage().subscribe((msg) => {
-      debugger;
       this.componentName = msg;
       this.target.clear();
       this.loadComponent(this.componentName);
@@ -241,7 +244,7 @@ export class ConsoleHeaderComponent implements OnInit {
         );
         this.target.createComponent(componentFactory);
         break;
-      case 'auto-responder':
+      case 'templates/auto-responder':
         componentFactory = this.resolver.resolveComponentFactory(
           ConsoleAutoResponderHeaderComponent
         );
@@ -339,9 +342,33 @@ export class ConsoleHeaderComponent implements OnInit {
         );
         this.target.createComponent(componentFactory);
         break;
+      case 'consoleCreateQuickResponseTemplatesHeader':
+        componentFactory = this.resolver.resolveComponentFactory(
+          ConsoleCreateQuickResponseHeaderComponent
+        );
+        this.target.createComponent(componentFactory);
+        break;
       case 'consoleConnectFormHeader':
         componentFactory = this.resolver.resolveComponentFactory(
           ConsoleConnectFormHeaderComponent
+        );
+        this.target.createComponent(componentFactory);
+        break;
+        case 'queues':
+        componentFactory = this.resolver.resolveComponentFactory(
+          ConsoleQueuesHeaderComponent
+        );
+        this.target.createComponent(componentFactory);
+        break;
+        case 'access-report':
+        componentFactory = this.resolver.resolveComponentFactory(
+          ConsoleAccessReportHeaderComponent
+        );
+        this.target.createComponent(componentFactory);
+        break;
+        case 'createQueues':
+        componentFactory = this.resolver.resolveComponentFactory(
+          ConsoleCreateQueuesHeaderComponent
         );
         this.target.createComponent(componentFactory);
         break;

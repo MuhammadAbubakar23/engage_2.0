@@ -41,6 +41,9 @@ import { ConsoleAutoResponderHeaderComponent } from './console-auto-responder-he
 import { CreateConsoleAutoResponderHeaderComponent } from './create-console-auto-responder-header/create-console-auto-responder-header.component';
 import { ConsoleBotConfigurationHeaderComponent } from './console-bot-configuration-header/console-bot-configuration-header.component';
 import { ConsoleCreateBotConfigurationHeaderComponent } from './console-create-bot-configuration-header/console-create-bot-configuration-header.component';
+import { ConsoleQueuesHeaderComponent } from './console-queues-header/console-queues-header.component';
+import { ConsoleCreateQueuesHeaderComponent } from './console-create-queues-header/console-create-queues-header.component';
+import { ConsoleAccessReportHeaderComponent } from './console-access-report-header/console-access-report-header.component';
 
 
 
@@ -85,7 +88,10 @@ import { ConsoleCreateBotConfigurationHeaderComponent } from './console-create-b
           ConsoleAutoResponderHeaderComponent,
           CreateConsoleAutoResponderHeaderComponent,
           ConsoleBotConfigurationHeaderComponent,
-          ConsoleCreateBotConfigurationHeaderComponent
+          ConsoleCreateBotConfigurationHeaderComponent,
+          ConsoleQueuesHeaderComponent,
+          ConsoleCreateQueuesHeaderComponent,
+          ConsoleAccessReportHeaderComponent
       //    RightHeaderComponentsComponent
   ],
   imports: [

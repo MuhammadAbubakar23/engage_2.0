@@ -7,7 +7,11 @@ import {
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
-  Validators, FormControl, FormControlName, FormBuilder, FormGroup,
+  Validators,
+  FormControl,
+  FormControlName,
+  FormBuilder,
+  FormGroup,
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
@@ -22,13 +26,21 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HeaderService } from 'src/app/services/HeaderService/header.service';
 
 @Component({
   standalone: true,
   selector: 'app-create-queues',
   templateUrl: './create-queues.component.html',
   styleUrls: ['./create-queues.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatChipsModule, MatIconModule, MatSelectModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatChipsModule,
+    MatIconModule,
+    MatSelectModule,
+  ],
 })
 export class CreateQueuesComponent implements OnInit {
   channelsList: any[] = [];
@@ -39,26 +51,27 @@ export class CreateQueuesComponent implements OnInit {
   userForm!: FormGroup;
   skillTeamId: any;
 
-  constructor(private formbuilder: FormBuilder, private router: Router,
-    private ExchangeData: DataExchangeServicesService,
-    private changeDetecte: ChangeDetectorRef,
+  constructor(
+    private formbuilder: FormBuilder,
+    private router: Router,
     private commondata: CommonDataService,
-    private activeRoute: ActivatedRoute)
-    {
-      this.initializeForm();
-    }
-
-   ngOnInit() {
-     this.skillTeamId = this.activeRoute.snapshot.paramMap.get('id');
-     this.getGroups();
-     this.getChannels();
-     this.getCompanyTeams();
-     if (this.skillTeamId > 0) {
-       this.getSkillTeamById(this.skillTeamId);
-     } 
+    private activeRoute: ActivatedRoute,
+    private headerService: HeaderService
+  ) {
+    this.initializeForm();
   }
 
- getSkillTeamById(id: string) {
+  ngOnInit() {
+    this.skillTeamId = this.activeRoute.snapshot.paramMap.get('id');
+    this.getGroups();
+    this.getChannels();
+    this.getCompanyTeams();
+    if (this.skillTeamId > 0) {
+      this.getSkillTeamById(this.skillTeamId);
+    }
+  }
+
+  getSkillTeamById(id: string) {
     this.commondata.GetSkillTeamById(id).subscribe(
       (skillTeam: any) => {
         this.skillTeamId = skillTeam.id;
@@ -66,37 +79,36 @@ export class CreateQueuesComponent implements OnInit {
           teamSlug: skillTeam.teamSlug,
           groupSlug: skillTeam.groupSlug,
           tagId: skillTeam.tagId,
-          status: skillTeam.status
+          status: skillTeam.status,
         });
       },
-      (error: any) => {
-      }
+      (error: any) => {}
     );
   }
-  
+
   initializeForm(): void {
     this.userForm = this.formbuilder.group({
       teamSlug: ['', Validators.required],
       groupSlug: ['', Validators.required],
       tagId: ['', Validators.required],
-      status: true
+      status: true,
     });
   }
 
-   getCompanyTeams(){
-     this.commondata.GetCompanyTeams().subscribe({
+  getCompanyTeams() {
+    this.commondata.GetCompanyTeams().subscribe({
       next: (res: any) => {
         this.initialTeams = res;
-        this.initialTeams = this.initialTeams.filter(a=>a.typeId > 10);
-        this.teamsList = this.initialTeams.length > 0? this.initialTeams : res;
+        this.initialTeams = this.initialTeams.filter((a) => a.typeId > 10);
+        this.teamsList = this.initialTeams.length > 0 ? this.initialTeams : res;
       },
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;
         // this.showError = true;
-      }
+      },
     });
   }
-  getChannels(){
+  getChannels() {
     this.supreamId = 11;
     this.commondata.GetTagBySupreamId(this.supreamId).subscribe({
       next: (res: any) => {
@@ -105,10 +117,10 @@ export class CreateQueuesComponent implements OnInit {
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;
         // this.showError = true;
-      }
+      },
     });
   }
-  getGroups(){
+  getGroups() {
     this.supreamId = 14;
     this.commondata.GetTagBySupreamId(this.supreamId).subscribe({
       next: (res: any) => {
@@ -117,12 +129,11 @@ export class CreateQueuesComponent implements OnInit {
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;
         // this.showError = true;
-      }
+      },
     });
   }
   onSubmit(): void {
     if (this.userForm.valid) {
-      
       const template = history.state.template;
       if (this.skillTeamId > 0) {
         const updatedTemplate = {
@@ -131,18 +142,16 @@ export class CreateQueuesComponent implements OnInit {
           teamSlug: this.userForm.value.teamSlug,
           groupSlug: this.userForm.value.groupSlug,
           tagId: this.userForm.value.tagId,
-          status: true
+          status: true,
         };
-        this.commondata
-          .UpdateTagTeams(updatedTemplate)
-          .subscribe(
-            (response: any) => {
-              this.router.navigate(['/console/queues']);
-            },
-            (error: any) => {
-              console.error('Error updating template:', error);
-            }
-          );
+        this.commondata.UpdateTagTeams(updatedTemplate).subscribe(
+          (response: any) => {
+            this.router.navigate(['/console/queues']);
+          },
+          (error: any) => {
+            console.error('Error updating template:', error);
+          }
+        );
       } else {
         this.commondata.AddTagTeams(this.userForm.value).subscribe(
           (response: any) => {
@@ -158,6 +167,7 @@ export class CreateQueuesComponent implements OnInit {
     }
   }
   routerLink() {
-    this.router.navigateByUrl('/console/queues')
+    this.router.navigateByUrl('/console/queues');
+    this.headerService.updateMessage('queues')
   }
 }

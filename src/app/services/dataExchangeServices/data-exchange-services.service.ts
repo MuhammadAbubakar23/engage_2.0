@@ -23,11 +23,9 @@ export class DataExchangeServicesService {
   }
 
   public sendAdminPenalEndPoint(adminPenalEndPoint: any): void {
-    debugger;
     return this.adminpenalEndPoint.next(adminPenalEndPoint);
   }
   public receivedAdminPenalEndPoint() {
-    debugger;
     return this.adminpenalEndPoint.asObservable();
   }
 }

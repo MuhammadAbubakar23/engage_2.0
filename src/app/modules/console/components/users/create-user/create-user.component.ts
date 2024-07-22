@@ -1,7 +1,14 @@
 import { CommonModule, Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  ReactiveFormsModule,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
@@ -17,20 +24,29 @@ import { UsersService } from '../users.service';
 import { NavigationBackDirective } from 'src/app/shared/services/navigation/navigation-back.directive';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PreventCopyPasteDirective } from 'src/app/shared/directives/PreventCopyPaste/prevent-copy-paste.directive';
+import { HeaderService } from 'src/app/services/HeaderService/header.service';
 @Component({
   selector: 'create-user',
   standalone: true,
-  imports: [SharedModule, CommonModule, ReactiveFormsModule, MatChipsModule, MatIconModule, MatSelectModule,PreventCopyPasteDirective],
+  imports: [
+    SharedModule,
+    CommonModule,
+    ReactiveFormsModule,
+    MatChipsModule,
+    MatIconModule,
+    MatSelectModule,
+    PreventCopyPasteDirective,
+  ],
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.scss'],
-  providers: [NavigationBackDirective]
+  providers: [NavigationBackDirective],
 })
 export class CreateUserComponent implements OnInit {
   //identity:string | null | undefined = "0";
-  toastermessage:boolean=false
-  AlterMsg:any
+  toastermessage: boolean = false;
+  AlterMsg: any;
   identity: number = 0;
-  btnText: string = "Save";
+  btnText: string = 'Save';
   userForm: UntypedFormGroup = new UntypedFormGroup({
     id: new UntypedFormControl(),
     firstname: new UntypedFormControl(),
@@ -57,78 +73,89 @@ export class CreateUserComponent implements OnInit {
   Roles: Array<any> = [];
   Teams: Array<any> = [];
   Skills: Array<any> = [];
-  TeamIds: string[] = []
+  TeamIds: string[] = [];
   RoleIds: string[] = [];
   SkillIds: string[] = [];
   // Skills: string[] = ['English', 'Urdu'];
-  constructor(private formbuilder: UntypedFormBuilder
-    , private _request: RequestService
-    , private _Activatedroute: ActivatedRoute
-    , private location: Location
-    , private storsrv: StorageService
-    , private uservc: UsersService
-    , private roles: RolesAndPermissionsService
-    , private router: Router
-    , private teams: TeamsService) { }
+  constructor(
+    private formbuilder: UntypedFormBuilder,
+    private _request: RequestService,
+    private _Activatedroute: ActivatedRoute,
+    private location: Location,
+    private uservc: UsersService,
+    private router: Router,
+    private headerService: HeaderService
+  ) {}
   get f(): { [key: string]: AbstractControl } {
     return this.userForm.controls;
   }
   ngOnInit(): void {
-    this.Roles = this._Activatedroute.snapshot.data["roles"];
-    this.Teams = this._Activatedroute.snapshot.data["teams"].Teams;
-    this.Skills = this._Activatedroute.snapshot.data["skills"];
-    this._Activatedroute.paramMap.subscribe(paramMap => {
+    this.Roles = this._Activatedroute.snapshot.data['roles'];
+    this.Teams = this._Activatedroute.snapshot.data['teams'].Teams;
+    this.Skills = this._Activatedroute.snapshot.data['skills'];
+    this._Activatedroute.paramMap.subscribe((paramMap) => {
       this.identity = Number(paramMap.get('id'));
     });
     // ;
-    if (this.identity > 0) {//.pipe(takeUntil(this.unsubscribe))
-      this._request.getBy<userDto>("GetUserById", this.identity.toString()).subscribe(
-        (next: userDto) => {//...next:T[]
-          this.setform(next);
-        },
-        (error: any) => console.log(error)
-      );
-      this.btnText = "Update"
+    if (this.identity > 0) {
+      //.pipe(takeUntil(this.unsubscribe))
+      this._request
+        .getBy<userDto>('GetUserById', this.identity.toString())
+        .subscribe(
+          (next: userDto) => {
+            //...next:T[]
+            this.setform(next);
+          },
+          (error: any) => console.log(error)
+        );
+      this.btnText = 'Update';
     } else {
       //userDto fullName:"Ali Ahmad", userName:null,
       let form = {
         id: 0,
-        email: "",
-        firstName: "",
-        lastName: "",
-        password: "",
-        confirmPassword: "",
-        phone: "",
+        email: '',
+        firstName: '',
+        lastName: '',
+        password: '',
+        confirmPassword: '',
+        phone: '',
         roleId: [],
         teamId: [],
         skillId: [],
         //  teams:"",
         //  userId:[],//null0000void//null0000void
-      }
+      };
       this.setform(form);
     }
     // let vr = this.storsrv.retrive("main","o").local;
     // this.Roles = vr.roles;
   }
   async setform(formVal: any): Promise<void> {
-    this.userForm = this.formbuilder.group({
-      id: [formVal.id],
-      firstname: [formVal.firstName, Validators.required],
-      lastname: [formVal.lastName, Validators.required],
-      phone: [formVal.phone, Validators.required],
-      email: [formVal.email, Validators.required],
-      password: [formVal.password, [Validators.required,Validators.minLength(8)]],
-      confirmpassword: [formVal.confirmPassword, [Validators.required,Validators.minLength(8)]],
-      roleId: ['', Validators.required],
-      teamId: [],
-      skillId: [0, Validators.required],
-      // timezone: ['', [Validators.required]],
-      // supportchannel: ['', [Validators.required]],
-    }
-      ,
+    this.userForm = this.formbuilder.group(
       {
-        validators: [Validation.match('password', 'confirmPassword')]
-      });
+        id: [formVal.id],
+        firstname: [formVal.firstName, Validators.required],
+        lastname: [formVal.lastName, Validators.required],
+        phone: [formVal.phone, Validators.required],
+        email: [formVal.email, Validators.required],
+        password: [
+          formVal.password,
+          [Validators.required, Validators.minLength(8)],
+        ],
+        confirmpassword: [
+          formVal.confirmPassword,
+          [Validators.required, Validators.minLength(8)],
+        ],
+        roleId: ['', Validators.required],
+        teamId: [],
+        skillId: [0, Validators.required],
+        // timezone: ['', [Validators.required]],
+        // supportchannel: ['', [Validators.required]],
+      },
+      {
+        validators: [Validation.match('password', 'confirmPassword')],
+      }
+    );
     // await this.getRoles();
     // await this.getTeams();
     let roleForm: any = [];
@@ -191,8 +218,8 @@ export class CreateUserComponent implements OnInit {
     this.userForm.reset();
     this.userForm.controls['roleId'].reset();
     this.userForm.reset({
-      teamId:[]
-    })
+      teamId: [],
+    });
     this.userForm.controls['skillId'].reset();
   }
   onSubmit(): void {
@@ -214,21 +241,21 @@ export class CreateUserComponent implements OnInit {
     // for (let i in this.RolesControl.value) {
     //   this.RoleIds.push(this.RolesControl.value[i].id);
     // }
-    this.RoleIds=[]
+    this.RoleIds = [];
     for (let i in this.RolesControl.value) {
-      if(!this.RoleIds.includes(this.RolesControl.value[i]?.id.toString())){
+      if (!this.RoleIds.includes(this.RolesControl.value[i]?.id.toString())) {
         this.RoleIds.push(this.RolesControl?.value[i]?.id.toString());
       }
     }
-  this.TeamIds=[]
+    this.TeamIds = [];
     for (let i in this.TeamsControl.value) {
-      if(!this.TeamIds.includes(this.TeamsControl?.value[i]?.id.toString())){
+      if (!this.TeamIds.includes(this.TeamsControl?.value[i]?.id.toString())) {
         this.TeamIds.push(this.TeamsControl?.value[i]?.id?.toString());
       }
     }
-    this.SkillIds=[]
+    this.SkillIds = [];
     for (let i in this.SkillsControl.value) {
-      if(!this.SkillIds.includes(this.SkillsControl.value[i]?.skillID)){
+      if (!this.SkillIds.includes(this.SkillsControl.value[i]?.skillID)) {
         this.SkillIds.push(this.SkillsControl.value[i]?.skillID);
       }
     }
@@ -237,14 +264,18 @@ export class CreateUserComponent implements OnInit {
     this.userForm.controls['skillId'].setValue(this.SkillIds);
     // return ;
     //breturn;
-    let controllerRoute = "AddUser";
+    let controllerRoute = 'AddUser';
     if (this.userForm.value.id > 0) {
-      controllerRoute = "UpdateUser";
+      controllerRoute = 'UpdateUser';
     }
-    if (controllerRoute != "UpdateUser" && this.userForm.invalid) {
+    if (controllerRoute != 'UpdateUser' && this.userForm.invalid) {
       return;
     }
-    if (controllerRoute == "AddUser" && this.userForm?.controls["password"].value !== this.userForm?.controls["confirmpassword"].value) {
+    if (
+      controllerRoute == 'AddUser' &&
+      this.userForm?.controls['password'].value !==
+        this.userForm?.controls['confirmpassword'].value
+    ) {
       return;
     }
     this.uservc.save(controllerRoute, this.userForm.value).subscribe({
@@ -255,7 +286,7 @@ export class CreateUserComponent implements OnInit {
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;
         // this.showError = true;
-      }
+      },
     });
   }
   isShow = false;
@@ -269,6 +300,7 @@ export class CreateUserComponent implements OnInit {
 
   cancelForm() {
     this.router.navigate(['/console/users']);
+    this.headerService.updateMessage('users');
   }
   onCatRemovedTeam(cat: string) {
     const Teams = this.TeamsControl.value as string[];
@@ -291,12 +323,10 @@ export class CreateUserComponent implements OnInit {
       array.splice(index, 1);
     }
   }
-  reloadComponent(){
+  reloadComponent() {}
+  closeToaster() {
+    this.toastermessage = false;
   }
-  closeToaster(){
-    this.toastermessage=false
-  }
-
 
   checkPasswords() {
     const password = this.userForm.get('password')?.value;
