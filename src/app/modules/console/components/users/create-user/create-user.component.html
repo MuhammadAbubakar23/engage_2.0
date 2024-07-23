@@ -73,14 +73,13 @@
                         </div>
                         <div class="floating-item mb-4">
                           <div [ngClass]="{'was-validated' : f['phone']!.valid && f['phone']!.touched}"
-                            class="form-floating mb-2 ">
+                            class="form-floating mb-2">
                             <input [ngClass]="{'is-invalid' : (f['phone']!.errors && (f['phone']!.touched ||
-                        f['phone']!.dirty))}" class="form-floating mb-2" class="form-control" id="phone"
+                              f['phone']!.dirty))}" class="form-floating mb-2" class="form-control" id="phone"
                               formControlName="phone" placeholder="enter phone">
                             <label for="phone">Phone</label>
-                            <div class="invalid-feedback" *ngIf="(f['phone']!.errors && (f['phone']!.touched ||
-                                                                f['phone']!.dirty))">
-                              <div *ngIf="f['phone']!.errors?.['maxlength'] || f['phone']!.errors?.['minlength']">
+                            <div class="invalid-feedback" *ngIf="(f['phone']!.errors && (f['phone']!.touched || f['phone']!.dirty))">
+                              <div *ngIf="f['phone']!.errors?.['minlength'] || f['phone']!.errors?.['maxlength']">
                                 Enter number between 11-14 numbers
                               </div>
                               <div *ngIf="f['phone']!.errors?.['required']">
@@ -334,7 +333,7 @@
               </div>
               <div class="col-md-8 justify-content-end d-flex">
                 <div class="buttons-wrap d-flex">
-                  <button (click)="cancelForm()" class="btn btn-outline-secondary btn-medium me-2 px-4">Cancel </button>
+                  <button type="button" (click)="cancelForm()" class="btn btn-outline-secondary btn-medium me-2 px-4">Cancel </button>
                   <!-- <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"  data-bs-toggle="modal"
                     data-bs-target=""></button> -->
                   <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn">{{btnText}}</button>
