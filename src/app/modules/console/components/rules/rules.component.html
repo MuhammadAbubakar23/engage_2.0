@@ -70,7 +70,7 @@
                                     </div> -->
                                     <div class="me-2">
                                         <select class="form-select" id="channelSelect" [(ngModel)]="selectedChannelSlug"
-                                            (change)="onChannelChange($event)">
+                                            (change)="onChannelChange($event)" [value]='2'>
                                             <option value="" selected>Select Platform</option>
                                             <option *ngFor="let channel of channels" [value]="channel.id">{{
                                                 channel.name }}</option>

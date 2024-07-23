@@ -29,7 +29,7 @@
                                     </div>
                                     <div class="col-md-7 d-flex align-items-center justify-content-end">
                                         <div class="me-2">
-                                            <select class="form-select" id="channelSelect"
+                                            <select class="form-select" id="channelSelect"  [(ngModel)]="selectedChannelSlug"
                                                 (change)="onChannelChange($event)">
                                                 <option value="" selected>Select Platform</option>
                                                 <option *ngFor="let channel of channels" [value]="channel.id">{{

@@ -34,6 +34,7 @@ export class RulesComponent implements OnInit {
      private spinnerServerice: NgxSpinnerService,private _perS:PermissionService) { }
 
   ngOnInit(): void {
+   
     this.hasCreatePermission = this.hasPermission('_nwrul_');
     this.hasupdatePermission = this.hasPermission('_uprul_');
     this.hasDeletePermission = this.hasPermission('_rmvrul_');
@@ -183,7 +184,7 @@ hasPermission(permissionName: string) {
         (response: RuleWithCount) => {
           this.spinnerServerice.hide();
           this.channelRules.push({
-            platform: "G-Suit",
+            platform: "Exchange-Email",
             rulesWihtCount: response
           });
           this.totalCount = response.TotalCount;
@@ -391,18 +392,25 @@ hasPermission(permissionName: string) {
   }
 
   loadServices(): void {
+    debugger
     this.commonService.GetPlatorm().subscribe(
       (response: any) => {
         this.channels = Object.keys(response).map(key => ({
           id: parseInt(key),
           name: response[key],
-          slug: response[key].toLowerCase() // Ensure slug is in lowercase
+          slug: response[key].toLowerCase()
+           // Ensure slug is in lowercase
         }));
+        const defaultChannel = this.channels.find(channel => channel.name === 'Facebook');
+        if (defaultChannel) {
+          this.selectedChannelSlug = defaultChannel.id;
+        }
       },
       (error: any) => {
         console.error('Error fetching services:', error);
       }
     );
+
   }
 
   setSortOption(option: string) {
