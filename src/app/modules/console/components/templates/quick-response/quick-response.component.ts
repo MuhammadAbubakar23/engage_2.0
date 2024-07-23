@@ -114,7 +114,7 @@ export class QuickResponseComponent implements OnInit {
 
   delobj = {"id": 0,"isActive": true,"isBlock": true};
   deleteTemplate(template: any,isDelete:any) {
-    debugger
+    
     // Confirm deletion with user if needed
     const confirmation = confirm(isDelete == true ? 'Are you sure you want to delete this template?' : 'Are you sure you want to change the status?');
 

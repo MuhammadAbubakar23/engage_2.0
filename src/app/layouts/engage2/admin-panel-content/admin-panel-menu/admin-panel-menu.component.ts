@@ -25,7 +25,7 @@ downloading:boolean=false
   }
 getAdminpenalMenus(){
 this.spinner.show()
-debugger
+
  this.commanS.getAdminPenalMenus().subscribe((res:any)=>{
    this.adminPenalMenus=res
    this.spinner.hide()
@@ -33,7 +33,7 @@ debugger
 // this.adminPenalMenus=this.baseUrl+this.endPoint+this.token
   }
   sendEndPoint(url:any){
-   debugger
+   
    if(url =='#' || url ==''){
 
    }

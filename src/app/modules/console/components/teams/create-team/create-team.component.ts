@@ -120,6 +120,7 @@ export class CreateTeamComponent implements OnInit {
   }
   cancelForm() {
     this.router.navigate(['/console/teams']);
+    this.headerService.updateMessage('teams');
   }
   reloadComponent(value: any) {
     if (value == 'error') {

@@ -39,7 +39,7 @@ export class CreateBusinessHoursComponent implements OnInit {
     this.businessId = this._route.snapshot.paramMap.get('id')
     // this.patchFormValues(this.businessId)
     // const template = history.state.template;
-    debugger
+    
     if (this.businessId) {
       this.patchFormValues(this.businessId);
     } else {
@@ -72,7 +72,7 @@ export class CreateBusinessHoursComponent implements OnInit {
     });
   }
   patchFormValues(template: any): void {
-    debugger
+    
     this.commonService.GetBusinessById(template).subscribe(
       (res: any) => {
         this.messageForm.patchValue({

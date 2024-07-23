@@ -72,7 +72,7 @@ export class QueuesComponent implements OnInit {
     if (confirmation) {
       this.commonService.DeleteTagTeam(template.skillTeamId).subscribe(
         () => {
-          debugger
+          
           window.location.reload()
           this.skills = this.skills.filter((msg) => msg.skillTeamId !== template.skillTeamId);
         },

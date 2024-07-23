@@ -13,7 +13,7 @@ export class AdminPanelContentComponent implements OnInit {
   ngOnInit(): void {
   }
   toggleRightPanel() {
- debugger
+ 
     this.showPanel = !this.showPanel;
    }
    toggleSubLeftBar(){

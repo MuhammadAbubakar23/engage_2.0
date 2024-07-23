@@ -2,23 +2,37 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CKEditorModule } from 'ckeditor4-angular';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { entries } from 'lodash';
 import { number } from 'echarts';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { HeaderService } from 'src/app/services/HeaderService/header.service';
 @Component({
   selector: 'app-create-auto-responder',
   templateUrl: './create-auto-responder.component.html',
   styleUrls: ['./create-auto-responder.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, CKEditorModule, FormsModule, ReactiveFormsModule,NgxSpinnerModule]
+  imports: [
+    CommonModule,
+    RouterModule,
+    CKEditorModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxSpinnerModule,
+  ],
 })
 export class CreateAutoResponderComponent implements OnInit {
   assingClients: any;
   selectedFruits: any;
   switchId = 'flexSwitchCheckChecked';
-  newtempletvaiablesArray: any[] = []
+  newtempletvaiablesArray: any[] = [];
   messageForm!: FormGroup;
   name!: string;
   subject!: string;
@@ -28,41 +42,42 @@ export class CreateAutoResponderComponent implements OnInit {
   editorConfig = {};
   entities: any[] = [];
   currentTags: any[] = [];
-  templateVariables: string = "";
-  AlterMsg: string = ''
+  templateVariables: string = '';
+  AlterMsg: string = '';
   errormessage: any;
-  isEmailChannel: boolean = false; 
-  toastermessage: boolean = false
+  isEmailChannel: boolean = false;
+  toastermessage: boolean = false;
   constructor(
-    private formBuilder: FormBuilder
-    , private commonService: CommonDataService
-    , private router: Router,
-    private spinnerServerice: NgxSpinnerService) {
-  }
+    private formBuilder: FormBuilder,
+    private commonService: CommonDataService,
+    private router: Router,
+    private spinnerServerice: NgxSpinnerService,
+    private headerService: HeaderService
+  ) {}
   selectedChannel: any;
   ngOnInit() {
     this.messageForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
       description: ['', Validators.required],
-      template_Message: ['',  Validators.required],
-      entityName: ['',],
+      template_Message: ['', Validators.required],
+      entityName: [''],
       ruleTag: ['', Validators.required],
-      variables: ['',],
-      status: [true,],
-      contentType: ['',],
+      variables: [''],
+      status: [true],
+      contentType: [''],
     });
     this.loadPlatform();
-    this.getAutoResponderTag()
+    this.getAutoResponderTag();
   }
   loadPlatform() {
     this.commonService.GetServicetree().subscribe((res: any) => {
-      this.channels = res
+      this.channels = res;
     });
   }
   getAutoResponderTag() {
     this.commonService.GetRuleTag(13).subscribe(
       (response: any) => {
-        this.currentTags = response
+        this.currentTags = response;
       },
       (error: any) => {
         console.error('Error fetching rule tags:', error);
@@ -73,62 +88,72 @@ export class CreateAutoResponderComponent implements OnInit {
     this.editorContent += templateVariable.entityName;
   }
   updateFormVariables() {
-    const variables = this.newtempletvaiablesArray.map(variable => variable.entityName).join(', ');
+    const variables = this.newtempletvaiablesArray
+      .map((variable) => variable.entityName)
+      .join(', ');
     this.messageForm.get('variables')?.setValue(variables);
   }
   onChangeChannel(event: any) {
     this.entities = [];
     this.newtempletvaiablesArray = [];
     this.selectedChannel = event.target.value;
-    const selectedChannel = this.channels.find(channel => channel.name === this.selectedChannel);
+    const selectedChannel = this.channels.find(
+      (channel) => channel.name === this.selectedChannel
+    );
     if (selectedChannel) {
       this.content = selectedChannel.subService;
       this.entities = [];
-      this.isEmailChannel = this.selectedChannel === 'Exchange-email' || this.selectedChannel === 'G-suite';
+      this.isEmailChannel =
+        this.selectedChannel === 'Exchange-email' ||
+        this.selectedChannel === 'G-suite';
     }
   }
   getEntites(event: any) {
-    this.entities = []
-    this.newtempletvaiablesArray = []
-    const contentType = event.target.value
+    this.entities = [];
+    this.newtempletvaiablesArray = [];
+    const contentType = event.target.value;
     this.content.forEach((table: any) => {
       if (contentType == table.prefix) {
-        this.entities.push(table.name)
+        this.entities.push(table.name);
       }
-    })
+    });
   }
   getTableProperites(event: any) {
-    const tableproperties = event.target.value
+    const tableproperties = event.target.value;
     this.content.forEach((loadproperties: any) => {
       if (tableproperties == loadproperties.name) {
-        const template = loadproperties.subService
+        const template = loadproperties.subService;
         template.forEach((x: any) => {
           this.newtempletvaiablesArray.push({
             id: x.id,
-            entityName: `{${x.name}}`
+            entityName: `{${x.name}}`,
           });
-        })
+        });
       }
-    })
+    });
     this.updateFormVariables();
   }
   channelServiceMapping: any = {
-    'Facebook': this.commonService.AddFbResponed.bind(this.commonService),
-    'Instagram': this.commonService.AddInstaResponed.bind(this.commonService),
-    'Whatsapp': this.commonService.AddWsResponed.bind(this.commonService),
-    'YouTube': this.commonService.AddYtResponed.bind(this.commonService),
-    'Playstore': this.commonService.AddPsResponed.bind(this.commonService),
-    'LinkedIn': this.commonService.AddLinkDinResponed.bind(this.commonService),
+    Facebook: this.commonService.AddFbResponed.bind(this.commonService),
+    Instagram: this.commonService.AddInstaResponed.bind(this.commonService),
+    Whatsapp: this.commonService.AddWsResponed.bind(this.commonService),
+    YouTube: this.commonService.AddYtResponed.bind(this.commonService),
+    Playstore: this.commonService.AddPsResponed.bind(this.commonService),
+    LinkedIn: this.commonService.AddLinkDinResponed.bind(this.commonService),
     'G-suite': this.commonService.AddGsuitResponed.bind(this.commonService),
-    'Meta-Whatsapp': this.commonService.AddMetWaResponed.bind(this.commonService),
-    'Exchange-email': this.commonService.AddExchangeEmailtResponed.bind(this.commonService),
+    'Meta-Whatsapp': this.commonService.AddMetWaResponed.bind(
+      this.commonService
+    ),
+    'Exchange-email': this.commonService.AddExchangeEmailtResponed.bind(
+      this.commonService
+    ),
   };
   saveForm() {
     if (this.messageForm.valid) {
       const obj = {
         id: 0,
         companyId: 0,
-        uniqueId: "",
+        uniqueId: '',
         name: this.messageForm.value.name,
         description: this.messageForm.value.description,
         template_Message: this.messageForm.value.template_Message,
@@ -136,25 +161,26 @@ export class CreateAutoResponderComponent implements OnInit {
         ruleTag: this.messageForm.value.ruleTag,
         variables: this.messageForm.value.variables,
         status: this.messageForm.value.status,
-        contentType: this.messageForm.value.contentType
+        contentType: this.messageForm.value.contentType,
       };
-      this.spinnerServerice.show()
+      this.spinnerServerice.show();
       // 2
       const serviceMethod = this.channelServiceMapping[this.selectedChannel];
       if (serviceMethod) {
         serviceMethod(obj).subscribe(
           (response: any) => {
-            this.spinnerServerice.hide()
+            this.spinnerServerice.hide();
             this.router.navigate(['/console/templates/auto-responder']);
 
-            this.reload(response.message)
+            this.reload(response.message);
           },
           (error: any) => {
-            console.error(`Error creating template for ${this.selectedChannel}:`, error);
-            this.spinnerServerice.hide()
-            this.reload(error.error.message)
-
-
+            console.error(
+              `Error creating template for ${this.selectedChannel}:`,
+              error
+            );
+            this.spinnerServerice.hide();
+            this.reload(error.error.message);
           }
         );
       }
@@ -164,15 +190,14 @@ export class CreateAutoResponderComponent implements OnInit {
   }
   cancelForm() {
     this.router.navigate(['/console/templates/auto-responder']);
- 
+    this.headerService.updateMessage('templates/auto-responder')
   }
   reload(value: any) {
-   
-    if (value ) {
-      this.AlterMsg = value
-      this.toastermessage = true
+    if (value) {
+      this.AlterMsg = value;
+      this.toastermessage = true;
       setTimeout(() => {
-        this.toastermessage = false
+        this.toastermessage = false;
       }, 2000);
     }
   }
