@@ -54,10 +54,10 @@ export class TeamsComponent implements OnInit {
     this.headerService.updateMessage(string);
   }
   applySearchFilter() {
-    if (this.searchText.trim() !== '') {
+    if(this.searchText.length> 2){
       this.getTeamList();
-    } else {
-      this.searchText = '';
+    }
+    if(this.searchText.length == 0){
       this.getTeamList();
     }
   }
