@@ -131,7 +131,21 @@ export class CreateUserComponent implements OnInit {
     // this.Roles = vr.roles;
   }
   async setform(formVal: any): Promise<void> {
-    this.userForm = this.formbuilder.group(
+    this.userForm = this.formbuilder.group({
+      id: [formVal.id],
+      firstname: [formVal.firstName, Validators.required],
+      lastname: [formVal.lastName, Validators.required],
+      phone: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(14)]],
+      email: [formVal.email, Validators.required],
+      password: [formVal.password, [Validators.required,Validators.minLength(8)]],
+      confirmpassword: [formVal.confirmPassword, [Validators.required,Validators.minLength(8)]],
+      roleId: ['', Validators.required],
+      teamId: [],
+      skillId: [0, Validators.required],
+      // timezone: ['', [Validators.required]],
+      // supportchannel: ['', [Validators.required]],
+    }
+      ,
       {
         id: [formVal.id],
         firstname: [formVal.firstName, Validators.required],
