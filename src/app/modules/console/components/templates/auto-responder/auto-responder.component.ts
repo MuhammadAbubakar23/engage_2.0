@@ -46,12 +46,11 @@ export class AutoResponderComponent implements OnInit {
     this.headerService.updateMessage(string);
   }
   applySearchFilter() {
-    if (this.searchText.trim() !== '') {
-      this.refreshtableData()
+    if(this.searchText.length> 2){
+      this.refreshtableData();
     }
-    else {
-      this.searchText = '';
-      this.refreshtableData()
+    if(this.searchText.length == 0){
+      this.refreshtableData();
     }
   }
   onChannelChange(event: any) {

@@ -51,11 +51,10 @@ hasPermission(permissionName: string) {
     this.headerService.updateMessage(string);
   }
   applySearchFilter() {
-    if (this.searchText.trim() !== '') {
+    if(this.searchText.length> 2){
       this.refreshtableData()
     }
-    else {
-      this.searchText = '';
+    if(this.searchText.length == 0){
       this.refreshtableData()
     }
   }

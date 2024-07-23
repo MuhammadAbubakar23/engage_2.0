@@ -49,14 +49,12 @@ export class BotConfigurationComponent implements OnInit {
   channelId: any = 2;
   // baseUrl: any = 'https://newpurpleshop86.conveyor.cloud/api/';
   applySearchFilter() {
-    if (this.searchText.trim() !== '') {
-      this.refreshBots();
-    } else {
-
-      this.searchText = '';
+    if(this.searchText.length> 2){
       this.refreshBots();
     }
-
+    if(this.searchText.length == 0){
+      this.refreshBots();
+    }
   }
 
 

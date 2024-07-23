@@ -42,7 +42,7 @@ export class TagsComponent implements OnInit {
   delobj = {"id": 0,"isActive": true,"isBlock": true};
 
   applySearchFilter(): void {
-    if (this.searchText.length >= 2) {
+    if (this.searchText.length > 2) {
       this.getTags()
     }
     if (this.searchText.length == 0) {

@@ -19,10 +19,10 @@ export class QuickResponseComponent implements OnInit {
   currentPage: number = 1;
   totalCount: any;
   applySearchFilter() {
-    if (this.searchText.trim() !== '') {
+    if(this.searchText.length> 2){
       this.refreshMessages();
-    } else {
-      this.searchText = '';
+    }
+    if(this.searchText.length == 0){
       this.refreshMessages();
     }
   }
