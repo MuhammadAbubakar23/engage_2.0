@@ -165,6 +165,9 @@ export class InstagramReportComponent implements OnInit {
       this.getPageReachGraph()
       this.getAudienceGraph()
       this.gettopfiveCutomer()
+    },
+    (error)=>{
+      this.spinerServices.hide();
     })
   }
   gettopfiveCutomer() {

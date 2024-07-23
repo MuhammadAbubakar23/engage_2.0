@@ -23,6 +23,7 @@ export class AutoResponderComponent implements OnInit {
   channelRules: any
   AlterMsg: string = ''
   errormessage: any;
+  selectedChannelSlug:any
   toastermessage: boolean = false
   channelServiceMapping: { [key: string]: (data: any) => any } = {
     '3': (data: any) => this.commonData.getAllAutoRespondInsta(data),
@@ -68,6 +69,10 @@ export class AutoResponderComponent implements OnInit {
           id: parseInt(key),
           name: response[key]
         }));
+        const defaultChannel = this.channels.find(channel => channel.name === 'Facebook');
+        if (defaultChannel) {
+          this.selectedChannelSlug = defaultChannel.id;
+        }
       },
       (error: any) => {
         console.error('Error fetching services:', error);

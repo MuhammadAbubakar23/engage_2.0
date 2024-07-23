@@ -397,16 +397,16 @@ export class ChannelComponent implements OnInit {
   teamPermissions: any;
   messagesStatus: any[] = [];
   Sentiments: any[] = [];
-  hasReplyEmojiPermission: boolean=false;
-  hasReplySentPermission: boolean=false;
-  hasReplyAttachmentPermission: boolean=false;
-  hasReplyCsatPermission: boolean=false;
-  hasQueryStatusPermission: boolean=false;
-  hasReplyQuickPermission: boolean=false;
-  hasQuickReplyPermission: boolean=false;
-  hasQuickLikesPermission: boolean=false;
-  hasQuerySentimentsPermission: boolean=false;
-  hasQueryTicketssPermission: boolean=false;
+  hasReplyEmojiPermission: boolean = false;
+  hasReplySentPermission: boolean = false;
+  hasReplyAttachmentPermission: boolean = false;
+  hasReplyCsatPermission: boolean = false;
+  hasQueryStatusPermission: boolean = false;
+  hasReplyQuickPermission: boolean = false;
+  hasQuickReplyPermission: boolean = false;
+  hasQuickLikesPermission: boolean = false;
+  hasQuerySentimentsPermission: boolean = false;
+  hasQueryTicketssPermission: boolean = false;
 
   fetchedPostType: string = '';
   public Subscription!: Subscription;
@@ -434,12 +434,12 @@ export class ChannelComponent implements OnInit {
     private fetchPostType: FetchPostTypeService,
     private getWing: GetWingsService,
     private getSkillSlug: SkillslugService,
-    private _perS:PermissionService,
+    private _perS: PermissionService,
     private getConnectionId: ConnectionIdService
   ) {}
   hasPermission(permissionName: string) {
-    const isAccessible = this._perS.hasPermission(permissionName)
-    return isAccessible
+    const isAccessible = this._perS.hasPermission(permissionName);
+    return isAccessible;
   }
   ngOnInit(): void {
     this.hasReplyEmojiPermission = this.hasPermission('_repemo_');
@@ -452,10 +452,6 @@ export class ChannelComponent implements OnInit {
     this.hasQuickLikesPermission = this.hasPermission('_qrylik_');
     this.hasQuerySentimentsPermission = this.hasPermission('_qrysnt_');
     this.hasQueryTicketssPermission = this.hasPermission('_qrysnt_');
-
-
-
-
 
     this.platform = this.fetchId.platform;
     this.flag = this.router.url.split('/')[2];
@@ -479,8 +475,7 @@ export class ChannelComponent implements OnInit {
       this.activeClient = 'localhost';
     } else if (this.baseUrl == 'http://localhost:4200') {
       this.activeClient = 'localhost';
-    }
-    else if (this.baseUrl == 'https://engageui.enteract.live') {
+    } else if (this.baseUrl == 'https://engageui.enteract.live') {
       this.activeClient = 'damo';
     }
     // this.ImageName=[ {name: 'gif', lastModified: 1713945235285, lastModifiedDate:" Wed Apr 24 2024 12:53:55 GMT+0500 (Pakistan Standard Time)", webkitRelativePath: '', size: 1202167, }];
@@ -533,9 +528,15 @@ export class ChannelComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
-        this.updatedComments = res;
-        this.Newpost = res;
-        this.updateCommentsDataListener();
+        if (
+          this.flag == 'focused' ||
+          this.flag == 'assigned_to_me' ||
+          this.flag == 'follow_up'
+        ) {
+          this.updatedComments = res;
+          this.Newpost = res;
+          this.updateCommentsDataListener();
+        }
       });
     this.Subscription = this.updateMessagesService
       .receiveMessage()
@@ -593,7 +594,7 @@ export class ChannelComponent implements OnInit {
   skillIdArray: number[] = [];
   async fetchData() {
     // this.spinner1running = true;
-    //   this.SpinnerService.show();
+    // this.SpinnerService.show();
     const channelFeatures = [
       {
         platform: 'Facebook',
@@ -770,7 +771,9 @@ export class ChannelComponent implements OnInit {
               this.userInformation = res.List[0].user;
               this.userInfoService.shareUserInformation(res.List[0].user);
               this.TotalCmntQueryCount = res.TotalQueryCount;
-              this.pageName = this.Comments[0]?.post?.profile?.clientAppName || this.Comments[0]?.comments[0]?.sendTo;
+              this.pageName =
+                this.Comments[0]?.post?.profile?.clientAppName ||
+                this.Comments[0]?.comments[0]?.sendTo;
               sessionStorage.setItem(
                 'lastQueryId',
                 this.Comments[0].comments[0].id
@@ -886,7 +889,9 @@ export class ChannelComponent implements OnInit {
                     } else {
                       this.Newpost.forEach((x: any) => {
                         this.newPostComment.push(x);
-                        x.groupedComments = this.groupCommentsByDate(x.comments);
+                        x.groupedComments = this.groupCommentsByDate(
+                          x.comments
+                        );
                       });
                     }
                   });

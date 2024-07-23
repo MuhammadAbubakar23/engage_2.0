@@ -32,137 +32,27 @@ export const environment = {
   KelisteningBaseUrl: 'https://listen.enteract.live/backend/api/',
   KemediaBaseUrl: 'https://kemedia.360scrm.com/api/',
   KescrmBaseUrl: 'https://kescrm.360scrm.com/',
-  // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
-
-  // For KE
-  // IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
-  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
-  // ServiceBaseUrl: '',
-  // consoleBaseUrl: 'https://console.enteract.live/api/',
-  // ReportsBaseUrl: 'https://kereports.enteract.live/api/',
-  // LinkedInBaseUrl: 'https://linkdservice.enteract.live/api/',
-  // keReportsBaseUrl: 'https://kereports.enteract.live/api/',
-  // LinkedInBaseUrl: 'https://linkdservice.enteract.live/api/',
-  // botBaseUrl:'',
-
-  // For Jazz
-  // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
-  // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
-  // SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
-  // ServiceBaseUrl: '',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  // LinkedInBaseUrl:'',
-
-  // For Total Parco
-  // IdentityBaseUrl: 'https://tt_identity.enteract.live/api/',
-  // CommonBaseUrl: 'https://ttcommon.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://ttcommon.enteract.live/',
-  // consoleBaseUrl: '',
-  // ServiceBaseUrl: '',
-  //  ProfileBaseUrl: '',
-  //  botBaseUrl:'',
-
-  // For Morinaga
-  // IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
-  // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
-  // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
-  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  // ProfileBaseUrl: '',
-  // botBaseUrl: '',
-  // LinkedInBaseUrl:'',
-
-  // For PK tach damo company Id 649
-  // IdentityBaseUrl: 'https://enidentitybackend.enteract.live/api/',
-  // CommonBaseUrl: 'https://encommonbackend.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://encommonbackend.enteract.live/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  // ServiceBaseUrl: '',
-  // consoleBaseUrl: 'https://enconsolebackend.enteract.live/api/',
-  // ReportsBaseUrl:'https://enreportsbackend.enteract.live/api/',
-  // LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
-  // BotBaseUrl:'',
 
   IdentityBaseUrl: 'https://enidentitybackend.enteract.live/api/',
   CommonBaseUrl: '',
   SignalRCommonBaseUrl: '',
   ProfileBaseUrl: '',
   ServiceBaseUrl: '',
-  //ConsoleBaseUrl: 'http://10.111.11.57:45457/api/',
-  ConsoleBaseUrl: "https://enconsolebackend.enteract.live/api/",
+  ConsoleBaseUrl: '',
   LinkedInBaseUrl: '',
   BotBaseUrl: '',
   ReportsBaseUrl: '',
   KeReportsBaseUrl: '',
 
-  // For Bazaar
-  // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
-  // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
-  // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
-  //consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
-  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  // LinkedInBaseUrl:'',
-
-  // For Jazz Rox
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  // LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
-
-  //for statging / Internal :companyId 650
-  // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
-  // CommonBaseUrl: 'https://comrox.enteract.app/api/',
-  // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  // consoleBaseUrl: 'https://conrox.enteract.app/api/',
-
-  // // // for rule
-  // // company Id 100 for chatBot
-  // faceRoxBaseUrl: 'https://facerox.enteract.app/api/',
-  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  // LinkedInBaseUrl: '',
-  // ReportsBaseUrl: '',
-
-  // botMoniteringBaseUrl: 'http://3.1.47.150:5000/',
-  // flowBot: 'https://flowbot.enteract.app/',
-  // intentBot: 'https://intentBot.enteract.app/',
-  // autoresponderbaseurl: 'https://d387-203-135-1-210.ngrok-free.app/api/',
-  // profileBaseUrl: 'https://lastgoldbox49.conveyor.cloud/api/',
-  // testing uiengage company id 657
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  
   botBaseUrl: 'https://bot-engage.enteract.app/api/',
   chatBotBaseUrl: 'https://entertainerbot.enteract.app',
   botsBaseUrl: 'http://3.1.47.150:5000/bots/',
   botConfigBaseUrl: 'https://linked.360scrm.com/api/',
-  // botConfigBaseUrl: 'https://newpurpleshop86.conveyor.cloud/api/',
 
-  //for statging / Internal :companyId 650
-  // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
-  // CommonBaseUrl: 'https://comrox.enteract.app/api/',
-  // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  // consoleBaseUrl: 'https://conrox.enteract.app/api/',
   // // for rule
   faceRoxBaseUrl: 'https://smallreddart56.conveyor.cloud/api/',
-  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+
   botMoniteringBaseUrl: 'https://flowbot.enteract.app/',
   flowBot: 'https://flowbot.enteract.app/',
   intentBot: 'https://intentbot.enteract.app/',
@@ -177,9 +67,6 @@ export const environment = {
   metaWhatsapp: 'https://mbwhats.360scrm.com/api/',
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
-  // for testing purpose
-  // consoleBaseUrl: 'http://10.111.11.93:45455/api/',
-  // consoleBaseUrl: '',
   links: {
     identity: {
       login: 'Authentication/Login',
