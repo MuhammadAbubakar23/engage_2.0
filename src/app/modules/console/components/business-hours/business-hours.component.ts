@@ -26,12 +26,11 @@ export class BusinessHoursComponent implements OnInit {
   hasupdatePermission: boolean=false;
   hasDeletePermission: boolean=false;
   applySearchFilter() {
-    if (this.searchText.trim() !== '') {
-      this.refreshMessages()
+    if(this.searchText.length> 2){
+      this.refreshMessages();
     }
-    else {
-      this.searchText = '';
-      this.refreshMessages()
+    if(this.searchText.length == 0){
+      this.refreshMessages();
     }
   }
   refreshMessages() {

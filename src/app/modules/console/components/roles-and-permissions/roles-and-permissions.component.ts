@@ -23,12 +23,23 @@ export class RolesAndPermissionsComponent implements OnInit {
   hasupdatePermission: boolean=false;
   hasDeletePermission: boolean=false;
   applySearchFilter() {
-    const searchTextLower = this.searchText.toLowerCase();
-    this.Roles = this._Activatedroute.snapshot.data["roles"].filter((role: { name: any }) => {
-      const roleNameLower = (role.name || '').toLowerCase();
-      return roleNameLower.includes(searchTextLower);
-    });
-    this.sortRoles(); // Reapply sorting after filtering the roles
+    if(this.searchText.length> 2){
+      const searchTextLower = this.searchText.toLowerCase();
+      this.Roles = this._Activatedroute.snapshot.data["roles"].filter((role: { name: any }) => {
+        const roleNameLower = (role.name || '').toLowerCase();
+        return roleNameLower.includes(searchTextLower);
+      });
+      this.sortRoles(); // Reapply sorting after filtering the roles
+    }
+    if(this.searchText.length == 0){
+      const searchTextLower = this.searchText.toLowerCase();
+      this.Roles = this._Activatedroute.snapshot.data["roles"].filter((role: { name: any }) => {
+        const roleNameLower = (role.name || '').toLowerCase();
+        return roleNameLower.includes(searchTextLower);
+      });
+      this.sortRoles(); // Reapply sorting after filtering the roles
+    }
+
   }
   messages: any[] = [];
   //Teams: Array<any> = [];
