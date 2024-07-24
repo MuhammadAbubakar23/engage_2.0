@@ -392,7 +392,6 @@ hasPermission(permissionName: string) {
   }
 
   loadServices(): void {
-    debugger
     this.commonService.GetPlatorm().subscribe(
       (response: any) => {
         this.channels = Object.keys(response).map(key => ({
