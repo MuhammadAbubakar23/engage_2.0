@@ -8,9 +8,10 @@ import { Injectable } from '@angular/core';
 export class PermissionService {
   private permissions: any = "";
   constructor() {
-    this.permissions = JSON.parse(sessionStorage.getItem('Permissions')|| "");
+    
   }
   hasPermission(name: string): boolean {
+    this.permissions = JSON.parse(sessionStorage.getItem('Permissions')|| "");
     return this.permissions.includes(name);
   }
 }

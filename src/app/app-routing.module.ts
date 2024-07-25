@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './identity/Services/AuthGuardService/auth.guard';
 import { ModulesResolver } from './shared/resolver/modules.resolver';
-import { TagsResolver } from './shared/resolver/Tags Resolver/tags.resolver';
 import { ChatWidgetComponent } from './shared/components/chat-widget/chat-widget.component';
 import { ChatWidget2Component } from './shared/components/chat-widget2/chat-widget2.component';
 // import { MonitoringMenuComponent } from './layouts/engage2/bot-monitoring-content/monitoring-menu/monitoring-menu.component';
@@ -23,21 +22,9 @@ const routes: Routes = [
     redirectTo: '/console/home',
     pathMatch: 'full',
   },
-  // For Jazz, TPPL, Morinaga
-  // {
-  //   path: 'analytics',
-  //   redirectTo: 'analytics/whatsapp-report',
-  //   pathMatch: 'full',
-  // },
   {
     path: 'bot-monitoring',
     redirectTo: 'bot-monitoring/chat-bot',
-    pathMatch: 'full',
-  },
-  // For KE
-  {
-    path: 'analytics',
-    redirectTo: 'analytics/inbound-outbound-report',
     pathMatch: 'full',
   },
   {

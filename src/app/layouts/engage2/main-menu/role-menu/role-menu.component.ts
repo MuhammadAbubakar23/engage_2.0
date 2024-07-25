@@ -26,6 +26,7 @@ export class RoleMenuComponent implements OnInit {
   showAnalytics = false;
   showBotManagement = false;
   showConsole = false;
+  activeModule:string="";
   //menu$ :Observable<MenuModel[]>;
   //menu$ :Observable<any>;
   loading$: any;
@@ -74,6 +75,11 @@ export class RoleMenuComponent implements OnInit {
         if (res.length > 0) {
           this.showAnalytics = true;
           this._menuS.changeAnalyticsMenu(res);
+          if (this.activeModule == 'analytics') {
+            debugger
+            const firstItem = res[0].link;
+            this._route.navigate([`analytics/${firstItem}`]);
+            }
         }
       });
   }
@@ -98,6 +104,7 @@ export class RoleMenuComponent implements OnInit {
     this.hasMonitoringPermission = this.hasPermission('bot');
     this.baseurl = window.location.origin;
     this.activeChannel = this._route.url.split('/')[2];
+    this.activeModule = this._route.url.split('/')[1];
     let data = this.storage.retrive('main', 'O').local;
     this.restrictedAgent = data.originalUserName.toLowerCase();
     this.MenuStore.select(getEmargingEqual('7_layout_lft')).subscribe(

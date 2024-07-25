@@ -94,7 +94,7 @@
                 <div class="tab-content m-4" id="myTabContent">
                     <div *ngIf="newPostComment" class="tab-pane fade show active" id="new-post-comment" role="tabpanel"
                         aria-labelledby="new-post-comment-tab">
-                        <div class="chat-box-wrap" *ngFor="let post of newPostComment">
+                        <div class="chat-box-wrap" *ngFor="let newPost of newPostComment">
                             <div class="message-wrap agent-message-wrap right">
                                 <div class="d-flex align-items-center agent-container">
                                     <div class="card chennels-post">
@@ -102,17 +102,17 @@
                                             <div class="card-header bg-white msg-user-info p-0 border-0">
                                                 <div class="d-flex align-items-center">
                                                     <p class="card-text">
-                                                        <small class="silver">{{post?.post?.createdDate |
+                                                        <small class="silver">{{newPost?.post?.createdDate |
                                                             date:'EEEE, MMMM d, y, h:mm a'}}</small>
-                                                        <a *ngIf="post?.post?.redirectUrl != null"
-                                                            href={{post?.post?.redirectUrl}} target="_blank">
+                                                        <a *ngIf="newPost?.post?.redirectUrl != null"
+                                                            href={{newPost?.post?.redirectUrl}} target="_blank">
                                                             <span><i
                                                                     class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button"
-                                                style="width:375px;" *ngFor="let attachment of post?.post?.attachments">
+                                                style="width:375px;" *ngFor="let attachment of newPost?.post?.attachments">
                                                 <img *ngIf="((attachment?.mediaType | lowercase) == 'photo') || ((attachment?.mediaType | lowercase) == 'image')"
                                                     src={{attachment?.attachmentUrl}}
                                                     style="width: -webkit-fill-available;">
@@ -128,43 +128,43 @@
                                             </div>
                                             <div class="card-body bg-light">
                                                 <p class="card-text nignt mb-0">
-                                                    {{post?.post?.caption}}
+                                                    {{newPost?.post?.caption}}
                                                 </p><br>
-                                                <p class="card-text nignt mb-0" *ngIf="post?.post?.description != null">
-                                                    <b>Description: </b> {{post?.post?.description}}</p>
+                                                <p class="card-text nignt mb-0" *ngIf="newPost?.post?.description != null">
+                                                    <b>Description: </b> {{newPost?.post?.description}}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div *ngFor="let group of post?.groupedComments | sort:criteria">
+                            <div *ngFor="let group of newPost?.groupedComments | sort:criteria">
                                 <div class="date-wrap">
                                     <p class="date">{{group?.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                 </div>
-                                <ng-container *ngFor="let cmnt of group?.items | sort:criteria">
+                                <ng-container *ngFor="let newCmnt of group?.items | sort:criteria">
                                     <div class="message-wrap agent-message-wrap right"
-                                        *ngIf="post?.post?.postId == cmnt?.postId">
+                                        *ngIf="newPost?.post?.postId == newCmnt?.postId">
                                         <div class="application-wrap d-flex align-items-center mb-1"
-                                            *ngIf="cmnt?.ticketId != null">
+                                            *ngIf="newCmnt?.ticketId != null">
                                             <p class="m-0 silver me-2 ms-1">Application ID
                                             </p>
-                                            <p class="app-no navy m-0 me-2">{{cmnt?.ticketId}}</p>
+                                            <p class="app-no navy m-0 me-2">{{newCmnt?.ticketId}}</p>
                                         </div>
                                         <div class="d-flex align-items-center agent-container">
                                             <div class="card w-d-inline messageUpper">
                                                 <div class="card-body shadow-sm" style="min-width: 400px;"
-                                                    [ngClass]="cmnt?.queryStatus == 'Unresponded'?'unread-msg':''">
+                                                    [ngClass]="newCmnt?.queryStatus == 'Unresponded'?'unread-msg':''">
                                                     <div class="d-flex msg-user-info">
                                                         <div class="d-flex align-items-center">
                                                             <h6 class="card-title navy m-0">
-                                                                {{cmnt?.userName}}</h6>
+                                                                {{newCmnt?.userName}}</h6>
                                                             <p class="card-text ms-3">
-                                                                <small class="silver">{{cmnt?.createdDate |
+                                                                <small class="silver">{{newCmnt?.createdDate |
                                                                     date:'h:mm:ss a'}}</small>
                                                             </p>
                                                             <button class="starbtn iconButton iconHover small btn"
-                                                                *ngIf="cmnt?.starred == true"
-                                                                [ngClass]="cmnt?.starred?'active':''">
+                                                                *ngIf="newCmnt?.starred == true"
+                                                                [ngClass]="newCmnt?.starred?'active':''">
                                                                 <i class="fal fa-star charcoal"></i>
                                                                 <i class="fas fa-star sun"></i>
                                                             </button>
@@ -173,29 +173,29 @@
                                                             <button class="btn coal p-0 ps-3" type="button"
                                                                 id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                 aria-expanded="false">
-                                                                {{cmnt?.queryStatus}}
+                                                                {{newCmnt?.queryStatus}}
                                                                 <i class="far fa-chevron-down ms-2"
-                                                                    *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnt?.queryStatus == 'Unresponded'"></i>
+                                                                    *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && newCmnt?.queryStatus == 'Unresponded'"></i>
                                                             </button>
                                                             <ul class="dropdown-menu custom-dropdown"
                                                                 aria-labelledby="dropdownMenuButton1"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnt?.queryStatus == 'Unresponded'">
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && newCmnt?.queryStatus == 'Unresponded'">
                                                                 <li>
                                                                     <a class="dropdown-item"
-                                                                        (click)="commentStatus(cmnt?.id, cmnt?.contentType)">Read</a>
+                                                                        (click)="commentStatus(newCmnt?.id, newCmnt?.contentType)">Read</a>
                                                                     <a class="dropdown-item"
-                                                                        *ngIf="cmnt?.isHide == false"
-                                                                        (click)="hideMessage(cmnt?.id, true, post?.platform)">Hide
+                                                                        *ngIf="newCmnt?.isHide == false"
+                                                                        (click)="hideMessage(newCmnt?.id, true, newPost?.platform)">Hide
                                                                         Message</a>
                                                                     <a class="dropdown-item"
-                                                                        *ngIf="cmnt?.isHide == true"
-                                                                        (click)="hideMessage(cmnt?.id, false, post?.platform)">Unhide
+                                                                        *ngIf="newCmnt?.isHide == true"
+                                                                        (click)="hideMessage(newCmnt?.id, false, newPost?.platform)">Unhide
                                                                         Message</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div *ngFor="let attachment of cmnt?.attachments"
+                                                    <div *ngFor="let attachment of newCmnt?.attachments"
                                                             style="width: 375px;">
                                                             <img class="whatsapp-single-img whatsappImgModalBtn"
                                                                 *ngIf="isImage(attachment)"
@@ -239,16 +239,16 @@
                                                                 </div>
                                                             </a>
                                                         </div>
-                                                    <p class="card-text nignt">{{cmnt?.message}}</p>
-                                                    <div class="tags" *ngFor="let tag of cmnt?.tags">
+                                                    <p class="card-text nignt">{{newCmnt?.message}}</p>
+                                                    <div class="tags" *ngFor="let tag of newCmnt?.tags">
                                                         <span class="badge rounded-pill tag tag1 selected"
-                                                            (click)="removeTagFromFeed(tag.feedId, tag.name, post?.platform)">{{tag.name
+                                                            (click)="removeTagFromFeed(tag.feedId, tag.name, newPost?.platform)">{{tag.name
                                                             | tagSlugConversion}}</span>
                                                     </div>
                                                     <!-- For Sentiment Pills -->
-                                                    <div class="tags" *ngIf="cmnt?.sentiment">
+                                                    <div class="tags" *ngIf="newCmnt?.sentiment">
                                                         <span
-                                                            class="badge rounded-pills tag tag1 selected">{{cmnt?.sentiment?.name
+                                                            class="badge rounded-pills tag tag1 selected">{{newCmnt?.sentiment?.name
                                                             | tagSlugConversion}}</span>
                                                     </div>
                                                     <!-- For Sentiment Pills -->
@@ -259,10 +259,10 @@
                                                         <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                             <div class="message-actionlist d-flex align-items-center">
                                                                 <div class="box"
-                                                                    *ngIf="showLikeBtnTo.includes(post?.platform | lowercase)">
+                                                                    *ngIf="showLikeBtnTo.includes(newPost?.platform | lowercase)">
                                                                     <a class="message-actionItem coal likebht p-0 label-reactions" *ngIf="hasQuickLikesPermission"
-                                                                        (click)="likeByAdmin(cmnt?.id, cmnt?.isLikedByAdmin, post?.platform, post?.post?.profile.page_Id, post?.post?.profile.profile_Id, post?.user?.userId)"
-                                                                        [class.active]="cmnt?.isLikedByAdmin == true">
+                                                                        (click)="likeByAdmin(newCmnt?.id, newCmnt?.isLikedByAdmin, newPost?.platform, newPost?.post?.profile.page_Id, newPost?.post?.profile.profile_Id, newPost?.user?.userId)"
+                                                                        [class.active]="newCmnt?.isLikedByAdmin == true">
                                                                         <span class="iconButton small btn">
                                                                             <i class="fal fa-thumbs-up coal"></i>
                                                                             <i class="fas fa-thumbs-up"></i>
@@ -271,7 +271,7 @@
                                                                     </a>
                                                                 </div>
                                                                 <a class="message-actionItem replyBtn coal"
-                                                                    (click)="SendnewCommentInformation(cmnt?.id)" *ngIf="hasReplyQuickPermission">
+                                                                    (click)="SendnewCommentInformation(newCmnt?.id)" *ngIf="hasReplyQuickPermission">
                                                                     <span class="iconButton small btn">
                                                                         <i class="fal fa-reply coal"></i>
                                                                     </span>
@@ -336,7 +336,7 @@
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
                                                                                                     <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(cmnt?.id, keyword.slug, post?.platform)"
+                                                                                                        (click)="insertTagsForFeed(newCmnt?.id, keyword.slug, newPost?.platform)"
                                                                                                         [ngClass]="activeTag==true?'active':''"
                                                                                                         *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                         <div
@@ -393,7 +393,7 @@
                                                                                     <div class="list-group list-group-flush"
                                                                                         *ngFor="let sentiment of Sentiments">
                                                                                         <a class="list-group-item d-flex level1Btn "
-                                                                                            (click)="insertSentimentForFeed(cmnt?.id, sentiment.slug, post?.platform)">
+                                                                                            (click)="insertSentimentForFeed(newCmnt?.id, sentiment.slug, newPost?.platform)">
                                                                                             <div class="list-down-icon">
                                                                                                 <span
                                                                                                     class="btn iconButton iconHover medium"
@@ -410,7 +410,7 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                             <small>
-                                                                                                <!-- <i [class.fa-check-circle]="cmnt?.sentiment.text == sentiment.name" class="fal sky"></i> -->
+                                                                                                <!-- <i [class.fa-check-circle]="newCmnt?.sentiment.text == sentiment.name" class="fal sky"></i> -->
                                                                                             </small>
                                                                                         </a>
                                                                                     </div>
@@ -425,13 +425,13 @@
                                                 </div>
                                             </div>
                                             <!-- <ng-container  *ngIf="hasQueryTicketssPermission">
-                                            <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', cmnt?.id)"
+                                            <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', newCmnt?.id)"
                                             type="button">
                                             <i class="fal fa-plus-circle sky"></i>
                                         </span>
                                         </ng-container> -->
                                         </div>
-                                        <div *ngFor="let reply of cmnt?.replies | sort:criteria">
+                                        <div *ngFor="let reply of newCmnt?.replies | sort:criteria">
                                             <!-- <div class="date-wrap">
                                                                     <p class="date">{{reply.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                                                 </div> -->
