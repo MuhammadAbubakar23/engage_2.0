@@ -1714,9 +1714,9 @@ export class ChannelComponent implements OnInit {
           this.mentionedCommentOrMessageId = comment.id;
           this.platform = xyz.platform;
           this.postType = comment.contentType;
-          this.profileId = xyz.post.profile.profile_Id;
-          this.profilePageId = xyz.post.profile.page_Id;
           this.userProfileId = this.userInformation.id;
+          this.profileId = xyz?.post?.profile?.profile_Id;
+          this.profilePageId = xyz?.post?.profile?.page_Id;
         }
       });
     });
@@ -1731,9 +1731,9 @@ export class ChannelComponent implements OnInit {
           this.mentionedCommentOrMessageId = comment.id;
           this.platform = xyz.platform;
           this.postType = comment.contentType;
-          this.profileId = xyz.post.profile.profile_Id;
-          this.profilePageId = xyz.post.profile.page_Id;
           this.userProfileId = this.userInformation.id;
+          this.profileId = xyz?.post?.profile?.profile_Id;
+          this.profilePageId = xyz?.post?.profile?.page_Id;
         }
       });
     });

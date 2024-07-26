@@ -76,17 +76,17 @@ export class ShiftReportComponent implements OnInit {
     { id: 4, name: 'Sehr' },
   ];
   platformIconMapping: any = {
-    Facebook: 'fa-brands fa-facebook fs-4 navy fa-beat-fade' ,
-    Twitter: 'fa-brands fa-twitter fs-4 sky fa-beat-fade',
-    Instagram: 'fa-brands fa-instagram fs-4 berry fa-beat-fade',
-    LinkedIn: 'fa-brands fa-linkedin fs-4 linkedinTxt fa-beat-fade',
-    Email: 'fa-light fa-envelope  fs-4 berry fa-beat-fade',
-    Youtube: 'fa-brands fa-youtube fs-4 radical fa-beat-fade',
-    SMS: 'fa-message-sms fs-4 cherry fa-beat-fade ',
-    WebChat: 'fa-light fa-messages fs-4 webchatcolor fa-beat-fade',
-    WhatsApp: 'fab fa-whatsapp fs-4 mint fa-beat-fade',
-    PlayStore: 'fa-brands fa-google-play fs-4 googleplaycolor fa-beat-fade',
-    OfficeEmail: 'fa-light fa-envelope  fs-4 navy  fa-beat-fade',
+    Facebook: 'fa-brands fa-facebook fs-4 navy ' ,
+    Twitter: 'fa-brands fa-twitter fs-4 sky ',
+    Instagram: 'fa-brands fa-instagram fs-4 berry ',
+    LinkedIn: 'fa-brands fa-linkedin fs-4 linkedinTxt ',
+    Email: 'fa-light fa-envelope  fs-4 berry ',
+    Youtube: 'fa-brands fa-youtube fs-4 radical ',
+    SMS: 'fa-message-sms fs-4 cherry  ',
+    WebChat: 'fa-light fa-messages fs-4 webchatcolor ',
+    WhatsApp: 'fab fa-whatsapp fs-4 mint ',
+    PlayStore: 'fa-brands fa-google-play fs-4 googleplaycolor ',
+    OfficeEmail: 'fa-light fa-envelope  fs-4 navy  ',
   };
   channelIcon: any[] = [
     { fbicone: 'fa-brands fa-facebook-f', class: 'iconButton medium navyBg' },

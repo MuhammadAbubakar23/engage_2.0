@@ -62,7 +62,7 @@
         "ServiceBaseUrl": "",
         "ConsoleBaseUrl": "https://enconsolebackend.enteract.live/api/",
         "ReportsBaseUrl": "https://enreportsbackend.enteract.live/api/",
-        "LinkedInBaseUrl": "https://linkdservice.enteract.live/api/",
+        "LinkedInBaseUrl": "https://enlinkedinbackend.enteract.live/api/",
         "BotBaseUrl": "https://bot-engage.enteract.app/api/"
     },
     "bazaar": {
