@@ -30,6 +30,7 @@ export class TagsComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 10;
   tags: Tag[] = [];
+  selectedSortOption:string=''
   perPage: number = 10;
   totoalCount: any
   totalItems: number = 100;
@@ -90,7 +91,7 @@ hasPermission(permissionName: string) {
   getTags() {
     let obj = {
       "search": this.searchText,
-      "sorting": this.sortby,
+      "sorting": this.selectedSortOption,
       "pageNumber": this.currentPage,
       "pageSize": this.perPage
     }
@@ -170,5 +171,10 @@ hasPermission(permissionName: string) {
       startPage = Math.max(1, endPage - visiblePages + 1);
     }
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+ 
+  }
+  setSortOption(option: string) {
+    this.selectedSortOption = option;
+   this.getTags()
   }
 }

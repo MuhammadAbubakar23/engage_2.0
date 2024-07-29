@@ -18,7 +18,7 @@ export class RolesAndPermissionsComponent implements OnInit {
   Roles: Array<any> = [];
   RolesCount: number = 0;
   searchText: string = '';
-  selectedSortOption: string = 'All';
+  selectedSortOption: string = '';
   hasCreatePermission: boolean=false;
   hasupdatePermission: boolean=false;
   hasDeletePermission: boolean=false;
@@ -54,7 +54,7 @@ export class RolesAndPermissionsComponent implements OnInit {
   this.hasDeletePermission = this.hasPermission('_rmvro_');
     this.Roles = this._Activatedroute.snapshot.data["roles"];
     this.RolesCount = this.Roles.length;
-    this.selectedSortOption = 'All'; // Set the default sort option
+
     this.applySearchFilter(); // Apply search filter and sort roles on component initialization
   }
   setStatus(status: string): void {
@@ -101,5 +101,9 @@ export class RolesAndPermissionsComponent implements OnInit {
         }
       );
     }
+  }
+  setSortOption(option: string) {
+    this.selectedSortOption = option;
+
   }
 }

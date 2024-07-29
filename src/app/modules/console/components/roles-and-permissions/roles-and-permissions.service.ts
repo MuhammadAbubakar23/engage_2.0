@@ -45,4 +45,5 @@ export class RolesAndPermissionsService {
   save(route:string, form:any ):any{
     return this.request.post<any>(route, form);
   }
+  
 }
