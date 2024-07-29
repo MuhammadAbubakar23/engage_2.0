@@ -11,6 +11,9 @@ import { RouterModule } from '@angular/router';
 import { RightSidebarComponentsModule } from './right-sidebar-components/right-sidebar-components.module';
 import { InboxResponderComponent } from './components/inbox-responder/inbox-responder.component';
 import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard';
+import {
+  AudioRecordingService
+} from 'src/app/shared/services/audioRecording/audio-recording.service'
 @NgModule({
   declarations: [
     InboxesComponent,
@@ -30,7 +33,8 @@ import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard
   ],
   providers: [
     DatePipe,
-    ResponderGuardGuard
+    ResponderGuardGuard,
+    AudioRecordingService
   ]
 })
 export class InboxesModule { }

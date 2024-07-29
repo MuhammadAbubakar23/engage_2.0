@@ -15,6 +15,7 @@ import { DispositionFormComponent } from './components/disposition-form/disposit
 import { PostStatsComponent } from './sharedComponents/post-stats/post-stats.component';
 import { ChannelComponent } from './components/responderChannelData/channel.component';
 import { CKEditorModule } from 'ckeditor4-angular';
+import { AudioRecordingService } from 'src/app/shared/services/audioRecording/audio-recording.service';
 @NgModule({
   declarations: [
     ResponderComponent,

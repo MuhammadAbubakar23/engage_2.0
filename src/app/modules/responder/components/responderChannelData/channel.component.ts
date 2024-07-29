@@ -51,6 +51,8 @@ import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service
 import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { ConnectionIdService } from 'src/app/services/connectionId/connection-id.service';
 import { PermissionService } from 'src/app/shared/services/permission.service';
+import { AudioRecordingService } from 'src/app/shared/services/audioRecording/audio-recording.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-channel',
@@ -435,8 +437,24 @@ export class ChannelComponent implements OnInit {
     private getWing: GetWingsService,
     private getSkillSlug: SkillslugService,
     private _perS: PermissionService,
-    private getConnectionId: ConnectionIdService
-  ) {}
+    private getConnectionId: ConnectionIdService,
+    private audioRecordingService: AudioRecordingService,
+    private sanitizer: DomSanitizer
+  ) {
+    this.audioRecordingService
+      .recordingFailed()
+      .subscribe(() => (this.isRecording = false));
+    this.audioRecordingService
+      .getRecordedTime()
+      .subscribe(time => (this.recordedTime = time));
+    this.audioRecordingService.getRecordedBlob().subscribe(data => {
+      this.teste = data;
+      this.blobUrl = this.sanitizer.bypassSecurityTrustUrl(
+        URL.createObjectURL(data.blob)
+      );
+    });
+  }
+  
   hasPermission(permissionName: string) {
     const isAccessible = this._perS.hasPermission(permissionName);
     return isAccessible;
@@ -1714,9 +1732,9 @@ export class ChannelComponent implements OnInit {
           this.mentionedCommentOrMessageId = comment.id;
           this.platform = xyz.platform;
           this.postType = comment.contentType;
-          this.profileId = xyz.post.profile.profile_Id;
-          this.profilePageId = xyz.post.profile.page_Id;
           this.userProfileId = this.userInformation.id;
+          this.profileId = xyz.post?.profile?.profile_Id;
+          this.profilePageId = xyz.post?.profile?.page_Id;
         }
       });
     });
@@ -1731,9 +1749,9 @@ export class ChannelComponent implements OnInit {
           this.mentionedCommentOrMessageId = comment.id;
           this.platform = xyz.platform;
           this.postType = comment.contentType;
-          this.profileId = xyz.post.profile.profile_Id;
-          this.profilePageId = xyz.post.profile.page_Id;
           this.userProfileId = this.userInformation.id;
+          this.profileId = xyz.post?.profile?.profile_Id;
+          this.profilePageId = xyz.post?.profile?.page_Id;
         }
       });
     });
@@ -2471,5 +2489,51 @@ export class ChannelComponent implements OnInit {
     } else {
       this.filterDto.queryType = value;
     }
+  }
+
+  ///// audio recording
+
+  isRecording = false;
+  recordedTime:any;
+  blobUrl:any;
+  teste:any;
+
+  
+
+  startRecording() {
+    if (!this.isRecording) {
+      this.isRecording = true;
+      this.audioRecordingService.startRecording();
+    }
+  }
+
+  abortRecording() {
+    if (this.isRecording) {
+      this.isRecording = false;
+      this.audioRecordingService.abortRecording();
+    }
+  }
+
+  stopRecording() {
+    if (this.isRecording) {
+      this.audioRecordingService.stopRecording();
+      this.isRecording = false;
+    }
+  }
+
+  clearRecordedData() {
+    this.blobUrl = null;
+  }
+
+  ngOnDestroy(): void {
+    this.abortRecording();
+  }
+
+  download(): void {
+    const url = window.URL.createObjectURL(this.teste.blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = this.teste.title;
+    link.click();
   }
 }
