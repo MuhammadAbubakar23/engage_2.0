@@ -961,7 +961,7 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
   }
   GetRouteToAgentsCsv(body: any) {
     return this.http.post(
-      this.CommonBaseUrl + this.routeToAgentsCsv,
+      this.ReportsBaseUrl + this.routeToAgentsCsv,
       body,
       {
         responseType: 'text',
@@ -969,25 +969,25 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
     );
   }
   GetRouteToAgents(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.routeToAgents, body);
+    return this.http.post(this.ReportsBaseUrl + this.routeToAgents, body);
   }
   AddUniqueCustomer(body: any) {
     return this.http.post(
-      this.CommonBaseUrl + this.addUniqueCustomer,
+      this.ReportsBaseUrl + this.addUniqueCustomer,
       body
     );
   }
   UniqueExportCsv(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.uniqueExportCsv, body, {
+    return this.http.post(this.ReportsBaseUrl + this.uniqueExportCsv, body, {
       responseType: 'text',
     });
   }
   AddHandledBot(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.addHandledBot, body);
+    return this.http.post(this.ReportsBaseUrl + this.addHandledBot, body);
   }
   AddHandledBotCSV(body: any) {
     return this.http.post(
-      this.CommonBaseUrl + this.addHandledBotCSV,
+      this.ReportsBaseUrl + this.addHandledBotCSV,
       body,
       {
         responseType: 'text',
@@ -1035,21 +1035,21 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
   }
   DownloadWhatsAppReport(body: any) {
     return this.http.post(
-      this.CommonBaseUrl + this.downloadWhatsAppRawDataReport,
+      this.ReportsBaseUrl + this.downloadWhatsAppRawDataReport,
       body,
       { responseType: 'text' }
     );
   }
   DownloadSocialRawData(body: any) {
     return this.http.post(
-      this.CommonBaseUrl + this.downloadSocialRawData,
+      this.ReportsBaseUrl + this.downloadSocialRawData,
       body,
       { responseType: 'text' }
     );
   }
   PostSocialRawData(body: any) {
     return this.http.post(
-      this.CommonBaseUrl + this.postSocialRawData,
+      this.ReportsBaseUrl + this.postSocialRawData,
       body
     );
   }
