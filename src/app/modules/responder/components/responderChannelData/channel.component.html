@@ -2505,6 +2505,23 @@
                         data-bs-placement="top" title="" type="submit" data-bs-original-title="Send" *ngIf="hasReplySentPermission">
                         <i class="fal fa-paper-plane"></i>
                     </button>
+                    <!-- <div>
+                        <button class="start-button" *ngIf="!isRecording && !blobUrl" (click)="startRecording()">Start Recording</button>
+                    
+                        <button class="stop-button" *ngIf="isRecording && !blobUrl" (click)="stopRecording()">Stop Recording</button>
+                    
+                        <button class="cancel-button" *ngIf="!isRecording && blobUrl" (click)="clearRecordedData()">Clear Recording</button>
+                    
+                        <br>
+                        <button class="cancel-button" *ngIf="!isRecording && blobUrl" (click)="download()">Download Recording</button>
+                    
+                        <div *ngIf="isRecording && !blobUrl"> {{recordedTime}} </div>
+                        <div>
+                            <audio *ngIf="!isRecording && blobUrl" controls>
+                                <source [src]="blobUrl" type="audio/webm">
+                            </audio>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </form>
