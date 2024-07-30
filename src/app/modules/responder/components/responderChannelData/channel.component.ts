@@ -77,8 +77,8 @@ export class ChannelComponent implements OnInit {
   showGifBtnOnChannels: any[] = ['FC', 'FCP', 'IM'];
   showGifBtnToClients: any[] = ['localhost', 'staging', 'jazz'];
   showAttachmentBtnTo: any[] = ['FC', 'FCP', 'IM', 'WM', 'LIC'];
-  commentTab: any[] = ['FC', 'IC', 'YC', 'LIC', 'PSR'];
-  messageTab: any[] = ['FCP', 'IM', 'TM', 'TDM', 'TTR', 'WM', 'SMS'];
+  commentTab: any[] = ['FC', 'IC', 'YC', 'LIC', 'PSR', 'WM'];
+  messageTab: any[] = ['FCP', 'IM', 'TM', 'TDM', 'TTR', 'SMS'];
   showCustomerSatistactionForm: any[] = [
     'localhost',
     'staging',
@@ -847,41 +847,41 @@ export class ChannelComponent implements OnInit {
 
     if (this.updatedComments.length > 0) {
       this.updatedComments.forEach((xyz: any) => {
-        if (this.id == xyz.user.userId) {
-          xyz.comments.forEach((abc: any) => {
+        if (this.id == xyz?.user?.userId) {
+          xyz?.comments.forEach((abc: any) => {
             const commentDto = {
-              id: abc.id,
-              wings: abc.wings,
-              postId: xyz.post.postId,
-              commentId: abc.commentId,
-              message: abc.message,
-              contentType: abc.contentType,
-              userName: abc.userName || abc.userId,
-              queryStatus: abc.queryStatus,
-              createdDate: abc.createdDate,
-              insertionDate: abc.insertionDate,
-              ticketId: abc.ticketId,
-              fromUserProfilePic: abc.fromUserProfilePic,
-              body: abc.body,
-              sentimentValue: abc.sentimentValue,
-              language: abc.language,
-              isHide: abc.isHide,
-              isLikedByAdmin: abc.isLikedByAdmin,
-              channelId: abc.channelId,
-              conversationId: abc.conversationId,
-              attachmentUrl: abc.attachmentUrl,
-              attachmentType: abc.attachmentType,
-              sendTo: abc.sendTo,
-              unrespondedCount: abc.unrespondedCount,
-              attachments: abc.attachments,
-              replies: abc.replies,
-              sentiment: abc.sentiment,
-              tags: abc.tags,
-              to: abc.to,
-              cc: abc.cc,
-              bcc: abc.bcc,
-              dispositions: abc.dispositions,
-              signalRGroupName: abc.signalRGroupName,
+              id: abc?.id,
+              wings: abc?.wings,
+              postId: xyz?.post?.postId,
+              commentId: abc?.commentId,
+              message: abc?.message,
+              contentType: abc?.contentType,
+              userName: abc?.userName || abc?.userId,
+              queryStatus: abc?.queryStatus,
+              createdDate: abc?.createdDate,
+              insertionDate: abc?.insertionDate,
+              ticketId: abc?.ticketId,
+              fromUserProfilePic: abc?.fromUserProfilePic,
+              body: abc?.body,
+              sentimentValue: abc?.sentimentValue,
+              language: abc?.language,
+              isHide: abc?.isHide,
+              isLikedByAdmin: abc?.isLikedByAdmin,
+              channelId: abc?.channelId,
+              conversationId: abc?.conversationId,
+              attachmentUrl: abc?.attachmentUrl,
+              attachmentType: abc?.attachmentType,
+              sendTo: abc?.sendTo,
+              unrespondedCount: abc?.unrespondedCount,
+              attachments: abc?.attachments,
+              replies: abc?.replies,
+              sentiment: abc?.sentiment,
+              tags: abc?.tags,
+              to: abc?.to,
+              cc: abc?.cc,
+              bcc: abc?.bcc,
+              dispositions: abc?.dispositions,
+              signalRGroupName: abc?.signalRGroupName,
             };
 
             sessionStorage.setItem('lastQueryId', commentDto.id.toString());
@@ -889,7 +889,7 @@ export class ChannelComponent implements OnInit {
             let foundPost = false;
 
             this.Comments.forEach((item: any) => {
-              if (item.post.postId === xyz.post.postId) {
+              if (item.post?.postId === xyz?.post?.postId) {
                 foundPost = true;
                 item.comments.push(commentDto);
                 item.groupedComments = this.groupCommentsByDate(item.comments);
@@ -901,7 +901,7 @@ export class ChannelComponent implements OnInit {
               if (this.newPostComment.length > 0) {
                 this.newPostComment?.forEach((x: any) => {
                   this.Newpost?.forEach((y: any) => {
-                    if (y.post.postId == x.post.postId) {
+                    if (y.post?.postId == x.post?.postId) {
                       x.comments.push(commentDto);
                       x.groupedComments = this.groupCommentsByDate(x.comments);
                     } else {
@@ -924,6 +924,56 @@ export class ChannelComponent implements OnInit {
               this.totalUnrespondedNewPostCmntCountByCustomer += 1;
             }
           });
+        } else if(this.id == xyz?.userId){
+          // xyz?.forEach((abc: any) => {
+            const commentDto = {
+              id: xyz?.id,
+              wings: xyz?.wings,
+              postId: xyz?.post?.postId,
+              commentId: xyz?.commentId,
+              message: xyz?.message,
+              contentType: xyz?.contentType,
+              userName: xyz?.userName || xyz?.userId,
+              queryStatus: xyz?.queryStatus,
+              createdDate: xyz?.createdDate,
+              insertionDate: xyz?.insertionDate,
+              ticketId: xyz?.ticketId,
+              fromUserProfilePic: xyz?.fromUserProfilePic,
+              body: xyz?.body,
+              sentimentValue: xyz?.sentimentValue,
+              language: xyz?.language,
+              isHide: xyz?.isHide,
+              isLikedByAdmin: xyz?.isLikedByAdmin,
+              channelId: xyz?.channelId,
+              conversationId: xyz?.conversationId,
+              attachmentUrl: xyz?.attachmentUrl,
+              attachmentType: xyz?.attachmentType,
+              sendTo: xyz?.sendTo,
+              unrespondedCount: xyz?.unrespondedCount,
+              attachments: xyz?.attachments,
+              replies: xyz?.replies,
+              sentiment: xyz?.sentiment,
+              tags: xyz?.tags,
+              to: xyz?.to,
+              cc: xyz?.cc,
+              bcc: xyz?.bcc,
+              dispositions: xyz?.dispositions,
+              signalRGroupName: xyz?.signalRGroupName,
+            };
+
+            sessionStorage.setItem('lastQueryId', commentDto.id.toString());
+
+
+            this.Comments[0].comments.push(commentDto)
+            this.Comments[0].groupedComments = this.groupCommentsByDate(this.Comments[0].comments);
+            this.totalUnrespondedCmntCountByCustomer += 1;
+            
+            // forEach((item: any) => {
+            //     item.comments.push(commentDto);
+            //     item.groupedComments = this.groupCommentsByDate(item.comments);
+            //     this.totalUnrespondedCmntCountByCustomer += 1;
+            // });
+          // });
         }
       });
     }
@@ -953,31 +1003,31 @@ export class ChannelComponent implements OnInit {
     }
     const skillSlug = sessionStorage.getItem('skillSlug');
     this.updatedMessages.forEach((xyz: any) => {
-      if (skillSlug == xyz.skillSlug) {
-        if (this.id == xyz.fromId) {
+      if (skillSlug == xyz?.skillSlug) {
+        if (this.id == xyz?.fromId) {
           this.messageDto = {
-            id: xyz.id,
-            contentType: xyz.contentType,
-            queryStatus: xyz.queryStatus,
-            createdDate: xyz.createdDate,
-            attachments: xyz.attachments,
+            id: xyz?.id,
+            contentType: xyz?.contentType,
+            queryStatus: xyz?.queryStatus,
+            createdDate: xyz?.createdDate,
+            attachments: xyz?.attachments,
             replies: [],
             sentiment: '',
             tags: [],
-            msgId: xyz.msgId,
-            fromId: xyz.fromId,
-            fromName: xyz.fromName,
-            fromProfilePic: xyz.fromProfilePic,
-            toId: xyz.toId,
-            toName: xyz.toName,
-            msgText: xyz.msgText,
+            msgId: xyz?.msgId,
+            fromId: xyz?.fromId,
+            fromName: xyz?.fromName,
+            fromProfilePic: xyz?.fromProfilePic,
+            toId: xyz?.toId,
+            toName: xyz?.toName,
+            msgText: xyz?.msgText,
             agentId: '',
             customerSocailProfileId: 0,
-            profileId: xyz.profileId,
-            profilePageId: xyz.profilePageId,
-            wings: xyz.wings,
-            signalRGroupName: xyz.signalRGroupName,
-            skillSlug: xyz.skillSlug,
+            profileId: xyz?.profileId,
+            profilePageId: xyz?.profilePageId,
+            wings: xyz?.wings,
+            signalRGroupName: xyz?.signalRGroupName,
+            skillSlug: xyz?.skillSlug,
           };
           sessionStorage.setItem('lastQueryId', this.messageDto.id.toString());
           if (this.messageDto.contentType == 'TTR') {
@@ -1667,7 +1717,7 @@ export class ChannelComponent implements OnInit {
     // this.shareFbResService.updateMessage(this.Comments);
     if (this.Comments != null || undefined) {
       this.Comments?.forEach(async (post: any): Promise<void> => {
-        this.postIdForStats = post.post.postId;
+        this.postIdForStats = post.post?.postId;
         this.pageIdForStats = post.post?.postId.split('_')[0];
         await this.commondata
           .GetFbPostStats(this.pageIdForStats, this.postIdForStats)
@@ -1724,13 +1774,13 @@ export class ChannelComponent implements OnInit {
   });
   SendCommentInformation(comId: any) {
     this.Comments?.forEach((xyz: any) => {
-      xyz.comments.forEach((comment: any) => {
+      xyz?.comments.forEach((comment: any) => {
         if (comment.id == comId) {
           // show mentioned reply
           this.show = true;
           this.mentionedCommentOrMessage = comment.message;
           this.mentionedCommentOrMessageId = comment.id;
-          this.platform = xyz.platform;
+          this.platform = xyz?.platform;
           this.postType = comment.contentType;
           this.userProfileId = this.userInformation.id;
           this.profileId = xyz?.post?.profile?.profile_Id;
@@ -1741,13 +1791,13 @@ export class ChannelComponent implements OnInit {
   }
   SendnewCommentInformation(comId: any) {
     this.newPostComment?.forEach((xyz: any) => {
-      xyz.comments.forEach((comment: any) => {
+      xyz?.comments.forEach((comment: any) => {
         if (comment.id == comId) {
           // show mentioned reply
           this.show = true;
           this.mentionedCommentOrMessage = comment.message;
           this.mentionedCommentOrMessageId = comment.id;
-          this.platform = xyz.platform;
+          this.platform = xyz?.platform;
           this.postType = comment.contentType;
           this.userProfileId = this.userInformation.id;
           this.profileId = xyz?.post?.profile?.profile_Id;
@@ -1949,7 +1999,7 @@ export class ChannelComponent implements OnInit {
       connectionId: this.getConnectionId.connectionId,
     };
     this.Comments?.forEach((abc: any) => {
-      abc.comments.forEach((comment: any) => {
+      abc?.comments.forEach((comment: any) => {
         if (comment.id == comId) {
           if (comment.tags.length == 0) {
             this.commondata
@@ -1978,7 +2028,7 @@ export class ChannelComponent implements OnInit {
     });
     // for new posttag
     this.newPostComment?.forEach((abc: any) => {
-      abc.comments.forEach((comment: any) => {
+      abc?.comments.forEach((comment: any) => {
         if (comment.id == comId) {
           if (comment.tags.length == 0) {
             this.commondata
