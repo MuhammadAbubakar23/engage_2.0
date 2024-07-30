@@ -207,7 +207,7 @@ export const environment = {
       deleteTagTeam: 'TagTeams/Delete',
       addAccessReports: 'ReportAcess/Add',
       getActors: 'Roles/GetActors',
-      getReports: 'WhatsAppReport/GetReports',
+      getReports: 'Report/GetReports',
       emailReport: 'EmailReport/GetEmailReport',
       wallboardReport: 'CommonReport/GetWallboard',
       perviousWallboardReport: 'CommonReport/GetPreviousWallboard',

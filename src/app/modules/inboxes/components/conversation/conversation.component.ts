@@ -676,6 +676,9 @@ export class ConversationComponent implements OnInit {
     let data = this.storage.retrive('skills', 'O').local;
     // Find the rule that includes the new message skill slug
     let rule = data.find((x: any) => x.rules.includes(newMsg.rule));
+    if(rule == undefined && newMsg.postType == 'WM'){
+      rule = {'skilSlug':'pk_tech_whatsapp_message'}
+    }
     if (rule) {
       newMsg.skillSlug = rule.skilSlug;
       // Find existing conversation in the list
