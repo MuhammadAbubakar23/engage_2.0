@@ -661,6 +661,9 @@
                     (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId, query.skillSlug)">
                     {{query.message < 110 ? query.message: (query.message | slice:0:110) +'...'}} </div>
                 </td>
+                <!-- <td class="px-1">
+                  <small>{{query.wings}}</small>
+                </td> -->
                 <td class="px-1">
                   <small>{{query.createdDate | date:'h:mm:ss a'}}</small>
                 </td>

@@ -675,7 +675,7 @@ export class ConversationComponent implements OnInit {
     // Retrieve data from storage
     let data = this.storage.retrive('skills', 'O').local;
     // Find the rule that includes the new message skill slug
-    let rule = data.find((x: any) => x.rules.includes(newMsg.rule));
+    let rule = data.find((x: any) => x.skilSlug.includes(newMsg.skillSlug));
     if(rule == undefined && newMsg.postType == 'WM'){
       rule = {'skilSlug':'pk_tech_whatsapp_message'}
     }
