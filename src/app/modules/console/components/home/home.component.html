@@ -257,7 +257,7 @@
     <div class="modal-dialog modal-dialog-centered custom-modal-properties">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="facebookModalLabel">ATTACH A PROFILE</h5>
+          <h5 class="modal-title" id="facebookModalLabel">Attach Facebook Account</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -344,11 +344,11 @@
     <div class="modal-dialog modal-dialog-centered custom-modal-properties">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="emailModalLabel">ATTACH Instagram ACCOUNT</h5>
+          <h5 class="modal-title" id="emailModalLabel">Attach Instagram Account</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form [formGroup]="attachFacebookPageForm" (ngSubmit)="connectGoogle()">
+          <form [formGroup]="attachFacebookPageForm" (ngSubmit)="attachInstagramPage()">
             <div class="d-flex align-items-center">
               <div class="icon-circle iconButton me-4">
                 <i class="fal fa-clipboard-check"></i>

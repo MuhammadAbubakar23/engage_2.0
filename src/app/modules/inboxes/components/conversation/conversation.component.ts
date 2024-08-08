@@ -24,6 +24,7 @@ import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { InsertTagInProfileFeedDto } from 'src/app/shared/Models/InsertTagaInProfileFeedDto';
 import { SearchFilterService } from 'src/app/services/SearchFilter/search-filter.service';
 import { PermissionService } from 'src/app/shared/services/permission.service';
+import { NotificationSoundService } from 'src/app/shared/services/notificationSound/notification-sound.service';
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
@@ -89,7 +90,8 @@ export class ConversationComponent implements OnInit {
     private sendSkillSlug: SkillslugService,
     private getSkillSlug: SkillslugService,
     public searchFilterService: SearchFilterService,
-    private _perS: PermissionService
+    private _perS: PermissionService,
+    private triggerNotification : NotificationSoundService
   ) {
     this.criteria = {
       property: 'createdDate',
@@ -675,7 +677,8 @@ export class ConversationComponent implements OnInit {
     // Retrieve data from storage
     let data = this.storage.retrive('skills', 'O').local;
     // Find the rule that includes the new message skill slug
-    let rule = data.find((x: any) => x.skilSlug.includes(newMsg.skillSlug));
+    // let rule = data.find((x: any) => x.skilSlug.includes(newMsg.skillSlug));
+    let rule = data.find((x: any) => x.skilSlug.includes(newMsg.rule));
     if(rule == undefined && newMsg.postType == 'WM'){
       rule = {'skilSlug':'pk_tech_whatsapp_message'}
     }
@@ -705,6 +708,7 @@ export class ConversationComponent implements OnInit {
           this.to++;
         }
       }
+      this.triggerNotification.playSound()
     } else {
       console.error('No rule found for the given skill slug.');
     }
