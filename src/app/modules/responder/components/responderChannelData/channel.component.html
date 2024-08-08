@@ -2371,6 +2371,27 @@
                 <p>{{image?.gifFile?.size / 1024 | number:'1.2-2'}} kb</p>
             </div>
         </div>
+
+        <div class="attachment-block" [ngClass]="audioAdded == true?'':'d-none'">
+            <div class="p-3" *ngFor="let image of ImageName; let i = index" style="margin-right: 10px;">
+                <!-- <span class="close-icon" (click)="removeAttachedFileGif(image?.gifUrl?.id)"><i
+                        class="fas fa-times"></i></span>
+                <img [src]="image?.gifUrl?.src" alt="" style="max-width: 200px; max-height: 50px;">
+                <h5 class="card-title coal">{{image?.gifUrl?.name | slice:0:20}}</h5>
+                <p>{{image?.gifFile?.size / 1024 | number:'1.2-2'}} kb</p> -->
+                <div *ngIf="isRecording && !blobUrl"> {{recordedTime}} </div>
+        <div>
+            <audio *ngIf="!isRecording && blobUrl" controls>
+                <source [src]="blobUrl" type="audio/webm">
+            </audio>
+        </div>
+            </div>
+        </div>
+
+        
+        
+
+
         <!-- mentioned message -->
         <div [ngClass]="show == true? 'show':''" class="card hideMsg">
             <div class="card-body">
@@ -2505,23 +2526,17 @@
                         data-bs-placement="top" title="" type="submit" data-bs-original-title="Send" *ngIf="hasReplySentPermission">
                         <i class="fal fa-paper-plane"></i>
                     </button>
-                    <!-- <div>
-                        <button class="start-button" *ngIf="!isRecording && !blobUrl" (click)="startRecording()">Start Recording</button>
+                    <div>
+                        <button class="start-button" *ngIf="!isRecording && !blobUrl" (click)="startRecording()"><i class="fa-light fa-microphone"></i></button>
                     
-                        <button class="stop-button" *ngIf="isRecording && !blobUrl" (click)="stopRecording()">Stop Recording</button>
+                        <button class="stop-button" *ngIf="isRecording && !blobUrl" (click)="stopRecording()"><i class="fa-light fa-circle-pause"></i></button>
                     
-                        <button class="cancel-button" *ngIf="!isRecording && blobUrl" (click)="clearRecordedData()">Clear Recording</button>
+                        <!-- <button class="cancel-button" *ngIf="!isRecording && blobUrl" (click)="clearRecordedData()">Clear Recording</button> -->
                     
-                        <br>
-                        <button class="cancel-button" *ngIf="!isRecording && blobUrl" (click)="download()">Download Recording</button>
+                        <!-- <br>
+                        <button class="cancel-button" *ngIf="!isRecording && blobUrl" (click)="download()">Download Recording</button> -->
                     
-                        <div *ngIf="isRecording && !blobUrl"> {{recordedTime}} </div>
-                        <div>
-                            <audio *ngIf="!isRecording && blobUrl" controls>
-                                <source [src]="blobUrl" type="audio/webm">
-                            </audio>
-                        </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </form>

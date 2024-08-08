@@ -410,6 +410,9 @@ export class ChannelComponent implements OnInit {
   hasQuerySentimentsPermission: boolean = false;
   hasQueryTicketssPermission: boolean = false;
 
+  sendSelectedAudio:any[]=[];
+  audioAdded:boolean = false
+
   fetchedPostType: string = '';
   public Subscription!: Subscription;
   public criteria!: SortCriteria;
@@ -448,10 +451,16 @@ export class ChannelComponent implements OnInit {
       .getRecordedTime()
       .subscribe(time => (this.recordedTime = time));
     this.audioRecordingService.getRecordedBlob().subscribe(data => {
+      debugger
       this.teste = data;
       this.blobUrl = this.sanitizer.bypassSecurityTrustUrl(
         URL.createObjectURL(data.blob)
       );
+
+      const selectedAudio = new File([data.blob], data.title, {type: data.blob.type});
+          this.sendSelectedAudio.push(selectedAudio);
+          this.ImageName = this.sendSelectedAudio;
+          this.audioAdded = true;
     });
   }
   
@@ -2440,7 +2449,8 @@ export class ChannelComponent implements OnInit {
   isImage(attachment: any): boolean {
     return (
       attachment?.mediaType?.toLowerCase().includes('image') ||
-      attachment?.mediaType?.toLowerCase().includes('photo')
+      attachment?.mediaType?.toLowerCase().includes('photo') ||
+      attachment?.mediaType?.toLowerCase().includes('share')
     );
   }
   isVideo(attachment: any): boolean {

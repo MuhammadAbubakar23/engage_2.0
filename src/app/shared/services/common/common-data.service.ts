@@ -17,24 +17,23 @@ export class CommonDataService {
   CommonBaseUrl = environment.CommonBaseUrl;
   IdentityBaseUrl = environment.IdentityBaseUrl;
   FacebookBaseUrl = environment.FbBaseUrl;
-  InstagramBaseUrl = environment.instagramBaseUrl;
+  InstagramBaseUrl = environment.InstagramBaseUrl;
   ServiceBaseUrl = environment.ServiceBaseUrl;
   ProfileBaseUrl = environment.ProfileBaseUrl;
   LinkedInBaseUrl = environment.LinkedInBaseUrl;
   KemediaBaseUrl = environment.KemediaBaseUrl;
   KescrmBaseUrl = environment.KescrmBaseUrl;
-  WhatsappBaseUrl = environment.whatsappBaseUrl;
+  WhatsappBaseUrl = environment.DemoWhatsappBaseUrl;
   ReportsBaseUrl = environment.ReportsBaseUrl;
   faceRoxBaseUrl = environment.faceRoxBaseUrl;
   autoresponderbaseurl = environment.autoresponderbaseurl;
-  metaWhatsapp = environment.metaWhatsapp;
-  exchangeEmailBaseUrl = environment.exchangeEmailBaseUrl;
-  playStoreBaseUrl = environment.playStoreBaseUrl;
-  gSuitBaseUrl = environment.gSuitBaseUrl;
-  whatsappBaseUrl = environment.whatsappBaseUrl;
-  youtubeBaseUrl = environment.youtubeBaseUrl;
-  linkdinBaseUrl = environment.linkdinBaseUrl;
-  instagramBaseUrl = environment.instagramBaseUrl;
+  metaWhatsapp = environment.MetaWhatsapp;
+  exchangeEmailBaseUrl = environment.DemoExchangeEmailBaseUrl;
+  playStoreBaseUrl = environment.PlayStoreBaseUrl;
+  gSuitBaseUrl = environment.GSuitBaseUrl;
+  whatsappBaseUrl = environment.DemoWhatsappBaseUrl;
+  youtubeBaseUrl = environment.YoutubeBaseUrl;
+  linkdinBaseUrl = environment.DemoLinkdinBaseUrl;
 
   profileBaseUrl = environment.botConfigBaseUrl;
   // channelBaseUrl = environment.ConsoleBaseUrl;
@@ -426,7 +425,7 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
     return this.http.post(this.gSuitBaseUrl + this.getautoResponedFB, body);
   }
   getAllAutoRespondInsta(body: any) {
-    return this.http.post(this.instagramBaseUrl + this.getautoResponedFB, body);
+    return this.http.post(this.InstagramBaseUrl + this.getautoResponedFB, body);
   }
 
   getChannelsList() {
@@ -439,7 +438,7 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
     return this.http.post(this.autoresponderbaseurl + this.addFbResponed, body);
   }
   AddInstaResponed(body: any) {
-    return this.http.post(this.instagramBaseUrl + this.addFbResponed, body);
+    return this.http.post(this.InstagramBaseUrl + this.addFbResponed, body);
   }
   AddWsResponed(body: any) {
     return this.http.post(this.WhatsappBaseUrl + this.addFbResponed, body);
@@ -753,6 +752,14 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
       httpOptions
     );
   }
+  AttachInstagramPage(body: any) {
+    let httpOptions = this.gethttpOptions();
+    return this.http.post(
+      this.InstagramBaseUrl + this.attachFacebookPage,
+      body,
+      httpOptions
+    );
+  }
   SignOut() {
     return this.http.get(this.CommonBaseUrl + this.signOut);
   }
@@ -796,7 +803,7 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
     );
   }
   GetInstaAllRules(body: any) {
-    return this.http.post<RuleWithCount>(this.instagramBaseUrl + this.getFbRule, body);
+    return this.http.post<RuleWithCount>(this.InstagramBaseUrl + this.getFbRule, body);
   }
   GetWslRules(body: any) {
     return this.http.post<RuleWithCount>(this.whatsappBaseUrl + this.getFbRule, body);
@@ -832,7 +839,7 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
     return this.http.post(this.autoresponderbaseurl + this.addRule, addrule);
   }
   AddInstaRule(addrule: any) {
-    return this.http.post(this.instagramBaseUrl + this.addRule, addrule);
+    return this.http.post(this.InstagramBaseUrl + this.addRule, addrule);
   }
   AddLinkdinRule(addrule: any) {
     return this.http.post(this.linkdinBaseUrl + this.addRule, addrule);
@@ -897,7 +904,7 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
     return this.http.get(url);
   }
   DeleteInstaRules(delRules: any) {
-    const url = `${this.instagramBaseUrl}${this.softDeleteFb}?Id=${delRules}`;
+    const url = `${this.InstagramBaseUrl}${this.softDeleteFb}?Id=${delRules}`;
     return this.http.get(url);
   }
 
@@ -1289,7 +1296,7 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
     return this.http.get<any>(url, {});
   }
   GetInstaTemplateStatus(id: any, status: boolean) {
-    const url = `${this.instagramBaseUrl}${this.getTemplateStatus}?templateId=${id}&status=${status}`;
+    const url = `${this.InstagramBaseUrl}${this.getTemplateStatus}?templateId=${id}&status=${status}`;
     return this.http.get<any>(url, {});
   }
   GetLinkedinTemplateStatus(id: any, status: boolean) {
@@ -1326,7 +1333,7 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
     return this.http.get<any>(url, {});
   }
   DeleteInstaTemplate(id: any) {
-    const url = `${this.instagramBaseUrl}${this.deleteTemplate}?templateId=${id}`;
+    const url = `${this.InstagramBaseUrl}${this.deleteTemplate}?templateId=${id}`;
     return this.http.get<any>(url, {});
   }
   DeleteLinkedinTemplate(id: any) {
@@ -1371,7 +1378,7 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
   }
 
   GetInstaRuleStatus(id: any, status: boolean) {
-    const url = `${this.instagramBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
+    const url = `${this.InstagramBaseUrl}${this.getRuleStatus}?Id=${id}&status=${status}`;
     return this.http.get<any>(url, {});
   }
   GetWaRuleStatus(id: any, status: boolean) {
