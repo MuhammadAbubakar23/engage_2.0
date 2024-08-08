@@ -30,7 +30,7 @@ export class SignalRService {
   temporaryDMObject: any;
   token = sessionStorage.getItem('token');
   signalRStatus = sessionStorage.getItem('signalRStatus');
-  companyId: number = 649;
+  companyId: number = 651;
   baseUrl: string = '';
   public hubconnection!: signalR.HubConnection;
   public connectionId!: string;

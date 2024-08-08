@@ -55,7 +55,7 @@ export class AnalyticsMenuComponent implements OnInit {
     this.activeChannel = window.location.origin;
 
     if (this.activeChannel == 'http://localhost:4200') {
-      this.channelname = 'local';
+      this.channelname = 'KE';
     } else if (this.activeChannel == 'https://engage.jazz.com.pk') {
       this.channelname = 'Jazz';
     } else if (this.activeChannel == 'https://keportal.enteract.live') {
@@ -71,198 +71,198 @@ export class AnalyticsMenuComponent implements OnInit {
     } else if (this.activeChannel == 'https://uiengagerox.enteract.app') {
       this.channelname = 'stagging';
     }
-    this._menuS.getAnalyticsMenu.subscribe((res) => {
-      this.analyticeReport = res;
-    })
-
+    // this._menuS.getAnalyticsMenu.subscribe((res) => {
+    //   this.analyticeReport = res;
+    // })
+  this.getmenu()
   }
-  getmenu(menus: any) {
+  getmenu() {
     // this.analyticeReport=menus;
-    // if (this.channelname == 'local') {
+    if (this.channelname == 'local') {
 
-    // }
-    //  else if (this.channelname == 'stagging') {
-    //   if(this.showOnlyRawDataReport.includes(this.restrictedAgent)){
-    //     this.analyticeReport=[
-    //       { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
-    //       { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
-    //       { name: 'BOT Interactions', link: '/analytics/handled-bot' },
-    //       {
-    //         name: 'Live Agent Interactions',
-    //         link: '/analytics/route-to-agent',
-    //       },
-    //     ]
-    //   }
-    //   else{
-    //     this.analyticeReport = [
-    //       { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
-    //       { name: 'Interaction Report', link: '/analytics/interaction-report' },
-    //       { name: 'BOT Interactions', link: '/analytics/handled-bot' },
-    //       { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
-    //       { name: 'Unique Interactions', link: '/analytics/unique-customers' },
-    //       { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
-    //       {
-    //         name: 'Inbound/Outbound Report',
-    //         link: '/analytics/inbound-outbound-report',
-    //       },
-    //       {
-    //         name: 'Agent Performance Report',
-    //         link: '/analytics/performance-report',
-    //       },
-    //       { name: 'Shift Report', link: '/analytics/shift-report' },
-    //       // { name: 'Query Tag Report', link: '/analytics/querytag-report' },
-    //       { name: 'Tag Report', link: '/analytics/tag-report' },
+    }
+     else if (this.channelname == 'stagging') {
+      if(this.showOnlyRawDataReport.includes(this.restrictedAgent)){
+        this.analyticeReport=[
+          { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+          { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+          { name: 'BOT Interactions', link: '/analytics/handled-bot' },
+          {
+            name: 'Live Agent Interactions',
+            link: '/analytics/route-to-agent',
+          },
+        ]
+      }
+      else{
+        this.analyticeReport = [
+          { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+          { name: 'Interaction Report', link: '/analytics/interaction-report' },
+          { name: 'BOT Interactions', link: '/analytics/handled-bot' },
+          { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
+          { name: 'Unique Interactions', link: '/analytics/unique-customers' },
+          { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+          {
+            name: 'Inbound/Outbound Report',
+            link: '/analytics/inbound-outbound-report',
+          },
+          {
+            name: 'Agent Performance Report',
+            link: '/analytics/performance-report',
+          },
+          { name: 'Shift Report', link: '/analytics/shift-report' },
+          // { name: 'Query Tag Report', link: '/analytics/querytag-report' },
+          { name: 'Tag Report', link: '/analytics/tag-report' },
 
-    //       { name: 'Facebook Report', link: '/analytics/facebook-report' },
-    //       { name: 'Twitter Report', link: '/analytics/twitter-report' },
-    //       { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
-    //       { name: 'Instagram Report', link: '/analytics/instagram-report' },
-    //     ];
-    //   }
+          { name: 'Facebook Report', link: '/analytics/facebook-report' },
+          { name: 'Twitter Report', link: '/analytics/twitter-report' },
+          { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
+          { name: 'Instagram Report', link: '/analytics/instagram-report' },
+        ];
+      }
 
-    // }
-    //  else if (this.channelname == 'Jazz') {
-    //   if (this.showOnlySocialRawDataReport.includes(this.restrictedAgent)) {
-    //     this.analyticeReport = [
-    //       { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
-    //     ];
-    //   }
-    //   else if(this.showOnlyRawDataReport.includes(this.restrictedAgent)){
-    //      this.analyticeReport=[
-    //       { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
-    //       { name: 'BOT Interactions', link: '/analytics/handled-bot' },
-    //       {
-    //         name: 'Live Agent Interactions',
-    //         link: '/analytics/route-to-agent',
-    //       },
-    //       { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
-    //      ]
-    //   }
-    //    else {
-    //     this.analyticeReport = [
-    //       { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+    }
+     else if (this.channelname == 'Jazz') {
+      if (this.showOnlySocialRawDataReport.includes(this.restrictedAgent)) {
+        this.analyticeReport = [
+          { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+        ];
+      }
+      else if(this.showOnlyRawDataReport.includes(this.restrictedAgent)){
+         this.analyticeReport=[
+          { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+          { name: 'BOT Interactions', link: '/analytics/handled-bot' },
+          {
+            name: 'Live Agent Interactions',
+            link: '/analytics/route-to-agent',
+          },
+          { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+         ]
+      }
+       else {
+        this.analyticeReport = [
+          { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
 
-    //       { name: 'BOT Interactions', link: '/analytics/handled-bot' },
-    //       {
-    //         name: 'Live Agent Interactions',
-    //         link: '/analytics/route-to-agent',
-    //       },
-    //       { name: 'Unique Interactions', link: '/analytics/unique-customers' },
-    //       { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
-    //       {
-    //         name: 'Inbound/Outbound Report',
-    //         link: '/analytics/inbound-outbound-report',
-    //       },
-    //       {
-    //         name: 'Agent Performance Report',
-    //         link: '/analytics/performance-report',
-    //       },
-    //       { name: 'Shift Report', link: '/analyticsKs/shift-report' },
-    //     ];
-    //   }
-    // } else if (this.channelname == 'KE') {
-    //   if(this.keAgentShowallReportsExceptAgentPrefomanceReport.includes(this.restrictedAgent)){
-    //     this.analyticeReport = [
-    //       {
-    //         name: 'Inbound/Outbound Report',
-    //         link: '/analytics/inbound-outbound-report',
-    //       },
-    //       // {
-    //       //   name: 'Agent Performance Report',
-    //       //   link: '/analytics/performance-report',
-    //       // },
-    //       { name: 'Interaction Report',
-    //         link: '/analytics/interaction-report'
-    //       },
-    //       { name: 'Shift Report',
-    //         link: '/analytics/shift-report'
-    //      },
-    //       { name: 'Tag Report', link: '/analytics/tag-report' },
+          { name: 'BOT Interactions', link: '/analytics/handled-bot' },
+          {
+            name: 'Live Agent Interactions',
+            link: '/analytics/route-to-agent',
+          },
+          { name: 'Unique Interactions', link: '/analytics/unique-customers' },
+          { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+          {
+            name: 'Inbound/Outbound Report',
+            link: '/analytics/inbound-outbound-report',
+          },
+          {
+            name: 'Agent Performance Report',
+            link: '/analytics/performance-report',
+          },
+          { name: 'Shift Report', link: '/analyticsKs/shift-report' },
+        ];
+      }
+    } else if (this.channelname == 'KE') {
+      if(this.keAgentShowallReportsExceptAgentPrefomanceReport.includes(this.restrictedAgent)){
+        this.analyticeReport = [
+          {
+            name: 'Inbound/Outbound Report',
+            link: '/analytics/inbound-outbound-report',
+          },
+          // {
+          //   name: 'Agent Performance Report',
+          //   link: '/analytics/performance-report',
+          // },
+          { name: 'Interaction Report',
+            link: '/analytics/interaction-report'
+          },
+          { name: 'Shift Report',
+            link: '/analytics/shift-report'
+         },
+          { name: 'Tag Report', link: '/analytics/tag-report' },
 
-    //       { name: 'Facebook Report', link: '/analytics/facebook-report' },
-    //       { name: 'Twitter Report', link: '/analytics/twitter-report' },
-    //       { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
-    //       { name: 'Instagram Report', link: '/analytics/instagram-report' },
-    //     ];
-    //   }
-    //   else{
-    //     this.analyticeReport = [
-    //       {
-    //         name: 'Inbound/Outbound Report',
-    //         link: '/analytics/inbound-outbound-report',
-    //       },
-    //       {
-    //         name: 'Agent Performance Report',
-    //         link: '/analytics/performance-report',
-    //       },
-    //       { name: 'Interaction Report',
-    //         link: '/analytics/interaction-report'
-    //       },
-    //       { name: 'Shift Report',
-    //         link: '/analytics/shift-report'
-    //      },
-    //       { name: 'Tag Report', link: '/analytics/tag-report' },
+          { name: 'Facebook Report', link: '/analytics/facebook-report' },
+          { name: 'Twitter Report', link: '/analytics/twitter-report' },
+          { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
+          { name: 'Instagram Report', link: '/analytics/instagram-report' },
+        ];
+      }
+      else{
+        this.analyticeReport = [
+          {
+            name: 'Inbound/Outbound Report',
+            link: '/analytics/inbound-outbound-report',
+          },
+          {
+            name: 'Agent Performance Report',
+            link: '/analytics/performance-report',
+          },
+          { name: 'Interaction Report',
+            link: '/analytics/interaction-report'
+          },
+          { name: 'Shift Report',
+            link: '/analytics/shift-report'
+         },
+          { name: 'Tag Report', link: '/analytics/tag-report' },
 
-    //       { name: 'Facebook Report', link: '/analytics/facebook-report' },
-    //       { name: 'Twitter Report', link: '/analytics/twitter-report' },
-    //       { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
-    //       { name: 'Instagram Report', link: '/analytics/instagram-report' },
-    //     ];
-    //   }
+          { name: 'Facebook Report', link: '/analytics/facebook-report' },
+          { name: 'Twitter Report', link: '/analytics/twitter-report' },
+          { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
+          { name: 'Instagram Report', link: '/analytics/instagram-report' },
+        ];
+      }
 
-    // } else if (this.channelname == 'ttpl') {
-    //   this.analyticeReport = [
-    //     { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
-    //     { name: 'BOT Interactions', link: '/analytics/handled-bot' },
-    //     { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
-    //     { name: 'Unique Interactions', link: '/analytics/unique-customers' },
-    //     { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
-    //     {
-    //       name: 'Inbound/Outbound Report',
-    //       link: '/analytics/inbound-outbound-report',
-    //     },
-    //     {
-    //       name: 'Agent Performance Report',
-    //       link: '/analytics/performance-report',
-    //     },
-    //     { name: 'Shift Report', link: '/analytics/shift-report' },
-    //   ];
-    // } else if (this.channelname == 'Morinaga') {
-    //   this.analyticeReport = [
-    //     { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
-    //     { name: 'BOT Interactions', link: '/analytics/handled-bot' },
-    //     { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
-    //     { name: 'Unique Interactions', link: '/analytics/unique-customers' },
-    //     { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
-    //     {
-    //       name: 'Inbound/Outbound Report',
-    //       link: '/analytics/inbound-outbound-report',
-    //     },
-    //     {
-    //       name: 'Agent Performance Report',
-    //       link: '/analytics/performance-report',
-    //     },
-    //     { name: 'Shift Report', link: '/analytics/shift-report' },
-    //     { name: 'Tag Report', link: '/analytics/tag-report' },
-    //   ];
-    // } else if (this.channelname == 'Bazaar') {
-    //   this.analyticeReport = [
-    //     { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
-    //     { name: 'Interaction Report', link: '/analytics/interaction-report' },
-    //     { name: 'BOT Interactions', link: '/analytics/handled-bot' },
-    //     { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
-    //     { name: 'Unique Interactions', link: '/analytics/unique-customers' },
-    //     { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
-    //     {
-    //       name: 'Inbound/Outbound Report',
-    //       link: '/analytics/inbound-outbound-report',
-    //     },
-    //     {
-    //       name: 'Agent Performance Report',
-    //       link: '/analytics/performance-report',
-    //     },
-    //     { name: 'Shift Report', link: '/analytics/shift-report' },
-    //   ];
-    // }
+    } else if (this.channelname == 'ttpl') {
+      this.analyticeReport = [
+        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+        { name: 'BOT Interactions', link: '/analytics/handled-bot' },
+        { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
+        { name: 'Unique Interactions', link: '/analytics/unique-customers' },
+        { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+        {
+          name: 'Inbound/Outbound Report',
+          link: '/analytics/inbound-outbound-report',
+        },
+        {
+          name: 'Agent Performance Report',
+          link: '/analytics/performance-report',
+        },
+        { name: 'Shift Report', link: '/analytics/shift-report' },
+      ];
+    } else if (this.channelname == 'Morinaga') {
+      this.analyticeReport = [
+        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+        { name: 'BOT Interactions', link: '/analytics/handled-bot' },
+        { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
+        { name: 'Unique Interactions', link: '/analytics/unique-customers' },
+        { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+        {
+          name: 'Inbound/Outbound Report',
+          link: '/analytics/inbound-outbound-report',
+        },
+        {
+          name: 'Agent Performance Report',
+          link: '/analytics/performance-report',
+        },
+        { name: 'Shift Report', link: '/analytics/shift-report' },
+        { name: 'Tag Report', link: '/analytics/tag-report' },
+      ];
+    } else if (this.channelname == 'Bazaar') {
+      this.analyticeReport = [
+        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+        { name: 'Interaction Report', link: '/analytics/interaction-report' },
+        { name: 'BOT Interactions', link: '/analytics/handled-bot' },
+        { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
+        { name: 'Unique Interactions', link: '/analytics/unique-customers' },
+        { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+        {
+          name: 'Inbound/Outbound Report',
+          link: '/analytics/inbound-outbound-report',
+        },
+        {
+          name: 'Agent Performance Report',
+          link: '/analytics/performance-report',
+        },
+        { name: 'Shift Report', link: '/analytics/shift-report' },
+      ];
+    }
   }
 }
