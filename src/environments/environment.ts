@@ -218,6 +218,7 @@ export const environment = {
       wallboardCSATReport: 'CommonReport/GetCurrentDayCSATReport',
       GetMonthToDateServiceLevel: 'CommonReport/GetMonthToDateServiceLevel',
       getPreviousInteractionDashboard: 'AgentReport/GetPreviousInteractionDashboard',
+      SlaResponder:'SLAPolicies/GetByWing'
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',

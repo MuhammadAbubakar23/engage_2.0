@@ -197,6 +197,7 @@ export class CommonDataService {
   getTagsByComayId = environment.links.console.getTagsByComayId;
   getAllTags = environment.links.console.defaultTags;
   getPolicyByWing = environment.links.console.getPolicyByWing;
+  SlaResponder=environment.links.console.SlaResponder
   // ReportsBaseUrl = environment.ReportsBaseUrl;
   // rules
   deleteRules = environment.links.console.deleteRules;
@@ -1472,10 +1473,11 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
       body
     );
   }
-
   getAdminPenalMenus(){
-    
     return this.http.get(this.adminPanelBaseUrl+this.endPoint + this.AdminPanelToken)
+  }
+  GetSlaReponder(slug:any){
+    return this.http.get(`${this.ConsoleBaseUrl}${this.SlaResponder}?Id=${slug}`)
   }
 
 }

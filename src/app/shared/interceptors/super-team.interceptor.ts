@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { StorageService } from '../services/storage/storage.service';
 @Injectable()
 export class SuperTeamInterceptor implements HttpInterceptor {
-  companyId: number = 651;
+  companyId: number = 649;
   baseUrl: string = '';
   constructor(private storage: StorageService) {}
   intercept(

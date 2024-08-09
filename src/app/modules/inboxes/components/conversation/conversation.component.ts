@@ -72,6 +72,9 @@ export class ConversationComponent implements OnInit {
   hasAttachementeSerachPermission: boolean = false;
   hasSearchInboxPermission: boolean = false;
   hasSearchFromPermission: boolean = false;
+  priorityHigh:any
+  priorityUrgent:any
+  priorityMedium:any
   constructor(
     private fetchId: FetchIdService,
     private SpinnerService: NgxSpinnerService,
@@ -130,6 +133,13 @@ export class ConversationComponent implements OnInit {
 
     this.wings = this.getWing.wings || sessionStorage.getItem('defaultWings');
     const date_fillter = sessionStorage.getItem('datefillter');
+
+    // Sla Policies
+    this.commondata.GetSlaReponder(this.wings).subscribe((res:any)=>{
+      debugger
+      const SLAPolicies=res
+    })
+
     if (date_fillter) {
       this.filterDtolocal = JSON.parse(date_fillter);
     }
