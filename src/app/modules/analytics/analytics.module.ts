@@ -12,16 +12,14 @@ import { ExcelService } from './services/excel.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { InteractionReportComponent } from './components/interaction-report/interaction-report.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { WallboardDashboardComponent } from './components/wallboard-dashboard/wallboard-dashboard.component';
-import { AgentScorecardDashboardComponent } from './components/agent-scorecard-dashboard/agent-scorecard-dashboard.component';
-import { EmialReportComponent } from './components/emial-report/emial-report.component';
-import { LiveInteractionReportComponent } from './components/live-interaction-report/live-interaction-report.component';
+
 
 @NgModule({
   declarations: [
     AnalyticsComponent,
     ExecutiveDashboardHeaderComponent,
     LiveMonitoringHeaderComponent,
+  
 
     // InteractionReportComponent,
   ],

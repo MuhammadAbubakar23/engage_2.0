@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { HeaderService } from 'src/app/shared/services/header.service';
+import { SharedModule } from "../../../../shared/shared.module";
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxSpinnerModule],
+  imports: [CommonModule, FormsModule, NgxSpinnerModule, SharedModule],
   selector: 'app-social-raw-data',
   templateUrl: './social-raw-data.component.html',
   styleUrls: ['./social-raw-data.component.scss'],
@@ -28,6 +29,11 @@ export class SocialRawDataComponent implements OnInit {
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
+  isChannelShow: any;
+  channelOptions:any
+  activeChannel: any;
+  slectedChannelsName:any[]=[]
+searchText: any;
   constructor(
     private commonService: CommonDataService,
     private datePipe: DatePipe,
@@ -35,6 +41,43 @@ export class SocialRawDataComponent implements OnInit {
     private SpinnerService: NgxSpinnerService
   ) {}
   ngOnInit(): void {
+    this.activeChannel = window.location.origin
+    if (this.activeChannel == 'https://waengage.enteract.live') {
+      this.isChannelShow = "morinaga";
+      this.getChannel()
+    }
+    else if (this.activeChannel == 'https://keportal.enteract.live') {
+      this.isChannelShow = 'KE';
+      this.getChannel()
+    }
+    else if (this.activeChannel == 'https://engageui.enteract.live') {
+      this.isChannelShow = 'damo';
+      this.getChannel()
+    }
+    else if (this.activeChannel == 'https://tpplui.enteract.live') {
+      this.isChannelShow = 'ttpl';
+      this.getChannel()
+    }
+    else if (this.activeChannel == 'https://engage.jazz.com.pk') {
+      this.isChannelShow = 'jazz'
+      this.getChannel()
+    }
+    else if (this.activeChannel == 'https://uiengage.enteract.app') {
+      this.isChannelShow = 'stagging'
+      this.getChannel()
+    }
+    else if (this.activeChannel == 'https://uiengagerox.enteract.app') {
+      this.isChannelShow = 'stagging'
+      this.getChannel()
+    }
+    else if (this.activeChannel == 'https://bzengage.enteract.live') {
+      this.isChannelShow = 'Bazaar',
+        this.getChannel()
+    }
+    else {
+      this.isChannelShow = 'loc'
+      this.getChannel()
+    }
     const newObj = {
       title: 'Social Raw Data',
       url: '/analytics/social-raw-data',
@@ -88,6 +131,7 @@ export class SocialRawDataComponent implements OnInit {
       toDate: this.toDate,
       pageNumber: this.pageNumber,
       pageSize: this.itemperPage,
+   
     };
     if (this.fromDate <= this.toDate) {
       this.SpinnerService.show();
@@ -119,6 +163,7 @@ export class SocialRawDataComponent implements OnInit {
       toDate: this.toDate,
       pageNumber: 1,
       pageSize: 30,
+
     };
     this.downloading = true;
     this.reloadComponent('downloading');
@@ -170,5 +215,94 @@ export class SocialRawDataComponent implements OnInit {
         this.toastermessage = false;
       }, 4000);
     }
+  }
+  getChannel() {
+    if (this.isChannelShow == "morinaga") {
+      this.channelOptions = [
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+      ];
+    }
+    if (this.isChannelShow == "jazz") {
+      this.channelOptions = [
+        { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+        { id: '18', name: 'Playstore', icon: 'fa-brands fa-google-play pe-2', isSelected: false },
+      ];
+    }
+    else if (this.isChannelShow == "ttpl") {
+      this.channelOptions = [
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+      ];
+    }
+    else if (this.isChannelShow == "KE") {
+      this.channelOptions = [
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+      ];
+    }
+    else if (this.isChannelShow == "damo") {
+      this.channelOptions = [
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+      ];
+    }
+    else if (this.isChannelShow == 'loc') {
+      this.channelOptions = [
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+        // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+        // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+        // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+        // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
+        { id: '18', name: 'Playstore', icon: 'fa-brands fa-google-play pe-2', isSelected: false },
+      ];
+    }
+    else if (this.isChannelShow == 'stagging') {
+      this.channelOptions = [
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+        // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+        // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+        // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+        // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
+      ];
+    }
+    if (this.isChannelShow == 'Bazaar') {
+      this.channelOptions = [
+        { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+        { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+      ];
+    };
+  }
+  checkUncheckChannels(channelName:any){
+    debugger
+    const index= this.slectedChannelsName.findIndex((item:any)=>item==channelName)
+    // const index = this.selectedChannel.findIndex((x:any)=>x == channel.name)
+    if(index != -1){
+      this.slectedChannelsName.splice(index,1)
+    }
+    else{
+      this.slectedChannelsName.push(channelName)
+    }
+    this.GetSocialRawData()
+console.log('this.selectedChannelSName===>',this.slectedChannelsName)
   }
 }

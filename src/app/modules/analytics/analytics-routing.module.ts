@@ -87,6 +87,11 @@ const routes: Routes = [
       loadComponent: () => import('./components/whatsapp-report/whatsapp-report.component').then(c => c.WhatsappReportComponent),
     },
     {
+      path:'cast-report',
+      loadComponent:()=>import ('./components/csat-raw-data-report/csat-raw-data-report.component').then(c=>c.CsatRawDataReportComponent)
+
+    },
+    {
       path:'social-raw-data',
       loadComponent: () => import('./components/social-raw-data/social-raw-data.component').then(c => c.SocialRawDataComponent),
     },
@@ -135,6 +140,7 @@ const routes: Routes = [
       path:'live-interaction-report',
       loadComponent:()=>import('./components/live-interaction-report/live-interaction-report.component').then(c=>c.LiveInteractionReportComponent)
     },
+
   ]
   }
 ];

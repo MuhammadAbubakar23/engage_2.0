@@ -74,16 +74,16 @@ export class AnalyticsMenuComponent implements OnInit {
     // this._menuS.getAnalyticsMenu.subscribe((res) => {
     //   this.analyticeReport = res;
     // })
-  this.getmenu()
+    this.getmenu()
   }
   getmenu() {
     // this.analyticeReport=menus;
     if (this.channelname == 'local') {
 
     }
-     else if (this.channelname == 'stagging') {
-      if(this.showOnlyRawDataReport.includes(this.restrictedAgent)){
-        this.analyticeReport=[
+    else if (this.channelname == 'stagging') {
+      if (this.showOnlyRawDataReport.includes(this.restrictedAgent)) {
+        this.analyticeReport = [
           { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
           { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
           { name: 'BOT Interactions', link: '/analytics/handled-bot' },
@@ -93,7 +93,7 @@ export class AnalyticsMenuComponent implements OnInit {
           },
         ]
       }
-      else{
+      else {
         this.analyticeReport = [
           { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
           { name: 'Interaction Report', link: '/analytics/interaction-report' },
@@ -121,14 +121,14 @@ export class AnalyticsMenuComponent implements OnInit {
       }
 
     }
-     else if (this.channelname == 'Jazz') {
+    else if (this.channelname == 'Jazz') {
       if (this.showOnlySocialRawDataReport.includes(this.restrictedAgent)) {
         this.analyticeReport = [
           { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
         ];
       }
-      else if(this.showOnlyRawDataReport.includes(this.restrictedAgent)){
-         this.analyticeReport=[
+      else if (this.showOnlyRawDataReport.includes(this.restrictedAgent)) {
+        this.analyticeReport = [
           { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
           { name: 'BOT Interactions', link: '/analytics/handled-bot' },
           {
@@ -136,9 +136,9 @@ export class AnalyticsMenuComponent implements OnInit {
             link: '/analytics/route-to-agent',
           },
           { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
-         ]
+        ]
       }
-       else {
+      else {
         this.analyticeReport = [
           { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
 
@@ -161,8 +161,9 @@ export class AnalyticsMenuComponent implements OnInit {
         ];
       }
     } else if (this.channelname == 'KE') {
-      if(this.keAgentShowallReportsExceptAgentPrefomanceReport.includes(this.restrictedAgent)){
+      if (this.keAgentShowallReportsExceptAgentPrefomanceReport.includes(this.restrictedAgent)) {
         this.analyticeReport = [
+
           {
             name: 'Inbound/Outbound Report',
             link: '/analytics/inbound-outbound-report',
@@ -171,12 +172,14 @@ export class AnalyticsMenuComponent implements OnInit {
           //   name: 'Agent Performance Report',
           //   link: '/analytics/performance-report',
           // },
-          { name: 'Interaction Report',
+          {
+            name: 'Interaction Report',
             link: '/analytics/interaction-report'
           },
-          { name: 'Shift Report',
+          {
+            name: 'Shift Report',
             link: '/analytics/shift-report'
-         },
+          },
           { name: 'Tag Report', link: '/analytics/tag-report' },
 
           { name: 'Facebook Report', link: '/analytics/facebook-report' },
@@ -185,8 +188,12 @@ export class AnalyticsMenuComponent implements OnInit {
           { name: 'Instagram Report', link: '/analytics/instagram-report' },
         ];
       }
-      else{
+      else {
+
         this.analyticeReport = [
+          { name: 'CSAT Raw Data Report', link: '/analytics/cast-report' },
+          { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+          { name: 'Unique Interactions', link: '/analytics/unique-customers' },
           {
             name: 'Inbound/Outbound Report',
             link: '/analytics/inbound-outbound-report',
@@ -195,12 +202,14 @@ export class AnalyticsMenuComponent implements OnInit {
             name: 'Agent Performance Report',
             link: '/analytics/performance-report',
           },
-          { name: 'Interaction Report',
+          {
+            name: 'Interaction Report',
             link: '/analytics/interaction-report'
           },
-          { name: 'Shift Report',
+          {
+            name: 'Shift Report',
             link: '/analytics/shift-report'
-         },
+          },
           { name: 'Tag Report', link: '/analytics/tag-report' },
 
           { name: 'Facebook Report', link: '/analytics/facebook-report' },
