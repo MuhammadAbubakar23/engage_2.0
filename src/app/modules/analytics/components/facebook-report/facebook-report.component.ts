@@ -6,12 +6,13 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
+import { SharedModule } from "../../../../shared/shared.module";
 @Component({
   standalone: true,
   selector: 'app-facebook-report',
   templateUrl: './facebook-report.component.html',
   styleUrls: ['./facebook-report.component.scss'],
-  imports: [CommonModule, FormsModule, NgxSpinnerModule,LayoutsModule],
+  imports: [CommonModule, FormsModule, NgxSpinnerModule, LayoutsModule, SharedModule],
 })
 export class FacebookReportComponent implements OnInit {
   @ViewChild('radioInput5', { static: false })
@@ -126,6 +127,7 @@ export class FacebookReportComponent implements OnInit {
   LTPS: any;
   LtotalSumAudienceEngagement: any;
   totalSumOfAudience: any;
+  searchText:string=''
   constructor(
     private headerServices: HeaderService,
     private spinerServices: NgxSpinnerService,
@@ -142,6 +144,7 @@ export class FacebookReportComponent implements OnInit {
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
     this.getAllfeacebookData();
     this.getTopFiveCustomers();
+    this.GetAllCompanyWings()
     // this.getDamiChart()
   }
   date_pagination(days: number) {
@@ -172,6 +175,7 @@ export class FacebookReportComponent implements OnInit {
       from: this.startDate,
       to: this.enddate,
       lastPostId: 0,
+       wings:this.slectedWings.toString() || ''
     };
     this.audiencelikesCounts = [];
     this.audiencelikesdate = [];
@@ -1018,7 +1022,8 @@ export class FacebookReportComponent implements OnInit {
       pageNumber: 0,
       pageSize: 0,
       from: this.startDate,
-      to: this.enddate
+      to: this.enddate,
+       wings:this.slectedWings.toString() || ''
     };
     this.commandataSerivecs.GetfacebookProfile(obj).subscribe((res: any) => {
       this.cutomerdata = res;
@@ -1072,4 +1077,27 @@ export class FacebookReportComponent implements OnInit {
       }
     });
   }
+  AllWingsList:any
+  slectedWings:any[]=[]
+  GetAllCompanyWings(){
+    this.commandataSerivecs.GetCompanyWingsForReporting().subscribe((res:any)=>{
+      const wingresponse=res
+      this.AllWingsList=wingresponse
+    })
+  }
+
+
+checkUnCheckWings(wing:any){
+const index =this.slectedWings.findIndex((item:any)=>item==wing)
+if(index != -1){
+this.slectedWings.splice(index,1)
+}
+else{
+this.slectedWings.push(wing)
+}
+this.getAllfeacebookData()
+this.getTopFiveCustomers()
+
+}
+
 }

@@ -75,6 +75,7 @@ export class AgentPerformanceReportComponent implements OnInit {
     const newObj = { title: 'Agent Performance Report', url: '/analytics/performance-report' };
     this._hS.setHeader(newObj);
     this.makeChartResponsive();
+    this.GetAllCompanyWings()
   }
   getBaseurl() {
     this.activeChannel = window.location.origin
@@ -226,7 +227,8 @@ export class AgentPerformanceReportComponent implements OnInit {
       fromDate: this.startDate,
       toDate: this.endDate,
       agents: this.selectedTagBy,
-      channels: this.AllChannels
+      channels: this.AllChannels,
+      wings:this.slectedWings.toString() || ''
     };
     this.SpinnerService.show();
     this.commonService.AddAgentPerformance(requestData).subscribe(
@@ -576,4 +578,24 @@ this. fillterdata= this.csatArray.filter((item:any)=>item.value!==0)
     };
     option && this.CSATGraph.setOption(option);
   }
+  AllWingsList:any
+  slectedWings:any[]=[]
+  GetAllCompanyWings(){
+    this.commonService.GetCompanyWingsForReporting().subscribe((res:any)=>{
+      const wingresponse=res
+      this.AllWingsList=wingresponse
+    })
+  }
+  checkUnCheckWings(wing:any){
+    const index =this.slectedWings.findIndex((item:any)=>item==wing)
+   if(index != -1){
+    this.slectedWings.splice(index,1)
+   }
+   else{
+    this.slectedWings.push(wing)
+   }
+   this.addAgentGraph()
+   
+  }
+  
 }

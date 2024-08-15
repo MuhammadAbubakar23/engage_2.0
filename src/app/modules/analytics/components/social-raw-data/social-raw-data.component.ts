@@ -131,6 +131,7 @@ searchText: any;
       toDate: this.toDate,
       pageNumber: this.pageNumber,
       pageSize: this.itemperPage,
+       wings:this.slectedWings.toString() || ''
    
     };
     if (this.fromDate <= this.toDate) {
@@ -163,7 +164,7 @@ searchText: any;
       toDate: this.toDate,
       pageNumber: 1,
       pageSize: 30,
-
+ wings:this.slectedWings.toString() || ''
     };
     this.downloading = true;
     this.reloadComponent('downloading');
@@ -303,6 +304,28 @@ searchText: any;
       this.slectedChannelsName.push(channelName)
     }
     this.GetSocialRawData()
-console.log('this.selectedChannelSName===>',this.slectedChannelsName)
+
   }
+  AllWingsList:any
+  slectedWings:any[]=[]
+  GetAllCompanyWings(){
+    this.commonService.GetCompanyWingsForReporting().subscribe((res:any)=>{
+      const wingresponse=res
+      this.AllWingsList=wingresponse
+    })
+  }
+
+
+checkUnCheckWings(wing:any){
+const index =this.slectedWings.findIndex((item:any)=>item==wing)
+if(index != -1){
+this.slectedWings.splice(index,1)
+}
+else{
+this.slectedWings.push(wing)
+}
+this.GetSocialRawData()
+
+}
+
 }

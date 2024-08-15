@@ -144,6 +144,7 @@ export class ShiftReportComponent implements OnInit {
     this.getAgentsTeamList();
     this.makeChartResponsive();
     this.getTableStyle()
+    this.GetAllCompanyWings()
     if(this.selectedName==''){
       
       this.selectedName="Morning"
@@ -195,6 +196,7 @@ export class ShiftReportComponent implements OnInit {
       toDate: this.endDate,
       shiftId: this.shiftime,
       tags: this.changedateintostring,
+      wings:this.slectedWings.toString() || ''
     };
 
     if (this.startDate && this.endDate) {
@@ -514,4 +516,27 @@ value:any
       }
     });
   }
+  AllWingsList:any
+  slectedWings:any[]=[]
+  GetAllCompanyWings(){
+    this.commandataService.GetCompanyWingsForReporting().subscribe((res:any)=>{
+      const wingresponse=res
+      this.AllWingsList=wingresponse
+    })
+  }
+
+
+checkUnCheckWings(wing:any){
+const index =this.slectedWings.findIndex((item:any)=>item==wing)
+if(index != -1){
+this.slectedWings.splice(index,1)
+}
+else{
+this.slectedWings.push(wing)
+}
+this.getShfitReport()
+console.log("slectedWings===>",this.slectedWings)
+}
+
+
 }

@@ -50,8 +50,8 @@ export class InteractionReportComponent implements OnInit {
   negativeCount: number = 0;
   neutralCount: number = 0;
   csatArray: any[] = [];
-  CSATobj: any;
   data: any[] = [];
+  CSATobj: any;
   interactionData: any[] = [];
   _legend: any[] = [];
   newArray: any[] = [];
@@ -103,8 +103,7 @@ export class InteractionReportComponent implements OnInit {
     this.makeChartResponsive();
     this.getListUser();
     this.GetAllChannels()
-    // charts
-    // this.pieChart()
+    this.GetAllCompanyWings()
   }
    platformIconMapping :any= {
       Facebook: 'fa-brands fa-facebook fs-4 navy',
@@ -252,6 +251,8 @@ export class InteractionReportComponent implements OnInit {
       toDate: this.endDate,
       agents: this.selectedTagBy,
       channels: this.selectedChannel.toString() || '',
+      wings:this.slectedWings.toString() || ''
+
     };
     this.SpinnerService.show();
     this.interactionStats = null;
@@ -513,6 +514,7 @@ export class InteractionReportComponent implements OnInit {
       toDate: this.endDate,
       agents: this.selectedTagByEmail,
       plateForm: this.selectedChannel.toString() || '',
+      wings:this.slectedWings.toString() ||''
     };
     this.csatArray = [];
     this.fillterdata=[]
@@ -809,4 +811,26 @@ export class InteractionReportComponent implements OnInit {
       }
     });
   }
+  AllWingsList:any
+  slectedWings:any[]=[]
+  GetAllCompanyWings(){
+    this.commonData.GetCompanyWingsForReporting().subscribe((res:any)=>{
+      const wingresponse=res
+      this.AllWingsList=wingresponse
+    })
+  }
+
+
+checkUnCheckWings(wing:any){
+const index =this.slectedWings.findIndex((item:any)=>item==wing)
+if(index != -1){
+this.slectedWings.splice(index,1)
+}
+else{
+this.slectedWings.push(wing)
+}
+
+
+}
+
 }

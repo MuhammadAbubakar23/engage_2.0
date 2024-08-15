@@ -6,12 +6,13 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { ExcelService } from '../../services/excel.service';
+import { SharedModule } from "../../../../shared/shared.module";
 @Component({
   selector: 'app-linked-in-report',
   templateUrl: './linked-in-report.component.html',
   styleUrls: ['./linked-in-report.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxSpinnerModule],
+  imports: [CommonModule, FormsModule, NgxSpinnerModule, SharedModule],
 })
 export class LinkedInReportComponent implements OnInit {
   @ViewChild('radioInput5',{static:false}) 
@@ -48,6 +49,7 @@ export class LinkedInReportComponent implements OnInit {
   LinkedInReport: any;
   followers: any;
   linkedfollowerTotalcount: any;
+  searchText:string=''
   constructor(
     private _hS: HeaderService,
     private commonDataService: CommonDataService,
@@ -122,6 +124,9 @@ export class LinkedInReportComponent implements OnInit {
       from: this.fromDate,
       to: this.toDate,
       lastPostId: 0,
+      
+   wings:this.slectedWings.toString() || ''
+
     };
     this.allDates = [];
     this.ImpressionsGraphData = [];
@@ -454,103 +459,7 @@ export class LinkedInReportComponent implements OnInit {
     };
     option && this.clickThroughRateGraph.setOption(option);
   }
-  // getAllLinkedInfollowrs() {
-  //   if (this.fromDate == '' && this.toDate == '') {
-  //     const today = new Date();
-  //     this.toDate =
-  //       this.datePipe.transform(this.currentDate, 'YYYY-MM-dd') || '';
-  //     let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 5);
-  //     this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-d') || '';
-  //   } else if (this.fromDate != '' && this.toDate != '') {
-  //     this.toDate = this.toDate;
-  //     this.fromDate = this.fromDate;
-  //   }
-  //   let obj = {
-  //     pageId: '76213578',
-  //     from: this.fromDate,
-  //     to: this.toDate,
-  //     lastPostId: 0,
-  //   };
-  //   this.followersGraphData = [];
-  //   this.allDates = [];
-  //   this.commonDataService
-  //     .GetLinkedInReportFollwers(obj)
-  //     .subscribe((res: any) => {
-  //       this.linkedfollowerTotalcount = res.spanFollowers_TotalCount;
-  //       this.linkedFollowerData = res.spanFollowers;
-  //       this.linkedFollowerData.forEach((abc: any) => {
-  //         if (
-  //           !this.allDates.includes(this.datePipe.transform(abc.from, 'dd MMM'))
-  //         ) {
-  //           this.allDates.push(this.datePipe.transform(abc.from, 'dd MMM'));
-  //         }
-  //         this.followersGraphData.push(
-  //           abc.organicFollowers + abc.paidFollowers
-  //         );
-  //       });
-  //       this.followerChart();
-  //     });
-  // }
-  // followerChart() {
-  //   type EChartsOption = echarts.EChartsOption;
-  //   const dom = document.getElementById('followers');
-  //   this.followers = echarts.init(dom, null, {
-  //     renderer: 'canvas',
-  //     useDirtyRect: false,
-  //   });
-  //   var option: EChartsOption;
-  //   option = {
-  //     color: ['#90EE90'],
-  //     title: {
-  //       text: '',
-  //     },
-  //     tooltip: {
-  //       trigger: 'axis',
-  //     },
-  //     legend: {
-  //       data: ['Total Followers'],
-  //       icon: 'circle',
-  //       bottom: 0,
-  //     },
-  //     grid: {
-  //       left: '3%',
-  //       right: '4%',
-  //       bottom: '15%',
-  //       containLabel: true,
-  //     },
-  //     toolbox: {
-  //       feature: {
-  //         saveAsImage: {},
-  //       },
-  //     },
-  //     xAxis: {
-  //       type: 'category',
-  //       boundaryGap: false,
-  //       data: this.allDates,
-  //       axisLabel: {
-  //         rotate: 45,
-  //       },
-  //     },
-  //     yAxis: {
-  //       type: 'value',
-  //       nameLocation: 'middle',
-  //       name: 'Total Number of Followers',
-  //       nameTextStyle: {
-  //         fontSize: 12,
-  //         color: 'grey',
-  //         lineHeight: 80,
-  //       },
-  //     },
-  //     series: [
-  //       {
-  //         name: 'Total Followers',
-  //         type: 'line',
-  //         data: this.followersGraphData,
-  //       },
-  //     ],
-  //   };
-  //   option && this.followers.setOption(option);
-  // }
+
   getAllLinkedInfollowrs(){
     if(this.fromDate==''&& this.toDate=='' ){
       const today =new Date()
@@ -581,7 +490,8 @@ export class LinkedInReportComponent implements OnInit {
       "pageId": "103568",
       "from":this.fromDate,
       "to": this.toDate,
-      "lastPostId": 0
+      "lastPostId": 0,
+      wings:this.slectedWings.toString() || ''
     }
     this.followersGraphData=[]
     this.allDates=[]
@@ -675,4 +585,30 @@ followerChart(){
   restStartDate() {
     this.toDate = '';
   }
+  AllWingsList:any
+  slectedWings:any[]=[]
+  GetAllCompanyWings(){
+    this.commonDataService.GetCompanyWingsForReporting().subscribe((res:any)=>{
+      const wingresponse=res
+      this.AllWingsList=wingresponse
+    })
+  }
+
+
+checkUnCheckWings(wing:any){
+const index =this.slectedWings.findIndex((item:any)=>item==wing)
+if(index != -1){
+this.slectedWings.splice(index,1)
+}
+else{
+this.slectedWings.push(wing)
+}
+this.getAllLinkedInfollowrs()
+this.getLinkedInReportData()
+
+}
+
+
+
+
 }

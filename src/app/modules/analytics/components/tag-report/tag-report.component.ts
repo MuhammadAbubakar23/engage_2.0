@@ -47,6 +47,7 @@ export class TagReportComponent implements OnInit {
   uniqueAgentData: any[] = [];
   tagreport:any
  isChecked:boolean=false;
+ searchText:string=''
   constructor(
     private _hs: HeaderService,
     private spinerServices: NgxSpinnerService,
@@ -59,7 +60,8 @@ export class TagReportComponent implements OnInit {
     let obj = { title: 'Tag Report', url: '/analytics/tag-report' };
     this._hs.setHeader(obj);
     this.getAllTagsReport();
-    this.makeChartResponsive()
+    this.makeChartResponsive();
+    this.GetAllCompanyWings()
   }
   onClick(){
     this.isChecked=true
@@ -88,6 +90,7 @@ export class TagReportComponent implements OnInit {
       from: this.startDate,
       to: this.endDate,
       pageId: '',
+      wings:this.slectedWings.toString() || ''
     };
     this.tagslist = [];
     this.facebookCommentsArray = [];
@@ -269,4 +272,25 @@ this.tagreport= echarts.init(chartDom);
       }
     })
   }
+  AllWingsList:any
+  slectedWings:any[]=[]
+  GetAllCompanyWings(){
+    this.commonService.GetCompanyWingsForReporting().subscribe((res:any)=>{
+      const wingresponse=res
+      this.AllWingsList=wingresponse
+    })
+  }
+
+
+checkUnCheckWings(wing:any){
+const index =this.slectedWings.findIndex((item:any)=>item==wing)
+if(index != -1){
+this.slectedWings.splice(index,1)
+}
+else{
+this.slectedWings.push(wing)
+}
+this.getAllTagsReport()
+console.log("slectedWings===>",this.slectedWings)
+}
 }
