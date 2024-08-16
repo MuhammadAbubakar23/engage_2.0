@@ -30,6 +30,11 @@ export class RouteToAgentComponent implements OnInit {
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
+  isChannelShow: any;
+  channelOptions:any
+  activeChannel: any;
+  slectedChannelsName:any[]=[]
+searchText: any;
   constructor(
     private commondataServices: CommonDataService,
     private headerServices: HeaderService,
@@ -37,6 +42,7 @@ export class RouteToAgentComponent implements OnInit {
     private SpinnerService: NgxSpinnerService
   ) {}
   ngOnInit(): void {
+  
     const obj = {
       title: 'Live Agent Interactions',
       url: 'analytics/route-to-agent',
@@ -76,7 +82,7 @@ export class RouteToAgentComponent implements OnInit {
       this.commondataServices.GetRouteToAgents(data).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.agentsDate = res.List;
-        this.agentsDataColumns=Object.keys(this.agentsDate[0])
+        this.agentsDataColumns=Object?.keys(this.agentsDate[0])
         this.totalCounts = res.TotalCount;
         if (this.pageNumber == 1) {
           this.startingPoint = 1;
@@ -181,5 +187,93 @@ export class RouteToAgentComponent implements OnInit {
         this.toastermessage = false;
       }, 4000);
     }
+  }
+  getChannel() {
+    if (this.isChannelShow == "morinaga") {
+      this.channelOptions = [
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+      ];
+    }
+    if (this.isChannelShow == "jazz") {
+      this.channelOptions = [
+        { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+        { id: '18', name: 'Playstore', icon: 'fa-brands fa-google-play pe-2', isSelected: false },
+      ];
+    }
+    else if (this.isChannelShow == "ttpl") {
+      this.channelOptions = [
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+      ];
+    }
+    else if (this.isChannelShow == "KE") {
+      this.channelOptions = [
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+      ];
+    }
+    else if (this.isChannelShow == "damo") {
+      this.channelOptions = [
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+      ];
+    }
+    else if (this.isChannelShow == 'loc') {
+      this.channelOptions = [
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+        // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+        // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+        // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+        // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
+        { id: '18', name: 'Playstore', icon: 'fa-brands fa-google-play pe-2', isSelected: false },
+      ];
+    }
+    else if (this.isChannelShow == 'stagging') {
+      this.channelOptions = [
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+        // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+        // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+        // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+        // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
+      ];
+    }
+    if (this.isChannelShow == 'Bazaar') {
+      this.channelOptions = [
+        { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+        { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+      ];
+    };
+  }
+    checkUncheckChannels(channelName:any){
+    debugger
+    const index= this.slectedChannelsName.findIndex((item:any)=>item==channelName)
+    // const index = this.selectedChannel.findIndex((x:any)=>x == channel.name)
+    if(index != -1){
+      this.slectedChannelsName.splice(index,1)
+    }
+    else{
+      this.slectedChannelsName.push(channelName)
+    }
+console.log('this.selectedChannelSName===>',this.slectedChannelsName)
   }
 }

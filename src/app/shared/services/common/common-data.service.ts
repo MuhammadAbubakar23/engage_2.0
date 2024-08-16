@@ -144,6 +144,7 @@ export class CommonDataService {
   PrintFeed = environment.links.common.PrintFeed;
   CSATReport = environment.links.common.CSATReport;
   getInteractionReport = environment.links.common.getInteractionReport;
+  castRawDataReport=environment.links.console.castRawDataReport;
   // SCRM Reports
   facebookscrmReport = environment.links.scrmReports.facebookscrmReport;
   getfortesting = environment.links.scrmReports.getfortesting;
@@ -241,7 +242,7 @@ export class CommonDataService {
   wallboardCSATReport = environment.links.console.wallboardReport;
   getMonthToDateServiceLevel = environment.links.console.GetMonthToDateServiceLevel;
   getPreviousInteractionDashboard = environment.links.console.getPreviousInteractionDashboard;
-
+  getCompanyWings=environment.links.console.getCompanyWings
   adminPanelBaseUrl='https://lhr-ivr1.enteract.live/console_sandbox/public/'
 endPoint='engage_menus/'
 AdminPanelToken=sessionStorage.getItem('adminPenalToken')
@@ -1484,6 +1485,12 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
   }
   GetSlaReponder(slug:any){
     return this.http.get(`${this.ConsoleBaseUrl}${this.SlaResponder}?Id=${slug}`)
+  }
+  GetCastRawDataReport(body:any){
+    return this.http.post(this.ProfileBaseUrl + this.castRawDataReport,body)
+  }
+  GetCompanyWingsForReporting(){
+    return this.http.get(this.ConsoleBaseUrl + this.getCompanyWings)
   }
 
 }

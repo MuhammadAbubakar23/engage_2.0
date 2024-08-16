@@ -282,6 +282,7 @@ export class LiveInteractionReportComponent implements OnInit {
       agents: this.selectedTagBy,
       channels: this.selectedChannel.toString() || '',
       liveDashboard: true,
+         wings:this.slectedWings.toString() || ''
     };
     this.SpinnerService.show();
     this.interactionStats = null;
@@ -821,4 +822,26 @@ ngOnDestroy(): void {
   clearTimeout(this.clearsetTime)
 
 }
+slectedWings:any[]=[]
+AllWingsList:any
+GetAllCompanyWings(){
+  this.commonData.GetCompanyWingsForReporting().subscribe((res:any)=>{
+    const wingresponse=res
+    this.AllWingsList=wingresponse
+  })
+}
+
+
+checkUnCheckWings(wing:any){
+const index =this.slectedWings.findIndex((item:any)=>item==wing)
+if(index != -1){
+this.slectedWings.splice(index,1)
+}
+else{
+this.slectedWings.push(wing)
+}
+this.GetStatsInteractionReport()
+console.log("slectedWings===>",this.slectedWings)
+}
+
 }

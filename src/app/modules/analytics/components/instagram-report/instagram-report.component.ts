@@ -7,9 +7,10 @@ import * as echarts from 'echarts';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { ExcelService } from '../../services/excel.service';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
+import { SharedModule } from "../../../../shared/shared.module";
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxSpinnerModule, LayoutsModule],
+  imports: [CommonModule, FormsModule, NgxSpinnerModule, LayoutsModule, SharedModule],
   selector: 'app-instagram-report',
   templateUrl: './instagram-report.component.html',
   styleUrls: ['./instagram-report.component.scss'],
@@ -57,6 +58,7 @@ export class InstagramReportComponent implements OnInit {
   isShowDemographics: boolean = false;
   isShowEngagments: boolean = false;
   instagra_reportArray: any[] = [];
+  searchText:string=''
   constructor(
     private _hS: HeaderService,
     private excelServices: ExcelService,
@@ -73,7 +75,8 @@ export class InstagramReportComponent implements OnInit {
     const currentDate = new Date();
     this.maxEndDate = currentDate.toISOString().split('T')[0]
     this.GetInstagramReport()
-    this.gettopfiveCutomer()
+    this.gettopfiveCutomer();
+    this.GetAllCompanyWings()
   }
   GetInstagramReport() {
     if (this.endDate == '' && this.startDate == '') {
@@ -99,6 +102,8 @@ export class InstagramReportComponent implements OnInit {
       from: this.startDate,
       to: this.endDate,
       lastPostId: 0,
+   wings:this.slectedWings.toString() || ''
+
     };
     this.totalPeopleWhoViewedCount = []
     this.totalPeopleWhoViewedDates = []
@@ -176,6 +181,8 @@ export class InstagramReportComponent implements OnInit {
       pageSize: 0,
       from: this.startDate,
       to: this.endDate,
+      wings:this.slectedWings.toString() || ''
+
     };
     this.commonDataService.GetInstagramProfile(data).subscribe((res: any) => {
       this.topfiveCustomer = res;
@@ -449,4 +456,26 @@ export class InstagramReportComponent implements OnInit {
       'Instagram Stats'
     );
   }
+  AllWingsList:any
+  slectedWings:any[]=[]
+  GetAllCompanyWings(){
+    this.commonDataService.GetCompanyWingsForReporting().subscribe((res:any)=>{
+      const wingresponse=res
+      this.AllWingsList=wingresponse
+    })
+  }
+
+
+checkUnCheckWings(wing:any){
+const index =this.slectedWings.findIndex((item:any)=>item==wing)
+if(index != -1){
+this.slectedWings.splice(index,1)
+}
+else{
+this.slectedWings.push(wing)
+}
+this.GetInstagramReport()
+}
+
+
 }

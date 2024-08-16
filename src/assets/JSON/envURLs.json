@@ -25,10 +25,10 @@
         "IdentityBaseUrl": "https://identity-engage.enteract.app/api/",
         "CommonBaseUrl": "https://common-engage.enteract.app/api/",
         "SignalRCommonBaseUrl": "https://common-engage.enteract.app/",
-        "ProfileBaseUrl": "",
+        "ProfileBaseUrl": "https://profiler.enteract.app/api/",
         "ServiceBaseUrl": "",
         "ConsoleBaseUrl": "https://console-engage.enteract.app/api/",
-        "ReportsBaseUrl": "",
+        "ReportsBaseUrl": "https://rep.enteract.app/api/",
         "LinkedInBaseUrl": "https://linkdservice.enteract.live/api/",
         "BotBaseUrl": "https://bot-engage.enteract.app/api/"
     },

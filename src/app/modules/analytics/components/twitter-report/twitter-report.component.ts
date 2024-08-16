@@ -13,12 +13,13 @@ import { HeaderService } from 'src/app/shared/services/header.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { ExcelService } from '../../services/excel.service';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
+import { SharedModule } from "../../../../shared/shared.module";
 @Component({
   selector: 'app-twitter-report',
   templateUrl: './twitter-report.component.html',
   styleUrls: ['./twitter-report.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxSpinnerModule, LayoutsModule],
+  imports: [CommonModule, FormsModule, NgxSpinnerModule, LayoutsModule, SharedModule],
 })
 export class TwitterReportComponent implements OnInit {
   @ViewChild('TwitterInboundOutboundReport', { static: true })
@@ -112,6 +113,7 @@ export class TwitterReportComponent implements OnInit {
   OutboundGraph: any;
   QueryTypeChart: any;
   OutboundQueriesChart: any;
+  searchText:string=''
   constructor(private _hS: HeaderService,
     private commonDataService: CommonDataService,
     private excelServices: ExcelService,
@@ -126,6 +128,7 @@ export class TwitterReportComponent implements OnInit {
     this.GetTwitterReport();
     // this.GetTwitterSLAReport();
     this.GetTwitterProfileWiseReport();
+    this.GetAllCompanyWings()
   }
   date_pagination(days: number) {
     let currentDate = new Date();
@@ -189,6 +192,7 @@ export class TwitterReportComponent implements OnInit {
       fromDate: this.fromDate,
       toDate: this.toDate,
       profileId: '539038993',
+      wings:this.slectedWings.toString() || ''
     };
     if (this.toDate >= this.fromDate) {
       this.SpinnerService.show();
@@ -613,4 +617,25 @@ export class TwitterReportComponent implements OnInit {
   export() {
     this.excelServices.exportAsExcelFile(this.TwitterProfileWiseReport, 'Twitter-Report')
   }
+  AllWingsList:any
+  slectedWings:any[]=[]
+  GetAllCompanyWings(){
+    this.commonDataService.GetCompanyWingsForReporting().subscribe((res:any)=>{
+      const wingresponse=res
+      this.AllWingsList=wingresponse
+    })
+  }
+
+
+checkUnCheckWings(wing:any){
+const index =this.slectedWings.findIndex((item:any)=>item==wing)
+if(index != -1){
+this.slectedWings.splice(index,1)
+}
+else{
+this.slectedWings.push(wing)
+}
+this.GetTwitterProfileWiseReport()
+this.GetTwitterReport()
+}
 }
