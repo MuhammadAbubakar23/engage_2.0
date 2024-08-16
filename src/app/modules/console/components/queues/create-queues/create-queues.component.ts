@@ -50,6 +50,7 @@ export class CreateQueuesComponent implements OnInit {
   supreamId: number = 0;
   userForm!: FormGroup;
   skillTeamId: any;
+  wingsList: any[] = [];
 
   constructor(
     private formbuilder: FormBuilder,
@@ -66,6 +67,7 @@ export class CreateQueuesComponent implements OnInit {
     this.getGroups();
     this.getChannels();
     this.getCompanyTeams();
+    this.getWings();
     if (this.skillTeamId > 0) {
       this.getSkillTeamById(this.skillTeamId);
     }
@@ -90,8 +92,13 @@ export class CreateQueuesComponent implements OnInit {
     this.userForm = this.formbuilder.group({
       teamSlug: ['', Validators.required],
       groupSlug: ['', Validators.required],
+      wingSlug: [ '', Validators.required],
       tagId: ['', Validators.required],
       status: true,
+      Weight: [null, Validators.required],
+      Count:[null, Validators.required],
+      Priority:[null, Validators.required],
+      TimeWise:[null, Validators.required],
     });
   }
 
@@ -108,6 +115,18 @@ export class CreateQueuesComponent implements OnInit {
       },
     });
   }
+
+  getWings(){
+    this.commondata.GetWings().subscribe((res:any)=>{
+      debugger
+      this.wingsList = res;
+    },
+    (error:any)=>{
+
+    }
+  )
+  }
+
   getChannels() {
     this.supreamId = 11;
     this.commondata.GetTagBySupreamId(this.supreamId).subscribe({
@@ -133,6 +152,7 @@ export class CreateQueuesComponent implements OnInit {
     });
   }
   onSubmit(): void {
+    debugger
     if (this.userForm.valid) {
       const template = history.state.template;
       if (this.skillTeamId > 0) {

@@ -34,10 +34,10 @@
                     <div class="floating-item">
                         <div class="form-floating">
                             <select class="form-select" aria-label="Floating label select" [(ngModel)]="teamId" (change)="onTeamSelect()">
-                                <option value="0" disabled selected>Please Select Team</option>
+                                <option value="0" disabled selected>Please Select Wing</option>
                                 <option *ngFor="let team of teams" [value]="team.id" >{{ team.name }}</option>
                             </select>
-                            <label for="timeZone">Teams</label>
+                            <label for="timeZone">Wings</label>
                         </div>
                     </div>
                 </div>

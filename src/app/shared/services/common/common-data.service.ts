@@ -714,7 +714,8 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
     return this.http.get(url);
   }
   GetAllSkills(body: any) {
-    return this.http.post(this.ConsoleBaseUrl + this.getAllSkills, body);
+    var url = "https://console-engage.enteract.app/api/"
+    return this.http.post(url + this.getAllSkills, body);
   }
   GetSkills(body: any) {
     return this.http.post(this.ConsoleBaseUrl + this.getSkills, body);
@@ -1373,6 +1374,10 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
   GetCompanyTeams() {
     return this.http.get(this.IdentityBaseUrl + this.getCompanyTeams);
   }
+  GetWings(){
+    var ConsoleBaseUrl = "https://console-engage.enteract.app/api/";
+    return this.http.get(ConsoleBaseUrl + "Tags/GetCompanyWings");
+  }
   GetRuleStatus(id: any, status: boolean) {
     const url = `${this.autoresponderbaseurl}${this.getRuleStatus}?Id=${id}&status=${status}`;
     return this.http.get<any>(url, {});
@@ -1411,8 +1416,9 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
     return this.http.get<any>(url, {});
   }
   AddTagTeams(tagteam: any) {
+    var url = "https://console-engage.enteract.app/api/"
     return this.http.post(
-      this.ConsoleBaseUrl + this.addTagTeams,
+      url + this.addTagTeams,
       tagteam
     );
   }

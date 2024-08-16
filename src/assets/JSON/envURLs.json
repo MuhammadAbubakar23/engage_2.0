@@ -55,7 +55,7 @@
         "LinkedInBaseUrl": "https://linkdservice.enteract.live/api/"
     },
     "demo": {
-        "IdentityBaseUrl": "https://enidentitybackend.enteract.live/api/",
+        "IdentityBaseUrl": "https://identity-engage.enteract.app/api/",
         "CommonBaseUrl": "https://encommonbackend.enteract.live/api/",
         "SignalRCommonBaseUrl": "https://encommonbackend.enteract.live/",
         "ProfileBaseUrl": "https://profiler.enteract.app/api/",

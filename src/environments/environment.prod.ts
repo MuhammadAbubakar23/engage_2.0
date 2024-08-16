@@ -33,7 +33,7 @@ export const environment = {
   KemediaBaseUrl: 'https://kemedia.360scrm.com/api/',
   KescrmBaseUrl: 'https://kescrm.360scrm.com/',
 
-  IdentityBaseUrl: 'https://enidentitybackend.enteract.live/api/',
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
   CommonBaseUrl: '',
   SignalRCommonBaseUrl: '',
   ProfileBaseUrl: '',

@@ -195,7 +195,7 @@ export class AddPolicyComponent implements OnInit {
   }
 
    getCompanyTeams(){
-    this.commonService.GetCompanyTeams().subscribe({
+    this.commonService.GetWings().subscribe({
       next: (res: any) => {
         this.initialTeams = res;
         this.initialTeams = this.initialTeams.filter(a=>a.typeId > 10);
