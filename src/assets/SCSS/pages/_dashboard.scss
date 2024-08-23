@@ -255,8 +255,8 @@ a[data-toggle="tooltip"] {
   .form-check-input {
     border-radius: 50% !important;
     &:checked{
-        background-color: #52bdff;
-        border-color: #52bdff !important;
+        background-color: rgb(84, 84, 251);
+        border-color: rgb(84, 84, 251) !important;
     }
     &:checked[type="radio"]{
       background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
@@ -264,9 +264,9 @@ a[data-toggle="tooltip"] {
   }
 }
 .all-conversation{
-  &:hover{
+  &:hover{ 
     background-color: #fafafa;
-    color: #1f7ec7 !important;
+    color: rgb(84, 84, 251) !important;
   }
 }
 .filtericon {
