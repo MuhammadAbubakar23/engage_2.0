@@ -1,12 +1,12 @@
 <!-- Coming From DB -->
 <!-- <ng-container *ngFor="let menu of menus$" >
     <a (click)="update('all-inboxes/'+menu.link+'/all')"  routerLinkActive="active" ariaCurrentWhenActive="page"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
-    <div class="list-group-text d-flex align-items-center" >
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
+    <div class="list-group-text d-flex align-items-center gap-3" >
         <div class="iconButton medium" [innerHTML]="menu.icon">
             {{menu.icon}}
         </div>
-        <a class="itemLabel">
+        <a class="itemLabel level-8">
             {{menu.name}}
         </a>
     </div>
@@ -15,7 +15,7 @@
 </ng-container> -->
 
 <!-- From Tags -->
-<!-- <li class="p-3 cursor-pointer">
+<!-- <li class="cursor-pointer">
     <button
       class="border-0 outline-0 cursor-pointer brand-bg text-white rounded-full w-[34px] h-[34px]"
     >
@@ -24,26 +24,26 @@
 </li> -->
 
 <a [routerLink]="['/all-inboxes/focused/all']" routerLinkActive="active" ariaCurrentWhenActive="page" data-tooltip="Sent"
-    class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+    class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 "
     [class.active]="activeChannel=='focused'">
-    <div class="list-group-text d-flex align-items-center">
-        <div class="p-3 cursor-pointer">
+    <div class="list-group-text d-flex align-items-center gap-3">
+        <div class="cursor-pointer">
             <i class="fa fa-inbox"></i>
         </div>
-        <div class="itemLabel" style="color: black; !important">
+        <div class="itemLabel level-8" style="color: black !important;">
             All Inboxes 
         </div>
     </div>
 </a>
 
 <a [routerLink]="['/all-inboxes/sent/all']" routerLinkActive="active" ariaCurrentWhenActive="page" data-tooltip="Sent"
-    class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+    class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 "
     [class.active]="activeChannel=='sent'">
-    <div class="list-group-text d-flex align-items-center">
-        <div class="p-3 cursor-pointer">
+    <div class="list-group-text d-flex align-items-center gap-3">
+        <div class="cursor-pointer">
             <i class="fa fa-paper-plane"></i>
         </div>
-        <div class="itemLabel" style="color: black; !important">
+        <div class="itemLabel level-8" style="color: black !important;">
             Sent
         </div>
     </div>
@@ -51,12 +51,12 @@
 <ng-container *ngFor="let menu of mainMenu"  >
     <a 
         [routerLink]="['/all-inboxes/'+menu.slug+'/all']" routerLinkActive="active" ariaCurrentWhenActive="page"
-        class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
-        <div class="list-group-text d-flex align-items-center" >
-            <div class="p-3 cursor-pointer" [innerHTML]="menu.icon " >
+        class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
+        <div class="list-group-text d-flex align-items-center gap-3" >
+            <div class="cursor-pointer" [innerHTML]="menu.icon " >
                 {{menu.icon}}
             </div>
-            <a class="itemLabel" style="color: black; !important">
+            <a class="itemLabel level-8" style="color: black !important">
                 {{menu.name}}
             </a>
         </div>
@@ -65,78 +65,78 @@
 
 <!-- Hard coded -->
 <!-- <a (click)="update('all-inboxes/focused/all')"
-    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
-    <div class="list-group-text d-flex align-items-center">
+    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
+    <div class="list-group-text d-flex align-items-center gap-3">
         <div class="iconButton medium">
             <i class="fal fa-inbox ice"></i>
         </div>
-        <div class="itemLabel">
+        <div class="itemLabel level-8">
             All Inboxes
         </div>
     </div>
 </a>
 <a (click)="update('all-inboxes/assigned_to_me/all')"
-    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
-    <div class="list-group-text d-flex align-items-center">
+    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
+    <div class="list-group-text d-flex align-items-center gap-3">
         <div class="iconButton medium">
             <i class="fa-sharp fa-light fa-money-check-pen"></i>
         </div>
-        <div class="itemLabel">
+        <div class="itemLabel level-8">
             Assigned To Me
         </div>
     </div>
 </a>
 <a (click)="update('all-inboxes/starred/all')"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
-    <div class="list-group-text d-flex align-items-center">
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
+    <div class="list-group-text d-flex align-items-center gap-3">
         <div class="iconButton medium">
             <i class="fal fa-star ice"></i>
         </div>
-        <div class="itemLabel">
+        <div class="itemLabel level-8">
             Starred
         </div>
     </div>
 </a>
 <a (click)="update('all-inboxes/sent/all')"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
-    <div class="list-group-text d-flex align-items-center">
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
+    <div class="list-group-text d-flex align-items-center gap-3">
         <div class="iconButton medium">
             <i class="fal fa-paper-plane ice"></i>
         </div>
-        <div class="itemLabel">
+        <div class="itemLabel level-8">
             Sent
         </div>
     </div>
 </a>
 <a (click)="update('all-inboxes/black_list/all')"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
-    <div class="list-group-text d-flex align-items-center">
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
+    <div class="list-group-text d-flex align-items-center gap-3">
         <div class="iconButton medium">
             <i class="fal fa-ban ice"></i>
         </div>
-        <div class="itemLabel">
+        <div class="itemLabel level-8">
             Black List
         </div>
     </div>
 </a>
 <a (click)="update('all-inboxes/spam/all')"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
-    <div class="list-group-text d-flex align-items-center">
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
+    <div class="list-group-text d-flex align-items-center gap-3">
         <div class="iconButton medium">
             <i class="fal fa-exclamation-circle ice"></i>
         </div>
-        <div class="itemLabel">
+        <div class="itemLabel level-8">
             Spam
         </div>
     </div>
 </a>
 <a (click)="update('all-inboxes/trash/all')"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
-    <div class="list-group-text d-flex align-items-center">
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
+    <div class="list-group-text d-flex align-items-center gap-3">
         <div class="iconButton medium">
             <i class="fal fa-flag ice"></i>
         </div>
-        <div class="itemLabel">
+        <div class="itemLabel level-8">
             Trash
         </div>
     </div>
@@ -145,7 +145,7 @@
 <!-- Hard coded -->
 
 
-<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 999999">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
