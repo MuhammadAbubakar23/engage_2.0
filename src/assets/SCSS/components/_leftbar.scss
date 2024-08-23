@@ -574,28 +574,28 @@
     flex-wrap: wrap;
     .btn {
       margin-right: 7px;
-      margin-bottom: 5px;
-      min-width: 0;
-      font-size: 11px;
-      font-family: "robotoregular", sans-serif;
-      font-weight: normal !important;
-      background-color: #fff;
-      border: 1px solid #e5e6e8;
-      text-transform: capitalize;
-      border-radius: 4px;
-      color: #9398a5;
-      padding: 5px 10px;
-      min-height: 32px;
-      i {
-        margin-right: 5px;
-      }
-      &.active {
-        background: #2f9df2;
+    margin-bottom: 5px;
+    min-width: 0;
+    font-size: 11px;
+      font-family: 'robotoregular', sans-serif;
+  font-weight: normal !important;
+    background-color: #fff;
+    border: 1px solid #e5e6e8;
+    text-transform: capitalize;
+    border-radius: 4px;
+    color: #9398a5;
+    padding: 5px 10px;
+    min-height: 32px;
+    i{
+      margin-right: 5px;
+    }
+    &.active{
+      background: rgb(84, 84, 251);
+      color: #fff !important;
+      i{
         color: #fff !important;
-        i {
-          color: #fff !important;
-        }
       }
+    }
     }
   }
 }
