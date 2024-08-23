@@ -6,7 +6,7 @@
     <div *ngIf="hasSearchInboxPermission">
       <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar"
       *ngIf="FlagForAssignToMe != 'assigned_to_me'">
-      <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+      <ul class="list-inline px-4 py-3 m-0 d-flex align-items-center">
         <li class="list-inline-item">
           <div class="dropdown">
             <button class="btn dropdown-toggle fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
@@ -415,7 +415,7 @@
    
     <div class="filter-container">
       <ul class="list-group list-group-horizontal border-0">
-        <li class="list-group-item border-0 all-check-boxes" >
+        <li class="list-group-item border-0 all-check-boxes cursor-pointer" >
           <input *ngIf="flag != 'sent'" class="form-check-input me-1" type="checkbox" aria-label="..."
             data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Check All"
             [checked]="masterSelected" value="m1" (change)="checkUncheckAll($event)"
@@ -444,24 +444,24 @@
                         </ul> -->
           </div>
         </li>
-        <li class="list-group-item filtericon skyBgg border-0 iconButton medium iconHover" data-bs-toggle="collapse"
+        <li class="list-group-item filtericon border-0 iconButton medium iconHover cursor-pointer" data-bs-toggle="collapse"
           data-bs-target="#filter-bar" aria-expanded="true" aria-controls="filter-bar" aria-label="..."
           data-bs-placement="bottom" title="Filters">
           <i class="fal fa-sliders-h"></i>
         </li>
-        <li class="list-group-item border-0" (click)="Reload()" aria-label="..." data-bs-toggle="tooltip"
+        <li class="list-group-item border-0 cursor-pointer" (click)="Reload()" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="bottom" title="" data-bs-original-title="Refresh"
           [style.display]="FlagForAssignToMe == 'assigned_to_me'?'none':'block'">
           <i class="fal fa-redo-alt"></i>
         </li>
         <!-- <div [hidden]="flag == 'trash'"> -->
-        <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'archived'"
+        <li class="list-group-item border-0 after-select-fun cursor-pointer" [hidden]="flag == 'trash' || flag == 'archived'"
           (click)="InsertTagInProfile('archived','Tag')" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="bottom" title="" data-bs-original-title="Archive"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-archive"></i>
         </li>
-        <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag != 'archived'"
+        <li class="list-group-item border-0 after-select-fun cursor-pointer" [hidden]="flag == 'trash' || flag != 'archived'"
           (click)="RemoveTagInProfile('archived', 'Tag')" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="bottom" title="" data-bs-original-title="Unarchive"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
@@ -477,13 +477,13 @@
             data-bs-original-title="Undo Spam" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
             <i class="fal fa-rotate-exclamation"></i>
           </li> -->
-        <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
+        <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun cursor-pointer"
           (click)="InsertTagInProfile('trash','Tag')" [hidden]="flag == 'trash'" aria-label="..."
           data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-trash"></i>
         </li>
-        <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
+        <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun cursor-pointer"
           [hidden]="flag != 'trash'" (click)="RemoveTagInProfile('trash', 'Tag')" aria-label="..."
           data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Undo Delete"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
@@ -518,7 +518,7 @@
                     [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
                     <i class="fal fa-tags"></i>
                 </li> -->
-        <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
+        <li class="list-group-item border-0 after-select-fun cursor-pointer" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="top" title="" data-bs-original-title="More" [hidden]="flag == 'trash'"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <div class="dropdown w-auto">
@@ -583,7 +583,7 @@
             conversations in Focused</a>
           <a class="clear-selection" style="display: none;">Clear selection</a>
         </div> -->
-        <table class="table">
+        <table class="table all_inbox">
           <thead>
             <tr *ngIf="FlagForAssignToMe=='follow_up'">
               <th></th>
@@ -596,52 +596,52 @@
           </thead>
           <tbody>
             <ng-container *ngFor="let group of groupByDateList">
-              <tr>
-                <td colspan="6">
-                  <span *ngIf="FlagForAssignToMe!=='follow_up'">
-                    <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
+              <tr class="border-b">
+                <td class="p-3" colspan="6">
+                  <span *ngIf="FlagForAssignToMe!=='follow_up'" class="email-tag">
+                    <span class="email-date"></span> <i class="fa fa-calendar-days me-2"></i> {{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
                   </span>
-                  <span *ngIf="FlagForAssignToMe=='follow_up'">
-                    <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
+                  <span *ngIf="FlagForAssignToMe=='follow_up'" class="email-tag">
+                    <span class="email-date"></span> <i class="fa fa-calendar-days me-2"></i> {{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
                   </span>
                 </td>
               </tr>
-              <tr *ngFor="let query of group.items | sort:criteria; let i = index"
+              <tr class="border-b" *ngFor="let query of group.items | sort:criteria; let i = index"
                 [class.selected]="query.isChecked==true" class="alert" [ngClass]="[query.slaFlag == 'warning'?'alert-warning':'' || query.slaFlag == 'danger'?'alert-danger':'' ||
               query.slaFlag == 'unread'?'unread':'']">
-                <td *ngIf="flag != 'sent'" style="width: 40px;">
+                <td class="p-3" *ngIf="flag != 'sent'" style="width: 40px;">
                   <input [checked]="query.isChecked" value="{{query.id}}"
                     (change)="isAllSelected($event, i, query.platform, query.profileId, group.createdDate, query.skillSlug)"
                     class="form-check-input me-1" type="checkbox" aria-label="..."
                     [disabled]="FlagForAssignToMe == 'assigned_to_me'">
                 </td>
-                <td style="width: 40px;">
-                  <img *ngIf="query.postType == 'FCP'" src="../../../../../assets/images/FacebookDM.png" style="width: 75% !important;"> 
-                  <img *ngIf="query.postType == 'FC'" src="../../../../../assets/images/FacebookComment.png" style="width: 75% !important;">  
-                  <img *ngIf="query.postType == 'IC'" src="../../../../../assets/images/InstagramComment.png" style="width: 75% !important;">
-                  <img *ngIf="query.postType == 'IM'" src="../../../../../assets/images/InstagramDM.png" style="width: 75% !important;">   
+                <td class="p-3" style="width: 60px;">
+                  <img *ngIf="query.postType == 'FCP'" src="../../../../../assets/images/FacebookDM.png" width="24" height="24"> 
+                  <img *ngIf="query.postType == 'FC'" src="../../../../../assets/images/FacebookComment.png" width="24" height="24">  
+                  <img *ngIf="query.postType == 'IC'" src="../../../../../assets/images/InstagramComment.png" width="24" height="24">
+                  <img *ngIf="query.postType == 'IM'" src="../../../../../assets/images/InstagramDM.png" width="24" height="24">   
                   <i *ngIf="query.platform == 'Email' || query.platform == 'OfficeEmail'" class="fal fa-envelope cherry"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Email"
                     aria-label="Email"></i>
                   <i *ngIf="query.platform == 'Youtube'" class="fab fa-youtube warning" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" title="" data-bs-original-title="Youtube" aria-label="Youtube"></i>
-                  <img *ngIf="query.postType == 'TM'" src="../../../../../assets/images/Twitter Complete.png" style="width: 75% !important;">
-                  <img *ngIf="query.postType == 'TTR'" src="../../../../../assets/images/Twitter Complete.png" style="width: 75% !important;">
-                  <img *ngIf="query.postType == 'TDM'" src="../../../../../assets/images/TwitterDM.png" style="width: 75% !important;">
+                  <img *ngIf="query.postType == 'TM'" src="../../../../../assets/images/Twitter Complete.png" width="24" height="24">
+                  <img *ngIf="query.postType == 'TTR'" src="../../../../../assets/images/Twitter Complete.png" width="24" height="24">
+                  <img *ngIf="query.postType == 'TDM'" src="../../../../../assets/images/TwitterDM.png" width="24" height="24">
                   <i *ngIf="query.platform == 'SMS'" class="fal fa-comment-alt-lines berry" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-original-title="SMS" aria-label="SMS"></i>
                   <i *ngIf="query.platform == 'WhatsApp'" class="fab fa-whatsapp emerald" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-original-title="WhatsApp" aria-label="Whatsapp"></i>
                   <i *ngIf="query.platform == 'Webchat'" class="fal fa-messages webchat" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-original-title="Webchat" aria-label="Webchat"></i>
-                  <img *ngIf="query.postType == 'LIC'" src="../../../../../assets/images/LinkedIn Comment.png" style="width: 75% !important;">
+                  <img *ngIf="query.postType == 'LIC'" src="../../../../../assets/images/LinkedIn Comment.png" width="24" height="24">
                   <i *ngIf="query.platform == 'PlayStore'" class="fa-brands fa-google-play darkorange"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="PlayStore"
                     aria-label="PlayStore"></i>
                 </td>
-                <td style="width: 300px;">
+                <td class="p-3" style="width: 300px;">
                   <div class="d-flex align-items-center">
-                    <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
+                    <span class="emailer-name level-8 font-medium" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
                       <a
                         (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId, query.skillSlug)">
                         <span class="font-regular">{{query?.userName?.split('<')[0] || query.user}} 
@@ -651,28 +651,28 @@
                         &nbsp;
                            </a>
                     </span>
-                    <span class="badge bg-danger rounded-pill ms-auto"
+                    <span class="badge bg-danger rounded-pill"
                     *ngIf="query.unrespondedCount > 0">{{query.unrespondedCount}}</span>
                   </div>
                  
                 </td>
-                <td>
-                  <div class="level-7"
+                <td class="p-3">
+                  <div class="level-8 font-regular"
                     (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId, query.skillSlug)">
                     {{query.message < 110 ? query.message: (query.message | slice:0:110) +'...'}} </div>
                 </td>
-                <!-- <td class="px-1">
+                <!-- <td class="p-3">
                   <small>{{query.wings}}</small>
                 </td> -->
-                <td class="px-1">
+                <td class="p-3">
                   <small>{{query.createdDate | date:'h:mm:ss a'}}</small>
                 </td>
-                <td class="px-1">
+                <td class="p-3">
                   <span *ngIf="FlagForAssignToMe=='follow_up'">
                     <small><strong>{{query?.follow_Up_Status | date: 'EE, MMM-dd, yyyy h:mm:ss a '}}</strong></small>
                   </span>
                 </td>
-                <!-- <td>
+                <!-- <td class="p-3">
                         <div class="dropdown bookmark-dropdown">
                           <button class="btn" type="button" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-bookmark mint"></i>
@@ -777,7 +777,7 @@
     </div>
   </div>
 </div>
-<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 999999">
   <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
     aria-live="assertive" aria-atomic="true">
     <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">

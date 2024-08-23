@@ -236,13 +236,13 @@
 // Badges
 
 .badge {
-  border-radius: 20px;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 400;
-  background: $badgeBg;
-  padding: 2px 8px;
-  transition: 0.3s ease;
+  border-radius: 20px !important;
+  color: #fff !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  background: $badgeBg !important;
+  padding: 2px 8px !important;
+  transition: 0.3s ease !important;
 }
 
 .badge-red {
