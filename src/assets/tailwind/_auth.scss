@@ -1,0 +1,24 @@
+.auth__wrapp {
+  position: relative;
+  // background: url(../../assets/images/gradient-background.jpg) no-repeat center/
+  //   cover;
+
+  .auth__block {
+    max-width: 26%;
+    width: 100%;
+
+    input {
+      padding: 12px !important;
+      border-radius: 14px !important;
+    }
+
+    .common__checkbox {
+      padding: 0 !important;
+      border-radius: 4px !important;
+    }
+  }
+
+  button {
+    box-shadow: 0 10px 10px #7171ff45;
+  }
+}

@@ -1,10 +1,24 @@
-<div class="leftbar-console-expanded">
-  <div class="sidebar-header pe-3 ps-3 row">
-    <h5 class="fw-bold mt-3 ms-1 col-8 capital-letter">
-      <a (click)="updatevalue('consoleHeader')" [routerLink]="['/' + SubMenuPage.slug + '/home']">{{ SubMenuPage.name
-        }}</a>
-    </h5>
+<!-- <div class="multiple-screens secondary-bg">
+  <div id="all-inboxes-wrapper secondary-bg">
+    <div class="collapsible__header py-4 px-3">
+      <h3 class="level-3 font-regular py-4 px-3 fw-bold mt-3 ms-1 col-8" >
+        <a (click)="updatevalue('consoleHeader')" [routerLink]="['/console/home']"
+          >Console</a
+        >
+      </h3>
+    </div> -->
+
+<div class="multiple-screens secondary-bg" style="padding: 0px !important; margin-top: 0px !important;">
+  <div id="all-inboxes-wrapper secondary-bg">
+    <div class="collapsible__header">
+
+      <h3 class="col-8 font-regular fw-bold level-3 px-3 pb-2 pt-3" >
+        <a class="level-3 font-regular" (click)="updatevalue('consoleHeader')" [routerLink]="['/' + SubMenuPage.slug + '/home']">{{ SubMenuPage.name
+          }}</a>
+      </h3>
+    </div>
   </div>
+  <div class="spacer_line"></div>
   <!-- <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1"
         style="overflow-y: auto; outline: none;">
         <li class="list-group-item list-group-item-action" [hidden]="SuperTeamShow">
@@ -79,10 +93,10 @@
     <div class="scroll-content">
       <li class="list-group-item list-group-item-action" [ngClass]="!menu.expanded ? 'collapsed' : ''"
         *ngFor="let menu of menuItems; let i = index">
-        <a class="d-flex align-items-center" [ngClass]="menu.subMenu ? 'chevron-icon' : ''"
+        <a class="d-flex align-items-center level-8 font-regular" [ngClass]="menu.subMenu ? 'chevron-icon' : ''"
           type="button" (click)="updatevalue(menu)">
           <!-- <i [ngClass]="menu['icon']"></i> -->
-          <span [innerHTML]="menu['icon']" class="pe-2"></span>
+          <span [innerHTML]="menu['icon']" class="p-2 cursor-pointer"></span>
           {{ menu["name"] }}
         </a>
 

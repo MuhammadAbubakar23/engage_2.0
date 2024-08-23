@@ -11,7 +11,22 @@
             </div>
         </a>
     </ng-container> -->
-    <a  [routerLink]="['/analytics']" routerLinkActive="active" ariaCurrentWhenActive="page"
+    <a [routerLink]="['/analytics']" routerLinkActive="active" ariaCurrentWhenActive="page" data-tooltip="Sent" 
+      (click)="opensidebar()"
+      class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+      (click)="resetFilters()">
+      <div class="list-group-text d-flex align-items-center">
+          <div class="p-3 cursor-pointer">
+              <i class="fa fa-chart-line-up"></i>
+          </div>
+          <div class="itemLabel" style="color: black; !important">
+            Analytics 
+          </div>
+      </div>
+    </a>
+
+
+    <!-- <a  [routerLink]="['/analytics']" routerLinkActive="active" ariaCurrentWhenActive="page"
     (click)="opensidebar()"
     class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
     (click)="resetFilters()">
@@ -21,7 +36,7 @@
       </div>
       <a class="itemLabel"> Analytics</a>
     </div>
-  </a>
+  </a> -->
 <!-- </ng-container> -->
 <!-- <ng-container *ngIf="!onlyAnalyticsTabVisible.includes(restrictedAgent)">
   <a [routerLink]="['/all-inboxes/completed/all']" routerLinkActive="active" ariaCurrentWhenActive="page"
@@ -35,8 +50,9 @@
     </div>
   </a>
 </ng-container>  -->
+
   <ng-container *ngIf="showBotManagement">
-    <a [routerLink]="['/bot-monitoring']" routerLinkActive="active" ariaCurrentWhenActive="page"
+    <!-- <a [routerLink]="['/bot-monitoring']" routerLinkActive="active" ariaCurrentWhenActive="page"
       class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
       (click)="resetFilters()">
       <div class="list-group-text d-flex align-items-center">
@@ -45,11 +61,23 @@
         </div>
         <div class="itemLabel">BOT Management</div>
       </div>
+    </a> -->
+    <a [routerLink]="['/bot-monitoring']" routerLinkActive="active" ariaCurrentWhenActive="page" data-tooltip="Sent" 
+      class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+      (click)="resetFilters()">
+      <div class="list-group-text d-flex align-items-center">
+          <div class="p-3 cursor-pointer" style="color: black; !important">
+              <i class="fa fa-message-bot"></i>
+          </div>
+          <div class="itemLabel" style="color: black; !important">
+            BOT Management 
+          </div>
+      </div>
     </a>
   </ng-container>
 
   <ng-container *ngIf="showConsole">
-    <a [routerLink]="['/console/home']" routerLinkActive="active" ariaCurrentWhenActive="page"
+    <!-- <a [routerLink]="['/console/home']" routerLinkActive="active" ariaCurrentWhenActive="page"
       class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
       [class.active]="activeChannel == 'console'" (click)="resetFilters()">
       <div class="list-group-text d-flex align-items-center">
@@ -57,6 +85,18 @@
           <i class="fal fa-cog ice"></i>
         </div>
         <div class="itemLabel">Console</div>
+      </div>
+    </a> -->
+    <a [routerLink]="['/console/home']" routerLinkActive="active" ariaCurrentWhenActive="page" data-tooltip="Sent" 
+      class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+      [class.active]="activeChannel == 'console'" (click)="resetFilters()">
+      <div class="list-group-text d-flex align-items-center">
+          <div class="p-3 cursor-pointer">
+              <i class="fa fa-cog"></i>
+          </div>
+          <div class="itemLabel" style="color: black; !important">
+            Console 
+          </div>
       </div>
     </a>
   </ng-container>

@@ -191,7 +191,7 @@
     
                                 <li class="list-inline-item">
                                     <button type="button" (click)="GetStatsInteractionReport()"
-                                        class="btn btn-success ms-2 px-4">Search</button>
+                                    class="btn btn-outline-secondary btn-medium me-2" style ="font-size: 14px !important; background-color: white !important; color:black !important; min-width:100px !important; ms-2 px-4">Search</button>
                                 </li>
                                 <li class="list-inline-item ms-auto">
                                     <div class="dropdown">
@@ -219,7 +219,7 @@
                                                 <span class="iconButton medium berryBg me-2">
                                                     <i class="fa-light fa-users"></i>
                                                 </span>
-                                                <p class="coal mb-0">Active Agents</p>
+                                                <p class="level-7 font-medium text-left text-[#727272] mb-0">Active Agents</p>
                                             </div>
                                             <h5>{{totalAgentsCount}}</h5>
                                         </div>
@@ -234,7 +234,7 @@
                                                 <span class="iconButton medium skyBg me-2">
                                                     <i class="fa-light fa-percent"></i>
                                                 </span>
-                                                <p class="coal mb-0"> Avg. Response Rate</p>
+                                                <p class="level-7 font-medium text-left text-[#727272] mb-0"> Avg. Response Rate</p>
                                             </div>
                                             <h5>{{ formatNumber(averageResponseData) |number:'1.2-2' }}% <small
                                                     *ngIf="preAveragePercentage >= 0; else downArrow"
@@ -263,7 +263,7 @@
                                                 <span class="iconButton medium mintBg me-2">
                                                     <i class="fa-light fa-clock"></i>
                                                 </span>
-                                                <p class="coal mb-0"> Avg. Response Time</p>
+                                                <p class="level-7 font-medium text-left text-[#727272] mb-0"> Avg. Response Time</p>
                                             </div>
                                             <h5>{{ finalAverage !== 'NaN:NaN:NaN' ? finalAverage : '00:00:00' }}
                                                 <small *ngIf="avgResponseTimeSum >= 0; else downArrow"
@@ -292,7 +292,7 @@
                                                 <span class="iconButton medium skyBg me-2">
                                                     <i class="fa-light fa-clock"></i>
                                                 </span>
-                                                <p class="coal mb-0">Avg Min. Cater Time</p>
+                                                <p class="level-7 font-medium text-left text-[#727272] mb-0">Avg Min. Cater Time</p>
                                             </div>
                                             <h5>{{finalAverageMinimum != 'NaN:NaN:NaN' ? finalAverageMinimum
                                                 :'00:00:00'}}
@@ -322,7 +322,7 @@
                                                 <span class="iconButton medium radicalBg me-2">
                                                     <i class="fa-light fa-message"></i>
                                                 </span>
-                                                <p class="coal mb-0">Avg Max. Cater Time</p>
+                                                <p class="level-7 font-medium text-left text-[#727272] mb-0">Avg Max. Cater Time</p>
                                             </div>
                                             <h5>{{finalAverageMaximum != 'NaN:NaN:NaN' ? finalAverageMaximum
                                                 :'00:00:00'}}
@@ -352,7 +352,7 @@
                                         <span class="iconButton large bg-dark ice">
                                             <i class="fa-light fa-comment-lines fs-5"></i>
                                         </span>
-                                        <h5 class="my-3">Total Interactions</h5>
+                                        <h5 class="level-6 font-regular text-left mb-0 my-3">Total Interactions</h5>
                                         <h1 class="fw-bolder">{{ formatNumber(totalInteractionCount)}}</h1>
                                         <ul class="sociallist">
                                             <li>
@@ -541,7 +541,7 @@
                         </div>
                         <div class="html2pdf__page-break"></div>
                         <div class="card iceBg p-4 rounded mb-5">
-                            <h5 class="section-heading mb-4 p-0">CUSTOMER SATISFACTION RATINGS </h5>
+                            <h5 class="level-5 font-regular text-left my-3 mb-4 p-0">CUSTOMER SATISFACTION RATINGS </h5>
                             <div class="row justify-content-between">
                                 <div class="col-md-6">
                                     <div class="graphcontainer align-items-end">
@@ -583,7 +583,7 @@
                     </div>
                     <div class="html2pdf__page-break"></div>
                     <div class="card iceBg p-4 rounded mb-5">
-                        <h5 class="section-heading mb-4 p-0">INTERACTIONS BY DATE </h5>
+                        <h5 class="level-5 font-regular text-left my-3 mb-4 p-0">INTERACTIONS BY DATE </h5>
                         <div class="graphcontainer align-items-end mb-5">
                             <!-- <img src="../images/shift.svg" class="img-fluid" alt=""> -->
                             <div id="interactions" style="height: 400px;width: 100%;"></div>

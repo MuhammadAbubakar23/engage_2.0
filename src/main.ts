@@ -101,15 +101,15 @@ fetch('/assets/JSON/envURLs.json')
       environment.LinkedInBaseUrl = config.rox.LinkedInBaseUrl;
       environment.BotBaseUrl = config.rox.BotBaseUrl;
     } else if (baseUrl == 'http://localhost:4200' || baseUrl == 'https://localhost:4200') {
-      environment.IdentityBaseUrl = config.stagging.IdentityBaseUrl;
-      environment.CommonBaseUrl = config.stagging.CommonBaseUrl;
-      environment.SignalRCommonBaseUrl = config.stagging.SignalRCommonBaseUrl;
-      environment.ProfileBaseUrl = config.stagging.ProfileBaseUrl;
-      environment.ServiceBaseUrl = config.stagging.ServiceBaseUrl;
-      environment.ConsoleBaseUrl = config.stagging.ConsoleBaseUrl;
-      environment.ReportsBaseUrl = config.stagging.ReportsBaseUrl;
-      environment.LinkedInBaseUrl = config.stagging.LinkedInBaseUrl;
-      environment.BotBaseUrl = config.stagging.BotBaseUrl;
+      environment.IdentityBaseUrl = config.ke.IdentityBaseUrl;
+      environment.CommonBaseUrl = config.ke.CommonBaseUrl;
+      environment.SignalRCommonBaseUrl = config.ke.SignalRCommonBaseUrl;
+      environment.ProfileBaseUrl = config.ke.ProfileBaseUrl;
+      environment.ServiceBaseUrl = config.ke.ServiceBaseUrl;
+      environment.ConsoleBaseUrl = config.ke.ConsoleBaseUrl;
+      environment.ReportsBaseUrl = config.ke.ReportsBaseUrl;
+      environment.LinkedInBaseUrl = config.ke.LinkedInBaseUrl;
+      environment.BotBaseUrl = config.ke.BotBaseUrl;
     }
 
 if (environment.production) {

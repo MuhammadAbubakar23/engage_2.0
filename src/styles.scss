@@ -26,6 +26,17 @@
 // // Alternatively, you can import and @include the theme mixins for each component
 // // that you are using.
 // @include mat.all-component-themes($Enteract.Engage2.0-theme);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "./assets/tailwind/globals";
+@import "./assets/tailwind/_common.scss";
+@import "./assets/tailwind/_fonts.scss";
+@import "./assets/tailwind/_variables.scss";
+@import "./assets/tailwind/_layout.scss";
+@import "./assets/tailwind/_auth.scss";
+@import "./assets/scss/base/typography";
+@import "./assets/scss/base/base.scss";
 @import "../node_modules/bootstrap/scss/functions";
 @import "./assets/SCSS/_bootstrap-variables.scss";
 @import "../node_modules/bootstrap/scss/_variables.scss";

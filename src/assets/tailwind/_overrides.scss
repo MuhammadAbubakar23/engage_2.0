@@ -1,0 +1,17 @@
+.tabs__inner-body {
+  li {
+    button[aria-selected="true"] {
+      color: #000 !important;
+      font-weight: 500;
+    }
+
+    button {
+        font-weight: 400;
+    }
+  }
+}
+
+
+#default-modal {
+  z-index: 999 !important;
+}

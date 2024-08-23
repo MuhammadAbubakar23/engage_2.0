@@ -1,35 +1,183 @@
-<!-- <div class="multiple-screens" *ngIf="hasFocusedPermission"> -->
-<div class="multiple-screens">
-  <div id="all-inboxes-wrapper">
-    <div class="sidebar-header border-bottom ps-4 pe-3 pt-3 pb-3">
+<div class="multiple-screens secondary-bg">
+  <div id="all-inboxes-wrapper secondary-bg">
+    <div class="collapsible__header py-4 px-3">
+      <h3 class="level-3 font-regular">All Inboxes<span style="background-color: rgb(84, 84, 251) !important;"class="badge twltte-bg rounded-pill"
+        *ngIf="UnResponded > 0">{{UnResponded}}</span></h3>
+    </div>
+    <!-- <div class="sidebar-header border-bottom ps-4 pe-3 pt-3 pb-3">
       <h6 class="fw-bold m-0">All Inboxes <span class="badge twltte-bg rounded-pill"
           *ngIf="UnResponded > 0">{{UnResponded}}</span></h6>
-    </div>
+    </div> -->
     <ul class="list-group list-group-flush" id="inboxes-list" data-scrollbar="true" tabindex="-1"
       style="overflow-y: auto; outline: none;">
       <div class="scroll-content">
         <a class="all-inboxes-menu list-group-item list-group-item-action" [routerLink]="['/all-inboxes/'+flag+'/all']"
           (click)="updateWing('')" [class.active]="activeChannel == 'all'" value="all-conversation">
-          <div class="iconButton medium skyBg">
-            <i class="far fa-inbox"></i>
+          <div class="iconButton medium" style="color:black !important">
+            <i class="fa fa-inbox"></i>
           </div>
           <div class="ms-2 me-auto">
-            <div class="black-text">All Conversations </div>
+            <div class="level-8 font-regular">All Conversations </div>
           </div>
-          <span class="badge twltte-bg rounded-pill" *ngIf="UnResponded > 0">{{UnResponded}}</span>
+          <span class="level-9 font-regular text-sub" *ngIf="UnResponded > 0">{{UnResponded}}</span>
         </a>
         <a class="all-inboxes-menu list-group-item list-group-item-action" *ngFor="let channel of allSkills"
           (click)="updateWing(channel.skilSlug)" [class.active]="activeChannel == channel.skilSlug"
           [routerLink]="['/all-inboxes/'+flag+'/'+channel.skilSlug]">
-          <div [ngClass]="channel.color" [innerHTML]="channel.icon ">
+          <div class="iconButton medium" style="color:black !important" [innerHTML]="channel.icon ">
           </div>
           <div class="ms-2 me-auto">
-            <div class="black-text">{{channel.skillName}}</div>
-            <small class="coal">{{channel.wing}}</small>
+            <div class="level-8 font-regular">{{channel.skillName}}</div>
+            <small class="level-9 font-regular text-sub">{{channel.wing}}</small>
           </div>
-          <!-- <span class="badge twltte-bg rounded-pill">{{channel.count}}</span> -->
         </a>
+<!-- 
+        <li class="py-3">
+          <a href="#" class="flex justify-between items-center">
+            <div class="flex gap-[10px] items-start">
+              <i class="fa-brands fa-square-whatsapp mt-[4px]"></i>
+              <span>
+                <p class="level-8 font-regular">Whatsapp</p>
+                <p class="level-9 font-regular text-sub">SLA immediately</p>
+              </span>
+            </div>
+            <p class="level-8 text-count count-bg text-white rounded-full w-[22px] h-[22px] text-center">
+              8
+            </p>
+          </a>
+        </li> -->
       </div>
     </ul>
   </div>
 </div>
+
+
+<!-- <div class="collapsible__sidebar py-4 px-3 secondary-bg relative w-full">
+  <div class="sidebar__toggler absolute bg-white text-center w-[25px] h-[25px] rounded-full bg-white">
+    <i class="fa-solid fa-chevron-left"></i>
+  </div>
+  <div class="collapsible__header py-4 px-3">
+    <h3 class="level-3 font-regular">All Inboxes</h3>
+  </div>
+
+  <div class="collapsible__chatCount flex justify-between items-center mt-10 mb-6 px-3">
+    <p class="level-8 text-black font-regular">All Conversations</p>
+    <p class="level-6 text-count">8</p>
+  </div>
+  <div class="spacer_line"></div>
+  <div class="collapsible__chatCount mt-4 mb-4 px-3">
+    <div class="flex justify-between items-center">
+      <p class="level-8 text-black font-regular">SLA Imminently</p>
+      <p class="level-6 text-count">8</p>
+    </div>
+    <div class="mt-2">
+      <span class="tag tag-high text-[#F62346] p-1 rounded-lg level-9 bg-[#FFEFF2] border-2 border-[#EDBFC6]">18
+        High</span>
+      <span class="tag tag-warning text-[#DB6C06] p-1 rounded-lg level-9 bg-[#FFEDDD] border-2 border-[#FFBB7C]">18
+        Medium</span>
+      <span class="tag tag-low text-[#C5961D] p-1 rounded-lg level-9 bg-[#FFF7E3] border-2 border-[#F9D475]">18
+        Low</span>
+    </div>
+  </div>
+
+  <ul class="items_list p-0 mb-0 mt-6">
+    <li class="py-3">
+      <a href="#" class="flex justify-between items-center">
+        <div class="flex gap-[10px] items-start">
+          <i class="fa fa-envelope mt-[4px]"></i>
+          <span>
+            <p class="level-8 font-regular">Email</p>
+            <p class="level-9 font-regular text-sub">SLA immediately</p>
+          </span>
+        </div>
+        <p class="level-8 text-count count-bg text-white rounded-full w-[22px] h-[22px] text-center">
+          8
+        </p>
+      </a>
+    </li>
+    <li class="py-3">
+      <a href="#" class="flex justify-between items-center">
+        <div class="flex gap-[10px] items-start">
+          <i class="fa-brands fa-square-whatsapp mt-[4px]"></i>
+          <span>
+            <p class="level-8 font-regular">Whatsapp</p>
+            <p class="level-9 font-regular text-sub">SLA immediately</p>
+          </span>
+        </div>
+        <p class="level-8 text-count count-bg text-white rounded-full w-[22px] h-[22px] text-center">
+          8
+        </p>
+      </a>
+    </li>
+    <li class="py-3">
+      <a href="#" class="flex justify-between items-center">
+        <div class="flex gap-[10px] items-start">
+          <i class="fa fa-message mt-[4px]"></i>
+          <span>
+            <p class="level-8 font-regular">SMS/Text</p>
+            <p class="level-9 font-regular text-sub">SLA immediately</p>
+          </span>
+        </div>
+        <p class="level-8 text-count count-bg text-white rounded-full w-[22px] h-[22px] text-center">
+          8
+        </p>
+      </a>
+    </li>
+    <li class="py-3">
+      <a href="#" class="flex justify-between items-center">
+        <div class="flex gap-[10px] items-start">
+          <i class="fa-brands fa-facebook-f mt-[4px]"></i>
+          <span>
+            <p class="level-8 font-regular">Facebook</p>
+            <p class="level-9 font-regular text-sub">SLA immediately</p>
+          </span>
+        </div>
+        <p class="level-8 text-count count-bg text-white rounded-full w-[22px] h-[22px] text-center">
+          8
+        </p>
+      </a>
+    </li>
+    <li class="py-3">
+      <a href="#" class="flex justify-between items-center">
+        <div class="flex gap-[10px] items-start">
+          <i class="fa-brands fa-youtube mt-[4px]"></i>
+          <span>
+            <p class="level-8 font-regular">Youtube</p>
+            <p class="level-9 font-regular text-sub">SLA immediately</p>
+          </span>
+        </div>
+        <p class="level-8 text-count count-bg text-white rounded-full w-[22px] h-[22px] text-center">
+          8
+        </p>
+      </a>
+    </li>
+    <li class="py-3">
+      <a href="#" class="flex justify-between items-center">
+        <div class="flex gap-[10px] items-start">
+          <i class="fa-brands fa-instagram mt-[4px]"></i>
+          <span>
+            <p class="level-8 font-regular">Instagram</p>
+            <p class="level-9 font-regular text-sub">SLA immediately</p>
+          </span>
+        </div>
+        <p class="level-8 text-count count-bg text-white rounded-full w-[22px] h-[22px] text-center">
+          8
+        </p>
+      </a>
+    </li>
+    <li class="py-3">
+      <a href="#" class="flex justify-between items-center">
+        <div class="flex gap-[10px] items-start">
+          <i class="me-[15px]"></i>
+          <span>
+            <p class="level-8 font-regular">Twitter</p>
+            <p class="level-9 font-regular text-sub">SLA immediately</p>
+          </span>
+        </div>
+        <p class="level-8 text-count count-bg text-white rounded-full w-[22px] h-[22px] text-center">
+          8
+        </p>
+      </a>
+    </li>
+  </ul>
+</div> -->

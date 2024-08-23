@@ -60,7 +60,7 @@
                 class="ms-2"
                 *ngIf="hasCreatePermission"
               >
-                <button type="button" class="btn btn-success">
+                <button type="button" class="btn__theme flex items-center gap-[10px]">
                   <i class="fal fa-plus me-2"></i>
                   Create Tags
                 </button>
@@ -72,7 +72,7 @@
           <table class="table mb-5 align-middle">
             <thead>
               <tr>
-                <th>{{ tags.length }} Tags</th>
+                <th class="level-7 font-bold">{{ tags.length }} Tags</th>
                 <!-- <th>
                   <a class="charcoal hover-icon" (click)="sortByTickets()">
                     Tickets
@@ -92,7 +92,7 @@
                 <td>
                   <!-- [style.color]="tag.color" -->
                   <a class="night">
-                    <p>
+                    <p class="level-8 font-medium">
                       {{ tag.name }}
                     </p>
                   </a>

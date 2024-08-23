@@ -5,8 +5,8 @@
             <div class="landing-page-header">
                 <div class="row justify-content-between">
                     <div class="col-lg-5">
-                        <h4 class="radical heading">Manage omnichannel support effortlessly</h4>
-                        <p class="text">From agent onboarding to reporting, orchestrating workflows across channels is
+                        <h4 class="radical heading font-regular">Manage omnichannel support effortlessly</h4>
+                        <p class="text font-regular">From agent onboarding to reporting, orchestrating workflows across channels is
                             centralized on the new Omnichannel platform.</p>
                     </div>
                     <div class="col-lg-3">
@@ -187,7 +187,7 @@
                 <div class="col-lg-12 h-100 row">
                     <div class="col-lg-3 shortcut-box mb-3" *ngFor="let channel of channels">
                         <div class="card-body h-100 p-3 shadow d-flex iceBg">
-                            <button class="iconButton medium" [innerHTML]="channel.icon"></button>
+                            <button class="iconButton medium" style="background-color: grey !important;color: white !important;" [innerHTML]="channel.icon"></button>
                             <div class="ms-3 d-flex flex-grow-1">  <h5 class="night mb-0 mt-2 lh-base text fw-bold">{{channel.name}}</h5>
                               <div class="ms-auto">  <a type="button" class="btn btn-outline-success btn-text" data-bs-toggle="modal"
                                 [attr.data-bs-target]="'#'+channel.slug">
@@ -200,40 +200,40 @@
                     </div>
                 </div>
             </div>
-            <h4 class="heading darkblue mt-5 mb-3">Get the most out of interact</h4>
+            <h4 class="font-regular heading darkblue mt-5 mb-3">Get the most out of interact</h4>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="h-100 d-flex">
-                        <button class="iconButton medium skyBg">
-                            <i class="far fa-tag"></i>
+                        <button class="p-3 medium cursor-pointer">
+                            <i class="fa fa-tag"></i>
                         </button>
                         <div class="ms-3">
-                            <h5 class="night mb-0 mt-0 lh-base text fw-bold">Organize your work with tags</h5>
-                            <p class="coal lh-base small-text">Private tags replace personal folders. Pin tags to your
+                            <h5 class="night mb-0 mt-0 lh-base text fw-bold font-regular">Organize your work with tags</h5>
+                            <p class="coal lh-base small-text font-regular">Private tags replace personal folders. Pin tags to your
                                 workspace to easily find what you need.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="h-100 d-flex">
-                        <button class="iconButton medium darkblueBg">
-                            <i class="far fa-cog"></i>
+                        <button class="p-3 medium cursor-pointer">
+                            <i class="fa fa-cog"></i>
                         </button>
                         <div class="ms-3">
-                            <h5 class="night mb-0 mt-0 lh-base text fw-bold">Improve your productivity in Front</h5>
-                            <p class="coal lh-base small-text">Snooze messages, control your notifications, and make
+                            <h5 class="night mb-0 mt-0 lh-base text fw-bold font-regular">Improve your productivity in Front</h5>
+                            <p class="coal lh-base small-text font-regular">Snooze messages, control your notifications, and make
                                 your work day work for you.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="h-100 d-flex">
-                        <button class="iconButton medium cherryBg">
-                            <i class="far fa-share-alt"></i>
+                        <button class="p-3 medium cursor-pointer">
+                            <i class="fa fa-share-alt"></i>
                         </button>
                         <div class="ms-3">
-                            <h5 class="night mb-0 mt-0 lh-base text fw-bold">All about shared inboxes</h5>
-                            <p class="coal lh-base small-text">Learn how to take action in shared inboxes and improve
+                            <h5 class="night mb-0 mt-0 lh-base text fw-bold font-regular">All about shared inboxes</h5>
+                            <p class="coal lh-base small-text font-regular">Learn how to take action in shared inboxes and improve
                                 your team's efficiency.</p>
                         </div>
                     </div>

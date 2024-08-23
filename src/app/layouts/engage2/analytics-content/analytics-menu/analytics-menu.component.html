@@ -1,9 +1,11 @@
 <div class="leftbar-console-expanded">
   <div class="sidebar-header pe-3 ps-3">
-    <h5 class="fw-bold mt-3 ms-1">
-      <a>Analytics</a>
-    </h5>
+    <h3 class="col-8 font-regular fw-bold level-3 px-3 pb-2 pt-3 m-0" >
+      <a class="level-3 font-regular">Analytics</a>
+    </h3>
   </div>
+  <div class="spacer_line"></div>
+
   <ul
     class="list-group console-list mt-2"
     data-scrollbar="true"
@@ -16,12 +18,12 @@
     >
       <span *ngFor="let item of analyticeReport">
         <li
-          class="list-group-item list-group-item-action"
+          class="d-flex align-items-center level-8 font-regular p-2"
           routerLinkActive="active"
           value="Live Monitoring"
           id="analyticstab2"
         >
-          <a [routerLink]="[item.link]" class="d-flex">
+          <a [routerLink]="[item.link]" class="d-flex" class="p-2 cursor-pointer">
             {{ item.name }}
           </a>
         </li>

@@ -316,8 +316,8 @@
                 </div>
             </div>
             <div class="filterActionWrap">
-                <button class="btn btn-success me-2" id="applyBtn">Apply</button>
-                <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                <button class="btn btn-outline-secondary btn-medium me-2" style ="font-size: 14px !important; background-color: white !important; color:black !important; min-width:100px !important; me-2" id="applyBtn">Apply</button>
+                <button class="btn__theme flex items-center ms-2 px-4 btn-medium saveBtn" style ="font-size: 14px !important;" id="cancelBtn">Cancel</button>
 
 
                 <div class="d-none">
@@ -417,7 +417,7 @@
 
                     <ul class="list-group-followup list-group-flush">
                         <a href="javascript:"
-                            class="list-group-item list-group-item-action d-flex align-items-center fw-bold"
+                            class="level-6 font-bold"
                             value="itProcurement">
                             Conversation Queue
                             <!-- <span class="badge berryBg rounded-pill">16</span> -->
@@ -465,7 +465,7 @@
                                         <a>
                                             <div class="boxHeading">
                                                 <div class="left">
-                                                    <div class="boxId">{{profile.userName}}</div>
+                                                    <div class="boxId" class="level-7 font-regular">{{profile.userName}}</div>
                                                 </div>
                                                 <div class="right">
                                                     <div class="postDate">{{profile.createdDate | date:'hh:mm a'}}</div>

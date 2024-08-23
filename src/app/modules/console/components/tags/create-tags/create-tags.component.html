@@ -68,7 +68,7 @@
             <!-- <label for="tagName0">Tag Name</label>  -->
             <input type="text" class="form-control" id="tagName0" placeholder="Tag Name" formControlName="name"
               [style.color]="selectedTextColor">
-            <label for="tagName0"> Tag Name</label>
+            <label for="tagName0" class="font-regular"> Tag Name</label>
           </div>
         </div>
         <br>
@@ -76,7 +76,7 @@
           <div class="floating-wrap form-floating">
             <input type="text" class="form-control" id="tagDescription0" placeholder="Description" formControlName="desc"
               [style.color]="selectedTextColor">
-            <label for="tagDescription0"> Description</label>
+            <label for="tagDescription0" class="font-regular"> Description</label>
           </div>
         </div>
         <br>
@@ -92,12 +92,12 @@
         </div> -->
         <div class="list-group-section">
           <div class="section-heading">
-            <h6 class="coal text-uppercase mb-0">Style</h6>
+            <h6 class="coal text-uppercase mb-0 font-regular"class="font-regular">Style</h6>
           </div><br>
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between align-items-sm-center">
-              <div class="me-auto coal">
-                <div class="fw-bold night">Color</div>
+              <div class="me-auto coal font-regular">
+                <div class="fw-bold night font-regular" >Color</div>
                 Create Shared inboxes for teammates to work together
               </div>
               <span class="col-sm-1">
@@ -108,8 +108,8 @@
                 </div>
               </span>
               <span>
-                <i class="fal fa-user sky me-3"></i>
-                <a class="text-decoration-underline" (click)="openPopup()"><span *ngIf="showPopup==true">
+                <i class="fal fa-user me-3" style="color: rgb(84, 84, 251) !important;"></i>
+                <a class="text-decoration-underline font-regular" (click)="openPopup()"><span *ngIf="showPopup==true">
                     UnSelect Visuals
                   </span>
                   <span *ngIf="showPopup==false">Select Visuals</span>
@@ -120,7 +120,7 @@
             </li>
             <div class="form-floating">
               <input type="text" class="form-control" id="icon" placeholder="Icon" formControlName="icon">
-              <label for="icon">Icon</label>
+              <label for="icon font-regular">Icon</label>
             </div>
             <!-- <div class="col-md-2">
           <div class="card">
@@ -134,13 +134,13 @@
           </div>
         </div> -->
             <li class="list-group-item d-flex justify-content-between align-items-sm-end">
-              <div class="me-auto coal">
-                <div class="fw-bold night">Nest tag under</div>
+              <div class="me-auto coal font-regular">
+                <div class="fw-bold night font-regular">Nest tag under</div>
                 Organize this tag under an existing parent tag
               </div>
               <span>
-                <i class="fal fa-tags sky me-3"></i>
-                <a class="text-decoration-underline" (click)="addTag()">Select Parent Tag</a>
+                <i class="fal fa-tags me-3" style="color: rgb(84, 84, 251) !important;"></i>
+                <a class="text-decoration-underline font-regular" (click)="addTag()">Select Parent Tag</a>
               </span>
             </li>
           </ul>
@@ -195,9 +195,9 @@
               </div>
               <div class="col-md-8 justify-content-end d-flex">
                 <div class="buttons-wrap d-flex">
-                  <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4"
+                  <button type="button" class="btn btn-outline-secondary btn-medium me-2" style ="font-size: 14px !important; background-color: white !important; color:black !important; min-width:100px !important;"
                     (click)="onDiscardChanges('tags')">Cancel</button>
-                  <button type="button" class="btn skyBg ms-2 px-4 btn-medium saveBtn" (click)="onSave()">Save</button>
+                  <button type="button" class="btn__theme flex items-center ms-2 px-4 btn-medium saveBtn" style ="font-size: 14px !important;"(click)="onSave()">Save</button>
                 </div>
               </div>
             </div>

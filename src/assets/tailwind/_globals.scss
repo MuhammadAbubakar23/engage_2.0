@@ -1,0 +1,229 @@
+@import "variables";
+%primary-bg {
+  background: #e8e8e8;
+}
+%secondary-bg {
+  background: #f1f1f1;
+}
+%light-bg-3 {
+  background: #E9E9E9;
+}
+%light-bg-4 {
+  background: #F7F7F7;
+}
+%brand-bg {
+  background: #5454fb;
+}
+%text-brand {
+  color: #5454fb;
+}
+%text-white {
+  color: #fff;
+}
+%text-black {
+  color: #000;
+}
+%text-light {
+  color: $textLight;
+}
+%text-light-2 {
+  color: $textLight-2;
+}
+%text-dark-2 {
+  color: $textDark-2;
+}
+%text-count {
+  color: #a5a5a5;
+}
+%count-bg {
+  background: #a5a5a5;
+}
+%text-sub {
+  color: #9b9b9b;
+}
+%text-para {
+  color: #7c7c7c;
+}
+%text-error {
+  color: #dc3545;
+}
+%badge-bg {
+  background: #6c757d;
+}
+
+// font weight
+
+%font-light {
+  font-weight: 300;
+}
+%font-regular {
+  font-weight: 400;
+}
+%font-medium {
+  font-weight: 500;
+}
+%font-semiBedium {
+  font-weight: 600;
+}
+%font-bold {
+  font-weight: 700;
+}
+%font-dark {
+  font-weight: 800;
+}
+%font-black {
+  font-weight: 900;
+}
+
+// font sizes
+
+%level-lg {
+  font-size: 60px;
+}
+%level-1 {
+  font-size: 36px;
+}
+%level-2 {
+  font-size: 32px;
+}
+%level-3 {
+  font-size: 24px;
+}
+%level-4 {
+  font-size: 22px;
+}
+%level-5 {
+  font-size: 20px;
+}
+%level-6 {
+  font-size: 18px;
+}
+%level-7 {
+  font-size: 16px;
+}
+%level-8 {
+  font-size: 14px !important;
+}
+%level-9 {
+  font-size: 12px;
+}
+%level-10 {
+  font-size: 10px;
+}
+
+.primary-bg {
+  @extend %primary-bg;
+}
+.secondary-bg {
+  @extend %secondary-bg;
+}
+.light-bg-3 {
+  @extend %light-bg-3;
+}
+.light-bg-4 {
+  @extend %light-bg-4;
+}
+.text-white {
+  @extend %text-white;
+}
+.text-count {
+  @extend %text-count;
+}
+.count-bg {
+  @extend %count-bg;
+}
+.text-sub {
+  @extend %text-sub;
+}
+.text-black {
+  @extend %text-black;
+}
+.text-light {
+  @extend %text-light;
+}
+.text-light-2 {
+  @extend %text-light-2;
+}
+
+.text-dark-2 {
+  @extend %text-dark-2;
+}
+.text-para {
+  @extend %text-para;
+}
+.text-error {
+  @extend %text-error;
+}
+.brand-bg {
+  @extend %brand-bg;
+}
+.badge-bg {
+  @extend %badge-bg;
+}
+.text-brand {
+  @extend %text-brand;
+}
+.font-light {
+  @extend %font-light;
+}
+.font-regular {
+  @extend %font-regular;
+}
+.font-medium {
+  @extend %font-medium;
+}
+.font-semiBedium {
+  @extend %font-semiBedium;
+}
+.font-bold {
+  @extend %font-bold;
+}
+.font-dark {
+  @extend %font-dark;
+}
+.font-black {
+  @extend %font-black;
+}
+
+// font sizes
+
+.level-lg {
+  @extend %level-lg;
+}
+.level-1 {
+  @extend %level-1;
+}
+.level-2 {
+  @extend %level-2;
+}
+.level-3 {
+  @extend %level-3;
+}
+.level-4 {
+  @extend %level-4;
+}
+.level-5 {
+  @extend %level-5;
+}
+.level-6 {
+  @extend %level-6;
+}
+.level-7 {
+  @extend %level-7;
+}
+.level-8 {
+  @extend %level-8;
+}
+.level-9 {
+  @extend %level-9;
+}
+.level-10 {
+  @extend %level-10;
+}
+
+input {
+  box-shadow: 0 0 0 transparent !important;
+}
+label {
+  display: block;
+}

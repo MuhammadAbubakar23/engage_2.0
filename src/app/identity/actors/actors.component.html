@@ -11,9 +11,9 @@
             <div class="landing-page-header">
                 <div class="row justify-content-between">
                     <div class="col-lg-8 col-md-8">
-                        <h2 class="radical heading-large">Enteract Engage</h2>
-                        <h4 class="radical heading">Workspace to run your application effortlessly</h4>
-                        <p class="text">From onboarding to reporting, orchestrating workflows across channels is
+                        <h2 class="radical heading-large font-regular">Enteract Engage</h2>
+                        <h4 class="radical heading font-regular">Workspace to run your application effortlessly</h4>
+                        <p class=" font-regular">From onboarding to reporting, orchestrating workflows across channels is
                             centralized on the new platform.</p>
                     </div>
                     <div class="col-lg-4 col-md-4">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <h4 class="darkblue heading">
+            <h4 class="darkblue heading my-4">
                 <a href="javascript:;">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-sm-center ps-0">
@@ -33,7 +33,7 @@
                                 {{email}}
                             </div>
                             <span>
-                                <button class="btn radicalBg text-center" (click)="logoutUser()">Sign Out  </button>
+                                <button class="btn radicalBg text-center level-8" (click)="logoutUser()">Sign Out  </button>
                             </span>
                         </li>
                         <!-- <li  class="list-group-item d-flex justify-content-between align-items-sm-center ps-0">
@@ -43,7 +43,7 @@
                 </a>
             </h4>
             
-            <div class="row console-landing-shortcuts h-100">
+            <div class="row console-landing-shortcuts h-100 my-3 ">
                 <!-- <div class="col-lg-4 h-100">
                     <ul class="full_dropdown p-0 text-small user-profile-dropdown shadow h-100"
                         aria-labelledby="dropdownUser1">
@@ -128,14 +128,14 @@
                     </ul>
                 </div> -->
                     <div class="col-lg-12 row justify-content-between">
-                        <div class="col-lg col-md col-sm shortcut-box" *ngFor="let actor of actors">
-                            <div class="card-body h-100 p-3 shadow d-flex iceBg"  (click)="getPermissions(actor.mainId,actor.slug)" style="cursor: pointer;">
+                        <div class="col-lg col-md col-sm shortcut-box transition-all hover:scale-105" *ngFor="let actor of actors">
+                            <div class="card-body h-100 p-3 shadow d-flex"  (click)="getPermissions(actor.mainId,actor.slug)" style="cursor: pointer;">
                                 <button class="iconButton medium">
                                     <i class="far fa-inbox"></i>
                                 </button>
                                 <div class="ms-3">
-                                    <h5 class="night mb-0 mt-0 lh-base text fw-bold">{{actor.name}}</h5>
-                                    <p class="coal lh-base small-text">Add your work email as a personal inbox to manage
+                                    <h5 class="night mb-0 mt-0 lh-base text fw-bold font-regular" >{{actor.name}}</h5>
+                                    <p class="coal lh-base small-text font-regular">Add your work email as a personal inbox to manage
                                         in enteract.</p>
 
                                 </div>

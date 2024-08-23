@@ -28,7 +28,7 @@
                             <div class="row">
                                 <div class="col-lg-2">
                                     <div class="d-flex align-items-lg-center">
-                                        <p class="coal m-0">Sort:</p>
+                                        <p class="coal m-0 font-regular">Sort:</p>
                                         <div class="dropdown">
                                             <button class="btn dropdown-toggle coal" type="button"
                                                 id="dropdownMenuButton1" data-bs-toggle="dropdown"
@@ -39,11 +39,11 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 <li>
-                                                    <a class="dropdown-item"
+                                                    <a class="dropdown-item font-regular"
                                                         (click)="setSortOption('Ascending')">Ascending</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item"
+                                                    <a class="dropdown-item font-regular"
                                                         (click)="setSortOption('Descending')">Descending</a>
                                                 </li>
                                             </ul>
@@ -54,7 +54,7 @@
                                     <div class="me-2">
                                         <select class="form-select" id="ruleTypeSelect" [(ngModel)]="selectedRuleType"
                                             (change)="onRuleTypeChange($event)">
-                                            <option value="" selected>Select Tag</option>
+                                            <option value="" selected class="font-regular">Select Tag</option>
                                             <option *ngFor="let ruleType of ruleTypes" [value]="ruleType.slug">{{
                                                 ruleType.name }}</option>
                                         </select>
@@ -71,8 +71,8 @@
                                     <div class="me-2">
                                         <select class="form-select" id="channelSelect" [(ngModel)]="selectedChannelSlug"
                                             (change)="onChannelChange($event)" [value]='2'>
-                                            <option value="" disabled>Select Platform</option>
-                                            <option *ngFor="let channel of channels" [value]="channel.id">{{
+                                            <option value="" disabled class="font-regular">Select Platform</option>
+                                            <option *ngFor="let channel of channels" [value]="channel.id" class="font-regular">{{
                                                 channel.name }}</option>
                                         </select>
                                     </div>
@@ -87,7 +87,7 @@
                                     </a>
                                     <a (click)="updatevalue('ConsoleCreateRuleHeader')" *ngIf="hasCreatePermission"
                                         [routerLink]="['/console/add-rules']" class="ms-2">
-                                        <button type="button" class="btn btn-success">
+                                        <button type="button"class="btn__theme flex items-center gap-[10px]">
                                             <i class="fal fa-plus me-2"></i>
                                             Add Rules
                                         </button>
@@ -249,7 +249,7 @@
                                     </a>
                                     <a (click)="updatevalue('consoleCreateTeamHeader')"
                                         [routerLink]="['/console/add-rules']" class="ms-2">
-                                        <button type="button" class="btn btn-success">
+                                        <button type="button" class="btn__theme flex items-center gap-[10px]">
                                             <i class="fal fa-plus me-2"></i>
                                             Add Rules
                                         </button>

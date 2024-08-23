@@ -1,0 +1,64 @@
+.post-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .chat-box {
+    flex: 1;
+    overflow-y: auto;
+  }
+  .message {
+    max-width: 75%;
+    margin: 20px 0;
+    .input-area {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #e5e7eb;
+      background-color: #fff;
+
+      input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        margin-right: 10px;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #4f46e5;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+    }
+
+    .message-body {
+      background-color: #e8e8e8;
+      border-radius: 8px;
+      padding: 14px;
+
+      &.attachment__box {
+        max-width: 65%;
+      }
+    }
+
+    &.sent {
+      color: #fff;
+      margin-left: auto;
+      .message-body {
+        background-color: #dce1f9;
+      }
+    }
+    &.received {
+      color: #333;
+      margin-right: auto;
+      .message-body {
+        background-color: #e8e8e8;
+      }
+    }
+  }
+
+}

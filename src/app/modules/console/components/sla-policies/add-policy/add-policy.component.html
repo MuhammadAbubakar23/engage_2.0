@@ -21,7 +21,7 @@
                                 <button class="nav-link active" id="permission-detail-tab" data-bs-toggle="tab"
                                     data-bs-target="#permission-detail" type="button" role="tab"
                                     aria-controls="permission-detail" aria-selected="false">
-                                    <h6>Add/Update SLA</h6>
+                                    <h6 class="level-6 font-bold">Add/Update SLA</h6>
                                 </button>
                                 <!-- <button class="nav-link" id="permission-rules-tab" data-bs-toggle="tab"
                                     data-bs-target="#permission-rules" type="button" role="tab"
@@ -270,10 +270,10 @@
                             </div>
                             <div class="col-md-8 justify-content-end d-flex">
                                 <div class="buttons-wrap d-flex">
-                                    <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4"
+                                    <button type="button"  class="btn btn-outline-secondary btn-medium me-2" style ="font-size: 14px !important; background-color: white !important; color:black !important; min-width:100px !important;"
                                         (click)="cancelForm()">Cancel</button>
-                                    <button type="submit" [disabled]="messageForm.disabled" class="btn skyBg ms-2 px-4 btn-medium saveBtn"
-                                        data-bs-target="">Save</button>
+                                    <button type="submit" [disabled]="messageForm.disabled" class="btn__theme flex items-center ms-2 px-4 btn-medium saveBtn" style ="font-size: 14px !important;"
+                                        data-bs-target="">Save</button>                                           
                                 </div>
                             </div>
                         </div>

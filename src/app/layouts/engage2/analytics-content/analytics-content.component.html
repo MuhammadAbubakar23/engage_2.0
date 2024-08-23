@@ -6,7 +6,9 @@
         </div> -->
         <nav id="left-sidebar-expand" class="conversation-list all-conversation"
             [ngClass]="toggleLeftBar ? '':'toggled' ">
+            <div class="multiple-screens secondary-bg" style="padding: 0px !important; margin-top: 0px !important;">
             <analytics-menu></analytics-menu>
+            </div>
             <a class="panelToggle" (click)="toggleSubLeftBar()"></a>
         </nav>
         <div class="middle-wrapper d-flex w-100 flex-column">

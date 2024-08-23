@@ -1,0 +1,14 @@
+.sidebar_internal{
+    border-right: 1px solid #e6e6e6;
+    padding: 8px;
+}
+
+.accordion__list {
+    li {
+        transition: .3s ease;
+        
+        &:hover {
+            background: $secondaryBg;
+        }
+    }
+}

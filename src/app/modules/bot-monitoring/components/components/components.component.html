@@ -139,11 +139,13 @@
                                                         </ul>
                                                     </div>
                                                     <div class="text-end mb-3">
-
+                                                        
+                                                        
+                                
                                                         <button *ngIf="!isViewMode" type="button"
-                                                            class="btn btn-primary btn-small"
+                                                        class="btn btn-outline-secondary btn-medium me-2" style ="font-size: 14px !important; background-color: white !important; color:black !important; min-width:100px !important;"
                                                             (click)="saveChatbot()">Save</button>
-                                                        <button class="btn btn-sm btn-danger ms-auto" type="button"
+                                                        <button class="btn__theme flex items-center ms-2 px-4 btn-medium saveBtn" style ="font-size: 14px !important;" type="button"
                                                             *ngIf="isViewMode"
                                                             (click)="cancelIntentSelection()">Cancel</button>
                                                     </div>
@@ -212,9 +214,9 @@
                                                 </div>
                                                 <div class="text-end mb-3">
                                                     <button *ngIf="!isResponseView" type="button"
-                                                        class="btn btn-primary btn-small"
+                                                    class="btn btn-outline-secondary btn-medium me-2" style ="font-size: 14px !important; background-color: white !important; color:black !important; min-width:100px !important;"
                                                         (click)="SaveResponse()">Save</button>
-                                                    <button class="btn btn-sm btn-danger ms-auto" type="button"
+                                                    <button class="btn__theme flex items-center ms-2 px-4 btn-medium saveBtn" style ="font-size: 14px !important;" type="button"
                                                         *ngIf="isResponseView"
                                                         (click)="cancelResponseSelection()">Cancel</button>
                                                 </div>

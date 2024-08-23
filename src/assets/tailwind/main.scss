@@ -1,0 +1,28 @@
+@import "./tailwind";
+@import "./components/fonts";
+@import "./components/globals";
+@import "./components/layout";
+@import "./components/variables";
+@import "./components/common";
+@import "./components/facebook";
+@import "./components/chat";
+@import "./components/overrides";
+
+body {
+  font-family: "Rubik" !important;
+  margin: 0;
+  padding: 0;
+  // transition: .3s ease !important;
+}
+
+.main {
+  .notifications {
+    li:not(:last-child) {
+      border-bottom: 1px solid #dedede;
+    }
+  }
+
+  .graph__box {
+    background: url(../assets/images/graph.svg) no-repeat right bottom;
+  }
+}

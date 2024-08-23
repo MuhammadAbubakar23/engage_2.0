@@ -444,7 +444,7 @@
                         </ul> -->
           </div>
         </li>
-        <li class="list-group-item filtericon skyBg border-0 iconButton medium iconHover" data-bs-toggle="collapse"
+        <li class="list-group-item filtericon skyBgg border-0 iconButton medium iconHover" data-bs-toggle="collapse"
           data-bs-target="#filter-bar" aria-expanded="true" aria-controls="filter-bar" aria-label="..."
           data-bs-placement="bottom" title="Filters">
           <i class="fal fa-sliders-h"></i>
@@ -644,7 +644,7 @@
                     <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
                       <a
                         (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId, query.skillSlug)">
-                        <span>{{query?.userName?.split('<')[0] || query.user}} 
+                        <span class="font-regular">{{query?.userName?.split('<')[0] || query.user}} 
                           &nbsp;
                           <i *ngIf="query.isVerified == true" class="fa-solid fa-badge-check text-primary"></i>
                         </span>
@@ -657,7 +657,7 @@
                  
                 </td>
                 <td>
-                  <div class="maintext"
+                  <div class="level-7"
                     (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId, query.skillSlug)">
                     {{query.message < 110 ? query.message: (query.message | slice:0:110) +'...'}} </div>
                 </td>
@@ -745,7 +745,7 @@
                                 </li>
                                 <li class="card-footer position-relative">
                                   <div class="dropdown-item">
-                                    <button type="button" class="btn btn-success">Assign</button>
+                                    <button type="button" class="btn__theme flex items-center gap-[10px]">Assign</button>
                                   </div>
                                 </li>
                               </ul>

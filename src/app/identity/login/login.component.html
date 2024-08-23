@@ -1,141 +1,168 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
    <p style="color: white"> Loading... </p>
 </ngx-spinner>
+<div
+      class="auth__wrapp h-screen w-screen flex items-center justify-between flex-col py-8 overflow-hidden"
+    >
+      <div></div>
+      <div class="auth__block">
+        <div class="auth__header text-center flex flex-col items-center">
+          <img
+            src="../../../assets/tailwind/images/entract-logo.svg"
+            width="234"
+            height="28"
+            alt="Engage"
+          />
 
-<div id="signupWrapper" class="">
-   <!-- <p class="text-end px-4 py-2 m-0 top-0 end-0 position-absolute">Don’t have an account? <a>Sign up</a> </p> -->
+          <h1 class="level-lg font-medium text-black m-0">Hello again!</h1>
+          <p class="level-7 text-para">Login with your enteract credentials.</p>
+        </div>
 
-   <aside>
-      <div class="left-body">
-         <div class="logo mb-5">
-            <img src="../../../assets/images/ibex-enteract-engage.svg" width="300" alt="">
-         </div>
+        <div class="auth__body mt-8 pt-8">
+          <form method="POST" class="flex items-center flex-col gap-3 w-full" [formGroup]="loginForm" method="POST" (submit)="login()" (keydown.enter)="login()">
+            <div class="input_group relative w-full">
+              <i class="fa-light fa-envelope absolute"></i>
+              <input formControlName="userName"
+                type="text"
+                name="email"
+                id="email"
+                class="common__input p-4 level-8"
+                placeholder="Username or Email"
+              />
+              <div class="error__message text-error level-8"></div>
+            </div>
+            <div class="input_group relative w-full">
+              <i class="fa-light fa-lock-keyhole absolute"></i>
+              <input formControlName="password"
+                type="password"
+                name="password"
+                id="password"
+                class="common__input p-4 level-8"
+                placeholder="Password"
+              />
+              <div class="error__message text-error level-8"></div>
+            </div>
+            <div class="flex justify-between items-center w-full">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="remember"
+                  id="remember"
+                  class="common__checkbox"
+                />
+                <span class="level-8 text-para">Remember me</span>
+              </label>
 
-         <div class="iconsbox">
-            <span class="iconButton iconfacebook"> <i class="fa-brands fa-facebook-f"></i></span>
-            <span class="iconButton icontiktok"> <i class="fa-brands fa-tiktok"></i></span>
-            <span class="iconButton icontwitter d-none"> <i class="fa-brands fa-twitter"></i></span>
-            <span class="iconButton iconwhatsapp"><i class="fa-brands fa-whatsapp"></i></span>
-            <span class="iconButton icongoogle"> <i class="fa-brands fa-google"></i></span>
-            <span class="iconButton iconyoutube"> <i class="fa-brands fa-youtube"></i></span>
-            <span class="iconButton iconlinkedin"><i class="fa-brands fa-linkedin-in"></i></span>
-            <span class="iconButton iconinstagram"> <i class="fa-brands fa-instagram"></i></span>
-         </div>
-         <div class="illustration">
-            <img src="../../../assets/images/illustration.svg" alt="-">
-         </div>
+              <a href="#" class="text-error level-8"> Forgot Password?</a>
+            </div>
+            <button
+              class="btn__theme level-6 text-center w-80 p-3 mx-auto block mt-3"
+              type="button"
+              id="validate_user" (click)="login()" (keydown.enter)="login()"
+              [disabled]="loginDisabled==true || loginForm.invalid"
+            >
+              Sign In
+            </button>
+          </form>
+        </div>
       </div>
-
-      <div class="circlebg topleft"></div>
-      <div class="circlebg bottomright">
-         <p></p>
+      <div class="text-center">
+        <a href="#" class="text-para level-8 mx-2">Technical Support</a>
+        <span class="text-para">|</span>
+        <a href="#" class="text-para level-8 mx-2">Privacy Policy</a>
+        <span class="text-para">|</span>
+        <a href="#" class="text-para level-8 mx-2">Terms & Conditions</a>
+        <p class="text-para level-8 mt-2">2024 All Rights Reserved.</p>
       </div>
-   </aside>
+    </div>
+
+<!-- <div class="auth__wrapp h-screen w-screen flex items-center justify-center">
    <ng-container *ngIf="isUserLoging==false">
-      <div class="main-body">
+      <div class="auth__block">
+         <div class="auth__header text-center flex flex-col gap-4 items-center">
+            <img src="../../../assets/tailwind/images/entract-logo.svg" width="234" height="28" alt="Engage" />
 
-         <div class="login-form main-login-form agentExtensionWrapper">
-            <h4>Glad to see you again!</h4>
-            <h6 class="coal mb-5">
-               Login with your enteract credentials
-            </h6>
-            <span *ngIf="countdownTime>0">
+            <h1 class="level-lg font-medium text-black">Hello again!</h1>
+            <p class="level-7 text-para">Login with your enteract credentials.</p>
+         </div>
 
-               <p>Remaining Time {{display}} </p>
+         <div class="auth__body">
+            <form [formGroup]="loginForm" method="POST" (submit)="login()">
+               <div class="input_group">
+                  <input formControlName="userName" type="text" name="email" id="email" class="common__input level-8"
+                     placeholder="Username or Email" />
+                  <div class="error__message text-error level-8"></div>
+               </div>
+               <div class="input_group">
+                  <input formControlName="password" type="password" name="password" id="password"
+                     class="common__input level-8" placeholder="Password" />
+                  <div class="error__message text-error level-8"></div>
+               </div>
+               <div class="flex justify-between items-center">
+                  <label class="flex items-center gap-3">
+                     <input type="checkbox" name="remember" id="remember" class="common__checkbox" />
+                     <span class="level-7 text-para">Remember me</span>
+                  </label>
 
-            </span>
-            <div class="form w-100">
-               <form [formGroup]="loginForm" (submit)="login()">
-                  <div class="dropdown loginas">
-                     <!-- <select class="form-select d-flex align-items-center mb-3" id="floatingSelect" aria-label="Floating label select"
-                        formControlName="actor">
-                        <option value="" disabled selected hidden>Login As</option>
-                        <option *ngFor="let actor of Actors" [ngValue]="actor.name">
-                           {{actor.name}}</option>
-                     </select> -->
-                  </div>
-                  <div class="form-floating mb-3">
-                     <input formControlName="userName" class="form-control" id="userName"
-                        placeholder="Enter your Email">
-                     <label for="userName"> Username or Email</label>
-                  </div>
-                  <div class="form-floating mb-3">
-                     <input formControlName="password" type="password" class="form-control" id="password"
-                        placeholder="Enter your Password">
-                     <label for="password">Password</label>
-                  </div>
-                  <div class="col-12 d-flex justify-content-between mb-4">
-                     <!-- <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                        <label class="form-check-label coal" for="gridCheck">
-                           Remember me
-                        </label>
-                     </div> -->
-                     <!-- <div id="register-link">
-                        <a routerLink="/forgotpassword" class="forgot-password-btn">Forget Password</a>
-                     </div> -->
-                  </div>
-                  <div class="form-btn">
-                     <button type="submit" class="w-100 btn loginbtn" id="loginBtn" tabindex="-1" role="button"
-                        [disabled]="loginDisabled==true || loginForm.invalid">Login</button>
-                  </div>
-               </form>
-            </div>
+                  <a class="text-error level-7"> Forgot Password?</a>
+               </div>
+
+               <div class="button__group max-w-[80%]">
+                  <button class="btn__theme level-6 text-center max-w-[80%]"
+                     [disabled]="loginDisabled==true || loginForm.invalid">
+                     Sign In
+                  </button>
+               </div>
+            </form>
          </div>
       </div>
    </ng-container>
+
    <ng-container *ngIf="isUserLoging==true">
-      <div class="main-body">
-         <div class="login-form reset-password-form agentExtensionWrapper">
-            <h4>Glad to see you again</h4>
-            <h6 class="coal mb-3 text-center">
-               Login with your enteract credentials
-            </h6>
-            <h6 class="coal mb-3 text-center">
-               Code Sent on your Email
-            </h6>
-            <div class="form w-100">
-               <form [formGroup]="verificationForm">
-                  <div class="form-floating mb-3">
-                     <input readonly class="form-control" id="floatingInputPassword" [(ngModel)]="Verificationemail"
-                        formControlName="Verificationemail" placeholder="Password">
-                     <label for="floatingInputPassword">Email</label>
-                     <div id="password_msg"></div>
-                  </div>
-                  <div class="form-floating mb-3">
-                     <input type="password" class="form-control" id="floatingInputPassword"
-                        formControlName="verificationCode" placeholder="Password">
-                     <label for="floatingInputPassword">Please Enter Code</label>
-                     <div id="password_msg"></div>
-                  </div>
-                  <div class="form-btn">
-                     <button class="w-100 btn loginbtn" id="loginBtn" tabindex="-1" role="button"
-                        (click)="Submituser()" [disabled]="verificationForm.invalid">Verify</button>
-                  </div>
-                  <span *ngIf="isVerificationcodeFailed==true">
-                     <div class="center-section">
-                        <span class="line"></span>
-                        <span class="or-option">OR</span>
-                        <span class="line"></span>
-                     </div>
+      <div class="auth__block">
+         <div class="auth__header text-center flex flex-col gap-4 items-center">
+            <img src="../../../assets/tailwind/images/entract-logo.svg" width="234" height="28" alt="Engage" />
 
-                     <div class="form-btn">
-                        <button class="w-100 btn loginbtn" id="loginBtn" tabindex="-1" role="button"
-                           (click)="VerificationcodeFailed()">Login Again</button>
-                     </div>
+            <h1 class="level-lg font-medium text-black">Hello again!</h1>
+            <p class="level-7 text-para">Login with your enteract credentials.</p>
+            <p class="level-7 text-para">Code Sent on your Email</p>
+         </div>
 
+         <div class="auth__body">
+            <form [formGroup]="verificationForm" method="POST" (submit)="login()">
+               <div class="input_group">
+                  <input formControlName="userName" type="text" name="email" id="email" class="common__input level-8"
+                     placeholder="Username or Email" [(ngModel)]="Verificationemail"
+                     formControlName="Verificationemail"/>
+                  <div class="error__message text-error level-8"></div>
+               </div>
+               <div class="input_group">
+                  <input formControlName="password" type="password" name="password" id="password"
+                     class="common__input level-8" placeholder="Please Enter Code" formControlName="verificationCode"/>
+                  <div class="error__message text-error level-8"></div>
+               </div>
+               <div class="flex justify-between items-center">
+                  <label class="flex items-center gap-3">
+                     <input type="checkbox" name="remember" id="remember" class="common__checkbox" />
+                     <span class="level-7 text-para">Remember me</span>
+                  </label>
 
-                  </span>
+                  <a class="text-error level-7"> Forgot Password?</a>
+               </div>
 
-               </form>
-
-            </div>
+               <div class="button__group max-w-[80%]">
+                  <button class="btn__theme level-6 text-center max-w-[80%]"(click)="Submituser()"
+                     [disabled]="verificationForm.invalid">Verify
+                  </button>
+               </div>
+            </form>
          </div>
       </div>
    </ng-container>
 
-</div>
 
+
+</div> -->
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
       aria-live="assertive" aria-atomic="true">
@@ -150,3 +177,83 @@
       </div>
    </div>
 </div>
+
+
+
+
+
+
+<!-- <div
+      class="auth__wrapp h-screen w-screen flex items-center justify-between flex-col py-8 overflow-hidden"
+    >
+      <div></div>
+      <div class="auth__block">
+        <div class="auth__header text-center flex flex-col items-center">
+          <img
+            src="./assets/images/entract-logo.svg"
+            width="234"
+            height="28"
+            alt="Engage"
+          />
+
+          <h1 class="level-lg font-medium text-black m-0">Hello again!</h1>
+          <p class="level-7 text-para">Login with your enteract credentials.</p>
+        </div>
+
+        <div class="auth__body mt-8 pt-8">
+          <form method="POST" class="flex items-center flex-col gap-5 w-full" [formGroup]="loginForm" method="POST" (submit)="login()">
+            <div class="input_group relative w-full">
+              <i class="fa-light fa-envelope absolute"></i>
+              <input formControlName="userName"
+                type="text"
+                name="email"
+                id="email"
+                class="common__input p-4 level-8"
+                placeholder="Username or Email"
+              />
+              <div class="error__message text-error level-8"></div>
+            </div>
+            <div class="input_group relative w-full">
+              <i class="fa-light fa-lock-keyhole absolute"></i>
+              <input formControlName="password"
+                type="password"
+                name="password"
+                id="password"
+                class="common__input p-4 level-8"
+                placeholder="Password"
+              />
+              <div class="error__message text-error level-8"></div>
+            </div>
+            <div class="flex justify-between items-center w-full">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="remember"
+                  id="remember"
+                  class="common__checkbox"
+                />
+                <span class="level-7 text-para">Remember me</span>
+              </label>
+
+              <a href="#" class="text-error level-7"> Forgot Password?</a>
+            </div>
+            <button
+              class="btn__theme level-6 text-center w-80 p-4 mx-auto block mt-3"
+              type="button"
+              id="validate_user"
+              [disabled]="loginDisabled==true || loginForm.invalid"
+            >
+              Sign In
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="text-center">
+        <a href="#" class="text-para level-7">Technical Support</a>
+        <span class="text-para">|</span>
+        <a href="#" class="text-para level-7">Privacy Policy</a>
+        <span class="text-para">|</span>
+        <a href="#" class="text-para level-7">Terms & Conditions</a>
+        <p class="text-para level-7">2024 All Rights Reserved.</p>
+      </div>
+    </div> -->

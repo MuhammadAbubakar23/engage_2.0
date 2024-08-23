@@ -1,0 +1,132 @@
+@import "./variables";
+.layout {
+  .sidebar {
+    flex: 0 0 22%;
+    .stick__sidebar {
+      .segment {
+        li {
+          // height: 50px;
+          position: relative;
+          transition: 0.3s ease;
+          cursor: pointer;
+          padding: 12px;
+          &:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0;
+            height: 80%;
+            width: 2px;
+            border-radius: 0 8px 8px 0;
+            background: $brandColor;
+            opacity: 0;
+            transition: 0.3s ease;
+          }
+          &:hover {
+            background: #fff;
+            &:before {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+
+    .collapsible__sidebar {
+      transition: 0.3s ease;
+
+      &.opened {
+        margin-left: 0;
+      }
+      &.closed {
+        margin-left: -100%;
+      }
+      .sidebar__toggler {
+        right: -16px;
+        top: 32px;
+        z-index: 99;
+        box-shadow: 0 4px 10px #5a52806e;
+        color: $brandColor;
+        cursor: pointer;
+        transition: 0.3s ease;
+      }
+      .collapsible__header {
+        border-bottom: 1px solid #e6e6e6;
+      }
+
+      .items_list {
+        li {
+          padding: 10px;
+          transition: 0.3s ease;
+          border-radius: 8px;
+          &:hover {
+            background: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  .content__area {
+    flex: 0 0 78%;
+    transition: 0.3s ease;
+    &.full-width {
+      margin-left: -18vw;
+      flex: 0 0 96%;
+    }
+    .dashboard_header {
+      border-bottom: 1px solid #e6e6e6;
+    }
+
+    .content__inner {
+      overflow-x: hidden;
+    }
+
+    .actions__sidebar {
+      border-left: 1px solid #e6e6e6;
+      max-width: 300px;
+      width: 100%;
+      transition: .3s ease;
+
+      &.hide {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        padding: 0;
+        width: 0;
+      }
+
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+    }
+
+    .screen__actions {
+      max-width: 56px;
+      width: 100%;
+      border-left: 1px solid #e6e6e6;
+      li {
+        position: relative;
+      }
+      a {
+        width: 100%;
+        &.active {
+          background: $secondaryBg;
+          color: $brandColor;
+        }
+        &:hover {
+          background: $secondaryBg;
+          color: $brandColor;
+        }
+      }
+    }
+  }
+
+  i, svg {
+    font-size: 14px;
+  }
+}

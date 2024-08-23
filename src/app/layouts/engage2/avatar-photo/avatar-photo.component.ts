@@ -31,7 +31,7 @@ export class AvatarPhotoComponent implements OnInit {
           this.createInititals();
 
           const randomIndex = Math.floor(Math.random() * Math.floor(this.colors.length));
-          this.circleColor = this.colors[randomIndex];
+          this.circleColor = "#5454fb";
       }
 
   }
