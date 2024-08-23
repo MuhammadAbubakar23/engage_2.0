@@ -14,7 +14,6 @@
   min-height: 100vh;
   //  z-index: 11;
   z-index: 10;
-  padding: 0 3px;
   .leftbar-console-expanded {
     visibility: visible;
     opacity: 1;
@@ -51,8 +50,8 @@
     }
   }
   &.toggled {
-    min-width: 17px;
-    max-width: 17px;
+    min-width: 0;
+    max-width: 0;
     .multiple-screens {
       width: auto;
       -webkit-transition-duration: 0.3s;

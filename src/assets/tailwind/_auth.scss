@@ -1,15 +1,23 @@
 .auth__wrapp {
   position: relative;
-  // background: url(../../assets/images/gradient-background.jpg) no-repeat center/
-  //   cover;
+  background: url(../../assets/images/gradient-background.jpg) no-repeat center
+    bottom/ cover;
 
   .auth__block {
-    max-width: 26%;
+    max-width: 540px;
     width: 100%;
 
     input {
-      padding: 12px !important;
+      padding: 18px !important;
+      border: 1px solid #00000052 !important;
       border-radius: 14px !important;
+      font-family: "Rubik" !important;
+
+      &:focus {
+        box-shadow: 0 0 0 transparent !important;
+        outline: none !important;
+        border: 1px solid #3737ff77 !important;
+      }
     }
 
     .common__checkbox {
@@ -20,5 +28,6 @@
 
   button {
     box-shadow: 0 10px 10px #7171ff45;
+    background: #5454fb;
   }
 }

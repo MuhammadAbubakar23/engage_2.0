@@ -64,7 +64,7 @@
     <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
         <p style="color: white"> Loading... </p>
     </ngx-spinner>
-    <div class="middle-wrapper d-flex w-100 flex-column" *ngIf="feedbackSubmitted == false">
+    <div class="middle-wrapper relative z-0 d-flex w-100 flex-column" *ngIf="feedbackSubmitted == false">
         <div class="content-box-wrapper d-flex w-100">
             <div class="middle-content d-flex">
                 <div class="container h-100vh surveymain">
@@ -107,7 +107,7 @@
             </div>
         </div>
     </div>
-    <div class="middle-wrapper d-flex w-100 flex-column" *ngIf="feedbackSubmitted == true">
+    <div class="middle-wrapper relative z-0 d-flex w-100 flex-column" *ngIf="feedbackSubmitted == true">
         <div class="content-box-wrapper d-flex w-100">
             <div class="middle-content d-flex">
                 <div class="container h-100vh">
@@ -134,7 +134,7 @@
         </div>
     </div>
 </div>
-<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 999999">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
