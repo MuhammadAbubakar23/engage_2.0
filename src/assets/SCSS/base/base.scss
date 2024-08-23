@@ -5,7 +5,7 @@
 body {
   overflow: hidden !important;
 }
-.d-grid{
+.d-grid {
   display: grid;
 }
 .wider-container {
@@ -31,8 +31,8 @@ body {
   &:after {
     content: "Choose Your File";
     position: absolute;
-    background-color: #D8F0FF;
-    border: 1px solid #1DA1F3;
+    background-color: #d8f0ff;
+    border: 1px solid #1da1f3;
     top: 0;
     width: 181px;
     height: 56px;
@@ -217,8 +217,9 @@ select {
   position: relative;
   .badge {
     position: absolute;
-    top: -3px;
-    right: -3px;
+    top: -6px;
+    right: -8px;
+    font-size: 10px !important;
     border-radius: 50%;
     background: red;
     color: white;
@@ -228,7 +229,7 @@ select {
 .console-body-wrapper {
   height: calc(100vh - 70px);
   width: 100%;
-  &.footerheight{
+  &.footerheight {
     height: calc(100vh - 145px);
   }
 }
@@ -246,7 +247,7 @@ select {
     width: 0;
   }
 }
-.rightbar-scroll-wrap{
+.rightbar-scroll-wrap {
   height: calc(100vh - 185px);
 }
 a {
@@ -265,61 +266,69 @@ a {
 .form-check-input {
   border: 1px solid #707070 !important;
 }
-.btn-close{
+.btn-close {
   background: none;
   padding: 0;
-    width: auto;
-    height: auto;
-    line-height: normal;
-    &:focus{
-      outline: none;
-    }
-  &:before{
-    content: '\f00d';
+  width: auto;
+  height: auto;
+  line-height: normal;
+  &:focus {
+    outline: none;
+  }
+  &:before {
+    content: "\f00d";
     font-size: 22px;
-    font-family: "Font Awesome 6 Pro"; 
+    font-family: "Font Awesome 6 Pro";
   }
 }
-.dropdown-listing{
-  .small-list{
-    .form-check-input{
+.dropdown-listing {
+  .small-list {
+    .form-check-input {
       position: relative;
       z-index: 2;
     }
   }
 }
-.fc-direction-ltr{
-  .fc-timegrid-slot-label-frame{
+.fc-direction-ltr {
+  .fc-timegrid-slot-label-frame {
     text-align: center;
   }
-} 
+}
 .filter-toolbar {
-  .dropdown-menu{
+  .dropdown-menu {
     font-size: 0.9rem;
-    h6{
+    h6 {
       font-size: 0.9rem;
     }
   }
-  .select2-container--default .select2-selection--single .select2-selection__rendered {
+  .select2-container--default
+    .select2-selection--single
+    .select2-selection__rendered {
     line-height: 36px;
   }
   .select2-container--default .select2-selection--single {
     height: 36px;
-   border:1px solid #e2e5e6;
+    border: 1px solid #e2e5e6;
   }
-  .select2-container--default .select2-selection--single .select2-selection__arrow {
+  .select2-container--default
+    .select2-selection--single
+    .select2-selection__arrow {
     height: 28px;
     top: 6px;
   }
-  .select2-container--default .select2-selection--single .select2-selection__rendered {
+  .select2-container--default
+    .select2-selection--single
+    .select2-selection__rendered {
     line-height: 36px;
     font-size: 0.9rem;
     &:focus-visible {
       outline: none;
     }
   }
-  .search-body{
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
+  .search-body {
+    .select2-container--default
+      .select2-selection--single
+      .select2-selection__rendered {
       line-height: 36px;
     }
     .select2-container--default .select2-selection--single {
@@ -327,11 +336,15 @@ a {
       border-bottom: 1px solid #eee;
       border-radius: 0;
     }
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
+    .select2-container--default
+      .select2-selection--single
+      .select2-selection__arrow {
       height: 28px;
       top: -6px;
     }
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
+    .select2-container--default
+      .select2-selection--single
+      .select2-selection__rendered {
       line-height: 36px;
       font-size: 14px;
       &:focus-visible {
@@ -345,59 +358,71 @@ a {
   .btn {
     height: 36px;
     font-size: 0.9rem;
-    i{
+    i {
       margin-right: 8px;
     }
   }
   border-bottom: 1px solid $powder;
   padding: 0 0 10px;
   position: relative;
-  ul.list-inline{
-    >li{
-      .dropdown{
-        .dropdown-toggle{
-          border: 1px solid $powder;
-          color: #5f6368;
+  ul.list-inline {
+    > li {
+      .dropdown {
+        .dropdown-toggle {
+          cursor: pointer;
+          border: 1px solid #ececec;
+          color: #212529;
           padding: 0.375rem 0.75rem;
-         height: 36px;
-         font-size: 0.9rem;
-         i{
-          color: $sky;
-          font-weight: 400 !important;
-         }
-          &:hover{
+          height: 40px;
+          font-size: 0.9rem;
+          background: #f6f5f5;
+          border-radius: 8px;
+
+          i {
+            color: #212529;
+            font-weight: 400 !important;
+          }
+          &:hover {
             background-color: white;
           }
         }
       }
-      .toggle-check-btn{
-        border: 1px solid $powder;
-        color: #5f6368;
-        i{
-          color: $sky;
+      .toggle-check-btn {
+        border: 1px solid #ececec;
+        color: #212529;
+        background: #f6f5f5;
+        border-radius: 8px;
+        height: 40px;
+        cursor: pointer;
+        i {
+          color: #212529;
           font-weight: 400 !important;
-         }
-        &:hover{
+        }
+        &:hover {
           background-color: white;
         }
       }
-      .btn-check:checked  + .toggle-check-btn {
+      .btn-check:checked + .toggle-check-btn {
         background-color: rgb(215, 238, 255);
         color: $royalblue;
-        border-color:rgb(215, 238, 255);
-        i{
-          &:before{
+        border-color: rgb(215, 238, 255);
+        i {
+          &:before {
             content: "\f00c";
           }
         }
       }
     }
   }
+
+  &.collapse {
+    visibility: visible !important;
+  }
 }
-.filter-container.checkbox-reset{
+.filter-container.checkbox-reset {
   padding: 0;
   border: 0;
-  li{
+  li {
     padding: 0 !important;
     background: none;
     margin: 0 !important;
@@ -406,24 +431,24 @@ a {
     line-height: normal !important;
   }
 }
-.leftactive{
+.leftactive {
   .inbox-container {
     .tab-content {
       .query-container {
         .table {
           tr {
-            .maintext{
+            .maintext {
               max-width: 500px;
             }
             td:nth-child(4) {
               max-width: 320px;
-          }
+            }
           }
         }
       }
     }
   }
 }
-.w-40{
+.w-40 {
   width: 40% !important;
 }
