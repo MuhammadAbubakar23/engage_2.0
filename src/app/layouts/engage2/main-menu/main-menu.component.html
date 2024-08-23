@@ -1,4 +1,4 @@
-<div id="leftBarWrapper" style="background-color: #e8e8e8 !important; background-image: none !important;">
+<div id="leftBarWrapper">
 
     <div class="logo">
         <a>
@@ -12,13 +12,13 @@
         </a>
     </div>
 
-    <ul class="list-group agent_nav_bar" id="agent-list">
+    <ul class="list-group agent_nav_bar mt-10" id="agent-list">
         <ng-container *ngIf="!(restrictedAgentsString.includes(restrictedAgent)) && !(onlyAnalyticsTabVisible.includes(restrictedAgent))">
             <team-menu></team-menu>
         </ng-container>
 
 
-        <div class="leftBarDivider" style="background-color: #60666c !important;"></div>
+        <div class="leftBarDivider" style="background-color: #fff !important;"></div>
         <!-- <a routerLink="/analytics/executive-dashboard"
             class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
             <div class="list-group-text d-flex align-items-center">

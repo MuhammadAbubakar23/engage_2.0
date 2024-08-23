@@ -1,11 +1,11 @@
 <!-- <ng-container *ngIf="!restrictedAgentsString.includes(restrictedAgent) && !onlyAnalyticsTabVisible.includes(restrictedAgent) && totalParcoAdminUsers.includes(restrictedAgent)"> -->
   <!-- <ng-container *ngFor="let menu of menus$ ">
         <a [routerLink]="['/'+menu.link]" routerLinkActive="active" ariaCurrentWhenActive="page"
-            class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
-            <div class="list-group-text d-flex align-items-center">
+            class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2">
+            <div class="list-group-text d-flex align-items-center gap-3">
                 <div class="iconButton medium" [innerHTML]="menu.icon">
                 </div>
-                <a class="itemLabel">
+                <a class="itemLabel level-8">
                     {{menu.name}}
                 </a>
             </div>
@@ -13,13 +13,13 @@
     </ng-container> -->
     <a [routerLink]="['/analytics']" routerLinkActive="active" ariaCurrentWhenActive="page" data-tooltip="Sent" 
       (click)="opensidebar()"
-      class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+      class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2"
       (click)="resetFilters()">
-      <div class="list-group-text d-flex align-items-center">
-          <div class="p-3 cursor-pointer">
+      <div class="list-group-text d-flex align-items-center gap-3">
+          <div class="cursor-pointer">
               <i class="fa fa-chart-line-up"></i>
           </div>
-          <div class="itemLabel" style="color: black; !important">
+          <div class="itemLabel level-8" style="color: black !important;">
             Analytics 
           </div>
       </div>
@@ -28,48 +28,48 @@
 
     <!-- <a  [routerLink]="['/analytics']" routerLinkActive="active" ariaCurrentWhenActive="page"
     (click)="opensidebar()"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2"
     (click)="resetFilters()">
-    <div class="list-group-text d-flex align-items-center">
+    <div class="list-group-text d-flex align-items-center gap-3">
       <div class="iconButton medium">
         <i class="fa-light fa-chart-line-up ice"></i>
       </div>
-      <a class="itemLabel"> Analytics</a>
+      <a class="itemLabel level-8"> Analytics</a>
     </div>
   </a> -->
 <!-- </ng-container> -->
 <!-- <ng-container *ngIf="!onlyAnalyticsTabVisible.includes(restrictedAgent)">
   <a [routerLink]="['/all-inboxes/completed/all']" routerLinkActive="active" ariaCurrentWhenActive="page"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2"
     [class.active]="activeChannel == 'completed'">
-    <div class="list-group-text d-flex align-items-center">
+    <div class="list-group-text d-flex align-items-center gap-3">
       <div class="iconButton medium">
         <i class="fal fa-paper-plane ice"></i>
       </div>
-      <div class="itemLabel">Completed Interactions</div>
+      <div class="itemLabel level-8">Completed Interactions</div>
     </div>
   </a>
 </ng-container>  -->
 
   <ng-container *ngIf="showBotManagement">
     <!-- <a [routerLink]="['/bot-monitoring']" routerLinkActive="active" ariaCurrentWhenActive="page"
-      class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+      class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2"
       (click)="resetFilters()">
-      <div class="list-group-text d-flex align-items-center">
+      <div class="list-group-text d-flex align-items-center gap-3">
         <div class="iconButton medium">
           <i class="fa-light fa-message-bot ice"></i>
         </div>
-        <div class="itemLabel">BOT Management</div>
+        <div class="itemLabel level-8">BOT Management</div>
       </div>
     </a> -->
     <a [routerLink]="['/bot-monitoring']" routerLinkActive="active" ariaCurrentWhenActive="page" data-tooltip="Sent" 
-      class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+      class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2"
       (click)="resetFilters()">
-      <div class="list-group-text d-flex align-items-center">
-          <div class="p-3 cursor-pointer" style="color: black; !important">
+      <div class="list-group-text d-flex align-items-center gap-3">
+          <div class="cursor-pointer" style="color: black !important;">
               <i class="fa fa-message-bot"></i>
           </div>
-          <div class="itemLabel" style="color: black; !important">
+          <div class="itemLabel level-8" style="color: black !important;">
             BOT Management 
           </div>
       </div>
@@ -78,23 +78,23 @@
 
   <ng-container *ngIf="showConsole">
     <!-- <a [routerLink]="['/console/home']" routerLinkActive="active" ariaCurrentWhenActive="page"
-      class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+      class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2"
       [class.active]="activeChannel == 'console'" (click)="resetFilters()">
-      <div class="list-group-text d-flex align-items-center">
+      <div class="list-group-text d-flex align-items-center gap-3">
         <div class="iconButton medium">
           <i class="fal fa-cog ice"></i>
         </div>
-        <div class="itemLabel">Console</div>
+        <div class="itemLabel level-8">Console</div>
       </div>
     </a> -->
     <a [routerLink]="['/console/home']" routerLinkActive="active" ariaCurrentWhenActive="page" data-tooltip="Sent" 
-      class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+      class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2"
       [class.active]="activeChannel == 'console'" (click)="resetFilters()">
-      <div class="list-group-text d-flex align-items-center">
-          <div class="p-3 cursor-pointer">
+      <div class="list-group-text d-flex align-items-center gap-3">
+          <div class="cursor-pointer">
               <i class="fa fa-cog"></i>
           </div>
-          <div class="itemLabel" style="color: black; !important">
+          <div class="itemLabel level-8" style="color: black !important;">
             Console 
           </div>
       </div>
@@ -102,24 +102,24 @@
   </ng-container>
   <!-- <ng-container>
     <a [routerLink]="['/telephone/admin']" routerLinkActive="active" ariaCurrentWhenActive="page"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2"
     [class.active]="activeChannel == 'console'">
-    <div class="list-group-text d-flex align-items-center">
+    <div class="list-group-text d-flex align-items-center gap-3">
       <div class="iconButton medium">
         <i class="fa fa-user ice"></i>
       </div>
-      <div class="itemLabel">Admin Panel</div>
+      <div class="itemLabel level-8">Admin Panel</div>
     </div>
     </a>
   </ng-container> -->
 <!-- <ng-container *ngIf="onlyAnalyticsTabVisible.includes(restrictedAgent)">
   <a [routerLink]="['/analytics']" routerLinkActive="active" ariaCurrentWhenActive="page"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
-    <div class="list-group-text d-flex align-items-center">
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2">
+    <div class="list-group-text d-flex align-items-center gap-3">
       <div class="iconButton medium">
         <i class="fa-light fa-chart-line-up ice"></i>
       </div>
-      <a class="itemLabel"> Analytics </a>
+      <a class="itemLabel level-8"> Analytics </a>
     </div>
   </a>
 </ng-container> -->
