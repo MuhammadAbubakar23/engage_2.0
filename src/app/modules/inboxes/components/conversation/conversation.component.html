@@ -597,7 +597,7 @@
           <tbody>
             <ng-container *ngFor="let group of groupByDateList">
               <tr class="border-b">
-                <td class="p-3" colspan="6">
+                <td class="" colspan="6">
                   <span *ngIf="FlagForAssignToMe!=='follow_up'" class="email-tag">
                     <span class="email-date"></span> <i class="fa fa-calendar-days me-2"></i> {{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
                   </span>
@@ -609,42 +609,50 @@
               <tr class="border-b" *ngFor="let query of group.items | sort:criteria; let i = index"
                 [class.selected]="query.isChecked==true" class="alert" [ngClass]="[query.slaFlag == 'warning'?'alert-warning':'' || query.slaFlag == 'danger'?'alert-danger':'' ||
               query.slaFlag == 'unread'?'unread':'']">
-                <td class="p-3" *ngIf="flag != 'sent'" style="width: 40px;">
+                <td class="" *ngIf="flag != 'sent'" style="width: 40px;">
                   <input [checked]="query.isChecked" value="{{query.id}}"
                     (change)="isAllSelected($event, i, query.platform, query.profileId, group.createdDate, query.skillSlug)"
                     class="form-check-input me-1" type="checkbox" aria-label="..."
                     [disabled]="FlagForAssignToMe == 'assigned_to_me'">
                 </td>
-                <td class="p-3" style="width: 60px;">
-                  <img *ngIf="query.postType == 'FCP'" src="../../../../../assets/images/FacebookDM.png" width="24" height="24"> 
-                  <img *ngIf="query.postType == 'FC'" src="../../../../../assets/images/FacebookComment.png" width="24" height="24">  
-                  <img *ngIf="query.postType == 'IC'" src="../../../../../assets/images/InstagramComment.png" width="24" height="24">
-                  <img *ngIf="query.postType == 'IM'" src="../../../../../assets/images/InstagramDM.png" width="24" height="24">   
+                <td class="" style="width: 60px;">
+                   <i *ngIf="query.postType == 'FCP'" title="Facebook Posts" class="fa-brands fa-facebook-messenger" aria-hidden="true"></i> 
+                  <i *ngIf="query.postType == 'FC'" title="Facebook Comments" class="fa-brands fa-facebook-f"></i>
+                  
+                  <i *ngIf="query.postType == 'IC'"  title="Instagram Comment" class="fab fa-instagram" aria-hidden="true"></i>
+                  <i *ngIf="query.postType == 'IM'"  title="Instagram DM" class="fab fa-instagram" aria-hidden="true"></i>
+
                   <i *ngIf="query.platform == 'Email' || query.platform == 'OfficeEmail'" class="fal fa-envelope cherry"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Email"
                     aria-label="Email"></i>
                   <i *ngIf="query.platform == 'Youtube'" class="fab fa-youtube warning" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" title="" data-bs-original-title="Youtube" aria-label="Youtube"></i>
-                  <img *ngIf="query.postType == 'TM'" src="../../../../../assets/images/Twitter Complete.png" width="24" height="24">
-                  <img *ngIf="query.postType == 'TTR'" src="../../../../../assets/images/Twitter Complete.png" width="24" height="24">
-                  <img *ngIf="query.postType == 'TDM'" src="../../../../../assets/images/TwitterDM.png" width="24" height="24">
+
+                    <i *ngIf="query.postType == 'TM'"  title="Twitter Message" class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+                    <i *ngIf="query.postType == 'TTR'"  title="Twitter TTR" class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+                    <i *ngIf="query.postType == 'TDM'"  title="Twitter DM" class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+
+
+                 
                   <i *ngIf="query.platform == 'SMS'" class="fal fa-comment-alt-lines berry" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-original-title="SMS" aria-label="SMS"></i>
                   <i *ngIf="query.platform == 'WhatsApp'" class="fab fa-whatsapp emerald" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-original-title="WhatsApp" aria-label="Whatsapp"></i>
                   <i *ngIf="query.platform == 'Webchat'" class="fal fa-messages webchat" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-original-title="Webchat" aria-label="Webchat"></i>
-                  <img *ngIf="query.postType == 'LIC'" src="../../../../../assets/images/LinkedIn Comment.png" width="24" height="24">
+
+                    <i *ngIf="query.postType == 'LIC'" class="fa-brands fa-linkedin"></i>
+
                   <i *ngIf="query.platform == 'PlayStore'" class="fa-brands fa-google-play darkorange"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="PlayStore"
                     aria-label="PlayStore"></i>
                 </td>
-                <td class="p-3" style="width: 300px;">
+                <td class="" style="width: 300px;">
                   <div class="d-flex align-items-center">
-                    <span class="emailer-name level-8 font-medium" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
+                    <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
                       <a
                         (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId, query.skillSlug)">
-                        <span class="font-regular">{{query?.userName?.split('<')[0] || query.user}} 
+                        <span class="">{{query?.userName?.split('<')[0] || query.user}} 
                           &nbsp;
                           <i *ngIf="query.isVerified == true" class="fa-solid fa-badge-check text-primary"></i>
                         </span>
@@ -653,26 +661,30 @@
                     </span>
                     <span class="badge bg-danger rounded-pill"
                     *ngIf="query.unrespondedCount > 0">{{query.unrespondedCount}}</span>
+                        <span class="label slahigh ">High</span>
+                      <span class="label slamedium ">Medium</span>
+                      <span class="label slalow ">Low</span>
+                  
                   </div>
                  
                 </td>
-                <td class="p-3">
-                  <div class="level-8 font-regular"
+                <td class="">
+                  <div class=" "
                     (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId, query.skillSlug)">
                     {{query.message < 110 ? query.message: (query.message | slice:0:110) +'...'}} </div>
                 </td>
-                <!-- <td class="p-3">
+                <!-- <td class="">
                   <small>{{query.wings}}</small>
                 </td> -->
-                <td class="p-3">
+                <td class="">
                   <small>{{query.createdDate | date:'h:mm:ss a'}}</small>
                 </td>
-                <td class="p-3" *ngIf="FlagForAssignToMe=='follow_up'">
+                <td class="" *ngIf="FlagForAssignToMe=='follow_up'">
                   <span >
                     <small><strong>{{query?.follow_Up_Status | date: 'EE, MMM-dd, yyyy h:mm:ss a '}}</strong></small>
                   </span>
                 </td>
-                <!-- <td class="p-3">
+                <!-- <td class="">
                         <div class="dropdown bookmark-dropdown">
                           <button class="btn" type="button" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-bookmark mint"></i>

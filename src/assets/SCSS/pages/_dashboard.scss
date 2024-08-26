@@ -2,6 +2,7 @@
   display: flex;
   width: 200px;
   justify-content: space-around;
+  margin-right: 60px;
   .btn {
     color: #5f6368;
     &:hover {
@@ -42,9 +43,7 @@
   }
 }
 .inbox-container {
-  .agent-page-main-content {
-    // padding: 0px 15px;
-  }
+  
   .bookmark-dropdown {
     > .btn {
       height: auto;
@@ -54,7 +53,7 @@
   }
   .tab-content {
     .query-container {
-      height: calc(100vh - 200px);
+      height: calc(100vh - 140px);
       overflow: hidden;
       &.active {
         height: calc(100vh - 140px);
@@ -98,12 +97,40 @@
         position: relative;
         border-bottom: 1px solid #f3f3f3;
         transition: 0.2s ease;
+        color: $night;
+        border-color: transparent;
         &:hover {
           background: #f5f9fe !important;
         }
+        td{
+          .label{
+            border: 1px solid;
+            padding: 2px 12px;
+            font-size: 11px;
+            font-weight: 500;
+            border-radius: 4px;
+            display: none;
+            margin-left: 4px;
+            &.slahigh{
+              color: #F62346;
+              border-color:#EDBFC6 ;
+            }
+            &.slamedium{
+              color: #DB6C06;
+              border-color:#FFBB7C ;
+            }
+            &.slalow{
+              color: #C5961D;
+              border-color:#F9D475 ;
+            }
+          }
+        }
         &.alert.alert-danger {
+          background: rgba(255, 255, 255, 0.80);
           td {
-            color: $mehroon;
+            .slahigh{
+              display: block!important;
+            }
             &.more-action-container {
               background-color: #f8d7da;
             }
@@ -113,15 +140,22 @@
           }
         }
         &.alert.alert-light {
+          background: rgba(255, 255, 255, 0.80);
           td {
+            .slalow{
+              display: block!important;
+            }
             .emailer-name {
               font-weight: 500;
             }
           }
         }
         &.alert.alert-warning {
+          background: rgba(255, 255, 255, 0.80);
           td {
-            color: $darkbrown;
+            .slamedium{
+              display: block!important;
+            }
             &.more-action-container {
               background-color: #fff3cd;
             }
@@ -133,6 +167,7 @@
         &.unread {
           background-color: $white;
           td {
+            font-weight: 500;
             &.more-action-container {
               background-color: $white;
             }
@@ -142,21 +177,15 @@
           }
         }
         &.selected {
-          background-color: $lightblue;
-          td {
-            color: $darkerblue;
-            &.more-action-container {
-              background-color: $lightblue !important;
-            }
-            .emailer-name {
-              font-weight: 500;
-            }
-          }
+          background-color:#F5F9FE;
+          
         }
         td {
           transition: 0.5s;
           background: transparent;
           border-bottom-width: 1px;
+          padding: 12px 8px;
+         
           .email-tag {
             background: #ebf4fd;
             color: #0573e7;
@@ -174,8 +203,8 @@
             border: 2px solid rgba($coal, 0.58) !important;
           }
           > .form-check-input[type="checkbox"]:checked {
-            background-color: $inkblue;
-            border: 2px solid $inkblue !important;
+            background-color: $brand-primary;
+            border: 2px solid $brand-primary !important;
           }
           &.more-action-container {
             position: absolute;
@@ -198,6 +227,7 @@
             place-items: center;
             font-size: 10px !important;
           }
+         
         }
         &:hover {
           //  box-shadow: 0 0.125rem 0.25rem rgba($black, 0.5);
@@ -249,7 +279,6 @@
   margin: 10px 0 5px 0;
 }
 .all-check-boxes {
-  padding-left: 10px !important;
   i {
     position: relative;
     top: 5px;
@@ -306,3 +335,8 @@ a[data-toggle="tooltip"] {
   padding: 2px 8px;
   border-radius: 25px;
 }
+// .mainpage{
+//   .rightbarNav{
+//      display: none;
+//   }
+// }
