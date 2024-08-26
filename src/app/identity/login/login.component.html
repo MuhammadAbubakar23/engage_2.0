@@ -1,80 +1,96 @@
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
-   <p style="color: white"> Loading... </p>
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
 </ngx-spinner>
 <div
-      class="auth__wrapp h-screen w-screen flex items-center justify-between flex-col py-8 overflow-hidden"
-    >
-      <div></div>
-      <div class="auth__block">
-        <div class="auth__header text-center flex flex-col items-center">
-          <img
-            src="../../../assets/tailwind/images/entract-logo.svg"
-            width="234"
-            height="28"
-            alt="Engage"
-          />
+  class="auth__wrapp d-flex align-items-center justify-content-between flex-column overflow-hidden py-5"
+>
+  <div class="auth__block">
+    <div class="auth__header text-center d-flex flex-column align-items-center">
+      <img
+        src="../../../assets/tailwind/images/entract-logo.svg"
+        width="234"
+        height="28"
+        alt="Engage"
+      />
 
-          <h1 class="level-lg font-medium text-black m-0">Hello again!</h1>
-          <p class="level-7 text-para">Login with your enteract credentials.</p>
-        </div>
-
-        <div class="auth__body mt-8 pt-8">
-          <form method="POST" class="flex items-center flex-col gap-3 w-full" [formGroup]="loginForm" method="POST" (submit)="login()" (keydown.enter)="login()">
-            <div class="input_group relative w-full">
-              <i class="fa-light fa-envelope absolute"></i>
-              <input formControlName="userName"
-                type="text"
-                name="email"
-                id="email"
-                class="common__input p-4 level-8"
-                placeholder="Username or Email"
-              />
-              <div class="error__message text-error level-8"></div>
-            </div>
-            <div class="input_group relative w-full">
-              <i class="fa-light fa-lock-keyhole absolute"></i>
-              <input formControlName="password"
-                type="password"
-                name="password"
-                id="password"
-                class="common__input p-4 level-8"
-                placeholder="Password"
-              />
-              <div class="error__message text-error level-8"></div>
-            </div>
-            <div class="flex justify-between items-center w-full">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  name="remember"
-                  id="remember"
-                  class="common__checkbox"
-                />
-                <span class="level-8 text-para">Remember me</span>
-              </label>
-
-              <a href="#" class="text-error level-8"> Forgot Password?</a>
-            </div>
-            <button
-              class="btn__theme level-7 text-center w-[70%] p-3 mx-auto block mt-3 cursor-pointer"
-              type="button"
-              id="validate_user" (click)="login()" (keydown.enter)="login()"
-              [disabled]="loginDisabled==true || loginForm.invalid"
-            >
-              Sign In
-            </button>
-          </form>
-        </div>
-      </div>
-      <div class="text-center">
-        <a href="#" class="text-para level-8 mx-2">Technical Support</a>
-        <span class="text-para">|</span>
-        <a href="#" class="text-para level-8 mx-2">Privacy Policy</a>
-        <span class="text-para">|</span>
-        <a href="#" class="text-para level-8 mx-2">Terms & Conditions</a>
-        <p class="text-para level-8 mt-2">2024 All Rights Reserved.</p>
-      </div>
+      <h1 class="level-lg font-medium text-black m-0">Hello again!</h1>
+      <p class="level-7 text-para">Login with your enteract credentials.</p>
     </div>
+
+    <div class="auth__body mt-5 pt-5">
+      <form
+        method="POST"
+        class="d-flex align-items-center flex-column gap-3 w-100"
+        [formGroup]="loginForm"
+        method="POST"
+        (submit)="login()"
+        (keydown.enter)="login()"
+      >
+        <div class="input_group position-relative w-100">
+          <i class="fa-light fa-envelope position-absolute"></i>
+          <input
+            formControlName="userName"
+            type="text"
+            name="email"
+            id="email"
+            class="common__input p-4 level-8"
+            placeholder="Username or Email"
+          />
+          <div class="error__message text-error level-8"></div>
+        </div>
+        <div class="input_group position-relative w-100">
+          <i class="fa-light fa-lock-keyhole position-absolute"></i>
+          <input
+            formControlName="password"
+            type="password"
+            name="password"
+            id="password"
+            class="common__input p-4 level-8"
+            placeholder="Password"
+          />
+          <div class="error__message text-error level-8"></div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <label class="d-flex align-items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              name="remember"
+              id="remember"
+              class="common__checkbox"
+            />
+            <span class="level-8 text-para">Remember me</span>
+          </label>
+
+          <a href="#" class="text-error level-8"> Forgot Password?</a>
+        </div>
+        <button
+          class="btn__theme level-7 text-center p-3 mx-auto d-block mt-3 cursor-pointer"
+          type="button"
+          id="validate_user"
+          (click)="login()"
+          (keydown.enter)="login()"
+          [disabled]="loginDisabled == true || loginForm.invalid"
+        >
+          Sign In
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="text-center">
+    <a href="#" class="text-para level-8 mx-2">Technical Support</a>
+    <span class="text-para">|</span>
+    <a href="#" class="text-para level-8 mx-2">Privacy Policy</a>
+    <span class="text-para">|</span>
+    <a href="#" class="text-para level-8 mx-2">Terms & Conditions</a>
+    <p class="text-para level-8 mt-2">2024 All Rights Reserved.</p>
+  </div>
+</div>
 
 <!-- <div class="auth__wrapp h-screen w-screen flex items-center justify-center">
    <ng-container *ngIf="isUserLoging==false">
@@ -163,25 +179,35 @@
 
 
 </div> -->
-<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 999999">
-   <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
-      aria-live="assertive" aria-atomic="true">
-      <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
-         <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
-         <div class="toast-btn d-flex align-items-center">
-
-            <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
-               (click)="closeToaster()"><i class="fal fa-times"></i></button>
-
-         </div>
+<div
+  class="position-fixed toast-bar border-0 shadow-sm rounded navyBg"
+  style="z-index: 999999"
+>
+  <div
+    [ngClass]="toastermessage == true ? 'show' : 'hide'"
+    class="toast border-0 p-2 h-100 navyBg fade"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div
+      class="d-flex border-0 justify-content-between align-items-center w-100 h-100"
+    >
+      <p class="toast-line-para ice m-0">{{ AlterMsg }}</p>
+      <div class="toast-btn d-flex align-items-center">
+        <button
+          type="button"
+          class="btn m-0 ms-2"
+          aria-label="Close"
+          data-bs-dismiss="toast"
+          (click)="closeToaster()"
+        >
+          <i class="fal fa-times"></i>
+        </button>
       </div>
-   </div>
+    </div>
+  </div>
 </div>
-
-
-
-
-
 
 <!-- <div
       class="auth__wrapp h-screen w-screen flex items-center justify-between flex-col py-8 overflow-hidden"
