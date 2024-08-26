@@ -667,8 +667,8 @@
                 <td class="p-3">
                   <small>{{query.createdDate | date:'h:mm:ss a'}}</small>
                 </td>
-                <td class="p-3">
-                  <span *ngIf="FlagForAssignToMe=='follow_up'">
+                <td class="p-3" *ngIf="FlagForAssignToMe=='follow_up'">
+                  <span >
                     <small><strong>{{query?.follow_Up_Status | date: 'EE, MMM-dd, yyyy h:mm:ss a '}}</strong></small>
                   </span>
                 </td>
