@@ -129,7 +129,7 @@ searchText: any;
       this.SpinnerService.show();
       this.commonService.GetCastRawDataReport(obj).subscribe((res: any) => {
         this.SpinnerService.hide();
-        debugger
+        
       //   const json={
       //     "TotalCount": 160207,
       //     "List": [
@@ -470,7 +470,7 @@ searchText: any;
     this.toastermessage = false;
   }
   checkUncheckChannels(channelName:any){
-    debugger
+    
     const index= this.slectedChannelsName.findIndex((item:any)=>item==channelName)
     // const index = this.selectedChannel.findIndex((x:any)=>x == channel.name)
     if(index != -1){

@@ -336,7 +336,7 @@ sentimentDataPointsHourlyWise: {
         (response: any) => {
           this.SpinnerService.hide();
           if (response) {
-            debugger
+            
             // this.Inbound_Outbound_Report = this.inboundJson;
             this.Inbound_Outbound_Report=response
             const hourlyWiseDataInboundOutbound= this.Inbound_Outbound_Report?.channelReportData?.hourWiseData
@@ -975,7 +975,7 @@ sentimentDataPointsHourlyWise: {
   }
   sentimentGraph:any
   getHourlyWiseSentimentChart() {
-    debugger
+    
     var app = {};
 
     var chartDom = document.getElementById('Mediacomparison');

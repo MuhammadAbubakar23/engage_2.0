@@ -265,7 +265,7 @@ searchText: any;
     };
   }
     checkUncheckChannels(channelName:any){
-    debugger
+    
     const index= this.slectedChannelsName.findIndex((item:any)=>item==channelName)
     // const index = this.selectedChannel.findIndex((x:any)=>x == channel.name)
     if(index != -1){

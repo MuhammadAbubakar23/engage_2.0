@@ -40,7 +40,7 @@ export class AudioRecordingService {
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((s) => {
-        debugger
+        
         this.stream = s;
         this.record();
       })

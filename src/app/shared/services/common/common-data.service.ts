@@ -387,6 +387,22 @@ AdminPanelToken=sessionStorage.getItem('adminPenalToken')
     const url = this.CommonBaseUrl + this.updateBreak + '?Status=' + status;
     return this.http.get(url);
   }
+  GrammerChange(body:any){
+    const url = "https://engage10aicomposerbackend-api.enteract.app/grammar";
+    return this.http.post(url, body)
+  }
+  ToneChange(body:any){
+    const url = "https://engage10aicomposerbackend-api.enteract.app/change_tone";
+    return this.http.post(url, body)
+  }
+  LanguageChange(body:any){
+    const url = "https://engage10aicomposerbackend-api.enteract.app/translate";
+    return this.http.post(url, body)
+  }
+  GetChatSentiment(body:any){
+    const url = "http://3.142.27.167:5005/sentiment_analysis";
+    return this.http.post(url,body)
+  }
   GetFbPostStats(pageId: any, postId: any) {
     return this.http.post(
       this.CommonBaseUrl +

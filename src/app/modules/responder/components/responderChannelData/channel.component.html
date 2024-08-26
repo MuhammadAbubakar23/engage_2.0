@@ -2457,6 +2457,35 @@
                         </ul>
                     </ul>
                 </div>
+                <div class="icons-list align-items-md-center d-flex ps-2">
+                    <button id="grammarBtn" (click)="correctGrammar()">
+                        <i class="fas fa-spell-check"></i>
+                    </button>
+                </div>
+                
+                <div class="icons-list align-items-md-center d-flex ps-2">
+                    <button id="languageBtn">
+                        <i class="fas fa-language"></i>
+                    </button>
+                    <select id="languageSelect" #languageSelect (change)="translateText(languageSelect.value)">
+                        <option value="" disabled>Select Language</option>
+                        <option *ngFor="let lng of languages" [value]="lng">{{lng}}</option>
+                    </select>
+                </div>
+                
+                
+                
+                <div class="icons-list align-items-md-center d-flex ps-2">
+                    <button id="toneBtn">
+                        <i class="fas fa-adjust"></i>
+                    </button>
+                    <select id="toneBtn" #toneSelect (change)="changeTone(toneSelect.value)">
+                        <option value="" disabled>Select Tone</option>
+                        <option *ngFor="let tone of tones" [value]="tone">{{tone}}</option>
+                    </select>
+                </div>
+                
+                
                 <!-- text box -->
                 <div class="form-floating textarea-field">
                     <textarea formControlName="text" class="form-control auto" rows="1" id="text"
