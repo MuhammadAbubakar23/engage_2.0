@@ -32,8 +32,8 @@
     border: 2px solid rgba($coal, 0.58) !important;
   }
   .form-check-input[type="checkbox"]:checked {
-    background-color: $inkblue;
-    border: 2px solid $inkblue !important;
+    background-color: $brand-primary;
+    border: 2px solid $brand-primary !important;
   }
   .square-btn {
     background: $silver10;
@@ -261,6 +261,7 @@
 .list-group-followup {
   a {
     position: relative;
+    color: $night;
     svg,
     i {
       margin-right: 10px;
