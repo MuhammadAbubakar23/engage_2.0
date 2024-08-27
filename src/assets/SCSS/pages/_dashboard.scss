@@ -2,7 +2,6 @@
   display: flex;
   width: 200px;
   justify-content: space-around;
-  margin-right: 60px;
   .btn {
     color: #5f6368;
     &:hover {
@@ -185,7 +184,7 @@
           background: transparent;
           border-bottom-width: 1px;
           padding: 12px 8px;
-         
+          font-size: 14px;
           .email-tag {
             background: #ebf4fd;
             color: #0573e7;

@@ -2407,17 +2407,51 @@
         </div>
         <form [formGroup]="replyForm" (ngSubmit)="submitReply()">
             <div class="input-group input-group-lg">
-                <div class="icons-list align-items-md-center d-flex pe-2">
-                    <!-- quick reply button -->
-                    <a class="iconButton small notification iconHover" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" *ngIf="hasQuickReplyPermission">
-                        <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></a>
-                    <!-- human agent tag -->
-                    <a *ngIf="fetchedPostType == 'FCP'" class="iconButton small notification iconHover"
-                        data-bs-toggle="offcanvas" data-bs-target="#humanAgentTags" aria-controls="humanAgentTags">
-                        <i class="fa-light fa-user-robot"></i></a>
-                </div>
+                
                 <!-- c-sat forms -->
+                        <div class="iconsleft d-flex align-items-center gap-3">
+                                <div class="icons-list align-items-md-center d-flex pe-2">
+                                    <!-- quick reply button -->
+                                   
+                                    <!-- human agent tag -->
+                                    <a *ngIf="fetchedPostType == 'FCP'" class="iconButton small notification iconHover"
+                                        data-bs-toggle="offcanvas" data-bs-target="#humanAgentTags" aria-controls="humanAgentTags">
+                                        <i class="fa-light fa-user-robot"></i></a>
+                                </div>
+                                <button class="iconButton btn small spellcheckbtn">
+                                    <i class="fa-light fa-spell-check"></i>
+                                </button>
+                                <div class=" dropup">
+                                    <button type="button" class="btn " data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-language"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li class="p-3"><i class="fa-solid fa-language"></i>  Choose Language</li>
+                                        <li><hr class="dropdown-divider"></li>
+                                    <li><a href="" class="dropdown-item">Arabic</a></li>
+                                    <li><a href="" class="dropdown-item">French </a></li>
+                                    <li><a href="" class="dropdown-item">Spanish </a></li>
+                                    </ul>
+                                </div>
+                                <div class=" dropup">
+                                    <button type="button" class="btn " data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-sparkles"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li class="p-3"><i class="fa-solid fa-sparkles"></i>  Modify Response</li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a href="" class="dropdown-item">Shorter</a></li>
+                                        <li><a href="" class="dropdown-item">Longer </a></li>
+                                        <li><a href="" class="dropdown-item">More Casual</a></li>
+                                        <li><a href="" class="dropdown-item">More Friendly</a></li>
+                                    </ul>
+                                </div>
+                                <div class="responseBtn">
+                                     <a class="iconButton btn small openQuickResponse" data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" *ngIf="hasQuickReplyPermission">
+                                        <i class="fal fa-notes-medical "></i></a>
+                                </div>
+                            </div>
                 <div *ngIf="showCustomerSatistactionForm.includes(activeClient)"
                     class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
                     <button class="iconButton small notification iconHover" id="surveyForms" data-bs-toggle="dropdown"
@@ -2429,9 +2463,9 @@
                     <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
                         aria-labelledby="dropdownMenuButton2">
                         <ul class="dropdown-listing">
-                            <li class="dropdown-listing-header  p-2">
+                            <li class="">
                                 <div class="head-section" (click)="c_satForm()">
-                                    <a class="list-group-item d-flex level1Btn">
+                                    <a class="dropdown-item">
                                         <div class="w-100 list-txt">
                                             <div class="d-flex w-100 justify-content-between">
                                                 <h6 class="mb-1 darkblue">
@@ -2441,9 +2475,13 @@
                                         </div>
                                     </a>
                                 </div>
+                              
+                            </li>
+                            <li class="">
+                               
                                 <div *ngIf="showCustomerInformationForm.includes(activeClient)" class="head-section"
                                     (click)="c_informationForm()">
-                                    <a class="list-group-item d-flex level1Btn">
+                                    <a class="dropdown-item">
                                         <div class="w-100 list-txt">
                                             <div class="d-flex w-100 justify-content-between">
                                                 <h6 class="mb-1 darkblue">
@@ -2556,9 +2594,9 @@
                         <i class="fal fa-paper-plane"></i>
                     </button>
                     <div>
-                        <button class="start-button" *ngIf="!isRecording && !blobUrl" (click)="startRecording()"><i class="fa-light fa-microphone"></i></button>
+                        <button class="iconButton small iconHover start-button" *ngIf="!isRecording && !blobUrl" (click)="startRecording()"><i class="fa-light fa-microphone"></i></button>
                     
-                        <button class="stop-button" *ngIf="isRecording && !blobUrl" (click)="stopRecording()"><i class="fa-light fa-circle-pause"></i></button>
+                        <button class="iconButton small iconHover stop-button" *ngIf="isRecording && !blobUrl" (click)="stopRecording()"><i class="fa-light fa-circle-pause"></i></button>
                     
                         <!-- <button class="cancel-button" *ngIf="!isRecording && blobUrl" (click)="clearRecordedData()">Clear Recording</button> -->
                     

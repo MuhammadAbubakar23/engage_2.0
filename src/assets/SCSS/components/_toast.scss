@@ -1,12 +1,8 @@
 .toast-bar{
-    height: 40px;
-    bottom: 65px;
-    left: 80px;
-    p{
-        // font-size: 13px;
-    }
+    bottom: 24px;
+    left: 24px;
+    
     .btn-close{
-        // font-size: 10px;
         opacity: 1;
     }
     .btn-outline-light{
@@ -14,6 +10,7 @@
     }
     .toast{
         z-index: 60;
+        background-color: $brand-primary!important;
     }
 }
 .toast-btn{
