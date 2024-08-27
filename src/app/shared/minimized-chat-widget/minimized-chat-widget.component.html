@@ -14,7 +14,7 @@
                     <div *ngIf="platform == 'Youtube'"><i class="fab fa-youtube warning"></i> Youtube</div>
                     <div *ngIf="platform == 'Twitter'"><i class="fab fa-twitter sky"></i> Twitter</div>
                     <div *ngIf="platform == 'SMS'"><i class="fal fa-comment-alt-lines berry"></i> SMS</div>
-                    <div *ngIf="platform == 'WhatsApp'"><i class="fab fa-whatsapp emerald"></i> WhatsApp</div>
+                    <div *ngIf="platform == 'WhatsApp'"><i class="fab fa-whatsapp "></i> WhatsApp</div>
                     <div *ngIf="platform == 'Webchat'"><i class="fal fa-messages webchat"></i> Webchat</div>
                     <div *ngIf="platform == 'LinkedIn'"><i class="fa-brands fa-linkedin-in linkedinTxt"></i> LinkedIn</div>
                 </div>
@@ -37,7 +37,7 @@
     </div>
     <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
         <div class="scroll-content">
-            <div class="tab-content m-4" id="myTabContent">
+            <div class="tab-content my-4 mx-5" id="myTabContent">
                 <div class="tab-pane fade show active" id="youtube-comment" role="tabpanel"
                     aria-labelledby="youtube-comment-tab">
                     <div class="chat-box-wrap" *ngFor="let youtubedata of YoutubeData">

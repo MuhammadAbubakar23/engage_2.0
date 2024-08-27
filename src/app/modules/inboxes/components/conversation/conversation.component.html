@@ -609,13 +609,13 @@
               <tr class="border-b" *ngFor="let query of group.items | sort:criteria; let i = index"
                 [class.selected]="query.isChecked==true" class="alert" [ngClass]="[query.slaFlag == 'warning'?'alert-warning':'' || query.slaFlag == 'danger'?'alert-danger':'' ||
               query.slaFlag == 'unread'?'unread':'']">
-                <td class="" *ngIf="flag != 'sent'" style="width: 40px;">
+                <td class="" *ngIf="flag != 'sent'" style="width: 30px;">
                   <input [checked]="query.isChecked" value="{{query.id}}"
                     (change)="isAllSelected($event, i, query.platform, query.profileId, group.createdDate, query.skillSlug)"
                     class="form-check-input me-1" type="checkbox" aria-label="..."
                     [disabled]="FlagForAssignToMe == 'assigned_to_me'">
                 </td>
-                <td class="" style="width: 60px;">
+                <td class="" style="width: 40px;">
                    <i *ngIf="query.postType == 'FCP'" title="Facebook Posts" class="fa-brands fa-facebook-messenger" aria-hidden="true"></i> 
                   <i *ngIf="query.postType == 'FC'" title="Facebook Comments" class="fa-brands fa-facebook-f"></i>
                   
@@ -636,7 +636,7 @@
                  
                   <i *ngIf="query.platform == 'SMS'" class="fal fa-comment-alt-lines berry" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-original-title="SMS" aria-label="SMS"></i>
-                  <i *ngIf="query.platform == 'WhatsApp'" class="fab fa-whatsapp emerald" data-bs-toggle="tooltip"
+                  <i *ngIf="query.platform == 'WhatsApp'" class="fab fa-whatsapp " data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-original-title="WhatsApp" aria-label="Whatsapp"></i>
                   <i *ngIf="query.platform == 'Webchat'" class="fal fa-messages webchat" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-original-title="Webchat" aria-label="Webchat"></i>
@@ -647,9 +647,12 @@
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="PlayStore"
                     aria-label="PlayStore"></i>
                 </td>
+                <td><span class="badge bg-primary rounded-pill "
+                    *ngIf="query.unrespondedCount > 0">{{query.unrespondedCount}}</span></td>
                 <td class="" style="width: 300px;">
                   <div class="d-flex align-items-center">
-                    <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
+                     
+                    <span class="emailer-name text-truncate" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
                       <a
                         (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId, query.skillSlug)">
                         <span class="">{{query?.userName?.split('<')[0] || query.user}} 
@@ -659,11 +662,10 @@
                         &nbsp;
                            </a>
                     </span>
-                    <span class="badge bg-danger rounded-pill"
-                    *ngIf="query.unrespondedCount > 0">{{query.unrespondedCount}}</span>
-                        <span class="label slahigh ">High</span>
-                      <span class="label slamedium ">Medium</span>
-                      <span class="label slalow ">Low</span>
+                   
+                        <span class="label slahigh ms-2">High</span>
+                      <span class="label slamedium ms-2">Medium</span>
+                      <span class="label slalow ms-2">Low</span>
                   
                   </div>
                  
