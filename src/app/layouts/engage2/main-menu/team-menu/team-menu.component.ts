@@ -69,7 +69,7 @@ export class TeamMenuComponent implements OnInit {
             singleMenu.icon = singleMenu.icon.replace(/\bice\b/g, '');
             singleMenu.icon = singleMenu.icon.replace(/\bfal\b/g, 'fa');
             singleMenu.icon = singleMenu.icon.trim().replace(/\s+/g, ' ');
-            debugger
+            
             this.mainMenu.push(singleMenu)
           }
         });

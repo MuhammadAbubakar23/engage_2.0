@@ -76,7 +76,7 @@ export class RoleMenuComponent implements OnInit {
           this.showAnalytics = true;
           this._menuS.changeAnalyticsMenu(res);
           if (this.activeModule == 'analytics') {
-            debugger
+            
             const firstItem = res[0].link;
             this._route.navigate([`analytics/${firstItem}`]);
             }

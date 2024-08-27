@@ -136,7 +136,7 @@ export class ConversationComponent implements OnInit {
 
     // Sla Policies
     this.commondata.GetSlaReponder(this.wings).subscribe((res:any)=>{
-      debugger
+      
       const SLAPolicies=res
     })
 

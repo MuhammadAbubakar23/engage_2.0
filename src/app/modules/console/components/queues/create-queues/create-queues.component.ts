@@ -118,7 +118,7 @@ export class CreateQueuesComponent implements OnInit {
 
   getWings(){
     this.commondata.GetWings().subscribe((res:any)=>{
-      debugger
+      
       this.wingsList = res;
     },
     (error:any)=>{
@@ -152,7 +152,7 @@ export class CreateQueuesComponent implements OnInit {
     });
   }
   onSubmit(): void {
-    debugger
+    
     if (this.userForm.valid) {
       const template = history.state.template;
       if (this.skillTeamId > 0) {

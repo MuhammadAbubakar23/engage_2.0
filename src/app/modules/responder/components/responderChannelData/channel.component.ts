@@ -7,7 +7,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
@@ -451,7 +451,7 @@ export class ChannelComponent implements OnInit {
       .getRecordedTime()
       .subscribe(time => (this.recordedTime = time));
     this.audioRecordingService.getRecordedBlob().subscribe(data => {
-      debugger
+      
       this.teste = data;
       this.blobUrl = this.sanitizer.bypassSecurityTrustUrl(
         URL.createObjectURL(data.blob)
@@ -2596,4 +2596,61 @@ export class ChannelComponent implements OnInit {
     link.download = this.teste.title;
     link.click();
   }
+  languages:any = ["English", "Urdu", "Spanish", "Arabic"];
+  language:any; 
+  tones:any = ["Casual", "Formal", "Friendly", "Shorter", "Longer"];
+  tone:any;
+  // apiUrl = "https://engage10aicomposerbackend-api.enteract.app/translate";
+  correctGrammar() {
+    if(this.replyForm.value.text){
+      const body = {
+          text: this.replyForm.value.text,
+          slug: "1c7d6da6-f79b-410c-a6db-6944e4a43f9c"
+      };
+      this.commondata.GrammerChange(body).subscribe((res:any)=>{
+        this.replyForm.get('text')?.setValue(res.result);
+      })
+    }
+  }
+
+  translateText(selectedLanguage: string) {
+    if (selectedLanguage) {
+        const body = {
+            text: this.replyForm.value.text,
+            language: selectedLanguage,
+            slug: "1c7d6da6-f79b-410c-a6db-6944e4a43f9c"
+        };
+        this.commondata.LanguageChange(body).subscribe((res: any) => {
+            this.replyForm.get('text')?.setValue(res.result);
+            
+            // Handle the response as needed
+        });
+    }
+  }
+
+  changeTone(tone:any) {
+    if (tone) {
+        const body = {
+            text: this.replyForm.value.text,
+            tone: tone,
+            slug: "1c7d6da6-f79b-410c-a6db-6944e4a43f9c"
+        };
+        this.commondata.ToneChange(body).subscribe((res:any)=>{
+          this.replyForm.get('text')?.setValue(res.result);
+        })
+    }
+  }
+
+  ChatSentiment(text:any){
+    let sentiment = "";
+    const body = {
+      chatlog : text
+    }
+    
+    this.commondata.GetChatSentiment(body).subscribe((res:any)=>{
+      sentiment = res.result
+    })
+    return sentiment;
+  }
+
 }
