@@ -2418,7 +2418,12 @@
                                         data-bs-toggle="offcanvas" data-bs-target="#humanAgentTags" aria-controls="humanAgentTags">
                                         <i class="fa-light fa-user-robot"></i></a>
                                 </div>
-                                <button class="iconButton btn small spellcheckbtn">
+                                <!-- <div class="icons-list align-items-md-center d-flex ps-2"> -->
+                                    <!-- <button id="grammarBtn" (click)="correctGrammar()">
+                                        <i class="fas fa-spell-check"></i>
+                                    </button> -->
+                                <!-- </div> -->
+                                <button class="iconButton btn small spellcheckbtn" (click)="correctGrammar()">
                                     <i class="fa-light fa-spell-check"></i>
                                 </button>
                                 <div class=" dropup">
@@ -2428,11 +2433,20 @@
                                     <ul class="dropdown-menu">
                                         <li class="p-3"><i class="fa-solid fa-language"></i>  Choose Language</li>
                                         <li><hr class="dropdown-divider"></li>
-                                    <li><a href="" class="dropdown-item">Arabic</a></li>
-                                    <li><a href="" class="dropdown-item">French </a></li>
-                                    <li><a href="" class="dropdown-item">Spanish </a></li>
+                                    <li *ngFor="let lng of languages" [value] = "lng" (click)="translateText(lng)"><a class="dropdown-item">{{lng}}</a></li>
+                                    <!-- <li><a href="" class="dropdown-item">French </a></li>
+                                    <li><a href="" class="dropdown-item">Spanish </a></li> -->
                                     </ul>
                                 </div>
+                                <!-- <div class="icons-list align-items-md-center d-flex ps-2">
+                                    <button id="languageBtn">
+                                        <i class="fas fa-language"></i>
+                                    </button>
+                                    <select id="languageSelect" #languageSelect (change)="translateText(languageSelect.value)">
+                                        <option value="" disabled>Select Language</option>
+                                        <option *ngFor="let lng of languages" [value]="lng">{{lng}}</option>
+                                    </select>
+                                </div> -->
                                 <div class=" dropup">
                                     <button type="button" class="btn " data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa-solid fa-sparkles"></i>
@@ -2440,12 +2454,19 @@
                                     <ul class="dropdown-menu">
                                         <li class="p-3"><i class="fa-solid fa-sparkles"></i>  Modify Response</li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a href="" class="dropdown-item">Shorter</a></li>
-                                        <li><a href="" class="dropdown-item">Longer </a></li>
-                                        <li><a href="" class="dropdown-item">More Casual</a></li>
-                                        <li><a href="" class="dropdown-item">More Friendly</a></li>
+                                        <li *ngFor="let tone of tones" [value]="tone"><a class="dropdown-item" (click)="changeTone(tone)">{{tone}}</a></li>
+
                                     </ul>
                                 </div>
+                                <!-- <div class="icons-list align-items-md-center d-flex ps-2">
+                                    <button id="toneBtn">
+                                        <i class="fas fa-adjust"></i>
+                                    </button>
+                                    <select id="toneBtn" #toneSelect (change)="changeTone(toneSelect.value)">
+                                        <option value="" disabled>Select Tone</option>
+                                        <option *ngFor="let tone of tones" [value]="tone">{{tone}}</option>
+                                    </select>
+                                </div> -->
                                 <div class="responseBtn">
                                      <a class="iconButton btn small openQuickResponse" data-bs-toggle="offcanvas"
                                         data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" *ngIf="hasQuickReplyPermission">
@@ -2487,13 +2508,13 @@
                         </ul>
                     </ul>
                 </div>
-                <div class="icons-list align-items-md-center d-flex ps-2">
+                <!-- <div class="icons-list align-items-md-center d-flex ps-2">
                     <button id="grammarBtn" (click)="correctGrammar()">
                         <i class="fas fa-spell-check"></i>
                     </button>
-                </div>
+                </div> -->
                 
-                <div class="icons-list align-items-md-center d-flex ps-2">
+                <!-- <div class="icons-list align-items-md-center d-flex ps-2">
                     <button id="languageBtn">
                         <i class="fas fa-language"></i>
                     </button>
@@ -2501,11 +2522,11 @@
                         <option value="" disabled>Select Language</option>
                         <option *ngFor="let lng of languages" [value]="lng">{{lng}}</option>
                     </select>
-                </div>
+                </div> -->
                 
                 
                 
-                <div class="icons-list align-items-md-center d-flex ps-2">
+                <!-- <div class="icons-list align-items-md-center d-flex ps-2">
                     <button id="toneBtn">
                         <i class="fas fa-adjust"></i>
                     </button>
@@ -2513,7 +2534,7 @@
                         <option value="" disabled>Select Tone</option>
                         <option *ngFor="let tone of tones" [value]="tone">{{tone}}</option>
                     </select>
-                </div>
+                </div> -->
                 
                 
                 <!-- text box -->
