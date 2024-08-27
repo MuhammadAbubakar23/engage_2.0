@@ -60,14 +60,14 @@
       .table {
         tr {
           td {
-            &:nth-child(4) {
-              max-width: 550px;
-            }
+            // &:nth-child(4) {
+            //   max-width: 550px;
+            // }
           }
-          .maintext {
-            @include text-truncate();
-            max-width: 700px;
-          }
+          // .maintext {
+          //   @include text-truncate();
+          //   max-width: 700px;
+          // }
         }
         &.monitoringtable {
           tr {
@@ -104,7 +104,7 @@
         td{
           .label{
             border: 1px solid;
-            padding: 2px 12px;
+            padding: 2px 8px;
             font-size: 11px;
             font-weight: 500;
             border-radius: 4px;
@@ -135,6 +135,8 @@
             }
             .emailer-name {
               font-weight: 500;
+              max-width: 200px;
+              min-width: 200px;
             }
           }
         }
@@ -184,13 +186,13 @@
           background: transparent;
           border-bottom-width: 1px;
           padding: 12px 8px;
-          font-size: 14px;
+          font-size: 0.95rem;
           .email-tag {
             background: #ebf4fd;
             color: #0573e7;
             padding: 8px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 0.95rem;
             margin: 6px 0;
             display: inline-block;
           }

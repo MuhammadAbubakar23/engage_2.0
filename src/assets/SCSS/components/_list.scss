@@ -45,6 +45,9 @@
     }
 }
 .collapse-toggle-card {
+    .theme-check .form-check-input:checked[type=radio]{
+        height: 20px !important;
+    }
     &.open {
         .chevron-icon{
             &:after{

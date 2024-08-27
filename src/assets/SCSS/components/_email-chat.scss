@@ -24,8 +24,8 @@
     // height: 170vh;
     // overflow-x: scroll;
     .accordion-item{
-        border-radius: 5px;
-        border: 1px solid $powder;
+        border-radius: 6px;
+    border: 1px solid #4CAF50;
         .accordion-header{
             position: relative;
             .top-right{
@@ -332,7 +332,7 @@
     .marked-wrap{
         .accordion-button{
             align-items: flex-start;
-            background-color: $alertLightYellow;
+            background-color: #f3fff3;
             .card-header-content{
                 border-bottom: 0 !important;
                 .card-header-top{

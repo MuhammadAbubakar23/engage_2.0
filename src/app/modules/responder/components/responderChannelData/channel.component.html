@@ -99,9 +99,8 @@
                                 <div class="d-flex align-items-center agent-container">
                                     <div class="card chennels-post">
                                         <div class="card-body">
-                                            <div class="card-header bg-white msg-user-info p-0 border-0">
-                                                <div class="d-flex align-items-center">
-                                                    <p class="card-text">
+                                            <div class="bg-tranparent msg-user-info p-0 border-0">
+                                                    <p class="card-text d-flex align-items-center justify-content-between w-100">
                                                         <small class="silver">{{newPost?.post?.createdDate |
                                                             date:'EEEE, MMMM d, y, h:mm a'}}</small>
                                                         <a *ngIf="newPost?.post?.redirectUrl != null"
@@ -109,7 +108,6 @@
                                                             <span><i
                                                                     class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
                                                     </p>
-                                                </div>
                                             </div>
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                 style="width:375px;" *ngFor="let attachment of newPost?.post?.attachments">
@@ -129,7 +127,7 @@
                                             <div class="card-body bg-light">
                                                 <p class="card-text nignt mb-0">
                                                     {{newPost?.post?.caption}}
-                                                </p><br>
+                                                </p>
                                                 <p class="card-text nignt mb-0" *ngIf="newPost?.post?.description != null">
                                                     <b>Description: </b> {{newPost?.post?.description}}</p>
                                             </div>
@@ -151,8 +149,8 @@
                                             <p class="app-no navy m-0 me-2">{{newCmnt?.ticketId}}</p>
                                         </div>
                                         <div class="d-flex align-items-center agent-container">
-                                            <div class="card w-d-inline messageUpper" style="background-color: #e8e8e8 !important;">
-                                                <div class="card-body " style="min-width: 400px; background-color: #e8e8e8 !important;"
+                                            <div class="card w-d-inline messageUpper" >
+                                                <div class="card-body " 
                                                     [ngClass]="newCmnt?.queryStatus == 'Unresponded'?'unread-msg':''">
                                                     <div class="d-flex msg-user-info">
                                                         <div class="d-flex align-items-center">
@@ -169,12 +167,20 @@
                                                                 <i class="fas fa-star sun"></i>
                                                             </button>
                                                         </div>
-                                                        <div class="dropdown w-auto" *ngIf="hasQueryStatusPermission">
-                                                            <button class="btn coal p-0 ps-3" type="button"
+                                                    <div class="rightaction">
+                                                        <!-- For Sentiment Pills -->
+                                                        <div class="sentiments" *ngIf="newCmnt?.sentiment">
+                                                            <span
+                                                                class=" rounded-pills" [ngClass]="newCmnt.sentiment?.name == 'positive'? 'bgpositive' : newCmnt.sentiment?.name == 'negative'? 'bgnegative' : 'bgneutral'"><i class="fa-light" [ngClass]="newCmnt.sentiment?.name == 'positive'? 'fa-smile' : newCmnt.sentiment?.name == 'negative'? 'fa-frown' : 'fa-meh-blank'"></i> {{newCmnt?.sentiment?.name
+                                                                | tagSlugConversion}}</span>
+                                                        </div>
+                                                        <!-- For Sentiment Pills -->
+                                                        <div class="dropdown respondeddd" *ngIf="hasQueryStatusPermission">
+                                                            <button class="btn" type="button"
                                                                 id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                 aria-expanded="false">
                                                                 {{newCmnt?.queryStatus}}
-                                                                <i class="far fa-chevron-down ms-2"
+                                                                <i class="fa-light fa-angle-down"
                                                                     *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && newCmnt?.queryStatus == 'Unresponded'"></i>
                                                             </button>
                                                             <ul class="dropdown-menu custom-dropdown"
@@ -194,6 +200,8 @@
                                                                 </li>
                                                             </ul>
                                                         </div>
+                                                   </div>
+                                                        
                                                     </div>
                                                     <div *ngFor="let attachment of newCmnt?.attachments"
                                                             style="width: 375px;">
@@ -245,18 +253,12 @@
                                                             (click)="removeTagFromFeed(tag.feedId, tag.name, newPost?.platform)">{{tag.name
                                                             | tagSlugConversion}}</span>
                                                     </div>
-                                                    <!-- For Sentiment Pills -->
-                                                    <div class="tags" *ngIf="newCmnt?.sentiment">
-                                                        <span
-                                                            class="badge rounded-pills tag tag1 selected">{{newCmnt?.sentiment?.name
-                                                            | tagSlugConversion}}</span>
-                                                    </div>
-                                                    <!-- For Sentiment Pills -->
+                                                    
                                                 </div>
                                                 <div class="message-bottom"
                                                     *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
-                                                    <div class="row">
-                                                        <div class="col-lg-10 ps-4 d-flex align-items-center">
+                                                    <div class="">
+                                                        <div class="">
                                                             <div class="message-actionlist d-flex align-items-center">
                                                                 <div class="box"
                                                                     *ngIf="showLikeBtnTo.includes(newPost?.platform | lowercase)">
@@ -267,7 +269,8 @@
                                                                             <i class="fal fa-thumbs-up coal"></i>
                                                                             <i class="fas fa-thumbs-up"></i>
                                                                         </span>
-                                                                        Like
+                                                                        
+                                                                         <em> Like</em>
                                                                     </a>
                                                                 </div>
                                                                 <a class="message-actionItem replyBtn coal"
@@ -275,7 +278,8 @@
                                                                     <span class="iconButton small btn">
                                                                         <i class="fal fa-reply coal"></i>
                                                                     </span>
-                                                                    Reply
+                                                                    
+                                                                     <em> Reply</em>
                                                                 </a>
                                                                 <div class="dropdown w-auto">
                                                                     <button class="iconButton medium"
@@ -285,7 +289,8 @@
                                                                         <span class="iconButton small btn mx-2">
                                                                             <i class="fal fa-tag coal"></i>
                                                                         </span>
-                                                                        Tag
+                                                                        
+                                                                         <em> Tag</em>
                                                                     </button>
                                                                     <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
                                                                         aria-labelledby="dropdownMenuButton2">
@@ -302,7 +307,7 @@
                                                                                 <div *ngFor="let tag of TagsList"
                                                                                     class="list-group list-group-flush dropend">
                                                                                     <a data-bs-toggle="dropdown"
-                                                                                        class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+                                                                                        class="d-flex dropdown-item align-items-center dropdown-item dropdown-toggle">
                                                                                         <div class="w-100 list-txt">
                                                                                             <div
                                                                                                 class="d-flex w-100 justify-content-between">
@@ -335,7 +340,7 @@
                                                                                                 style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
-                                                                                                    <a class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                    <a class="d-flex dropdown-item align-items-center dropdown-item"
                                                                                                         (click)="insertTagsForFeed(newCmnt?.id, keyword.slug, newPost?.platform)"
                                                                                                         [ngClass]="activeTag==true?'active':''"
                                                                                                         *ngFor="let keyword of tag.subTags | filter: searchText">
@@ -373,13 +378,14 @@
                                                                     </ul>
                                                                 </div>
                                                                 <div class="dropdown w-auto"  *ngIf="hasQuerySentimentsPermission">
-                                                                    <button class="iconButton medium show"
+                                                                    <button class="iconButton medium "
                                                                         id="sentimentButton" data-bs-toggle="dropdown"
-                                                                        aria-expanded="true" style="margin-left:43px">
+                                                                        aria-expanded="true" >
                                                                         <span class="iconButton small btn mx-2">
                                                                             <i class="fal fa-smile"></i>
                                                                         </span>
-                                                                        Sentiment
+                                                                        
+                                                                        <em> Sentiment</em>
                                                                     </button>
                                                                     <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
                                                                         aria-labelledby="dropdownMenuButton2"
@@ -392,7 +398,7 @@
                                                                                 <div class="scroll-content">
                                                                                     <div class="list-group list-group-flush"
                                                                                         *ngFor="let sentiment of Sentiments">
-                                                                                        <a class="list-group-item d-flex level1Btn "
+                                                                                        <a class="d-flex dropdown-item align-items-center "
                                                                                             (click)="insertSentimentForFeed(newCmnt?.id, sentiment.slug, newPost?.platform)">
                                                                                             <div class="list-down-icon">
                                                                                                 <span
@@ -400,14 +406,8 @@
                                                                                                     [innerHTML]="sentiment.icon">
                                                                                                 </span>
                                                                                             </div>
-                                                                                            <div class="w-100 list-txt">
-                                                                                                <div
-                                                                                                    class="d-flex w-100 justify-content-between">
-                                                                                                    <h6
-                                                                                                        class="mb-1 darkblue">
-                                                                                                        {{sentiment.name}}
-                                                                                                    </h6>
-                                                                                                </div>
+                                                                                            <div class="list-txt">
+                                                                                                 {{sentiment.name}}
                                                                                             </div>
                                                                                             <small>
                                                                                                 <!-- <i [class.fa-check-circle]="newCmnt?.sentiment.text == sentiment.name" class="fal sky"></i> -->
@@ -530,15 +530,13 @@
                                 <div class="d-flex align-items-center agent-container">
                                     <div class="card chennels-post">
                                         <div class="card-body">
-                                            <div class="card-header bg-white msg-user-info p-0 border-0">
-                                                <div class="d-flex align-items-center">
-                                                    <p class="card-text">
+                                            <div class="bg-tranparent msg-user-info p-0 border-0">
+                                                 <p class="card-text d-flex align-items-center justify-content-between w-100">
                                                         <small class="silver">{{post?.post?.createdDate |
                                                             date:'EEEE, MMMM d, y, h:mm a'}}</small>
                                                         <a *ngIf="post?.post?.redirectUrl != null" href={{post?.post?.redirectUrl}} target="_blank"><span><i
                                                                     class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
                                                     </p>
-                                                </div>
                                             </div>
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                 style="width:375px;" *ngFor="let attachment of post?.post?.attachments">
@@ -554,7 +552,7 @@
                                             <div class="card-body bg-light">
                                                 <p class="card-text nignt mb-0">
                                                     {{post?.post?.caption}}
-                                                </p><br>
+                                                </p>
                                                 <p class="card-text nignt mb-0"
                                                     *ngIf="post?.post?.description != null"><b>Description: </b>
                                                     {{post?.post?.description}}</p>
@@ -617,8 +615,8 @@
                                             <p class="app-no navy m-0 me-2">{{cmnt?.ticketId}}</p>
                                         </div>
                                         <div class="d-flex align-items-center agent-container">
-                                            <div class="card w-d-inline messageUpper"style="background-color: #e8e8e8 !important;">
-                                                <div class="card-body " style="min-width: 400px;background-color: #e8e8e8 !important;"
+                                            <div class="card w-d-inline messageUpper">
+                                                <div class="card-body "
                                                     [ngClass]="cmnt?.queryStatus == 'Unresponded'?'unread-msg':''" >
                                                     <div class="d-flex msg-user-info">
                                                         <div class="d-flex align-items-center">
@@ -635,34 +633,44 @@
                                                                 <i class="fas fa-star sun"></i>
                                                             </button>
                                                         </div>
-                                                        <div class="dropdown w-auto" *ngIf="hasQueryStatusPermission">
-                                                            <button class="btn coal p-0 ps-3" type="button"
-                                                                id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                                aria-expanded="false">
-                                                                {{cmnt?.queryStatus}}
-                                                                <i class="far fa-chevron-down ms-2"
-                                                                    *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnt?.queryStatus == 'Unresponded'"></i>
-                                                            </button>
-                                                            <ul class="dropdown-menu custom-dropdown"
-                                                                aria-labelledby="dropdownMenuButton1"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnt?.queryStatus == 'Unresponded'">
-                                                                <li>
-                                                                    <a class="dropdown-item"
-                                                                        (click)="commentStatus(cmnt?.id, cmnt?.contentType)">Read</a>
-                                                                    <ng-container
-                                                                        *ngIf="showHideBtnTo.includes(post?.platform | lowercase)">
-                                                                        <a class="dropdown-item"
-                                                                            *ngIf="cmnt?.isHide == false"
-                                                                            (click)="hideMessage(cmnt?.id, true, post?.platform)">Hide
-                                                                            Message</a>
-                                                                        <a class="dropdown-item"
-                                                                            *ngIf="cmnt?.isHide == true"
-                                                                            (click)="hideMessage(cmnt?.id, false, post?.platform)">Unhide
-                                                                            Message</a>
-                                                                    </ng-container>
-                                                                </li>
-                                                            </ul>
+                                                        <div class="rightaction">
+                                                                <!-- For Sentiment Pills -->
+                                                                <div class="sentiments" *ngIf="cmnt?.sentiment">
+                                                                    <span
+                                                                        class=" rounded-pills" [ngClass]="cmnt.sentiment?.name == 'positive'? 'bgpositive' : cmnt.sentiment?.name == 'negative'? 'bgnegative' : 'bgneutral'"><i class="fa-light" [ngClass]="cmnt.sentiment?.name == 'positive'? 'fa-smile' : cmnt.sentiment?.name == 'negative'? 'fa-frown' : 'fa-meh-blank'"></i> {{cmnt?.sentiment?.name
+                                                                        | tagSlugConversion}}</span>
+                                                                </div>
+                                                                <!-- For Sentiment Pills -->
+                                                                <div class="dropdown respondeddd" *ngIf="hasQueryStatusPermission">
+                                                                    <button class="btn" type="button"
+                                                                        id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                                        aria-expanded="false">
+                                                                        {{cmnt?.queryStatus}}
+                                                                        <i class="fa-light fa-angle-down"
+                                                                            *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnt?.queryStatus == 'Unresponded'"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu custom-dropdown"
+                                                                        aria-labelledby="dropdownMenuButton1"
+                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnt?.queryStatus == 'Unresponded'">
+                                                                        <li>
+                                                                            <a class="dropdown-item"
+                                                                                (click)="commentStatus(cmnt?.id, cmnt?.contentType)">Read</a>
+                                                                            <ng-container
+                                                                                *ngIf="showHideBtnTo.includes(post?.platform | lowercase)">
+                                                                                <a class="dropdown-item"
+                                                                                    *ngIf="cmnt?.isHide == false"
+                                                                                    (click)="hideMessage(cmnt?.id, true, post?.platform)">Hide
+                                                                                    Message</a>
+                                                                                <a class="dropdown-item"
+                                                                                    *ngIf="cmnt?.isHide == true"
+                                                                                    (click)="hideMessage(cmnt?.id, false, post?.platform)">Unhide
+                                                                                    Message</a>
+                                                                            </ng-container>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
                                                         </div>
+                                                        
                                                     </div>
                                                     <div *ngFor="let attachment of cmnt?.attachments"
                                                             style="width: 375px;">
@@ -714,18 +722,12 @@
                                                             (click)="removeTagFromFeed(tag.feedId, tag.name, post?.platform)">{{tag.name
                                                             | tagSlugConversion}}</span>
                                                     </div>
-                                                    <!-- For Sentiment Pills -->
-                                                    <div class="tags" *ngIf="cmnt?.sentiment">
-                                                        <span
-                                                            class="badge rounded-pills tag tag1 selected">{{cmnt?.sentiment?.name
-                                                            | tagSlugConversion}}</span>
-                                                    </div>
-                                                    <!-- For Sentiment Pills -->
+                                                    
                                                 </div>
                                                 <div class="message-bottom"
                                                     *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
-                                                    <div class="row">
-                                                        <div class="col-lg-10 ps-4 d-flex align-items-center">
+                                                    <div class="">
+                                                        <div class="">
                                                             <div class="message-actionlist d-flex align-items-center">
                                                                 <div class="box"
                                                                     *ngIf="showLikeBtnTo.includes(post?.platform | lowercase)">
@@ -736,7 +738,7 @@
                                                                             <i class="fal fa-thumbs-up coal"></i>
                                                                             <i class="fas fa-thumbs-up"></i>
                                                                         </span>
-                                                                        Like
+                                                                       <em> Like</em>
                                                                     </a>
                                                                 </div>
                                                                 <a class="message-actionItem replyBtn coal"
@@ -744,7 +746,7 @@
                                                                     <span class="iconButton small btn">
                                                                         <i class="fal fa-reply coal"></i>
                                                                     </span>
-                                                                    Reply
+                                                                    <em>Reply</em>
                                                                 </a>
                                                                 <div class="dropdown w-auto">
                                                                     <button class="iconButton medium"
@@ -754,39 +756,26 @@
                                                                         <span class="iconButton small btn mx-2">
                                                                             <i class="fal fa-tag coal"></i>
                                                                         </span>
-                                                                        Tag
+                                                                       <em> Tag</em>
                                                                     </button>
                                                                     <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
                                                                         aria-labelledby="dropdownMenuButton2">
                                                                         <ul class="dropdown-listing">
-                                                                            <li class="dropdown-listing-header">
-                                                                                <div class="head-section">
-                                                                                    <div class="left">
-                                                                                        <h6>Tags
-                                                                                        </h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
+                                                                           
                                                                             <li class="dropend">
                                                                                 <div *ngFor="let tag of TagsList"
                                                                                     class="list-group list-group-flush dropend">
                                                                                     <a data-bs-toggle="dropdown"
-                                                                                        class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+                                                                                        class="d-flex dropdown-item dropdown-toggle">
                                                                                         <div class="w-100 list-txt">
-                                                                                            <div
-                                                                                                class="d-flex w-100 justify-content-between">
-                                                                                                <h6
-                                                                                                    class="mb-1 darkblue">
-                                                                                                    {{tag.name}}
-                                                                                                </h6>
-                                                                                            </div>
+                                                                                                {{tag.name}}
                                                                                         </div>
                                                                                     </a>
                                                                                     <ul class="dropdown-menu shadow">
                                                                                         <form class="custom-searchbar">
                                                                                             <input
-                                                                                                class="form-control rounded-pill "
-                                                                                                [(ngModel)]="searchText"
+                                                                                                    class="form-control rounded-pill "
+                                                                                                    [(ngModel)]="searchText"
                                                                                                 placeholder="Search"
                                                                                                 aria-label="Search">
                                                                                             <span
@@ -804,7 +793,7 @@
                                                                                                 style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
-                                                                                                    <a class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                    <a class="d-flex dropdown-item align-items-center dropdown-item"
                                                                                                         (click)="insertTagsForFeed(cmnt?.id, keyword.slug, post?.platform)"
                                                                                                         [ngClass]="activeTag==true?'active':''"
                                                                                                         *ngFor="let keyword of tag.subTags | filter: searchText">
@@ -842,26 +831,22 @@
                                                                     </ul>
                                                                 </div>
                                                                 <div class="dropdown w-auto"  *ngIf="hasQuerySentimentsPermission">
-                                                                    <button class="iconButton medium show"
+                                                                    <button class="iconButton medium "
                                                                         id="sentimentButton" data-bs-toggle="dropdown"
-                                                                        aria-expanded="true" style="margin-left:43px">
+                                                                        aria-expanded="true" >
                                                                         <span class="iconButton small btn mx-2">
                                                                             <i class="fal fa-smile"></i>
                                                                         </span>
-                                                                        Sentiment
+                                                                        <em>Sentiment</em>
                                                                     </button>
-                                                                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                                    <ul class="dropdown-menu custom-dropdown medium  mt-2 secondDropdownList px-0"
                                                                         aria-labelledby="dropdownMenuButton2"
-                                                                        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);"
                                                                         data-popper-placement="bottom-start">
                                                                         <ul class="dropdown-listing">
-                                                                            <li class="list-body small-list"
-                                                                                data-scrollbar="true" tabindex="-1"
-                                                                                style="overflow: auto; outline: none;">
-                                                                                <div class="scroll-content">
+                                                                            <li class="list-body small-list">
                                                                                     <div class="list-group list-group-flush"
                                                                                         *ngFor="let sentiment of Sentiments">
-                                                                                        <a class="list-group-item d-flex level1Btn "
+                                                                                        <a class="d-flex dropdown-item align-items-center "
                                                                                             (click)="insertSentimentForFeed(cmnt?.id, sentiment.slug, post?.platform)">
                                                                                             <div class="list-down-icon">
                                                                                                 <span
@@ -869,21 +854,14 @@
                                                                                                     [innerHTML]="sentiment.icon">
                                                                                                 </span>
                                                                                             </div>
-                                                                                            <div class="w-100 list-txt">
-                                                                                                <div
-                                                                                                    class="d-flex w-100 justify-content-between">
-                                                                                                    <h6
-                                                                                                        class="mb-1 darkblue">
-                                                                                                        {{sentiment.name}}
-                                                                                                    </h6>
-                                                                                                </div>
+                                                                                            <div class="list-txt">
+                                                                                                 {{sentiment.name}}
                                                                                             </div>
                                                                                             <small>
                                                                                                 <!-- <i [class.fa-check-circle]="cmnt?.sentiment.text == sentiment.name" class="fal sky"></i> -->
                                                                                             </small>
                                                                                         </a>
                                                                                     </div>
-                                                                                </div>
                                                                             </li>
                                                                         </ul>
                                                                     </ul>
@@ -1035,8 +1013,8 @@
                                                 class="accordion-header" id="emailwrap7">
                                                 <button [ngClass]="markAsComplete == true?'':'collapsed'"
                                                     class="accordion-button" type="button">
-                                                    <div class="avatar large coal">
-                                                        <i class="fal fa-check-double"></i>
+                                                    <div class="avatar large mint">
+                                                        <i class="fal fa-check-circle"></i>
                                                     </div>
                                                     <div class="card-header-content p-0">
                                                         <div class="card-header-top">
@@ -1105,8 +1083,8 @@
                                         <p class="app-no navy m-0 me-2">{{msgs.ticketId}}</p>
                                     </div>
                                     <div class="d-flex align-items-center agent-container">
-                                        <div class="card w-d-inline messageUpper"style="background-color: #e8e8e8 !important;">
-                                            <div class="card-body " style="min-width: 400px;background-color: #e8e8e8 !important;"
+                                        <div class="card w-d-inline messageUpper">
+                                            <div class="card-body "
                                                 [ngClass]="msgs.queryStatus == 'Unresponded'?'unread-msg':''">
                                                 <div class="d-flex msg-user-info">
                                                     <div class="d-flex align-items-center">
@@ -1125,23 +1103,33 @@
                                                             <i class="fas fa-star sun"></i>
                                                         </button>
                                                     </div>
-                                                    <div class="dropdown w-auto" *ngIf="hasQueryStatusPermission">
-                                                        <button class="btn coal p-0 ps-3" type="button"
-                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            {{msgs.queryStatus}}
-                                                            <i class="far fa-chevron-down ms-2"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && msgs.queryStatus == 'Unresponded'"></i>
-                                                        </button>
-                                                        <ul class="dropdown-menu custom-dropdown"
-                                                            aria-labelledby="dropdownMenuButton1"
-                                                            *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && msgs.queryStatus == 'Unresponded'">
-                                                            <li>
-                                                                <a class="dropdown-item"
-                                                                    (click)="commentStatus(msgs.id, msgs.contentType)">Read</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                        <div class="rightaction">
+                                                                <!-- For Sentiment Pills -->
+                                                            <div class="sentiments" *ngIf="msgs.sentiment">
+                                                                <span
+                                                                    class=" rounded-pill" [ngClass]="msgs.sentiment?.name == 'positive'? 'bgpositive' : msgs.sentiment?.name == 'negative'? 'bgnegative' : 'bgneutral'"><i class="fa-light" [ngClass]="msgs.sentiment?.name == 'positive'? 'fa-smile' : msgs.sentiment?.name == 'negative'? 'fa-frown' : 'fa-meh-blank'"></i> {{msgs.sentiment?.name
+                                                                    | tagSlugConversion}} </span>
+                                                            </div>
+                                                            <!-- For Sentiment Pills -->
+                                                                <div class="dropdown respondeddd" *ngIf="hasQueryStatusPermission">
+                                                                    <button class="btn" type="button"
+                                                                        id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                                        aria-expanded="false">
+                                                                        {{msgs.queryStatus}}
+                                                                        <i class="fa-light fa-angle-down"
+                                                                            *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && msgs.queryStatus == 'Unresponded'"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu custom-dropdown"
+                                                                        aria-labelledby="dropdownMenuButton1"
+                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && msgs.queryStatus == 'Unresponded'">
+                                                                        <li>
+                                                                            <a class="dropdown-item"
+                                                                                (click)="commentStatus(msgs.id, msgs.contentType)">Read</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                        </div>
+                                                    
                                                 </div>
                                                 <div *ngFor="let attachment of msgs?.attachments"
                                                             style="width: 375px;">
@@ -1189,17 +1177,11 @@
                                                         </div>
                                                 <p class="card-text nignt">{{msgs.msgText}}</p>
                                                 <div class="tags" *ngFor="let tag of msgs.tags">
-                                                    <span class="badge rounded-pill tag tag1 selected"
+                                                    <span class="badge  tag tag1 selected"
                                                         (click)="removeTagFromFeed(tag.feedId, tag.name, platform)">{{tag.name
                                                         | tagSlugConversion}}</span>
                                                 </div>
-                                                <!-- For Sentiment Pills -->
-                                                <div class="tags" *ngIf="msgs.sentiment">
-                                                    <span
-                                                        class="badge rounded-pill tag tag1 selected">{{msgs.sentiment?.name
-                                                        | tagSlugConversion}}</span>
-                                                </div>
-                                                <!-- For Sentiment Pills -->
+                                               
                                             </div>
                                             <div class="message-bottom"
                                                 *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
@@ -1211,7 +1193,8 @@
                                                                 <span class="iconButton small btn">
                                                                     <i class="fal fa-reply coal"></i>
                                                                 </span>
-                                                                Reply
+                                                                
+                                                                 <em> Reply</em>
                                                             </a>
                                                             <div class="dropdown w-auto">
                                                                 <button class="iconButton medium"
@@ -1220,7 +1203,8 @@
                                                                     <span class="iconButton small btn mx-2">
                                                                         <i class="fal fa-tag coal"></i>
                                                                     </span>
-                                                                    Tag
+                                                                    
+                                                                    <em> Tag</em>
                                                                 </button>
                                                                 <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
                                                                     aria-labelledby="dropdownMenuButton2">
@@ -1237,7 +1221,7 @@
                                                                             <div *ngFor="let tag of TagsList"
                                                                                 class="list-group list-group-flush dropend">
                                                                                 <a data-bs-toggle="dropdown"
-                                                                                    class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+                                                                                    class="d-flex dropdown-item align-items-center dropdown-item dropdown-toggle">
                                                                                     <div class="w-100 list-txt">
                                                                                         <div
                                                                                             class="d-flex w-100 justify-content-between">
@@ -1268,7 +1252,7 @@
                                                                                             style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
                                                                                             <div
                                                                                                 class="list-group list-group-flush">
-                                                                                                <a class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                <a class="d-flex dropdown-item align-items-center dropdown-item"
                                                                                                     (click)="insertTagsForFeed(msgs.id, keyword.slug, platform)"
                                                                                                     [ngClass]="activeTag==true?'active':''"
                                                                                                     *ngFor="let keyword of tag.subTags | filter: searchText">
@@ -1306,13 +1290,14 @@
                                                                 </ul>
                                                             </div>
                                                             <div class="dropdown w-auto"  *ngIf="hasQuerySentimentsPermission">
-                                                                <button class="iconButton medium show"
+                                                                <button class="iconButton medium "
                                                                     id="sentimentButton" data-bs-toggle="dropdown"
-                                                                    aria-expanded="true" style="margin-left:43px">
+                                                                    aria-expanded="true" >
                                                                     <span class="iconButton small btn mx-2">
                                                                         <i class="fal fa-smile"></i>
                                                                     </span>
-                                                                    Sentiment
+                                                                    
+                                                                      <em> Sentiment</em>
                                                                 </button>
                                                                 <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
                                                                     aria-labelledby="dropdownMenuButton2"
@@ -1325,7 +1310,7 @@
                                                                             <div class="scroll-content">
                                                                                 <div class="list-group list-group-flush"
                                                                                     *ngFor="let sentiment of Sentiments">
-                                                                                    <a class="list-group-item d-flex level1Btn "
+                                                                                    <a class="d-flex dropdown-item align-items-center "
                                                                                         (click)="insertSentimentForFeed(msgs.id, sentiment.slug, platform)">
                                                                                         <div class="list-down-icon">
                                                                                             <span
@@ -1333,15 +1318,9 @@
                                                                                                 [innerHTML]="sentiment.icon">
                                                                                             </span>
                                                                                         </div>
-                                                                                        <div class="w-100 list-txt">
-                                                                                            <div
-                                                                                                class="d-flex w-100 justify-content-between">
-                                                                                                <h6
-                                                                                                    class="mb-1 darkblue">
-                                                                                                    {{sentiment.name}}
-                                                                                                </h6>
+                                                                                            <div class="list-txt">
+                                                                                                 {{sentiment.name}}
                                                                                             </div>
-                                                                                        </div>
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
@@ -1549,8 +1528,8 @@
                                         <p class="app-no navy m-0 me-2">{{tm.ticketId}}</p>
                                     </div>
                                     <div class="d-flex align-items-center agent-container">
-                                        <div class="card w-d-inline messageUpper"style="background-color: #e8e8e8 !important;">
-                                            <div class="card-body " style="min-width: 400px;background-color: #e8e8e8 !important;"
+                                        <div class="card w-d-inline messageUpper">
+                                            <div class="card-body "
                                                 [ngClass]="tm.queryStatus == 'Unresponded'?'unread-msg':''">
                                                 <div class="d-flex msg-user-info">
                                                     <div class="d-flex align-items-center">
@@ -1569,24 +1548,34 @@
                                                             <i class="fas fa-star sun"></i>
                                                         </button>
                                                     </div>
-                                                    <div class="dropdown w-auto" *ngIf="hasQueryStatusPermission">
-                                                        <button class="btn coal p-0 ps-3" type="button"
-                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            {{tm.queryStatus}}
-                                                            <i class="far fa-chevron-down ms-2"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && tm.queryStatus == 'Unresponded'"></i>
-                                                        </button>
-                                                        <ul class="dropdown-menu custom-dropdown"
-                                                            aria-labelledby="dropdownMenuButton1"
-                                                            *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && tm.queryStatus == 'Unresponded'">
-                                                            <li>
-                                                                <a class="dropdown-item"
-                                                                    (click)="commentStatus(tm.id, tm.contentType)">Read</a>
-                                                            </li>
-                                                        </ul>
+                                                            <div class="rightaction">
+                                                              <!-- For Sentiment Pills -->
+                                                                    <div class="sentiments" *ngIf="tm.sentiment">
+                                                                    <span
+                                                                        class=" rounded-pill" [ngClass]="tm.sentiment?.name == 'positive'? 'bgpositive' : tm.sentiment?.name == 'negative'? 'bgnegative' : 'bgneutral'"><i class="fa-light" [ngClass]="tm.sentiment?.name == 'positive'? 'fa-smile' : tm.sentiment?.name == 'negative'? 'fa-frown' : 'fa-meh-blank'"></i> {{tm.sentiment?.name
+                                                                        | tagSlugConversion}} </span>
+                                                                    </div>
+                                                                    <!-- For Sentiment Pills -->
+                                                                        <div class="dropdown respondeddd" *ngIf="hasQueryStatusPermission">
+                                                                        <button class="btn" type="button"
+                                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                                            aria-expanded="false">
+                                                                            {{tm.queryStatus}}
+                                                                            <i class="fa-light fa-angle-down"
+                                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && tm.queryStatus == 'Unresponded'"></i>
+                                                                        </button>
+                                                                        <ul class="dropdown-menu custom-dropdown p-0"
+                                                                            aria-labelledby="dropdownMenuButton1"
+                                                                            *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && tm.queryStatus == 'Unresponded'">
+                                                                            <li>
+                                                                                <a class="dropdown-item"
+                                                                                    (click)="commentStatus(tm.id, tm.contentType)">Read</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                            </div>
                                                     </div>
-                                                </div>
+                                                   
                                                 <div *ngFor="let attachment of tm?.attachments"
                                                             style="width: 375px;">
                                                             <img class="whatsapp-single-img whatsappImgModalBtn"
@@ -1637,13 +1626,7 @@
                                                         (click)="removeTagFromFeed(tag.feedId, tag.name, platform)">{{tag.name
                                                         | tagSlugConversion}}</span>
                                                 </div>
-                                                <!-- For Sentiment Pills -->
-                                                <div class="tags" *ngIf="tm.sentiment">
-                                                    <span
-                                                        class="badge rounded-pill tag tag1 selected">{{tm.sentiment?.name
-                                                        | tagSlugConversion}}</span>
-                                                </div>
-                                                <!-- For Sentiment Pills -->
+                                              
                                             </div>
                                             <div class="message-bottom"
                                                 *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
@@ -1655,7 +1638,8 @@
                                                                 <span class="iconButton small btn">
                                                                     <i class="fal fa-reply coal"></i>
                                                                 </span>
-                                                                Reply
+                                                                
+                                                                 <em> Reply</em>
                                                             </a>
                                                             <div class="dropdown w-auto">
                                                                 <button class="iconButton medium"
@@ -1664,7 +1648,8 @@
                                                                     <span class="iconButton small btn mx-2">
                                                                         <i class="fal fa-tag coal"></i>
                                                                     </span>
-                                                                    Tag
+                                                                    
+                                                                    <em> Tag</em>
                                                                 </button>
                                                                 <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
                                                                     aria-labelledby="dropdownMenuButton2">
@@ -1681,7 +1666,7 @@
                                                                             <div *ngFor="let tag of TagsList"
                                                                                 class="list-group list-group-flush dropend">
                                                                                 <a data-bs-toggle="dropdown"
-                                                                                    class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+                                                                                    class="d-flex dropdown-item align-items-center dropdown-item dropdown-toggle">
                                                                                     <div class="w-100 list-txt">
                                                                                         <div
                                                                                             class="d-flex w-100 justify-content-between">
@@ -1712,7 +1697,7 @@
                                                                                             style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
                                                                                             <div
                                                                                                 class="list-group list-group-flush">
-                                                                                                <a class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                <a class="d-flex dropdown-item align-items-center dropdown-item"
                                                                                                     (click)="insertTagsForFeed(tm.id, keyword.slug, platform)"
                                                                                                     [ngClass]="activeTag==true?'active':''"
                                                                                                     *ngFor="let keyword of tag.subTags | filter: searchText">
@@ -1725,7 +1710,7 @@
                                                                                                         </span>
                                                                                                     </div>
                                                                                                     <div
-                                                                                                        class="w-100 list-txt">
+                                                                                                        class="w-100 col-lg-10 ps-4 d-flex align-items-center">
                                                                                                         <div
                                                                                                             class="d-flex w-100 justify-content-between">
                                                                                                             <h6
@@ -1750,13 +1735,13 @@
                                                                 </ul>
                                                             </div>
                                                             <div class="dropdown w-auto"  *ngIf="hasQuerySentimentsPermission">
-                                                                <button class="iconButton medium show"
+                                                                <button class="iconButton medium "
                                                                     id="sentimentButton" data-bs-toggle="dropdown"
-                                                                    aria-expanded="true" style="margin-left:43px">
+                                                                    aria-expanded="true" >
                                                                     <span class="iconButton small btn mx-2">
                                                                         <i class="fal fa-smile"></i>
                                                                     </span>
-                                                                    Sentiment
+                                                                    <em>Sentiment</em>
                                                                 </button>
                                                                 <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
                                                                     aria-labelledby="dropdownMenuButton2"
@@ -1769,7 +1754,7 @@
                                                                             <div class="scroll-content">
                                                                                 <div class="list-group list-group-flush"
                                                                                     *ngFor="let sentiment of Sentiments">
-                                                                                    <a class="list-group-item d-flex level1Btn "
+                                                                                    <a class="d-flex dropdown-item align-items-center "
                                                                                         (click)="insertSentimentForFeed(tm.id, sentiment.slug, platform)">
                                                                                         <div class="list-down-icon">
                                                                                             <span
@@ -1777,15 +1762,9 @@
                                                                                                 [innerHTML]="sentiment.icon">
                                                                                             </span>
                                                                                         </div>
-                                                                                        <div class="w-100 list-txt">
-                                                                                            <div
-                                                                                                class="d-flex w-100 justify-content-between">
-                                                                                                <h6
-                                                                                                    class="mb-1 darkblue">
-                                                                                                    {{sentiment.name}}
-                                                                                                </h6>
+                                                                                       <div class="list-txt">
+                                                                                                 {{sentiment.name}}
                                                                                             </div>
-                                                                                        </div>
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
@@ -1993,8 +1972,8 @@
                                         <p class="app-no navy m-0 me-2">{{ttr.ticketId}}</p>
                                     </div>
                                     <div class="d-flex align-items-center agent-container">
-                                        <div class="card w-d-inline messageUpper"style="background-color: #e8e8e8 !important;">
-                                            <div class="card-body " style="min-width: 400px;background-color: #e8e8e8 !important;"
+                                        <div class="card w-d-inline messageUpper">
+                                            <div class="card-body "
                                                 [ngClass]="ttr.queryStatus == 'Unresponded'?'unread-msg':''">
                                                 <div class="d-flex msg-user-info">
                                                     <div class="d-flex align-items-center">
@@ -2013,23 +1992,29 @@
                                                             <i class="fas fa-star sun"></i>
                                                         </button>
                                                     </div>
-                                                    <div class="dropdown w-auto" *ngIf="hasQueryStatusPermission">
-                                                        <button class="btn coal p-0 ps-3" type="button"
-                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            {{ttr.queryStatus}}
-                                                            <i class="far fa-chevron-down ms-2"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && ttr.queryStatus == 'Unresponded'"></i>
-                                                        </button>
-                                                        <ul class="dropdown-menu custom-dropdown"
-                                                            aria-labelledby="dropdownMenuButton1"
-                                                            *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && ttr.queryStatus == 'Unresponded'">
-                                                            <li>
-                                                                <a class="dropdown-item"
-                                                                    (click)="commentStatus(ttr.id, ttr.contentType)">Read</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                   <div class="rightaction">
+                                                        <div class="sentiments" *ngIf="ttr.sentiment">
+                                                            <span class=" rounded-pill" [ngClass]="ttr.sentiment?.name == 'positive'? 'bgpositive' : ttr.sentiment?.name == 'negative'? 'bgnegative' : 'bgneutral'"><i class="fa-light" [ngClass]="ttr.sentiment?.name == 'positive'? 'fa-smile' : ttr.sentiment?.name == 'negative'? 'fa-frown' : 'fa-meh-blank'"></i> {{ttr.sentiment?.name
+                                                            | tagSlugConversion}}</span>
+                                                        </div>
+                                                        <div class="dropdown respondeddd" *ngIf="hasQueryStatusPermission">
+                                                            <button class="btn" type="button"
+                                                                id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                                aria-expanded="false">
+                                                                {{ttr.queryStatus}}
+                                                                <i class="fa-light fa-angle-down"
+                                                                    *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && ttr.queryStatus == 'Unresponded'"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu custom-dropdown"
+                                                                aria-labelledby="dropdownMenuButton1"
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && ttr.queryStatus == 'Unresponded'">
+                                                                <li>
+                                                                    <a class="dropdown-item"
+                                                                        (click)="commentStatus(ttr.id, ttr.contentType)">Read</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                   </div>
                                                 </div>
                                                 <div *ngFor="let attachment of ttr?.attachments"
                                                             style="width: 375px;">
@@ -2082,11 +2067,7 @@
                                                         | tagSlugConversion}}</span>
                                                 </div>
                                                 <!-- For Sentiment Pills -->
-                                                <div class="tags" *ngIf="ttr.sentiment">
-                                                    <span
-                                                        class="badge rounded-pill tag tag1 selected">{{ttr.sentiment?.name
-                                                        | tagSlugConversion}}</span>
-                                                </div>
+                                                
                                                 <!-- For Sentiment Pills -->
                                             </div>
                                             <div class="message-bottom"
@@ -2099,7 +2080,8 @@
                                                                 <span class="iconButton small btn">
                                                                     <i class="fal fa-reply coal"></i>
                                                                 </span>
-                                                                Reply
+                                                                
+                                                                 <em> Reply</em>
                                                             </a>
                                                             <div class="dropdown w-auto">
                                                                 <button class="iconButton medium"
@@ -2108,7 +2090,8 @@
                                                                     <span class="iconButton small btn mx-2">
                                                                         <i class="fal fa-tag coal"></i>
                                                                     </span>
-                                                                    Tag
+                                                                    
+                                                                     <em> Tag</em>
                                                                 </button>
                                                                 <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
                                                                     aria-labelledby="dropdownMenuButton2">
@@ -2125,7 +2108,7 @@
                                                                             <div *ngFor="let tag of TagsList"
                                                                                 class="list-group list-group-flush dropend">
                                                                                 <a data-bs-toggle="dropdown"
-                                                                                    class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+                                                                                    class="d-flex dropdown-item align-items-center dropdown-item dropdown-toggle">
                                                                                     <div class="w-100 list-txt">
                                                                                         <div
                                                                                             class="d-flex w-100 justify-content-between">
@@ -2156,7 +2139,7 @@
                                                                                             style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
                                                                                             <div
                                                                                                 class="list-group list-group-flush">
-                                                                                                <a class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                <a class="d-flex dropdown-item align-items-center dropdown-item"
                                                                                                     (click)="insertTagsForFeed(ttr.id, keyword.slug, platform)"
                                                                                                     [ngClass]="activeTag==true?'active':''"
                                                                                                     *ngFor="let keyword of tag.subTags | filter: searchText">
@@ -2194,13 +2177,13 @@
                                                                 </ul>
                                                             </div>
                                                             <div class="dropdown w-auto"  *ngIf="hasQuerySentimentsPermission">
-                                                                <button class="iconButton medium show"
+                                                                <button class="iconButton medium "
                                                                     id="sentimentButton" data-bs-toggle="dropdown"
-                                                                    aria-expanded="true" style="margin-left:43px">
+                                                                    aria-expanded="true" >
                                                                     <span class="iconButton small btn mx-2">
                                                                         <i class="fal fa-smile"></i>
                                                                     </span>
-                                                                    Sentiment
+                                                                    <em>Sentiment</em>
                                                                 </button>
                                                                 <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
                                                                     aria-labelledby="dropdownMenuButton2"
@@ -2213,7 +2196,7 @@
                                                                             <div class="scroll-content">
                                                                                 <div class="list-group list-group-flush"
                                                                                     *ngFor="let sentiment of Sentiments">
-                                                                                    <a class="list-group-item d-flex level1Btn "
+                                                                                    <a class="d-flex dropdown-item align-items-center "
                                                                                         (click)="insertSentimentForFeed(ttr.id, sentiment.slug, platform)">
                                                                                         <div class="list-down-icon">
                                                                                             <span
@@ -2221,15 +2204,9 @@
                                                                                                 [innerHTML]="sentiment.icon">
                                                                                             </span>
                                                                                         </div>
-                                                                                        <div class="w-100 list-txt">
-                                                                                            <div
-                                                                                                class="d-flex w-100 justify-content-between">
-                                                                                                <h6
-                                                                                                    class="mb-1 darkblue">
-                                                                                                    {{sentiment.name}}
-                                                                                                </h6>
+                                                                                        <div class="list-txt">
+                                                                                                 {{sentiment.name}}
                                                                                             </div>
-                                                                                        </div>
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
@@ -2423,15 +2400,15 @@
                                         <i class="fas fa-spell-check"></i>
                                     </button> -->
                                 <!-- </div> -->
-                                <button class="iconButton btn small spellcheckbtn" (click)="correctGrammar()">
+                                <button class="iconButton btn small spellcheckbtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Fix Grammer & Spelling" (click)="correctGrammar()">
                                     <i class="fa-light fa-spell-check"></i>
                                 </button>
                                 <div class=" dropup">
                                     <button type="button" class="btn " data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa-solid fa-language"></i>
                                     </button>
-                                    <ul class="dropdown-menu">
-                                        <li class="p-3"><i class="fa-solid fa-language"></i>  Choose Language</li>
+                                    <ul class="dropdown-menu p-0">
+                                        <li class="px-3 pb-2 pt-3 fw-medium"><i class="fa-solid fa-language"></i>  Choose Language</li>
                                         <li><hr class="dropdown-divider"></li>
                                     <li *ngFor="let lng of languages" [value] = "lng" (click)="translateText(lng)"><a class="dropdown-item">{{lng}}</a></li>
                                     <!-- <li><a href="" class="dropdown-item">French </a></li>
@@ -2451,8 +2428,8 @@
                                     <button type="button" class="btn " data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa-solid fa-sparkles"></i>
                                     </button>
-                                    <ul class="dropdown-menu">
-                                        <li class="p-3"><i class="fa-solid fa-sparkles"></i>  Modify Response</li>
+                                    <ul class="dropdown-menu p-0">
+                                        <li class="px-3 pb-2 pt-3 fw-medium"><i class="fa-solid fa-sparkles"></i>  Modify Response</li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li *ngFor="let tone of tones" [value]="tone"><a class="dropdown-item" (click)="changeTone(tone)">{{tone}}</a></li>
 
@@ -2467,55 +2444,44 @@
                                         <option *ngFor="let tone of tones" [value]="tone">{{tone}}</option>
                                     </select>
                                 </div> -->
-                                <div class="responseBtn">
+                                <div class="responseBtn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Quick Response">
                                      <a class="iconButton btn small openQuickResponse" data-bs-toggle="offcanvas"
                                         data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" *ngIf="hasQuickReplyPermission">
                                         <i class="fal fa-notes-medical "></i></a>
                                 </div>
+                                 <div data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Customer Satisfaction Form " *ngIf="showCustomerSatistactionForm.includes(activeClient)"
+                                        class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
+                                        <button class="iconButton small notification iconHover" id="surveyForms" data-bs-toggle="dropdown"
+                                            data-bs-auto-close="outside" data-bs-original-title="Survey Forms"*ngIf="hasReplyCsatPermission">
+                                            <span class="iconButton small btn mx-2">
+                                                <i class="fa-light fa-square-list"></i>
+                                            </span>
+                                        </button>
+                                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                            aria-labelledby="dropdownMenuButton2">
+                                            <ul class="dropdown-listing">
+                                                <li class="">
+                                                    <div class="head-section" (click)="c_satForm()">
+                                                        <a class="dropdown-item">
+                                                                Customer Satisfaction Form
+                                                        </a>
+                                                    </div>
+                                                
+                                                </li>
+                                                <li class="">
+                                                
+                                                    <div *ngIf="showCustomerInformationForm.includes(activeClient)" class="head-section"
+                                                        (click)="c_informationForm()">
+                                                        <a class="dropdown-item">
+                                                                Customer Information Form
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </ul>
+                                    </div>
                             </div>
-                <div *ngIf="showCustomerSatistactionForm.includes(activeClient)"
-                    class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
-                    <button class="iconButton small notification iconHover" id="surveyForms" data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside" data-bs-original-title="Survey Forms"*ngIf="hasReplyCsatPermission">
-                        <span class="iconButton small btn mx-2">
-                            <i class="fa-light fa-square-list"></i>
-                        </span>
-                    </button>
-                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                        aria-labelledby="dropdownMenuButton2">
-                        <ul class="dropdown-listing">
-                            <li class="">
-                                <div class="head-section" (click)="c_satForm()">
-                                    <a class="dropdown-item">
-                                        <div class="w-100 list-txt">
-                                            <div class="d-flex w-100 justify-content-between">
-                                                <h6 class="mb-1 darkblue">
-                                                    Customer Satisfaction Form
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                              
-                            </li>
-                            <li class="">
-                               
-                                <div *ngIf="showCustomerInformationForm.includes(activeClient)" class="head-section"
-                                    (click)="c_informationForm()">
-                                    <a class="dropdown-item">
-                                        <div class="w-100 list-txt">
-                                            <div class="d-flex w-100 justify-content-between">
-                                                <h6 class="mb-1 darkblue">
-                                                    Customer Information Form
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </ul>
-                </div>
+               
                 <!-- <div class="icons-list align-items-md-center d-flex ps-2">
                     <button id="grammarBtn" (click)="correctGrammar()">
                         <i class="fas fa-spell-check"></i>
