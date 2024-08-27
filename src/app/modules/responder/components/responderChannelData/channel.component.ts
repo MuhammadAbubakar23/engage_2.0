@@ -755,7 +755,7 @@ export class ChannelComponent implements OnInit {
   getClassOfHeaderBackground(platform: string) {
     if (platform == 'Facebook') {
       this.iconClass = 'fab fa-facebook-f';
-      this.backgroundColorClass = 'navyBg';
+      this.backgroundColorClass = 'facebookcolor';
     } else if (platform == 'Instagram') {
       this.iconClass = 'fab fa-instagram';
       this.backgroundColorClass = 'instabg';
@@ -764,7 +764,7 @@ export class ChannelComponent implements OnInit {
       this.backgroundColorClass = 'linkedinbg';
     } else if (platform == 'WhatsApp') {
       this.iconClass = 'fab fa-whatsapp';
-      this.backgroundColorClass = 'mintBg';
+      this.backgroundColorClass = 'whatsappcolor';
     } else if (platform == 'WebChat') {
       this.iconClass = 'fa-light fa-messages text-white';
       this.backgroundColorClass = 'webchatbg';
@@ -776,7 +776,7 @@ export class ChannelComponent implements OnInit {
       this.backgroundColorClass = 'radicalBg';
     } else if (platform == 'Twitter') {
       this.iconClass = 'fab fa-twitter';
-      this.backgroundColorClass = 'oceanBg';
+      this.backgroundColorClass = 'twittercolor';
     } else if (platform == 'PlayStore') {
       this.iconClass = 'fa-brands fa-google-play';
       this.backgroundColorClass = 'googleplaybg';

@@ -7,7 +7,7 @@
                 <p style="color: white"> Loading... </p>
             </ngx-spinner>
         </div>
-        <div class="headerWrap d-flex align-items-center shadow-sm" [ngClass]="backgroundColorClass">
+        <div class="headerWrap d-flex align-items-center " [ngClass]="backgroundColorClass">
             <div class="titleIcon d-flex align-items-center">
                 <i class="" [ngClass]="iconClass"></i>
                 <div class="titleLink ms-1">
@@ -20,9 +20,9 @@
                         aria-controls="comment" aria-selected="true">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
-                                <i class="fal fa-comments-alt ice"></i>
+                                <i class="fal fa-comments-alt "></i>
                             </span>Comment
-                            <span class="badge rounded-pill bg-light text-dark ms-3"
+                            <span class="badge rounded-pill  ms-3"
                                 *ngIf="totalUnrespondedCmntCountByCustomer > 0">{{totalUnrespondedCmntCountByCustomer}}</span>
                         </div>
                     </button>
@@ -33,10 +33,10 @@
                         role="tab" aria-controls="twitter-tweets" aria-selected="true" *ngIf="TwitterTweets.length > 0">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
-                                <i class="fal fa-comments-alt ice"></i>
+                                <i class="fal fa-comments-alt "></i>
                             </span>
                             Tweets
-                            <span class="badge rounded-pill twitter-pill bg-light text-dark ms-3"
+                            <span class="badge rounded-pill twitter-pill  ms-3"
                                 *ngIf="totalUnrespondedTweetCountByCustomer > 0">{{totalUnrespondedTweetCountByCustomer}}</span>
                         </div>
                     </button>
@@ -48,10 +48,10 @@
                         *ngIf="TwitterMentions.length > 0">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
-                                <i class="fab fa-facebook-messenger ice"></i>
+                                <i class="fab fa-facebook-messenger "></i>
                             </span>
                             Mention
-                            <span class="badge rounded-pill twitter-pill bg-light text-dark ms-3"
+                            <span class="badge rounded-pill twitter-pill  ms-3"
                                 *ngIf="totalUnrespondedMentionCountByCustomer > 0">{{totalUnrespondedMentionCountByCustomer}}</span>
                         </div>
                     </button>
@@ -62,10 +62,10 @@
                         aria-controls="msg" aria-selected="false">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
-                                <i class="fab fa-facebook-messenger ice"></i>
+                                <i class="fab fa-facebook-messenger "></i>
                             </span>
                             Messages
-                            <span class="badge rounded-pill bg-light text-dark ms-3"
+                            <span class="badge rounded-pill  ms-3"
                                 *ngIf="totalUnrespondedMsgCountByCustomer > 0">{{totalUnrespondedMsgCountByCustomer}}</span>
                         </div>
                     </button>
@@ -76,10 +76,10 @@
                         data-bs-target="#newPost" type="button" role="tab" aria-controls="newPost" aria-selected="true">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
-                                <i class="fal fa-comments-alt ice"></i>
+                                <i class="fal fa-comments-alt "></i>
                             </span>
                             Comment on New Post
-                            <span class="badge rounded-pill bg-light text-dark ms-3" 
+                            <span class="badge rounded-pill  ms-3" 
                             *ngIf="totalUnrespondedNewPostCmntCountByCustomer > 0">{{totalUnrespondedNewPostCmntCountByCustomer}}</span>
                         </div>
                     </button>
@@ -152,11 +152,11 @@
                                         </div>
                                         <div class="d-flex align-items-center agent-container">
                                             <div class="card w-d-inline messageUpper" style="background-color: #e8e8e8 !important;">
-                                                <div class="card-body shadow-sm" style="min-width: 400px; background-color: #e8e8e8 !important;"
+                                                <div class="card-body " style="min-width: 400px; background-color: #e8e8e8 !important;"
                                                     [ngClass]="newCmnt?.queryStatus == 'Unresponded'?'unread-msg':''">
                                                     <div class="d-flex msg-user-info">
                                                         <div class="d-flex align-items-center">
-                                                            <h6 class="card-title navy m-0">
+                                                            <h6 class="card-title m-0">
                                                                 {{newCmnt?.userName}}</h6>
                                                             <p class="card-text ms-3">
                                                                 <small class="silver">{{newCmnt?.createdDate |
@@ -316,7 +316,7 @@
                                                                                     <ul class="dropdown-menu shadow">
                                                                                         <form class="custom-searchbar">
                                                                                             <input
-                                                                                                class="form-control rounded-pill shadow-sm"
+                                                                                                class="form-control rounded-pill "
                                                                                                 [(ngModel)]="searchText"
                                                                                                 placeholder="Search"
                                                                                                 aria-label="Search">
@@ -438,7 +438,7 @@
                                             <div class="message-wrap agent-message-wrap left">
                                                 <div class="agent-container">
                                                     <div class="card card-txt ms-auto">
-                                                        <div class="card-body shadow-sm"style="background-color: #dce1f9 !important;">
+                                                        <div class="card-body "style="background-color: #dce1f9 !important;">
                                                             <div class="d-flex align-items-center mb-2">
                                                                 <h6 class="card-title m-0">
                                                                     {{reply.responseByName}}</h6>
@@ -618,11 +618,11 @@
                                         </div>
                                         <div class="d-flex align-items-center agent-container">
                                             <div class="card w-d-inline messageUpper"style="background-color: #e8e8e8 !important;">
-                                                <div class="card-body shadow-sm" style="min-width: 400px;background-color: #e8e8e8 !important;"
+                                                <div class="card-body " style="min-width: 400px;background-color: #e8e8e8 !important;"
                                                     [ngClass]="cmnt?.queryStatus == 'Unresponded'?'unread-msg':''" >
                                                     <div class="d-flex msg-user-info">
                                                         <div class="d-flex align-items-center">
-                                                            <h6 class="card-title navy m-0">
+                                                            <h6 class="card-title m-0">
                                                                 {{cmnt?.userName}}</h6>
                                                             <p class="card-text ms-3">
                                                                 <small class="silver">{{cmnt?.createdDate |
@@ -785,7 +785,7 @@
                                                                                     <ul class="dropdown-menu shadow">
                                                                                         <form class="custom-searchbar">
                                                                                             <input
-                                                                                                class="form-control rounded-pill shadow-sm"
+                                                                                                class="form-control rounded-pill "
                                                                                                 [(ngModel)]="searchText"
                                                                                                 placeholder="Search"
                                                                                                 aria-label="Search">
@@ -938,7 +938,7 @@
                                             <div class="message-wrap agent-message-wrap left">
                                                 <div class="agent-container">
                                                     <div class="card card-txt ms-auto">
-                                                        <div class="card-body shadow-sm"style="background-color: #dce1f9 !important;">
+                                                        <div class="card-body "style="background-color: #dce1f9 !important;">
                                                             <div class="d-flex align-items-center mb-2">
                                                                 <h6 class="card-title m-0">
                                                                     {{reply.responseByName}}</h6>
@@ -1106,11 +1106,11 @@
                                     </div>
                                     <div class="d-flex align-items-center agent-container">
                                         <div class="card w-d-inline messageUpper"style="background-color: #e8e8e8 !important;">
-                                            <div class="card-body shadow-sm" style="min-width: 400px;background-color: #e8e8e8 !important;"
+                                            <div class="card-body " style="min-width: 400px;background-color: #e8e8e8 !important;"
                                                 [ngClass]="msgs.queryStatus == 'Unresponded'?'unread-msg':''">
                                                 <div class="d-flex msg-user-info">
                                                     <div class="d-flex align-items-center">
-                                                        <h6 class="card-title navy m-0">
+                                                        <h6 class="card-title m-0">
                                                             {{msgs.fromName}}</h6>
                                                         <p class="card-text ms-3">
                                                             <small class="silver">{{msgs.createdDate |
@@ -1250,7 +1250,7 @@
                                                                                 <ul class="dropdown-menu shadow">
                                                                                     <form class="custom-searchbar">
                                                                                         <input
-                                                                                            class="form-control rounded-pill shadow-sm"
+                                                                                            class="form-control rounded-pill "
                                                                                             [(ngModel)]="searchText"
                                                                                             placeholder="Search"
                                                                                             aria-label="Search">
@@ -1383,7 +1383,7 @@
                                         <div class="message-wrap agent-message-wrap left">
                                             <div class="agent-container">
                                                 <div class="card card-txt ms-auto">
-                                                    <div class="card-body shadow-sm"style="background-color: #dce1f9 !important;">
+                                                    <div class="card-body "style="background-color: #dce1f9 !important;">
                                                         <div class="d-flex align-items-center mb-2">
                                                             <h6 class="card-title m-0">
                                                                 {{msgReply.responseByName}}</h6>
@@ -1550,11 +1550,11 @@
                                     </div>
                                     <div class="d-flex align-items-center agent-container">
                                         <div class="card w-d-inline messageUpper"style="background-color: #e8e8e8 !important;">
-                                            <div class="card-body shadow-sm" style="min-width: 400px;background-color: #e8e8e8 !important;"
+                                            <div class="card-body " style="min-width: 400px;background-color: #e8e8e8 !important;"
                                                 [ngClass]="tm.queryStatus == 'Unresponded'?'unread-msg':''">
                                                 <div class="d-flex msg-user-info">
                                                     <div class="d-flex align-items-center">
-                                                        <h6 class="card-title navy m-0">
+                                                        <h6 class="card-title m-0">
                                                             {{tm.fromName}}</h6>
                                                         <p class="card-text ms-3">
                                                             <small class="silver">{{tm.createdDate |
@@ -1694,7 +1694,7 @@
                                                                                 <ul class="dropdown-menu shadow">
                                                                                     <form class="custom-searchbar">
                                                                                         <input
-                                                                                            class="form-control rounded-pill shadow-sm"
+                                                                                            class="form-control rounded-pill "
                                                                                             [(ngModel)]="searchText"
                                                                                             placeholder="Search"
                                                                                             aria-label="Search">
@@ -1827,7 +1827,7 @@
                                         <div class="message-wrap agent-message-wrap left">
                                             <div class="agent-container">
                                                 <div class="card card-txt ms-auto">
-                                                    <div class="card-body shadow-sm"style="background-color: #dce1f9 !important;">
+                                                    <div class="card-body "style="background-color: #dce1f9 !important;">
                                                         <div class="d-flex align-items-center mb-2">
                                                             <h6 class="card-title m-0">
                                                                 {{msgReply.responseByName}}</h6>
@@ -1994,11 +1994,11 @@
                                     </div>
                                     <div class="d-flex align-items-center agent-container">
                                         <div class="card w-d-inline messageUpper"style="background-color: #e8e8e8 !important;">
-                                            <div class="card-body shadow-sm" style="min-width: 400px;background-color: #e8e8e8 !important;"
+                                            <div class="card-body " style="min-width: 400px;background-color: #e8e8e8 !important;"
                                                 [ngClass]="ttr.queryStatus == 'Unresponded'?'unread-msg':''">
                                                 <div class="d-flex msg-user-info">
                                                     <div class="d-flex align-items-center">
-                                                        <h6 class="card-title navy m-0">
+                                                        <h6 class="card-title m-0">
                                                             {{ttr.fromName}}</h6>
                                                         <p class="card-text ms-3">
                                                             <small class="silver">{{ttr.createdDate |
@@ -2138,7 +2138,7 @@
                                                                                 <ul class="dropdown-menu shadow">
                                                                                     <form class="custom-searchbar">
                                                                                         <input
-                                                                                            class="form-control rounded-pill shadow-sm"
+                                                                                            class="form-control rounded-pill "
                                                                                             [(ngModel)]="searchText"
                                                                                             placeholder="Search"
                                                                                             aria-label="Search">
@@ -2271,7 +2271,7 @@
                                         <div class="message-wrap agent-message-wrap left">
                                             <div class="agent-container">
                                                 <div class="card card-txt ms-auto">
-                                                    <div class="card-body shadow-sm"style="background-color: #dce1f9 !important;">
+                                                    <div class="card-body "style="background-color: #dce1f9 !important;">
                                                         <div class="d-flex align-items-center mb-2">
                                                             <h6 class="card-title m-0">
                                                                 {{msgReply.responseByName}}</h6>
@@ -2583,7 +2583,7 @@
         </div>
         <div class="offcanvas-body">
             <form class="custom-searchbar">
-                <input class="form-control me-2 rounded-pill shadow-sm" placeholder="Search" aria-label="Search">
+                <input class="form-control me-2 rounded-pill " placeholder="Search" aria-label="Search">
                 <span class="btn searchbar-btn" type="submit">
                     <i class="fal fa-search silver"></i>
                 </span>
@@ -2608,7 +2608,7 @@
         </div>
     </div>
 </div>
-<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 999999">
+<div class="position-fixed toast-bar border-0  rounded navyBg" style="z-index: 999999">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
@@ -2632,7 +2632,7 @@
         </div>
         <div class="offcanvas-body">
             <form class="custom-searchbar">
-                <input class="form-control me-2 rounded-pill shadow-sm" placeholder="Search" aria-label="Search"
+                <input class="form-control me-2 rounded-pill " placeholder="Search" aria-label="Search"
                     [(ngModel)]="quickReplySearchText">
                 <span class="btn searchbar-btn" type="submit">
                     <i class="fal fa-search silver"></i>

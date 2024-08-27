@@ -1,12 +1,12 @@
 <!-- Coming From DB -->
 <!-- <ng-container *ngFor="let menu of menus$" >
     <a (click)="update('all-inboxes/'+menu.link+'/all')"  routerLinkActive="active" ariaCurrentWhenActive="page"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
-    <div class="list-group-text d-flex align-items-center gap-3" >
-        <div class="iconButton medium" [innerHTML]="menu.icon">
+    class="list-group-item">
+    <div class="list-group-text d-flex align-items-center" >
+        <div class="menu-icon" [innerHTML]="menu.icon">
             {{menu.icon}}
         </div>
-        <a class="itemLabel level-8">
+        <a class="itemLabel ">
             {{menu.name}}
         </a>
     </div>
@@ -23,120 +23,113 @@
     </button>
 </li> -->
 
-<a [routerLink]="['/all-inboxes/focused/all']" routerLinkActive="active" ariaCurrentWhenActive="page" data-tooltip="Sent"
-    class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 "
+<a [routerLink]="['/all-inboxes/focused/all']" routerLinkActive="active" ariaCurrentWhenActive="page" class="list-group-item"
     [class.active]="activeChannel=='focused'">
-    <div class="list-group-text d-flex align-items-center gap-3">
         <div class="cursor-pointer">
             <i class="fa fa-inbox"></i>
         </div>
-        <div class="itemLabel level-8" style="color: black !important;">
+        <div class="itemLabel " >
             All Inboxes 
         </div>
-    </div>
 </a>
 
-<a [routerLink]="['/all-inboxes/sent/all']" routerLinkActive="active" ariaCurrentWhenActive="page" data-tooltip="Sent"
-    class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 "
+<a [routerLink]="['/all-inboxes/sent/all']" routerLinkActive="active" ariaCurrentWhenActive="page" 
+    class="list-group-item"
     [class.active]="activeChannel=='sent'">
-    <div class="list-group-text d-flex align-items-center gap-3">
-        <div class="cursor-pointer">
+        <div class="menu-icon">
             <i class="fa fa-paper-plane"></i>
         </div>
-        <div class="itemLabel level-8" style="color: black !important;">
+        <div class="itemLabel " >
             Sent
         </div>
-    </div>
 </a>
 <ng-container *ngFor="let menu of mainMenu"  >
     <a 
         [routerLink]="['/all-inboxes/'+menu.slug+'/all']" routerLinkActive="active" ariaCurrentWhenActive="page"
-        class="tooltips tooltip-right list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
-        <div class="list-group-text d-flex align-items-center gap-3" >
-            <div class="cursor-pointer" [innerHTML]="menu.icon " >
+        class="list-group-item">
+            <div class="menu-icon" [innerHTML]="menu.icon " >
                 {{menu.icon}}
             </div>
-            <a class="itemLabel level-8" style="color: black !important">
+            <div class="itemLabel " >
                 {{menu.name}}
-            </a>
-        </div>
+            </div>
     </a>
 </ng-container> 
 
 <!-- Hard coded -->
 <!-- <a (click)="update('all-inboxes/focused/all')"
-    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
-    <div class="list-group-text d-flex align-items-center gap-3">
-        <div class="iconButton medium">
+    class="list-group-item list-group-item-action">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="menu-icon">
             <i class="fal fa-inbox ice"></i>
         </div>
-        <div class="itemLabel level-8">
+        <div class="itemLabel ">
             All Inboxes
         </div>
     </div>
 </a>
 <a (click)="update('all-inboxes/assigned_to_me/all')"
-    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
-    <div class="list-group-text d-flex align-items-center gap-3">
-        <div class="iconButton medium">
+    class="list-group-item list-group-item-action">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="menu-icon">
             <i class="fa-sharp fa-light fa-money-check-pen"></i>
         </div>
-        <div class="itemLabel level-8">
+        <div class="itemLabel ">
             Assigned To Me
         </div>
     </div>
 </a>
 <a (click)="update('all-inboxes/starred/all')"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
-    <div class="list-group-text d-flex align-items-center gap-3">
-        <div class="iconButton medium">
+    class="list-group-item">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="menu-icon">
             <i class="fal fa-star ice"></i>
         </div>
-        <div class="itemLabel level-8">
+        <div class="itemLabel ">
             Starred
         </div>
     </div>
 </a>
 <a (click)="update('all-inboxes/sent/all')"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
-    <div class="list-group-text d-flex align-items-center gap-3">
-        <div class="iconButton medium">
+    class="list-group-item">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="menu-icon">
             <i class="fal fa-paper-plane ice"></i>
         </div>
-        <div class="itemLabel level-8">
+        <div class="itemLabel ">
             Sent
         </div>
     </div>
 </a>
 <a (click)="update('all-inboxes/black_list/all')"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
-    <div class="list-group-text d-flex align-items-center gap-3">
-        <div class="iconButton medium">
+    class="list-group-item">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="menu-icon">
             <i class="fal fa-ban ice"></i>
         </div>
-        <div class="itemLabel level-8">
+        <div class="itemLabel ">
             Black List
         </div>
     </div>
 </a>
 <a (click)="update('all-inboxes/spam/all')"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
-    <div class="list-group-text d-flex align-items-center gap-3">
-        <div class="iconButton medium">
+    class="list-group-item">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="menu-icon">
             <i class="fal fa-exclamation-circle ice"></i>
         </div>
-        <div class="itemLabel level-8">
+        <div class="itemLabel ">
             Spam
         </div>
     </div>
 </a>
 <a (click)="update('all-inboxes/trash/all')"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-2 ">
-    <div class="list-group-text d-flex align-items-center gap-3">
-        <div class="iconButton medium">
+    class="list-group-item">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="menu-icon">
             <i class="fal fa-flag ice"></i>
         </div>
-        <div class="itemLabel level-8">
+        <div class="itemLabel ">
             Trash
         </div>
     </div>
