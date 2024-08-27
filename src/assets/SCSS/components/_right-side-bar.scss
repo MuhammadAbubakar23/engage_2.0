@@ -5,7 +5,7 @@
     margin-right: -100%;
     transition: 0.3s;
     .bodyWrapper {
-      padding-right: 0;
+      padding: 0;
     }
     .expended-rigth-sidebar {
       padding-right: 0;
@@ -25,10 +25,12 @@
       .profile {
         table {
           background-color: $salt;
+          margin: 10px 0;
+      border-radius: 16px;
           tr {
             border: transparent;
             td {
-              padding: 1.5rem 1rem;
+              padding:0 1rem;
               .card {
                 background-color: $salt;
                 border: none;
@@ -40,10 +42,9 @@
                 .card-body {
                   .rate-bar {
                     font-size: 0.775em;
-                    border: 1px solid #dee2e6;
-                    border-right-width: 0;
-                    border-left-width: 0;
                     padding: 8px;
+                    background-color: $ice;
+                    border-radius: 48px;
                   }
                 }
               }
@@ -51,18 +52,18 @@
           }
         }
         ul.center-social-wrapper {
-          width: 50%;
-          margin: auto;
-          position: relative;
+          background: transparent;
           .list-group-item {
             display: flex;
             justify-content: center;
-            border-radius: 45px;
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            right: 0;
+           
             background-color: $ice;
+            border: 0;
+            .iconsButton {
+              i{
+                font-weight: 900;
+              }
+            }
           }
           .dropdown-menu li input {
             &::placeholder {
