@@ -441,6 +441,11 @@
         .btn{
             background: #fff;
             padding: 2px 4px !important;
+            border: 0;
+            &.show{
+               
+                color: $brand-primary;
+            }
         }
     }
    
@@ -452,14 +457,14 @@
     font-weight: 400 !important;
 }
 .leftactive{
-    .rightbar-expanded-wrapper{
-        width: 0;
-    }
+    // .rightbar-expanded-wrapper{
+    //     width: 0;
+    // }
 }
 .sentiments {
-    .rounded-pill{
+    .rounded-pills{
         padding: 4px 8px;
-        border-radius: 6px;
+        border-radius: 6px !important;
         font-weight: normal;
         i{
             font-weight: bold;

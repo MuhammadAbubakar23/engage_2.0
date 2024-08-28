@@ -415,7 +415,7 @@
    
     <div class="filter-container">
       <ul class="list-group list-group-horizontal border-0">
-        <li class="list-group-item border-0 all-check-boxes cursor-pointer" >
+        <li class="list-group-item border-0 all-check-boxes cursor-pointer ps-0" >
           <input *ngIf="flag != 'sent'" class="form-check-input me-1" type="checkbox" aria-label="..."
             data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Check All"
             [checked]="masterSelected" value="m1" (change)="checkUncheckAll($event)"
@@ -596,7 +596,7 @@
           </thead>
           <tbody>
             <ng-container *ngFor="let group of groupByDateList">
-              <tr class="border-b">
+              <tr class="date-row">
                 <td class="" colspan="6">
                   <span *ngIf="FlagForAssignToMe!=='follow_up'" class="email-tag">
                     <span class="email-date"></span> <i class="fa fa-calendar-days me-2"></i> {{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
@@ -647,8 +647,7 @@
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="PlayStore"
                     aria-label="PlayStore"></i>
                 </td>
-                <td><span class="badge bg-primary rounded-pill "
-                    *ngIf="query.unrespondedCount > 0">{{query.unrespondedCount}}</span></td>
+             
                 <td class="" style="width: 300px;">
                   <div class="d-flex align-items-center">
                      
@@ -662,7 +661,8 @@
                         &nbsp;
                            </a>
                     </span>
-                   
+                   <span class="badge bg-primary rounded-pill "
+                    *ngIf="query.unrespondedCount > 0">{{query.unrespondedCount}}</span>
                         <span class="label slahigh ms-2">High</span>
                       <span class="label slamedium ms-2">Medium</span>
                       <span class="label slalow ms-2">Low</span>
@@ -670,6 +670,7 @@
                   </div>
                  
                 </td>
+                
                 <td class="">
                   <div class=" "
                     (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId, query.skillSlug)">
@@ -678,10 +679,10 @@
                 <!-- <td class="">
                   <small>{{query.wings}}</small>
                 </td> -->
-                <td class="">
+                <td class="pe-5 text-end">
                   <small>{{query.createdDate | date:'h:mm:ss a'}}</small>
                 </td>
-                <td class="" *ngIf="FlagForAssignToMe=='follow_up'">
+                <td class="pe-5 text-end" *ngIf="FlagForAssignToMe=='follow_up'">
                   <span >
                     <small><strong>{{query?.follow_Up_Status | date: 'EE, MMM-dd, yyyy h:mm:ss a '}}</strong></small>
                   </span>

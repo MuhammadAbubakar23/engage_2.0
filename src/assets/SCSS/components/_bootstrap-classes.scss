@@ -47,13 +47,15 @@
     padding: 0.39em 0.66em !important;
     line-height: 1.1;
      font-weight: 500 !important;
+     min-width: 20px;
+    min-height: 20px;
 }
 .fw-bold {
      font-weight: 500 !important;
 }
 .alert{
     &.alert-primary{
-        color: #3D596D;
+        color: $brand-primary;
         background-color: #E5F2FD;
         border-color: #BADDFE;
     }
