@@ -9,7 +9,7 @@
             <img src={{userInfo?.profilePic}} class="rounded-circle w-100">
         </div>
         <!-- <h6 class="avatar-title navy m-0 ms-2">{{userName.split('<')[0]}}</h6> -->
-        <h6 class="avatar-title navy m-0 ms-2">{{userInfo?.userName}}
+        <h6 class="avatar-title  m-0 ms-2">{{userInfo?.userName}}
             <i *ngIf="userInfo.isVerified == true" class="fa-solid fa-badge-check text-primary"></i>
         </h6>
 
@@ -19,7 +19,7 @@
                 <i class="fal fa-ellipsis-v-alt"></i>
             </button>
             <ng-container *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
-                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 assignFirstDropdownList"
+                <ul class="dropdown-menu custom-dropdown medium shadow p-0 mt-2 assignFirstDropdownList"
                     aria-labelledby="dropdownMenuButton1" [ngClass]="showMoreOptions == true?'show':''">
                     <li>
                         <ul>
@@ -38,7 +38,7 @@
                         </ul>
                     </li>
                 </ul>
-                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 assignSecondDropdownList"
+                <ul class="dropdown-menu custom-dropdown medium shadow p-0 mt-2 assignSecondDropdownList"
                     [ngClass]="showAgentsList == true?'show':''" aria-labelledby="dropdownMenuButton2">
                     <div>
                         <ul class="dropdown-listing">
@@ -248,9 +248,9 @@
         </div>
         <div class="dropdown borderDropdown w-auto markAs-dropdown"
             *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
-            <a class="btn btn-secondary dropdown-toggle chevron-icon down ps-2 pe-5" role="button" id="dropdownMenuLink"
+            <a class="btn " role="button" id="dropdownMenuLink"
                 data-bs-toggle="dropdown" aria-expanded="false">
-                <div class="dropdown-title">Mark As</div>
+                <div class="dropdown-title">Mark As <i class="fa-light fa-angle-down"></i></div>
             </a>
 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
