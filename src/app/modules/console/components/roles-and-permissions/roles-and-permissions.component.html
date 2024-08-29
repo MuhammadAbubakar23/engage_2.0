@@ -63,7 +63,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let role of Roles">
-                            <th>
+                            <td>
                                 <ul class="list-group list-group-flush">
                                     <li
                                         class="list-group-item d-flex justify-content-between align-items-start p-0 pt-2 pb-2">
@@ -76,8 +76,8 @@
                                         </div>
                                     </li>
                                 </ul>
-                            </th>
-                            <td>
+                            </td>
+                            <td >
                                 <!-- <div class="icons-list d-flex justify-content-end dropstart">
                                 <button class="btn iconButton medium iconHover">
                                     <i class="fal fa-edit"></i>
@@ -101,10 +101,10 @@
                                     </li>
                                 </ul>
                             </div> -->
-                                <div class="icons-list d-flex justify-content-end dropstart">
+                                <div class=" d-flex justify-content-end dropstart">
                                     <button class="btn iconButton medium iconHover btn-group" type="button"
                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                                      <i class="fa-regular fa-ellipsis-vertical"></i>
                                     </button>
                                     <ul class="dropdown-menu fade">
                                         <li *ngIf="hasDeletePermission">

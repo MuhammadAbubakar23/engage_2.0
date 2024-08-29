@@ -4,8 +4,40 @@
     }
     i,
     svg {
-      color: rgba(0, 0, 0, 0.3215686275) !important;
-      left: 22px;
-      top: 22px;
+      color: rgba(0, 0, 0, 0.5) !important;
+      left: 20px;
+      top: 24px;
     }
   }
+  .loginblock{
+    max-width: 420px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    flex: 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .form-control{
+      padding: 16px;
+      font-size: 1.15rem;
+      color: #000;
+    }
+  }
+  .bgimg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-size: cover;
+    background-position: bottom;
+    width: 100%;
+    height: 100%;
+}
+
+.form-controlinput::placeholder {
+  font-weight: normal;
+  opacity: 0.5;
+  color: #888;
+  font-size: 15px;
+}

@@ -93,7 +93,7 @@
     <div class="scroll-content">
       <li class="list-group-item list-group-item-action" [ngClass]="!menu.expanded ? 'collapsed' : ''"
         *ngFor="let menu of menuItems; let i = index">
-        <a class="d-flex align-items-center level-8 font-regular" [ngClass]="menu.subMenu ? 'chevron-icon' : ''"
+        <a class="d-flex align-items-center " [ngClass]="menu.subMenu ? 'chevron-icon' : ''"
           type="button" (click)="updatevalue(menu)">
           <!-- <i [ngClass]="menu['icon']"></i> -->
           <span [innerHTML]="menu['icon']" class="p-2 cursor-pointer"></span>

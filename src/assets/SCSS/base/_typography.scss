@@ -87,3 +87,10 @@ h6,
 .fa-twitter:before {
   content: "" !important;
 }
+.list-unstyled-inner.collapse{
+  .fa-circle{
+      &:before{
+        content: "";
+      }
+  }
+}

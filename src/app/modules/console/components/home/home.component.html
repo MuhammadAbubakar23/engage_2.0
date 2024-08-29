@@ -186,10 +186,10 @@
                  
                 <div class="col-lg-12 h-100 row">
                     <div class="col-lg-3 shortcut-box mb-3" *ngFor="let channel of channels">
-                        <div class="card-body h-100 p-3 shadow d-flex iceBg">
+                        <div class="card-body h-100 px-3 py-5  d-flex iceBg">
                             <button class="iconButton medium" style="background-color: grey !important;color: white !important;" [innerHTML]="channel.icon"></button>
                             <div class="ms-3 d-flex flex-grow-1">  <h5 class="night mb-0 mt-2 lh-base text fw-bold">{{channel.name}}</h5>
-                              <div class="ms-auto">  <a type="button" class="btn btn-outline-success btn-text" data-bs-toggle="modal"
+                              <div class="ms-auto">  <a type="button" class="btn btn-outline-primary btn-text" data-bs-toggle="modal"
                                 [attr.data-bs-target]="'#'+channel.slug">
                                   <i class="fa fa-plug me-2"></i>
                                   Connect
@@ -204,7 +204,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="h-100 d-flex">
-                        <button class="p-3 medium cursor-pointer">
+                        <button class="iconButton iconHover medium cursor-pointer">
                             <i class="fa fa-tag"></i>
                         </button>
                         <div class="ms-3">
@@ -216,7 +216,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="h-100 d-flex">
-                        <button class="p-3 medium cursor-pointer">
+                        <button class="iconButton iconHover medium cursor-pointer">
                             <i class="fa fa-cog"></i>
                         </button>
                         <div class="ms-3">
@@ -228,7 +228,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="h-100 d-flex">
-                        <button class="p-3 medium cursor-pointer">
+                        <button class="iconButton iconHover medium cursor-pointer">
                             <i class="fa fa-share-alt"></i>
                         </button>
                         <div class="ms-3">

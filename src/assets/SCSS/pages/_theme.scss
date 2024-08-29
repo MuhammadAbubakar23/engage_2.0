@@ -1,0 +1,136 @@
+[data-bs-theme="dark"] {
+  body {
+    background-color: #0f1014;
+    color: #9A9CAE;
+  }
+
+  .agent-grid .content-box-wrapper,
+  .middle-content {
+    background-color: #0f1014;
+  }
+
+  .main-header {
+    border-bottom: 1px solid #282a33;
+    background: #0d0e12;
+  }
+
+  .breadcrumb .breadcrumb-item:first-child a {
+    color: #9A9CAE;
+  }
+
+  .user-profile-dropdown li.user-dropdown-header {
+    background: #1c1d22;
+  }
+
+  .dropdown-item.active,
+  .dropdown-item:active {
+    background: #0d0e12;
+    color: $sky;
+  }
+
+  .night {
+    color: $ice !important;
+  }
+
+  .coal {
+    color: #9A9CAE !important;
+  }
+
+  .right-header-components .dropdown a .name-n-info span {
+    color: #9A9CAE;
+  }
+
+  #left-sidebar-expand {
+
+    border-right: 1px solid #282a33;
+    background: #0d0e12;
+
+  }
+
+  #left-sidebar-expand ul.list-group li a {
+    color: #9A9CAE;
+  }
+
+  #left-sidebar-expand ul.list-group li:hover {
+    background-color: #0f1014;
+
+    a {
+      color: #9A9CAE;
+    }
+  }
+
+  #left-sidebar-expand ul.list-group li.active {
+    background-color: #1d1f27;
+  }
+
+  #leftBarWrapper {
+    background-image: linear-gradient(6deg, #0f1014, #202122);
+  }
+
+  .right-header-components .dropdown .dropdown-menu .card-footer,
+  .right-header-components .notify .notification-header {
+    background-color: #1d1f27;
+  }
+
+  .form-control,
+  .form-select {
+    border-color: #3f3f3f;
+  }
+
+  .botleft .sidebar-header {
+    background-color: #1d1f27;
+  }
+
+  .list-group-item {
+    border-color: #222;
+  }
+
+  .botleft .sidebar-search {
+    background-color: #1d1f27;
+  }
+
+  .botleft .sidebar-search .form-control {
+    background-color: #0f1014;
+  }
+  .chat-header {
+    background: #1d1f27;
+}
+  .chatbot-main .chat-message-component {
+    background-color: #18191b;
+  
+  }
+  .chat-message-component .message-wrap.agent-message-wrap.left .card .card-body {
+    background-color: #262d3f !important;
+    color: #fff;
+}
+    .chat-message-component .message-wrap.agent-message-wrap .card .card-body {
+      background-color: #111212 !important;
+  }
+  .chatfooter {
+      background: #1d1f27;
+  }
+  #left-sidebar-expand .multiple-screens ul.list-group .list-group-item.all-inboxes-menu.active {
+    color: #ffffff;
+    background: #383a3f;
+}
+.bg-white,.iceBg {
+  background-color: #000 !important;
+}
+.btn-success {
+  background-color: #323b36 !important;
+  border-color: #416a56 !important;
+  color: #3cc480 !important;
+}
+.search-btn {
+  border: 1px solid #464f59;
+  background-color: #212529;
+}
+.btn-outline-success{
+  background-color: #292e2b !important;
+  border-color: #416a56 !important;
+  color: #3cc480 !important;
+  &:hover{
+    box-shadow:none;
+  }
+}
+}

@@ -76,7 +76,7 @@
               [routerLink]="['/console/sla-policy/create']"
               class="ms-2"
             >
-              <button type="button" class="btn__theme flex items-center gap-[10px]">
+              <button type="button" class="btn btn-primary">
                 <i class="fal fa-plus me-2"></i>
                 Add Policy
               </button>
@@ -117,7 +117,7 @@
               </th>
               <td>
                 <div
-                  class="icons-list d-flex justify-content-end dropstart"
+                  class=" d-flex justify-content-end dropstart"
                   *ngIf="
                     hasupdatePermission ||
                     hasDeletePermission
@@ -135,7 +135,7 @@
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                    <i class="far fa-ellipsis-v"></i>
                   </button>
                   <ul class="dropdown-menu fade">
                     <li>

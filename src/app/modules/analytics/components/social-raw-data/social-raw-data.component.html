@@ -1,13 +1,13 @@
 <div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
         <div class="d-grid w-100">
-            <div class="analytics-dashboard p-4">
+            <div class="analytics-dashboard px-4 py-2 scroll">
                 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
                     [fullScreen]="false">
                     <p style="color: white"> Loading... </p>
                 </ngx-spinner>
                 <div class="report-toolbar mb-4">
-                    <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                    <ul class="list-inline  m-0 d-flex align-items-center">
                         <li class="list-inline-item">
                             <div class="iconholder">
                                 <div class="row">
@@ -103,30 +103,31 @@
                             </div>
                         </li>
                         <li class="list-inline-item ms-auto">
-                            <button class="btn__theme flex items-center gap-[10px]" (click)="DownloadSocialRawData()"
+                            <button class="btn btn-primary" (click)="DownloadSocialRawData()"
                                 [disabled]="downloading">Export as CSV
                                 <div *ngIf="downloading" class="loader"></div>
                             </button>
                         </li>
                     </ul>
                 </div>
-                <span>
-                    <div class="pagination-bar" style="margin-top:70px; margin-right: 10px;">
-                        <div class="dropdown">
-                            <button class="btn iconHover" type="button" id="dropdownMenuButton1"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <span> {{startingPoint}}-{{endingPoint}} of {{totalCounts}}</span>
-                            </button>
-                        </div>
-                        <span class="iconButton medium iconHover" (click)="perviousPage(pageNumber)">
-                            <i class="fal fa-chevron-left"></i>
-                        </span>
-                        <span class="iconButton medium iconHover" (click)="nextPage(pageNumber)">
-                            <i class="fal fa-chevron-right"></i>
-                        </span>
-                    </div>
-                </span>
-                <div class="card p-3 iceBg tableScroll" style="margin-top: 70px;">
+                            <div class="filter-container border-0 m-0 justify-content-end">
+                                <div class="pagination-bar  ms-5 w-auto">
+                                    <div class="dropdown">
+                                        <button class="btn iconHover" type="button" id="dropdownMenuButton1"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span> {{startingPoint}}-{{endingPoint}} of {{totalCounts}}</span>
+                                        </button>
+                                    </div>
+                                    <span class="iconButton medium iconHover" (click)="perviousPage(pageNumber)">
+                                        <i class="fal fa-chevron-left"></i>
+                                    </span>
+                                    <span class="iconButton medium iconHover" (click)="nextPage(pageNumber)">
+                                        <i class="fal fa-chevron-right"></i>
+                                    </span>
+                                </div>
+                            </div>
+                    
+                <div class="card p-3 iceBg tableScroll mt-2" >
                     <div class="table-section table-scroll-x perfect-scrollbar" data-scrollbar="true" tabindex="-1"
                         style="overflow: auto; outline: none">
                         <div class="scroll-content" style="width: 45vh; white-space: nowrap">

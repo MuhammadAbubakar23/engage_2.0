@@ -46,7 +46,7 @@
                             </div>
                             <div class="col-md-4 d-flex align-items-center justify-content-end" *ngIf="hasCreatePermission">
                                 <a (click)="updatevalue('consoleCreateTeamsHeader')" [routerLink]="['/console/teams/create/0']" class="ms-2">
-                                    <button type="button" class="btn__theme flex items-center gap-[10px]">
+                                    <button type="button" class="btn btn-primary">
                                         <i class="fal fa-plus me-2"></i>
                                         Create Team
                                     </button>
@@ -146,7 +146,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="icons-list d-flex justify-content-end dropstart" *ngIf="hasupdatePermission || hasDeletePermission">
+                                        <div class="d-flex justify-content-end dropstart" *ngIf="hasupdatePermission || hasDeletePermission">
                                             <button class="btn iconButton medium iconHover btn-group" type="button"
                                                 data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="far fa-ellipsis-v"></i>
