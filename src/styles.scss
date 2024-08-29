@@ -26,15 +26,15 @@
 // // Alternatively, you can import and @include the theme mixins for each component
 // // that you are using.
 // @include mat.all-component-themes($Enteract.Engage2.0-theme);
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@import "./assets/tailwind/globals";
-@import "./assets/tailwind/_common.scss";
-@import "./assets/tailwind/_fonts.scss";
-@import "./assets/tailwind/_variables.scss";
-@import "./assets/tailwind/_layout.scss";
-@import "./assets/tailwind/_auth.scss";
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+// @import "./assets/tailwind/globals";
+// @import "./assets/tailwind/_common.scss";
+// @import "./assets/tailwind/_fonts.scss";
+// @import "./assets/tailwind/_variables.scss";
+// @import "./assets/tailwind/_layout.scss";
+// @import "./assets/tailwind/_auth.scss";
 @import "./assets/scss/base/typography";
 @import "./assets/scss/base/base.scss";
 @import "../node_modules/bootstrap/scss/functions";
@@ -107,12 +107,12 @@
 // html, body { height: 100%; }
 // body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 //font-awesome6
-@import "./assets/SCSS/font-awesome-6/fontawesome.scss";
-@import "./assets/SCSS/font-awesome-6/brands.scss";
-@import "./assets/SCSS/font-awesome-6/light.scss";
-@import "./assets/SCSS/font-awesome-6/solid.scss";
-@import "./assets/SCSS/font-awesome-6/thin.scss";
-@import "./assets/SCSS/font-awesome-6/regular.scss";
+// @import "./assets/SCSS/font-awesome-6/fontawesome.scss";
+// @import "./assets/SCSS/font-awesome-6/brands.scss";
+// @import "./assets/SCSS/font-awesome-6/light.scss";
+// @import "./assets/SCSS/font-awesome-6/solid.scss";
+// @import "./assets/SCSS/font-awesome-6/thin.scss";
+// @import "./assets/SCSS/font-awesome-6/regular.scss";
 // Import ng-select component styles
 @import "~@ng-select/ng-select/themes/default.theme.css";
 /* width */

@@ -1,7 +1,7 @@
 <div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
         <div class="d-grid w-100">
-            <div class="analytics-dashboard p-4">
+            <div class="analytics-dashboard px-4 py-2">
                 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
                     [fullScreen]="false">
                     <p style="color: white"> Loading... </p>
@@ -102,7 +102,7 @@
                                 </div>
                             </li>
                             <li class="list-inline-item ms-auto">
-                                <button class="btn__theme flex items-center gap-[10px]" (click)="exportToCSV()" [disabled]="downloading">Export
+                                <button class="btn btn-primary" (click)="exportToCSV()" [disabled]="downloading">Export
                                     as CSV
                                     <div *ngIf="downloading" class="loader"></div>
                                 </button>

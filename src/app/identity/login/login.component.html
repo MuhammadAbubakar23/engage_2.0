@@ -8,22 +8,22 @@
   <p style="color: white">Loading...</p>
 </ngx-spinner>
 <div
-  class="auth__wrapp d-flex align-items-center justify-content-between flex-column overflow-hidden py-5"
->
-  <div class="auth__block">
+  class="auth__wrapp h-100vh d-flex align-items-center justify-content-center flex-column overflow-hidden py-5">
+  <div class="bgimg" style="background-image:url('../../../assets/images/gradient-background.png');"></div>
+  <div class="auth__block loginblock">
     <div class="auth__header text-center d-flex flex-column align-items-center">
-      <img
+     <div class="mb-1"> <img
         src="../../../assets/tailwind/images/entract-logo.svg"
         width="234"
         height="28"
         alt="Engage"
       />
-
-      <h1 class="level-lg font-medium text-black m-0">Hello again!</h1>
-      <p class="level-7 text-para">Login with your enteract credentials.</p>
+</div>
+      <h1 class=" font-medium text-black ">Hello again!</h1>
+      <p class=" text-secondary">Login with your enteract credentials.</p>
     </div>
 
-    <div class="auth__body mt-5 pt-5">
+    <div class="auth__body mt-4 pt-4 w-100">
       <form
         method="POST"
         class="d-flex align-items-center flex-column gap-3 w-100"
@@ -39,10 +39,10 @@
             type="text"
             name="email"
             id="email"
-            class="common__input p-4 level-8"
+            class="form-control "
             placeholder="Username or Email"
           />
-          <div class="error__message text-error level-8"></div>
+          <div class="error__message text-error "></div>
         </div>
         <div class="input_group position-relative w-100">
           <i class="fa-light fa-lock-keyhole position-absolute"></i>
@@ -51,12 +51,12 @@
             type="password"
             name="password"
             id="password"
-            class="common__input p-4 level-8"
+            class="form-control "
             placeholder="Password"
           />
-          <div class="error__message text-error level-8"></div>
+          <div class="error__message text-error "></div>
         </div>
-        <div class="d-flex justify-content-between align-items-center w-100">
+        <div class="d-flex justify-content-between align-items-center w-100 mb-3">
           <label class="d-flex align-items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
@@ -64,13 +64,13 @@
               id="remember"
               class="common__checkbox"
             />
-            <span class="level-8 text-para">Remember me</span>
+            <span class=" text-para">Remember me</span>
           </label>
 
-          <a href="#" class="text-error level-8"> Forgot Password?</a>
+          <a href="#" class="text-error "> Forgot Password?</a>
         </div>
         <button
-          class="btn__theme level-7 text-center p-3 mx-auto d-block mt-3 cursor-pointer"
+          class="btn btn-primary btn-lg loginbtn"
           type="button"
           id="validate_user"
           (click)="login()"
@@ -82,13 +82,13 @@
       </form>
     </div>
   </div>
-  <div class="text-center">
-    <a href="#" class="text-para level-8 mx-2">Technical Support</a>
+  <div class="text-center position-relative z-index-1 mt-auto">
+    <a href="#" class="text-para  mx-2">Technical Support</a>
     <span class="text-para">|</span>
-    <a href="#" class="text-para level-8 mx-2">Privacy Policy</a>
+    <a href="#" class="text-para  mx-2">Privacy Policy</a>
     <span class="text-para">|</span>
-    <a href="#" class="text-para level-8 mx-2">Terms & Conditions</a>
-    <p class="text-para level-8 mt-2">2024 All Rights Reserved.</p>
+    <a href="#" class="text-para  mx-2">Terms & Conditions</a>
+    <p class="text-secondary  mt-2">2024 All Rights Reserved.</p>
   </div>
 </div>
 
@@ -98,29 +98,29 @@
          <div class="auth__header text-center flex flex-col gap-4 items-center">
             <img src="../../../assets/tailwind/images/entract-logo.svg" width="234" height="28" alt="Engage" />
 
-            <h1 class="level-lg font-medium text-black">Hello again!</h1>
-            <p class="level-7 text-para">Login with your enteract credentials.</p>
+            <h1 class=" font-medium text-black">Hello again!</h1>
+            <p class=" text-para">Login with your enteract credentials.</p>
          </div>
 
          <div class="auth__body">
             <form [formGroup]="loginForm" method="POST" (submit)="login()">
                <div class="input_group">
-                  <input formControlName="userName" type="text" name="email" id="email" class="common__input level-8"
+                  <input formControlName="userName" type="text" name="email" id="email" class="common__input "
                      placeholder="Username or Email" />
-                  <div class="error__message text-error level-8"></div>
+                  <div class="error__message text-error "></div>
                </div>
                <div class="input_group">
                   <input formControlName="password" type="password" name="password" id="password"
-                     class="common__input level-8" placeholder="Password" />
-                  <div class="error__message text-error level-8"></div>
+                     class="common__input " placeholder="Password" />
+                  <div class="error__message text-error "></div>
                </div>
                <div class="flex justify-between items-center">
                   <label class="flex items-center gap-3">
                      <input type="checkbox" name="remember" id="remember" class="common__checkbox" />
-                     <span class="level-7 text-para">Remember me</span>
+                     <span class=" text-para">Remember me</span>
                   </label>
 
-                  <a class="text-error level-7"> Forgot Password?</a>
+                  <a class="text-error "> Forgot Password?</a>
                </div>
 
                <div class="button__group max-w-[80%]">
@@ -139,31 +139,31 @@
          <div class="auth__header text-center flex flex-col gap-4 items-center">
             <img src="../../../assets/tailwind/images/entract-logo.svg" width="234" height="28" alt="Engage" />
 
-            <h1 class="level-lg font-medium text-black">Hello again!</h1>
-            <p class="level-7 text-para">Login with your enteract credentials.</p>
-            <p class="level-7 text-para">Code Sent on your Email</p>
+            <h1 class=" font-medium text-black">Hello again!</h1>
+            <p class=" text-para">Login with your enteract credentials.</p>
+            <p class=" text-para">Code Sent on your Email</p>
          </div>
 
          <div class="auth__body">
             <form [formGroup]="verificationForm" method="POST" (submit)="login()">
                <div class="input_group">
-                  <input formControlName="userName" type="text" name="email" id="email" class="common__input level-8"
+                  <input formControlName="userName" type="text" name="email" id="email" class="common__input "
                      placeholder="Username or Email" [(ngModel)]="Verificationemail"
                      formControlName="Verificationemail"/>
-                  <div class="error__message text-error level-8"></div>
+                  <div class="error__message text-error "></div>
                </div>
                <div class="input_group">
                   <input formControlName="password" type="password" name="password" id="password"
-                     class="common__input level-8" placeholder="Please Enter Code" formControlName="verificationCode"/>
-                  <div class="error__message text-error level-8"></div>
+                     class="common__input " placeholder="Please Enter Code" formControlName="verificationCode"/>
+                  <div class="error__message text-error "></div>
                </div>
                <div class="flex justify-between items-center">
                   <label class="flex items-center gap-3">
                      <input type="checkbox" name="remember" id="remember" class="common__checkbox" />
-                     <span class="level-7 text-para">Remember me</span>
+                     <span class=" text-para">Remember me</span>
                   </label>
 
-                  <a class="text-error level-7"> Forgot Password?</a>
+                  <a class="text-error "> Forgot Password?</a>
                </div>
 
                <div class="button__group max-w-[80%]">
@@ -222,8 +222,8 @@
             alt="Engage"
           />
 
-          <h1 class="level-lg font-medium text-black m-0">Hello again!</h1>
-          <p class="level-7 text-para">Login with your enteract credentials.</p>
+          <h1 class=" font-medium text-black m-0">Hello again!</h1>
+          <p class=" text-para">Login with your enteract credentials.</p>
         </div>
 
         <div class="auth__body mt-8 pt-8">
@@ -234,10 +234,10 @@
                 type="text"
                 name="email"
                 id="email"
-                class="common__input p-4 level-8"
+                class="common__input p-4 "
                 placeholder="Username or Email"
               />
-              <div class="error__message text-error level-8"></div>
+              <div class="error__message text-error "></div>
             </div>
             <div class="input_group relative w-full">
               <i class="fa-light fa-lock-keyhole absolute"></i>
@@ -245,10 +245,10 @@
                 type="password"
                 name="password"
                 id="password"
-                class="common__input p-4 level-8"
+                class="common__input p-4 "
                 placeholder="Password"
               />
-              <div class="error__message text-error level-8"></div>
+              <div class="error__message text-error "></div>
             </div>
             <div class="flex justify-between items-center w-full">
               <label class="flex items-center gap-2 cursor-pointer">
@@ -258,10 +258,10 @@
                   id="remember"
                   class="common__checkbox"
                 />
-                <span class="level-7 text-para">Remember me</span>
+                <span class=" text-para">Remember me</span>
               </label>
 
-              <a href="#" class="text-error level-7"> Forgot Password?</a>
+              <a href="#" class="text-error "> Forgot Password?</a>
             </div>
             <button
               class="btn__theme level-6 text-center w-80 p-4 mx-auto block mt-3"
@@ -275,11 +275,11 @@
         </div>
       </div>
       <div class="text-center">
-        <a href="#" class="text-para level-7">Technical Support</a>
+        <a href="#" class="text-para ">Technical Support</a>
         <span class="text-para">|</span>
-        <a href="#" class="text-para level-7">Privacy Policy</a>
+        <a href="#" class="text-para ">Privacy Policy</a>
         <span class="text-para">|</span>
-        <a href="#" class="text-para level-7">Terms & Conditions</a>
-        <p class="text-para level-7">2024 All Rights Reserved.</p>
+        <a href="#" class="text-para ">Terms & Conditions</a>
+        <p class="text-para ">2024 All Rights Reserved.</p>
       </div>
     </div> -->

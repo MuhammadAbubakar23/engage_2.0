@@ -1,7 +1,7 @@
 <div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
         <div class="d-grid w-100">
-            <div class="analytics-dashboard p-4 scroll" data-scrollbar="true" tabindex="-1">
+            <div class="analytics-dashboard px-4 py-2 scroll" data-scrollbar="true" tabindex="-1">
                 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
                     [fullScreen]="false">
                     <p style="color: white"> Loading... </p>
@@ -25,31 +25,33 @@
                                 </div>
                             </li>
                            
-                            <li class="list-inline-item ms-auto" style="margin-right: 10px;">
-                                <button class="btn__theme flex items-center gap-[10px]" (click)="downloadRouteAgentsCvs()"
-                                    [disabled]="downloading">Export as CSV
-                                    <div *ngIf="downloading" class="loader"></div>
-                                </button>
+                            <li class="list-inline-item ms-auto d-flex align-items-center ">
+                                    <button class="btn btn-primary" (click)="downloadRouteAgentsCvs()"
+                                        [disabled]="downloading">Export as CSV
+                                        <div *ngIf="downloading" class="loader"></div>
+                                    </button>
+                               
+                            
                             </li>
                         </ul>
                     </div>
-                    <span>
-                        <div class="pagination-bar" style="margin-top:50px;">
-                            <div class="dropdown">
-                                <button class="btn iconHover" type="button" id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span> {{startingPoint}}-{{endingPoint}} of {{totalCounts}}</span>
-                                </button>
-                            </div>
-                            <span class="iconButton medium iconHover" (click)="perviousPage(pageNumber)">
-                                <i class="fal fa-chevron-left"></i>
-                            </span>
-                            <span class="iconButton medium iconHover" (click)="nextPage(pageNumber)">
-                                <i class="fal fa-chevron-right"></i>
-                            </span>
+                        <div class="filter-container border-0 m-0 justify-content-end">
+                                <div class="pagination-bar ms-5 w-auto" >
+                                    <div class="dropdown">
+                                        <button class="btn iconHover" type="button" id="dropdownMenuButton1"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span> {{startingPoint}}-{{endingPoint}} of {{totalCounts}}</span>
+                                        </button>
+                                    </div>
+                                    <span class="iconButton medium iconHover" (click)="perviousPage(pageNumber)">
+                                        <i class="fal fa-chevron-left"></i>
+                                    </span>
+                                    <span class="iconButton medium iconHover" (click)="nextPage(pageNumber)">
+                                        <i class="fal fa-chevron-right"></i>
+                                    </span>
+                                </div>
                         </div>
-                    </span>
-                    <div class="card p-3 iceBg" style="margin-top: 60px;">
+                    <div class="card p-3 iceBg " >
                         <div class="table-section table-scroll-x" style="overflow: auto; height: calc(100vh - 250px);">
                             <table class="table table-sm">
                                 <thead>
